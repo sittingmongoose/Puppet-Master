@@ -8014,7 +8014,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
 canonical_text: >-
-  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer modes, plus blocked-action payloads for missing lane bindings, overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.
+  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer modes, plus blocked-action payloads for a required job with no usable model after named inheritance (MS-109), overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.
 gui_related: false
 gui_classification_reason: Write authority and blocker payloads are permission/runtime policy; GUI surfaces consume their visible projections.
 depends_on:
@@ -8023,7 +8023,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Permission checks consume write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer.
-  - Missing capability lanes and overlapping write surfaces produce typed blockers.
+  - A required job with no usable model after named inheritance and overlapping write surfaces produce typed blockers; legacy unconfigured-lane is read vocabulary only.
   - Invisible/internal goals cannot exceed predeclared authority.
   - Recoverable blockers name the user, Settings, worktree, or approval action needed to proceed.
 validation_surfaces:
@@ -9958,7 +9958,18 @@ plan_unit_id: PS-140
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: Source restrictions propagate to all derived context surfaces (notes, summaries, capsules, handoffs, search projections, caches) and are enforced at read time on every path including direct-ID reads. Paraphrase, relabel, partial quote, or export cannot widen access; conservative exclusion/rebuild applies when dependency isolation is unavailable; already-sent bytes are disclosed, never claimed recalled. Denied existence is not leaked through error differentials, counts, or titles, and blind-phase material stays inaccessible across direct read, search, import, capsule, and shared-note routes until the workflow owner releases it.
+canonical_text: 'Source restrictions propagate to all derived context surfaces (notes, summaries, capsules,
+  handoffs, search projections, caches) and are enforced at read time on every path including direct-ID
+  reads. Paraphrase, relabel, partial quote, or export cannot widen access; conservative exclusion/rebuild
+  applies when dependency isolation is unavailable; already-sent bytes are disclosed, never claimed recalled.
+  Denied existence is not leaked through error differentials, counts, or titles, and blind-phase material
+  stays inaccessible across direct read, search, import, capsule, and shared-note routes until the workflow
+  owner releases it. DL-475: Crews, reviews and the chat assistant''s other helpers may read the current
+  Project''s notes and the same user''s personal Every project notes, read-only under current actor/source/phase
+  permissions. No helper-owned memory, other-Project access or private app-thread access follows. Summaries
+  and handoffs inherit restrictions; paraphrase cannot widen them. Existing source-off/privacy choices
+  migrate to equivalent or stricter read restrictions before any read. Removing Memory source switches
+  never restores access; unknown migrations stay denied until explicit owner resolution.'
 gui_related: false
 gui_classification_reason: Restriction propagation is permission behavior, not GUI work.
 depends_on: [PS-120, WN-010]
@@ -9976,9 +9987,10 @@ context_scope: permission_contracts
 implementation_surfaces: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/Working_Notebook.md]
 node_compile_hint: {mode: permission_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-H05
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-H02
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N12
+- source_packet:PM-WNC-2026-09-05-v1:WNC-H05
+- source_packet:PM-WNC-2026-09-05-v1:WNC-H02
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N12
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["derived", "read-time", "conservatively", "already sent", "not permission"]
 negative_constraints:
   - Do not declassify derived content by paraphrase or partial quote.

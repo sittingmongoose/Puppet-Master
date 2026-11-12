@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28375-L28863
+Source lines: L28404-L28896
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `30fc010686ea17ae38b61544a99e01519fe3ff49ef9e792d83b1a1f6c18223cd`
 
 ---
 
@@ -283,13 +283,16 @@ plan_unit_id: F3-403
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Teach/Teacher uses the Assistant Chat window/thread model rather than a detached teaching app. Help
-  icons on major surfaces launch a new Teacher thread with current-surface context. Teacher thread presentation
-  includes persona badge, low-end/fast model source, context/model chips, source/context disclosure, activity cards,
-  footer status where relevant, and thread states such as working, unread, blocked, degraded, draft, archived, or
-  handoff. Guided GUI overlay uses highlight/spotlight, anchored captions, Back, Next, Stop, Let me try, and Do
-  it controls, confirmation for mutations, degraded state recovery, keyboard and screen-reader accessibility, responsive
-  behavior, and no stale target stepping.
+canonical_text: >-
+  Teach/Teacher uses the Assistant Chat window/thread model rather than a detached teaching app.
+  Help icons on major surfaces launch a new Teacher thread with current-surface context. Teacher
+  thread presentation includes persona badge, low-end/fast model source, capacity/cost/model
+  information and useful compaction status, with source/context records internal and no composition
+  inspector or per-run inclusion receipt, activity cards, footer status where relevant, and thread
+  states such as working, unread, blocked, degraded, draft, archived, or handoff. Guided GUI overlay
+  uses highlight/spotlight, anchored captions, Back, Next, Stop, Let me try, and Do it controls,
+  confirmation for mutations, degraded state recovery, keyboard and screen-reader accessibility,
+  responsive behavior, and no stale target stepping.
 gui_related: true
 gui_classification_reason: Defines visible help icons, Teacher thread chrome, source panels, overlay captions, controls,
   degraded states, and responsive/accessibility behavior.
@@ -300,10 +303,10 @@ depends_on:
 unblocks:
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage."
+  - "Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this compile."
+  - "Teacher chat has no user-facing context source composition, raw/curated inspection or per-run inclusion receipt; ordinary task evidence remains available."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -346,6 +349,8 @@ source_lineage:
 - Concepts/PMConcept.html#chat-thread-sidebar
 - Concepts/PMConcept.html#switchToChatThread
 - chat:pmconcept-gui-reference
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0103
 - atom-0104
@@ -448,39 +453,38 @@ preserved_exact_tokens:
 - runtime popovers
 - activity cards
 negative_constraints:
-- Do not bury Teach behind only slash commands.
-- Do not add a loud or decorative help affordance that competes with primary workflow controls.
-- Do not launch Teacher without current-surface context.
-- Do not create a detached Teacher-only shell that hides standard Assistant Chat controls.
-- Do not omit requested/effective persona or model disclosure from the Teacher thread.
-- Do not make Teacher launch a modal that blocks normal navigation as the only path.
-- Do not use raw cursor/click automation as the teaching UI.
-- Do not obscure the target control with the explanatory caption.
-- Do not allow Teacher to click destructive/mutating controls without confirmation and permission gates.
-- Do not fork labels between surfaces.
-- Do not make context help available only from the full Help page.
-- Do not include generic examples when current surface context is available.
-- Do not silently mutate an existing non-Teacher thread into Teacher mode.
-- Do not lose the originating surface/control context during launch.
-- Do not require users to know `/teach` before discovering help.
-- Do not invent a separate chat product surface for Teacher.
-- Do not hide requested/effective Persona/model state.
-- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
-- Do not obscure the target control with the explanation caption.
-- Do not make the overlay inaccessible without keyboard or screen-reader fallback.
-- Do not trap the user in the overlay without Stop/return-to-chat.
-- Do not keep stepping through a stale or missing UI target.
-- Do not hide permission/capability/model degraded states.
-- Do not turn degraded guidance into generic apology text without a next action.
-- Do not treat PMConcept.html as final or canonical UI truth.
-- Do not copy the concept HTML/CSS directly into canonical Plans or implementation.
-- Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile.
-- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
-- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
-- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
-- Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details.
-- Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility
-  checks.
+  - "Do not bury Teach behind only slash commands."
+  - "Do not add a loud or decorative help affordance that competes with primary workflow controls."
+  - "Do not launch Teacher without current-surface context."
+  - "Do not create a detached Teacher-only shell that hides standard Assistant Chat controls."
+  - "Do not omit requested/effective persona or model disclosure from the Teacher thread."
+  - "Do not make Teacher launch a modal that blocks normal navigation as the only path."
+  - "Do not use raw cursor/click automation as the teaching UI."
+  - "Do not obscure the target control with the explanatory caption."
+  - "Do not allow Teacher to click destructive/mutating controls without confirmation and permission gates."
+  - "Do not fork labels between surfaces."
+  - "Do not make context help available only from the full Help page."
+  - "Do not include generic examples when current surface context is available."
+  - "Do not silently mutate an existing non-Teacher thread into Teacher mode."
+  - "Do not lose the originating surface/control context during launch."
+  - "Do not require users to know `/teach` before discovering help."
+  - "Do not invent a separate chat product surface for Teacher."
+  - "Do not hide requested/effective Persona/model state."
+  - "Do not show Save as taught memory unless the content is eligible and user confirmation is still required."
+  - "Do not obscure the target control with the explanation caption."
+  - "Do not make the overlay inaccessible without keyboard or screen-reader fallback."
+  - "Do not trap the user in the overlay without Stop/return-to-chat."
+  - "Do not keep stepping through a stale or missing UI target."
+  - "Do not hide permission/capability/model degraded states."
+  - "Do not turn degraded guidance into generic apology text without a next action."
+  - "Do not treat PMConcept.html as final or canonical UI truth."
+  - "Do not copy the concept HTML/CSS directly into canonical Plans or implementation."
+  - "Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile."
+  - "Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher."
+  - "Keep Teacher Persona/model and capacity/cost/compaction information when launching from Help or a summon; ordinary PM task evidence stays attributable, without memory-use citations, context inspection or per-run source receipts."
+  - "Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant."
+  - "Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details."
+  - "Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility checks."
 owner_hints:
 - Plans/FinalGUISpec.md
 - Plans/UI_Command_Catalog.md

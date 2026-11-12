@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3807-L22961
+Source lines: L3747-L23074
 
-Source SHA256: `5be00385fb332d27e9b2e7b29ae5101b4031acc3777b8ed3e23faceb8dcf4b75`
+Source SHA256: `36ea80200c6dac9bf1e131cf96b14ec8bda8d154a122d7ad9d9fa493cc727c1b`
 
 ---
 
@@ -1033,15 +1033,21 @@ plan_unit_id: ACD-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach is an explicit capture workflow for durable codebase knowledge, user preferences, and workflow constraints. It uses user-locked records and requires explicit user confirmation before storage; it is not a separate closed mode_overlay.
+canonical_text: >-
+  Teach is explicit deliberate standing-instruction capture through its existing writer at Settings
+  > Personas & Crews > Defaults > Standing instructions. It requires confirmation before storage,
+  preserves secret/privacy/revision and retained protected-record safeguards internally, and creates
+  no separate closed mode_overlay. A requested saved note instead uses AMS-141 Add/Edit/Delete on
+  the shared Memory page at This project or Every project; no lock/unlock, conflict, source or
+  rollback controls appear.
 gui_related: false
 gui_classification_reason: Teach capture and memory persistence behavior are backend/chat workflow behavior rather than visual implementation.
 depends_on: []
 unblocks: [ACD-021, ACD-022]
 acceptance_criteria:
-  - Teach may be invoked through /teach or equivalent natural-language persistence intent.
-  - Persistence requires explicit user-confirming action before knowledge is stored.
-  - Teach does not create a separate closed mode_overlay.
+  - "Teach opens the existing written-instruction owner through /teach or equivalent deliberate intent and persists only after confirmation."
+  - "Saved notes reuse AMS-141 and the two allowed levels without a separate capture or inspection workflow."
+  - "Legacy protected-record state is internal and Teach creates no separate closed mode_overlay."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1057,6 +1063,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "user-locked"
   - "/teach"
@@ -1125,15 +1132,19 @@ plan_unit_id: ACD-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach retrieval, disclosure, conflict handling, inspection, narrowing, supersession, revocation, and secret exclusion are auditable safety rules. Taught knowledge enters prompts as explicit memory/context rather than undocumented hidden prompt mutation.
+canonical_text: >-
+  Teach and saved-note persistence retain scope, secret exclusion, revisions and legacy protections
+  internally; inclusion records prove no compliance. Only a durable successful save may add Saved to
+  memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation,
+  receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown.
+  Ordinary task evidence remains available; written instructions use their separate owner.
 gui_related: false
 gui_classification_reason: Teach audit and secret-exclusion behavior are memory governance requirements, not GUI implementation.
 depends_on: [ACD-020, ACD-021]
 unblocks: []
 acceptance_criteria:
-  - Conflicting teachings record supersession or revocation rather than silently overwriting prior knowledge.
-  - Users can inspect, narrow, supersede, or revoke taught knowledge later.
-  - Teach does not persist secrets, tokens, passwords, or other credentials.
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
+  - "No source/verification/rule receipt, named-note hover, conflict/lock/rollback control or third saved-note level is exposed."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1148,12 +1159,14 @@ node_compile_hint:
   mode: teach_audit_safety
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "explicit memory/context"
   - "MUST NOT persist secrets, tokens, passwords, or other credentials"
 negative_constraints:
-  - "Teach MUST NOT persist secrets, tokens, passwords, or other credentials."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Decision_Policy.md
@@ -3173,18 +3186,17 @@ plan_unit_id: ACD-066
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Retrieved results enter the Work bundle as a Retrieved Context block with
-  source type, provenance, snippet sizes, and truncation notes. Retrieved
-  Context is not Assistant memory and must respect Context Lens overlays.
+canonical_text: Retrieved Context stays ephemeral Work Bundle data with source provenance, snippet/truncation
+  and Context Lens restrictions, distinct from saved memories, written rules, conversations and task notes.
+  Assembled-source inspection is internal diagnostics; ordinary chat shows basic capacity/cost facts.
 gui_related: false
 gui_classification_reason: Retrieved Context assembly and memory boundaries are prompt/context pipeline behavior.
 depends_on: [ACD-063, ACD-064]
 unblocks: []
 acceptance_criteria:
-  - Retrieved Context carries source type, provenance, byte/token sizes, and truncation notes.
-  - Retrieved Context is not written to Assistant memory unless separately captured as a verified gist.
-  - Context Lens muted, focused, and subcompacted rules affect retrieval injection.
+- Retrieved Context stays ephemeral Work Bundle data with source provenance, snippet/truncation and Context
+  Lens restrictions, distinct from saved memories, written rules, conversations and task notes. Assembled-source
+  inspection is internal diagnostics; ordinary chat shows basic capacity/cost facts.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3199,7 +3211,8 @@ node_compile_hint:
   mode: retrieved_context_memory_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Retrieved Context"
   - "Work bundle"
@@ -3207,7 +3220,7 @@ preserved_exact_tokens:
   - "Plans/assistant-memory-subsystem.md"
   - "Context Lens"
 negative_constraints:
-  - "Retrieved Context is not \"memory\" and must not be written into the Assistant memory store unless separately captured as a verified gist."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -4455,20 +4468,19 @@ plan_unit_id: ACD-092
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The Context Detail Pane is an editor-tab pane with top-level `Curated` and
-  `Raw` views; `Curated` contains `Overview`, `Breakdown`, and `Messages`, and
-  `Raw` exposes message payloads, related `tool-part` payloads, provider
-  metadata blobs, and path/runtime debug data through an accordion.
+canonical_text: Context Detail retains basic on-demand chat capacity/cost, effective model/usage facts
+  and useful compaction/transition feedback. Assembled-source Breakdown, raw message/tool/provider/runtime
+  payloads and memory-selection explanations are internal debugging, not an ordinary user view or alternate
+  Memory editor. No memory raw data or used-note list is exposed.
 gui_related: true
 gui_classification_reason: Context Detail Pane tabs and accordions are visible editor-pane UI.
 depends_on: [ACD-091]
 unblocks: [ACD-093, ACD-100]
 acceptance_criteria:
-  - Context Detail Pane opens as an editor-tab pane.
-  - Top-level Curated and Raw views are available.
-  - Curated includes Overview, Breakdown, and Messages.
-  - Raw exposes payloads, tool-part data, provider metadata, and runtime/path debug data.
+- Context Detail retains basic on-demand chat capacity/cost, effective model/usage facts and useful compaction/transition
+  feedback. Assembled-source Breakdown, raw message/tool/provider/runtime payloads and memory-selection
+  explanations are internal debugging, not an ordinary user view or alternate Memory editor. No memory
+  raw data or used-note list is exposed.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4483,7 +4495,8 @@ node_compile_hint:
   mode: context_detail_pane_ia
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Curated"
   - "Raw"
@@ -4493,7 +4506,8 @@ preserved_exact_tokens:
   - "/model/mode/persona"
   - "/context/cost"
   - "tool-part"
-negative_constraints: []
+negative_constraints:
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -4506,20 +4520,21 @@ plan_unit_id: ACD-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Context Detail Pane breakdowns include system/instruction blocks,
-  user/assistant messages, compiled attachments and forwarded document
-  selections, tool/activity-derived context, canonical `usage.event` and
-  `run.completed.usage` snapshots, and debug-only Investigation Context items
-  for active debug threads.
+canonical_text: Internal context records retain instruction/message/attachment/tool/notebook/workflow
+  source classes, canonical usage snapshots, redaction/truncation and debug provenance for correct enforcement.
+  No assembled-source chart, raw memory detail or selection explanation is a user-facing memory surface;
+  basic capacity/cost information remains on demand.
 gui_related: true
-gui_classification_reason: Breakdown rows and source groups are visible in the Context Detail Pane.
+gui_classification_reason: >-
+  Keeps basic visible context status while source groups and source-level breakdowns remain internal
+  accounting.
 depends_on: [ACD-092]
 unblocks: [ACD-094, ACD-095]
 acceptance_criteria:
-  - Context breakdowns include all canonical user, assistant, system, attachment, tool, usage, and debug source families.
-  - Investigation Context items appear only for active debug threads.
-  - Canonical usage snapshots remain separate from ordinary chat-local message estimates.
+- Internal context records retain instruction/message/attachment/tool/notebook/workflow source classes,
+  canonical usage snapshots, redaction/truncation and debug provenance for correct enforcement. No assembled-source
+  chart, raw memory detail or selection explanation is a user-facing memory surface; basic capacity/cost
+  information remains on demand.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4534,12 +4549,16 @@ node_compile_hint:
   mode: context_breakdown_source_taxonomy
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "usage.event"
   - "run.completed.usage"
   - "Investigation Context"
-negative_constraints: []
+negative_constraints:
+- Do not expose retired memory-use, verification or rule-check receipt UI.
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Prompt_Pipeline.md
@@ -4552,23 +4571,19 @@ plan_unit_id: ACD-094
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The thread surface derives usage from canonical runtime records and must not
-  invent a second chat-local cost model; hidden/background helper usage remains
-  source-class inspectable, and truncation, redaction, and
-  context-serialization state remain visible so omitted context is never
-  presented as serialized.
-  Amended 2026-10-31 (DL-270): thread usage summaries read the redb rollups (UF-108);
-  raw usage.event reads are limited to the per-turn Context Detail drill-down.
+canonical_text: Thread usage derives from canonical runtime records/redb rollups (UF-108), never a second
+  chat-local cost model. Basic on-demand model/capacity/cost facts stay available; source-family charts
+  and raw payload views remain internal diagnostics. Unknown or omitted/truncated/redacted data never
+  masquerades as serialized context; permission enforcement retains internal records.
 gui_related: true
 gui_classification_reason: Runtime usage source and omitted-context state affect user-visible usage/cost display.
 depends_on: [ACD-091, ACD-093]
 unblocks: []
 acceptance_criteria:
-  - Usage derives from canonical runtime records.
-  - Hidden/background helper usage remains inspectable by source class.
-  - Truncation, redaction, and serialization state remain visible.
-  - Omitted context is never presented as serialized.
+- Thread usage derives from canonical runtime records/redb rollups (UF-108), never a second chat-local
+  cost model. Basic on-demand model/capacity/cost facts stay available; source-family charts and raw payload
+  views remain internal diagnostics. Unknown or omitted/truncated/redacted data never masquerades as serialized
+  context; permission enforcement retains internal records.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4584,13 +4599,13 @@ node_compile_hint:
   mode: context_usage_runtime_source_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "MUST NOT invent a second chat-local cost model"
   - "UI MUST NOT silently present omitted context as if it were still serialized"
 negative_constraints:
-  - "MUST NOT invent a second chat-local cost model"
-  - "UI MUST NOT silently present omitted context as if it were still serialized"
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/usage-feature.md
@@ -8798,18 +8813,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat UI surfaces an "Injected Context" breakdown per run or turn, including
-  included `AGENTS.md` paths and byte counts, parent summary and attempt
-  journal inclusion plus byte counts, and whether truncation occurred with its
-  reason and order.
+  The Injected Context record retains AGENTS.md paths and byte counts, parent summary and attempt
+  journal inclusion/byte counts, and truncation occurrence, reason and order internally for
+  enforcement and debugging. Chat retains basic on-demand capacity, cost and effective model
+  information plus useful compaction/truncation status. Source composition and per-run or per-turn
+  inclusion receipts are not user-facing.
 gui_related: true
-gui_classification_reason: Injected Context breakdown is visible chat UI.
+gui_classification_reason: "Defines the boundary between visible capacity/compaction status and internal source accounting."
 depends_on: [ACD-178]
 unblocks: []
 acceptance_criteria:
-  - Injected Context breakdown appears per run or turn.
-  - AGENTS.md, parent summary, and attempt journal inclusion disclose byte counts.
-  - Truncation occurrence, reason, and order are visible.
+  - "Internal Injected Context records retain source identity, inclusion/byte counts and truncation occurrence/reason/order under the existing permission and redaction rules."
+  - "Chat keeps basic capacity, cost and effective model information and useful compaction/truncation status available on demand."
+  - "The chat ring, menu, Context Detail Pane and replies show no assembled-source breakdown or per-run/turn inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8825,15 +8841,19 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0088
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
   - "Injected Context"
   - "AGENTS.md"
   - "parent summary"
   - "attempt journal"
-negative_constraints: []
+negative_constraints:
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+stale_retired_dispositions:
+  - "DL-475 retires the user-facing Injected Context breakdown; the historical title and preserved tokens identify internal accounting, not a required GUI label or receipt."
 ```
 
 ### ACD-181 - Context Injector User Configuration
@@ -9123,19 +9143,21 @@ plan_unit_id: ACD-187
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Automatic memory injection applies Assistant-memory SSOT eligibility gating:
-  Verified-only by default, Unverified inclusion only with explicit user
-  action, memory text summary-only, and memory injection separate from the
-  Application/Project rules pipeline.
+canonical_text: Memory injection uses bounded supported summary-only selection separate from written rules,
+  and memory off disables save/use. User-authored preferences/statements are supported as what the user
+  said at that version, without a Verify chore; world claims still require scoped current evidence. Edits
+  invalidate stale summary/index eligibility and are checked internally; no pinned/manual bypass can make
+  unsupported claims proven.
 gui_related: false
 gui_classification_reason: Memory eligibility and summary-only boundaries are prompt/context policy behavior.
 depends_on: [ACD-186]
 unblocks: [ACD-188]
 acceptance_criteria:
-  - Verified-only automatic inclusion remains default.
-  - Unverified memory inclusion requires explicit user action.
-  - Memory text is summary-only and separate from Application/Project rules.
+- Memory injection uses bounded supported summary-only selection separate from written rules, and memory
+  off disables save/use. User-authored preferences/statements are supported as what the user said at that
+  version, without a Verify chore; world claims still require scoped current evidence. Edits invalidate
+  stale summary/index eligibility and are checked internally; no pinned/manual bypass can make unsupported
+  claims proven.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9150,14 +9172,15 @@ node_compile_hint:
   mode: assistant_memory_eligibility_summary_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Verified-only"
   - "Unverified"
   - "summary-only"
   - "Application/Project rules pipeline"
 negative_constraints:
-  - "Any Unverified inclusion requires explicit user action."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -9170,15 +9193,19 @@ plan_unit_id: ACD-188
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat.
+canonical_text: Crews, reviews and the chat assistant's other helpers may read the current Project's notes
+  and the same user's personal Every project notes, read-only under current actor/source/phase permissions.
+  No helper-owned memory, other-Project access or private app-thread access follows. Summaries and handoffs
+  inherit restrictions; paraphrase cannot widen them.
 gui_related: false
 gui_classification_reason: Assistant memory forwarding boundary is execution/context policy behavior.
 depends_on: [ACD-186, ACD-187]
 unblocks: []
 acceptance_criteria:
-  - Assistant memory remains scoped to Assistant chat.
-  - Subagents do not receive Assistant memory from chat.
-  - Non-Assistant execution paths do not receive Assistant memory from chat.
+- Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the same
+  user's personal Every project notes, read-only under current actor/source/phase permissions. No helper-owned
+  memory, other-Project access or private app-thread access follows. Summaries and handoffs inherit restrictions;
+  paraphrase cannot widen them.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9194,11 +9221,12 @@ node_compile_hint:
   mode: assistant_memory_non_forwarding
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant memory MUST NOT be forwarded"
 negative_constraints:
-  - "Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat."
+- Do not widen source restrictions, private app-thread access or helper writes.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -9211,17 +9239,35 @@ plan_unit_id: ACD-189
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Gist Review actions in Assistant chat dispatch canonical
-  `cmd.chat.memory.*` UI command IDs and must not use ad-hoc command
-  identifiers.
+canonical_text: Memory is one saved-note page, opened from Settings and as that same page in the chat
+  Memory button/wand sheet. It has one on/off switch, search including archived notes, a level filter
+  All / This project / Every project, text/level/updated list rows, Add memory, Edit, Delete and collapsed
+  Archived. Title is optional, kind inferred. Delete all names the exact scope; deletion is distinct from
+  Discard/archive and cannot be silently undone from old chats. Verification, sources, pins, conflicts,
+  ranking, preview, upkeep and competing recovery controls stay off the page. Instructions, History/privacy,
+  chat capacity and Run limits remain separate. Add/Edit/Delete use cmd.chat.memory.add, cmd.chat.memory.edit
+  and cmd.chat.memory.delete under AMS-141; never relabel Discard as Delete or use ad-hoc handlers. User-authored
+  preferences/statements are supported as what the user said at that version, without a Verify chore;
+  world claims still require scoped current evidence. Edits invalidate stale summary/index eligibility
+  and are checked internally; no pinned/manual bypass can make unsupported claims proven.
 gui_related: true
-gui_classification_reason: Gist Review actions and UI command IDs are visible chat commands.
+gui_classification_reason: >-
+  The shared Memory page/sheet has current CRUD/navigation controls only; Gist Review is a
+  historical identity and produces no separate surface.
 depends_on: [ACD-186]
 unblocks: []
 acceptance_criteria:
-  - Gist Review actions dispatch cmd.chat.memory.* UI command IDs.
-  - Ad-hoc memory command identifiers are prohibited.
+- Memory is one saved-note page, opened from Settings and as that same page in the chat Memory button/wand
+  sheet. It has one on/off switch, search including archived notes, a level filter All / This project
+  / Every project, text/level/updated list rows, Add memory, Edit, Delete and collapsed Archived. Title
+  is optional, kind inferred. Delete all names the exact scope; deletion is distinct from Discard/archive
+  and cannot be silently undone from old chats. Verification, sources, pins, conflicts, ranking, preview,
+  upkeep and competing recovery controls stay off the page. Instructions, History/privacy, chat capacity
+  and Run limits remain separate. Add/Edit/Delete use cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete
+  under AMS-141; never relabel Discard as Delete or use ad-hoc handlers. User-authored preferences/statements
+  are supported as what the user said at that version, without a Verify chore; world claims still require
+  scoped current evidence. Edits invalidate stale summary/index eligibility and are checked internally;
+  no pinned/manual bypass can make unsupported claims proven.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9237,11 +9283,13 @@ node_compile_hint:
   mode: gist_review_memory_command_canon
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "cmd.chat.memory.*"
 negative_constraints:
-  - "Gist Review actions in Assistant chat MUST NOT use ad-hoc command identifiers."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -9254,18 +9302,17 @@ plan_unit_id: ACD-190
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Project retrieval injection may add project-scoped chat/code/log context for
-  the current turn, but it remains separate from Assistant memory injection and
-  is fresh, ephemeral Work Bundle context.
+canonical_text: Project chat/code/log retrieval is fresh ephemeral Work Bundle context, separate from
+  saved Memory, written Instructions, conversation history and Working Notebook. Finding material does
+  not itself save a reusable memory or create proof.
 gui_related: false
 gui_classification_reason: Project retrieval separation is context assembly policy, not GUI behavior.
 depends_on: [ACD-186]
 unblocks: [ACD-191]
 acceptance_criteria:
-  - Project retrieval injection stays separate from Assistant memory injection.
-  - Retrieved context is fresh, ephemeral context for the current turn.
-  - Assistant memory is never implicitly expanded by chat/code/log retrieval.
+- Project chat/code/log retrieval is fresh ephemeral Work Bundle context, separate from saved Memory,
+  written Instructions, conversation history and Working Notebook. Finding material does not itself save
+  a reusable memory or create proof.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9280,14 +9327,15 @@ node_compile_hint:
   mode: project_retrieval_separation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "project-scoped retrieved context"
   - "chat/code/logs"
   - "MUST remain separate"
   - "fresh, ephemeral context"
 negative_constraints:
-  - "Assistant memory injection is never implicitly expanded by chat/code/log retrieval."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -9304,7 +9352,7 @@ canonical_text: >-
   Project retrieval injection respects the Thread-local Auto Retrieval chip,
   per-project retrieval settings, and Context Lens overlays.
 gui_related: true
-gui_classification_reason: Retrieval chips, Settings/Memory controls, and Context Lens overlays are visible or user-configurable UI.
+gui_classification_reason: Retrieval chips and Context Lens overlays are visible or user-configurable UI; per-project retrieval has no Memory-page control (DL-475).
 depends_on: [ACD-190]
 unblocks: [ACD-194]
 acceptance_criteria:
@@ -11991,35 +12039,43 @@ plan_unit_id: ACD-253
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: One Auditor validation-loop setting exposes provider/model choices for the Auditor invariant loop after interview/wizard project-plan generation; per-pass settings are retired compatibility lineage.
+canonical_text: The Auditor invariant loop consumes Checking finished work from the common Settings > Models
+  > Default models list and permits an explicit run override through Models §2. Retire independent Auditor
+  and per-pass provider/model settings; old values are inert compatibility reads, not a second default store.
 gui_related: true
-gui_classification_reason: Auditor validation provider/model settings are visible Settings UI.
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
 depends_on: []
-unblocks: [ACD-254]
+unblocks:
+- ACD-254
 acceptance_criteria:
-  - Auditor invariant loop is exposed through one provider/model settings row.
-  - Settings apply after interview/wizard project-plan generation cycles.
+- The whole Auditor loop consumes Checking finished work from the one shared defaults list.
+- The loop applies after interview/wizard project-plan generation cycles.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: gui
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: validation_settings_context
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0114
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0115
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0114
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0115
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Three-Pass Canonical Validation Workflow"
-  - "provider + model selection"
+- Three-Pass Canonical Validation Workflow
+- provider + model selection
 negative_constraints:
-  - "Do not expose per-pass provider/model settings."
+- Do not expose per-pass provider/model settings.
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-254 - Validation Settings Location
@@ -12029,37 +12085,48 @@ plan_unit_id: ACD-254
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation loop provider/model selection lives in Settings -> Interview / Planning Wizard -> Auditor Validation, not the chat UI.
+canonical_text: The Interview / Planning Wizard Auditor Validation location redirects to Checking finished
+  work in Settings > Models > Default models. It exposes no independent provider/model/depth selectors; a run
+  override remains run-scoped.
 gui_related: true
-gui_classification_reason: Settings navigation and non-chat placement are visible configuration UI.
-depends_on: [ACD-253]
-unblocks: [ACD-255, ACD-261]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-253
+unblocks:
+- ACD-255
+- ACD-261
 acceptance_criteria:
-  - Auditor Validation settings group exists under Interview / Planning Wizard settings.
-  - Auditor loop selection is not placed in chat UI.
-  - Validation settings remain co-located with interview/wizard settings.
+- Default editing redirects from Auditor Validation to Settings > Models > Default models > Checking finished
+  work.
+- An explicit Auditor run override remains run-scoped rather than a saved second default.
+- No Interview/Wizard-specific model/depth selector or store is created.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: standard
 context_scope: gui
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_validation_settings_location
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0116
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0116
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Auditor Validation"
-  - "Settings -> Interview / Planning Wizard -> Auditor Validation"
+- Auditor Validation
+- Settings -> Interview / Planning Wizard -> Auditor Validation
 negative_constraints:
-  - "Fixed Pass 1 / Pass 2 / Pass 3 provider and model selections are retired."
+- Fixed Pass 1 / Pass 2 / Pass 3 provider and model selections are retired.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-255 - Validation Pass Controls
@@ -12069,53 +12136,58 @@ plan_unit_id: ACD-255
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Auditor Validation settings expose one row for the Auditor validation loop
-  with label, default provider, default model, and Provider and Model dropdowns
-  sourced from the Provider -> models registry and Models_System capability
-  resolver.
+canonical_text: |-
+  Auditor Validation reads its model/depth and named fallback source from Checking finished work. Default editing opens that common row, using the one open ACD-438 model/depth picker; explicit run choices use the same picker. No separate Provider/Model dropdown pair or thinking-depth Settings row survives.
 gui_related: true
-gui_classification_reason: Auditor validation loop row and provider/model dropdowns are visible Settings UI.
-depends_on: [ACD-254]
-unblocks: [ACD-256, ACD-262]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-254
+unblocks:
+- ACD-256
+- ACD-262
 acceptance_criteria:
-  - Auditor Validation has one settings row for the whole validation loop.
-  - Provider dropdown lists enabled provider entries from the account-bound Provider -> models registry.
-  - Model dropdown lists provider models and falls back through the Models_System `fallback_chain[]` contract.
-  - Legacy `platform_specs::fallback_model_ids(platform)` is not an active fallback source.
+- The loop uses the common Checking finished work row and shared ACD-438 model/depth picker, with supported levels beside the still-open model list on desktop and inside the picker on phone.
+- Provider/model choices come from the account-bound Provider -> models registry and route capability resolver.
+- Models §2 owns inheritance and missing-model recovery; no first-provider fallback is added.
+- Legacy platform_specs::fallback_model_ids(platform) is not an active fallback source.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: gui
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
-  - Plans/FinalGUISpec.md
-  - Plans/Models_System.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
 node_compile_hint:
   mode: auditor_validation_controls
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Document Creation"
-  - "Docs + Canonical Alignment"
-  - "Canonical Systems Only"
-  - "Auditor Validation"
-  - "Provider"
-  - "Model"
-  - "fallback_chain[]"
+- Document Creation
+- Docs + Canonical Alignment
+- Canonical Systems Only
+- Auditor Validation
+- Provider
+- Model
+- fallback_chain[]
 negative_constraints:
-  - "Do not expose independent Pass 1 / Pass 2 / Pass 3 provider/model rows."
-  - "Do not use legacy `platform_specs` or `platform_specs::fallback_model_ids(platform)` as the active Auditor Validation dropdown source."
+- Do not expose independent Pass 1 / Pass 2 / Pass 3 provider/model rows.
+- Do not use legacy `platform_specs` or `platform_specs::fallback_model_ids(platform)` as the shared model-picker
+  source.
 compatibility_only_notes:
-  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
+- '`platform_specs::fallback_model_ids(platform)` is retired source-lineage only.'
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
-  - Plans/Models_System.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+- Plans/Models_System.md
 ```
 
 ### ACD-256 - No Effort Control Widget Tag
@@ -12125,36 +12197,45 @@ plan_unit_id: ACD-256
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor Validation settings show no reasoning/effort control and tag reusable wrappers with `// DRY:WIDGET:auditor-validation-provider-model-selector`.
+canonical_text: |-
+  The Auditor uses ACD-438 one open model/depth picker, with supported depth levels beside the model list on desktop and inside the same picker on phone; it has no separate reasoning-effort Settings row. The old auditor-validation-provider-model-selector wrapper token is inert source lineage and does not require a second selector.
 gui_related: true
-gui_classification_reason: The omitted effort control and reusable widget tag govern visible Auditor Validation settings controls.
-depends_on: [ACD-255]
-unblocks: [ACD-263]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-255
+unblocks:
+- ACD-263
 acceptance_criteria:
-  - Reasoning/effort control is not shown in Auditor Validation settings.
-  - Auditor validation provider/model selector wrappers use the DRY widget tag.
+- Effort is chosen within the shared model-picker interaction; no separate reasoning-effort Settings row exists.
+- The old auditor-validation-provider-model-selector wrapper tag is inert source lineage.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: dry
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_no_effort_control_widget_tag
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "// DRY:WIDGET:auditor-validation-provider-model-selector"
+- // DRY:WIDGET:auditor-validation-provider-model-selector
 negative_constraints:
-  - "No reasoning/effort control is shown in this settings group."
+- Do not create a separate reasoning-effort Settings row; the common model picker retains the ACD-438 effort
+  step.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-257 - Validation Default Chain
@@ -12164,42 +12245,52 @@ plan_unit_id: ACD-257
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Default provider/model resolution uses the explicit Auditor loop stored value, then Auditor Model role default, then primary chat provider/model, then first available provider entry plus the first eligible Models_System fallback-chain entry.
+canonical_text: 'Auditor selection follows exactly Models §2: explicit run model/depth, scoped owner policy,
+  surface/stage default, eligible manually selected account default, This project, Everywhere/factory. Checking
+  finished work supplies the job default. Historical model_roles.auditor scalars, primary chat fallback and
+  first-discovered provider order are not selection sources.'
 gui_related: false
-gui_classification_reason: Default resolution priority is settings/config behavior.
-depends_on: [ACD-253]
-unblocks: [ACD-258, ACD-259]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-253
+unblocks:
+- ACD-258
+- ACD-259
 acceptance_criteria:
-  - Stored model_roles.auditor provider/model values take priority.
-  - Auditor Model role default is second priority.
-  - Primary chat platform/model is third priority.
-  - First available provider entry plus the first eligible fallback-chain entry is final fallback.
+- Explicit run selection wins, then scoped owner policy, surface/stage default, eligible manually selected
+  account, This project and Everywhere/factory.
+- Checking finished work and its named inheritance remain Models-owned.
+- Historical independent Auditor keys and primary-chat/first-provider fallbacks supply no model precedence.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: defaults
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
 node_compile_hint:
   mode: validation_default_chain
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "model_roles.auditor.provider"
-  - "model_roles.auditor.model"
-  - "fallback_chain"
+- model_roles.auditor.provider
+- model_roles.auditor.model
+- fallback_chain
 negative_constraints:
-  - "Do not resolve Auditor defaults through legacy `platform_specs::fallback_model_ids(platform)`."
+- Do not resolve Auditor defaults through legacy `platform_specs::fallback_model_ids(platform)`.
 compatibility_only_notes:
-  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
+- '`platform_specs::fallback_model_ids(platform)` is retired source-lineage only.'
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
-  - Plans/Models_System.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+- Plans/Models_System.md
 ```
 
 ### ACD-258 - Validation Default Invariants
@@ -12209,36 +12300,46 @@ plan_unit_id: ACD-258
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Validation defaults are deterministic for the same app settings and resolved defaults are written on first explicit save for reproducible reads.
+canonical_text: Auditor default resolution is deterministic for the same permitted inputs and freezes the actual
+  run selection. It never writes a resolved inherited default back as a new preference; only an explicit common-list
+  transaction changes a default.
 gui_related: false
-gui_classification_reason: Default invariants are deterministic settings behavior.
-depends_on: [ACD-257]
-unblocks: [ACD-259]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-257
+unblocks:
+- ACD-259
 acceptance_criteria:
-  - Same app settings state resolves the same provider/model.
-  - First explicit save writes resolved default to app settings.
-  - Resolution avoids randomness and environment-dependent branching.
+- The same permitted inputs resolve the same provider/model/effort pair.
+- Only explicit shared-list transactions write own defaults; resolving inheritance never copies it into an
+  own setting.
+- Resolution avoids randomness and environment-dependent branching.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: defaults
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
 node_compile_hint:
   mode: validation_default_invariants
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "no randomness, no environment-dependent branching"
+- no randomness, no environment-dependent branching
 negative_constraints:
-  - "Default resolution uses no randomness and no environment-dependent branching."
+- Default resolution uses no randomness and no environment-dependent branching.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-259 - Validation App Settings Only
@@ -12248,46 +12349,55 @@ plan_unit_id: ACD-259
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Auditor validation-loop preferences are ordinary Settings values at exactly their inventory-admitted
-  Everywhere/Computer/Project/owner levels. They are not Project artifacts or event-built configuration.
-  App work skips Project; every consumer uses one resolver/transaction and freezes its actual run
-  selection. Source/export includes only the chosen permitted own configuration under Settings exclusions;
-  live loop progress/history is never copied as a default. No competing app-only preference store or
-  direct feature YAML writer is added.
+canonical_text: Auditor model/depth defaults are the shared Checking finished work row, stored atomically at
+  its inventory-admitted Everywhere/Project levels; app work skips Project. Existing Settings transactions
+  and transfer exclusions apply. Historical independent model_roles.auditor values are inert old-data inspection,
+  omitted from new writes/imports and never silently promoted to shared defaults. Run evidence is not a preference
+  store.
 gui_related: false
-gui_classification_reason: Auditor validation settings storage scope is persistence/config behavior.
-depends_on: [ACD-257]
-unblocks: [ACD-260]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-257
+unblocks:
+- ACD-260
 acceptance_criteria:
-  - Auditor validation loop selections are stored in app settings only.
-  - Auditor validation loop selections are not project artifacts.
-  - Auditor validation loop selections are not emitted to seglog as project data or included in exports.
+- The common Checking finished work pair is stored through Settings at its admitted Everywhere/Project levels;
+  app work skips Project.
+- Run reports and project artifacts are not configuration stores.
+- Settings copy/export applies only to admitted own values under the shared exclusions; retired independent
+  keys are omitted with a notice.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_storage
 reasoning_tier: high
 context_scope: settings
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Project_Output_Artifacts.md
+- Plans/assistant-chat-design.md
+- Plans/Project_Output_Artifacts.md
 node_compile_hint:
   mode: app_settings_only
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "not stored in project artifacts"
-  - "not emitted to seglog as project data"
-  - "not included in project exports"
+- not stored in project artifacts
+- not emitted to seglog as project data
+- not included in project exports
 negative_constraints:
-  - "Auditor validation loop selections are app settings only."
+- Do not create an independent app-only Auditor default store or put shared default keys in Project artifacts;
+  Settings owns the permitted Everywhere/Project values.
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-260 - Validation Storage Keys
@@ -12297,47 +12407,51 @@ plan_unit_id: ACD-260
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Each Auditor cycle report records the resolved Auditor validation loop
-  provider/model in `auditor_cycle_report` payload fields and uses normative
-  `model_roles.auditor.{provider,model}` storage keys. Legacy
-  `validation_pass_report` mirrors may copy those values only with
-  compatibility_only true and cycle_report_ref.
+canonical_text: Each auditor_cycle_report records the actual frozen provider/model and effort requested/effective
+  outcomes when present. Old model_roles.auditor.provider/model keys are inert historical reads and no longer
+  normative new-write keys; legacy validation_pass_report mirrors only runtime values under compatibility_only
+  with cycle_report_ref.
 gui_related: false
-gui_classification_reason: Validation storage keys and audit payload fields are persistence behavior.
-depends_on: [ACD-259]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-259
 unblocks: []
 acceptance_criteria:
-  - auditor_cycle_report records resolved Auditor loop provider and model.
-  - validation_pass_report mirrors resolved Auditor loop provider and model only as a compatibility mirror with compatibility_only true and cycle_report_ref.
-  - Normative model_roles.auditor provider/model keys are used.
-  - Settings keys themselves are not stored as project artifacts.
+- auditor_cycle_report records the actual frozen provider/model and requested/effective effort when present.
+- validation_pass_report mirrors resolved runtime values only with compatibility_only true and cycle_report_ref.
+- Old model_roles.auditor provider/model scalar keys are inert reads and are not written or silently promoted.
+- Settings keys themselves are not stored as project artifacts.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_storage
 reasoning_tier: high
 context_scope: audit
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Project_Output_Artifacts.md
+- Plans/assistant-chat-design.md
+- Plans/Project_Output_Artifacts.md
 node_compile_hint:
   mode: validation_storage_keys
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "auditor_cycle_report"
-  - "validation_pass_report"
-  - "cycle_report_ref"
-  - "compatibility_only"
-  - "provider"
-  - "model"
-  - "model_roles.auditor.provider"
-  - "model_roles.auditor.model"
+- auditor_cycle_report
+- validation_pass_report
+- cycle_report_ref
+- compatibility_only
+- provider
+- model
+- model_roles.auditor.provider
+- model_roles.auditor.model
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-261 - Validation UX Copy
@@ -12347,41 +12461,48 @@ plan_unit_id: ACD-261
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor Validation UX copy uses the specified section header, loop description, and `(Default)` indicator.
+canonical_text: Auditor Validation copy names Checking finished work and the actual inherited source/current
+  model/depth. Default editing redirects to the shared row; the old standalone (Default) indicator and independent
+  save behavior are inert lineage.
 gui_related: true
-gui_classification_reason: Auditor Validation labels and descriptions are visible Settings copy.
-depends_on: [ACD-254]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-254
 unblocks: []
 acceptance_criteria:
-  - Section header is "Auditor Validation".
-  - Section description and loop description match the specified copy.
-  - Default indicator shows "(Default)" for automatically resolved provider/model values.
+- The shared row and inherited source are named; no unexplained Default or independent save is shown.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: standard
 context_scope: copy
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_validation_ux_copy
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0120
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0120
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Auditor Validation"
-  - "Puppet Master runs the canonical validation sweep with the Auditor Model. Choose the provider and model for the whole audit loop."
-  - "Audit / Repair / Audit"
-  - "Document Creation"
-  - "Canonical Alignment"
-  - "Canonical Systems Only"
-  - "(Default)"
+- Auditor Validation
+- Puppet Master runs the canonical validation sweep with the Auditor Model. Choose the provider and model for
+  the whole audit loop.
+- Audit / Repair / Audit
+- Document Creation
+- Canonical Alignment
+- Canonical Systems Only
+- (Default)
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-262 - Provider Models Registry Only
@@ -12391,41 +12512,49 @@ plan_unit_id: ACD-262
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Provider and model lists must come from the account-bound Provider -> models registry and shared capability resolver; hardcoded provider names or model lists are not allowed, and legacy platform_specs is source-lineage only.
+canonical_text: The common Auditor model/depth picker uses the account-bound Provider -> models registry and
+  shared capability resolver. No hardcoded provider/model/effort lists or local platform_specs fallback is
+  admitted. This data-source contract does not create a separate Auditor selector.
 gui_related: false
-gui_classification_reason: Provider/model source-of-truth is DRY/config behavior.
-depends_on: [ACD-255]
-unblocks: [ACD-263]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-255
+unblocks:
+- ACD-263
 acceptance_criteria:
-  - Provider lists source from the account-bound Provider -> models registry.
-  - Model lists source from the shared provider/model registry and capability resolver.
-  - Hardcoded provider names and model lists are prohibited.
+- Provider lists source from the account-bound Provider -> models registry.
+- Model lists source from the shared provider/model registry and capability resolver.
+- Hardcoded provider names and model lists are prohibited.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: dry
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+- Plans/Contracts_V0.md
 node_compile_hint:
   mode: provider_models_registry_only
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "platform_specs"
-  - "No hardcoded provider names or model lists"
+- platform_specs
+- No hardcoded provider names or model lists
 negative_constraints:
-  - "Provider and model lists MUST NOT be sourced from legacy platform_specs."
-  - "No hardcoded provider names or model lists anywhere in this feature."
+- Provider and model lists MUST NOT be sourced from legacy platform_specs.
+- No hardcoded provider names or model lists anywhere in this feature.
 compatibility_only_notes:
-  - "platform_specs is preserved only as a retired source-lineage token."
+- platform_specs is preserved only as a retired source-lineage token.
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
 ```
 
 ### ACD-263 - Validation Dropdown Reuse
@@ -12435,37 +12564,44 @@ plan_unit_id: ACD-263
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor Validation reuses the same provider and model dropdown widgets as chat controls and applies the auditor-validation DRY widget tag.
+canonical_text: |-
+  Auditor default editing and explicit run overrides reuse the chat composer picker as ACD-438 defines it, with supported depth levels beside the still-open model list on desktop and inside the same picker on phone. The old separate provider/model dropdown wrapper and DRY tag are inert historical references, not new UI requirements.
 gui_related: true
-gui_classification_reason: Provider/model dropdown reuse affects visible Auditor Validation settings controls.
-depends_on: [ACD-256, ACD-262]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-256
+- ACD-262
 unblocks: []
 acceptance_criteria:
-  - Auditor Validation uses the same provider dropdown widget as chat controls.
-  - Auditor Validation uses the same model dropdown widget as chat controls.
-  - Reusable settings wrappers carry the auditor-validation DRY widget tag.
+- ACD-438 defines the shared interaction; one popout is open at a time.
+- The old wrapper tag cannot recreate an independent Auditor selector.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: dry
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_validation_dropdown_reuse
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "§1.1 chat controls"
-  - "// DRY:WIDGET:auditor-validation-provider-model-selector"
+- §1.1 chat controls
+- // DRY:WIDGET:auditor-validation-provider-model-selector
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-264 - Validation Next Sweep Application
@@ -12475,36 +12611,42 @@ plan_unit_id: ACD-264
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Validation settings changes take effect only on the next validation sweep run;
-  an in-progress sweep continues with the provider/model active when it started.
+canonical_text: Shared Checking finished work edits and explicit run choices affect only the next validation
+  sweep. An in-progress sweep preserves its frozen requested/effective provider/model/effort and account identity.
 gui_related: false
-gui_classification_reason: Validation sweep timing is lifecycle behavior rather than GUI implementation.
-depends_on: [ACD-253, ACD-257]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-253
+- ACD-257
 unblocks: []
 acceptance_criteria:
-  - Settings changes apply on the next validation sweep run.
-  - A validation sweep in progress does not change provider/model mid-sweep.
+- Settings changes apply on the next validation sweep run.
+- A validation sweep in progress does not change provider/model mid-sweep.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_lifecycle
 reasoning_tier: high
 context_scope: validation_settings
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: validation_next_sweep_application
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "next"
-  - "not mid-sweep"
+- next
+- not mid-sweep
 negative_constraints:
-  - "Settings changes must not mutate provider/model selection for a validation sweep already in progress."
+- Settings changes must not mutate provider/model selection for a validation sweep already in progress.
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-265 - Validation Unavailable Provider Warning
@@ -12514,39 +12656,44 @@ plan_unit_id: ACD-265
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  When a saved validation provider is unavailable, Puppet Master falls back to
-  the deterministic default and displays the warning "Auditor validation provider
-  [name] is unavailable; using Auditor Model default."
+canonical_text: An unavailable frozen Auditor model request is visibly unavailable/blocked with the existing
+  Models recovery path. Policy-permitted account/provider fallback remains Models/Multi-Account-owned and disclosed;
+  no independent Auditor fallback through primary chat, first provider or a hidden model default is added.
 gui_related: true
-gui_classification_reason: The unavailable-provider warning is visible user-facing settings feedback.
-depends_on: [ACD-257]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-257
 unblocks: []
 acceptance_criteria:
-  - Unavailable saved validation providers fall back to the deterministic default.
-  - The fallback displays the specified warning text.
+- Unavailable requests preserve their requested identity and existing recovery/authority rules.
+- No independent default fallback or silent substitution occurs.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: silent_fallback
 reasoning_tier: high
 context_scope: validation_settings
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Decision_Policy.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Decision_Policy.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: validation_unavailable_provider_warning
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Auditor validation provider [name] is unavailable; using Auditor Model default."
+- Auditor validation provider [name] is unavailable; using Auditor Model default.
 negative_constraints:
-  - "Unavailable saved validation providers must not fail silently."
+- Unavailable saved validation providers must not fail silently.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-266 - Validation Pass Persistence And Independence
@@ -12556,37 +12703,46 @@ plan_unit_id: ACD-266
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation provider/model settings persist across app restarts, and Pass 1, Pass 2, and Pass 3 are compatibility aliases only, not independently configurable model settings or active stages.
+canonical_text: The shared Checking finished work row persists through the normal Settings owner. Auditor cycle
+  reports freeze actual runtime selection; legacy Pass 1/2/3 names and independent Auditor settings remain
+  inert compatibility reads, never separate model selectors or active stages.
 gui_related: false
-gui_classification_reason: Restart persistence and one-loop Auditor validation settings are configuration behavior.
-depends_on: [ACD-253, ACD-260]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-253
+- ACD-260
 unblocks: []
 acceptance_criteria:
-  - Auditor validation settings are preserved across app restarts.
-  - Auditor cycle reports use the same resolved Auditor validation loop provider/model.
-  - Legacy Pass 1, Pass 2, and Pass 3 report mirrors are compatibility aliases only.
+- Common-list own values persist at their admitted levels.
+- Cycle reports use the frozen runtime selection.
+- Legacy pass names and independent settings cannot recreate active defaults.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: standard
 context_scope: validation_storage
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Project_Output_Artifacts.md
+- Plans/assistant-chat-design.md
+- Plans/Project_Output_Artifacts.md
 node_compile_hint:
   mode: auditor_validation_persistence_no_pass_independence
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Pass 1"
-  - "Pass 2"
-  - "Pass 3"
+- Pass 1
+- Pass 2
+- Pass 3
 negative_constraints:
-  - "Pass 1, Pass 2, and Pass 3 are not independently configurable model settings."
+- Pass 1, Pass 2, and Pass 3 are not independently configurable model settings.
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-267 - Validation Default Indicator Lifecycle
@@ -12596,34 +12752,43 @@ plan_unit_id: ACD-267
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: The `(Default)` indicator is visible until an explicit Auditor validation loop provider/model selection is saved, then disappears.
+canonical_text: Auditor default display follows the shared list’s named source and current model/depth; it
+  has no independent saved-selection state or standalone (Default) indicator. Run overrides remain clearly
+  scoped and do not write shared defaults.
 gui_related: true
-gui_classification_reason: The default indicator is visible settings UI.
-depends_on: [ACD-254, ACD-261]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-254
+- ACD-261
 unblocks: []
 acceptance_criteria:
-  - The `(Default)` indicator appears when no explicit Auditor validation loop selection is saved.
-  - The `(Default)` indicator disappears after the user saves an explicit Auditor validation loop selection.
+- Source and current model/depth are explicit.
+- Old (Default) display tokens are inert history, not an independent write path.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: standard
 context_scope: gui
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_validation_default_indicator_lifecycle
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "(Default)"
+- (Default)
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-268 - Validation Dropdown And Report Parity
@@ -12633,48 +12798,53 @@ plan_unit_id: ACD-268
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Auditor validation provider/model dropdowns draw from the account-bound Provider -> models registry and shared capability resolver, and
-  each Auditor cycle report emits provider and model values matching the
-  resolved Auditor validation loop provider/model; legacy
-  `validation_pass_report.provider` and `.model` values mirror them for
-  compatibility.
+canonical_text: The common model/depth picker uses the same Provider -> models capability truth as chat. Each
+  auditor_cycle_report records the frozen actual provider/model and effort outcomes; validation_pass_report
+  mirrors only runtime values with compatibility_only true and cycle_report_ref. Independent Auditor dropdowns
+  and storage keys are inert reads.
 gui_related: false
-gui_classification_reason: Dropdown data-source and emitted report parity are contract/config behavior.
-depends_on: [ACD-260, ACD-262, ACD-263]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-260
+- ACD-262
+- ACD-263
 unblocks: []
 acceptance_criteria:
-  - Auditor validation dropdowns use the same Provider -> models and capability resolver source as chat controls.
-  - Each emitted Auditor cycle report provider/model matches the resolved Auditor validation loop settings.
-  - Legacy validation pass report provider/model values mirror the Auditor cycle report values only with compatibility_only true and cycle_report_ref.
+- Picker choices use the shared registry/capability resolver.
+- Actual frozen runtime selection matches each cycle report.
+- Legacy report mirrors require compatibility_only true and cycle_report_ref.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_storage
 reasoning_tier: high
 context_scope: validation_report
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
-  - Plans/Project_Output_Artifacts.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+- Plans/Project_Output_Artifacts.md
 node_compile_hint:
   mode: auditor_validation_dropdown_report_parity
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "platform_specs"
-  - "validation_pass_report.provider"
-  - ".model"
-  - "model_roles.auditor.provider"
-  - "model_roles.auditor.model"
+- platform_specs
+- validation_pass_report.provider
+- .model
+- model_roles.auditor.provider
+- model_roles.auditor.model
 negative_constraints:
-  - "Do not use legacy platform_specs as the active Auditor validation dropdown source."
+- Do not use legacy platform_specs as the shared model-picker source.
 compatibility_only_notes:
-  - "platform_specs remains preserved only as a retired source-lineage token."
+- platform_specs remains preserved only as a retired source-lineage token.
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
 ```
 
 ### ACD-269 - Auditor Invariant Loop And Settings Ownership
@@ -12684,32 +12854,33 @@ plan_unit_id: ACD-269
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Section 26 owns the mandatory Auditor invariant loop specified in §26.10–§26.14 and its model/provider
-  settings. The initial Auditor audit cycle validates and completes the provisional artifact pack, may mirror legacy
-  Pass 1 / validation_pass_report fields for document_creation compatibility, and writes a read-only requirements_quality_report
-  without authoring requirements or contract fragments. Bounded Auditor repair compares project artifacts against
-  contracts and canon, applies resolvable fixes, applies auto_fixable requirement-quality fixes, updates reports,
-  and records unresolved findings without treating legacy Pass 2 as an active process stage. The Auditor certification
-  gate enforces DRY/SSOT, plan graph, wiring, evidence, and deterministic decision invariants while never modifying
-  requirements.md, plan.md, or user-intent-derived content; legacy Pass 3 fields are compatibility aliases only.
-  The sweep runs deterministically and headlessly, uses one Auditor validation loop provider/model setting for all
-  Auditor cycle reports, emits enough reports to prove audit/repair/re-audit/certification or block, and treats
-  legacy pass reports as compatibility rows only. Auditor loop blocks route to user-visible clarification or resolution
-  surfaces using distinct needs_user_clarification and unresolved_findings artifacts while preserving corrected-but-blocked
-  artifacts for resume. Auditor cycle reports carry lineage fields and skipped-verdict support, legacy validation_pass_report
+canonical_text: Section 26 owns the mandatory Auditor invariant loop specified in §26.10–§26.14 and its consumption
+  of the shared Checking finished work default. The initial Auditor audit cycle validates and completes the
+  provisional artifact pack, may mirror legacy Pass 1 / validation_pass_report fields for document_creation
+  compatibility, and writes a read-only requirements_quality_report without authoring requirements or contract
+  fragments. Bounded Auditor repair compares project artifacts against contracts and canon, applies resolvable
+  fixes, applies auto_fixable requirement-quality fixes, updates reports, and records unresolved findings without
+  treating legacy Pass 2 as an active process stage. The Auditor certification gate enforces DRY/SSOT, plan
+  graph, wiring, evidence, and deterministic decision invariants while never modifying requirements.md, plan.md,
+  or user-intent-derived content; legacy Pass 3 fields are compatibility aliases only. The sweep runs deterministically
+  and headlessly, freezes one resolved shared-job model/depth selection for all Auditor cycle reports, emits
+  enough reports to prove audit/repair/re-audit/certification or block, and treats legacy pass reports as compatibility
+  rows only. Auditor loop blocks route to user-visible clarification or resolution surfaces using distinct
+  needs_user_clarification and unresolved_findings artifacts while preserving corrected-but-blocked artifacts
+  for resume. Auditor cycle reports carry lineage fields and skipped-verdict support, legacy validation_pass_report
   mirrors may expose the same data only with compatibility_only true and cycle_report_ref, and effective runtime
   identity survives validation into launch handoff. Section 26 consumes Plans/Project_Output_Artifacts.md §10.2,
   Plans/Decision_Policy.md §2 and DP-066, Plans/DRY_Rules.md, Plans/Contracts_V0.md, and Section 1.1 chat controls
   without re-owning those contracts.
 gui_related: true
-gui_classification_reason: Owns loop failure routing to clarification and review/resolution UI as well as backend
-  validation.
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
 depends_on:
 - ACD-253
 unblocks: []
 acceptance_criteria:
-- Section 26 owns the loop; output artifact, decision policy, DRY, and provider/model capability contracts remain
-  with their linked owners.
+- Section 26 owns the loop; output artifact, decision policy, DRY, and provider/model capability contracts
+  remain with their linked owners.
 - Initial Auditor audit validates and completes the provisional artifact pack produced by Contract Unification.
 - Initial Auditor audit may materialize missing derived artifacts or deterministic projections.
 - Initial Auditor audit is not the first author of requirements or contract fragments.
@@ -12736,7 +12907,8 @@ acceptance_criteria:
 - Auditor certification never modifies requirements.md, plan.md, or user-intent-derived artifacts.
 - Auditor loop cycles run deterministically without human intervention.
 - Each cycle runs headless with no GUI and no approval gate inside the loop.
-- Auditor validation loop provider and model are configurable through app settings.
+- Auditor model/depth comes from shared Checking finished work defaults and an explicit run override under
+  Models §2.
 - Defaults are deterministic and safe when not explicitly configured.
 - Each Auditor cycle report includes provider and model matching the resolved Auditor validation loop provider/model
   from sweep start.
@@ -12757,8 +12929,8 @@ acceptance_criteria:
 - Auditor cycle reports include staged_bundle_ref.
 - Auditor cycle reports include requirements_quality_report_ref.
 - Auditor cycle reports include run_id.
-- Auditor validation cycles emit lineage-rich cycle reports explaining what was evaluated and what execution was
-  seeded.
+- Auditor validation cycles emit lineage-rich cycle reports explaining what was evaluated and what execution
+  was seeded.
 - Legacy validation_pass_report mirrors carry compatibility_only true and cycle_report_ref.
 - pass_verdict supports skipped.
 - Effective runtime identity survives validation into launch handoff.
@@ -12786,6 +12958,7 @@ source_lineage:
 - Plans/chain-wizard-flexibility.md#CWF-086 (retired source; generic loop moved per DL-472)
 - Plans/chain-wizard-flexibility.md#CWF-087 (retired source; generic loop moved per DL-472)
 - Plans/chain-wizard-flexibility.md §12 (retired source; moved per DL-472)
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - ContractName:Plans/assistant-chat-design.md§26
 - ContractName:Plans/Project_Output_Artifacts.md
@@ -12867,8 +13040,8 @@ negative_constraints:
 - Pass 2 is a compatibility alias only.
 - Bounded Auditor repair does not escalate directly.
 - Pass 3 is a compatibility alias only.
-- Auditor certification MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by user
-  intent or product scope.
+- Auditor certification MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by
+  user intent or product scope.
 - No GUI is required and no user approval gate exists between passes.
 - Do not expose fixed Pass 1 / Pass 2 / Pass 3 model settings.
 owner_hints:

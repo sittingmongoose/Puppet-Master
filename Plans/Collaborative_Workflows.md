@@ -593,9 +593,14 @@ canonical_text: >-
   run's truth and remains visible in the panel even after Settings change. Requested and effective model,
   account, and Persona are both recorded and the difference is disclosed on the participant row; there is
   no silent substitution, and where no acceptable substitute exists the participant is disabled with its
-  reason. No-project defaults use the one Everywhere/Computer resolver and retain frozen
-  participant/account/Persona snapshots; a library choice is not destination-host installation or
-  authentication.
+  reason. No-project model defaults use the Everywhere list; other defaults use their declared Settings
+  resolver and retain frozen participant/account/Persona snapshots; a library choice is not destination-
+  host installation or authentication. New Review rows start on Checking finished work, Crew rows on
+  Everyday building, and other rows on Everyday model, resolving the current named row and its depth
+  through Models §2. A Persona never supplies a model. The default Crew stores ordered Personas only;
+  per-invocation sheet choices may override model/depth without creating persistent helper settings. An
+  agent-spawned helper may use any parent-selected allowed/runnable model and effort within existing
+  ceilings, otherwise the normal defaults.
 gui_related: true
 gui_classification_reason: This unit defines the modal, its participant rows, and the requested-versus-effective disclosure.
 depends_on: [CWR-001]
@@ -1684,33 +1689,32 @@ status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
   The configuration modal of Crew, Crew Auto, Chat Room, BrainStorm and Review is presented as a
-  configuration sheet over its own scrim. Scrim click, the close control, Cancel and Escape run one
-  close path, which discards the local draft and emits no domain event (MODAL-003..005); a click
-  outside an open dropdown closes only that dropdown, and a click on the dropdown's own trigger closes
-  it (FinalGUISpec F3-568, DL-145). The sheet shows an In your chat preview of the
-  card's first frame. The preview is local view state and becomes a transcript card only after a
-  committed Start is admitted, never on open, configure or cancel. A read-back sentence restates the
-  draft and is always true for the values on screen. An estimate line states likely time and cost;
-  it is computed locally from the draft, makes no provider request, never claims precision and says
-  "an estimate, not a promise", and when there is no basis it reads "Time and cost depend on the
-  work". Where a sheet offers Start from a team (each kind's sheet, CWR-039), choosing a preset only
-  prefills the draft: it writes
-  no definition, no Settings value and no run. Each sheet has exactly one Advanced page whose shared
-  rows map, in this order, to the section 3 fields that the sheet itself does not already show:
-  time and cost limit, token limit,
-  context sharing and attachments, tool, MCP and Skill policy, failure policy when a participant is
-  stuck, substitution policy, transcript retention, output format, and the permission ceiling. The
-  other section 3 fields (name and purpose, participants and roles, provider, account, model and
-  Persona per participant, the Wonderer and Grill Me additions, and the coordinator or synthesis
-  model) are on the sheet itself, and concurrency is set on the Crew sheet's own Working at the same
-  time control, never on the Advanced page. The Crew Auto sheet shows that same effective value
-  read-only, clamped by app execution limits, with no separate at-once setting. The
-  substitution row and the permission ceiling are sentences and never settings: an unavailable
-  chosen model blocks Start until the user replaces it (CWR-034, DL-121), and the ceiling is never
-  configured upward. Kind rows follow the shared rows, and no row repeats
-  a control already visible on the sheet. The card title is the definition name: it is derived from
-  the job text as its first sentence, at most 48 characters and cut at a word boundary, until the
-  user edits it; the draft records that the name was edited and never derives it again.
+  configuration sheet over its own scrim. Scrim click, the close control, Cancel and Escape run one close
+  path, which discards the local draft and emits no domain event (MODAL-003..005); a click outside an
+  open dropdown closes only that dropdown, and a click on the dropdown's own trigger closes it
+  (FinalGUISpec F3-568, DL-145). The sheet shows an In your chat preview of the card's first frame. The
+  preview is local view state and becomes a transcript card only after a committed Start is admitted,
+  never on open, configure or cancel. A read-back sentence restates the draft and is always true for the
+  values on screen. An estimate line states likely time and cost; it is computed locally from the draft,
+  makes no provider request, never claims precision and says "an estimate, not a promise", and when there
+  is no basis it reads "Time and cost depend on the work". Where a sheet offers Start from a team (each
+  kind's sheet, CWR-039), choosing a preset only prefills the draft: it writes no definition, no Settings
+  value and no run. Each sheet has exactly one Advanced page whose shared rows map, in this order, to the
+  section 3 fields that the sheet itself does not already show: time and cost limit, token limit, context
+  sharing and attachments, tool, MCP and Skill policy, failure policy when a participant is stuck,
+  substitution policy, transcript retention, output format, and the permission ceiling. The other section
+  3 fields (name and purpose, participants and roles, provider, account, model and Persona per
+  participant, the Wonderer and Grill Me additions, and the coordinator or synthesis model) are on the
+  sheet itself, and concurrency is set on the Crew sheet's own Working at the same time control, never on
+  the Advanced page. The Crew Auto sheet shows that same effective value read-only, clamped by app
+  execution limits, with no separate at-once setting. The substitution row and the permission ceiling are
+  sentences and never settings: an unavailable chosen model blocks Start until the user replaces it
+  (CWR-034, DL-121), and the ceiling is never configured upward. Kind rows follow the shared rows, and no
+  row repeats a control already visible on the sheet. The card title is the definition name: it is
+  derived from the job text as its first sentence, at most 48 characters and cut at a word boundary,
+  until the user edits it; the draft records that the name was edited and never derives it again. Model
+  and effort are chosen together in each participant row using the shared chat picker overlay; new rows
+  use CWR-002 defaults, with no Persona model preselection or separate helper-depth setting.
 gui_related: true
 gui_classification_reason: This unit defines the configuration sheet, its close path, preview, read-back, estimate, presets, Advanced page and card title.
 depends_on: [CWR-002]
@@ -3172,24 +3176,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Start from a team offers a built-in catalog of team presets for each kind: Crew, Chat Room,
-  BrainStorm and Review (DL-117). A preset is {id, label, helper, rows, config_overrides}: rows have
-  the shape of participant specs (role, requested model, requested Persona, additive role and, for
-  Review, the reviewer's focus), and config_overrides are definition fields the sheet exposes.
-  Choosing a preset only prefills the draft (CWR-018); it never writes a definition, a Settings value
-  or a run, never adds a specialist where specialists are refused (CWR-028), and never raises a cap
-  or a limit beyond what the sheet itself allows. The built-in presets are, for Crew, Build and
-  check, Split a big change and Try it two ways; for Chat Room, Quick opinions, Debate and Deep dive;
-  for BrainStorm, Balanced four, Quick call and Wide search; for Review (DL-117, as the design lead
-  named them on 2026-09-27), Careful review · Security, Bugs and Tests (3 reviewers), Quick check ·
-  one reviewer, and Deep audit · 5 reviewers, one of them a Critical Advisor. Careful review is
-  Review's default preset: its three reviewers take the Security, Bugs and Tests focus roles
-  (CWR-025), and it is the preset a Review sheet shows as applied when it opens without a saved
-  default roster. Preset rows use the Personas registered for team use in
+  Start from a team offers a built-in catalog of team presets for each kind: Crew, Chat Room, BrainStorm
+  and Review (DL-117). A preset is {id, label, helper, rows, config_overrides}: rows have the shape of
+  participant specs (role, requested model, requested Persona, additive role and, for Review, the
+  reviewer's focus), and config_overrides are definition fields the sheet exposes. Choosing a preset only
+  prefills the draft (CWR-018); it never writes a definition, a Settings value or a run, never adds a
+  specialist where specialists are refused (CWR-028), and never raises a cap or a limit beyond what the
+  sheet itself allows. The built-in presets are, for Crew, Build and check, Split a big change and Try it
+  two ways; for Chat Room, Quick opinions, Debate and Deep dive; for BrainStorm, Balanced four, Quick
+  call and Wide search; for Review (DL-117, as the design lead named them on 2026-09-27), Careful review
+  · Security, Bugs and Tests (3 reviewers), Quick check · one reviewer, and Deep audit · 5 reviewers, one
+  of them a Critical Advisor. Careful review is Review's default preset: its three reviewers take the
+  Security, Bugs and Tests focus roles (CWR-025), and it is the preset a Review sheet shows as applied
+  when it opens without a saved default roster. Preset rows use the Personas registered for team use in
   Plans/Personas.md: Product Manager, Architect, Implementer, Reviewer, Critical Advisor and Wonderer
-  (DL-133). Grill Me is a methodology Skill and never a Persona, so a preset turns it on only
-  through the Grill Me switch and never as a row (CWR-028; amended 2026-10-16, DL-218). A saved default roster is the Settings owner's and is not part of this
-  catalog.
+  (DL-133). Grill Me is a methodology Skill and never a Persona, so a preset turns it on only through the
+  Grill Me switch and never as a row (CWR-028; amended 2026-10-16, DL-218). A saved default roster is the
+  Settings owner's and is not part of this catalog. When a preset row leaves its requested model unset,
+  initialize it using CWR-002: Review from Checking finished work, Crew from Everyday building, other
+  rows from Everyday model. Persona identity never sets a model. Explicit preset/sheet requests and
+  frozen rosters remain invocation-owned, not Persona or global helper defaults.
 gui_related: true
 gui_classification_reason: This unit defines the Start from a team catalog each sheet offers.
 depends_on: [CWR-018, CWR-028]

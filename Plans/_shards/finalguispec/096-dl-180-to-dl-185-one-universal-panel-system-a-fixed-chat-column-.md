@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45061-L47130
+Source lines: L45163-L47221
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `30fc010686ea17ae38b61544a99e01519fe3ff49ef9e792d83b1a1f6c18223cd`
 
 ---
 
@@ -923,14 +923,15 @@ canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D
   ticks every 1 s for Working, Retrying, Fallback route and Waiting, and live breathe is 1.6 s or a 1-1.2 s stepped Retro/NieR
   blink. Step discs hide below 420 px, model below 700 px, Parent below 560 px, Read-only · live words below 440 px (the
   lock stays), and agent name below 360 px. Transcript saves agent reference, follow, open stretches and scroll top.
-  Context columns cap at 720 px, 960 px from a 960 px body; Source composition and Context growth appear side by side
-  and start open at that width until the reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles
+  Context columns cap at 720 px, 960 px from a 960 px body; basic capacity/cost/model facts and useful context
+  growth/compaction status adapt to that width without a Source composition or source-inspection section. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles
   use 3 columns from 360 px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1 below 300 px. Plan-limit rows
   have name, bar and a 128 px figure, with the bar on its own line below 460 px; the usage fact hides below 380 px. Growth
   charts are 168 px high; the source''s 131,000-token-limit fixture uses an axis to 140,000, gridlines at 0/50K/100K,
   ceiling 131,000 and turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and bad from 90 %. Context saves thread
-  reference, curated/raw view, open sections (null while width decides) and scroll top; sections are tokens, sources,
-  growth, route, limits, caps, cost and compaction. The six categorical colours are dark #3987e5 #d95926 #199e70 #c98500
+  reference, open sections (null while width decides) and scroll top; sections are tokens, growth, model/route,
+  limits, caps, cost and compaction. Old curated/raw selection and sources-section state are ignored on read,
+  never used to restore retired source composition, prompt inspection or per-run inclusion receipts. The six categorical colours are dark #3987e5 #d95926 #199e70 #c98500
   #d55181 #008300 and light #2a78d6 #eb6834 #1baf7a #eda100 #e87ba4 #008300; NieR''s charts part uses ink at .92/.72/.56/.42/.30/.20
   with hatching on even segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
   nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at 27 plus an ellipsis;
@@ -967,7 +968,8 @@ canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D
   with a yes or no submenu, Change setup... (on a Crew disabled until it is cancelled: "This Crew builds one plan version.
   Cancel it first.") or Run again with changes... once finished, Run another review (Review only), Download transcript
   and Open in new panel; a transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a
-  context tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
+  context tab has Preview compact, which shows only capacity, cost, model and compaction facts (raw and serialized context
+  stays internal, with no Redacted JSON action); a record has Show in chat, which reveals and marks the work row
   in its thread or says the message is not available, and Copy. Each row dispatches its content owner''s existing command
   or is view-local; none adds a command id here. Amended 2026-10-29 (PC5; PM7): Seat hues remain this one owner table.
   Pip reads them rather than owning another palette; gold crown/hat are role material and do not change the seat or status
@@ -1000,37 +1002,22 @@ unblocks:
 - G-030
 - ATS-075
 acceptance_criteria:
-- Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix
-  fail at start-up.
-- Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or
-  session id appears as text.
-- Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums.
-- A restored background tab is mounted only when first shown; serialized state above 16 KB is refused.
-- No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag
-  or animation settles.
-- Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold
-  and hide threshold.
-- Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own
-  overlay.
-- Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or
-  digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T,
-  Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
-  by this unit.
-- Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that
-  channel.
-- The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches
-  nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown.
-- Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration.
-- Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected;
-  F6 reaches the chat composer from every region.
-- Exactly the fifteen registered kinds and their stated identity prefixes are admitted; Goal, Activity Detail and setup
-  sheets are not centre-tab kinds.
-- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
-  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
-  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
-  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
-  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
+  - "Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix fail at start-up."
+  - "Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or session id appears as text."
+  - "Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums."
+  - "A restored background tab is mounted only when first shown; serialized state above 16 KB is refused."
+  - "No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag or animation settles."
+  - "Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold and hide threshold."
+  - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
+  - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
+  - "The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown."
+  - "Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration."
+  - "Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected; F6 reaches the chat composer from every region."
+  - "Exactly the fifteen registered kinds and their stated identity prefixes are admitted; Goal, Activity Detail and setup sheets are not centre-tab kinds."
+  - "DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism."
+  - "The thread Context tab retains basic capacity/cost/model and useful growth/compaction status, with no source composition, Curated/Raw source-inspection view or per-run inclusion receipt. Restoring old curated/raw or sources-section view state cannot restore those retired surfaces."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -1078,6 +1065,7 @@ source_lineage:
   (source lineage; not native certification)
 - 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
   1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - Open in new tab
 - output:<channel>
@@ -1112,6 +1100,7 @@ negative_constraints:
 - Do not show a tab, panel or session id in the interface.
 - Do not bind a panel action to Ctrl+K, a Ctrl+K chord, Ctrl+1..9 or a bare letter or digit.
 - Do not let a tab kind append its own overlay outside the one overlay root.
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes:
 - The concept's registration call, host API names, container name and z-index values are concept lineage; the
   stacking order is canon, its numbers are not.

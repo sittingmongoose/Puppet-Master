@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24960-L25337
+Source lines: L25049-L25421
 
-Source SHA256: `5be00385fb332d27e9b2e7b29ae5101b4031acc3777b8ed3e23faceb8dcf4b75`
+Source SHA256: `36ea80200c6dac9bf1e131cf96b14ec8bda8d154a122d7ad9d9fa493cc727c1b`
 
 ---
 
@@ -20,18 +20,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: |-
-  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
+  Chat transient popouts - the combined model/depth picker and the mode, persona, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false
 depends_on: [ACD-438]
 unblocks: [ACD-440, ACD-441, ACD-442]
 acceptance_criteria:
-  - "Model, mode, persona, effort, and thoroughness popouts sprout from and collapse into the corner or edge nearest their trigger, with an overshoot open and a late-fade close."
-  - "Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce."
-  - "The modes popout opens directly on Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search."
-  - "At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The combined model/depth picker and the mode, persona, and thoroughness popouts sprout from and collapse into the corner or edge nearest their trigger, with an overshoot open and a late-fade close.
+- Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce.
+- The modes popout opens directly on Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search.
+- At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "scripts/pm-plan-migration.py"
 - "scripts/pm-plan-index.py"
@@ -70,23 +70,18 @@ plan_unit_id: ACD-440
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The effort/thoroughness side flyout resizes in place: when the flyout is already open and
-  the hovered row changes to one whose available option count differs, the open flyout
-  spring-resizes its height with overshoot and a brief size-bounce instead of re-running the
-  sprout open. First open uses the corner-origin sprout of ACD-439, and hovering the same row
-  again only repositions and refreshes content. This applies to the model-effort flyout and
-  to the mode Plan/Deep Plan thoroughness flyout, which share the same flyout portal.
+canonical_text: |-
+  The supported-depth region of the one open model/depth picker resizes in place when the selected or hovered model changes the available option count: beside the still-visible model list on desktop, inside the same picker on phone. It spring-resizes its height with overshoot and a brief size-bounce rather than closing the model list or re-running the sprout open. First open uses ACD-439; hovering the same row again only repositions and refreshes content. The mode Plan/Deep Plan thoroughness flyout keeps this same in-place resize treatment in its own single-overlay interaction, separate from model depth.
 gui_related: true
-gui_classification_reason: Defines visible side-flyout resize behavior when option counts change.
+gui_classification_reason: Defines in-place resize of supported depth inside the model picker and of the separate Plan Thoroughness flyout.
 split_recommended: false
 depends_on: [ACD-438, ACD-439]
 unblocks: []
 acceptance_criteria:
-  - "With the flyout open, hovering a row with a different available option count spring-resizes the flyout height in place with overshoot and a brief size-bounce, without re-running the sprout open."
-  - "First open uses the corner-origin sprout; same-row hover repositions and refreshes content only."
-  - "The behavior applies to model-effort and to mode Plan/Deep Plan thoroughness through the same flyout portal."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- While the model/depth picker stays open, changing the model’s supported depth count spring-resizes the depth region beside the list on desktop or inside the same picker on phone, with overshoot and a brief size-bounce; the model list remains visible.
+- First open uses the corner-origin sprout; same-row hover repositions and refreshes content only.
+- The mode Plan/Deep Plan thoroughness flyout shares the in-place resize treatment, while model depth stays inside its combined picker.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -108,7 +103,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "An option-count change while the flyout is open must not re-sprout the flyout from its origin."
 compatibility_only_notes:
-  - "Slint portability: the side flyout renders as an opaque precomputed popup surface whose height change animates via Slint property animations with overshoot easing; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- 'Slint portability: the depth region resizes inside the one native model/depth popup; the separate mode thoroughness popup shares the same height-animation treatment. Use opaque precomputed surfaces and Slint property animations with overshoot easing; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed.'
 stale_retired_dispositions: []
 owner_boundary_notes:
   - "Effort/thoroughness option semantics and label distinctness stay owned by ACD-438; this unit owns the resize-in-place presentation behavior."

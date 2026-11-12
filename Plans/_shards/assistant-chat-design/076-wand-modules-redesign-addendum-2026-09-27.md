@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27329-L28054
+Source lines: L27424-L28118
 
-Source SHA256: `5be00385fb332d27e9b2e7b29ae5101b4031acc3777b8ed3e23faceb8dcf4b75`
+Source SHA256: `36ea80200c6dac9bf1e131cf96b14ec8bda8d154a122d7ad9d9fa493cc727c1b`
 
 ---
 
@@ -124,57 +124,30 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Teach capture and confirm (section 6). The wand's Teach…, /teach, natural-language intent and Save as a
-  rule… in a message's More row each dispatch cmd.chat.teach.capture with mode new, prefilled with the
-  proposed rule text and a reference to its source message; the user's message stays in the chat as sent.
-  Editing a taught rule dispatches cmd.chat.teach.capture with mode correct. Capture only opens the
-  capture step, and the capture step is the Teach sheet (FinalGUISpec F3-579) for every entry point,
-  /teach and natural-language intent included: there is no inline capture card in the chat (DL-127). The
-  save action is cmd.chat.teach.confirm, and Cancel, close and Escape are cmd.chat.teach.cancel, which
-  persists nothing. Scope is exactly one of thread, project and user, shown nested from narrowest to
-  widest as This thread, This project and Every project. The user scope needs public_safe: the user's
-  explicit statement that the rule holds no private names, links or code; without it confirm refuses user
-  scope and says why. In correct mode the scope may stay or narrow but never widen; a wider rule is a new
-  rule. Before confirm the capture step screens the text for passwords, keys and tokens; when one is found
-  it says so in words and confirm stays refused until it is removed. When a similar taught rule is in
-  reach, the capture step shows the old and the new wording side by side and confirm waits for the user's
-  choice: replace the old rule, which records supersedes_memory_id and keeps the old version in history,
-  or keep both. The user may also mark the rule locked at confirm (ACD-481). The confirm request is
-  TeachConfirmRequest {scope, public_safe, locked, conflict_resolution: replace:<memory_id> | keep_both,
-  supersedes_memory_id?}. Each confirmed change leaves one receipt line in the chat (saved, or updated to
-  a new version), and consecutive saves coalesce into one line. The reply's note about taught rules
-  follows DL-116 as the design lead's ruling of 2026-09-27 applied it and AMS-053 of
-  assistant-memory-subsystem defines it. A rule counts as followed only when it was given to the assistant
-  for that reply and the finished reply passed that rule's check; inclusion alone is never shown as
-  following. The note counts only rules that passed, for example "Followed 1 of your rules". When any
-  included rule failed its check the reply shows "Missed 1 of your rules" (the number is how many failed),
-  with a way to see which rule was missed and a way to ask for a fix; the fix starts only when the user
-  asks, and a failed check is never hidden behind a Followed count. A rule whose check could not run earns
-  no tick, and a reply with no passed or failed check shows no rule note. Used is never shown in place of
-  either note. Section 6's user-locked sentence is unchanged. DL-138 confirms the final wording. Persisted
-  AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and
-  could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your
-  rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses
-  cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the
-  source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never
-  sends or executes a fix. The user sends it. In No project omit the project choice, retain thread and
-  user with the user label Everywhere, and preserve public_safe, screening, conflict, locked-rule and
-  no-widening checks. Settings' Computer layer changes behavior defaults, not a new Teach memory scope.
-  Conversion keeps thread rules thread-wide and does not widen them.
+  The wand Teach, /teach, natural-language instruction intent and Save as a rule open the existing
+  Teach step through cmd.chat.teach.capture; capture persists nothing and Cancel remains
+  cmd.chat.teach.cancel. Written instruction changes use their instruction owner and return to
+  Settings > Personas & Crews > Defaults > Standing instructions. A Teacher answer offered as a
+  saved note instead uses the shared Memory page and AMS-141 Add/Edit/Delete owner. This project and
+  Every project are the only visible saved-note levels. Add/Edit/Delete use AMS-141 quiet Memory
+  contracts; automatic fading/archiving, deletion suppression, privacy and existing source
+  restrictions remain. Private app-thread records stay private and are not a third visible level. No
+  thread-level selector, locked checkbox, Replace/Keep both chooser, source preview or automatic
+  save/update receipt is shown. Existing TeachConfirmRequest thread/public_safe/locked/conflict
+  fields are compatibility/storage inputs, not an ordinary UI contract. Legacy protections, privacy
+  checks and revision refusal remain; capture never changes the Persona to Teacher. Only a durable
+  successful save may add Saved to memory · View to a reply; View opens the one Memory page as a
+  sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or
+  Followed/Missed decoration is shown.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
 depends_on: [ACD-469, DL-127, DL-116, AMS-053]
 unblocks: [F3-570, F3-574, F3-579]
 acceptance_criteria:
-  - "Reopening retains the saved rule-check result, mixed results show one Missed-first line, and Ask for a fix only fills an empty composer until the user sends."
-  - "Every entry point dispatches cmd.chat.teach.capture and opens the Teach sheet; nothing persists before cmd.chat.teach.confirm."
-  - "No entry point renders an inline capture card in the chat."
-  - "Confirm refuses user scope without public_safe and refuses text that looks like a secret, with the reason in words."
-  - "Correct mode never widens a rule's scope."
-  - "A similar rule blocks confirm until replace or keep both is chosen; replace records supersedes_memory_id."
-  - "TeachConfirmRequest carries scope, public_safe, locked, conflict_resolution and supersedes_memory_id and no other new field."
-  - "A reply's rule note counts only included rules whose check passed; a failed check shows \"Missed 1 of your rules\" with a way to see which rule and to ask for a fix; a rule whose check could not run earns no tick."
+  - "All saved-note entry points reuse the same Memory page and typed Add/Edit/Delete owner at This project or Every project."
+  - "Teach persists nothing on open/cancel and uses the existing written-instruction owner; no lock/conflict/source/rollback picker or third saved-note level appears."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -190,16 +163,22 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 8.11, 8.15"
-  - "IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127 and DL-130)"
-  - "Plans/Decision_Log.md#DL-127"
-  - "Plans/Decision_Log.md#DL-130"
-  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
-  - "Plans/assistant-memory-subsystem.md#AMS-053"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 8.11, 8.15
+- IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127
+  and DL-130)
+- Plans/Decision_Log.md#DL-127
+- Plans/Decision_Log.md#DL-130
+- Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
+- Plans/assistant-memory-subsystem.md#AMS-053
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t.'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -223,12 +202,8 @@ preserved_exact_tokens:
   - "Missed 1 of your rules"
   - "AMS-053"
 negative_constraints:
-  - "Do not persist anything on capture."
-  - "Do not let an edit widen a rule's scope."
-  - "Do not save text that looks like a password, key or token."
-  - "Do not overwrite a similar rule without the user's replace choice."
-  - "Do not render an inline capture card for /teach or natural-language intent."
-  - "Do not show a rule as followed because it was included in the reply's context."
+  - "Do not persist on capture/cancel, save secrets, silently broaden availability, overwrite protected records or restore old capture controls."
+  - "Do not turn /teach into a Teacher Persona switch or an alternate Memory manager."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -317,20 +292,26 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Each automatic or explicit naming of a thread is one ThreadTitleAttempt {thread_id, attempt_id,
-  requested_route, effective_route?, outcome, title?, at} with outcome pending | named | policy_off | route_unavailable | awaiting_first_message | user_locked. thread.title_locked is set by a manual
-  rename and cleared only by cmd.chat.thread.regenerate_title (ACD-462); while it is set, automatic
-  naming records user_locked and changes nothing. An unavailable title model records
-  route_unavailable and is never silently replaced by another model. The chat header's title shows
-  the attempt's state without pills: New chat with a naming shimmer while pending, the title once
-  named, a lock glyph while title_locked is set, and a warning glyph when naming is unavailable,
-  each with a hover that says why. A failure never opens a modal. The header is a source surface of
-  cmd.chat.thread.regenerate_title (chat_header) beside the thread menu, where the regenerate
-  action sits directly under Rename and is disabled with its reason when the policy is off or the
-  model is unavailable. The naming outcome reads as a plain sentence per outcome (naming, named,
-  not named because automatic naming is off, could not name because the model is unavailable,
-  waiting for the first message, kept the user's name). The command's visible label, in the thread
-  menu and in the header's hovers, is Name it for me; it replaces the catalog label Regenerate Title
-  (DL-134), and the command id is unchanged.
+  requested_route, effective_route?, outcome, title?, at} with outcome pending | named | policy_off |
+  route_unavailable | awaiting_first_message | user_locked. thread.title_locked is set by a manual rename
+  and cleared only by cmd.chat.thread.regenerate_title (ACD-462); while it is set, automatic naming
+  records user_locked and changes nothing. An unavailable title model records route_unavailable and is
+  never silently replaced by another model. The chat header's title shows the attempt's state without
+  pills: New chat with a naming shimmer while pending, the title once named, a lock glyph while
+  title_locked is set, and a warning glyph when naming is unavailable, each with a hover that says why. A
+  failure never opens a modal. The header is a source surface of cmd.chat.thread.regenerate_title
+  (chat_header) beside the thread menu, where the regenerate action sits directly under Rename and is
+  disabled with its reason when the policy is off or the model is unavailable. The naming outcome reads
+  as a plain sentence per outcome (naming, named, not named because automatic naming is off, could not
+  name because the model is unavailable, waiting for the first message, kept the user's name). The
+  command's visible label, in the thread menu and in the header's hovers, is Name it for me; it replaces
+  the catalog label Regenerate Title (DL-134), and the command id is unchanged. The naming row lives in
+  Settings > Models > Default models. Default resolves the smallest allowed runnable model when a naming
+  attempt is created; None displays Off and produces policy_off. An explicit model and its optional
+  proven depth use the shared picker, including WL4 B validation of typed names before saving. The
+  resolved requested route is then frozen, so an unavailable title model still records route_unavailable
+  and is never silently substituted. Manual title locks, first-message-only naming and no-modal failure
+  remain unchanged.
 gui_related: true
 gui_classification_reason: "Defines the chat title record and the header title states."
 split_recommended: false
@@ -455,34 +436,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Per-rule lock and turn off for taught rules (section 6; DL-130 adds both commands). A rule is
-  locked when the user ticks Locked in the Teach sheet, which sets TeachConfirmRequest.locked, or
-  uses Lock on the rule's row in Your rules. cmd.chat.teach.set_lock {locked} sets or clears the
-  user-locked flag of one taught rule; a locked rule can be changed only by the user, and this
-  command is the explicit user unlock that section 6 requires before automated cleanup,
-  summarization or profile migration may weaken a user-locked rule. Unlocking is the same command
-  with locked false. Turning a rule off is cmd.chat.teach.revoke: it sets revoked_at on one rule, the
-  rule stays in history, older versions do not come back, and the rule leaves future prompt
-  assembly; there is no undo, and the way back is to teach the rule again. Turn off asks inline in
-  the rule's row, never in a modal: "Stop using this rule? It stays in history, and older versions
-  don't come back." with Keep it, which is view state and dispatches nothing, and Turn off, which
-  dispatches the command. Both commands act on one rule at its current revision and refuse a stale
-  revision or an already turned-off rule with the reason in words. Turning a rule off leaves one
-  receipt line in the chat (Rule turned off: and the rule's words); locking and unlocking change the
-  rule's row and write no chat line. Your rules (the taught memory document) is the source surface of
-  both commands, and the Memory sheet is a source surface of cmd.chat.teach.revoke. The catalog rows
-  are UI_Command_Catalog's and the stored flags are assistant-memory-subsystem's; this unit states
-  the chat behaviour.
+  Written instructions remain directly editable through Settings > Personas & Crews > Defaults >
+  Standing instructions. Memory never edits a standing instruction. Existing Teach lock/revocation
+  and version codecs remain for internal compatibility and protection; cmd.chat.teach.set_lock has
+  no ordinary GUI producer. No user lock/unlock or rollback control and no automatic memory
+  rule-change proposal panel is shown. Explicit user edits/deletions still use the owning
+  instruction or Memory writer with revision/privacy checks; automatic upkeep cannot weaken retained
+  protections.
 gui_related: true
 gui_classification_reason: "Defines how a user locks, unlocks and turns off a taught rule."
 split_recommended: false
 depends_on: [ACD-477, DL-130]
 unblocks: [F3-579]
 acceptance_criteria:
-  - "cmd.chat.teach.set_lock changes the lock of exactly one rule and is the only way a user-locked rule is unlocked."
-  - "cmd.chat.teach.revoke sets revoked_at on one rule, keeps it in history and never restores an older version."
-  - "Keep it dispatches nothing; Turn off never opens a modal."
-  - "A stale revision is refused with its reason."
+  - "Written instructions and saved notes use their separate existing owners; no Memory rule editor, lock/unlock, conflict or rollback control exists."
+  - "Legacy protected records retain their internal safeguards without ordinary UI producers."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -498,9 +466,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.11 (G-26, G-33)"
-  - "IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)"
-  - "Plans/Decision_Log.md#DL-130"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  section 8.11 (G-26, G-33)
+- 'IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)'
+- Plans/Decision_Log.md#DL-130
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "cmd.chat.teach.set_lock"
   - "cmd.chat.teach.revoke"
@@ -508,9 +479,7 @@ preserved_exact_tokens:
   - "Keep it"
   - "Rule turned off:"
 negative_constraints:
-  - "Do not let automated cleanup unlock or weaken a user-locked rule."
-  - "Do not restore an older version when a rule is turned off."
-  - "Do not ask to turn a rule off in a modal."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md

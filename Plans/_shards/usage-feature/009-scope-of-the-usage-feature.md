@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L128-L372
 
-Source SHA256: `34f9d35b34eb646892a11b83dff6df80cf13fba56a6f73c23c9230c5e38ded1e`
+Source SHA256: `3fe9cb5e5bef8706451b8fa41734ff0843f170762c7f79507889d688533a3ae4`
 
 ---
 
@@ -42,7 +42,7 @@ OpenCode Desktop implementation reference (non-binding):
 - `packages/app/src/components/session-context-usage.tsx` is only a behavioral reference for the chat header context circle/button: hover shows total tokens, usage %, and total USD cost; click opens a `context` tab rather than replacing app-wide Usage.
 - `packages/app/src/pages/session/session-side-panel.tsx` is the reference for opening that `context` tab in the side/review panel, not the main editor.
 - `packages/app/src/components/session/session-context-tab.tsx` is the reference for the detail payload: session title, message counts, provider, model, context limit, total/input/output/reasoning/cache tokens, total cost, created/last-activity times, coarse context breakdown bar, system prompt, and raw per-message accordions with JSON.
-- OpenCode message UI is a reference for hover-revealed icon actions and metadata rows on messages, but it does not satisfy PM's richer per-message info popover requirement; PM keeps the curated inspection and raw payload requirements below as the canonical target.
+- OpenCode message UI remains a reference for hover-revealed icon actions and metadata rows. DL-475 keeps PM's human-readable message information and basic context/cost/model facts; the reference's source chart, system-prompt and raw-payload accordions are not user-facing PM requirements.
 
 Per-thread context/usage in chat is a split inspect/action affordance rather than a direct jump to a chat-shell usage panel.
 
@@ -57,14 +57,14 @@ Rules:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
 
-The Context Detail Pane must support both curated inspection and raw payload inspection.
+The Context Detail Pane keeps basic on-demand chat capacity, cost and model information and useful compaction/transition status (DL-475).
 
-Required content:
-- curated overview of thread counts, provider/model/mode/persona, and headline tokens/context/estimated cost
-- grouped context and token breakdowns
-- per-message inspection with human-readable fields first
-- raw payload toggles for the full thread and for individual messages
-- drill-downs by mode, provider, model, and other shared runtime identity dimensions when available
+Required visible content:
+- a readable overview of thread counts, provider/model/mode/persona, effective context window, tokens and estimated cost
+- useful compaction/transition state, outcome and history, with truthful unknown/estimated labels
+- ordinary per-message runtime identity, token and cost information through the existing message-info owner
+
+Source-family budgets, inclusion/omission records and raw payloads remain internal for enforcement and debugging. The thread pane has no assembled-source composition, full-thread/per-message raw payload toggle or per-run inclusion receipt. Existing Expert/ELI5 help explains the retained facts without exposing source records.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
 
@@ -72,7 +72,7 @@ Estimated-cost rule:
 - per-thread chat cost consumes canonical UsageRecord projections first
 - OpenCode-style normalization is a display fallback only when the UsageRecord marks the value `pricing_estimated` or otherwise non-authoritative
 - reasoning/thoughts, cache read, cache write, cache_write_1h/TTL, output_visible, provider_total, and context_estimate display only under the provider mapper's inclusive/exclusive `counting_semantics`
-- provider-sensitive cache normalization caveats, source_class, source_confidence, settlement_status, freshness, and redaction state remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
+- chat cost/usage labels remain truthful about estimates, freshness and settlement; provider-sensitive cache caveats, source_class/source_confidence and raw/redaction records stay on existing internal debug paths rather than a chat source-inspection view
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ### Cursor -- API (usage/account only; not for model invocation)
@@ -241,7 +241,7 @@ Direct providers with coding-plan-branded products keep provider-specific reset 
 
 `Z.AI Coding Plan` usage remains `Z.AI` provider usage with plan-dependent quota/reset semantics on the coding-plan endpoint. Until the active plan proves exact windows, PM labels the reset evidence as plan-dependent instead of presenting a fixed reset countdown.
 
-Gemini CLI is retired (UF-021, DL-332): its structured session stats from `gemini -p ... --output-format json` (`usage`, `modelUsage`, `permission_denials`, `fast_mode_state`) are source-lineage only. PM does not ingest or record them as active usage evidence.
+Gemini CLI structured session stats from `gemini -p ... --output-format json` may include `usage`, `modelUsage`, `permission_denials`, and `fast_mode_state`; PM records these as provider/runtime evidence rather than as a universal quota counter.
 
 Usage evidence must keep the `documented/default expectation` separate from the `effective observed state` whenever provider docs, runtime output, or account-specific behavior disagree.
 

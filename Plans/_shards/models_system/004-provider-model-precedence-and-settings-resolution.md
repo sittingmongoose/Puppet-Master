@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L34-L203
+Source lines: L34-L204
 
-Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
+Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
 
 ---
 
@@ -21,7 +21,7 @@ This section is the single owner section for provider/model precedence across ru
 ### Three-axis settings model
 
 Settings resolution is always described on three axes:
-- `source`: where a candidate value came from (`manual_override`, `persona_preference`, `surface_default`, `scope_policy`, `config_default`, `provider_default`).
+- `source`: where a candidate value came from (`manual_override`, `surface_default`, `scope_policy`, `account_default`, `config_default`; retired `persona_preference` and `provider_default` are historical read vocabulary).
 - `request`: the value explicitly requested for this run or child run.
 - `execution`: the value actually handed to the selected provider/runtime after capability checks, worktree assignment, and policy gating.
 
@@ -29,16 +29,17 @@ The display grammar MUST preserve the distinction between requested and effectiv
 
 ### Deterministic precedence by scope
 
-The canonical precedence chain is:
+The plain rule is: **What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere.**
+
+Technical source order (the build/page sources apply only where their owners already declare them):
 1. explicit run-envelope override
 2. scoped owner policy for the active execution unit (`run`, `seam`, `package`, `node`, `overseer`, or delegated subagent)
-3. Persona preference
-4. surface or stage default
-5. Project own configuration default
-6. work Computer own configuration default
-7. Everywhere, then factory configuration default
-8. last-used state where explicitly permitted
-9. provider default
+3. surface or stage default
+4. default of an account the person explicitly selected for this run, if no earlier model is set
+5. This project defaults list, omitted for No project
+6. Everywhere, then factory configuration default
+
+Persona and command model fields are retired compatibility inputs, never candidates. Computer, last-used and provider-default candidates no longer select a model. Parent/policy ceilings apply to every source. Historical receipts keep their source-order version and original numbers.
 
 Rules:
 - the same inputs and availability set MUST produce the same effective result
@@ -91,7 +92,7 @@ Run Graph event-update vocabulary is historical input only. `Plans/Run_Graph_Vie
 
 Provider account snapshots are runtime-wide. `storage-plan` and `storage-plan.md` must model durable provider account snapshots for runs and for other actor classes that use the same provider runtime, not only the run actor class.
 
-Resolver selection reason text is concise but structured. Standard explanation snippets include `Package overseer default`, `Seam integration default`, `Node implementation match: Rust + backend`, `Review pass default`, `Recovery actor default`, and `Provider fallback from preferred persona model`.
+Resolver selection reason text is concise but structured. Standard explanation snippets include `Package overseer default`, `Seam integration default`, `Node implementation match: Rust + backend`, `Review pass default`, `Recovery actor default`, and `Provider fallback from requested model`.
 
 Requested/effective runtime identity uses the `requested_*` and `effective_*` field families as canonical cross-system IDs. `Contracts_V0`, `Contracts_V0.md`, `_id` compatibility fields, and `/runtime` consumers may expose those IDs, but they must not collapse requested, effective, account, provider, model, execution role, or operational identity into one value.
 

@@ -336,14 +336,6 @@
    "label": "Everyday model",
    "help": "For chat, planning and research when nothing more specific is chosen."
   },
-  "ai.models.default-variant": {
-   "label": "Speed or power",
-   "help": "Faster and cheaper, or slower and smarter, without changing the model."
-  },
-  "ai.models.reasoning-effort": {
-   "label": "Thinking depth",
-   "help": "Deeper is smarter but slower and costs more."
-  },
   "general.interaction.provider-disclosure": {
    "label": "Say when a different model answered",
    "help": "Nothing swaps without you seeing it."
@@ -371,22 +363,6 @@
   "ai.models.auditor-model": {
    "label": "Checking finished work",
    "help": "Checks finished work until it passes or is truly stuck."
-  },
-  "ai.models.goal-worker-model": {
-   "label": "Goals: doing the work",
-   "help": "Runs autonomous Goals."
-  },
-  "ai.models.goal-verifier-model": {
-   "label": "Goals: checking the work",
-   "help": "Checks Goal results. Kept apart from the worker."
-  },
-  "ai.models.subagent-model": {
-   "label": "Helper agents",
-   "help": "Never bigger than the agent that started it."
-  },
-  "ai.models.subagent-effort": {
-   "label": "Helper agents' thinking depth",
-   "help": "How hard each helper thinks."
   },
   "ai.models.teach-model": {
    "label": "Explaining things to you",
@@ -456,42 +432,6 @@
   },
   "ai.models.provider-options": {
    "label": "Extra options for a service"
-  },
-  "ai.models.lane-bindings": {
-   "label": "Work lanes",
-   "options": {
-    "unconfigured": "Every lane uses the everyday model"
-   }
-  },
-  "ai.models.role-policy": {
-   "label": "Role rules"
-  },
-  "ai.models.per-lane-platform": {
-   "label": "Service for each lane",
-   "options": {
-    "": "The everyday model’s service",
-    "Claude Code": "Claude",
-    "Cursor": "Cursor",
-    "Gemini Direct": "Gemini API",
-    "Antigravity CLI": "Google Antigravity",
-    "OpenCode": "OpenCode server"
-   },
-   "empty": "The everyday model’s service",
-   "choices": [
-    ""
-   ]
-  },
-  "ai.models.per-lane-model": {
-   "label": "Model for each lane",
-   "help": "An exact model name for one kind of work, written the way its service writes it. Blank uses the lane's service default.",
-   "placeholder": "Same as the lane's service"
-  },
-  "ai.models.execution-role": {
-   "label": "Role for one run",
-   "options": {
-    "": "Set by how the run starts"
-   },
-   "empty": "Set by how the run starts"
   },
   "ai.models.requested-effective-inspector": {
    "label": "What actually ran",
@@ -684,10 +624,6 @@
     "local-endpoint": "Local model server"
    },
    "help": "Used when several services could do a job."
-  },
-  "ai.models.resolution-policy": {
-   "label": "How boldly to pick models",
-   "help": "Careful never guesses; bold chases the cheapest or fastest."
   },
   "ai.usage.auto-resume-default": {
    "label": "Pick up paused work when usage resets",

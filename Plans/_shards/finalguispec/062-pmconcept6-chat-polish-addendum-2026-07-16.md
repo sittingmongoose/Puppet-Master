@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30060-L30241
+Source lines: L30116-L30293
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `30fc010686ea17ae38b61544a99e01519fe3ff49ef9e792d83b1a1f6c18223cd`
 
 ---
 
@@ -148,22 +148,18 @@ plan_unit_id: F3-424
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Chat mode, model, and effort popouts render as body-portaled overlays above stream overflow
-  clipping so they are never clipped by the scrollport; the persona dropdown remains inline
-  with an overflow flip when it would exit the viewport. Footer FAB items reveal with a
-  spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as
-  instant show and hide with no animation.
+canonical_text: |-
+  Chat mode popouts and the one combined model/depth picker render as body-portaled overlays above stream overflow clipping so they are never clipped by the scrollport; the persona dropdown remains inline with an overflow flip when it would exit the viewport. Footer FAB items reveal with a spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as instant show and hide with no animation.
 gui_related: true
 gui_classification_reason: This unit defines visible chat overlay layering and motion behavior.
 split_recommended: false
 depends_on: [F3-422, ACD-438]
 unblocks: []
 acceptance_criteria:
-- "Mode, model, and effort popouts render above stream overflow clipping in both chat mounts and are never clipped by the scrollport."
-- "The persona dropdown remains inline and flips its opening direction when it would overflow the viewport."
-- "FAB items reveal with a spring stagger; reduced motion renders instant show and hide."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Mode popouts and the combined model/depth picker render above stream overflow clipping in both chat mounts and are never clipped by the scrollport.
+- The persona dropdown remains inline and flips its opening direction when it would overflow the viewport.
+- FAB items reveal with a spring stagger; reduced motion renders instant show and hide.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"

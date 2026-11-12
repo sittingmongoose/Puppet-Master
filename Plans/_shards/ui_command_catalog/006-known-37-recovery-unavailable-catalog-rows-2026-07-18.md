@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L133-L1182
+Source lines: L133-L1185
 
-Source SHA256: `3076b04b822023dbbc42190301d7803c7772652b6b3fc3f45d443c7c7683b726`
+Source SHA256: `23639a3ba83b0aaf6c2697215a0b9787100cbb602fb5195f228070a646e66809`
 
 ---
 
@@ -1003,23 +1003,26 @@ Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
 
-### 2.8 Assistant memory (Gist Review) commands
-These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.
+### 2.8 Memory commands
 
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+Typed owner payloads and results are defined in AMS-141; the catalogue owns IDs and producer disposition.
+
+| Command ID | Owner contract | Effect | Surface |
 |---|---|---|---|
-| `cmd.chat.memory.verify` | `{ project_id, gist_id }` | `memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.edit` | `{ project_id, gist_id, patch }` | `memory.gist.updated` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.pin` | `{ project_id, gist_id, pinned }` | `memory.gist.pinned` or `memory.gist.unpinned` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.discard` | `{ project_id, gist_id }` | `memory.gist.discarded` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.updated` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.preview_capsule` | `{ project_id, thread_id? }` | no persisted domain event (preview computation only) | Assistant chat Gist Review panel |
-| `cmd.chat.memory.rebuild_lexical_index` | `{ project_id }` | `memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.rebuild_semantic_index` | `{ project_id }` | `memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.verification_sweep` | `{ project_id }` | `memory.verification_sweep.started`, `memory.verification_sweep.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.dedup_sweep` | `{ project_id }` | `memory.dedup_sweep.started`, `memory.dedup_sweep.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |
+| `cmd.chat.memory.add` | AMS-141 | Durable new note and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.edit` | AMS-141 | New note version and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.delete` | AMS-141 | Durable deletion suppression and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.verify` | AMS-141 | Internal support validation only | No ordinary UI producer |
+| `cmd.chat.memory.pin` | AMS-141 | Legacy protected-state support only | No ordinary UI producer |
+| `cmd.chat.memory.discard` | AMS-141 | Legacy validity handling, never Delete | No ordinary UI producer |
+| `cmd.chat.memory.toggle_auto_save_unverified` | AMS-141 | Compatibility only; no ordinary write | No ordinary UI producer |
+| `cmd.chat.memory.preview_capsule` | AMS-141 | Internal debugging only | No ordinary UI producer |
+| `cmd.chat.memory.rebuild_lexical_index` | AMS-141 | Existing recovery operation | Internal/support only |
+| `cmd.chat.memory.rebuild_semantic_index` | AMS-141 | Existing recovery operation | Internal/support only |
+| `cmd.chat.memory.verification_sweep` | AMS-141 | Internal validity check | Internal/support only |
+| `cmd.chat.memory.dedup_sweep` | AMS-141 | Held pending DL-444/445 application/approvals | Internal/support only |
+| `cmd.chat.memory.summarize_monthly` | AMS-141 | Held archive-only operation | Internal/support only |
+| `cmd.chat.memory.prune_archive` | AMS-141 | Held archive-only operation | Internal/support only |
 
 Lineage pointer (DL-333): for each command here that UCC-230 routes, the Args schema column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25339-L25440
+Source lines: L25423-L25529
 
-Source SHA256: `5be00385fb332d27e9b2e7b29ae5101b4031acc3777b8ed3e23faceb8dcf4b75`
+Source SHA256: `36ea80200c6dac9bf1e131cf96b14ec8bda8d154a122d7ad9d9fa493cc727c1b`
 
 ---
 
@@ -21,12 +21,13 @@ Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (
 saved dock, and More Details opens or reveals the thread's context tab in the home centre (ACD-448, ACD-500).
 
 The context ring is the compact projection of the active thread's actual context state. Its compact surface
-shows current-window usage/percentage, effective window and tokens loaded, cache hit, and source
-composition. Clicking opens a compact menu with `Compact Now` and `More Details`; menu disclosure itself is
+shows current-window usage/percentage, effective window and tokens loaded, cache hit, estimated cost,
+and effective model information. Source composition and per-run inclusion receipts remain internal. Clicking opens a compact menu with `Compact Now` and `More Details`; menu disclosure itself is
 local and dispatches nothing. `Compact Now` explicitly dispatches `cmd.chat.compact_context` and updates the
 ring and drawer coherently from the owner result/projection. `More Details` dispatches
-`cmd.chat.open_thread_context_details` and reuses the existing thread Context Detail Pane, whose Curated and
-Raw views include routing, fallback, cache, model/limit, compaction state, and compaction history. Focus and
+`cmd.chat.open_thread_context_details` and reuses the existing thread Context Detail Pane for basic
+capacity/cost/model information, cache/limit facts and useful compaction/transition state and history.
+Assembled-source charts and raw source payloads remain internal diagnostics. Focus and
 close reuse the existing focus/close commands. No app-wide Usage route, second context drawer, or second
 context store is created.
 
@@ -40,36 +41,37 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  One shared Assistant node/controller/transcript/context store is re-seated between the
-  saved Home dock and the right-side global host on every primary page, preserving thread,
-  draft, attachment, activity, Context Detail Pane, and focus continuity and returning to
-  the saved Home dock. The active-thread context ring exposes current-window use,
-  effective window/tokens, cache hit, and source composition; its click menu is local and
-  offers Compact Now plus More Details. Compact Now alone dispatches
-  cmd.chat.compact_context and updates ring/detail projections coherently, while More
-  Details reuses cmd.chat.open_thread_context_details and the existing focus/close commands and
-  Curated/Raw routing, fallback, cache, limits, compaction-state, and history views. No
-  Assistant clone, app-wide Usage substitute, second detail drawer, or second context
-  store is permitted.
-  Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (Plans/FinalGUISpec.md#F3-637), not a
-  saved dock: returning Home puts the same Assistant back in its column, and its only other place is the popped-out
-  window, which Dock back returns (Plans/UI_Command_Catalog.md#UCC-203). Boot never restores a floating Home
-  placement, and nothing floats the chat inside the window. More Details opens or reveals the thread's context tab in
-  the home centre (ACD-500).
+  One shared Assistant node/controller/transcript/context store is re-seated between the saved Home
+  dock and the right-side global host on every primary page, preserving thread, draft, attachment,
+  activity, Context Detail Pane, and focus continuity and returning to the saved Home dock. The
+  active-thread context ring exposes current-window use, effective window/tokens, cache hit,
+  estimated cost and effective model information; its click menu is local and offers Compact Now
+  plus More Details. Compact Now alone dispatches cmd.chat.compact_context and updates ring/detail
+  projections coherently, while More Details reuses cmd.chat.open_thread_context_details and the
+  existing focus/close commands and basic capacity/cost/model, cache/limit, and useful
+  compaction/transition state and history views. Source records, assembled-source composition and
+  raw source payloads stay internal for enforcement/debugging, with no user-facing per-run inclusion
+  receipt. No Assistant clone, app-wide Usage substitute, second detail drawer, or second context
+  store is permitted. Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right
+  (Plans/FinalGUISpec.md#F3-637), not a saved dock: returning Home puts the same Assistant back in
+  its column, and its only other place is the popped-out window, which Dock back returns
+  (Plans/UI_Command_Catalog.md#UCC-203). Boot never restores a floating Home placement, and nothing
+  floats the chat inside the window. More Details opens or reveals the thread's context tab in the
+  home centre (ACD-500).
 gui_related: true
 gui_classification_reason: The unit defines cross-page Assistant visibility, identity continuity, context-ring fields, menu actions, and detail views.
 split_recommended: false
 depends_on: [ACD-441, ACD-445, ACD-447, CS-068, UCC-147, WM-045, UIW-012, DR-039, DL-180]
 unblocks: []
 acceptance_criteria:
-  - Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it.
+  - "Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it."
   - "Returning Home restores that same node to the chat column (F3-637) with active thread, draft, attachments, transcript, context, details, and focus continuity intact; boot never restores floating placement (DL-180)."
-  - The context ring/menu exposes current-window use, effective window/tokens loaded, cache hit, and source composition.
-  - The click menu contains Compact Now and More Details; opening or hovering the menu dispatches nothing.
-  - Compact Now dispatches cmd.chat.compact_context only after explicit selection and updates the ring plus detail state coherently for started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results.
-  - More Details reuses the existing thread Context Detail Pane with Curated and Raw views covering routing, fallback, cache, limits, compaction state, and history.
-  - No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created.
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+  - "The context ring/menu exposes current-window use, effective window/tokens loaded, cache hit, estimated cost and effective model information; it exposes no source-composition chart or per-run inclusion receipt."
+  - "The click menu contains Compact Now and More Details; opening or hovering the menu dispatches nothing."
+  - "Compact Now dispatches cmd.chat.compact_context only after explicit selection and updates the ring plus detail state coherently for started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results."
+  - "More Details reuses the existing thread Context Detail Pane for basic capacity/cost/model and cache/limit facts plus useful compaction/transition state and history; raw source payloads and source/inclusion records remain internal under their existing enforcement/debugging restrictions."
+  - "No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created."
 validation_surfaces:
   - scripts/pm-plans-verify.py
   - scripts/pm-plan-index.py
@@ -92,6 +94,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
   - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
   - Compact Now
   - More Details
@@ -104,8 +107,10 @@ negative_constraints:
   - Do not dispatch compaction from hover or menu disclosure.
   - Do not route thread context details through app-wide Usage or create a second detail store.
   - Do not treat concept-local storage as canonical Assistant state.
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is in depends_on now that it depends on no earlier unit, and ACD-500 stays in source_lineage because ACD-500 reaches this unit through F3-569, ACD-480 and ACD-452."
+  - "DL-475 retires Curated/Raw source inspection and source composition from the thread context surface; those preserved tokens are historical lineage, not visible view requirements."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

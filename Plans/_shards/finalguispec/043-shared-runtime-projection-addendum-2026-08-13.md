@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5446-L27013
+Source lines: L5442-L27031
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `30fc010686ea17ae38b61544a99e01519fe3ff49ef9e792d83b1a1f6c18223cd`
 
 ---
 
@@ -6492,9 +6492,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Agent-Config setup copy separates setup success from operational evidence, exposes stable
-  selection and failover reason codes plus requested/effective runtime controls, and owns Default
-  Crew default-config confirmation and provider constraint explanation.
+  Agent-Config setup copy separates setup success from operational evidence, exposes stable selection and
+  failover reason codes plus requested/effective runtime controls, and owns Default Crew default-config
+  confirmation and provider constraint explanation. Default Crew now stores only ordered Personas and
+  enablement. Per-member model/runtime defaults retire; the invocation sheet still resolves and confirms
+  each row, including existing Copilot whole-crew normalization.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible setup, failover, provider-gap, and Default Crew controls.
@@ -7374,22 +7376,26 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
-  context detail tabs, curated/raw views, under-message actions, and info-popovers that follow
-  Assistant Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
-  Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and failed
-  command-result states.
-  Amended 2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind (`context:<threadId>`,
-  F3-635), opened and placed by F3-634 in a home panel.
+  context detail tabs, basic capacity/cost/model and useful compaction status, under-message
+  actions, and info-popovers that follow Assistant Chat and Contracts label rules, including visible
+  progress and failure/degraded feedback for explicit Compact Now actions plus already-running,
+  cancelled, no-op, unavailable, retry, reload, completed, and failed command-result states. Amended
+  2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind
+  (`context:<threadId>`, F3-635), opened and placed by F3-634 in a home panel. DL-475 keeps basic
+  on-demand capacity/cost/model facts and Squeeze now, but moves assembled-source charts, raw memory
+  data and memory-selection explanations to internal debugging. Curated/raw source-family inspection
+  is no ordinary user surface.
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
 depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "The covered source span remains losslessly available for exact-text audit."
+  - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+  - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Thread context/message surfaces expose no source-composition, Curated/Raw source inspection or per-run inclusion receipt; source accounting stays internal."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -7402,9 +7408,11 @@ node_compile_hint:
   mode: thread_context_detail_and_message_info_surfaces
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0084"
-- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance"
-- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0084
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - "More Details"
 - "Compact Now"
@@ -7422,6 +7430,7 @@ negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
 - "Compact Now failure must not be silent or logs-only."
 - "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.failed or completion EventRecord is emitted for that failed outcome."
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The former context.compaction.failed event implication remains retired; completion-only admission under ACD-461 / SP-259 does not authorize a failed event or a completion event for failure."
@@ -9102,10 +9111,11 @@ plan_unit_id: F3-164
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Context management combines thread context, Investigation Context, editor/file references, and
-  review/document references with stable identity, owner surface, canonical usage/state counters,
-  token summaries, and visible pruning, compaction, and restoration disclosure.
+canonical_text: Context management combines thread context, Investigation Context, editor/file references,
+  and review/document references with stable identity, owner surface, canonical usage/state counters,
+  token summaries, and visible pruning, compaction, and restoration disclosure. DL-475 keeps capacity/cost
+  and useful transition/compaction results on demand; assembled-source breakdowns, raw data and memory-selection
+  explanations are internal debugging only. No source-family chart or used-memory list is shown.
 gui_related: true
 gui_classification_reason: Context disclosure and context surfaces are user-visible GUI behavior despite the source span inference being false.
 split_recommended: false
@@ -9128,7 +9138,8 @@ node_compile_hint:
   mode: context_management_provenance_and_disclosure
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0106"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0106
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - "Investigation Context"
 - "editor/file references"
@@ -15772,54 +15783,56 @@ plan_unit_id: F3-283
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona editor shows provider support states `supported`, `partially supported`, and
-  `unsupported` for Persona controls and renders normal editing, warning styling/tooltips, or
-  disabled controls with explanations for Claude Code, Cursor CLI, OpenCode, and Direct/API
-  providers.
+canonical_text: The Persona editor shows supported, partially supported and unsupported states only for surviving
+  non-model answer, prompt, tool and permission controls. Route support governs editing/warnings/disabled explanations.
+  Model/provider/preset/variant/depth fields are retired; their old exact-token list is inert compatibility
+  vocabulary, not an editor field set.
 gui_related: true
-gui_classification_reason: >-
-  This unit defines the visible Persona editor compatibility matrix.
+gui_classification_reason: This unit defines the visible Persona editor compatibility matrix.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: persona_editor_compatibility_state_matrix
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0169"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0169
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "Persona editor"
-- "supported"
-- "partially supported"
-- "unsupported"
-- "platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents"
-- "warning styling"
-- "explanatory tooltip"
-- "disabled control plus explanation"
-- "Claude Code"
-- "Cursor CLI"
-- "OpenCode"
-- "Direct/API providers"
+- Persona editor
+- supported
+- partially supported
+- unsupported
+- platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents
+- warning styling
+- explanatory tooltip
+- disabled control plus explanation
+- Claude Code
+- Cursor CLI
+- OpenCode
+- Direct/API providers
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- The preserved platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents
+  list records the old mixed field set only; model/provider/variant/effort entries are retired.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-284 - Talkativeness Support State Rule
@@ -15877,52 +15890,59 @@ plan_unit_id: F3-285
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona editor supports fields for default platform/model/variant, temperature, top_p,
-  reasoning_effort, talkativeness, preferred/discouraged tools, tool usage guidance, and
-  aliases.
+canonical_text: 'The Persona editor supports temperature, top_p, talkativeness, preferred/discouraged tools,
+  tool usage guidance and aliases subject to provider capability and existing authority limits. It has no default
+  platform, model, preset/variant or reasoning-effort/depth field. Persona/provider/model/preset/effort fields
+  retired by MD2 are inert compatibility reads only: preserve old bytes and historical receipts, omit them
+  from new writes and imports, never apply them as model defaults or recreate editable fields. Choose model/depth
+  through Settings > Models > Default models or the run picker under Models §2.'
 gui_related: true
-gui_classification_reason: >-
-  This unit defines visible Persona editor fields despite the source inference being false.
+gui_classification_reason: Defines visible non-model Persona authoring fields and inert old-data retirement
+  disclosure.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: expanded_persona_editor_field_set
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0170"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0170
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "default_platform"
-- "default_model"
-- "default_variant"
-- "temperature"
-- "top_p"
-- "reasoning_effort"
-- "talkativeness"
-- "preferred_tools"
-- "discouraged_tools"
-- "tool_usage_guidance"
-- "aliases"
-negative_constraints: []
-compatibility_only_notes: []
+- default_platform
+- default_model
+- default_variant
+- temperature
+- top_p
+- reasoning_effort
+- talkativeness
+- preferred_tools
+- discouraged_tools
+- tool_usage_guidance
+- aliases
+negative_constraints:
+- Do not preselect a model/provider/preset/depth by activating or importing a Persona.
+compatibility_only_notes:
+- default_platform, default_model, default_variant and reasoning_effort are preserved exact tokens for inert
+  old-data inspection only.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-286 - Talkativeness Labels And Enum Values
@@ -15989,43 +16009,45 @@ plan_unit_id: F3-287
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona compatibility panel can communicate provider-specific support examples for Claude
-  Code, Cursor CLI, and Direct/API providers.
+canonical_text: Persona compatibility copy describes only surviving non-model Persona controls using concrete
+  route capability evidence. Claude Code, Cursor CLI and Direct/API examples must not imply that a Persona
+  owns a model or effort default. Model/depth selection belongs to the common defaults list or run picker.
 gui_related: true
-gui_classification_reason: >-
-  This unit preserves visible Persona compatibility copy examples.
+gui_classification_reason: This unit preserves visible Persona compatibility copy examples.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: persona_compatibility_panel_copy_examples
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0171"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0171
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings."
-- "Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented."
-- "Direct/API providers: strongest support for exact runtime controls."
+- 'Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.'
+- 'Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited
+  or undocumented.'
+- 'Direct/API providers: strongest support for exact runtime controls.'
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-288 - Requested Effective Persona Surface Identity Boundary

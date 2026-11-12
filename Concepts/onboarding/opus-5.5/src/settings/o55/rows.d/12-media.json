@@ -19,28 +19,6 @@
     "video": "Videos"
    }
   },
-  "media.image.provider": {
-   "label": "Service that makes pictures",
-   "help": "Only services you are signed in to can be chosen.",
-   "options": {
-    "None": "No service",
-    "OpenAI/Codex subscription": "ChatGPT / Codex plan",
-    "OpenAI gpt-image-2": "GPT Image 2 with an OpenAI API key",
-    "OpenAI Responses image_generation": "Pictures inside OpenAI replies",
-    "MiniMax Image-01": "MiniMax Image-01",
-    "Gemini Direct": "Gemini API",
-    "Antigravity gemini-3.1-flash-image": "Google Antigravity"
-   },
-   "hints": {
-    "None": "Pictures are not made",
-    "OpenAI/Codex subscription": "Uses the pictures included in your ChatGPT plan",
-    "OpenAI gpt-image-2": "Paid per picture",
-    "OpenAI Responses image_generation": "An API key account; the picture comes back in the reply",
-    "MiniMax Image-01": "Through your MiniMax Coding Plan",
-    "Gemini Direct": "Gemini picture models, paid per picture",
-    "Antigravity gemini-3.1-flash-image": "Gemini 3.1 Flash Image through your Google plan"
-   }
-  },
   "media.image.model": {
    "label": "Model for each ability",
    "help": "Each ability's Uses row picks it. The service's default model is the usual choice.",

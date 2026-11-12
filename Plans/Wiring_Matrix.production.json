@@ -2795,18 +2795,18 @@
     },
     "assistant.redesign.cmd.chat_teach_open_memory": {
       "ui_element_id": "assistant.redesign.cmd.chat_teach_open_memory",
-      "ui_location": "Puppet Master Assistant > teach_capture; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "The shared Memory page via wand, chat_header or successful memory_save_receipt View; no proposal line, Teach receipt or alternate Memory surface.",
       "ui_command_id": "cmd.chat.teach.open_memory",
       "handler_location": "handlers::assistant_memory::teach_open_memory",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.chat.teach.open_memory dispatches the typed request MemoryRoute and returns RouteResult; the surfaces that may raise it are exactly: teach_capture, message_menu, wand, memory_proposal_line, teach_receipt.",
+        "cmd.chat.teach.open_memory dispatches MemoryRoute/RouteResult from exactly wand, chat_header and memory_save_receipt; View selects the saved note on the same Memory page.",
         "Read state.assistant_redesign.chat_teach_open_memory.availability and state.assistant_redesign.chat_teach_open_memory.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/assistant-memory-subsystem.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062; teach_receipt by UCC-172, WM-063): wand, memory_proposal_line, teach_receipt joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them. It stays the one memory route: the wand's Memory…, the proposal line's Review and the Teach receipt all reach it.",
+        "DL-475/UCC-169: chat_header Memory and memory_save_receipt View join the existing wand route; memory_proposal_line and teach_receipt are no longer saved-note Memory producers. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them. It stays the one memory route: the wand's Memory…, chat-header Memory and a successful save's View all reach the same page, with the saved note selected for View.",
         "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -4309,13 +4309,13 @@
       "handler_location": "handlers::collaboration::review_send_findings_to_agent",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.review.send_findings_to_agent dispatches the typed request ReviewSendFindingsRequest and returns ComposerBufferResult; the surfaces that may raise it are exactly: review_card, review_panel, message_chrome.",
+        "cmd.review.send_findings_to_agent dispatches ReviewSendFindingsRequest/ComposerBufferResult from exactly review_card and review_panel.",
         "Read state.assistant_redesign.review_send_findings_to_agent.availability and state.assistant_redesign.review_send_findings_to_agent.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Composer fill (DL-125, DL-138, UCC-172, CWR-031, AMS-053): ReviewSendFindingsRequest keeps source_kind review_findings for review_card and review_panel and adds taught_rule_check for Ask for a fix on message_chrome. The latter binds thread_id, reply_message_id and nonempty missed_teaching_refs using existing IncludedTeachingRef {memory_id, normalized_fact_sha256}; each must identify a saved failed check on that reply. It never fabricates a review run or finding ID. Both variants fill only the source thread's empty composer, return ComposerBufferResult with source-specific lineage in metadata, refuse composer_not_empty without changes, and never send or execute; the user sends.",
+        "Review findings fill only the source thread’s empty composer and never send. The taught_rule_check source remains internal compatibility only; ordinary replies expose no Ask for a fix/message_chrome producer or rule-check receipt.",
         "The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration kinds, participant/message actions and Crew Auto admit explicit app siblings and original exact Project contracts. Scope, original accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config revisions and canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew bindings. No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification is revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults to linked new destination records after safe stop/fence. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -7667,7 +7667,7 @@
         "Every named reverse consumer renders from the same owner projection: capture card.",
         "Negative path is enforced: not Teacher Persona.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062; teach_document by UCC-172, WM-063): wand, memory_sheet, teach_document also raise cmd.chat.teach.capture, and no other surface is added. Each reads state.assistant_redesign.chat_teach_capture.availability and state.assistant_redesign.chat_teach_capture.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Every Teach entry opens the one Teach sheet (teach_capture) and the request carries mode new or correct; there is no in-chat capture card and capture writes no memory. The sheet's save is cmd.chat.teach.confirm with the TeachConfirmRequest fields of ACD-477, including locked; its Cancel, close, Escape and scrim are cmd.chat.teach.cancel.",
+        "Producer surfaces (DL-475): slash, natural_language, message_menu, wand and the existing written-instruction destination teach_document open the same Teach step; memory_sheet never produces this command. Opening/cancel writes nothing. The existing instruction writer owns confirmed changes, secret/privacy/revision checks and return to Settings > Personas & Crews > Defaults > Standing instructions. No Locked checkbox, thread-memory selector, conflict choice, source inspection or rollback control is rendered; legacy request fields stay internal compatibility only.",
         "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -19890,7 +19890,7 @@
     },
     "catalog.chat_memory_dedup_sweep": {
       "ui_element_id": "catalog.chat_memory_dedup_sweep",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.dedup_sweep",
       "handler_location": "handlers::chat::memory_dedup_sweep",
       "expected_event_types": [],
@@ -19905,9 +19905,11 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.dedup_sweep has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.dedup_sweep; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_dedup_sweep.availability",
       "disabled_reason_projection": "state.commands.chat_memory_dedup_sweep.disabled_reason",
       "effect_contract": {
@@ -19918,10 +19920,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_dedup_sweep exposes a stable role/name/description matching cmd.chat.memory.dedup_sweep.",
-        "keyboard_access": "catalog.chat_memory_dedup_sweep is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_dedup_sweep preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_dedup_sweep surfaces state.commands.chat_memory_dedup_sweep.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -19942,7 +19944,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_dedup_sweep.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_dedup_sweep.scope_target",
@@ -19964,11 +19966,12 @@
         "Assert cmd.chat.memory.dedup_sweep records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_discard": {
       "ui_element_id": "catalog.chat_memory_discard",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.discard",
       "handler_location": "handlers::chat::memory_discard",
       "expected_event_types": [],
@@ -19978,15 +19981,16 @@
         "cmd.chat.memory.discard dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.discard must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.chat.memory.discard must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): memory_sheet also raise cmd.chat.memory.discard, and no other surface is added. Each reads state.commands.chat_memory_discard.availability and state.commands.chat_memory_discard.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them.",
         "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.discard has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.discard; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_discard.availability",
       "disabled_reason_projection": "state.commands.chat_memory_discard.disabled_reason",
       "effect_contract": {
@@ -19997,10 +20001,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_discard exposes a stable role/name/description matching cmd.chat.memory.discard.",
-        "keyboard_access": "catalog.chat_memory_discard is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_discard preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_discard surfaces state.commands.chat_memory_discard.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20021,7 +20025,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_discard.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_discard.scope_target",
@@ -20043,11 +20047,12 @@
         "Assert cmd.chat.memory.discard records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_edit": {
       "ui_element_id": "catalog.chat_memory_edit",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Memory page in Settings and the same page as a sheet over the initiating chat",
       "ui_command_id": "cmd.chat.memory.edit",
       "handler_location": "handlers::chat::memory_edit",
       "expected_event_types": [],
@@ -20061,15 +20066,16 @@
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475: Owner-checked canonical MemoryGist edit commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "Remain handler_unavailable until native dispatcher, owner source, permission and durable write evidence exists."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.memory.edit; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_memory_edit.availability",
       "disabled_reason_projection": "state.commands.chat_memory_edit.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Projects refresh: cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Owner-checked canonical MemoryGist edit commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
         "receipt_or_event_refs": [
           "cmd.chat.memory.edit.dispatch_receipt"
         ]
@@ -20094,7 +20100,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_edit.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Owner-checked canonical MemoryGist edit commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
         },
         {
           "test_id": "wiring.catalog.chat_memory_edit.accessibility",
@@ -20114,18 +20120,18 @@
         {
           "test_id": "fb.catalog.chat_memory_edit.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "Owner-checked canonical MemoryGist edit commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.memory.edit records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert exact owner durable mutation receipt, refusal before stale/denied/helper write, no premature success and no unregistered EventRecord."
       ],
-      "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "request_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteEditRequestV1",
+      "result_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1"
     },
     "catalog.chat_memory_pin": {
       "ui_element_id": "catalog.chat_memory_pin",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.pin",
       "handler_location": "handlers::chat::memory_pin",
       "expected_event_types": [],
@@ -20135,15 +20141,16 @@
         "cmd.chat.memory.pin dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.pin must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.chat.memory.pin must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): memory_sheet also raise cmd.chat.memory.pin, and no other surface is added. Each reads state.commands.chat_memory_pin.availability and state.commands.chat_memory_pin.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them.",
         "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.pin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.pin; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_pin.availability",
       "disabled_reason_projection": "state.commands.chat_memory_pin.disabled_reason",
       "effect_contract": {
@@ -20154,10 +20161,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_pin exposes a stable role/name/description matching cmd.chat.memory.pin.",
-        "keyboard_access": "catalog.chat_memory_pin is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_pin preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_pin surfaces state.commands.chat_memory_pin.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20178,7 +20185,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_pin.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_pin.scope_target",
@@ -20200,11 +20207,12 @@
         "Assert cmd.chat.memory.pin records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_preview_capsule": {
       "ui_element_id": "catalog.chat_memory_preview_capsule",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.preview_capsule",
       "handler_location": "handlers::chat::memory_preview_capsule",
       "expected_event_types": [],
@@ -20214,15 +20222,16 @@
         "cmd.chat.memory.preview_capsule dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.preview_capsule must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.chat.memory.preview_capsule must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062; teach_document by UCC-172, WM-063): memory_sheet, teach_document also raise cmd.chat.memory.preview_capsule, and no other surface is added. Each reads state.commands.chat_memory_preview_capsule.availability and state.commands.chat_memory_preview_capsule.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. See what your next message will include is this row: a preview computation with no persisted domain event.",
         "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.preview_capsule has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.preview_capsule; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_preview_capsule.availability",
       "disabled_reason_projection": "state.commands.chat_memory_preview_capsule.disabled_reason",
       "effect_contract": {
@@ -20233,10 +20242,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_preview_capsule exposes a stable role/name/description matching cmd.chat.memory.preview_capsule.",
-        "keyboard_access": "catalog.chat_memory_preview_capsule is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_preview_capsule preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_preview_capsule surfaces state.commands.chat_memory_preview_capsule.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20257,7 +20266,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_preview_capsule.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_preview_capsule.scope_target",
@@ -20279,11 +20288,12 @@
         "Assert cmd.chat.memory.preview_capsule records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_prune_archive": {
       "ui_element_id": "catalog.chat_memory_prune_archive",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.prune_archive",
       "handler_location": "handlers::chat::memory_prune_archive",
       "expected_event_types": [],
@@ -20298,9 +20308,11 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.prune_archive has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.prune_archive; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_prune_archive.availability",
       "disabled_reason_projection": "state.commands.chat_memory_prune_archive.disabled_reason",
       "effect_contract": {
@@ -20311,10 +20323,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_prune_archive exposes a stable role/name/description matching cmd.chat.memory.prune_archive.",
-        "keyboard_access": "catalog.chat_memory_prune_archive is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_prune_archive preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_prune_archive surfaces state.commands.chat_memory_prune_archive.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20335,7 +20347,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_prune_archive.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_prune_archive.scope_target",
@@ -20357,11 +20369,12 @@
         "Assert cmd.chat.memory.prune_archive records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_rebuild_lexical_index": {
       "ui_element_id": "catalog.chat_memory_rebuild_lexical_index",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.rebuild_lexical_index",
       "handler_location": "handlers::chat::memory_rebuild_lexical_index",
       "expected_event_types": [],
@@ -20376,9 +20389,11 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.rebuild_lexical_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.rebuild_lexical_index; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_rebuild_lexical_index.availability",
       "disabled_reason_projection": "state.commands.chat_memory_rebuild_lexical_index.disabled_reason",
       "effect_contract": {
@@ -20389,10 +20404,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_rebuild_lexical_index exposes a stable role/name/description matching cmd.chat.memory.rebuild_lexical_index.",
-        "keyboard_access": "catalog.chat_memory_rebuild_lexical_index is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_rebuild_lexical_index preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_rebuild_lexical_index surfaces state.commands.chat_memory_rebuild_lexical_index.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20413,7 +20428,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_rebuild_lexical_index.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_rebuild_lexical_index.scope_target",
@@ -20435,11 +20450,12 @@
         "Assert cmd.chat.memory.rebuild_lexical_index records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_rebuild_semantic_index": {
       "ui_element_id": "catalog.chat_memory_rebuild_semantic_index",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.rebuild_semantic_index",
       "handler_location": "handlers::chat::memory_rebuild_semantic_index",
       "expected_event_types": [],
@@ -20454,9 +20470,11 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.rebuild_semantic_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.rebuild_semantic_index; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_rebuild_semantic_index.availability",
       "disabled_reason_projection": "state.commands.chat_memory_rebuild_semantic_index.disabled_reason",
       "effect_contract": {
@@ -20467,10 +20485,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_rebuild_semantic_index exposes a stable role/name/description matching cmd.chat.memory.rebuild_semantic_index.",
-        "keyboard_access": "catalog.chat_memory_rebuild_semantic_index is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_rebuild_semantic_index preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_rebuild_semantic_index surfaces state.commands.chat_memory_rebuild_semantic_index.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20491,7 +20509,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_rebuild_semantic_index.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_rebuild_semantic_index.scope_target",
@@ -20513,11 +20531,12 @@
         "Assert cmd.chat.memory.rebuild_semantic_index records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_summarize_monthly": {
       "ui_element_id": "catalog.chat_memory_summarize_monthly",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.summarize_monthly",
       "handler_location": "handlers::chat::memory_summarize_monthly",
       "expected_event_types": [],
@@ -20532,9 +20551,11 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.summarize_monthly has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.summarize_monthly; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_summarize_monthly.availability",
       "disabled_reason_projection": "state.commands.chat_memory_summarize_monthly.disabled_reason",
       "effect_contract": {
@@ -20545,10 +20566,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_summarize_monthly exposes a stable role/name/description matching cmd.chat.memory.summarize_monthly.",
-        "keyboard_access": "catalog.chat_memory_summarize_monthly is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_summarize_monthly preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_summarize_monthly surfaces state.commands.chat_memory_summarize_monthly.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20569,7 +20590,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_summarize_monthly.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_summarize_monthly.scope_target",
@@ -20591,11 +20612,12 @@
         "Assert cmd.chat.memory.summarize_monthly records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_toggle_auto_save_unverified": {
       "ui_element_id": "catalog.chat_memory_toggle_auto_save_unverified",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.toggle_auto_save_unverified",
       "handler_location": "handlers::chat::memory_toggle_auto_save_unverified",
       "expected_event_types": [],
@@ -20605,15 +20627,16 @@
         "cmd.chat.memory.toggle_auto_save_unverified dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.toggle_auto_save_unverified must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.chat.memory.toggle_auto_save_unverified must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): memory_sheet also raise cmd.chat.memory.toggle_auto_save_unverified, and no other surface is added. Each reads state.commands.chat_memory_toggle_auto_save_unverified.availability and state.commands.chat_memory_toggle_auto_save_unverified.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them.",
         "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.toggle_auto_save_unverified has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.toggle_auto_save_unverified; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_toggle_auto_save_unverified.availability",
       "disabled_reason_projection": "state.commands.chat_memory_toggle_auto_save_unverified.disabled_reason",
       "effect_contract": {
@@ -20624,10 +20647,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_toggle_auto_save_unverified exposes a stable role/name/description matching cmd.chat.memory.toggle_auto_save_unverified.",
-        "keyboard_access": "catalog.chat_memory_toggle_auto_save_unverified is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_toggle_auto_save_unverified preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_toggle_auto_save_unverified surfaces state.commands.chat_memory_toggle_auto_save_unverified.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20648,7 +20671,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_toggle_auto_save_unverified.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_toggle_auto_save_unverified.scope_target",
@@ -20670,11 +20693,12 @@
         "Assert cmd.chat.memory.toggle_auto_save_unverified records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_verification_sweep": {
       "ui_element_id": "catalog.chat_memory_verification_sweep",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.verification_sweep",
       "handler_location": "handlers::chat::memory_verification_sweep",
       "expected_event_types": [],
@@ -20689,9 +20713,11 @@
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.verification_sweep has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.verification_sweep; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_verification_sweep.availability",
       "disabled_reason_projection": "state.commands.chat_memory_verification_sweep.disabled_reason",
       "effect_contract": {
@@ -20702,10 +20728,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_verification_sweep exposes a stable role/name/description matching cmd.chat.memory.verification_sweep.",
-        "keyboard_access": "catalog.chat_memory_verification_sweep is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_verification_sweep preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_verification_sweep surfaces state.commands.chat_memory_verification_sweep.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20726,7 +20752,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_verification_sweep.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_verification_sweep.scope_target",
@@ -20748,11 +20774,12 @@
         "Assert cmd.chat.memory.verification_sweep records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_memory_verify": {
       "ui_element_id": "catalog.chat_memory_verify",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Internal support/compatibility only (DL-475); no ordinary GUI producer, menu, sheet, reply control or unavailable placeholder.",
       "ui_command_id": "cmd.chat.memory.verify",
       "handler_location": "handlers::chat::memory_verify",
       "expected_event_types": [],
@@ -20762,15 +20789,16 @@
         "cmd.chat.memory.verify dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.memory.verify must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.chat.memory.verify must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): memory_sheet also raise cmd.chat.memory.verify, and no other surface is added. Each reads state.commands.chat_memory_verify.availability and state.commands.chat_memory_verify.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them.",
         "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
         "Projects refresh exact effect: cmd.chat.memory.verify has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475 retires all ordinary UI producers permanently. Assert zero rendered controls, GUI consumer bindings, touch triggers, keyboard/menu bindings and placeholders for this retained command.",
+        "Internal invocation remains permission/scope/revision/Stop/source-admission gated; maintenance holds and exact legacy request/result codecs remain. No native proof or Event Authority is inferred."
       ],
-      "evidence_required": "Production wiring contract for cmd.chat.memory.verify; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Internal compatibility/support evidence only: exact sole handler, typed request/result, permission/currentness/restart/Stop and hold checks, zero ordinary GUI producers and zero unregistered EventRecord effects. Existing metadata is not native implementation proof.",
       "state_selector": "state.commands.chat_memory_verify.availability",
       "disabled_reason_projection": "state.commands.chat_memory_verify.disabled_reason",
       "effect_contract": {
@@ -20781,10 +20809,10 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_memory_verify exposes a stable role/name/description matching cmd.chat.memory.verify.",
-        "keyboard_access": "catalog.chat_memory_verify is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_memory_verify preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_memory_verify surfaces state.commands.chat_memory_verify.disabled_reason to assistive technology when unavailable."
+        "role_or_semantics": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "keyboard_access": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "focus_management": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated.",
+        "disabled_announcement": "No ordinary rendered control or keyboard/focus/announcement producer exists. Retained support invocation is internal and owner-gated."
       },
       "test_evidence": [
         {
@@ -20805,7 +20833,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_verify.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+          "requirement": "Assert absence of every ordinary GUI control, keyboard binding and unavailable placeholder; retained internal request/result/permission and hold checks remain."
         },
         {
           "test_id": "fb.catalog.chat_memory_verify.scope_target",
@@ -20827,7 +20855,8 @@
         "Assert cmd.chat.memory.verify records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "ui_disposition": "internal_support_only"
     },
     "catalog.chat_mode": {
       "ui_element_id": "catalog.chat_mode",
@@ -91447,6 +91476,164 @@
       "event_test_requirements": [
         "Assert cmd.teacher.guide.do_it records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
+    },
+    "catalog.chat_memory_add": {
+      "ui_element_id": "catalog.chat_memory_add",
+      "ui_location": "Memory page in Settings and the same page as a sheet over the initiating chat",
+      "ui_command_id": "cmd.chat.memory.add",
+      "handler_location": "handlers::chat::memory_add",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.memory.add must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.memory.add must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.memory.add dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.memory.add must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.memory.add must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
+        "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
+        "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
+        "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475: Owner-checked canonical MemoryGist add commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "Remain handler_unavailable until native dispatcher, owner source, permission and durable write evidence exists."
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.memory.add; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_memory_add.availability",
+      "disabled_reason_projection": "state.commands.chat_memory_add.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner-checked canonical MemoryGist add commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "receipt_or_event_refs": [
+          "cmd.chat.memory.add.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_memory_add exposes a stable role/name/description matching cmd.chat.memory.add.",
+        "keyboard_access": "catalog.chat_memory_add is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_memory_add preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_memory_add surfaces state.commands.chat_memory_add.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_memory_add.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.memory.add reaches handlers::chat::memory_add with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_add.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_memory_add.availability and disabled copy reads state.commands.chat_memory_add.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_add.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Owner-checked canonical MemoryGist add commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_add.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_add.scope_target",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Positive real app/Project target and original exact Project replay; negative wrong scope/Computer/root/owner target; no native proof from fixtures."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_add.currentness",
+          "evidence_kind": "state_projection",
+          "requirement": "Changed preview/source/target/permission/Stop/pause or stale caller return refuses before effect, and repeated original key/digest cannot repeat effects."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_add.owner_return",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Owner-checked canonical MemoryGist add commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert exact owner durable mutation receipt, refusal before stale/denied/helper write, no premature success and no unregistered EventRecord."
+      ],
+      "request_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteAddRequestV1",
+      "result_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1"
+    },
+    "catalog.chat_memory_delete": {
+      "ui_element_id": "catalog.chat_memory_delete",
+      "ui_location": "Memory page in Settings and the same page as a sheet over the initiating chat",
+      "ui_command_id": "cmd.chat.memory.delete",
+      "handler_location": "handlers::chat::memory_delete",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.memory.delete must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.memory.delete must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.memory.delete dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.memory.delete must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.memory.delete must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
+        "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
+        "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
+        "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475: Owner-checked canonical MemoryGist delete commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "Remain handler_unavailable until native dispatcher, owner source, permission and durable write evidence exists."
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.memory.delete; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_memory_delete.availability",
+      "disabled_reason_projection": "state.commands.chat_memory_delete.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner-checked canonical MemoryGist delete commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "receipt_or_event_refs": [
+          "cmd.chat.memory.delete.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_memory_delete exposes a stable role/name/description matching cmd.chat.memory.delete.",
+        "keyboard_access": "catalog.chat_memory_delete is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_memory_delete preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_memory_delete surfaces state.commands.chat_memory_delete.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_memory_delete.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.memory.delete reaches handlers::chat::memory_delete with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_delete.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_memory_delete.availability and disabled copy reads state.commands.chat_memory_delete.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_delete.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Owner-checked canonical MemoryGist delete commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_delete.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_delete.scope_target",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Positive real app/Project target and original exact Project replay; negative wrong scope/Computer/root/owner target; no native proof from fixtures."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_delete.currentness",
+          "evidence_kind": "state_projection",
+          "requirement": "Changed preview/source/target/permission/Stop/pause or stale caller return refuses before effect, and repeated original key/digest cannot repeat effects."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_delete.owner_return",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Owner-checked canonical MemoryGist delete commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert exact owner durable mutation receipt, refusal before stale/denied/helper write, no premature success and no unregistered EventRecord."
+      ],
+      "request_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteDeleteRequestV1",
+      "result_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1"
     }
   }
 }
