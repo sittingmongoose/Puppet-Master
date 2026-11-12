@@ -14,6 +14,9 @@
 //
 // --set looks=<a,b> (default basic-dark)   --set settle=<ms> (default 30000)
 // Both surfaces. No Stop chip, or fewer than two switches seen, fails as "could not judge".
+// F2 also changes Settings' Animation speed from Measured to Fast during both flowing and waiting loops. The waiting
+// duration's longhand rescales; the flowing var-shorthand remains 2200 ms in Chromium. Every ensuing cadence change
+// must remain near a boundary. --set speedOnly=1 runs only these regressions for the main/rc3 controls.
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 
 const WATCH = () => {
@@ -58,6 +61,45 @@ export default async function (t) {
 		await f.evaluate(() => PM_PAGES.go('dashboard'));
 		await parkPointer(t.page, W, H);
 		await t.page.waitForTimeout(3000);
+		for (const cadence of ['flowing', 'waiting']) {
+		await t.check(`${look} ${cadence}: Settings accepts Measured animation speed`, await f.evaluate(() => PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured')));
+		await f.evaluate(() => PM56_DEMO.pauseWorking());
+		await t.page.waitForTimeout(250);
+		await f.evaluate(WATCH);
+		const speed = await f.evaluate(async (cadence) => {
+			if (cadence === 'flowing') PM56_SENDSTOP.token();
+			PM56_DEMO.startWorking();
+			await new Promise((r) => setTimeout(r, 100));
+			const b = document.querySelector('.pm56-host .sendstop, #pmRoot .sendstop');
+			const name = cadence === 'flowing' ? 'ss-breathe' : 'ss-breathe-w';
+			const a = b?.querySelector('.ss-g')?.getAnimations().find((x) => x.animationName === name);
+			if (!a) return { error: `no ${cadence} animation after start` };
+			const initial = { flow: b.getAttribute('data-flow'), ...a.effect.getTiming() };
+			await new Promise((r) => setTimeout(r, Math.max(0, 1000 - Number(a.currentTime))));
+			const changedAt = document.timeline.currentTime;
+			const accepted = PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Fast');
+			await new Promise((r) => setTimeout(r, 100));
+			const current = b.querySelector('.ss-g').getAnimations().find((x) => x.animationName === name);
+			const changed = current && { sameAnimation: current === a, ...current.effect.getTiming() };
+			const painted = { value: window.PM51?.value('general.visual.animation-speed'), sheet: !!document.getElementById('o55-look-scale') };
+			const feed = cadence === 'waiting' ? setInterval(() => PM56_SENDSTOP.token(), 100) : null;
+			await new Promise((r) => setTimeout(r, 5500));
+			if (feed) clearInterval(feed);
+			return { initial, changedAt, accepted, changed, painted };
+		}, cadence);
+		const live = await f.evaluate(() => { const R = window.__beat; clearInterval(R.poll); R.mo.disconnect(); return R.recs; });
+		t.log(`${look} ${cadence} live Animation speed change: ${JSON.stringify(speed)}; records ${JSON.stringify(live)}`);
+		// The flowing shorthand contains variables: Chromium's CSSOM exposes no animation-duration for Settings to
+		// scale there (2200 ms). The waiting rule has an explicit 3200 ms longhand, which Fast scales to 1920 ms.
+		await t.check(`${look} ${cadence}: live Fast setting is painted with the animation retained`, speed.accepted && speed.painted?.value === 'Fast' && speed.painted.sheet && speed.initial?.flow === cadence && speed.initial.duration === (cadence === 'flowing' ? 2200 : 3200) && speed.initial.delay === 800 && speed.changed?.sameAnimation && (cadence === 'flowing' ? [2200, 1320].includes(speed.changed.duration) : speed.changed.duration === 1920) && speed.changed.delay === 800, JSON.stringify(speed));
+		const changes = live.filter((r) => r.attr === 'data-flow' && r.errMs != null && r.flowed && r.t >= speed.changedAt);
+		await t.check(`${look} ${cadence}: a cadence change is seen after live Animation speed changes`, changes.length > 0, JSON.stringify(changes));
+		await t.check(`${look} ${cadence}: every cadence change after live Animation speed stays within ${near} ms of a boundary`, changes.length > 0 && changes.every((r) => Math.abs(r.errMs) <= near), JSON.stringify(changes));
+		await f.evaluate(() => PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured'));
+		}
+		if (String(t.args.speedOnly || '0') === '1') continue;
+		await f.evaluate(() => PM56_DEMO.pauseWorking());
+		await t.page.waitForTimeout(250);
 		await f.evaluate(() => window.PM56_DEMO.startWorking());
 		await t.page.waitForTimeout(1500);
 		const init = await f.evaluate(WATCH);

@@ -520,7 +520,10 @@
     else document.documentElement.style.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.tier = false; room.lg = false; room.own = 0; room.keepWas = 0; room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
+  /* (a dropped room needs no frame: one still asked for is given back. A hold that expires in the frame in which the
+     content already reaches the floor wakes the loop in releaseRoom and is dropped a few lines later, and that wake
+     then ran one frame for nothing) */
+  function dropRoom() { room.tier = false; room.lg = false; room.own = 0; room.keepWas = 0; room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); if (room.raf) { cancelAnimationFrame(room.raf); room.raf = 0; } }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -936,7 +939,9 @@
     try { C().followIfSticky(); } catch (e) { }
     if (room.rel && room.lg) lgMark(inner);
     if (still) return;
-    room.raf = requestAnimationFrame(roomTick);
+    /* An expiring hold calls releaseRoom above, whose wake already queued the next frame. Keep that one chain;
+       releaseRoom must still wake a sleeping room when called outside roomFrame. */
+    if (!room.raf) room.raf = requestAnimationFrame(roomTick);
   }
 
   /* ================================================================ 6 directors
