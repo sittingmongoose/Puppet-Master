@@ -4970,9 +4970,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   function openDialog({ title, subtitle = '', body = '', saveLabel = 'Save changes', cancelLabel = 'Cancel', wide = false, onSave = null, onOpen = null }) {
     const returnTarget=captureTransientFocus();closeOverlay(false);
     const overlay=document.createElement('div');overlay.className='overlay';overlay._pmReturnFocus=returnTarget;
-    overlay.innerHTML=`<section class="dialog ${wide?'wide':''}" role="dialog" aria-modal="true" aria-label="${escAttr(title)}">
+    /* FO-154: a plain confirm carries its message in the subtitle, so it has no body at all. An empty
+       .dialog-body kept its 17px padding and drew a blank band between the head's rule and the footer's;
+       with nothing to show, the body is not rendered (and no-body drops the head's rule so the footer's
+       own rule stays the single divider). */
+    const hasBody=String(body==null?'':body).trim()!=='';
+    overlay.innerHTML=`<section class="dialog ${wide?'wide':''}${hasBody?'':' no-body'}" role="dialog" aria-modal="true" aria-label="${escAttr(title)}">
       <div class="dialog-head"><div class="dialog-head-copy"><div class="dialog-title">${escapeHtml(title)}</div>${subtitle?`<div class="dialog-sub">${escapeHtml(subtitle)}</div>`:''}</div><button class="icon-btn" data-action="close-overlay" aria-label="Close">${icon('close')}</button></div>
-      <form class="dialog-form"><div class="dialog-body">${body}</div><div class="dialog-footer"><button type="button" class="btn" data-action="close-overlay">${escapeHtml(cancelLabel)}</button>${onSave?`<button type="submit" class="btn primary">${escapeHtml(saveLabel)}</button>`:''}</div></form>
+      <form class="dialog-form">${hasBody?`<div class="dialog-body">${body}</div>`:''}<div class="dialog-footer"><button type="button" class="btn" data-action="close-overlay">${escapeHtml(cancelLabel)}</button>${onSave?`<button type="submit" class="btn primary">${escapeHtml(saveLabel)}</button>`:''}</div></form>
     </section>`;
     portalRoot().append(overlay);overlay.addEventListener('mousedown',e=>{if(e.target===overlay)closeOverlay();});
     const form=overlay.querySelector('form');

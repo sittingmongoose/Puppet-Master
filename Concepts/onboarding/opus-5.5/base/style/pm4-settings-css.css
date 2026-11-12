@@ -825,6 +825,8 @@
 #panel-settings .dialog.wide { width: min(860px, 100%); }
 @keyframes dialogIn { from { opacity: 0; transform: translateY(12px) scale(.982); } to { opacity: 1; transform: none; } }
 #panel-settings .dialog-head { display: flex; align-items: flex-start; gap: 11px; padding: 17px 18px; border-bottom: 1px solid var(--k3-line); }
+/* FO-154: a dialog with no body (a plain confirm) shows no body and one divider: the footer's own rule. */
+#panel-settings .dialog.no-body .dialog-head { border-bottom: 0; }
 #panel-settings .dialog-head-copy { flex: 1; min-width: 0; }
 #panel-settings .dialog-title { font-size: 14px; font-weight: 730; }
 #panel-settings .dialog-sub { margin-top: 4px; color: var(--k3-text-3); font-size: 10.5px; line-height: 1.45; }
