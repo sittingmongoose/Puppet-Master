@@ -151,6 +151,10 @@ html[data-o55-nier="on"] .pm7-mem-layer > .pm7-mem-sheet { border-radius: 0; box
 html[data-motion="reduced"] .pm7-mem-layer > .pm7-mem-sheet, html[data-motion="reduced"] .pm7-mem-layer > .pm7-mem-scrim { transition: none; }
 
 /* ---- the rule documents' editor and the working space split ---------------------------------------------------- */
+#panel-settings .o55-mem-doc { display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0; max-width: 100%; }
+#panel-settings .o55-mem-doc-preview { min-width: 0; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--k3-mono, ui-monospace, monospace); font-size: 11.5px; color: var(--k3-text-2); }
+#panel-settings .o55-mem-doc-preview.is-empty { font-family: inherit; color: var(--k3-text-3); }
+#panel-settings .o55-mem-doc-edit { flex: 0 0 auto; }
 #panel-settings .o55-mem-editor { width: 100%; min-height: 280px; box-sizing: border-box; padding: 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); color: var(--k3-text-1); font: 12.5px/1.6 var(--k3-mono, ui-monospace, monospace); resize: vertical; }
 #panel-settings .o55-mem-split-bar { display: flex; gap: 2px; height: 14px; border-radius: min(var(--pm-ctl-r, 4px), 3px); overflow: hidden; background: var(--k3-bg-2); box-shadow: inset 0 0 0 1px var(--k3-line); }
 #panel-settings .o55-mem-split-bar span { height: 100%; flex: none; transition: width 260ms ease; }

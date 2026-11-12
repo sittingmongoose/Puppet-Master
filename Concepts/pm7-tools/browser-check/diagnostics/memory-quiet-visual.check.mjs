@@ -3,7 +3,8 @@
 // Each look (--set looks=, default Basic Dark, Basic Light, Glass Dark, NieR Dark) at 1390x900 and 390x844, normal page:
 //   01 Settings > Memory · 03 Add memory · 04 its "Where it's available" picker · 05 Delete with its confirm (the
 //   recipe photos note, as the mock) · 06 the level filter · 07 search "docs" reaching Archived · 08 a reply that saved
-//   something · 09 "Remember that I always use pnpm" · 10 the chat's Memory button opens the sheet.
+//   something · 09 "Remember that I always use pnpm" · 10 the chat's Memory button opens the sheet · 11 Standing
+//   instructions in Personas & Crews > Defaults · 12 the rows waiting for Plans in Advanced Settings (no mock for 11, 12).
 // Shots only (LOOK lines); memory-quiet.check.mjs asserts the behaviour. --set states=01,10 limits the states.
 import { setLookBySetting } from '../helpers/settings-look.mjs';
 
@@ -83,6 +84,18 @@ export const tests = {
 					await t.page.waitForTimeout(500);
 					await t.shot(`${look}-05-delete-confirm-${size}`, `${look} ${size}: Delete with its confirm, compare mock 05`);
 					await esc(t, 2);
+				}
+				if ((on('11') || on('12')) && size === 'desktop') {
+					// where the rows the Memory page no longer draws live: the rule documents (Personas & Crews > Defaults >
+					// Standing instructions), and the rows waiting for Plans (Advanced Settings > More options)
+					for (const [state, id, what] of [['11', 'memory.assembly.app-rules', 'standing-instructions'], ['12', 'memory.retention.gist-review-filter', 'advanced-waiting-rows']]) {
+						if (!on(state)) continue;
+						await f.evaluate((i) => PM51.revealSetting(i), id);
+						await f.waitForSelector(`[id="setting-${id}"]`, { state: 'attached', timeout: 15000 }).catch(() => {});
+						await t.page.waitForTimeout(900);
+						await t.shot(`${look}-${state}-${what}-${size}`, `${look} ${size}: ${what} (no mock screen: where the rows went)`);
+					}
+					await toMemory(t, f, w);
 				}
 				await toHome(t, f, w);
 				if (on('08')) {

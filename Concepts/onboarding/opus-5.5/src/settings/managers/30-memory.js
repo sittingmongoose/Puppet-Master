@@ -373,6 +373,19 @@
 
   /* ---------- the rule documents (Standing instructions): a real editor, never a one-line box ---------- */
   const docText = id => { const v = String(PM51.value(id) || ''); return id === S.appRules && v === APP_RULES_SEED ? '' : v; };
+  /* their rows (Personas & Crews > Defaults > Standing instructions) show the document's first line and Edit (Write when
+     empty), never a one-line box, wherever the kit draws them: the page, All Settings, Details */
+  function docControl(id) {
+    const text = docText(id).trim(), row = PM51.rowMeta(id) || {};
+    const first = text.split('\n').find(l => l.trim()) || '', lines = text ? text.split('\n').filter(l => l.trim()).length : 0;
+    return `<span class="o55-mem-doc"><span class="o55-mem-doc-preview${text ? '' : ' is-empty'}">${h(text ? `${first}${lines > 1 ? ` · ${lines} lines` : ''}` : (row.placeholder || 'Nothing yet'))}</span>`
+      + PM51.btn({ label: text ? 'Edit' : 'Write', icon: 'edit', small: true, action: 'pm51-memory-rules', data: { setting: id }, cls: 'o55-mem-doc-edit' }) + `</span>`;
+  }
+  const mmRenderControl = renderControl;
+  renderControl = function (setting) {
+    if (setting && (setting.id === S.appRules || setting.id === S.projectRules)) return docControl(setting.id);
+    return mmRenderControl.apply(this, arguments);
+  };
   PM51.on('memory-rules', el => {
     const id = ds(el, 'setting'); const s = PM51.setting(id); if (!s) return;
     const project = id === S.projectRules; const row = PM51.rowMeta(id) || {};
