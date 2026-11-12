@@ -600,6 +600,70 @@ def negatives(suite):
     neg('C6/neg/reinstall_permission_revoked', reinstall_permission, 'M/reinstall/permission', 'reinstall')
 
 
+def guard_negatives(suite):
+    """One-defect negatives aimed at each remaining C6 coordinator guard (check 11 inputs)."""
+    def neg(name, setup, expected, boundary):
+        suite.negative(G, name, setup, expected, boundary=boundary)
+
+    def enrolled(**kw):
+        w, scope = new(suite, **kw)
+        sel, req, res = run(w, scope)
+        return w, scope, sel, res
+
+    def host_epoch():
+        w, scope = new(suite)
+        sel = M.selector(scope)
+        req = w.coordinator.capture(sel)
+
+        def hook(c):
+            c.world.host_stop.owner_epoch += 1
+        w.coordinator.inject[('commit', 'after_derive')] = hook
+        return w, lambda: w.coordinator.commit(req)
+    neg('C6/neg/boundary/after_derive/host_owner_epoch', host_epoch, 'M/commit/final_candidate', 'commit/after_derive')
+
+    def ambiguous_manifest():
+        w, scope = new(suite)
+        sel = M.selector(scope)
+        w.coordinator.capture(sel)
+        key = w.coordinator.part_key(scope, sel['migration_id'], 0)
+        w.write([w.put(M.PART, key, dict(qualification='TEST_ONLY', partial=True))])
+        mark(w, M.PART, key)
+        return w, lambda: w.coordinator.recover(sel)
+    neg('C6/neg/recover_manifest_part_without_result_stays_unknown', ambiguous_manifest, 'M/recover/ambiguous_manifest', 'recover')
+
+    def unknown_result():
+        w, scope, sel, res = enrolled()
+        return w, lambda: w.coordinator.read_result(M.selector(scope))
+    neg('C6/neg/read_result_unknown_migration_identity', unknown_result, 'M/read_result/result_unavailable', 'read_result')
+
+    def only_part_deleted():
+        w, scope, sel, res = enrolled()
+        key = w.coordinator.part_key(scope, sel['migration_id'], 0)
+        w.write([dict(table=M.PART, key=key, expected=w.cell(M.PART, key)['version'], delete=True)])
+        mark(w, M.PART, key)
+        return w, lambda: w.coordinator.read_result(sel)
+    neg('C6/neg/manifest/only_part_missing', only_part_deleted, 'M/read_result/manifest_unavailable', 'read_result')
+
+    def immutable_deleted():
+        w, scope, sel, res = enrolled()
+        key = w.binding.keys(scope, 0)['origin']
+        w.write([dict(table=w.binding.ORIGIN, key=key, expected=w.cell(w.binding.ORIGIN, key)['version'], delete=True)])
+        mark(w, w.binding.ORIGIN, key)
+        return w, lambda: w.coordinator.read_result(sel)
+    neg('C6/neg/immutable_destination_missing', immutable_deleted, 'M/read_result/destination_unavailable', 'read_result')
+
+    def reinstall_unenrolled():
+        w, scope, sel, res = enrolled()
+        w.coordinator.withdraw(withdrawal_request(w, scope, sel['migration_id']))
+        other = B.legacy_goal(w)
+        for t in (M.WITHDRAWAL, B.CUTOFF):
+            for k in w.storage.cells.get(t, {}):
+                mark(w, t, k)
+        return w, lambda: w.coordinator.reinstall([scope, other])
+    neg('C6/neg/reinstall_names_an_unenrolled_goal', reinstall_unenrolled, 'M/reinstall/binding_unavailable', 'reinstall')
+
+
 def cases(suite):
     positives(suite)
     negatives(suite)
+    guard_negatives(suite)

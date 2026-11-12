@@ -7574,6 +7574,8 @@ validation_surfaces:
 - Plans/goal_own_c_contracts/source-witness-inputs.json
 - scripts/pm_goal_own_c_oracles.py
 - Plans/goal_own_c_contracts/protocol.md
+- python3 scripts/pm_goal_dg_cb_oracles.py
+- Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json
 risk_class: forged_original_authority_or_lost_pending_effect
 reasoning_tier: high
 context_scope: dg_own_c_20261105
@@ -7595,6 +7597,8 @@ negative_constraints:
 ```
 
 The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration and three original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12b adds explicitly bounded no-association migration/cancellation witnesses and a per-method remaining inventory. Its complete inherited W2 tuple coverage remains NOT_COMPLETE. DG-CA (2026-11-11) executes the C1 authenticated no-association route as a complete TEST_ONLY original path on the shared owner adapters, with child-process crash cuts of its Event protocol, and maps every inherited method row in `Plans/goal_own_c_contracts/dg-ca-corpus-v1/coverage.json`; on 2026-11-12 it adds the complete bound-Plan route (C2) and the SP-305/SP-310 assignment admission with a newly authored SP-337 reference successor for the over-cap assignment audit; the Workflow D05/D06 route (C3) is lane DG-CA3 and the SP-313 v2 private inspection (C4) remains NOT_COMPLETE until that route exists. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+DG-CB (2026-11-12) executes C5 and C6 of M1-M9 as complete TEST_ONLY original paths on the shared owner adapters: the six pre-enrollment owners' issued source images are captured under an all-writer exclusion and authenticated byte for byte, every derived join is checked field by field (unavailable for missing or unsupported data, `blocked_unresolved` for unknown or contradictory effects), and enrollment, recovery, replay, withdrawal and reinstall run as single test-owner Storage transactions with child-process crash cuts. Its per-method map is `Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json`. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
 

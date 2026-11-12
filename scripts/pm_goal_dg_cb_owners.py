@@ -1152,8 +1152,11 @@ class LegacyWorkflowOwner(SourceOwnerMixin, WorldOwner):
         return key, dict(schema_id='pm.test_only.workflow_activation_source.v1', qualification=QUALIFICATION, kind=kind, scope=copy.deepcopy(scope),
                          goal_run_id=run_id, owner_ref=self.owner_id, owner_epoch=self.owner_epoch, at=self.clock.now(), detail=detail)
 
-    def attach(self, scope):
-        """Original Workflow birth bound to the Goal: D01 run body/control, Start birth/update/head and lineage, one joint transaction."""
+    def attach(self, scope, *, goal_body_scope=None):
+        """Original Workflow birth bound to the Goal: D01 run body/control, Start birth/update/head and lineage, one joint transaction.
+
+        ``goal_body_scope`` (negative cases only) makes the run body name another Goal's body as its original Goal body.
+        """
         w = self.world
         with self.recorder.call(self.owner_id, 'attach', dict(scope=scope)) as slot:
             self.require_unexcluded(scope)
@@ -1176,7 +1179,7 @@ class LegacyWorkflowOwner(SourceOwnerMixin, WorldOwner):
             sel = lambda family, key: source_selector(w, family, key)
             binding_of = lambda kind: dict(source=sel(self.ACT, acts[kind]), origin=sel(ORIGINS, origin_key(self.ACT, acts[kind],
                                                                                                              phys_sha(w.value(self.ACT, acts[kind])))))
-            goal_body_key = w.goal.keys(scope)['body']
+            goal_body_key = w.goal.keys(goal_body_scope or scope)['body']
             body = dict(schema_id='pm.storage_value.workflow_goal_run_body.v1', schema_version='1.0.0', storage_instance_id=w.storage_id,
                         physical_key=k['body'], record=dict(identity=identity, revision=1, status='running',
                         activation_state=dict(activation_id=oid('act'), state='active', revision=1, goal_run_id=run_id,
@@ -1505,6 +1508,15 @@ class MigrationRegistrationOwner(O.RegistrationOwner):
         """Register the seven categories at native dispatch (primary implementation each)."""
         w = self.world
         with self.recorder.call(self.owner_id, 'register_all', dict(generation=generation)) as slot:
+            writes, state = self.registration_writes(generation)
+            w.write(writes)
+            slot.set(dict(count=len(state['registrations'])))
+            return state['registrations']
+
+    def registration_writes(self, generation):
+        """The complete registration write set and resulting dispatch state, uncommitted (the caller's transaction commits it)."""
+        w = self.world
+        if True:
             existing = w.cell(DISPATCH, self.state_key())
             writes, registrations, implementations = [], {}, []
             root = uid('TEST_ONLY:native-root')
@@ -1522,9 +1534,7 @@ class MigrationRegistrationOwner(O.RegistrationOwner):
                          registrations=registrations, implementations=implementations)
             lane_bank().validate(TOS + 'NativeDispatchState', state, 'registration/state')
             writes.append(w.put(DISPATCH, self.state_key(), state, expected=None if existing is None else existing['version']))
-            w.write(writes)
-            slot.set(dict(count=len(registrations)))
-            return registrations
+            return writes, state
 
     def _impl(self, registration, kind, generation, *, disposition=None, enrollment='enrolled'):
         return dict(descriptor=dict(operation=registration['operation'], native_handler_id=uid('TEST_ONLY:native-handler:%s:%s' % (registration['operation'], kind))

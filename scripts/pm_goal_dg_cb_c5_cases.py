@@ -792,6 +792,148 @@ def negatives(suite):
     neg('C5/neg/stop_keeps_changing_capture_unavailable', unstable_stop, 'M/capture/stop_unstable', 'capture/yield')
 
 
+def guard_negatives(suite):
+    """One-defect negatives aimed at each remaining coordinator and owner guard (check 11 inputs)."""
+    def neg(name, setup, expected, boundary):
+        suite.negative(G, name, setup, expected, boundary=boundary)
+
+    def capture_of(w, scope):
+        return lambda: w.coordinator.capture(M.selector(scope))
+
+    def dispatch_state(name, mutate, code):
+        def setup():
+            w, scope = new(suite)
+            cell = w.cell(B.DISPATCH, w.registration.state_key())
+            state = copy.deepcopy(cell['value'])
+            mutate(w, state)
+            w.write([w.put(B.DISPATCH, w.registration.state_key(), state, expected=cell['version'])])
+            mark(w, B.DISPATCH, w.registration.state_key())
+            return w, capture_of(w, scope)
+        neg('C5/neg/writers/' + name, setup, code, 'registration')
+    dispatch_state('category_without_implementation', lambda w, st: st.update(implementations=[i for i in st['implementations']
+                   if i['descriptor']['operation'] != 'goal_birth']), 'M/capture/writer_missing/goal_birth')
+
+    def foreign_registration(w, st):
+        impl = [i for i in st['implementations'] if i['descriptor']['operation'] == 'workflow_attach'][0]
+        impl['descriptor']['original_registration_ref'] = st['registrations']['goal_birth']
+    dispatch_state('implementation_joined_to_another_category', foreign_registration, 'M/capture/writer_registration_join/workflow_attach')
+
+    def foreign_storage(w, st):
+        impl = [i for i in st['implementations'] if i['descriptor']['operation'] == 'binding_restore'][0]
+        impl['descriptor']['storage_instance_id'] = '00000000-0000-4000-8000-000000000000'
+    dispatch_state('implementation_of_another_storage', foreign_storage, 'M/capture/writer_storage/binding_restore')
+
+    def stmt(name, defect, code):
+        def setup():
+            w, scope = new(suite)
+            w.goal.statement_defect = defect
+            return w, capture_of(w, scope)
+        neg('C5/neg/statement/' + name, setup, code, 'statement/goal')
+
+    def other_key(m):
+        family, key = M.split(m['sources'][0]['selection']['physical_key'])
+        m['sources'][0]['selection']['physical_key'] = family + '|' + key + ':absent'
+        return m
+    stmt('image_names_absent_original', other_key, 'M/capture/source_absent/goal_body_record')
+
+    def wrong_hash(m):
+        m['sources'][0]['selection']['sha256'] = sha(b'TEST_ONLY:other')
+        return m
+    stmt('selection_hash_substituted', wrong_hash, 'M/capture/source_hash/goal_body_record')
+
+    def origin_hash(m):
+        m['sources'][0]['origin']['sha256'] = sha(b'TEST_ONLY:other-origin')
+        return m
+    stmt('origin_selection_hash_substituted', origin_hash, 'M/capture/origin_hash/goal_body_record')
+
+    def origin_deleted():
+        w, scope = new(suite)
+        k = w.goal.keys(scope)
+        okey = B.origin_key(w.goal.BODY, k['body'], B.phys_sha(w.cell(w.goal.BODY, k['body'])['value']))
+
+        def hook(c):
+            cell = c.world.cell(B.ORIGINS, okey)
+            c.world.write([dict(table=B.ORIGINS, key=okey, expected=cell['version'], delete=True)])
+            mark(c.world, B.ORIGINS, okey)
+        w.coordinator.inject[('capture', 'after_goal')] = hook
+        return w, capture_of(w, scope)
+    neg('C5/neg/origin/deleted_after_owner_statement', origin_deleted, 'M/capture/origin_absent/goal_body_record', 'origin')
+
+    def foreign_goal_body():
+        w, scope = new(suite)
+        other = B.legacy_goal(w)
+        w.workflows.attach(scope, goal_body_scope=other)
+        return w, capture_of(w, scope)
+    neg('C5/neg/workflow_run_names_another_goal_body', foreign_goal_body, 'M/capture/workflow_goal_join', 'derive/workflow')
+
+    def callback_unknown_run():
+        w, scope = new(suite)
+        plan_bound(w, scope, schedules=0, consents=0)
+        w.scheduler.admit_callback(scope, 'TEST_ONLY:run-the-plan-owner-cannot-account-for', run_epoch=0, stop_epoch=1)
+        return w, capture_of(w, scope)
+    neg('C5/neg/scheduler_callback_for_unaccounted_run', callback_unknown_run, 'M/capture/scheduler_unaccounted', 'derive/scheduler')
+
+    def carrier(name, mutate_raw, code, codec=None):
+        def setup():
+            w, scope = new(suite)
+            k = w.goal.keys(scope)
+            cell = w.cell(w.goal.BODY, k['body'])
+            raw = B.physical(cell['value'])[1]
+            value = dict(cell['value'], bytes_hex=mutate_raw(raw).hex())
+            if codec:
+                value['codec_id'] = codec
+            w.write([w.put(w.goal.BODY, k['body'], value, expected=cell['version'])])
+            mark(w, w.goal.BODY, k['body'])
+            return w, capture_of(w, scope)
+        neg('C5/neg/codec/' + name, setup, code, 'goal/image')
+    carrier('json_duplicate_key', lambda raw: raw[:-1] + b',"schema_id":"x"}', 'codec/json_duplicate_key')
+    carrier('msgpack_noncanonical_width', lambda raw: S.canonical({'a': 1})[:-1] + b'\xcc\x01', 'codec/msgpack_decode', codec=B.MSGPACK)  # the shared decoder already refuses the wider width; the canonical re-encode check stays as defense in depth
+
+    def unknown_schema():
+        w, scope = new(suite)
+        k = w.goal.keys(scope)
+        cell = w.cell(w.goal.BODY, k['body'])
+        value = B.json_decode(B.physical(cell['value'])[1])
+        value['schema_id'] = 'pm.storage_value.goal_body_record.v9'
+        w.write([w.put(w.goal.BODY, k['body'], dict(cell['value'], bytes_hex=B.json_encode(value).hex()), expected=cell['version'])])
+        mark(w, w.goal.BODY, k['body'])
+        return w, capture_of(w, scope)
+    neg('C5/neg/unsupported/goal_body_schema_edition', unknown_schema, 'family/unsupported_schema', 'goal/image')
+
+    # owner-model refusals
+    def owner(name, act, code, prepare=None):
+        def setup():
+            w, scope = new(suite)
+            state = prepare(w, scope) if prepare else None
+            return w, lambda: act(w, scope, state)
+        neg('C5/neg/owner/' + name, setup, code, 'owner')
+    owner('host_stop_twice', lambda w, s, st: w.host_stop.manual(s, 'stop'), 'host_stop/already_latched', prepare=lambda w, s: w.host_stop.manual(s, 'stop'))
+    owner('host_resume_unlatched', lambda w, s, st: w.host_stop.manual(s, 'resume'), 'host_stop/not_latched')
+    owner('goal_mutation_after_completed', lambda w, s, st: w.goal.set_state(s, 'active'), 'goal/mutation_completed',
+          prepare=lambda w, s: w.goal.set_state(s, 'completed'))
+    owner('goal_pending_twice', lambda w, s, st: w.goal.reserve_pending(s, 1), 'goal/pending_exists', prepare=lambda w, s: w.goal.reserve_pending(s, 1))
+
+    def sir_conflict(w, s):
+        route, request = cancel_request(w, s)
+        w.sir.accept(request)
+        return dict(request, expected_revision=request['expected_revision'] + 1)
+    owner('sir_altered_dispatch_conflicts', lambda w, s, st: w.sir.accept(st), 'sir/dispatch_conflict', prepare=sir_conflict)
+
+    def stale_check(w, s, st):
+        key = w.goal.keys(s)['control']
+        cell = w.cell(w.goal.CONTROL, key)
+        return w.storage.transact([w.put(B.EXCLUSION, 'TEST_ONLY:probe', dict(qualification='TEST_ONLY'))],
+                                  checks=[dict(table=w.goal.CONTROL, key=key, expected=cell['version'] + 1)])
+    owner('storage_whole_source_cas_stale', stale_check, 'tx/check_version')
+
+    def absent_check(w, s, st):
+        key = w.goal.keys(s)['control']
+        return w.storage.transact([w.put(B.EXCLUSION, 'TEST_ONLY:probe', dict(qualification='TEST_ONLY'))],
+                                  checks=[dict(table=w.goal.CONTROL, key=key, expected=None)])
+    owner('storage_absent_check_present', absent_check, 'tx/check_absent')
+
+
 def cases(suite):
     positives(suite)
     negatives(suite)
+    guard_negatives(suite)

@@ -956,15 +956,24 @@ class Coordinator(WorldOwner):
             require('M/reinstall/domain_not_withdrawn', gen > 0 and w.binding.domain_withdrawn)
             nxt = NR.uint64(gen + 1, 'M/reinstall/generation')
             permission = w.permissions.selection(self.permission(REINSTALL))
-            w.registration.register_all(generation=nxt)
-            state = w.registration.state()
+            for scope in scopes:
+                require('M/reinstall/binding_unavailable', w.cell(w.binding.CONTROL, w.binding.keys(scope)['control']) is not None)
+            reg_writes, state = w.registration.registration_writes(nxt)
+            registrations = {}
+            for write in reg_writes:
+                if write['table'] == w.registration.FAMILY:
+                    registrations[write['value']['operation']] = write['value']
+            writers = [dict(operation=r['operation'], original_owner_ref=r['original_owner_ref'], original_owner_epoch=r['original_owner_epoch'],
+                            method_id=r['native_handler_id'], method_contract_sha256=r['method_contract_sha256'],
+                            schema_resources_sha256=r['schema_resources_sha256'], original_registration_ref=r['registration_ref'],
+                            disposition=r['disposition']) for r in (registrations[op] for op in WRITERS)]
             dispatch = dict(domain='pm.goal.execution_dispatch.v1', storage_instance_id=w.storage_id, native_root_identity=state['root_identity'],
-                            complete_descriptors=w.registration.descriptors())
+                            complete_descriptors=[i['descriptor'] for i in state['implementations'] if i['enrollment'] == 'enrolled'])
             op, tx_ref = uid('TEST_ONLY:reinstall'), uid('TEST_ONLY:reinstall-tx')
             domain = w.roots.check('producer', BINDING + '#/$defs/WriterDomain', dict(
                 storage_instance_id=w.storage_id, domain_generation=nxt, native_root_identity=state['root_identity'],
                 schema_resources_sha256=w.shared.producer_bank_sha256, complete_original_dispatch_registration_sha256=w.codec.h(dispatch),
-                writers=w.registration.writer_registrations(),
+                writers=writers,
                 original_installation=transaction_record(self, 'owner.goal.execution_binding.install_writer_domain.v1', op, permission, tx_ref, op)))
             dkey = 'goal_execution_writer_domain.v1:%s:epoch:%d' % (w.binding.storage_key(), nxt)
             dwrap = w.binding.wrap('StorageWriterDomain', dkey, domain)
@@ -974,8 +983,8 @@ class Coordinator(WorldOwner):
             head = w.roots.check('producer', BINDING + '#/$defs/WriterDomainHead', dict(
                 storage_instance_id=w.storage_id, domain_generation=nxt, domain=dsel,
                 original_installation_transaction_id=domain['original_installation']['original_transaction_id']))
-            writes = [w.put(w.binding.DOMAIN, dkey, dwrap), w.put(w.binding.HEAD, hkey, w.binding.wrap('StorageWriterDomainHead', hkey, head),
-                                                                   expected=hcell['version'])]
+            writes = list(reg_writes) + [w.put(w.binding.DOMAIN, dkey, dwrap),
+                                         w.put(w.binding.HEAD, hkey, w.binding.wrap('StorageWriterDomainHead', hkey, head), expected=hcell['version'])]
             for scope in scopes:
                 ccell = w.cell(w.binding.CONTROL, w.binding.keys(scope)['control'])
                 require('M/reinstall/binding_unavailable', ccell is not None)

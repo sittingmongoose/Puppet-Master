@@ -197,9 +197,9 @@
       "index": 22,
       "method": "adopt_existing_binding",
       "closed_types": "BindingRevision / BindingOrigin / BindingControl",
-      "dg_ca_status": "DG_CB_C5_C6",
-      "note": "migration adoption belongs to the sibling lane",
-      "oracle": null
+      "dg_ca_status": "DG_CB_C5_C6_EXECUTED",
+      "note": "executed by lane DG-CB inside owner.storage.goal_binding_migration.commit.v1 (C5 capture and C6 atomic installation); see Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json",
+      "oracle": "python3 scripts/pm_goal_dg_cb_oracles.py"
     },
     {
       "index": 23,
