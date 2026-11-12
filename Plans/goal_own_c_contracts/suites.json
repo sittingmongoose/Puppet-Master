@@ -155,6 +155,25 @@
         "whole_tuple_closure": "NOT_COMPLETE",
         "component_oracle": "scripts/pm_goal_own_c3_w5_projection_oracles.py",
         "native_execution": "NOT_RUN"
+      },
+      "dg_cf1": {
+        "groups": [
+          "CF-01",
+          "CF-02",
+          "CF-03",
+          "CF-04",
+          "CF-05"
+        ],
+        "selection": "Plans/goal_own_c_contracts/protocol.md#dg-cf1-complete-original-path-oracles-goal_runcertified-cf-01-cf-02-cf-03-cf-04-cf-05-2026-11-11",
+        "oracle": "scripts/pm_goal_dg_cf1_oracles.py",
+        "world": [
+          "scripts/pm_goal_dg_cf1_world.py",
+          "scripts/pm_goal_dg_cf1_compose.py"
+        ],
+        "adopted_demonstration": "scripts/pm_goal_test_demo_cf01.py",
+        "adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN"
       }
     }
   ]
