@@ -452,7 +452,7 @@ def main():
     for job in JOBS:
         value = next(v for v in values if v['family_id'] == 'memory_' + job + '_operation')
         assert value['value_schema'] == operations[job]
-        assert value['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
+        assert value['retention_policy_ref'] == 'RP-MEMORY-MAINTENANCE-APPLICATION-2555D'
         assert value['status'] == 'deferred_not_build_blocking'
         assert not core.unresolved_references({'registry': core.load('Plans/storage_value_registry.json')},
                                               roots={'registry': [('', value['value_schema'])]})

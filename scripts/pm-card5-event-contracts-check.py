@@ -662,7 +662,7 @@ def main():
         elif stage == 'schema':
             actual = ['schema_reference'] if shared.schema_ref_errors(value) else []
         elif stage == 'schema_field':
-            node = schemas[value['surface']]
+            node = shared.domain.checkpoint_source_constraints(schemas[value['surface']])
             for part in value['schema_path']:
                 node = node[part]
             code = tables.first('sch_c5_field', schema_errors=len(schema_errors(value['input'], node)))

@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L760-L839
+Source lines: L760-L840
 
-Source SHA256: `2937ee6273963b17ae05260af88dd8d9861572783613076f8eb79461d537ac56`
+Source SHA256: `e60a3b3617415814a310669986eb1c687eda077a38b9a2d20cb2daf9fabc9610`
 
 ---
 
@@ -26,7 +26,8 @@ depends_on:
   - RAP-026
   - CV-288
   - SP-215
-  - GRS-027
+  - OP-022
+  - EP-098
 unblocks: []
 acceptance_criteria:
   - Runtime Artifacts can show WorkNodeReceipt and GoalCompletionReceipt references.

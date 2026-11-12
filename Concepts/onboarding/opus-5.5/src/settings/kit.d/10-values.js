@@ -197,12 +197,18 @@ function o55Swatches(setting, value) {
     return `<button type="button" class="swatch o55-sw${on ? ' active' : ''}${theme ? ' is-theme' : ''}" role="radio" aria-checked="${on}" aria-label="${a(label)}" data-pm-hover-label="${a(label)}" style="--sw:${theme ? 'var(--o55-theme-accent, var(--accent-primary))' : (O55_SWATCH[o] || '#888')}" data-action="set-setting" data-setting="${a(setting.id)}" data-value="${a(o)}"></button>`;
   }).join('')}</div>`;
 }
+/* a list's noun in the plural: the row's own "nouns" when it has one (category -> categories), else a regular plural.
+   The row button, the list editor's empty line and its Saved toast all say it this one way (B11 D3: "No categorys yet."). */
+function o55Plural(row, noun) {
+  if (row && row.nouns) return row.nouns;
+  return /[^aeiou]y$/i.test(noun) ? noun.slice(0, -1) + 'ies' : /(s|x|ch|sh)$/i.test(noun) ? noun + 'es' : noun + 's';
+}
 function o55Structured(setting, value) {
   const list = setting.control === 'list';
   const count = Array.isArray(value) ? value.length : (value && typeof value === 'object' ? Object.keys(value).length : 0);
   const row = O55R[setting.id] || {};
   const noun = row.noun || (list ? 'item' : 'entry');
-  const plural = row.nouns || (noun.endsWith('y') ? noun.slice(0, -1) + 'ies' : noun + 's');
+  const plural = o55Plural(row, noun);
   const preview = count ? PM51.valueText(setting, value) : '';
   const text = count ? `${count} ${count === 1 ? noun : plural}` : (row.empty || `No ${plural} yet`);
   return `<button type="button" class="o55-struct" data-action="open-structured-setting" data-setting="${a(setting.id)}" aria-label="${a(`${PM51.rowLabel(setting)}: ${text}. Edit`)}"><span class="o55-struct-copy"><span class="o55-struct-count">${h(text)}</span>${preview ? `<span class="o55-struct-preview">${h(preview)}</span>` : ''}</span>${icon(count ? 'edit' : 'plus')}</button>`;
@@ -285,7 +291,9 @@ function o55SentenceCase(label) {
   if (o55LabelCache.has(label)) return o55LabelCache.get(label);
   let s = String(label); const prot = [];
   O55_LABEL_PHRASES.forEach((ph, k) => { if (s.includes(ph)) { s = s.split(ph).join(`\u0000${k}\u0000`); prot.push([k, ph]); } });
-  const low = x => (!x || O55_LABEL_KEEP.has(x) || /[A-Z]/.test(x.slice(1)) || /\d/.test(x) || x[0] !== x[0].toUpperCase() || x.slice(1) !== x.slice(1).toLowerCase()) ? x : x[0].toLowerCase() + x.slice(1);
+  /* the pronoun keeps its capital in its contractions too: "Dim Terminals I'm Not In" reads "Dim terminals I'm not in"
+     (it read "i'm", lane-code 2026-11-11) */
+  const low = x => (!x || O55_LABEL_KEEP.has(x) || /^I['’](?:m|ve|ll|d)$/.test(x) || /[A-Z]/.test(x.slice(1)) || /\d/.test(x) || x[0] !== x[0].toUpperCase() || x.slice(1) !== x.slice(1).toLowerCase()) ? x : x[0].toLowerCase() + x.slice(1);
   let out = s.split(' ').map((w, n) => {
     if (w.includes('\u0000')) return w;
     const m = w.match(/^([^A-Za-z0-9]*)(.*?)([^A-Za-z0-9]*)$/), core = m ? m[2] : '';
@@ -296,8 +304,11 @@ function o55SentenceCase(label) {
   o55LabelCache.set(label, out);
   return out;
 }
-PM51.rowLabel = setting => (O55R[setting.id] || {}).label || o55SentenceCase(setting.label);
-PM51.rowHelp = setting => { const r = O55R[setting.id] || {}; return r.help != null ? r.help : o55FirstSentence(setting.description); };
+/* A caller's own label for a row (PM51.bound.row(id, {label}), PM51.settingRows(ids, {overrides: {id: {label}}})) is the
+   row's visible label and its control's name alike (R6: it changed only the control's aria-label, the visible label
+   still came from rows.json). */
+PM51.rowLabel = setting => setting.o55Label || (O55R[setting.id] || {}).label || o55SentenceCase(setting.label);
+PM51.rowHelp = setting => { if (setting.o55Help != null) return setting.o55Help; const r = O55R[setting.id] || {}; return r.help != null ? r.help : o55FirstSentence(setting.description); };
 renderSettingRow = function (setting, section, workspace) {
   const current = settingValue(setting);
   const changed = !!state.changed[setting.id];
@@ -386,7 +397,7 @@ function o55ListEditor(found) {
       if (add) add.innerHTML = left.length ? `${PM51.dropdown(left[0], left.map(c => ({ value: c, label: PM51.valueLabel(s.id, c) })), { label: 'New ' + noun, cls: 'o55-le-pick' }).replace('<select ', '<select data-o55-le-new ')}<button type="button" class="btn small" data-o55-le="add">${icon('plus')}<span>Add</span></button>` : `<span class="o55-le-help">Every ${h(noun)} is in the list.</span>`;
     }
     list.innerHTML = items.length ? items.map((x, i) => `<div class="o55-le-row${ordered ? '' : ' is-plain'}" data-i="${i}">${ordered ? `<span class="o55-le-n">${i + 1}</span>` : ''}${pick ? `<span class="o55-le-name">${h(PM51.valueLabel(s.id, x))}</span>` : `<input class="text-control" value="${a(x)}" aria-label="${a(`${cap(noun)} ${i + 1}`)}" data-i="${i}"/>`}${ordered ? `<button type="button" class="icon-btn" data-o55-le="up" data-i="${i}" aria-label="Move up"${i === 0 ? ' aria-disabled="true"' : ''}>${icon('up')}</button><button type="button" class="icon-btn" data-o55-le="down" data-i="${i}" aria-label="Move down"${i === items.length - 1 ? ' aria-disabled="true"' : ''}>${icon('down')}</button>` : ''}<button type="button" class="icon-btn" data-o55-le="remove" data-i="${i}" aria-label="${a('Remove ' + noun)}">${icon('trash')}</button></div>`).join('')
-      : `<div class="o55-le-empty">${h(row.empty || `No ${noun}s yet.`)}</div>`;
+      : `<div class="o55-le-empty">${h(row.empty || `No ${o55Plural(row, noun)} yet.`)}</div>`;
   };
   const body = `<div class="o55-le">${row.editorHelp ? `<p class="o55-le-help">${h(row.editorHelp)}</p>` : ''}<div class="o55-le-list"></div>
       <div class="o55-le-add"><input class="text-control" placeholder="${a(row.placeholder || `Add ${/^[aeiou]/i.test(noun) ? 'an' : 'a'} ${noun}`)}" aria-label="${a('New ' + noun)}" data-o55-le-new/><button type="button" class="btn small" data-o55-le="add">${icon('plus')}<span>Add</span></button></div></div>`;
@@ -397,7 +408,7 @@ function o55ListEditor(found) {
       const pending = pick ? null : w.querySelector('[data-o55-le-new]'); if (pending && pending.value.trim()) items.push(pending.value.trim());
       const next = items.filter(Boolean);
       if (!commitSettingValue(s.id, next)) return false;
-      saveState(); refreshSettingRow(s.id); o55Notify(s.id, next); showToast('Saved', `${PM51.rowLabel(s)}: ${next.length} ${next.length === 1 ? noun : noun + 's'}.`, 'success', 2200);
+      saveState(); refreshSettingRow(s.id); o55Notify(s.id, next); showToast('Saved', `${PM51.rowLabel(s)}: ${next.length} ${next.length === 1 ? noun : o55Plural(row, noun)}.`, 'success', 2200);
     }
   });
   draw(wrap);
@@ -420,18 +431,27 @@ function o55MapEditor(found) {
   if (!o55IsFlatMap(value) && value != null && !(value && typeof value === 'object' && !Object.keys(value).length) && typeof value !== 'string') return o55JsonEditor(found);
   let pairs = Object.entries(o55IsFlatMap(value) ? value : {}).map(([k, v]) => [k, v == null ? '' : String(v)]);
   const [kName, vName] = row.pair || ['Name', 'Value'];
+  /* A map whose keys rows.d names (`keys`) is a fixed set: each key reads as its name, is never typed over, and every one
+     is listed; only the values change (B11 memory 7: the fade-time editor showed CurrentThread, Blocker and Constraint
+     as text to edit). */
+  const fixed = row.keys && typeof row.keys === 'object' && !Array.isArray(row.keys) ? row.keys : null;
+  if (fixed) pairs = Object.keys(fixed).map(k => [k, (pairs.find(p => p[0] === k) || [k, ''])[1]]).concat(pairs.filter(p => !(p[0] in fixed)));
+  const isFixed = k => !!fixed && k in fixed;
+  const keyOf = el => el.dataset.key != null ? el.dataset.key : el.value;
   const draw = wrap => {
     const vc = row.valueChoices;
-    const valueCell = (v, i) => vc ? `<select class="select-control o55-kv-select" data-v="${i}" aria-label="${a(vName)}">${vc.map(o => `<option value="${a(o)}"${String(o) === String(v) ? ' selected' : ''}>${h(PM51.valueLabel(s.id, o))}</option>`).join('')}</select>` : `<input class="text-control" value="${a(v)}" aria-label="${a(vName)}" data-v="${i}"/>`;
-    wrap.querySelector('.o55-kv-list').innerHTML = pairs.length ? pairs.map(([k, v], i) => `<div class="o55-kv-row"><input class="text-control" value="${a(k)}" aria-label="${a(kName)}" data-k="${i}"/>${valueCell(v, i)}<button type="button" class="icon-btn" data-o55-kv="remove" data-i="${i}" aria-label="Remove">${icon('trash')}</button></div>`).join('')
+    const valueCell = (v, i, k) => vc ? `<select class="select-control o55-kv-select" data-v="${i}" aria-label="${a(isFixed(k) ? fixed[k] : vName)}">${vc.map(o => `<option value="${a(o)}"${String(o) === String(v) ? ' selected' : ''}>${h(PM51.valueLabel(s.id, o))}</option>`).join('')}</select>` : `<input class="text-control" value="${a(v)}" aria-label="${a(isFixed(k) ? `${fixed[k]}: ${vName}` : vName)}" data-v="${i}"/>`;
+    wrap.querySelector('.o55-kv-list').innerHTML = pairs.length ? pairs.map(([k, v], i) => isFixed(k)
+      ? `<div class="o55-kv-row is-fixed"><span class="o55-kv-key" data-k="${i}" data-key="${a(k)}">${h(fixed[k])}</span>${valueCell(v, i, k)}<span aria-hidden="true"></span></div>`
+      : `<div class="o55-kv-row"><input class="text-control" value="${a(k)}" aria-label="${a(kName)}" data-k="${i}"/>${valueCell(v, i, k)}<button type="button" class="icon-btn" data-o55-kv="remove" data-i="${i}" aria-label="Remove">${icon('trash')}</button></div>`).join('')
       : `<div class="o55-le-empty">${h(row.empty || 'Nothing here yet.')}</div>`;
   };
   const body = `<div class="o55-kv">${row.editorHelp ? `<p class="o55-le-help">${h(row.editorHelp)}</p>` : ''}<div class="o55-kv-cols"><span>${h(kName)}</span><span>${h(vName)}</span><span></span></div><div class="o55-kv-list"></div>
-      <button type="button" class="btn small o55-kv-add" data-o55-kv="add">${icon('plus')}<span>Add a row</span></button></div>`;
+      ${fixed ? '' : `<button type="button" class="btn small o55-kv-add" data-o55-kv="add">${icon('plus')}<span>Add a row</span></button>`}</div>`;
   const wrap = PM51.panel({
     title: PM51.rowLabel(s), eyebrow: found.workspace ? found.workspace.label : '', icon: row.icon || 'sliders', summary: PM51.rowHelp(s), body,
     primaryLabel: 'Save', onPrimary: w => {
-      const next = {}; w.querySelectorAll('.o55-kv-row').forEach((r, i) => { const k = r.querySelector('[data-k]').value.trim(), v = r.querySelector('[data-v]').value.trim(); if (k) next[k] = /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : v; });
+      const next = {}; w.querySelectorAll('.o55-kv-row').forEach((r, i) => { const k = String(keyOf(r.querySelector('[data-k]'))).trim(), v = r.querySelector('[data-v]').value.trim(); if (k && !(isFixed(k) && v === '')) next[k] = /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : v; });
       if (!commitSettingValue(s.id, next)) return false;
       saveState(); refreshSettingRow(s.id); o55Notify(s.id, next); showToast('Saved', `${PM51.rowLabel(s)} updated.`, 'success', 2200);
     }
@@ -439,7 +459,7 @@ function o55MapEditor(found) {
   draw(wrap);
   wrap.addEventListener('click', e => {
     const b = e.target.closest('[data-o55-kv]'); if (!b) return;
-    wrap.querySelectorAll('.o55-kv-row').forEach((r, i) => { pairs[i] = [r.querySelector('[data-k]').value, r.querySelector('[data-v]').value]; });
+    wrap.querySelectorAll('.o55-kv-row').forEach((r, i) => { pairs[i] = [keyOf(r.querySelector('[data-k]')), r.querySelector('[data-v]').value]; });
     if (b.dataset.o55Kv === 'add') pairs.push(['', row.valueChoices ? row.valueChoices[0] : '']); else pairs.splice(Number(b.dataset.i), 1);
     draw(wrap); if (b.dataset.o55Kv === 'add') { const last = wrap.querySelectorAll('.o55-kv-row [data-k]'); last.length && last[last.length - 1].focus(); }
   });
@@ -532,6 +552,78 @@ function o55RunAction(found) {
   });
   return true;
 }
+/* Reset settings to defaults (system.advanced.reset-defaults; canon: "Puts one setting, a whole section, or everything
+   back to factory values. Always asks first, and highlights what changed."). The row promised "Pick one setting, a
+   section or everything; you see it first" and opened one confirmation for everything (S4). Now one dialog: what to
+   reset, then the settings that would change, each with its value now and its default, before anything happens. */
+/* FO-163 (the land-2 before/after sheet): one column for everything in the dialog (the form grid's two columns had put the
+   preview in a narrow one); only the picker the chosen scope needs is drawn (the form field's display beat `hidden`, so
+   Everything still showed a section and a setting); the list is the app's key/value rows at the paragraph's size (no
+   browser bullets hanging outside the column); and each value reads in the app's own words (PM51.valueText: On/Off, a
+   list as "a, b", Not set), never raw True/False or a list joined with no space. */
+PM51.style(`
+#panel-settings .o55-reset-form { display: flex; flex-direction: column; gap: 13px; min-width: 0; }
+#panel-settings .o55-reset-preview { display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: 12px; line-height: 1.45; color: var(--k3-text-2); }
+#panel-settings .o55-reset-preview > p { margin: 0; font-size: inherit; line-height: inherit; color: inherit; }
+#panel-settings .o55-reset-preview .pm51-kv-row { font-size: inherit; }
+#panel-settings .o55-reset-preview .pm51-kv-row > span:first-child { color: var(--k3-text-1); font-weight: 600; }
+`);
+function o55ResetDialog() {
+  /* FO-164: a row is listed only when its value differs from its default (a changed mark alone listed "Theme: Basic
+     Dark → Basic Dark"); the count line counts the same list */
+  const same = (x, y) => JSON.stringify(x) === JSON.stringify(y) || (x != null && y != null && typeof x !== 'object' && typeof y !== 'object' && String(x) === String(y));
+  const titles = CATEGORY_TITLES(), changed = allSettingsCatalog().filter(e => state.changed[e.setting.id] && !same(settingValue(e.setting), e.setting.value));
+  const cats = [...new Set(changed.map(e => e.category))];
+  const name = e => PM51.rowLabel(e.setting), catName = c => titles.get(c) || humanize(c);
+  const shown = (e, v) => { try { return String(PM51.valueText(e.setting, v)); } catch (_e) { return String(v); } };
+  const d = { what: changed.length ? 'one' : 'everything', cat: cats[0] || '', id: changed[0] ? changed[0].setting.id : '' };
+  const pick = () => d.what === 'one' ? changed.filter(e => e.setting.id === d.id) : d.what === 'section' ? changed.filter(e => e.category === d.cat) : changed;
+  const opt = (v, l, cur) => `<option value="${escAttr(v)}"${v === cur ? ' selected' : ''}>${escapeHtml(l)}</option>`;
+  /* the one picker the scope needs: a section for A section, a setting for One setting, none for Everything */
+  const picker = () => d.what === 'section'
+    ? `<label class="form-field o55-reset-cat"><span class="form-label">Section</span><select class="form-select" name="cat" aria-label="Section">${cats.map(c => opt(c, catName(c), d.cat)).join('') || opt('', 'No section has changes', '')}</select></label>`
+    : d.what === 'one'
+      ? `<label class="form-field o55-reset-one"><span class="form-label">Setting</span><select class="form-select" name="id" aria-label="Setting">${changed.map(e => opt(e.setting.id, `${name(e)} · ${catName(e.category)}`, d.id)).join('') || opt('', 'No setting is changed', '')}</select></label>`
+      : '';
+  const preview = () => {
+    const list = pick();
+    const lead = d.what === 'everything' ? '<p class="o55-reset-lead">Every setting in this project goes back to its default. Accounts, keys and history are kept, and a restore point is made first so you can undo it.</p>' : '';
+    if (!list.length) return lead + `<p class="o55-reset-count">${d.what === 'everything' ? 'No setting is changed from its default right now.' : 'Nothing here is changed from its default.'}</p>`;
+    return lead + `<p class="o55-reset-count">${list.length === 1 ? 'This setting goes' : `These ${list.length} settings go`} back to ${list.length === 1 ? 'its default' : 'their defaults'}:</p>`
+      + `<div class="pm51-kv o55-reset-list">${list.map(e => `<div class="pm51-kv-row" data-setting-id="${escAttr(e.setting.id)}"><span>${escapeHtml(name(e))}</span><span>${escapeHtml(shown(e, settingValue(e.setting)))} → ${escapeHtml(shown(e, e.setting.value))}</span></div>`).join('')}</div>`;
+  };
+  const body = `<div class="o55-reset-form">
+    <label class="form-field"><span class="form-label">What to reset</span><select class="form-select" name="what" aria-label="What to reset">${[['one', 'One setting'], ['section', 'A section'], ['everything', 'Everything']].map(([v, l]) => opt(v, l, d.what)).join('')}</select></label>
+    <div class="o55-reset-picker">${picker()}</div>
+    <div class="o55-reset-preview" aria-live="polite">${preview()}</div></div>`;
+  openDialog({ title: 'Reset settings to defaults', subtitle: 'Pick one setting, a section or everything. You see what changes before anything is reset.', body, saveLabel: 'Reset',
+    onOpen: overlay => {
+      const f = overlay.querySelector('form'); if (!f) return;
+      const sync = (redrawPicker) => {
+        if (redrawPicker) overlay.querySelector('.o55-reset-picker').innerHTML = picker();
+        overlay.querySelector('.o55-reset-preview').innerHTML = preview();
+        const go = overlay.querySelector('button[type="submit"]'); if (go) go.disabled = d.what !== 'everything' && !pick().length;
+      };
+      f.addEventListener('change', ev => {
+        const t = ev.target; if (!t || !t.name) return;
+        if (t.name === 'what') { d.what = t.value; sync(true); return; }
+        if (t.name === 'cat') d.cat = t.value;
+        if (t.name === 'id') d.id = t.value;
+        sync(false);
+      });
+      sync(false);
+    },
+    onSave: () => {
+      if (d.what === 'everything') { o55AfterPaint(restoreAllProjectDefaults); return true; }
+      const list = pick(); if (!list.length) return false;
+      const done = list.filter(e => restoreSettingDefault(e.setting.id));
+      if (!done.length) return true;
+      saveState(); done.forEach(e => { try { refreshSettingRow(e.setting.id); } catch (_e) { /* not on screen */ } });
+      allSettingsCatalogCache = null; searchIndexDirty = true;
+      showToast(done.length === 1 ? 'Setting back to its default' : `${done.length} settings back to their defaults`, done.map(name).slice(0, 4).join(', ') + (done.length > 4 ? ` and ${done.length - 4} more` : ''), 'success');
+      return true;
+    } });
+}
 const o55ValuesDispatch = dispatchAction;
 dispatchAction = function (action, el, event) {
   const id = el && el.dataset ? el.dataset.setting : null;
@@ -541,7 +633,7 @@ dispatchAction = function (action, el, event) {
     case 'set-slider-override': if (found) { o55NumberDialog(found); return; } break;
     case 'manage-credential-reference': if (found) { o55KeyPanel(found); return; } break;
     case 'run-setting-action':
-      if (found && found.setting.id === 'system.advanced.reset-defaults') { confirmDialog('Reset settings to defaults', 'Every setting in this project goes back to its default. Accounts, keys and history are kept, and a restore point is made first so you can undo it.', 'Reset', () => restoreAllProjectDefaults(), true); return; }
+      if (found && found.setting.id === 'system.advanced.reset-defaults') { o55ResetDialog(); return; }
       if (found && found.setting.id !== 'restore-defaults') { o55RunAction(found); return; } break;
     case 'o55-go-owner': if (id) { o55GoOwner(id); return; } break;
     case 'o55-auto-number': if (found) { if (restoreSettingDefault(id)) { saveState(); refreshSettingRow(id); showToast((O55R[id] || {}).themeOwn ? "Back to the theme's own" : 'Back to automatic', PM51.rowLabel(found.setting), 'success', 2200); } return; } break;

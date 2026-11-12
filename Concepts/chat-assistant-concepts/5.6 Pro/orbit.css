@@ -491,9 +491,13 @@
 }
 /* FO-120: the glyph's entrance and full moving anatomy belong to the ring. The parent node keeps its
    positioning/rotation, pulse and failure shake. The 14/11/9px ink box leaves travel room inside each tile. */
+/* FO-157: `backwards`, never `both`. A forwards fill keeps the end keyframe's transform: scale(1) on the wrapper
+   after the entrance, which leaves the glyph on its own compositor layer, resampled at the node's fractional
+   position: every stroke painted soft and none reached its ink (orbit-verify (ii), NieR 0-1 px against 33 before
+   FO-120; 27-34 against 42-53 glyph px in the other looks). The end keyframe is the wrapper's own rest style. */
 .orbit-node-symbol {
   display: grid; place-items: center; width: 14px; height: 14px;
-  animation: orbit-symbol-in var(--pm-t-icon) var(--pm-ease-pop) both;
+  animation: orbit-symbol-in var(--pm-t-icon) var(--pm-ease-pop) backwards;
 }
 .orbit-node-symbol > .nx-st { width: 100%; height: 100%; display: grid; place-items: center; }
 .orbit-node-symbol svg { width: 100%; height: 100%; --nx-u: 1.7143; --nx-stroke-base: 2.3; }

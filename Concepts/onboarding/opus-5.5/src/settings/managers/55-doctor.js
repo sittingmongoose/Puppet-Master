@@ -14,7 +14,52 @@
 #panel-settings .pm51-doctor-evidence { margin-top: 10px; }
 `);
 
-  const groups = () => PM51.s().doctor.groups;
+  /* S6/R12: a finding about something another page owns reads that page's state each time, so Doctor and the page
+     can never disagree (the saved list said "Antigravity CLI signed out" and "GitHub push access missing" while the
+     provider list and Source Control said Ready). A finding being re-checked keeps its Checking state. */
+  const provider = ids => (state.providers || []).find(p => ids.includes(p.id));
+  const svcName = p => PM51.serviceName ? PM51.serviceName(p.name) : p.name;
+  const providerFinding = p => {
+    if (!p) return null;
+    const n = svcName(p);
+    if (p.status === 'active') return { title: `${n} ready`, state: 'Ready', fix: null, todo: null, impact: null };
+    if (p.status === 'disabled') return { title: `${n} turned off`, state: 'Not set up', fix: 'Open', todo: `Turn ${n} on under Providers & Accounts if you want it.`, impact: `Work does not go to ${n} while it is off.` };
+    if (p.status === 'not-installed') return { title: `${n} not installed`, state: 'Not set up', fix: 'Open', todo: `Install ${n} from Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    /* the step Providers itself names (window.O55ProviderAttention: a seat, a sign-in, an account or a model to turn on),
+       so Doctor and the service's page say the same thing */
+    let kind = '';
+    try { const rows = typeof window.O55ProviderAttention === 'function' ? window.O55ProviderAttention() : []; kind = ((rows || []).find(r => (r.ids || []).includes(p.id)) || {}).kind || ''; } catch (_e) { kind = ''; }
+    if (kind === 'seat') return { title: `${n} has no active seat`, state: 'Needs attention', fix: 'Open', todo: `Give its account a seat, or use another account, under Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    if (kind === 'account') return { title: `${n} has no account in use`, state: 'Needs attention', fix: 'Open', todo: `Turn on one of its accounts under Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    if (kind === 'models') return { title: `${n} has no model turned on`, state: 'Needs attention', fix: 'Open', todo: `Turn on at least one of its models under Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    if (kind === 'signin' || !p.signedIn) return { title: `${n} signed out`, state: 'Needs attention', fix: 'Sign In Again', todo: `Sign in to ${n} from Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    return { title: `${n} needs attention`, state: 'Needs attention', fix: 'Open', todo: `Open ${n} under Providers & Accounts to see what it needs.`, impact: `Work routed to ${n} may fall back to another service.` };
+  };
+  const OWNED = {
+    'ai:antigravity': () => providerFinding(provider(['antigravity'])),
+    'ai:claude': () => providerFinding(provider(['claude-code', 'claude'])),
+    'code:push': () => {
+      const f = ((state.sourceControl || {}).forges || []).find(x => x.id === 'github'); if (!f) return null;
+      if (f.status !== 'active') return { title: 'GitHub not connected', state: 'Not set up', fix: 'Connect GitHub', todo: 'Connect GitHub from Source Control.', impact: 'Changes cannot be sent to GitHub.' };
+      if (f.pushAccess === 'Ready') return { title: 'GitHub push access ready', state: 'Ready', fix: null, todo: null, impact: null };
+      return { title: 'GitHub push access missing', state: 'Needs attention', fix: 'Set Up Push Access', todo: 'Set up push access from Source Control.', impact: 'Changes can be read from GitHub but not pushed.' };
+    },
+    'backups:kit': () => {
+      const B = PM51.s().backup, k = B && B.recoveryKit; if (!k) return null;
+      if (k.tested) return { title: 'Recovery Kit tested', state: 'Ready', fix: null, todo: null, impact: null };
+      if (k.saved) return { title: 'Recovery Kit not tested', state: 'Needs attention', fix: 'Test Recovery Kit', todo: 'Run the Recovery Kit test from Backup & Restore.', impact: 'You have a kit, but it has never been proven to unlock a backup.' };
+      return { title: 'Recovery Kit not saved', state: 'Not set up', fix: 'Save Recovery Kit', todo: 'Save the Recovery Kit from Backup & Restore.', impact: 'Without the kit, a lost server means lost backups.' };
+    }
+  };
+  const syncOwned = G => {
+    (G || []).forEach(g => (g.findings || []).forEach(f => {
+      const read = OWNED[`${g.id}:${f.id}`]; if (!read || f.state === 'Checking') return;
+      let now = null; try { now = read(); } catch (_e) { now = null; }
+      if (now) Object.assign(f, now);
+    }));
+    return G;
+  };
+  const groups = () => syncOwned(PM51.s().doctor.groups);
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
   const allFindings = () => groups().flatMap(g => g.findings.map(f => Object.assign({ group: g }, f)));
   const findFinding = (gid, fid) => { const g = groups().find(x => x.id === gid); const f = g && g.findings.find(x => x.id === fid); return f ? { g, f } : null; };
@@ -26,6 +71,7 @@
     'devices:pairing': { domain: 'system', workspace: 'servers', tab: 'devices', open: 'pm51-servers-pair' },
     'devices:tailscale': { domain: 'system', workspace: 'servers', tab: 'away' },
     'ai:antigravity': { domain: 'ai', workspace: 'providers', provider: 'antigravity' },
+    'ai:claude': { domain: 'ai', workspace: 'providers', provider: 'claude-code' },
     'code:push': { domain: 'source', workspace: 'source-manager' },
     'backups:kit': { domain: 'system', workspace: 'backup', tab: 'backup' },
     'updates:app': { domain: 'system', workspace: 'updates' },
@@ -71,7 +117,7 @@
     })).join('');
     const S = PM51.s();
     const advanced = PM51.advanced([
-      PM51.section({ title: 'Cached summary', body: PM51.kv([['Last check', S.doctorLastCheck || 'Loaded from cache · 2 min ago'], ['Findings cached', String(allFindings().length)], ['Oldest result', '2 h ago (Code & Version History)'], ['Cache age limit', 'Results older than a day are marked for a re-check']]) + `<div class="pm51-doctor-actions" style="margin-top:10px">${PM51.btn({ label: 'Copy support details', small: true, icon: 'copy', action: 'pm51-doctor-copy' })}</div>` })
+      PM51.section({ title: 'Cached summary', body: PM51.kv([['Last check', S.doctorLastCheck || 'Loaded from cache · 2 min ago'], ['Findings cached', String(allFindings().length)], ['Oldest result', '2 h ago (Code & Version History)'], ['Cache age limit', 'Results older than a day are marked for a re-check']]) + `<div class="pm51-doctor-actions" style="margin-top:10px">${PM51.btn({ label: 'Copy checkup summary', small: true, icon: 'copy', action: 'pm51-doctor-copy' })}</div>` })
     ].join(''));
     /* The last checkup is a dated snapshot, not a promise; "Check everything" is the inventory's own action. */
     const summary = `<div class="o55-toolbar o55-doctor-summary">${PM51.home('system.health.doctor-summary', `<span class="o55-doctor-last">${PM51.status(`Last checkup: ${c.Unavailable && !c.Ready ? 'Blocked' : c['Needs attention'] || c.Unavailable ? 'Ready with warnings' : 'Ready'}`, c['Needs attention'] || c.Unavailable ? 'attention' : 'ready')}<small>${h(S.doctorLastCheck || '2 min ago')}</small></span>`, 'span')}<span class="o55-toolbar-spacer"></span>${PM51.bound.action('system.health.run-doctor', { label: checkingAll ? 'Checking…' : 'Check everything', icon: 'refresh', busy: checkingAll, reason: 'Every group is being checked.' })}</div>`;
@@ -156,6 +202,29 @@
   PM51.on('doctor-copy', () => {
     const text = groups().map(g => `${g.title}\n` + g.findings.map(f => `  - ${f.title}: ${f.state} (checked ${f.checked})`).join('\n')).join('\n');
     try { const p = navigator.clipboard && navigator.clipboard.writeText(text); if (p && p.catch) p.catch(() => {}); } catch (_e) {}
-    PM51.toast('Diagnostics copied', 'A short, secret-free summary is on your clipboard.', 'info');
+    PM51.toast('Checkup summary copied', 'Every finding and its state, with nothing secret in it.', 'info');
+  });
+  /* S5: "Collect support details" (system.health.platform-diagnostics, canon "Collects detailed info about your computer
+     and app install") is its own thing, not a second Copy of the checkup summary: it lists what it gathers, then copies it. */
+  const supportDetails = () => {
+    const env = (window.O55 && O55.S && O55.S.env) || null, client = (env && env.client) || {};
+    const ver = ((groups().find(g => g.id === 'updates') || {}).findings || []).find(f => f.id === 'app');
+    return [
+      ['Computer', [client.name, client.os].filter(Boolean).join(' · ') || 'This computer'],
+      ['Browser engine', String(navigator.userAgent || '').replace(/^.*?(Chrome|Firefox|Safari)\/([\d.]+).*$/, '$1 $2') || 'Unknown'],
+      ['Screen', `${screen.width} × ${screen.height}`],
+      ['Puppet Master', ver && /available/i.test(ver.title) ? `0.8.0 · ${ver.title}` : '0.8.0'],
+      ['Server', (PM51.s().doctor.groups.find(g => g.id === 'server') || { findings: [] }).findings.map(f => f.title).join(' · ') || 'Not checked'],
+      ['Left out', 'Passwords, keys, tokens and file contents']
+    ];
+  };
+  PM51.on('doctor-diagnostics', () => {
+    const rows = supportDetails();
+    PM51.panel({ title: 'Support details', subtitle: 'Computer and app install details, with secrets removed. Copy them when support asks.', body: PM51.panelSection('What is collected', PM51.kv(rows)) + PM51.note('Nothing is sent anywhere. Copy puts this list on your clipboard for you to paste.', 'info'),
+      primaryLabel: 'Copy support details', onPrimary: () => {
+        const text = rows.map(r => `${r[0]}: ${r[1]}`).join('\n');
+        try { const p = navigator.clipboard && navigator.clipboard.writeText(text); if (p && p.catch) p.catch(() => {}); } catch (_e) {}
+        PM51.toast('Support details copied', 'Computer and app install details, with secrets removed.', 'info');
+      } });
   });
 })();

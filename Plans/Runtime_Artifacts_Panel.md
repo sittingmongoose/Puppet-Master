@@ -775,7 +775,8 @@ depends_on:
   - RAP-026
   - CV-288
   - SP-215
-  - GRS-027
+  - OP-022
+  - EP-098
 unblocks: []
 acceptance_criteria:
   - Runtime Artifacts can show WorkNodeReceipt and GoalCompletionReceipt references.

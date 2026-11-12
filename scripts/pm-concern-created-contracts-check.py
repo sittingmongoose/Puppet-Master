@@ -421,7 +421,7 @@ def main():
         row = next(row for row in registry['families'] if row['family_id'] == fid)
         shared.check_schema(row['value_schema'])
         assert row['value_schema'] == {k: v for k, v in schema.items() if k != '$schema'}
-        assert row['retention_policy_ref'] == ('RP-AUTHORITY-INDEFINITE' if fid == 'concern_record' else 'PENDING_RETENTION_DECISION')
+        assert row['retention_policy_ref'] == {'concern_record': 'RP-AUTHORITY-INDEFINITE', 'concern_created_operation': 'RP-OPERATIONAL-2555D', 'concern_created_checkpoint': 'RP-PROJECTION-3GEN'}[fid]
         group = 'event_log' if fid.endswith('checkpoint') else ('runs_and_goals' if fid == 'concern_record' else 'coordination_and_storage')
         assert not shared.profile_errors(registry, fid, row['storage_kind'], group)
         missing = copy.deepcopy(registry)

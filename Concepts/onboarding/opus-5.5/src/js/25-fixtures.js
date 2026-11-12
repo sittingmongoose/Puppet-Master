@@ -332,7 +332,14 @@
   const SCENARIOS = {
     fresh: { label: 'Fresh computer', apply(e) { e.here.projects = []; } },
     returning: { label: 'Returning user', apply(e) {
-      e.here.projects = [{ id: 'tastebook', name: 'Tastebook', updated: 'today', providers: ['claude'] }, { id: 'harbor', name: 'Harbor', updated: '2 days ago' }, { id: 'loom', name: 'Loom', updated: 'last week' }];
+      /* (things: what each Project owns, previewed with what a copy of it becomes in the new Project: FO-133) */
+      e.here.projects = [{ id: 'tastebook', name: 'Tastebook', updated: 'today', providers: ['claude'],
+        things: [{ id: 'filesystem-mcp', name: 'Filesystem MCP', kind: 'MCP server', outcome: 'Copied as the new Project’s own; its folder access is set again there' },
+          { id: 'reviewer', name: 'Reviewer', kind: 'persona', outcome: 'Tastebook’s version, copied as the new Project’s version' }] },
+        { id: 'harbor', name: 'Harbor', updated: '2 days ago', providers: ['claude', 'codex'],
+          things: [{ id: 'figma-mcp', name: 'Figma MCP', kind: 'MCP server', outcome: 'Made available in the new Project too; nothing is copied' },
+            { id: 'release-notes', name: 'Release Notes', kind: 'skill', outcome: 'Harbor’s copy, kept as the new Project’s own; it is checked there before first use' }] },
+        { id: 'loom', name: 'Loom', updated: 'last week' }];
       e.here.providers.claude = { installed: true, version: '2.4.1', signedIn: true, account: 'jared@example.com', plan: 'Claude Max' };
       e.forges.github.accounts = [{ login: 'jared-p', name: 'Jared' }];
       e.here.sshConfigHosts = [{ alias: 'nas', host: '192.168.1.20', user: 'jared', key: 'k-ed' }];

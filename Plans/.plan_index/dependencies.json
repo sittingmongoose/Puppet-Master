@@ -432,6 +432,16 @@
     "DL-443",
     "DL-449",
     "DL-452",
+    "DL-500",
+    "DL-501",
+    "DL-502",
+    "DL-503",
+    "DL-504",
+    "DL-505",
+    "DL-506",
+    "DL-507",
+    "DL-508",
+    "DL-509",
     "DP-001",
     "DP-002",
     "DPP-001",
@@ -70033,7 +70043,12 @@
     {
       "edge_type": "depends_on",
       "from": "RAP-027",
-      "to": "GRS-027"
+      "to": "EP-098"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-027",
+      "to": "OP-022"
     },
     {
       "edge_type": "depends_on",
@@ -123348,6 +123363,11 @@
     {
       "edge_type": "unblocks",
       "from": "EP-098",
+      "to": "RAP-027"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "EP-098",
       "to": "RGV-012"
     },
     {
@@ -129166,7 +129186,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-12T15:12:24Z",
+  "generated_at_utc": "2026-11-12T18:55:14Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -170898,6 +170918,176 @@
         "heading_level": 3,
         "heading_line": 31606,
         "line": 31608,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-500",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-500: Rebuildable bookmarks (retention deck 4 Q1)",
+        "heading_level": 3,
+        "heading_line": 31678,
+        "line": 31680,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-501",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-501: Alert, concern, bundle-note and panel operations (retention deck 4 Q2)",
+        "heading_level": 3,
+        "heading_line": 31748,
+        "line": 31750,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-502",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-502: GitHub sign-in operation history (retention deck 4 Q3)",
+        "heading_level": 3,
+        "heading_line": 31799,
+        "line": 31801,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-503",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-503: Plugin operation history (retention deck 4 Q4)",
+        "heading_level": 3,
+        "heading_line": 31840,
+        "line": 31842,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-504",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-504: Persona operation history (retention deck 4 Q5)",
+        "heading_level": 3,
+        "heading_line": 31884,
+        "line": 31886,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-505",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-505: Current alert, rule and preview state (retention deck 4 Q6)",
+        "heading_level": 3,
+        "heading_line": 31926,
+        "line": 31928,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-506",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-506: Developer session record (retention deck 4 Q7)",
+        "heading_level": 3,
+        "heading_line": 31965,
+        "line": 31967,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-507",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-507: Dev-tool source records (retention deck 4 Q8)",
+        "heading_level": 3,
+        "heading_line": 32002,
+        "line": 32004,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-508",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-508: Chat-bound wizard and revision records (retention deck 4 Q9)",
+        "heading_level": 3,
+        "heading_line": 32043,
+        "line": 32045,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_retention_deck4",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-509",
+      "reasoning_tier": "high",
+      "risk_class": "retention_and_data_loss",
+      "source_location": {
+        "heading": "DL-509: Memory housekeeping operation records (retention deck 4 Q10)",
+        "heading_level": 3,
+        "heading_line": 32082,
+        "line": 32084,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -235479,8 +235669,8 @@
       "source_location": {
         "heading": "RAP-029 - Plans-To-Code Receipt And Test Evidence Projection",
         "heading_level": 3,
-        "heading_line": 843,
-        "line": 845,
+        "heading_line": 844,
+        "line": 846,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235496,8 +235686,8 @@
       "source_location": {
         "heading": "RAP-030 - Visible Testing And Compile Evidence Projection",
         "heading_level": 3,
-        "heading_line": 911,
-        "line": 913,
+        "heading_line": 912,
+        "line": 914,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235513,8 +235703,8 @@
       "source_location": {
         "heading": "RAP-031 - Discovery Receipt Browsing, Redaction, And Retention Projection",
         "heading_level": 3,
-        "heading_line": 968,
-        "line": 970,
+        "heading_line": 969,
+        "line": 971,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235564,8 +235754,8 @@
       "source_location": {
         "heading": "RAP-034 - History Runtime Artifact And Evidence Projection",
         "heading_level": 3,
-        "heading_line": 1018,
-        "line": 1020,
+        "heading_line": 1019,
+        "line": 1021,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235581,8 +235771,8 @@
       "source_location": {
         "heading": "RAP-035 - Vision Bridge Derived Description Artifacts",
         "heading_level": 3,
-        "heading_line": 1171,
-        "line": 1173,
+        "heading_line": 1172,
+        "line": 1174,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235598,8 +235788,8 @@
       "source_location": {
         "heading": "RAP-036 - Teacher Activity Transparency Projection",
         "heading_level": 3,
-        "heading_line": 1307,
-        "line": 1309,
+        "heading_line": 1308,
+        "line": 1310,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235615,8 +235805,8 @@
       "source_location": {
         "heading": "RAP-037 - Inline Visualizer Artifact Projection And Export Routing",
         "heading_level": 3,
-        "heading_line": 1430,
-        "line": 1432,
+        "heading_line": 1431,
+        "line": 1433,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235632,8 +235822,8 @@
       "source_location": {
         "heading": "RAP-038 - DRY Method Receipt And Disclosure Projection",
         "heading_level": 3,
-        "heading_line": 1484,
-        "line": 1486,
+        "heading_line": 1485,
+        "line": 1487,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235649,8 +235839,8 @@
       "source_location": {
         "heading": "RAP-039 - Notification Delivery Receipt Projection And Export Routing",
         "heading_level": 3,
-        "heading_line": 1546,
-        "line": 1548,
+        "heading_line": 1547,
+        "line": 1549,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235666,8 +235856,8 @@
       "source_location": {
         "heading": "RAP-040 - Free Models Auto Apply Diagnostics And Runtime Evidence Projection",
         "heading_level": 3,
-        "heading_line": 1623,
-        "line": 1625,
+        "heading_line": 1624,
+        "line": 1626,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235683,8 +235873,8 @@
       "source_location": {
         "heading": "RAP-041 - Free Models Route Provenance And Usage Receipt Projection",
         "heading_level": 3,
-        "heading_line": 1681,
-        "line": 1683,
+        "heading_line": 1682,
+        "line": 1684,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235700,8 +235890,8 @@
       "source_location": {
         "heading": "RAP-042 - Containerized Host Evidence Projection And Receipt Browsing Boundary",
         "heading_level": 3,
-        "heading_line": 1742,
-        "line": 1744,
+        "heading_line": 1743,
+        "line": 1745,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235717,8 +235907,8 @@
       "source_location": {
         "heading": "RAP-043 - Usage And Tool Trace Schema Strictness",
         "heading_level": 3,
-        "heading_line": 1839,
-        "line": 1841,
+        "heading_line": 1840,
+        "line": 1842,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235734,8 +235924,8 @@
       "source_location": {
         "heading": "RAP-044 - Usage Artifact Drill-Through And Raw Curated Contract",
         "heading_level": 3,
-        "heading_line": 1953,
-        "line": 1955,
+        "heading_line": 1954,
+        "line": 1956,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235751,8 +235941,8 @@
       "source_location": {
         "heading": "RAP-045 - Case L Canonical History And Projection Trust Consumer",
         "heading_level": 3,
-        "heading_line": 2073,
-        "line": 2075,
+        "heading_line": 2074,
+        "line": 2076,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235768,8 +235958,8 @@
       "source_location": {
         "heading": "RAP-046 - Case L Restore Point And Exact Restore Projection",
         "heading_level": 3,
-        "heading_line": 2137,
-        "line": 2139,
+        "heading_line": 2138,
+        "line": 2140,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235785,8 +235975,8 @@
       "source_location": {
         "heading": "RAP-047 - Case L Storage Access And Blocked Action Affordances",
         "heading_level": 3,
-        "heading_line": 2189,
-        "line": 2191,
+        "heading_line": 2190,
+        "line": 2192,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235802,8 +235992,8 @@
       "source_location": {
         "heading": "RAP-048 - Cozy Shelves Action-To-Command Binding",
         "heading_level": 3,
-        "heading_line": 2243,
-        "line": 2245,
+        "heading_line": 2244,
+        "line": 2246,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235819,8 +236009,8 @@
       "source_location": {
         "heading": "RAP-049 - Freshness x Health Visual Mapping",
         "heading_level": 3,
-        "heading_line": 2307,
-        "line": 2309,
+        "heading_line": 2308,
+        "line": 2310,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235836,8 +236026,8 @@
       "source_location": {
         "heading": "RAP-050 - Positive Empty States",
         "heading_level": 3,
-        "heading_line": 2365,
-        "line": 2367,
+        "heading_line": 2366,
+        "line": 2368,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235853,8 +236043,8 @@
       "source_location": {
         "heading": "RAP-051 - Receipt-Row Unified Expander Consumption",
         "heading_level": 3,
-        "heading_line": 2418,
-        "line": 2420,
+        "heading_line": 2419,
+        "line": 2421,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235870,8 +236060,8 @@
       "source_location": {
         "heading": "RAP-052 - Retention, Pin, And Tombstone Surface",
         "heading_level": 3,
-        "heading_line": 2609,
-        "line": 2611,
+        "heading_line": 2610,
+        "line": 2612,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235887,8 +236077,8 @@
       "source_location": {
         "heading": "RAP-053 - Debug Adapter Model Deferral Closure",
         "heading_level": 3,
-        "heading_line": 2673,
-        "line": 2675,
+        "heading_line": 2674,
+        "line": 2676,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235904,8 +236094,8 @@
       "source_location": {
         "heading": "RAP-054 - Runtime Artifact Event Authority Owner And Payload Depth",
         "heading_level": 3,
-        "heading_line": 2518,
-        "line": 2520,
+        "heading_line": 2519,
+        "line": 2521,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235921,8 +236111,8 @@
       "source_location": {
         "heading": "Notebook Artifact Reference Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2816,
-        "line": 2820,
+        "heading_line": 2817,
+        "line": 2821,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235938,8 +236128,8 @@
       "source_location": {
         "heading": "RAP-056 — Existing Recording Playback and Watch Bindings",
         "heading_level": 2,
-        "heading_line": 2853,
-        "line": 2887,
+        "heading_line": 2854,
+        "line": 2888,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235955,8 +236145,8 @@
       "source_location": {
         "heading": "RAP-058 — Deleted restore-point evidence admission",
         "heading_level": 3,
-        "heading_line": 3032,
-        "line": 3034,
+        "heading_line": 3033,
+        "line": 3035,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235972,8 +236162,8 @@
       "source_location": {
         "heading": "RAP-059 — Restore-point created consumers",
         "heading_level": 3,
-        "heading_line": 2931,
-        "line": 2933,
+        "heading_line": 2932,
+        "line": 2934,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -235989,8 +236179,8 @@
       "source_location": {
         "heading": "RAP-060 — Expired restore-point evidence admission",
         "heading_level": 3,
-        "heading_line": 3094,
-        "line": 3096,
+        "heading_line": 3095,
+        "line": 3097,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236006,8 +236196,8 @@
       "source_location": {
         "heading": "RAP-065 - The Artifact Viewer Tab",
         "heading_level": 3,
-        "heading_line": 3161,
-        "line": 3163,
+        "heading_line": 3162,
+        "line": 3164,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236023,8 +236213,8 @@
       "source_location": {
         "heading": "RAP-100 — runtime_artifact.api_web_call",
         "heading_level": 3,
-        "heading_line": 3640,
-        "line": 3642,
+        "heading_line": 3641,
+        "line": 3643,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236040,8 +236230,8 @@
       "source_location": {
         "heading": "RAP-101 — runtime_artifact.artifact_version",
         "heading_level": 3,
-        "heading_line": 3680,
-        "line": 3682,
+        "heading_line": 3681,
+        "line": 3683,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236057,8 +236247,8 @@
       "source_location": {
         "heading": "RAP-102 — runtime_artifact.before_after_snapshot",
         "heading_level": 3,
-        "heading_line": 3720,
-        "line": 3722,
+        "heading_line": 3721,
+        "line": 3723,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236074,8 +236264,8 @@
       "source_location": {
         "heading": "RAP-103 — runtime_artifact.browser_recording",
         "heading_level": 3,
-        "heading_line": 3760,
-        "line": 3762,
+        "heading_line": 3761,
+        "line": 3763,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236091,8 +236281,8 @@
       "source_location": {
         "heading": "RAP-104 — runtime_artifact.code_diff",
         "heading_level": 3,
-        "heading_line": 3802,
-        "line": 3804,
+        "heading_line": 3803,
+        "line": 3805,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236108,8 +236298,8 @@
       "source_location": {
         "heading": "RAP-105 — runtime_artifact.context_snapshot",
         "heading_level": 3,
-        "heading_line": 3842,
-        "line": 3844,
+        "heading_line": 3843,
+        "line": 3845,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236125,8 +236315,8 @@
       "source_location": {
         "heading": "RAP-106 — runtime_artifact.cost_usage",
         "heading_level": 3,
-        "heading_line": 3882,
-        "line": 3884,
+        "heading_line": 3883,
+        "line": 3885,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236142,8 +236332,8 @@
       "source_location": {
         "heading": "RAP-107 — runtime_artifact.document",
         "heading_level": 3,
-        "heading_line": 3925,
-        "line": 3927,
+        "heading_line": 3926,
+        "line": 3928,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236159,8 +236349,8 @@
       "source_location": {
         "heading": "RAP-108 — runtime_artifact.evidence",
         "heading_level": 3,
-        "heading_line": 3965,
-        "line": 3967,
+        "heading_line": 3966,
+        "line": 3968,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236176,8 +236366,8 @@
       "source_location": {
         "heading": "RAP-109 — runtime_artifact.failed_attempts",
         "heading_level": 3,
-        "heading_line": 4005,
-        "line": 4007,
+        "heading_line": 4006,
+        "line": 4008,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236193,8 +236383,8 @@
       "source_location": {
         "heading": "RAP-110 — runtime_artifact.hitl_approval",
         "heading_level": 3,
-        "heading_line": 4045,
-        "line": 4047,
+        "heading_line": 4046,
+        "line": 4048,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236210,8 +236400,8 @@
       "source_location": {
         "heading": "RAP-111 — runtime_artifact.implementation_plan",
         "heading_level": 3,
-        "heading_line": 4086,
-        "line": 4088,
+        "heading_line": 4087,
+        "line": 4089,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236227,8 +236417,8 @@
       "source_location": {
         "heading": "RAP-112 — runtime_artifact.reasoning_summary",
         "heading_level": 3,
-        "heading_line": 4126,
-        "line": 4128,
+        "heading_line": 4127,
+        "line": 4129,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236244,8 +236434,8 @@
       "source_location": {
         "heading": "RAP-113 — runtime_artifact.restore_point",
         "heading_level": 3,
-        "heading_line": 4167,
-        "line": 4169,
+        "heading_line": 4168,
+        "line": 4170,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236261,8 +236451,8 @@
       "source_location": {
         "heading": "RAP-114 — runtime_artifact.screenshot",
         "heading_level": 3,
-        "heading_line": 4210,
-        "line": 4212,
+        "heading_line": 4211,
+        "line": 4213,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236278,8 +236468,8 @@
       "source_location": {
         "heading": "RAP-115 — runtime_artifact.subagent_lineage",
         "heading_level": 3,
-        "heading_line": 4250,
-        "line": 4252,
+        "heading_line": 4251,
+        "line": 4253,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236295,8 +236485,8 @@
       "source_location": {
         "heading": "RAP-116 — runtime_artifact.suggested_next_steps",
         "heading_level": 3,
-        "heading_line": 4290,
-        "line": 4292,
+        "heading_line": 4291,
+        "line": 4293,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236312,8 +236502,8 @@
       "source_location": {
         "heading": "RAP-117 — runtime_artifact.tool_llm_trace",
         "heading_level": 3,
-        "heading_line": 4330,
-        "line": 4332,
+        "heading_line": 4331,
+        "line": 4333,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236329,8 +236519,8 @@
       "source_location": {
         "heading": "RAP-118 — runtime_artifact.validation_test",
         "heading_level": 3,
-        "heading_line": 4372,
-        "line": 4374,
+        "heading_line": 4373,
+        "line": 4375,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -236346,8 +236536,8 @@
       "source_location": {
         "heading": "RAP-129 - Runtime Artifacts Navigation Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 3272,
-        "line": 3274,
+        "heading_line": 3273,
+        "line": 3275,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -267708,12 +267898,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 20989,
+    "depends_on_edge_count": 20990,
     "downstream_blocked_node_count": 0,
-    "edge_count": 24202,
-    "node_count": 8149,
+    "edge_count": 24204,
+    "node_count": 8159,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3213,
+    "unblocks_edge_count": 3214,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []
