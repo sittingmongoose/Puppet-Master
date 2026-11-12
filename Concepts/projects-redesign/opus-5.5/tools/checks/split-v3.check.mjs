@@ -24,13 +24,17 @@ const plates = (f) => f.evaluate(() => Object.fromEntries(Array.from(document.qu
 const hideMinimap = (f) => f.addStyleTag({ content: '.pmw-ed-canvas { visibility: hidden !important; }' });
 /* PMConcept7's own notification toasts hang under the bell and may lie over the page head's buttons for a few seconds
    (its ruling: covering a control is fine). They are not Split's, and the audit's "controls can be clicked" would count
-   them against the page: each is closed with its own dismiss button first, as a person would, then the audit runs. */
+   them against the page. Closing each with its own button was not enough: a new one can pop in while the audit is still
+   measuring (2026-11-12, friendly-light). So for this file's audits the toasts are taken out of the picture by a rule,
+   as the minimap canvas is; nothing of Split's is hidden, and PMConcept7's own kit covers its toasts. */
 async function audit(t, f, name) {
-	for (let i = 0; i < 3; i++) {
-		const open = await f.evaluate(() => { const xs = Array.from(document.querySelectorAll('.pmn-toast')).filter((e) => e.getClientRects().length); xs.forEach((e) => { const x = e.querySelector('.pmn-x'); if (x) x.click(); }); return xs.length; });
-		if (!open) break;
-		await f.waitForFunction(() => !Array.from(document.querySelectorAll('.pmn-toast')).some((e) => e.getClientRects().length), null, { timeout: 3000 }).catch(() => {});
-	}
+	await f.evaluate(() => {
+		if (document.getElementById('split-v3-check-no-toasts')) return;
+		const s = document.createElement('style');
+		s.id = 'split-v3-check-no-toasts';
+		s.textContent = '.pmn-toast { visibility: hidden !important; pointer-events: none !important; }';
+		document.head.appendChild(s);
+	});
 	await t.audit(name);
 }
 /* how many lines the tallest value that sits beside its label takes (a stacked or long one has the plate's width) */
