@@ -1,13 +1,19 @@
 # INT2 — batch-2 Event Authority integration
 
-**Retention deck 4 is applied: 86 value bindings, DL-500..DL-509, registry 0 diagnostics.** Jared’s exact Q0 answer and question are quoted in every decision entry. The existing 41 policy definitions, 496-family census, shared frozen schemas, Spec Lock and event-registry membership are unchanged. No family is admitted and native execution remains NOT_RUN.
+**Retention deck 4 is applied: 86 exact value bindings, DL-500..DL-509, registry 0 diagnostics.** The full actual-worktree dry exits 1 with **0 blocking items and 0 infrastructure timeouts**. All twelve complete DFM family CLIs, B4 and the actual shared-runtime materializer pass. No family is admitted; native execution remains NOT_RUN.
 
-The current `origin/main` at `002800123fcf2464ac3d8005538527d283c27b70` is integrated: its three canon corrections were re-read before the merge; owner documents merged without conflict, and 89 derived conflicts took complete sides before regeneration. Shard/index generation and shard checking pass. Full consumer reruns and the full dry landing check are pending; this checkpoint claims no complete DFM, B4 or materializer pass.
+Checked source: `a76b7e43a301317422dc3b60f00998a09d8381e1` on `plans/ea-batch2-int-20261112`, retained at `/home/sittingmongoose/pm-worktrees/int2`. Main at retention start, `002800123fcf2464ac3d8005538527d283c27b70`, was integrated before retention; the dry used base `48dd033447c5feb95866d6978d2cfd70961c5cbb`. Source checkpoints are `dce01cb874` (main merge plus bindings and companions) and `a76b7e43a3` (final indexes, T198 pins and checkpoint report). Both configured push URLs were confirmed at the checked source; the final report-only push is confirmed separately.
+
+During the serial checks, origin/main advanced by 14 commits across 78 non-derived paths. Those concurrent canon changes are recorded in the verification proof; the checked source remains the retention checkpoint. The dry compares that source with the recorded current main base. The lead must reconcile concurrent main changes and verify the resulting tree before landing.
+
+At post-run inspection, origin/main was `b4e7a1c63978898b23da167cacfdfac54b2a5c16`. Its additional commit changes only the plan-migration snapshot and landing baseline; owner docs and checker scripts have no further change relative to the dry's starting base. The source checkpoint retains its inherited baseline and snapshot.
 
 ## Retention deck 4
 
+Jared answered Q0 with **"Accept all (Recommended)"**. Every DL entry quotes that answer and the entire actual question verbatim from `RETENTION-DECK4.md`, relayed by pm7-build mail `1112163308-4bd4`. A fresh pre-mint check covered 803 main/origin refs and 91 distinct Decision Log blobs: zero collisions.
+
 | Question | Decision | Stored-value rows | Existing policy |
-|---|---|---:|---|
+|---|---|---|---|
 | Q1 | DL-500 | 34 | RP-PROJECTION-3GEN@1.0.0 |
 | Q2 | DL-501 | 15 | RP-OPERATIONAL-2555D@1.0.0 |
 | Q3 | DL-502 | 5 | RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 |
@@ -19,15 +25,70 @@ The current `origin/main` at `002800123fcf2464ac3d8005538527d283c27b70` is integ
 | Q9 | DL-508 | 3 | RP-CHAT-THREAD-LIFETIME@1.0.0 |
 | Q10 | DL-509 | 6 | RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 |
 
-`INT2-retention-deck4.json` records every exact row, prior note and selected policy. The registry references use existing policy IDs; their version is recorded as 1.0.0 in the decision prose and compaction notes. This supersedes pending statements for these stored values only; separately governed event/source content, holds and admission conditions remain.
+`INT2-retention-deck4.json` names every exact row, previous note, selected policy and owner. Only each selected row’s `retention_policy_ref` and `retention_compaction` changed. Registry references use the existing policy ID; version 1.0.0 is explicit in the notes and decisions. All 41 policy definitions, 496 family identities/order/statuses, required fields, encodings, schemas, holds, dependencies and recovery dispositions remain unchanged. Census: 465 materialized, 30 deferred and 1 compatibility alias. The decisions supersede earlier pending statements for these stored values only; separate event/content lifetimes and admission conditions retain their own rules.
 
-The fresh pre-mint check covered 803 main/origin refs and 91 distinct Decision Log blobs, with zero collisions. All 68 pre-retention consumer results and DCW’s 36 nested phases were inspected. DCW, DCH and DT guard reports match their lane baselines semantically: 167/78/70 phases, 379/393, 271/282 and 244/247 guards proved; their declared FAIL obligations remain.
+The three canon corrections in integrated main `002800123fcf` were re-read before integration: EP-098 unblocks RAP-027; RAP-027 depends on OP-022/EP-098; the Gemini CLI session-stats sentence is source-lineage only. Owner documents merged without conflict. The 89 derived conflicts took complete sides and were regenerated. There are 8,159 unique PlanUnits after the ten accepted decisions; no WorkNodes or NodeSeeds were created.
 
-The nine Card 5 full-family failures selected a canonical selector leaf before composing its preserved private source constraints. The leaf probes now select from the effective schema, retaining their original refusal expectations. The prior materializer invocation used an invalid `--check` option; the rerun uses its actual positional `check` subcommand. These prior failures remain uncredited until the complete reruns pass.
+## Complete consumer reruns
 
-T198 uses the approved refresh/classification helpers. The first classification stopped on 19 exclusions whose old migration-snapshot source was removed by current main. The approved prune helper removes those obsolete exclusions, without touching validator code. The rerun passes: all 254 inventory nodes are classified, all 13,626 scope-all cases and 1,276 owner checks pass, and the actual runtime date-time validator accepts the envelope offset while refusing it for observed_at_utc and persisted_at_utc. Zero new nodes or classification changes were introduced; 659 exclusions remain. All eight phase commands exit 0.
+The command metadata contains **72 completed commands: 71 exit 0 and one declared failing DT guard replay**. A nonzero command receives no full-pass credit. Full command lines, modes, timings, peak RSS, local log paths and SHA-256 values are in `INT2-retention-verification.json`.
+
+| Consumer | Actual result | Scope |
+|---|---|---|
+| DFM complete family CLIs | 12/12 exit 0 | file/folder copied, created, deleted, exported, moved and renamed; aggregate registry gate unfiltered |
+| DFM P2A / tables / B4 | 0 / 0 / 0 | B4 control passes; all 28 intended pinned-reference failures refuse; restoration returns registry 0 |
+| Shared-runtime materializer | 0 | Positional check subcommand; shared_runtime_storage_materialization_current |
+| Shared-runtime / index-binding unit tests | 0 | 36 tests pass |
+| Registry data / complete readiness self-test | 0 / 0 | 0 diagnostics; no checker filtering |
+| DG6A complete family CLIs | 16/16 exit 0 | Includes all nine repaired Card 5 probes |
+| DG6A domain / full regressions | 7/7 and 7/7 exit 0 | Mutating inputs restored; citation audit/tables/guard check also pass |
+| DG6B checker / tables / changed retention guard phase | 0 / 0 / 0 | Exact nineteen-row policy binding; preparation_b guard proof passes |
+| DT checker / tables | 0 / 0 | Complete seventeen-family checker |
+| DS15 / memory maintenance / memory archive | 0 / 0 / 0 | Only value-specific pending assertions/companions updated |
+| DCW six ordinary family CLIs | 6/6 exit 0 | Bundle revisions and wizard open/seed consumers |
+| DR / DX after main drift | 5/5 exit 0 | DR checker; DX tables, P2A, semantics and contracts |
+
+The nine old Card 5 failures selected a canonical selector leaf before composing its already-preserved private source constraints. The repaired leaf probes select from the effective schema and keep every original refusal expectation. All nine full CLIs now pass. The earlier materializer `--check` invocation was an argument error; it receives no credit. The positional `check` rerun passes.
+
+### Guard obligations retained
+
+| Replay | Phases | Proved / guards | Declared FAIL phases/reports | Compared differences |
+|---|---|---|---|---|
+| DCW pre-retention | 167 | 379 / 393 | 14 | 0 |
+| DCH pre-retention | 78 | 271 / 282 | 5 | 0 |
+| DT pre-retention and fresh post-retention | 70 | 244 / 247 | 2 | 0 |
+
+DT’s actual post-retention guard command exits 1 for the same `src_stage` and `src_project_only` obligations. It is not a full guard pass. Recorded verdicts, proved rows, unproved sets, masks and unrelated-change observations match the lane baseline. The other recorded guard obligations remain open; no integration or retention decision upgrades their grades or admits a family.
+
+## T198 and frozen custody
+
+The approved helpers pruned 19 exclusions for a migration snapshot removed by integrated main `002800123fcf`, renewed 109 existing container entries and added 128, leaving 659 exclusions. Inventory projection introduces zero new nodes, classification changes or schema changes. All 254 inventory nodes pass; scope-all passes 13,626/13,626 cases (6,939 positive, 6,687 negative) and 1,276/1,276 owner checks. The actual date-time validator accepts the envelope’s +00:00 offset and refuses it for observed_at_utc/persisted_at_utc, as required. All eight T198 commands exit 0. NUMRULE tool code, approved mutation fixtures, nested-resource declarations and the registry checker remain at their gated bytes.
+
+The shared EventRecord, append-receipt and index-checkpoint schemas, Spec Lock and event-family registry remain byte-identical to the source checkpoint’s prior protected bytes. No custody manifest was restamped. No baseline or migration snapshot was refreshed on this branch; the inherited migration/baseline artifacts came unchanged from main `002800123fcf`. Shards and index generate successfully, and the final shard check passes.
+
+## Full actual-worktree dry landing
+
+| Aggregate | Status | Failure rows | Recorded baseline rows |
+|---|---|---|---|
+| audit-governance | fail | 5984 | 4843 |
+| plan-migration-validate | fail | 32464 | 0 |
+| run-gates | fail | 5984 | 4843 |
+
+Actual checker exit: **1**. Blocking items: **0**. Infrastructure timeouts: **0**. Runtime: 2752.13 seconds; memory mode: `hard_capped_2GiB_no_swap`; start memory: 14.708 GiB. The wrapper exit is not used as the checker exit. The actual full int2 tree, currentness input copy and all three aggregate checks were used; no sparse/test mirror, diagnostic filtering or baseline refresh substitutes for this run. `INT2-retention-landing-summary.json` preserves the actual head/base, currency result, command, counts, output paths and SHA-256 values.
+
+The baseline is current: its commit `d28dba72e5d949535c953d8136f940dbde338100` is an ancestor of the dry base within the seven-day window. All 33,220 on-branch records are classified as governance staleness; the check reports zero non-stale branch blockers. Full exported diagnostics and the checker’s growth classifications remain in the local raw report.
+
+**Reseal request for Jared after landing:** the reported governance staleness remains for the separately assigned seal/snapshot workflow. This task does not reseal, edit Spec Lock, push main or take the landing lock. Existing S4 missing-receipt/default limitations, lane guard obligations and native NOT_RUN cells remain. Lead Sol/Astra integration reviews and the authorized landing are separate work.
+
+## Evidence provenance and tool follow-up
+
+The 68 pre-retention consumer rows and 36 DCW nested phase records were inspected. The fresh independent DT replay supplies the post-retention guard evidence. A parent `long-job stop` returned stopped while its nested DT scope continued and later superseded 70 earlier raw guard reports. Their original console log and comparison record remain; those old raw-report hashes must not be treated as currently available. Both naturally completed DT replays match the frozen lane baseline, and no source file changed. `INT2-long-job-stop-scope-issue.json` records the exact provenance and is a follow-up for the shared tool batch. No shared tool code was changed here.
+
+Raw outputs remain local under `/home/sittingmongoose/pm-scratch/ea-int2/`; each cited log/report has a SHA-256 in the compact proof. The lead temporarily held evidence copies below 30 GB free, then lifted the restriction in mail `1112220153-1412`; `df -BG /mnt/Cursor` independently confirmed 36 GB free. Only small final reports, proof summaries, accepted answer source and push receipts are copied to `drafts/INT2/` with SHA256SUMS after capacity checks before every copy. The full int2 worktree is retained.
 
 ## Earlier integration and restart evidence — historical
+
+The original report below preserves the merge/conflict ledger, earlier 399/800 diagnostic counts, original checks, admission-readiness table and landing-note draft. Current results above supersede its pending-retention and carry statements. No earlier nonzero command is retrospectively credited.
 
 **Restart handoff, 2026-11-12 16:0xZ:** 313 technical registry diagnostics are repaired on owning lanes’ behalf; the unchanged checker now reports only 86 pending-retention diagnostics. Source is pushed through `7a60dd72b9`. The full DT checker, DCH’s 44,458 static checks, DCH Stop/tables, the 17-family DCH preservation probe and the DG6A acknowledged regression pass. Current full validation is still running; no new full-gate pass is claimed. `int2-registry-consumers` and the sequential `int2-landing-after-registry` are persistent systemd long-jobs. Exact commands, exits so far, output paths and open items: `INT2-restart-handoff.json`. The 86-row facts table is in `drafts/INT2/RETENTION-86.md`; no policy is chosen. Resume from `drafts/INT2/RESUME.md` after the 17:00Z T3 update. The earlier packet below describes the completed `8d72011611` stage and its historical 399/800 counts; the lead superseded its carry of the 313 technical findings.
 
