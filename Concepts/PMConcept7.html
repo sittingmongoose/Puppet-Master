@@ -129892,27 +129892,12 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
   ACCOUNT_IDS.filter(id => id !== 'ai.accounts.set-preferred-account').forEach(id => PM51.perValues(id, everyAccount((p, acc, i) =>
     id === 'ai.accounts.account-name' ? acc.nickname : id === 'ai.accounts.account-enabled' ? acc.enabled !== false : id === 'ai.accounts.account-priority' ? i + 1 : PM51.scopedValue(acc, id))));
   /* Model pickers offer the models on your signed-in accounts, after the inventory's examples. */
-  const MODEL_PICKERS = ['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.teach-model', 'ai.models.thread-title-model'];
+  const MODEL_PICKERS = ['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.teach-model', 'ai.models.thread-title-model'];
   /* a model that only makes pictures (GPT Image) answers no chat, plan or review, so the model pickers never offer it
      (lane-aimore 7); every picker of a model that writes, the Back Seat Driver's backup included, reads this one list */
   const writes = m => !(m.caps || []).length || (m.caps || []).some(c => !/^image-/.test(c));
   const readyModels = () => all().filter(p => p.status === 'active').flatMap(p => enabledModels(p).filter(writes).map(m => ({ value: `${p.id}/${m.id}`, label: `${m.name} · ${p.name}`, meta: p.id === 'free-models' ? 'A free route' : `On your ${p.name} ${p.bill === 'use' ? 'account' : 'plan'}`, pid: p.id, mid: m.id, provider: p.name, model: m.name })));
   MODEL_PICKERS.forEach(id => PM51.moreChoices(id, readyModels));
-  /* "Service for each lane" offers every service in the list, in its order, after "the everyday model's service"; one
-     that cannot answer now is shown with why and cannot be picked (A2 B-9: a fixed list of five old platform names, so
-     no lane could use ChatGPT / Codex or any other ready service). The five old names stay the stored values of their
-     services (rows.d keeps their labels), so a saved choice keeps its meaning. */
-  const LANE = 'ai.models.per-lane-platform';
-  const LANE_OLD = { 'claude-code': 'Claude Code', 'cursor-cli': 'Cursor', 'gemini-direct': 'Gemini Direct', antigravity: 'Antigravity CLI', opencode: 'OpenCode' };
-  const laneValue = p => LANE_OLD[p.id] || p.id;
-  const LANE_WHY = { seat: 'has no seat', signin: 'needs sign-in', account: 'has no account in use', models: 'has no model turned on' };
-  const laneWhy = p => {
-    const w = plain(p); if (w === 'Ready') return '';
-    const k = Object.entries(attentionKinds()).find(([, ps]) => ps.includes(p));
-    return `${p.name} ${k ? LANE_WHY[k[0]] : w === 'Off' ? 'is off' : `is ${w.toLowerCase()}`}. Get it ready under Services first.`;
-  };
-  PM51.moreChoices(LANE, () => all().map(p => ({ value: laneValue(p), label: p.name, meta: plain(p) === 'Ready' ? 'Ready' : plain(p) })));
-  PM51.choiceBlock(LANE, v => { const p = all().find(x => laneValue(x) === String(v)); return p ? laneWhy(p) : ''; });
   PM51.readyModels = readyModels;
   PM51.perValues('ai.models.provider-enabled', () => all().filter(p => p.status !== 'setup' && p.status !== 'not-installed').map(p => ({ name: p.name, value: p.status !== 'disabled' })));
   PM51.perValues('ai.accounts.auth-mode', () => all().filter(p => authModes(p).length > 2).map(p => ({ name: p.name, value: PM51.scopedValue(p, 'ai.accounts.auth-mode') })));
