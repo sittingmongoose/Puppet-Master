@@ -7450,3 +7450,77 @@ node_compile_hint: {mode: contract_only, create_worknodes: false}
 
 - `persona.updated`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
  The `persona.updated` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal.
+
+### ATS-285 - Debug family independent event oracles
+
+```yaml
+plan_unit_id: ATS-285
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Nine prepared exact families in Plans/debug_investigation_event_fixtures.json have independent
+  closed-payload, identity, Project join, replay/idempotency, original-receipt, custody, compatibility
+  and withdrawal oracles in scripts/pm-debug-investigation-events.py. DL-428 state_changed covers all
+  six Failed reasons and rejects every other failure pairing, separates failed_cleanup, compares original
+  before-state/phase, refuses terminal in-place restart and preserves historical opening/new-linked-work
+  semantics. DL-429 instrumentation_state_changed covers every approved transition row and each source
+  alternative, all eight legal pairs, whole-lane never-needed proof, verified removal including detach,
+  exact visible leftovers/recovery, retry authorization/count/attempt ceiling, pending handoff acceptance,
+  retained responsibility on failure, no second unaccepted handoff, no cleaned restart, restore/permission/overlap
+  guards and immutable original detail joins. Each current writer/retry refuses projector_replay_only;
+  every family has its own missing-field/version/unknown-field, encoded project partition, changed semantic
+  digest, native custody/CAS/permission/withdrawal obligations and none_required transient-checkpoint
+  assertion. The pre-existing seven contracts and mode-resolution cases retain their prior scope. Eagerly
+  resolve every schema reference, including unvisited definitions; malformed references fail the whole
+  checker. Retained original positives ignore current live transition state and current-writer replay
+  policy while forged or withdrawn originals refuse. scripts/pm-debug-investigation-standing-checks.py
+  promotes each family's bad candidates and rejects successful exits masquerading as failure. Static fixtures
+  use projected original facts; they never prove native receipt, proof dereference, payload-pack, writer
+  exclusion, recovery, CAS or effects. Those obligations remain authored and NOT_RUN. Number, physical
+  and date-time checks call the shared helpers of CV-1100, SP-1100 and CV-1101 (current_integer at every
+  companion-schema integer slot with its schema bounds, qualified RFC 8785 identity and producer digests,
+  EVENT_VALUE inline sizes, exact uint64 Storage metadata, date_time with the EventRecord profile and with
+  CV-253 storage_utc_z), and the shared number corpus runs through the complete checker. Every refusal is
+  a named guard-table row proved by the shared guard-isolation tool. No local number, date-time or proof
+  helper is introduced.
+gui_related: false
+gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
+  its surface.
+depends_on:
+- CV-570
+- CV-571
+- CV-572
+- CV-573
+- CV-574
+- CV-575
+- CV-576
+- CV-577
+- SP-570
+- CV-578
+unblocks: []
+acceptance_criteria:
+- Exact family remains unadmitted until its own integration landing and all open product cells close.
+- Named positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-debug-investigation-events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_debug_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-123
+- reports/event-authority-20261104/DDBG.md
+- Plans/Decision_Log.md#DL-428
+- Plans/Decision_Log.md#DL-429
+preserved_exact_tokens:
+- ATS-285
+negative_constraints:
+- No admission, retention decision, native readiness or governance seal.
+```
