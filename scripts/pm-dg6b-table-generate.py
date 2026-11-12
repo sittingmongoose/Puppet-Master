@@ -59,11 +59,11 @@ phase('preparation_a', 'Prepared-oracle fences: fixture and grade coverage, disp
     ('PR04_undispositioned', '/dispositions', 'every graded row is UNDISPOSITIONED', 'unadmitted_disposition',
      "value['dispositions'].count('UNDISPOSITIONED') != len(value['dispositions'])"),
 ])
-phase('preparation_b', 'Prepared-oracle fences: no admission, pending retention, operation schema binding.', [
+phase('preparation_b', 'Prepared-oracle fences: no admission, approved value retention, operation schema binding.', [
     ('PR05_unregistered', '/registered', 'no DG6B family is on the live registry', 'prepared_membership',
      "value['registered'] != []"),
-    ('PR06_retention_pending', '/retention_refs', 'every operation value family has PENDING_RETENTION_DECISION', 'retention_pending',
-     "value['retention_refs'].count('PENDING_RETENTION_DECISION') != len(value['retention_refs'])"),
+    ('PR06_retention_pending', '/retention_refs', 'every operation value family has its exact deck-4 Q3/Q4/Q5 policy', 'retention_pending',
+     "value['retention_refs'] != ['RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-PLUGIN-HOOK-APPLICATION-90D', 'RP-PLUGIN-HOOK-APPLICATION-90D', 'RP-PLUGIN-HOOK-APPLICATION-90D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D']"),
     ('PR07_value_schema_valid', '/value_schema_errors', 'every registered operation value schema is a valid schema', 'invalid_schema',
      "value['value_schema_errors'] != 0"),
     ('PR08_operation_binding', '/value_schema_digests', 'equals the DG6B operation definitions (value schemas valid)',

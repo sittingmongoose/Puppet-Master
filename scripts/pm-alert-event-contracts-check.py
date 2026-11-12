@@ -1376,7 +1376,7 @@ def main():
         assert family['event_type'] not in admitted
         for key in ('operation', 'checkpoint'):
             row = next(x for x in load('Plans/storage_value_registry.json')['families'] if x['family_id'] == family[key])
-            assert row['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
+            assert row['retention_policy_ref'] == ('RP-PROJECTION-3GEN' if key == 'checkpoint' else 'RP-OPERATIONAL-2555D')
             external = load(row['value_schema_ref'])
             assert row['value_schema'] == {k:v for k,v in external.items() if k != '$schema'}
         text = (ROOT / 'Plans/storage-plan.md').read_text().split(f"### {family['sp']} -", 1)[1].split('\n### ', 1)[0]
