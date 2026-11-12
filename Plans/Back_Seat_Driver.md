@@ -298,7 +298,7 @@ Context Details discloses which guidance sources were resolved, in what order, a
 
 BSD owns six record families. Payload semantics are owned here; physical binding, keys, replay, retention, indexes, and projector checkpoints belong to `Plans/storage-plan.md`, and no storage key is invented here.
 
-`pm.bsd.policy.v1` — project-scoped policy: `project_id`, `mode`, `model_selection`, `requested_model_id`, `requested_persona_id`, `trigger_sensitivity`, `read_only_tool_profile_id`, `catch_up_seconds`, `interruption_cooldown_turns`, `per_thread_cost_limit`, `per_stage_review_limit`, `retain_transcript`, `project_watch_instructions_ref`, `stage_defaults_ref`, `revision`.
+`pm.bsd.policy.v1` — project-scoped policy (model_selection Default means the resolved Checking finished work model/depth; explicit means requested_model_id and its route-supported effort, resolved through Models §2): `project_id`, `mode`, `model_selection`, `requested_model_id`, `requested_persona_id`, `trigger_sensitivity`, `read_only_tool_profile_id`, `catch_up_seconds`, `interruption_cooldown_turns`, `per_thread_cost_limit`, `per_stage_review_limit`, `retain_transcript`, `project_watch_instructions_ref`, `stage_defaults_ref`, `revision`.
 
 `pm.bsd.workflow_binding.v1` — `binding_id`, `workflow_kind`, `workflow_id`, `policy_revision`, `stage_bindings`, `created_at`. Each stage binding is `inherit|off|auto|on` and freezes requested and effective advisor identity for the run.
 
@@ -1541,13 +1541,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Back_Seat_Driver.md
 canonical_text: >-
-  BSD always discloses both the requested advisor identity, meaning requested model, account, and Persona, and the effective
-  identity that actually served the review after resolution, health, availability, quota, and any explicitly permitted
-  fallback. Any difference is visible in Context Details and Usage with its reason, a fallback occurs only under an explicit
-  policy and is fully attributed, and a silent substitution is a defect. When the requested model or Persona cannot be
-  resolved the assignment records no_model or no_persona and remains inactive rather than borrowing the primary's route, the
-  default Persona is the BSD advisor Persona critical-advisor (DL-138), which never grants a tool, permission, or authority, and a change of effective
-  model, account, or Persona resets and re-primes the assignment because prior reasoning came from a different reasoner.
+  BSD always discloses both the requested advisor identity, meaning requested model, account, and
+  Persona, and the effective identity that actually served the review after resolution, health,
+  availability, quota, and any explicitly permitted fallback. Any difference is visible in Context
+  Details and Usage with its reason, a fallback occurs only under an explicit policy and is fully
+  attributed, and a silent substitution is a defect. When the requested model or Persona cannot be
+  resolved the assignment records no_model or no_persona and remains inactive rather than borrowing the
+  primary's route, the default Persona is the BSD advisor Persona critical-advisor (DL-138), which never
+  grants a tool, permission, or authority, and a change of effective model, account, or Persona resets
+  and re-primes the assignment because prior reasoning came from a different reasoner. The persistent BSD
+  model row is in Settings > Models > Default models. Default means Same as Checking finished work and
+  resolves that row's model/depth before freezing the requested advisor route. The chat's BSD sheet can
+  override it for one chat. Existing no_model/no_persona, explicit-fallback attribution and reset/re-
+  prime rules remain unchanged; the advisor Persona owns no model.
 gui_related: true
 gui_classification_reason: Requested and effective identity rows appear in Context Details and Usage.
 depends_on:

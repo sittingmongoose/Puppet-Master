@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27672-L27782
+Source lines: L27677-L27808
 
-Source SHA256: `b1f46e0b411a11f49fb05bc9501dab29f9b82874e63a99617a7301bfba229b64`
+Source SHA256: `ea2e798af42d0f2056c69c54bdead134b8604e6b3671c53dffdfa12016418bce`
 
 ---
 
@@ -18,15 +18,36 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings exposes the six plans-to-code model controls named by Models_System: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model.
-  Settings copy must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop; legacy source may refer to the same loop as audit/repair/audit. Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or search, not as visible model controls.
-  Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control.
+  Settings exposes seven plans-to-code controls in one Default models list: Default Model, Overseer
+  Model, Worker Model, Low-Effort Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model,
+  and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning
+  Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge
+  decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to-
+  repair loop, verification, certification, quality gates, and evidence review route to Auditor Model;
+  normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to
+  GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route
+  to High-Effort Worker Model. Settings copy must describe the Auditor loop as repeating audit, bounded
+  repair, and re-audit until completion is certified or a critical block or authority boundary stops the
+  loop; legacy source may refer to the same loop as audit/repair/audit. Old Pass 1 / Pass 2 / Pass 3
+  labels may appear only as compatibility aliases in imported legacy source or search, not as visible
+  model controls. Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state
+  that Executor deterministic runtime behavior does not create an Executor Model control. Low-Effort
+  Worker Model is labelled Easy, routine jobs and inherits Everyday building when blank; it is restricted
+  to small, low-risk, non-design implementation, never checking. The list has Everywhere and This project
+  tabs, then naming, explaining, BSD and enabled media rows. Every row reuses the chat model picker as an
+  overlay that moves nothing, with depth inside the same picker and no separate effort rows. Blank rows
+  name their fallback source and current model/depth. Exact unlisted names require one small successful
+  call before saving; a refused or unreachable name is never saved, and acceptance proves no capability.
+  Helpers have no model or depth Settings row, and Persona/command model fields are removed. Presets and
+  nicknames remain below the list, with What actually ran a visible run-history link. The PRD Builder,
+  Planning Wizard, building and Scout use the common defaults and allow overrides; no redesign of those
+  screens is specified here.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings labels and help text for model routing.
 depends_on: [MS-110]
 unblocks: [OP-023]
 acceptance_criteria:
-  - Settings displays exactly the six named controls for this flow.
+  - Settings displays exactly seven named controls for this flow: Everyday model and the six jobs.
   - No Executor Model control is shown.
   - GUI/frontend and high-effort roles have clear Settings labels without exposing internal subrole sprawl.
   - Auditor settings copy describes an audit-to-repair loop until certified or critical block; legacy Pass 1 / Pass 2 / Pass 3 labels are compatibility/search aliases only, not model selectors.

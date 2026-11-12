@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5446-L27022
+Source lines: L5446-L27024
 
-Source SHA256: `b1f46e0b411a11f49fb05bc9501dab29f9b82874e63a99617a7301bfba229b64`
+Source SHA256: `ea2e798af42d0f2056c69c54bdead134b8604e6b3671c53dffdfa12016418bce`
 
 ---
 
@@ -6492,9 +6492,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Agent-Config setup copy separates setup success from operational evidence, exposes stable
-  selection and failover reason codes plus requested/effective runtime controls, and owns Default
-  Crew default-config confirmation and provider constraint explanation.
+  Agent-Config setup copy separates setup success from operational evidence, exposes stable selection and
+  failover reason codes plus requested/effective runtime controls, and owns Default Crew default-config
+  confirmation and provider constraint explanation. Default Crew now stores only ordered Personas and
+  enablement. Per-member model/runtime defaults retire; the invocation sheet still resolves and confirms
+  each row, including existing Copilot whole-crew normalization.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible setup, failover, provider-gap, and Default Crew controls.

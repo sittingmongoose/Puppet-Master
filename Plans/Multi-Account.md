@@ -217,6 +217,7 @@ Locked `account-profile` schema minimum:
 - `cooldown_policy?`
 - `retry_budget?`
 - `quota_profile_ref?`
+- `default_model_selection?` — one optional concrete model/effort pair scoped to this account
 - `allowed_roles?`
 - `disallowed_roles?`
 - `configured_project_id?` when project context affects quota or routing
@@ -706,6 +707,9 @@ Usage rows should prefer plain-language statuses such as `Working` or a concrete
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
 ### 9.5 Instructions, skills, and MCP in Agent-Config
+
+MD3 A: each account offers an optional model and thinking depth in its own provider-manager detail, using the shared model picker filtered to that account's allowed runnable models. Depth is inside that picker; typed names pass the same one-small-call check before saving, with unknown effort/capabilities left unknown. The account default is `default_model_selection`, absent by default, represented by `ai.accounts.default-model` as a thing-owned field rather than an ordinary Settings layer. It applies only when the person explicitly sends a run to that account (for example Use for the next run) and no earlier Models §2 source has chosen a model. Automatic account selection/rotation ignores it. An existing model request keeps its model and effort when the account changes. None/preferred/required account bindings retain their existing fail/fallback semantics, no silent substitutions, policy ceilings and receipts. Provider `default_model_id_raw` remains catalog/inspection metadata, not a model precedence rung. Historical account records with no default remain valid and mean use the normal list.
+
 
 Agent-Config must expose:
 - shared instruction panes sourced from PM's `AGENTS` / AGENTS-layer intent (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `Cursor Rules`)
@@ -1611,12 +1615,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Account-backed providers store ordered account rows with stable ids. The locked account-profile schema and minimum
-  fields preserve account_id, provider_id, label, auth_surface, enabled, priority, provider_identity, credential_ref,
-  configured_project_id, selected_billing_entity_id, threshold and retry controls, cooldown, availability, configuration,
-  credential state, and user-facing status. account_id is the internal stable key, provider_identity is descriptive
-  provider-native metadata only, secrets remain outside config/state stores, auth families that change quota semantics
-  remain separate account rows, and Codex and Gemini account examples preserve auth-family separation.
+  Account-backed providers store ordered account rows with stable ids. The locked account-profile schema
+  and minimum fields preserve account_id, provider_id, label, auth_surface, enabled, priority,
+  provider_identity, credential_ref, configured_project_id, selected_billing_entity_id, threshold and
+  retry controls, cooldown, availability, configuration, credential state, and user-facing status.
+  account_id is the internal stable key, provider_identity is descriptive provider-native metadata only,
+  secrets remain outside config/state stores, auth families that change quota semantics remain separate
+  account rows, and Codex and Gemini account examples preserve auth-family separation. An optional
+  account-owned default_model_selection is one concrete model/effort pair, absent by default and
+  validated against this account. It applies only to manually account-directed runs without an earlier
+  model source; automatic rotation ignores it. Existing records without the field keep normal list
+  behavior.
 gui_related: false
 gui_classification_reason: The unit defines backend account schema and identity constraints rather than GUI presentation.
 split_recommended: true
@@ -3332,10 +3341,15 @@ plan_unit_id: MA-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Account/profile rows display dense scan-friendly identity, auth, configuration, availability, pressure,
-  cooldown, entitlement, billing, health, and action state. Detailed usage/cooldown and requested/effective explanation
-  belongs in the inspector, Codex and Copilot rows preserve their real account/entity shape, OpenCode server profiles
-  expose connection readiness, and provider-level enable/disable changes future eligibility without destroying rows/defaults.
+canonical_text: >-
+  Account/profile rows display dense scan-friendly identity, auth, configuration, availability, pressure,
+  cooldown, entitlement, billing, health, and action state. Detailed usage/cooldown and
+  requested/effective explanation belongs in the inspector, Codex and Copilot rows preserve their real
+  account/entity shape, OpenCode server profiles expose connection readiness, and provider-level
+  enable/disable changes future eligibility without destroying rows/defaults. The selected account detail
+  offers its own optional model/depth picker (ai.accounts.default-model), filtered to this account; no
+  independent depth row. This affects manually directed runs only under Models §2, with existing binding
+  and no-silent-substitution rules intact.
 gui_related: true
 gui_classification_reason: The unit defines GUI account/profile row content, actions, and inspector boundaries.
 split_recommended: false

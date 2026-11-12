@@ -442,6 +442,11 @@ Resolution order for `model_override`:
 ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
 ### 2.4 Backend routing
+
+MD4 A (Jared, 2026-11-12): Settings > Models > Default models has one concrete model/route row for each enabled generation kind: Making pictures (`media.image.model`), Making videos (`media.capabilities.video-model`), Reading text aloud (`media.capabilities.tts-model`) and Making music and sounds (`media.capabilities.music-model`). Model and supported depth are picked together; no route is chosen until the person picks one. These rows use This project then Everywhere, remain gated by the existing master/kind switches, and do not enable media by themselves. The old separate `media.image.provider` is compatibility-read only; provider and model are one concrete route, never inferred from a provider label. Per-request `model_override` still wins only for that request and changes no Settings.
+
+Reading pictures retains `media.io.vision-fallback-model` as a compatibility identity but names the first bridge choice, used when the working model cannot see. Auto means an eligible vision model under MS-116. There is no separately saved backup: a further route is chosen automatically only when policy permits and disclosure covers the destination, with requested/effective identity and reason shown. An old scalar backup value is read as former intent and shown for review, never silently promoted to first choice; old auto remains Automatic. `media.io.vision-bridge` and the Wizard's own vision/prefer-Gemini rows keep their existing owners and gates.
+
 Media routing resolves through concrete provider/model rows and their `generated_media_routes[]`, `media_input`, and `media_output` capability fields.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
@@ -2255,7 +2260,15 @@ plan_unit_id: MGAC-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Media routing resolves provider/runtime, auth family, concrete media-capable runtime surface, and requested/effective runtime snapshot through the product-wide shared runtime identity model, not feature-local runtime-state fields.
+canonical_text: >-
+  Media routing resolves provider/runtime, auth family, concrete media-capable runtime surface, and
+  requested/effective runtime snapshot through the product-wide shared runtime identity model, not
+  feature-local runtime-state fields. Enabled image/video/tts/music generation uses the one per-kind
+  model/depth row in Settings > Models, with concrete route eligibility, This project then Everywhere and
+  no route until chosen; a per-request model_override retains priority and changes no default. Reading
+  pictures names the first bridge route; automatic further fallback remains MS-116 policy/disclosure
+  gated, with no separately saved backup. Former provider-only or backup-only scalar values are
+  compatibility reads requiring review rather than an inferred model or silently repurposed primary.
 gui_related: false
 gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
 split_recommended: true
