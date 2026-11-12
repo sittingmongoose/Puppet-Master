@@ -1,0 +1,1326 @@
+{
+  "round": "sweep part 2B",
+  "kind": "shared CV-1101 date-time check and SP-1101 retained dispatch (gated NUMRULE 58c2816ff3); guard tables on the gated tool (004bdedd63)",
+  "source_commit": "882ef7ae25",
+  "family_jobs": {
+    "jobs": [
+      {
+        "name": "bundle.selection_forward_blocked",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "bundle.selection_forward_blocked"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2375,
+        "failures": 0,
+        "seconds": 258.47,
+        "output": "bundle_selection_forward_blocked.json"
+      },
+      {
+        "name": "bundle.selection_sent_to_chat",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "bundle.selection_sent_to_chat"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2409,
+        "failures": 0,
+        "seconds": 45.85,
+        "output": "bundle_selection_sent_to_chat.json"
+      },
+      {
+        "name": "chat.message",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.message"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2391,
+        "failures": 0,
+        "seconds": 32.3,
+        "output": "chat_message.json"
+      },
+      {
+        "name": "chat.thread_archived",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_archived"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2503,
+        "failures": 0,
+        "seconds": 22.39,
+        "output": "chat_thread_archived.json"
+      },
+      {
+        "name": "chat.thread_created",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_created"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2369,
+        "failures": 0,
+        "seconds": 32.75,
+        "output": "chat_thread_created.json"
+      },
+      {
+        "name": "chat.thread_deleted",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_deleted"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2369,
+        "failures": 0,
+        "seconds": 28.61,
+        "output": "chat_thread_deleted.json"
+      },
+      {
+        "name": "chat.thread_worktree_bound",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_bound"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2367,
+        "failures": 0,
+        "seconds": 28.64,
+        "output": "chat_thread_worktree_bound.json"
+      },
+      {
+        "name": "chat.thread_worktree_create_failed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_create_failed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2363,
+        "failures": 0,
+        "seconds": 18.17,
+        "output": "chat_thread_worktree_create_failed.json"
+      },
+      {
+        "name": "chat.thread_worktree_merge_failed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_merge_failed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2371,
+        "failures": 0,
+        "seconds": 32.34,
+        "output": "chat_thread_worktree_merge_failed.json"
+      },
+      {
+        "name": "chat.thread_worktree_merged",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_merged"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2375,
+        "failures": 0,
+        "seconds": 32.67,
+        "output": "chat_thread_worktree_merged.json"
+      },
+      {
+        "name": "chat.thread_worktree_pr_created",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pr_created"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2569,
+        "failures": 0,
+        "seconds": 28.3,
+        "output": "chat_thread_worktree_pr_created.json"
+      },
+      {
+        "name": "chat.thread_worktree_pr_failed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pr_failed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2367,
+        "failures": 0,
+        "seconds": 28.39,
+        "output": "chat_thread_worktree_pr_failed.json"
+      },
+      {
+        "name": "chat.thread_worktree_pre_merge_test_failed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pre_merge_test_failed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2733,
+        "failures": 0,
+        "seconds": 26.26,
+        "output": "chat_thread_worktree_pre_merge_test_failed.json"
+      },
+      {
+        "name": "chat.thread_worktree_pre_merge_test_passed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pre_merge_test_passed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2683,
+        "failures": 0,
+        "seconds": 30.4,
+        "output": "chat_thread_worktree_pre_merge_test_passed.json"
+      },
+      {
+        "name": "chat.thread_worktree_pre_merge_test_started",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_pre_merge_test_started"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2367,
+        "failures": 0,
+        "seconds": 20.14,
+        "output": "chat_thread_worktree_pre_merge_test_started.json"
+      },
+      {
+        "name": "chat.thread_worktree_renamed",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_renamed"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2365,
+        "failures": 0,
+        "seconds": 28.99,
+        "output": "chat_thread_worktree_renamed.json"
+      },
+      {
+        "name": "chat.thread_worktree_unbound",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm_dch_events.py",
+          "--family",
+          "chat.thread_worktree_unbound"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": 2363,
+        "failures": 0,
+        "seconds": 22.32,
+        "output": "chat_thread_worktree_unbound.json"
+      }
+    ],
+    "minimum_available_bytes": 6415417344,
+    "memory_events": [
+      {
+        "job": "bundle.selection_forward_blocked",
+        "action": "pause",
+        "at": 1793862061.258085,
+        "available": 6415417344
+      },
+      {
+        "job": "bundle.selection_forward_blocked",
+        "action": "recheck",
+        "at": 1793862181.373076,
+        "available": 7289634816
+      },
+      {
+        "job": "bundle.selection_forward_blocked",
+        "action": "recheck",
+        "at": 1793862301.62337,
+        "available": 8315039744
+      },
+      {
+        "job": "bundle.selection_forward_blocked",
+        "action": "resume",
+        "at": 1793862301.6249352,
+        "available": 8315039744
+      }
+    ]
+  },
+  "stop": {
+    "status": "pass",
+    "checks": 4540,
+    "cases": 2264,
+    "surfaces": {
+      "request": 402,
+      "retry": 116,
+      "transport": 512,
+      "outcome": 384,
+      "save": 24,
+      "read": 48,
+      "queue": 96,
+      "schema_outcome": 262,
+      "schema_request": 276,
+      "index": 108,
+      "retirement": 36
+    },
+    "failures": [],
+    "native_execution": "NOT_RUN",
+    "claim_boundary": "Synthetic original source/Store/decision observations. No native durability, authenticated provenance, SP-278 completeness/CAS or check-11 isolation certification. Shared proof and number-domain adoption remain sweep items."
+  },
+  "verification": {
+    "jobs": [
+      {
+        "name": "shard-generate",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-shard-plans.py",
+          "--generate",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": null,
+        "failures": 0,
+        "seconds": 2.31,
+        "output": "shard-generate.json"
+      },
+      {
+        "name": "index-generate",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-plan-index.py",
+          "generate"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": null,
+        "failures": 0,
+        "seconds": 32.05,
+        "output": "index-generate.json"
+      },
+      {
+        "name": "shard-check",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit_code": 0,
+        "status": "pass",
+        "checks": null,
+        "failures": 0,
+        "seconds": 12.01,
+        "output": "shard-check.json"
+      },
+      {
+        "name": "index-validate",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "exit_code": 1,
+        "status": "fail",
+        "checks": null,
+        "failures": 22,
+        "seconds": 34.03,
+        "output": "index-validate.json"
+      },
+      {
+        "name": "storage-profile",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-storage-profile-check.py"
+        ],
+        "exit_code": 1,
+        "status": "fail",
+        "checks": null,
+        "failures": 0,
+        "seconds": 2.01,
+        "output": "storage-profile.json"
+      },
+      {
+        "name": "assistant-contract",
+        "command": [
+          "/home/sittingmongoose/PM-Experiments/DCH-r9/venv/bin/python",
+          "-B",
+          "scripts/pm-assistant-contract-check.py"
+        ],
+        "exit_code": 1,
+        "status": "gaps_found",
+        "checks": null,
+        "failures": 0,
+        "seconds": 22.04,
+        "output": "assistant-contract.json"
+      }
+    ],
+    "minimum_available_bytes": 11647356928,
+    "memory_events": []
+  },
+  "scope_audit": "r9/scope-audit.json",
+  "baseline_comparison": "r9/baseline-comparison.json",
+  "retirement_applications": "reports/event-authority-20261104/DCH-stop-retirement-application.json",
+  "native_execution": "NOT_RUN",
+  "no_admission": true,
+  "sweep_part_1": {
+    "input_head": "59959a9c0f",
+    "rebased_source_head": "6039d1817d5898c9d6e45fa1c8e2ea8a5a79dd2f",
+    "base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42",
+    "families": [
+      {
+        "label": "family-bundle_selection_forward_blocked",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2375,
+        "stdout_sha256": "a3e17712c7853eb36281dcc0cea519f5df2a06bd7fb583df57228334bf1e8001"
+      },
+      {
+        "label": "family-bundle_selection_sent_to_chat",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2409,
+        "stdout_sha256": "8c8f8f06798ebc869a9d663b42149b3ee0c462c68fdbbce484d427e6036d3b03"
+      },
+      {
+        "label": "family-chat_message",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2391,
+        "stdout_sha256": "2dbec8c521ea9e2a946ad35e4f15599062e4274b78aea24417279535019aee8c"
+      },
+      {
+        "label": "family-chat_thread_archived",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2503,
+        "stdout_sha256": "0145a1a08e8a6f4063b483e63d8799f03173817ebaed8370a5147e36d86c2d08"
+      },
+      {
+        "label": "family-chat_thread_created",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2369,
+        "stdout_sha256": "0d6539c90d0f9ca4c010a2da6a82657d3e55a4590f358eab29b744702d7bd047"
+      },
+      {
+        "label": "family-chat_thread_deleted",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2369,
+        "stdout_sha256": "f2d677592e115c729ea38f9a9719301a92142fd5e025c401be6a949914cbd6b5"
+      },
+      {
+        "label": "family-chat_thread_worktree_bound",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2367,
+        "stdout_sha256": "cf8eddcba8bc469e871868d74286b67fecf8ce75e4057fbb54bd81c0b7739ef5"
+      },
+      {
+        "label": "family-chat_thread_worktree_create_failed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2363,
+        "stdout_sha256": "0b1b49a641a2c6e134a4e2917e4edf090486c15bf3291f3cdea99caa01e12835"
+      },
+      {
+        "label": "family-chat_thread_worktree_merge_failed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2371,
+        "stdout_sha256": "33798d3c26f8038469de5fe0e3cacd164cde86d077e3aaaec66616364993e6f0"
+      },
+      {
+        "label": "family-chat_thread_worktree_merged",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2375,
+        "stdout_sha256": "d3cf53e7e97570eb39b8c7dfee4a7f32210fcad357d474ddb27250af27432ed6"
+      },
+      {
+        "label": "family-chat_thread_worktree_pr_created",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2569,
+        "stdout_sha256": "f02634c7bd6be68d2afbb70e4eb86251a4a31c8be154265e778801f030b57235"
+      },
+      {
+        "label": "family-chat_thread_worktree_pr_failed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2367,
+        "stdout_sha256": "b4065aa867851b777fa297967fbe17908aa53db0c37380a4da94da9c5da29859"
+      },
+      {
+        "label": "family-chat_thread_worktree_pre_merge_test_failed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2733,
+        "stdout_sha256": "fd3b5c83f4d2c73f16525e172848e80334a8ebce2b684a839978426fd2a6b10d"
+      },
+      {
+        "label": "family-chat_thread_worktree_pre_merge_test_passed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2683,
+        "stdout_sha256": "15a30a990c3919ee660620a2179a37904450ac1f73b91835dec12be768ea7f02"
+      },
+      {
+        "label": "family-chat_thread_worktree_pre_merge_test_started",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2367,
+        "stdout_sha256": "e5aea3e7b763a833985455b692eca397b949ac69db37792c20793782f7b46b46"
+      },
+      {
+        "label": "family-chat_thread_worktree_renamed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2365,
+        "stdout_sha256": "ae5268680a93fe56d4ad543258e025f9746f3aaf66f6111368b2ccb635d10cd7"
+      },
+      {
+        "label": "family-chat_thread_worktree_unbound",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2363,
+        "stdout_sha256": "5d8ba029a21583dce123809a917f0ac6a301c90b506c2a22dfeed36651065762"
+      }
+    ],
+    "stop": {
+      "exit": 0,
+      "status": "pass",
+      "checks": 4540,
+      "stdout_sha256": "b02e44c729de37ae3cd765ed4ef364aad9e4202f0e5089df9de737fbfed7d484"
+    },
+    "fixture_audit": "fixture-audit.json",
+    "derived": [
+      {
+        "label": "shard-generate",
+        "exit": 0,
+        "status": "pass",
+        "stdout_sha256": "058694314fb57888e86382b8d038e58893e4e70820a7f4b6ea17705789073441"
+      },
+      {
+        "label": "index-generate",
+        "exit": 0,
+        "status": "pass",
+        "stdout_sha256": "c2d028f2b063d291be17ca57b4f659c727313b07be1387e1b6f07f4936efc746"
+      },
+      {
+        "label": "shard-check",
+        "exit": 0,
+        "status": "pass",
+        "stdout_sha256": "91a12f9200b820a0469a53718d84756f9faa777652f2ff5725b6d68849838939"
+      },
+      {
+        "label": "index-validate",
+        "exit": 0,
+        "status": "pass",
+        "stdout_sha256": "237c2449b1f814eb44ad057bffff86a4f0cf9525b23de60e7c4d1d8c720cde19"
+      }
+    ],
+    "baseline_comparison": {
+      "index-validate": {
+        "base_status": "NOT_RUN",
+        "branch_status": "pass",
+        "reason": "Required index validation passes; source units and companions unchanged. Optional broad baseline repeats were cancelled before execution."
+      },
+      "storage-profile": {
+        "base_status": "NOT_RUN",
+        "branch_status": "NOT_RUN",
+        "reason": "Required index validation passes; source units and companions unchanged. Optional broad baseline repeats were cancelled before execution."
+      },
+      "assistant-contract": {
+        "base_status": "NOT_RUN",
+        "branch_status": "NOT_RUN",
+        "reason": "Required index validation passes; source units and companions unchanged. Optional broad baseline repeats were cancelled before execution."
+      }
+    },
+    "full_guard_proof": "PARTIAL; deferred to shared tool, no legacy proof rerun",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/sweep-p1"
+  },
+  "sweep_part_2a": {
+    "implementation_head": "9cd65b3cda",
+    "start_head": "ac5849d031",
+    "tool_merge": "798502af2c",
+    "number_merge": "5bbf9b23d0",
+    "family_runs": {
+      "status": "pass",
+      "ordinary_assertions": 45071,
+      "stop_assertions": 4588,
+      "jobs": [
+        {
+          "name": "bundle.selection_forward_blocked",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "bundle.selection_forward_blocked"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2593,
+          "failures": 0,
+          "seconds": 9.2,
+          "output": "bundle_selection_forward_blocked.json"
+        },
+        {
+          "name": "bundle.selection_sent_to_chat",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "bundle.selection_sent_to_chat"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2627,
+          "failures": 0,
+          "seconds": 9.8,
+          "output": "bundle_selection_sent_to_chat.json"
+        },
+        {
+          "name": "chat.message",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.message"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2609,
+          "failures": 0,
+          "seconds": 10.0,
+          "output": "chat_message.json"
+        },
+        {
+          "name": "chat.thread_archived",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_archived"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2737,
+          "failures": 0,
+          "seconds": 9.4,
+          "output": "chat_thread_archived.json"
+        },
+        {
+          "name": "chat.thread_created",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_created"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2587,
+          "failures": 0,
+          "seconds": 8.3,
+          "output": "chat_thread_created.json"
+        },
+        {
+          "name": "chat.thread_deleted",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_deleted"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2587,
+          "failures": 0,
+          "seconds": 8.7,
+          "output": "chat_thread_deleted.json"
+        },
+        {
+          "name": "chat.thread_worktree_bound",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_bound"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2585,
+          "failures": 0,
+          "seconds": 8.0,
+          "output": "chat_thread_worktree_bound.json"
+        },
+        {
+          "name": "chat.thread_worktree_create_failed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_create_failed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2581,
+          "failures": 0,
+          "seconds": 8.4,
+          "output": "chat_thread_worktree_create_failed.json"
+        },
+        {
+          "name": "chat.thread_worktree_merge_failed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_merge_failed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2589,
+          "failures": 0,
+          "seconds": 8.8,
+          "output": "chat_thread_worktree_merge_failed.json"
+        },
+        {
+          "name": "chat.thread_worktree_merged",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_merged"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2593,
+          "failures": 0,
+          "seconds": 8.8,
+          "output": "chat_thread_worktree_merged.json"
+        },
+        {
+          "name": "chat.thread_worktree_pr_created",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pr_created"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2787,
+          "failures": 0,
+          "seconds": 9.8,
+          "output": "chat_thread_worktree_pr_created.json"
+        },
+        {
+          "name": "chat.thread_worktree_pr_failed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pr_failed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2585,
+          "failures": 0,
+          "seconds": 9.3,
+          "output": "chat_thread_worktree_pr_failed.json"
+        },
+        {
+          "name": "chat.thread_worktree_pre_merge_test_failed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pre_merge_test_failed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2961,
+          "failures": 0,
+          "seconds": 11.2,
+          "output": "chat_thread_worktree_pre_merge_test_failed.json"
+        },
+        {
+          "name": "chat.thread_worktree_pre_merge_test_passed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pre_merge_test_passed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2901,
+          "failures": 0,
+          "seconds": 10.1,
+          "output": "chat_thread_worktree_pre_merge_test_passed.json"
+        },
+        {
+          "name": "chat.thread_worktree_pre_merge_test_started",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pre_merge_test_started"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2585,
+          "failures": 0,
+          "seconds": 8.3,
+          "output": "chat_thread_worktree_pre_merge_test_started.json"
+        },
+        {
+          "name": "chat.thread_worktree_renamed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_renamed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2583,
+          "failures": 0,
+          "seconds": 8.9,
+          "output": "chat_thread_worktree_renamed.json"
+        },
+        {
+          "name": "chat.thread_worktree_unbound",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_unbound"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2581,
+          "failures": 0,
+          "seconds": 9.0,
+          "output": "chat_thread_worktree_unbound.json"
+        },
+        {
+          "name": "chat.response_stop_requested",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_stop.py"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 4588,
+          "failures": 0,
+          "seconds": 8.1,
+          "output": "chat_response_stop_requested.json"
+        }
+      ]
+    },
+    "stop_assertions": 4588,
+    "ordinary_assertions": 45071,
+    "guard_tables": {
+      "tables": 78,
+      "rows": 280,
+      "proved": 269,
+      "unproved_tables": [
+        "sc_project_bytes",
+        "cp_family_entailed",
+        "cs_pointer_bounds",
+        "st_pointer_bounds",
+        "st_index_entailed"
+      ],
+      "masked": 0,
+      "lane_matrix_problems": 0,
+      "findings": [],
+      "witness_calls": 35020,
+      "seconds": 1333.3,
+      "sha256": {
+        "scripts/pm-dch-table-generate.py": "70ef6b9513cd0bb564385c7181b21476260eaa943fbaee0b0c68c42d86c3fd9e",
+        "scripts/pm_dch_events.py": "2c40a4bcf9b27e7f7ac74a0c1bc82c5f750af569119a49a5e60ec0f18932a040",
+        "scripts/pm_dch_guard_suites.py": "9e22d4d9b55dab18a2b87768c12e8bb0ca1b4762c5e2f5ceb5aadfe72e5a258c",
+        "scripts/pm_dch_stop.py": "ad178ec86767ee271ddbf35eaa75db54397a3676ac9eaf541ffb944c33b37b2c",
+        "scripts/pm_guard_isolation.py": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+      }
+    },
+    "numbers_self_test": {
+      "status": "pass",
+      "case_passes": 580,
+      "corpus_cases": 580,
+      "failures": 0
+    },
+    "standing_trials": {
+      "status": "pass",
+      "trials": 15
+    },
+    "differential_2a": {
+      "compared": 56687,
+      "differences": 0
+    },
+    "differential_2b": {
+      "body_bytes: float now type-preserving (old bytes = integral-normalized)": 47,
+      "identity: same results, different call count": 1,
+      "idempotency_key: same results, different call count": 1,
+      "body_bytes: same results, different call count": 4,
+      "payload_reference: reference of a float-carrying body": 12,
+      "retry_outcome: producer integer 2^53 now qualifies (CV-1100)": 34
+    },
+    "index_validate": {
+      "status": "fail",
+      "failures": 30,
+      "origin_main": "5cbb92a5aa340ba89baf51fcd3e2ef524652df6f",
+      "exit": 1
+    },
+    "native_execution": "NOT_RUN",
+    "timestamp_review": "interim only",
+    "previous_header": {
+      "round": 9,
+      "kind": "deck-2 item 3.a applied",
+      "source_commit": "d2a5182a825c16ce882c86f3459a23dea4312265"
+    }
+  },
+  "sweep_part_2b": {
+    "start_head": "c760032a85",
+    "numrule_merge": "1879aa0daa (58c2816ff3)",
+    "commits": [
+      "aaa5dc7389",
+      "dae68b9880",
+      "560db38533",
+      "882ef7ae25"
+    ],
+    "implementation_head": "882ef7ae25",
+    "guard_tables": {
+      "tables": 78,
+      "rows": 282,
+      "proved": 271,
+      "unproved_tables": [
+        "sc_project_bytes",
+        "cp_family_entailed",
+        "cs_pointer_bounds",
+        "st_pointer_bounds",
+        "st_index_entailed"
+      ],
+      "masked": 0,
+      "unrelated": 0,
+      "lane_matrix_problems": 0,
+      "findings": 0,
+      "witness_calls": 35733,
+      "seconds": 2304.9
+    },
+    "family_runs": {
+      "status": "pass",
+      "ordinary_assertions": 47229,
+      "stop_assertions": 4612,
+      "jobs": [
+        {
+          "name": "bundle.selection_forward_blocked",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "bundle.selection_forward_blocked"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2719,
+          "failures": 0,
+          "seconds": 31.2,
+          "output": "bundle_selection_forward_blocked.json"
+        },
+        {
+          "name": "bundle.selection_sent_to_chat",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "bundle.selection_sent_to_chat"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2753,
+          "failures": 0,
+          "seconds": 32.1,
+          "output": "bundle_selection_sent_to_chat.json"
+        },
+        {
+          "name": "chat.message",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.message"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2735,
+          "failures": 0,
+          "seconds": 30.3,
+          "output": "chat_message.json"
+        },
+        {
+          "name": "chat.thread_archived",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_archived"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2863,
+          "failures": 0,
+          "seconds": 32.6,
+          "output": "chat_thread_archived.json"
+        },
+        {
+          "name": "chat.thread_created",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_created"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2713,
+          "failures": 0,
+          "seconds": 38.4,
+          "output": "chat_thread_created.json"
+        },
+        {
+          "name": "chat.thread_deleted",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_deleted"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2713,
+          "failures": 0,
+          "seconds": 32.3,
+          "output": "chat_thread_deleted.json"
+        },
+        {
+          "name": "chat.thread_worktree_bound",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_bound"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2711,
+          "failures": 0,
+          "seconds": 34.1,
+          "output": "chat_thread_worktree_bound.json"
+        },
+        {
+          "name": "chat.thread_worktree_create_failed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_create_failed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2707,
+          "failures": 0,
+          "seconds": 33.5,
+          "output": "chat_thread_worktree_create_failed.json"
+        },
+        {
+          "name": "chat.thread_worktree_merge_failed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_merge_failed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2715,
+          "failures": 0,
+          "seconds": 31.8,
+          "output": "chat_thread_worktree_merge_failed.json"
+        },
+        {
+          "name": "chat.thread_worktree_merged",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_merged"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2719,
+          "failures": 0,
+          "seconds": 36.0,
+          "output": "chat_thread_worktree_merged.json"
+        },
+        {
+          "name": "chat.thread_worktree_pr_created",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pr_created"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2913,
+          "failures": 0,
+          "seconds": 35.6,
+          "output": "chat_thread_worktree_pr_created.json"
+        },
+        {
+          "name": "chat.thread_worktree_pr_failed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pr_failed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2711,
+          "failures": 0,
+          "seconds": 31.7,
+          "output": "chat_thread_worktree_pr_failed.json"
+        },
+        {
+          "name": "chat.thread_worktree_pre_merge_test_failed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pre_merge_test_failed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 3095,
+          "failures": 0,
+          "seconds": 53.6,
+          "output": "chat_thread_worktree_pre_merge_test_failed.json"
+        },
+        {
+          "name": "chat.thread_worktree_pre_merge_test_passed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pre_merge_test_passed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 3035,
+          "failures": 0,
+          "seconds": 50.5,
+          "output": "chat_thread_worktree_pre_merge_test_passed.json"
+        },
+        {
+          "name": "chat.thread_worktree_pre_merge_test_started",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_pre_merge_test_started"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2711,
+          "failures": 0,
+          "seconds": 33.6,
+          "output": "chat_thread_worktree_pre_merge_test_started.json"
+        },
+        {
+          "name": "chat.thread_worktree_renamed",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_renamed"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2709,
+          "failures": 0,
+          "seconds": 35.2,
+          "output": "chat_thread_worktree_renamed.json"
+        },
+        {
+          "name": "chat.thread_worktree_unbound",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_events.py",
+            "--family",
+            "chat.thread_worktree_unbound"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 2707,
+          "failures": 0,
+          "seconds": 32.2,
+          "output": "chat_thread_worktree_unbound.json"
+        },
+        {
+          "name": "chat.response_stop_requested",
+          "command": [
+            "python3",
+            "-B",
+            "scripts/pm_dch_stop.py"
+          ],
+          "exit_code": 0,
+          "status": "pass",
+          "checks": 4612,
+          "failures": 0,
+          "seconds": 35.8,
+          "output": "chat_response_stop_requested.json"
+        }
+      ]
+    },
+    "standing": {
+      "trials": 17,
+      "caught": 17,
+      "exit": 0
+    },
+    "selftest_numbers": "exit 0, status pass, 580/580",
+    "selftest_all": "exit 1, status fail, NOT_RUN_ADMISSION_REFUSED (inventory gate)",
+    "inventory": {
+      "failures": 337,
+      "nodes": 239,
+      "unclassified_nodes": 6,
+      "by_class": {
+        "derived": 166,
+        "dch_lane": 159,
+        "main_base": 12
+      }
+    },
+    "cases": {
+      "base": 30062,
+      "new": 32232,
+      "added": 3020
+    },
+    "watch_2pow53": "34 original_result at 2^53; 34 invalid_input_type at 2^53+1 and at uint64 max",
+    "differential": "38,441 distinct calls with identical results; 441 changed, exactly the owner-invalid retained originals (historical_read_valid true→false 136, retry_outcome conflict→invalid_input_type 136, checkpoint_joins true→false 153 = 136 + 17, test_joins true→false 16); old-only 921 = the 850 removed history calls (816 derived negatives, 34 year-0000 history) with their 34 body_bytes and 34 record_number_rule calls, plus 3 reference-closure calls over the envelope that re-key because its bytes changed (no errors in either tree); new-only 1,886 are the new cases' calls (2 of them the re-keyed closure calls)",
+    "index_validate": {
+      "origin_main": "47d9dc7655",
+      "exit": 1,
+      "summary": "top-level `fail`, 60 failures (39 plan_unit_removed_without_ledger_decision, 21 plan_unit_removal_ledger_invalid), all units or ledgers that main added after the lane's base d5ec2f70c0; none names a DCH unit or file. Pinned to d5ec2f70c0 in a scratch clone: status pass, 0 failures"
+    },
+    "previous_header": {
+      "round": "sweep part 2A and part 2B numbers",
+      "kind": "guard tables on the gated tool (004bdedd63); NUMRULE number scope (a16f67c1ef)",
+      "source_commit": "9cd65b3cda"
+    }
+  }
+}
