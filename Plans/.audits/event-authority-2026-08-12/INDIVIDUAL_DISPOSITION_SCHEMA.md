@@ -43,6 +43,8 @@ The row's retained `evidence` object must match its receipt member's `retained_e
 
 DL-077 adds no bucket and no row field. A family registered after August that has a complete admission record under `reports/event-authority-20260911/admission-records/` (defined in the independent validator spec) takes its depth from that record's pinned depth assessment. Its row here, for example `context.compaction.completed`, stays as written. It no longer counts toward the owner-veto, evidence-gap, unresolved or quarantine blocking checks or toward registered depth. Every other row check (evidence shape, provisional, ADMIT_CANDIDATE, inference, holding and denominator membership) still applies to it. Without a complete record the row is judged exactly as before.
 
+DL-412 adds no bucket and no row field. A family accepted through a record that describes a multi-family registry step (`registry_step_event_types`, defined in the independent validator spec) is treated exactly like a family accepted through a one-family record: its row here stays as written, it leaves the same blocking checks, and every other row check still applies to it.
+
 This schema addition does **not** claim contract-depth complete, seal, validator `pass`, or PNC-019.
 
 ## Row object

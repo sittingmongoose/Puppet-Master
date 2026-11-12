@@ -1,0 +1,1188 @@
+{
+  "status": "pass",
+  "checks": 250,
+  "interpreter": {
+    "implementation": "CPython",
+    "version": "3.14.4",
+    "executable": "/usr/bin/python3",
+    "optimize": 0,
+    "dont_write_bytecode": 1,
+    "isolated": 0,
+    "hash_randomization": 1
+  },
+  "passed": 250,
+  "failed": 0,
+  "real_frozen_source_custody": {
+    "receipt_sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709",
+    "list_sha256": "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c",
+    "source_revision": "16acf7594a3fe8559af89491b895f440b314b99e",
+    "verified_sources": 597,
+    "source_locations": {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/source-locations.json",
+      "sha256": "154b4a3f4f89faa79d96b08b3600a9d947ea741004d58c3107aa005bca25360a",
+      "locations": {
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/BRIEF-DRAFT.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/18751f47f1daa8f922fe97655528389f72be7d926e8713ad1baa90551dbe0b03-BRIEF-DRAFT.md",
+        "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/fb0d586f853de9941b419499bdf92965c46fc23aba96e5339e27fea66903f1a6-CURRENT_EVENT_SOURCE_INVENTORY.json",
+        "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/e465ad91876fde4cf9fe8d5c75e3a75d01565fa8c8e630ad8cc23622fce4b9b4-EVENT_FAMILY_DENOMINATOR_STATUS.json",
+        "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/9b4a6c425659df0ae8a2f690c4f75fc67b825c94234ac26f2305cf0c8b66e747-EVENT_OCCURRENCES.jsonl",
+        "Plans/.audits/event-authority-2026-08-13-currentness/README.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/a16af5dc4c0bc2954ef50bee707f43abfae6b8f79c7a696e0eb92a1637640308-README.md",
+        "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/605f8185d957222830679784c73d128f0f9c4fa67dc985fe152596c52decc192-VALIDATOR_RECEIPT.json",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541-EXPECTED_252_EVENT_TYPES.tsv",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e-GROUP_ARTIFACT_MANIFEST.json",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294-QUARANTINED_EVENT_DISPOSITIONS.jsonl",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_a.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3-group_a.jsonl",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_b.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160-group_b.jsonl",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_c.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79-group_c.jsonl",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_d.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2-group_d.jsonl",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_e.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a-group_e.jsonl",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_f.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1-group_f.jsonl",
+        "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_g.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db-group_g.jsonl",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/lanes/FIX-ROUND.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/4298583e2a69a3a6f6950ff94900b1a4d62b9e35bd151d55df227a27dda032e4-FIX-ROUND.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696-E-CARDS-1.as-presented-578a6774.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-COUNT.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/ca7085df112d01b5574c16273b93e126e7f75dfb21d0d9704adc38f42c0e485a-CA-COUNT.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/lanes/CARDS1-APPLY.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/f3f553370a89a6fc0467dedde8a5ed71169cc7e4b36f2c0be32ee2475b924104-CARDS1-APPLY.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW-astra.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/161b7ad15c9479155550ba573c7b9290c271f4483ed6b2c4ec23d4029f6f85e7-REVIEW-astra.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/a22a067876a204df9b6b6bc0c8e49034d211b3ea3480bc68fbb2e624e5232159-REVIEW.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/state/undecided-236.tsv": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/fad5326d8565b298257aa7f5f13f7e06fc7ecb233bb78ffaf9fca9d947c33d91-undecided-236.tsv",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/surveys/L9/NEW-NAMES.jsonl": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/ff5e91c7d6c6d79d2a68155d42f992c3826e392fc96cd335e993db42cfba2b02-NEW-NAMES.jsonl",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/surveys/L9/REPORT.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/ed537ce31df64b8ec1bd8399dd324792a5d48f041e3ba178fbfbec070541a4e5-REPORT.md",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/surveys/RT/TABLE.md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recovered-source-bytes/e3b1941dc015f98ebe12e967c8394d0f5b4ffab1bf61197135914400536e4c98-TABLE.md"
+      }
+    }
+  },
+  "results": [
+    {
+      "name": "positive_imported_bindings_match_ast",
+      "pass": true
+    },
+    {
+      "name": "positive_real_frozen_recount_597_sources",
+      "pass": true
+    },
+    {
+      "name": "negative_source_map_extra_root_key",
+      "pass": true,
+      "refusal": "invalid explicit recount source locations"
+    },
+    {
+      "name": "negative_source_map_wrong_schema",
+      "pass": true,
+      "refusal": "invalid explicit recount source locations"
+    },
+    {
+      "name": "negative_source_map_relative_location",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"source location must be an explicit absolute path\", \"source\": \"/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/BRIEF-DRAFT.md\"}]"
+    },
+    {
+      "name": "negative_custody_oserror",
+      "pass": true
+    },
+    {
+      "name": "negative_custody_valueerror",
+      "pass": true
+    },
+    {
+      "name": "negative_custody_subprocess",
+      "pass": true
+    },
+    {
+      "name": "positive_fourth_receipt",
+      "pass": true
+    },
+    {
+      "name": "positive_original_DL077_predicate_through_both_anchors",
+      "pass": true
+    },
+    {
+      "name": "negative_third_oserror",
+      "pass": true
+    },
+    {
+      "name": "negative_third_valueerror",
+      "pass": true
+    },
+    {
+      "name": "positive_preserved_August_snapshot_own_digest",
+      "pass": true
+    },
+    {
+      "name": "negative_snapshot_missing_file",
+      "pass": true
+    },
+    {
+      "name": "negative_anchor_ssot_type",
+      "pass": true
+    },
+    {
+      "name": "negative_anchor_files_type",
+      "pass": true
+    },
+    {
+      "name": "negative_anchor_entry_type",
+      "pass": true
+    },
+    {
+      "name": "negative_anchor_sha_type",
+      "pass": true
+    },
+    {
+      "name": "negative_relative_type",
+      "pass": true
+    },
+    {
+      "name": "negative_location_type",
+      "pass": true
+    },
+    {
+      "name": "positive_isolated_source_fixture",
+      "pass": true
+    },
+    {
+      "name": "negative_one_changed_receipt_byte",
+      "pass": true,
+      "refusal": "recount receipt byte fingerprint mismatch"
+    },
+    {
+      "name": "negative_one_changed_list_byte",
+      "pass": true,
+      "refusal": "recount list byte fingerprint mismatch"
+    },
+    {
+      "name": "negative_one_changed_source_byte",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"source fingerprint mismatch\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_wrong_source_byte_count",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"source fingerprint mismatch\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_missing_fingerprint",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_mismatched_fingerprint",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"source fingerprint mismatch\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_mixed_August_source_revision",
+      "pass": true,
+      "refusal": "recount receipt snapshot identity mismatch"
+    },
+    {
+      "name": "negative_missing_source_member",
+      "pass": true,
+      "refusal": "recount input fingerprint set incomplete"
+    },
+    {
+      "name": "negative_string_byte_count",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_boolean_byte_count",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_float_byte_count",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_uppercase_source_sha",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_August_fingerprint_with_recount_membership",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"source fingerprint mismatch\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_source_map_unknown_member",
+      "pass": true,
+      "refusal": "invalid explicit recount source locations"
+    },
+    {
+      "name": "positive_absolute_sources_without_map_entries",
+      "pass": true
+    },
+    {
+      "name": "negative_optional_map_absent",
+      "pass": true
+    },
+    {
+      "name": "negative_source_map_locations_array",
+      "pass": true,
+      "refusal": "invalid explicit recount source locations"
+    },
+    {
+      "name": "negative_change_schema_id",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_schema_id",
+      "pass": true
+    },
+    {
+      "name": "negative_change_authority_ref",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_authority_ref",
+      "pass": true
+    },
+    {
+      "name": "negative_change_validator_before_sha256",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_validator_before_sha256",
+      "pass": true,
+      "refusal": "post-August amendment receipt identity, authority or hash mismatch"
+    },
+    {
+      "name": "negative_change_validator_after_sha256",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_validator_after_sha256",
+      "pass": true,
+      "refusal": "post-August amendment receipt identity, authority or hash mismatch"
+    },
+    {
+      "name": "negative_change_prior_receipt",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_prior_receipt",
+      "pass": true
+    },
+    {
+      "name": "negative_change_recount_receipt",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_recount_receipt",
+      "pass": true
+    },
+    {
+      "name": "negative_change_recount_list",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_recount_list",
+      "pass": true
+    },
+    {
+      "name": "negative_change_definition_writing_authorized",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_definition_writing_authorized",
+      "pass": true
+    },
+    {
+      "name": "negative_change_app_recording_authorized",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_app_recording_authorized",
+      "pass": true
+    },
+    {
+      "name": "negative_change_contract_depth_complete",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_contract_depth_complete",
+      "pass": true
+    },
+    {
+      "name": "negative_change_validator_id",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_validator_id",
+      "pass": true
+    },
+    {
+      "name": "negative_change_validator_path",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_validator_path",
+      "pass": true
+    },
+    {
+      "name": "negative_change_authority_section_sha256",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_authority_section_sha256",
+      "pass": true
+    },
+    {
+      "name": "negative_change_author_task",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_author_task",
+      "pass": true
+    },
+    {
+      "name": "negative_change_lander_task",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_lander_task",
+      "pass": true
+    },
+    {
+      "name": "negative_change_seal_authorized",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_seal_authorized",
+      "pass": true
+    },
+    {
+      "name": "negative_change_admission_authorized",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_admission_authorized",
+      "pass": true
+    },
+    {
+      "name": "negative_change_certification_scope",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_certification_scope",
+      "pass": true
+    },
+    {
+      "name": "negative_authority_required_token_0",
+      "pass": true,
+      "refusal": "DL-451 authority text missing or changed"
+    },
+    {
+      "name": "negative_authority_required_token_1",
+      "pass": true,
+      "refusal": "DL-451 authority text missing or changed"
+    },
+    {
+      "name": "negative_authority_required_token_2",
+      "pass": true,
+      "refusal": "DL-451 authority text missing or changed"
+    },
+    {
+      "name": "negative_authority_required_token_3",
+      "pass": true,
+      "refusal": "DL-451 authority text missing or changed"
+    },
+    {
+      "name": "negative_nested_prior_receipt_path",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_nested_prior_receipt_keys",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_nested_recount_receipt_path",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_nested_recount_receipt_keys",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_nested_recount_list_path",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_nested_recount_list_keys",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_third_semantic_after_hash",
+      "pass": true,
+      "refusal": "multi-family step amendment receipt identity, authority or hash mismatch"
+    },
+    {
+      "name": "negative_strict_duplicate_root",
+      "pass": true,
+      "refusal": "duplicate recount JSON key: a"
+    },
+    {
+      "name": "negative_strict_duplicate_nested",
+      "pass": true,
+      "refusal": "duplicate recount JSON key: b"
+    },
+    {
+      "name": "negative_strict_NaN",
+      "pass": true,
+      "refusal": "non-finite recount number: NaN"
+    },
+    {
+      "name": "negative_strict_Infinity",
+      "pass": true,
+      "refusal": "non-finite recount number: Infinity"
+    },
+    {
+      "name": "negative_strict_negative_Infinity",
+      "pass": true,
+      "refusal": "non-finite recount number: -Infinity"
+    },
+    {
+      "name": "negative_strict_overflow",
+      "pass": true,
+      "refusal": "non-finite recount number: 1e9999"
+    },
+    {
+      "name": "negative_strict_BOM",
+      "pass": true,
+      "refusal": "Unexpected UTF-8 BOM (decode using utf-8-sig): line 1 column 1 (char 0)"
+    },
+    {
+      "name": "negative_strict_trailing",
+      "pass": true,
+      "refusal": "Extra data: line 1 column 3 (char 2)"
+    },
+    {
+      "name": "negative_strict_wrong_root_array",
+      "pass": true,
+      "refusal": "wrong recount JSON root type"
+    },
+    {
+      "name": "negative_strict_wrong_root_bool",
+      "pass": true,
+      "refusal": "wrong recount JSON root type"
+    },
+    {
+      "name": "negative_strict_wrong_root_null",
+      "pass": true,
+      "refusal": "wrong recount JSON root type"
+    },
+    {
+      "name": "negative_strict_wrong_root_string",
+      "pass": true,
+      "refusal": "wrong recount JSON root type"
+    },
+    {
+      "name": "positive_strict_JSON_7",
+      "pass": true
+    },
+    {
+      "name": "positive_strict_JSON_4",
+      "pass": true
+    },
+    {
+      "name": "negative_missing_fourth_anchor",
+      "pass": true,
+      "refusal": "post-August amendment receipt identity, authority or hash mismatch"
+    },
+    {
+      "name": "negative_duplicate_fourth_anchor",
+      "pass": true,
+      "refusal": "post-August amendment receipt identity, authority or hash mismatch"
+    },
+    {
+      "name": "negative_wrong_fourth_anchor_digest",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_wrong_fourth_anchor_path",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_blank_lander",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_missing_lander_from_seal_applier_list",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "negative_third_bridge_executable_pin",
+      "pass": true,
+      "refusal": "third executable pin refused"
+    },
+    {
+      "name": "negative_change_requires_valid_third_bridge",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "positive_complete_outcome_reader_with_injected_admitted_set",
+      "pass": true
+    },
+    {
+      "name": "negative_outcomes_rows_type",
+      "pass": true
+    },
+    {
+      "name": "negative_outcomes_row_type",
+      "pass": true
+    },
+    {
+      "name": "negative_outcome_schema_id",
+      "pass": true,
+      "refusal": "recount outcomes snapshot identity mismatch"
+    },
+    {
+      "name": "negative_outcome_receipt_sha256",
+      "pass": true,
+      "refusal": "recount outcomes snapshot identity mismatch"
+    },
+    {
+      "name": "negative_outcome_registered_extra_field",
+      "pass": true,
+      "refusal": "recount family lacks a complete original admission record: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_outcome_missing_name",
+      "pass": true,
+      "refusal": "recount outcomes must name each exact member once in sorted order"
+    },
+    {
+      "name": "negative_outcome_duplicate_name",
+      "pass": true,
+      "refusal": "recount outcomes must name each exact member once in sorted order"
+    },
+    {
+      "name": "negative_outcome_extra_name",
+      "pass": true
+    },
+    {
+      "name": "negative_outcome_mixed_snapshot",
+      "pass": true,
+      "refusal": "recount outcomes snapshot identity mismatch"
+    },
+    {
+      "name": "negative_outcome_unknown_outcome",
+      "pass": true,
+      "refusal": "unknown recount outcome: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_missing_complete_admission_record",
+      "pass": true,
+      "refusal": "recount family lacks a complete original admission record: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_complete_card_still_unresolved",
+      "pass": true,
+      "refusal": "recount decision cards unresolved: [\"artifacts.capture_provenance.inspected\"]"
+    },
+    {
+      "name": "negative_card_fingerprint",
+      "pass": true,
+      "refusal": "recount decision card fingerprint/name mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_card_type",
+      "pass": true
+    },
+    {
+      "name": "negative_card_extra_row_key",
+      "pass": true,
+      "refusal": "recount decision card incomplete: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_card_Plans_symlink_path",
+      "pass": true,
+      "refusal": "recount decision card path invalid: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_card_extra_pin_key",
+      "pass": true,
+      "refusal": "recount decision card path invalid: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_card_missing_event_name",
+      "pass": true,
+      "refusal": "recount decision card fingerprint/name mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "positive_exclusion_own_decision_and_evidence",
+      "pass": true
+    },
+    {
+      "name": "negative_rationale_type",
+      "pass": true
+    },
+    {
+      "name": "negative_decision_ref_type",
+      "pass": true
+    },
+    {
+      "name": "negative_citations_type",
+      "pass": true
+    },
+    {
+      "name": "negative_citation_type",
+      "pass": true
+    },
+    {
+      "name": "positive_exclusion_two_line_order_parent",
+      "pass": true
+    },
+    {
+      "name": "negative_exclusion_line_end_negative",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_extra_field",
+      "pass": true,
+      "refusal": "incomplete or contradictory recount exclusion: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_disposition",
+      "pass": true,
+      "refusal": "incomplete or contradictory recount exclusion: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_citation_extra_field",
+      "pass": true,
+      "refusal": "malformed recount exclusion citation: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_unknown_outcome_tag",
+      "pass": true,
+      "refusal": "unknown recount outcome: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_decision_ref_grammar",
+      "pass": true,
+      "refusal": "recount exclusion decision missing: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_lexical_Plans_prefix",
+      "pass": true,
+      "refusal": "recount exclusion evidence must cite Plans: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_line_end_boolean",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_line_start_zero",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_decision_dotted_sibling",
+      "pass": true,
+      "refusal": "recount exclusion decision fingerprint/name mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_decision_prefix",
+      "pass": true,
+      "refusal": "recount exclusion decision fingerprint/name mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_evidence_symlink_outside_Plans",
+      "pass": true,
+      "refusal": "recount exclusion evidence escapes Plans"
+    },
+    {
+      "name": "negative_exclusion_prefix",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_suffix",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_dotted_sibling",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_decision_sha",
+      "pass": true,
+      "refusal": "recount exclusion decision fingerprint/name mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_evidence_sha",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_citation_boolean",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_citation_float",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_citation_span",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_missing_evidence",
+      "pass": true,
+      "refusal": "recount exclusion evidence missing: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_missing_rationale",
+      "pass": true,
+      "refusal": "incomplete or contradictory recount exclusion: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_registered_and_excluded_contradiction",
+      "pass": true,
+      "refusal": "incomplete or contradictory recount exclusion: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "combined_result_boolean_and_single_snapshot_refusals",
+      "pass": true
+    },
+    {
+      "name": "negative_builder_explicit_overall_false",
+      "pass": true,
+      "refusal": "builder false pass"
+    },
+    {
+      "name": "negative_builder_depth_false",
+      "pass": true,
+      "refusal": "builder false pass"
+    },
+    {
+      "name": "negative_builder_recount_false",
+      "pass": true,
+      "refusal": "builder false pass"
+    },
+    {
+      "name": "negative_builder_August_false",
+      "pass": true,
+      "refusal": "builder false pass"
+    },
+    {
+      "name": "negative_builder_denominator_observation_false",
+      "pass": true,
+      "refusal": "builder false complete_denominator_known"
+    },
+    {
+      "name": "negative_builder_depth_observation_false",
+      "pass": true,
+      "refusal": "builder false contract_depth_complete"
+    },
+    {
+      "name": "negative_main_incomplete_complete_denominator_known",
+      "pass": true,
+      "refusal": "main refuses incomplete recount: complete_denominator_known"
+    },
+    {
+      "name": "negative_main_incomplete_contract_depth_complete",
+      "pass": true,
+      "refusal": "main refuses incomplete recount: contract_depth_complete"
+    },
+    {
+      "name": "negative_main_incomplete_overall_pass",
+      "pass": true,
+      "refusal": "main refuses incomplete recount: overall_pass"
+    },
+    {
+      "name": "negative_main_incomplete_seal_prerequisites_met",
+      "pass": true,
+      "refusal": "main refuses incomplete recount: seal_prerequisites_met"
+    },
+    {
+      "name": "negative_main_August_complete_denominator_known",
+      "pass": true,
+      "refusal": "main refuses false August input: complete_denominator_known"
+    },
+    {
+      "name": "negative_main_August_contract_depth_complete",
+      "pass": true,
+      "refusal": "main refuses false August input: contract_depth_complete"
+    },
+    {
+      "name": "negative_main_August_overall_pass",
+      "pass": true,
+      "refusal": "main refuses false August input: overall_pass"
+    },
+    {
+      "name": "negative_main_August_seal_prerequisites_met",
+      "pass": true,
+      "refusal": "main refuses false August input: seal_prerequisites_met"
+    },
+    {
+      "name": "negative_aggregate_input_issue",
+      "pass": true
+    },
+    {
+      "name": "negative_aggregate_receipt_issue",
+      "pass": true
+    },
+    {
+      "name": "negative_aggregate_receipt_oserror",
+      "pass": true
+    },
+    {
+      "name": "negative_aggregate_input_oserror",
+      "pass": true
+    },
+    {
+      "name": "negative_third_dispatch_TypeError",
+      "pass": true
+    },
+    {
+      "name": "negative_aggregate_receipt_dispatch_TypeError",
+      "pass": true
+    },
+    {
+      "name": "negative_aggregate_input_dispatch_TypeError",
+      "pass": true
+    },
+    {
+      "name": "negative_third_dispatch_KeyError",
+      "pass": true
+    },
+    {
+      "name": "negative_aggregate_receipt_dispatch_KeyError",
+      "pass": true
+    },
+    {
+      "name": "negative_aggregate_input_dispatch_KeyError",
+      "pass": true
+    },
+    {
+      "name": "negative_aggregate_input_dispatch_SubprocessError",
+      "pass": true
+    },
+    {
+      "name": "negative_custody_dispatch_TypeError",
+      "pass": true
+    },
+    {
+      "name": "negative_unsafe_source_path_parent",
+      "pass": true,
+      "refusal": "unsafe recount source path"
+    },
+    {
+      "name": "negative_unsafe_source_path_absolute",
+      "pass": true,
+      "refusal": "unsafe recount source path"
+    },
+    {
+      "name": "negative_unsafe_source_path_empty_segment",
+      "pass": true,
+      "refusal": "unsafe recount source path"
+    },
+    {
+      "name": "negative_unsafe_source_path_dot_segment",
+      "pass": true,
+      "refusal": "unsafe recount source path"
+    },
+    {
+      "name": "negative_unsafe_source_path_control",
+      "pass": true,
+      "refusal": "unsafe recount source path"
+    },
+    {
+      "name": "negative_unsafe_source_path_DEL",
+      "pass": true,
+      "refusal": "unsafe recount source path"
+    },
+    {
+      "name": "negative_unsafe_source_path_backslash",
+      "pass": true,
+      "refusal": "unsafe recount source path"
+    },
+    {
+      "name": "negative_unsafe_source_path_colon",
+      "pass": true,
+      "refusal": "unsafe recount source path"
+    },
+    {
+      "name": "positive_complete_predicate_coverage",
+      "pass": true
+    },
+    {
+      "name": "positive_ast_class_table",
+      "pass": true
+    },
+    {
+      "name": "positive_exhaustive_node_type_inventory",
+      "pass": true
+    },
+    {
+      "name": "positive_occurrence_map_controls",
+      "pass": true
+    },
+    {
+      "name": "negative_preserved_rebinding_inserted_call",
+      "pass": true
+    },
+    {
+      "name": "negative_preserved_inserted_sole_claim",
+      "pass": true
+    },
+    {
+      "name": "negative_preserved_duplicate_claim",
+      "pass": true
+    },
+    {
+      "name": "negative_preserved_changed_occurrence",
+      "pass": true
+    },
+    {
+      "name": "negative_preserved_changed_enclosing_header",
+      "pass": true
+    },
+    {
+      "name": "negative_unlisted_isinstance_assignment",
+      "pass": true
+    },
+    {
+      "name": "negative_unlisted_boolean_bitand_assignment",
+      "pass": true
+    },
+    {
+      "name": "negative_unlisted_builder_boolean_bitor",
+      "pass": true
+    },
+    {
+      "name": "negative_census_augassign_bitor",
+      "pass": true
+    },
+    {
+      "name": "negative_census_augassign_bitand",
+      "pass": true
+    },
+    {
+      "name": "negative_census_augassign_bitxor",
+      "pass": true
+    },
+    {
+      "name": "negative_census_hidden_builder_bitor",
+      "pass": true
+    },
+    {
+      "name": "negative_census_hidden_builder_bitand",
+      "pass": true
+    },
+    {
+      "name": "negative_census_hidden_builder_bitxor",
+      "pass": true
+    },
+    {
+      "name": "negative_census_arithmetic_augassign_add",
+      "pass": true
+    },
+    {
+      "name": "negative_census_arithmetic_unary_usub",
+      "pass": true
+    },
+    {
+      "name": "negative_changed_truncated_input",
+      "pass": true
+    },
+    {
+      "name": "negative_changed_rebound_input",
+      "pass": true
+    },
+    {
+      "name": "negative_changed_inserted_continue",
+      "pass": true
+    },
+    {
+      "name": "negative_changed_module_rebinding",
+      "pass": true
+    },
+    {
+      "name": "negative_changed_module_new_constant",
+      "pass": true
+    },
+    {
+      "name": "negative_changed_module_truth_carrier",
+      "pass": true
+    },
+    {
+      "name": "negative_changed_new_function_dict_spread",
+      "pass": true
+    },
+    {
+      "name": "negative_deleted_preserved_guard",
+      "pass": true
+    },
+    {
+      "name": "negative_frozen_round9_gate_deleted",
+      "pass": true
+    },
+    {
+      "name": "negative_frozen_comment_inserted",
+      "pass": true
+    },
+    {
+      "name": "negative_nodes_untouched_function_respaced",
+      "pass": true
+    },
+    {
+      "name": "negative_refused_class_present",
+      "pass": true
+    },
+    {
+      "name": "negative_fresh_module_rebinding",
+      "pass": true
+    },
+    {
+      "name": "negative_fresh_module_mutation",
+      "pass": true
+    },
+    {
+      "name": "negative_fresh_function_shadows_builtin",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_duplicate_def_build_receipt",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_duplicate_def_admission_record_problems",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_evidence_fields_truncation",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_module_alias_write",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_module_class_body",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_star_import",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_globals_write_new_function",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_alias_method_new_function",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_unbound_method_call_new_function",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_max_display_result_new_function",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_boolop_receiver_new_function",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_display_iteration_call_new_function",
+      "pass": true
+    },
+    {
+      "name": "negative_binding_call_result_new_function",
+      "pass": true
+    },
+    {
+      "name": "negative_encoding_declaration_inserted",
+      "pass": true
+    },
+    {
+      "name": "negative_line_ending_crlf_to_lf",
+      "pass": true
+    },
+    {
+      "name": "negative_line_ending_crlf_to_cr",
+      "pass": true
+    },
+    {
+      "name": "negative_ast_class_removed",
+      "pass": true
+    },
+    {
+      "name": "negative_ast_truth_class_without_rule",
+      "pass": true
+    },
+    {
+      "name": "negative_ast_rule_for_data_class",
+      "pass": true
+    },
+    {
+      "name": "positive_module_scope_rules_on_V_and_CA_SEAL",
+      "pass": true
+    },
+    {
+      "name": "positive_total_table_controls",
+      "pass": true
+    },
+    {
+      "name": "negative_random_single_line_edits",
+      "pass": true
+    },
+    {
+      "name": "negative_coverage_bytes_changed_during_corpus",
+      "pass": true
+    },
+    {
+      "name": "positive_no_assert_statement_in_the_checker",
+      "pass": true
+    },
+    {
+      "name": "positive_receipt_writer_runs_the_hashed_bytes",
+      "pass": true
+    }
+  ],
+  "limits": [
+    "No final approval, admission, live seal or all-green August main run is claimed.",
+    "Outcome positives inject the existing admitted set; they do not create or waive admission records.",
+    "Guard-removal inventory belongs to the shared-tool sweep; no lane-local proof engine is claimed."
+  ]
+}

@@ -1,0 +1,334 @@
+{
+  "status": "pass",
+  "checks": 68,
+  "passed": 68,
+  "failed": 0,
+  "results": [
+    {
+      "name": "positive_real_frozen_recount_597_sources",
+      "pass": true
+    },
+    {
+      "name": "positive_fourth_receipt",
+      "pass": true
+    },
+    {
+      "name": "positive_original_DL077_predicate_through_both_anchors",
+      "pass": true
+    },
+    {
+      "name": "positive_preserved_August_snapshot_own_digest",
+      "pass": true
+    },
+    {
+      "name": "positive_isolated_source_fixture",
+      "pass": true
+    },
+    {
+      "name": "negative_one_changed_list_byte",
+      "pass": true,
+      "refusal": "recount list byte fingerprint mismatch"
+    },
+    {
+      "name": "negative_one_changed_source_byte",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"source fingerprint mismatch\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_missing_fingerprint",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_mismatched_fingerprint",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"source fingerprint mismatch\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_mixed_August_source_revision",
+      "pass": true,
+      "refusal": "recount receipt snapshot identity mismatch"
+    },
+    {
+      "name": "negative_missing_source_member",
+      "pass": true,
+      "refusal": "recount input fingerprint set incomplete"
+    },
+    {
+      "name": "negative_string_byte_count",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_boolean_byte_count",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_float_byte_count",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_uppercase_source_sha",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"missing or noncanonical source fingerprint\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_August_fingerprint_with_recount_membership",
+      "pass": true,
+      "refusal": "recount source custody failed: [{\"error\": \"source fingerprint mismatch\", \"source\": \"Plans/fixture_0.json\"}]"
+    },
+    {
+      "name": "negative_change_validator_id",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_validator_id",
+      "pass": true
+    },
+    {
+      "name": "negative_change_validator_path",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_validator_path",
+      "pass": true
+    },
+    {
+      "name": "negative_change_authority_section_sha256",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_authority_section_sha256",
+      "pass": true
+    },
+    {
+      "name": "negative_change_author_task",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_author_task",
+      "pass": true
+    },
+    {
+      "name": "negative_change_lander_task",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_lander_task",
+      "pass": true
+    },
+    {
+      "name": "negative_change_seal_authorized",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_seal_authorized",
+      "pass": true
+    },
+    {
+      "name": "negative_change_admission_authorized",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_admission_authorized",
+      "pass": true
+    },
+    {
+      "name": "negative_change_certification_scope",
+      "pass": true,
+      "refusal": "fourth amendment identity, authority, byte link or anchor mismatch"
+    },
+    {
+      "name": "legacy_predicate_preserved_under_certification_scope",
+      "pass": true
+    },
+    {
+      "name": "negative_strict_duplicate_root",
+      "pass": true,
+      "refusal": "duplicate recount JSON key: a"
+    },
+    {
+      "name": "negative_strict_duplicate_nested",
+      "pass": true,
+      "refusal": "duplicate recount JSON key: b"
+    },
+    {
+      "name": "negative_strict_NaN",
+      "pass": true,
+      "refusal": "non-finite recount number: NaN"
+    },
+    {
+      "name": "negative_strict_Infinity",
+      "pass": true,
+      "refusal": "non-finite recount number: Infinity"
+    },
+    {
+      "name": "negative_strict_negative_Infinity",
+      "pass": true,
+      "refusal": "non-finite recount number: -Infinity"
+    },
+    {
+      "name": "negative_strict_overflow",
+      "pass": true,
+      "refusal": "non-finite recount number: 1e9999"
+    },
+    {
+      "name": "negative_strict_BOM",
+      "pass": true,
+      "refusal": "Unexpected UTF-8 BOM (decode using utf-8-sig): line 1 column 1 (char 0)"
+    },
+    {
+      "name": "negative_strict_trailing",
+      "pass": true,
+      "refusal": "Extra data: line 1 column 3 (char 2)"
+    },
+    {
+      "name": "negative_strict_wrong_root_array",
+      "pass": true,
+      "refusal": "wrong recount JSON root type"
+    },
+    {
+      "name": "negative_strict_wrong_root_bool",
+      "pass": true,
+      "refusal": "wrong recount JSON root type"
+    },
+    {
+      "name": "negative_strict_wrong_root_null",
+      "pass": true,
+      "refusal": "wrong recount JSON root type"
+    },
+    {
+      "name": "negative_strict_wrong_root_string",
+      "pass": true,
+      "refusal": "wrong recount JSON root type"
+    },
+    {
+      "name": "positive_strict_JSON_7",
+      "pass": true
+    },
+    {
+      "name": "positive_strict_JSON_4",
+      "pass": true
+    },
+    {
+      "name": "negative_missing_fourth_anchor",
+      "pass": true,
+      "refusal": "post-August amendment receipt identity, authority or hash mismatch"
+    },
+    {
+      "name": "negative_duplicate_fourth_anchor",
+      "pass": true,
+      "refusal": "post-August amendment receipt identity, authority or hash mismatch"
+    },
+    {
+      "name": "positive_complete_outcome_reader_with_injected_admitted_set",
+      "pass": true
+    },
+    {
+      "name": "negative_outcome_missing_name",
+      "pass": true,
+      "refusal": "recount outcomes must name each exact member once in sorted order"
+    },
+    {
+      "name": "negative_outcome_duplicate_name",
+      "pass": true,
+      "refusal": "recount outcomes must name each exact member once in sorted order"
+    },
+    {
+      "name": "negative_outcome_extra_name",
+      "pass": true,
+      "refusal": "recount outcomes must name each exact member once in sorted order"
+    },
+    {
+      "name": "negative_outcome_mixed_snapshot",
+      "pass": true,
+      "refusal": "recount outcomes snapshot identity mismatch"
+    },
+    {
+      "name": "negative_outcome_unknown_outcome",
+      "pass": true,
+      "refusal": "unknown recount outcome: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_missing_complete_admission_record",
+      "pass": true,
+      "refusal": "recount family lacks a complete original admission record: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_complete_card_still_unresolved",
+      "pass": true,
+      "refusal": "recount decision cards unresolved: [\"artifacts.capture_provenance.inspected\"]"
+    },
+    {
+      "name": "negative_card_fingerprint",
+      "pass": true,
+      "refusal": "recount decision card fingerprint/name mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "positive_exclusion_own_decision_and_evidence",
+      "pass": true
+    },
+    {
+      "name": "negative_exclusion_decision_sha",
+      "pass": true,
+      "refusal": "recount exclusion decision fingerprint/name mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_evidence_sha",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_citation_boolean",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_citation_float",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_citation_span",
+      "pass": true,
+      "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_missing_evidence",
+      "pass": true,
+      "refusal": "recount exclusion evidence missing: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_exclusion_missing_rationale",
+      "pass": true,
+      "refusal": "incomplete or contradictory recount exclusion: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "negative_registered_and_excluded_contradiction",
+      "pass": true,
+      "refusal": "incomplete or contradictory recount exclusion: artifacts.capture_provenance.inspected"
+    },
+    {
+      "name": "combined_result_boolean_and_single_snapshot_refusals",
+      "pass": true
+    },
+    {
+      "name": "negative_unsafe_source_paths",
+      "pass": true
+    }
+  ],
+  "limits": [
+    "No final approval, admission, live seal or all-green August main run is claimed.",
+    "Outcome positives inject the existing admitted set; they do not create or waive admission records.",
+    "Guard-removal inventory belongs to the shared-tool sweep; no lane-local proof engine is claimed."
+  ]
+}
