@@ -40,7 +40,9 @@ async function settings(t, surface, [w, h] = [1390, 900]) {
 	await t.viewport(w, h);
 	const f = await t.app.open({ sandbox: surface === 'sandbox' });
 	await t.app.resetLayout();
-	await f.locator('#tab-settings').click();
+	// at a phone's width the page tabs fold into their overflow menu: the Settings tab is pressed where it is
+	if (w <= 600) await f.evaluate(() => document.getElementById('tab-settings').click());
+	else await f.locator('#tab-settings').click();
 	await t.settle();
 	await f.evaluate((ws) => PM51.go('memory', ws), WS);
 	await f.waitForSelector(`${BODY}[data-workspace-mounted="true"]`, { timeout: 15000 });
@@ -226,8 +228,11 @@ async function home(t, surface, [w, h] = [1390, 900]) {
 	await t.viewport(w, h);
 	const f = await t.app.open({ sandbox: surface === 'sandbox' });
 	await t.app.resetLayout();
-	await f.locator('#tab-dashboard').click();
+	if (w <= 600) await f.evaluate(() => document.getElementById('tab-dashboard').click());
+	else await f.locator('#tab-dashboard').click();
 	await f.waitForFunction(() => !!document.querySelector('#pmRoot .chat-header') && !!document.querySelector('#pmRoot .composer-box[data-k="composer-box"]'), null, { timeout: 30000 });
+	// a narrow Home folds the chat to its edge strip; its button opens it over the page (PMW.chatCol.show, FO-142)
+	if (w <= 860) { await t.page.waitForTimeout(500); await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (c && !c.isOpen()) c.show(); }); }
 	await t.settle();
 	await t.page.waitForTimeout(600);
 	return f;
@@ -378,16 +383,22 @@ for (const surface of ['normal', 'sandbox']) {
 			await setLookBySetting(t, f, look);
 			await f.evaluate((ws) => PM51.go('memory', ws), WS);
 			await t.page.waitForTimeout(500);
-			const PAINT = (sel) => { const pick = (s) => { const e = [...document.querySelectorAll(s)].find((x) => x.getClientRects().length); if (!e) return null; const c = getComputedStyle(e); return { bg: c.backgroundColor, bd: c.borderTopColor, r: c.borderTopLeftRadius, fg: c.color, sh: c.boxShadow.slice(0, 60) }; }; return { sw: pick(`${sel} .mm-intro .toggle[role="switch"]`), card: pick(`${sel} .mm-intro`), add: pick(`${sel} .mm-add`), row: pick(`${sel} .mm-row-text`) }; };
+			// what each part paints (a switch's own text colour paints nothing: its knob is its ::after)
+			const PAINT = (sel) => { const pick = (s, pseudo, noFg) => { const e = [...document.querySelectorAll(s)].find((x) => x.getClientRects().length); if (!e) return null; const c = getComputedStyle(e, pseudo || null); const o = { bg: c.backgroundColor, bd: c.borderTopColor, r: c.borderTopLeftRadius, sh: c.boxShadow, font: `${c.fontSize} ${c.fontWeight}` }; if (!noFg) o.fg = c.color; return o; }; return { sw: pick(`${sel} .mm-intro .toggle[role="switch"]`, null, true), knob: pick(`${sel} .mm-intro .toggle[role="switch"]`, '::after', true), card: pick(`${sel} .mm-intro`), add: pick(`${sel} .mm-add`), row: pick(`${sel} .mm-row-text`), search: pick(`${sel} .mm-search input`) }; };
+			// no hover or focus on either side: read the parts at rest
+			const rest = async () => { await t.page.mouse.move(2, 300); await f.evaluate(() => { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); }); await t.page.waitForTimeout(400); };
+			await rest();
 			const page = await f.evaluate(PAINT, BODY);
 			await f.locator('#tab-dashboard').click();
 			await f.waitForFunction(() => !!document.querySelector('#pmRoot .chat-header .pm7-mem-btn'), null, { timeout: 20000 }).catch(() => {});
 			await t.page.waitForTimeout(500);
 			await f.locator('#pmRoot .chat-header .pm7-mem-btn').first().click().catch(() => {});
 			await t.page.waitForTimeout(600);
+			await rest();
 			const sheet = await f.evaluate(PAINT, '.pm7-mem-layer:not([hidden]) .pm7-mem-sheet');
-			const same = ['sw', 'card', 'add', 'row'].filter((k) => page[k] && sheet[k] && JSON.stringify(page[k]) === JSON.stringify(sheet[k]));
-			await t.check(`${look}: the sheet's switch, card, Add button and note words paint like the Settings page's`, same.length === 4, JSON.stringify({ page, sheet }));
+			const diff = [];
+			for (const k of Object.keys(page)) { if (!page[k] || !sheet[k]) { diff.push(`${k}: missing (page ${!!page[k]}, sheet ${!!sheet[k]})`); continue; } for (const f2 of Object.keys(page[k])) if (page[k][f2] !== sheet[k][f2]) diff.push(`${k}.${f2}: page ${page[k][f2].slice(0, 80)} / sheet ${String(sheet[k][f2]).slice(0, 80)}`); }
+			await t.check(`${look}: the sheet's switch, knob, card, Add button, search box and note words paint like the Settings page's`, diff.length === 0, diff.join(' | ') || 'same');
 			await t.page.keyboard.press('Escape');
 			await t.app.resetLayout();
 		}

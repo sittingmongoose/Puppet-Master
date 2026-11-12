@@ -220,7 +220,7 @@
     const layer = document.createElement('div');
     layer.className = 'pm7-mem-layer'; layer.hidden = true;
     layer.innerHTML = `<div class="pm7-mem-scrim" data-mm-sheet="close"></div>`
-      + `<section class="pm7-mem-sheet" role="dialog" aria-modal="true" aria-label="Memory">`
+      + `<section class="pm7-mem-sheet" role="dialog" aria-modal="true" aria-label="Memory" data-lg-surface="menu">`
       + `<header class="pm7-mem-head"><span class="pm7-mem-grip" aria-hidden="true"></span><h2 class="pm7-mem-title">Memory</h2>`
       + `<button type="button" class="pm51-link pm7-mem-open" data-mm-sheet="settings">Open in Settings</button>`
       + `<button type="button" class="icon-btn pm7-mem-x" data-mm-sheet="close" aria-label="Close" data-pm-hover-label="Close">${icon('close')}</button></header>`
@@ -262,23 +262,26 @@
      row, switch, field, dropdown trigger, buttons, tag, dialog) is copied once with .pm7-mem-sheet in its place, in
      page order and inside the same @media / @container / @supports, so the sheet follows the look exactly. Rules on
      the panel element itself keep only its custom properties, color-scheme, container and font. */
-  const PARTS = ['.toggle', '.pm51-dd', '.btn', '.icon-btn', '.pm51-icon-btn', '.pm51-tag', '.panel-card', '.pm51-section', '.setting-', '.o55-row', '.o55-bound', '.o55-quiet', '.dialog', '.overlay', '.form-', '.alert-strip', '.pm51-link', '.pm-app', '.manager-page', '.manager-body', '.manager-scroll', '.pm51-mgr', '.pm51-body', '.pm51-scroll', '.mm-', '.details-btn', '.icon', '.toast'];
+  const PARTS = ['.toggle', '.pm51-toggle', '.pm51-dd', '.btn', '-btn', '.pm51-tag', '.panel-card', '.pm51-section', '.setting-', '.o55-row', '.o55-bound', '.o55-quiet', '.o55-about', '.dialog', '.overlay', '.form-', '.alert-strip', '.pm51-link', '.pm-app', '.manager-page', '.manager-body', '.manager-scroll', '.pm51-mgr', '.pm51-body', '.pm51-scroll', '.mm-', '.icon', '.toast', 'button', 'input', 'textarea', 'select', 'svg'];
   const SELF_KEEP = /^(--|color-scheme$|container|font|color$|-webkit-font-smoothing$)/;
   function sheetLook() {
     if (lookReady) return;
     lookReady = true;
     const out = [];
     const sub = sel => sel.replace(/#panel-settings(?![\w-])/g, '.pm7-mem-sheet');
-    const selfOnly = sel => sel.split(',').some(s => /#panel-settings(?![\w-])[^\s>+~]*$/.test(s.trim()));
+    /* a selector list split at its own commas, never at those inside :is(), :not() or an attribute */
+    const splitTop = sel => { const out = []; let depth = 0, from = 0, q = ''; for (let i = 0; i < sel.length; i++) { const c = sel[i]; if (q) { if (c === '\\') i++; else if (c === q) q = ''; continue; } if (c === '"' || c === "'") q = c; else if (c === '(' || c === '[') depth++; else if (c === ')' || c === ']') depth--; else if (c === ',' && !depth) { out.push(sel.slice(from, i).trim()); from = i + 1; } } out.push(sel.slice(from).trim()); return out.filter(Boolean); };
+    const SELF = /#panel-settings(?![\w-])[^\s>+~()]*$/;
+    const selfOnly = sel => splitTop(sel).some(s => SELF.test(s));
     const walk = (rules, into) => {
       for (const r of rules) {
         if (r.selectorText !== undefined) {
           const sel = r.selectorText; if (sel.indexOf('#panel-settings') < 0) continue;
           if (selfOnly(sel)) {
             const keep = []; for (let i = 0; i < r.style.length; i++) { const p = r.style[i]; if (SELF_KEEP.test(p)) keep.push(`${p}: ${r.style.getPropertyValue(p)}${r.style.getPropertyPriority(p) ? ' !important' : ''}`); }
-            const parts = sel.split(',').filter(s => /#panel-settings(?![\w-])[^\s>+~]*$/.test(s.trim()));
-            if (keep.length) into.push(`${sub(parts.join(','))} { ${keep.join('; ')} }`);
-            if (parts.length === sel.split(',').length) continue;
+            const all = splitTop(sel), parts = all.filter(s => SELF.test(s));
+            if (keep.length) into.push(`${sub(parts.join(', '))} { ${keep.join('; ')} }`);
+            if (parts.length === all.length) continue;
           }
           if (!PARTS.some(p => sel.indexOf(p) >= 0)) continue;
           into.push(sub(r.cssText.slice(0, r.cssText.indexOf('{'))) + r.cssText.slice(r.cssText.indexOf('{')));

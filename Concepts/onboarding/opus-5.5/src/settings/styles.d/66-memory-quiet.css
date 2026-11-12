@@ -129,6 +129,9 @@
 .pm7-mem-layer .pm7-mem-portal > .overlay > .dialog { max-height: calc(100% - 24px); }
 .pm7-mem-layer .pm7-mem-portal > :not(.overlay) { pointer-events: auto; }
 .pm7-mem-layer.is-narrow .pm7-mem-portal > .overlay { padding: 12px; align-items: end; }
+/* Glass's primary buttons are filled by `background: var(--lg-sel) !important` and then a longhand (glass.css); the browser
+   cannot write those var() longhands back out, so sheetLook's copy of that rule loses the fill: it is restated here */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pm7-mem-layer .pm7-mem-sheet .btn.primary { background-color: var(--lg-sel); }
 html[data-theme^="glass"] .pm7-mem-layer > .pm7-mem-sheet { background: var(--pm6-glass-plate, var(--surface)); border-top-color: var(--glass-hairline, rgba(255,255,255,.14)); }
 html[data-theme^="retro"] .pm7-mem-layer > .pm7-mem-sheet { border-radius: 0; border: 2px solid var(--text-primary); border-bottom: 0; box-shadow: 4px -4px 0 var(--text-primary); }
 html[data-o55-nier="on"] .pm7-mem-layer > .pm7-mem-sheet { border-radius: 0; box-shadow: none; border-top: 2px solid var(--text-primary); }
