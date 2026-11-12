@@ -307,7 +307,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_authenticated_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.authenticated"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "auth_github_device_code_issued": {
       "type": "object",
@@ -614,7 +642,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_device_code_issued_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.device_code.issued"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "auth_github_disconnected": {
       "type": "object",
@@ -913,7 +969,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_disconnected_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.disconnected"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "auth_github_failed": {
       "type": "object",
@@ -1222,7 +1306,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_failed_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.failed"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "auth_github_token_polling": {
       "type": "object",
@@ -1543,7 +1655,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_token_polling_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.token.polling"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "plugin_hook_blocked": {
       "type": "object",
@@ -1849,7 +1989,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_hook_blocked_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.hook.blocked"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "plugin_hook_error": {
       "type": "object",
@@ -2205,7 +2373,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_hook_error_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.hook.error"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "plugin_hook_invoked": {
       "type": "object",
@@ -2545,7 +2741,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_hook_invoked_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.hook.invoked"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "plugin_load_failed": {
       "type": "object",
@@ -2849,7 +3073,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_load_failed_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.load_failed"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "plugin_loaded": {
       "type": "object",
@@ -3137,7 +3389,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_loaded_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.loaded"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "plugin_permission_override": {
       "type": "object",
@@ -3441,7 +3721,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_permission_override_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.permission.override"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "plugin_tool_collision": {
       "type": "object",
@@ -3743,7 +4051,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_tool_collision_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.tool.collision"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "plugin_tool_registered": {
       "type": "object",
@@ -4033,7 +4369,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_tool_registered_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.tool.registered"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "persona_created": {
       "type": "object",
@@ -4913,7 +5277,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.persona_created_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "persona.created"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "persona_deleted": {
       "type": "object",
@@ -5781,7 +6173,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.persona_deleted_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "persona.deleted"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "persona_exported": {
       "type": "object",
@@ -6661,7 +7081,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.persona_exported_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "persona.exported"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "persona_imported": {
       "type": "object",
@@ -7541,7 +7989,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.persona_imported_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "persona.imported"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "persona_selected": {
       "type": "object",
@@ -8763,7 +9239,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.persona_selected_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "persona.selected"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "persona_updated": {
       "type": "object",
@@ -9631,7 +10135,35 @@
             "payload_ref"
           ]
         }
-      ]
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.persona_updated_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "persona.updated"
+        },
+        "scope_key": {},
+        "actor_ref": {},
+        "payload": {},
+        "state": {},
+        "effect_receipt_ref": {},
+        "event_id": {},
+        "idempotency_key": {},
+        "server_id": {},
+        "replay_policy": {},
+        "payload_ref": {}
+      }
     },
     "persona_selected_resolution": {
       "type": "object",

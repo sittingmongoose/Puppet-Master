@@ -64,7 +64,7 @@ def _run(m, name, family, overrides, restore):
         # current recipe; the type-preserving byte oracles must then fail.
         original_bytes=m.body_bytes
         def normalized(value, rule=m.CURRENT_RULE):
-            return m.retained_body_bytes(value, 'strict-v3') if rule == m.CURRENT_RULE else original_bytes(value, rule)
+            return m.retained_body_bytes(value, 'strict-v3') if m.uses_current_numbers(rule) else original_bytes(value, rule)
         m.body_bytes=normalized
     elif name == 'Astra11_exact_types':
         cut(*[(phase, row) for phase in ['ty_a', 'ty_b'] for row, _, _ in m.table_rows(phase)])

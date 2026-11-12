@@ -33,8 +33,8 @@ def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('CP04_value_store', g.Invariant('/value/storage_instance_id', 'equals the actual Store'), 'checkpoint_refused', CP04_value_store),
-        g.Guard('CP05_token_store', g.Invariant('/value/source_token/storage_instance_id', 'equals the actual Store'), 'checkpoint_refused', CP05_token_store),
-        g.Guard('CP06_selection_store', g.Invariant('/value/source_token/source_selection/storage_instance_id', 'equals the actual Store'), 'checkpoint_refused', CP06_selection_store),
+        g.Guard('CP05_token_store', g.Invariant('/value/source_read_token/storage_instance_id', 'equals the actual Store'), 'checkpoint_refused', CP05_token_store),
+        g.Guard('CP06_selection_store', g.Invariant('/value/source_read_token/source_selection/storage_instance_id', 'equals the actual Store'), 'checkpoint_refused', CP06_selection_store),
         g.Guard('CP07_root_store', g.Invariant('/source/checkpoint/storage_instance_id', 'equals the actual Store'), 'checkpoint_refused', CP07_root_store),
     ])
 
