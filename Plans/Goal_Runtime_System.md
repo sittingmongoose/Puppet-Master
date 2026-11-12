@@ -964,7 +964,7 @@ negative_constraints: [Do not retarget a Goal from focus or current settings., D
 
 ### Durable Goal, Plan, thread, and agent lineage
 
-A Goal and every GoalRun preserve `goal_id`, Goal revision, parent/child refs, GoalRun/checkpoint refs, owner-defined Plan lineage refs, originating/current thread refs, agent/crew/WorkNode refs where present, correlation/causation, policy/Persona/route snapshots, budget/capacity refs, evidence/blocker/completion refs, and execution-owner epoch across provider rotation, compaction, restart, client reconnect, and client closure. These relationships are never reconstructed from the focused thread, selected Plan, prompt text, or a client-local transcript.
+A Goal preserves `goal_id`, Goal revision, checkpoint refs, owner-defined Plan lineage refs, originating/current thread refs, agent/WorkNode refs where present, correlation/causation, policy/Persona/route snapshots, evidence/blocker/completion refs, and execution-owner epoch across provider rotation, compaction, restart, client reconnect, and client closure. These relationships are never reconstructed from the focused thread, selected Plan, prompt text, or a client-local transcript.
 
 Provider processes, Goals, agents, tests, and approved work are Server/Execution-Host-owned after durable admission. Closing or disconnecting a client changes observation/control connectivity only. One concrete GoalRun has one accepted execution owner/epoch; transfer requires durable disposition, a safe checkpoint, a new fencing epoch, rejection of late prior-owner writes, and recreation or resolution of nonportable local resources. UI focus, server connection, thread selection, and execution ownership are separate. Reconnect consumes shared epoch-fenced cursor replay or snapshot-plus-live-buffer recovery, deduplicated by durable event identity, and cannot duplicate a Goal transition, child spawn, approval, provider attempt, charge, or completion.
 
@@ -989,7 +989,7 @@ canonical_text: >-
   Goal Runtime preserves durable Goal, Plan, thread, child, agent, run, checkpoint, policy, evidence, blocker, receipt, and execution-owner lineage across compaction, restart, disconnect, reconnect, and host transfer. Admitted work remains server-owned; one GoalRun has one accepted owner epoch; shared cursor/snapshot recovery never duplicates an effect.
 gui_related: false
 gui_classification_reason: Runtime identity, continuation, fencing, and recovery semantics are not visual implementation.
-depends_on: [GRS-011, GRS-019, GRS-040]
+depends_on: [GRS-049, GRS-019, GRS-040]
 unblocks: []
 acceptance_criteria:
   - Client closure/reconnect preserves Goal execution without duplicate transitions, attempts, charges, or completion.
@@ -1021,7 +1021,7 @@ canonical_text: >-
   Goal Runtime consumes BSD and conditional-rule outputs as bounded read-only attributable advice. Advice can remain silent, cannot widen authority or access AuthBrowserSession, and cannot block primary work on failure. Goal controls without command, handler, event, revision, and production-wiring closure remain disabled or omitted; this owner invents no IDs.
 gui_related: true
 gui_classification_reason: Visible Goal control availability, advisory projection, and disabled reasons are user-facing behavior.
-depends_on: [GRS-014, GRS-021, RM-050]
+depends_on: [GRS-050, GRS-021, RM-050]
 unblocks: []
 acceptance_criteria:
   - Silent, duplicate, timeout, quota, and failure cases preserve primary progress and Usage attribution.
@@ -1054,31 +1054,29 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime may request, consume, and certify work that depends on containerized-host capability, but it does not
-  dispatch host work directly and cannot treat blocked host state as completion evidence. Goals, child goals, and
-  verification or repair cycles pass host_capability_ref, host_profile_id, host_assignment_id, execution_unit_context_ref,
+  Goal Runtime may request and consume work that depends on containerized-host capability, but it does not
+  dispatch host work directly and cannot treat blocked host state as completion evidence. Host-dependent
+  work passes host_capability_ref, host_profile_id, host_assignment_id, execution_unit_context_ref,
   TestRunReceipt refs, host_preflight_receipt, host_execution_receipt, cleanup_retention_receipt, blocked_reason_code, and
-  Runtime Artifacts evidence refs through Executor, Automated Testing, Tools, and subagent boundaries. Goal completion
-  certification requires lane-appropriate host/test/cleanup receipts, explicit blocker payloads, or approved verification
-  exceptions; Runtime Artifacts remains projection and evidence browsing, not receipt truth.
+  Runtime Artifacts evidence refs through Executor, Automated Testing, Tools, and subagent boundaries.
+  Runtime Artifacts remains projection and evidence browsing, not receipt truth.
 gui_related: false
-gui_classification_reason: Goal Runtime host-capability consumption and certification are backend/runtime behavior, not GUI presentation.
+gui_classification_reason: Goal Runtime host-capability consumption is backend/runtime behavior, not GUI presentation.
 depends_on: [EP-109, RM-048, T-166, ATS-019, RAP-042, CV-303]
 unblocks: [OSI-431, OP-028, RGV-015]
 acceptance_criteria:
-  - Goal and child-goal records can carry host_capability_ref, host_assignment_id, execution_unit_context_ref, and receipt refs without owning host mutation.
-  - GoalCompletionReceipt certification fails or blocks when required host/test/cleanup evidence is missing.
+  - Host-dependent work can carry host_capability_ref, host_assignment_id, execution_unit_context_ref, and receipt refs without owning host mutation.
   - Blocked host outcomes are preserved as blocked != failed and cannot be transformed into success.
   - Runtime Artifacts links are used as evidence projection, not as the authoritative receipt source.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future GoalCompletionReceipt host-evidence fixture
+  - future Goal host-evidence fixture
 risk_class: goal_runtime_host_certification_drift
 reasoning_tier: high
 context_scope: goal_runtime_containerized_host_consumption
 implementation_surfaces:
   - Plans/Goal_Runtime_System.md
-  - future GoalCompletionReceipt and child-goal runtime records
+  - future Goal host-evidence consumption
 node_compile_hint:
   mode: goal_runtime_host_capability_consumption
   create_worknodes: false
@@ -1099,10 +1097,9 @@ preserved_exact_tokens:
   - "execution_unit_context"
   - "host_assignment_id"
   - "blocked != failed"
-  - "GoalCompletionReceipt"
 negative_constraints:
   - Do not let Goal Runtime dispatch host work directly.
-  - Do not certify completion from a blocked host state.
+  - Do not complete from a blocked host state.
   - Do not make Runtime Artifacts the receipt authority.
 owner_hints:
   - Plans/Goal_Runtime_System.md
@@ -1368,9 +1365,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-005
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-048
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The concise Goal V2 record replaces the expanded durable Goal state under GRS-048 (DL-478); the old text below is retained for lineage only.
   Goal Runtime owns durable execution state for each goal, including objective, lifecycle status, task list, allowed scope, constraints, budgets, attachment manifest, child goals, evidence references, completion receipt, revision, and append-only goal event log. Goal state survives compaction, restarts, and model switches, and optimistic concurrency prevents stale overwrite.
 gui_related: false
 gui_classification_reason: Durable goal state and event logs are runtime/persistence contracts, not GUI implementation.
@@ -1440,7 +1439,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Scheduler continuation and revisioning are runtime behavior; visible controls are Assistant Chat consumer behavior.
 depends_on:
-  - GRS-005
+  - GRS-048
 unblocks: []
 acceptance_criteria:
   - "The host reloads canonical state and Stop/currentness/root/permission/writer evidence before every bounded turn."
@@ -1496,9 +1495,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-007
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-054
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Direct user edits and approved agent proposals replace Goal Replan Events under GRS-054 (DL-478); the old text below is retained for lineage only.
   Material mid-goal user changes create an explicit Goal Replan Event. The runtime pauses scheduling, classifies the interruption as pause/resume, stop/cancel, constraint update, scope expansion, scope reduction, goal replacement, or clarifying instruction, computes impact, updates the visible task list, re-steers or cancels child goals, and then resumes when valid. Trivial clarifications may apply inline; hard constraints apply immediately; forks are reserved for alternate paths or material conflicts.
 gui_related: true
 gui_classification_reason: The runtime event includes user-visible task-list updates and chat-facing replan feedback.
@@ -1774,9 +1775,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-011
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-049
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The initiating chat model and workflow-owned Review replace Goal-specific verifier escalation under GRS-049 (DL-478); the old text below is retained for lineage only.
   Goal Runtime escalates to a stronger verifier, second-pass worker, adjudicator, or stronger policy handling when evidence is incomplete, stale, or non-replayable; child outputs conflict; retries or blockers repeat; strong-certification surfaces are touched; destructive or governance actions are proposed; worker confidence is low; high-density slice or high-signal input produces an empty/weak result; target conflict, large deletion/replacement, or failing tests appear; writes are out of scope; validators fail; or completion claims are unsupported.
 gui_related: false
 gui_classification_reason: Escalation policy is runtime safety behavior, not GUI implementation.
@@ -1834,9 +1837,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-012
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-050
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Evidence-gated completion replaces Goal completion certification under GRS-050 (DL-478); the old text below is retained for lineage only.
   Every goal produces a Goal Completion Receipt. Completion is a runtime-certified state, not a worker-model judgment. A worker can propose completion, but the controller/evaluator/certifier decides whether the goal is complete. Required inputs must be inventoried, required work represented or dispositioned, validations run or explicitly skipped with reason, acceptance criteria satisfied, unresolved items explicit, and no required source or target areas left unaccounted for. Ledger-to-Plans completion additionally requires material ledger content represented in live Plans or intentionally captured as open questions or unresolved decisions, conflicts preserved, unsupported inventions absent, and source-to-target evidence present. Receipts separate source evidence, canonical evidence, process evidence, governance evidence, unresolved items, changed artifacts, and validator outcomes.
 gui_related: false
 gui_classification_reason: Completion receipt authority and evidence classes are runtime/governance behavior.
@@ -2230,9 +2235,10 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-018
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Goal task templates and Goal-type completion criteria are retired. The old text below is retained for lineage only.
   Goal Runtime provides a task template catalog for common goal classes: bug_fix, feature_build, test_until_pass, doc_update, repo_research, refactor, migration, audit_and_repair, ledger_to_plan_transfer, governance seal, and future plan_graph_build only after the PlanUnit-to-NodeSeed-to-WorkNode compiler contract exists. Each template carries goal-type completion criteria, validator expectations, evidence requirements, and no-WorkNode boundary where applicable. Bug-fix goals require the bug reproduced or a reason recorded, fix applied, relevant tests pass, and changed files/evidence summarized. Feature-build goals require implementation done within scope, tests added/updated and passing, docs/plans updated when required, and acceptance criteria proved. Test-until-pass goals keep running until the command passes or external/blocking status is classified with logs captured. Doc-update goals require target docs reflect the request, unsupported content absent, source refs/lineage preserved where required, and validators or lint checks pass. Ledger-to-plan transfer goals load compact state and relevant records, inspect sharded source/target docs through runtime retrieval, update live Plans, verify coverage, repair missed/weak areas autonomously, and complete with evidence/certification.
 gui_related: false
 gui_classification_reason: Goal templates and completion criteria are runtime/task policy, not GUI implementation.
@@ -2241,14 +2247,7 @@ depends_on:
   - GRS-015
 unblocks: []
 acceptance_criteria:
-  - Bug-fix, feature-build, test-until-pass, doc-update, audit/repair, and ledger-to-plan transfer goals have explicit completion criteria.
-  - Plan graph build remains deferred until the compiler contract defines safe node artifacts.
-  - Template metadata does not create executable queues by itself.
-  - Bug-fix goals complete only after bug reproduced or reason recorded, fix applied, relevant tests pass, and changed files/evidence summarized.
-  - Feature-build goals complete only after implementation done within scope, tests added/updated and pass, docs/plans updated when required, and acceptance criteria proved.
-  - Test-until-pass goals continue until command passes or external/blocking condition is classified with logs captured.
-  - Doc-update goals complete only when target docs reflect the request, unsupported content is absent, source refs/lineage are preserved where required, and validators or lint checks pass.
-  - Ledger-to-plan transfer goals load compact state/relevant records, inspect sharded source/target docs, update live Plans, verify coverage, repair autonomously, and complete with completion certificate.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future template catalog tests
@@ -2281,7 +2280,6 @@ preserved_exact_tokens:
   - "migration"
   - "audit_and_repair"
   - "ledger_to_plan_transfer"
-  - "ledger-to-plan transfer"
   - "governance seal"
   - "plan_graph_build"
   - "Plan graph build goal deferred"
@@ -2306,8 +2304,6 @@ preserved_exact_tokens:
   - "sharded source/target docs"
   - "update live Plans"
   - "verify coverage"
-  - "repair autonomously"
-  - "completion certificate"
 negative_constraints:
   - Do not create NodeSeeds or WorkNodes until Plans/Plan_To_Node_Compilation.md defines the compiler contract.
   - Do not treat a task template as an executable queue.
@@ -2326,8 +2322,7 @@ owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Goal Runtime handles ordinary ambiguity and large-work recovery autonomously by preserving open
   questions, conflicts, or unplaced requirements in appropriate docs/artifacts, selecting a safe canonical
-  destination when policy is clear, retrying, inspecting, replanning, spawning verifier/subagents,
-  escalating model tier, narrowing scope, running repair gates, rolling back isolated changes when
+  destination when policy is clear, retrying, inspecting, replanning, narrowing scope, and rolling back isolated changes when
   appropriate, and recording precise blockers when it cannot proceed. Large, cross-referential,
   ambiguous-in-ordinary-ways, or many-shard tasks do not route to manual decision merely because they are
   large. Blocked status must store and display blocker_class, cause, affected scope, last attempted
@@ -2339,14 +2334,12 @@ gui_related: true
 gui_classification_reason: Exact blocker status is a user-visible goal status surface as well as runtime state.
 depends_on:
   - GRS-006
-  - GRS-015
 unblocks: []
 acceptance_criteria:
   - Ordinary large-work ambiguity does not become a manual decision request by default.
   - Recovery actions are recorded as goal events or receipt evidence.
-  - Blocked states expose exact blocker causes for user and verifier review.
+  - Blocked states expose exact blocker causes for user review.
   - Ordinary ambiguity can be preserved as open questions, conflicts, or unplaced requirements with safe canonical destination evidence.
-  - Recovery actions include retry, replan, spawn verifier/subagents, escalate model tier, narrow scope, repair gates, and isolated rollback where safe.
   - Blocked states record blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -2378,9 +2371,6 @@ preserved_exact_tokens:
   - "Autonomous recovery actions"
   - "retry"
   - "replan"
-  - "spawn verifier"
-  - "escalate model tier"
-  - "repair gates"
   - "roll back"
   - "precise blockers"
   - "No manual decision for ordinary large work"
@@ -2413,8 +2403,8 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Approval authority boundaries are runtime/permission policy, not GUI layout or presentation.
 depends_on:
-  - GRS-011
-  - GRS-012
+  - GRS-049
+  - GRS-050
 unblocks: []
 acceptance_criteria:
   - High-risk goal actions request explicit user approval before execution.
@@ -2525,9 +2515,10 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-022
 unit_type: risk
-status: accepted
+status: retired
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The Goal risk register and runtime-certification mitigation policy are retired. The old text below is retained for lineage only.
   The primary Goal Runtime risks are false completion by weak agents, hidden work without user control, and invisible/internal flows interrupting the user for ordinary blockers. Runtime certification, visible control surfaces, exact blocker states, autonomous recovery, and explicit authority boundaries mitigate these risks.
 gui_related: true
 gui_classification_reason: This risk register includes hidden-work/user-control UX risk and visible control mitigation.
@@ -2538,9 +2529,7 @@ depends_on:
   - GRS-020
 unblocks: []
 acceptance_criteria:
-  - False completion risk is mitigated through runtime-certified receipts and verifier/adjudicator policy.
-  - Hidden work risk is mitigated through visible Assistant Chat controls and evidence disclosure.
-  - Internal-flow interruption risk is mitigated through autonomous recovery and exact hard-stop boundaries.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual Goal Runtime risk review
@@ -2643,18 +2632,15 @@ unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md, and legacy Chain Wizard compatibility remains source-lineage-only unless a separate compatibility owner explicitly implements an import/display bridge. Goal Runtime may define invisible ledger-to-Plans execution and a plan_graph_build template that consumes the accepted Plan_To_Node_Compilation compiler contract, but Goal Runtime plan/index/governance phases still must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks. Runtime PlanCompile may create runtime artifacts only through the Plan_To_Node_Compilation compiler, Executor intake, activation, and completion certification chain.
+  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md, and legacy Chain Wizard compatibility remains source-lineage-only unless a separate compatibility owner explicitly implements an import/display bridge. Goal Runtime may support invisible ledger-to-Plans execution, but Goal Runtime plan/index/governance phases must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks. The plan_graph_build Goal template and Goal-owned completion certification are retired by DL-478; runtime compilation remains owned by Plan_To_Node_Compilation and Executor.
 gui_related: false
 gui_classification_reason: Legacy compatibility/source-lineage and runtime compiler boundary design is not a GUI implementation requirement.
 depends_on:
   - GRS-003
-  - GRS-018
-  - PNC-007
 unblocks: []
 acceptance_criteria:
   - Current Planning Wizard flow semantics route to Plans/Planning_Wizard.md.
   - Legacy Chain Wizard compatibility is source-lineage-only and is not required by accepted runtime flow.
-  - Plan graph build consumes the accepted Plan_To_Node_Compilation compiler contract without letting Goal Runtime bypass Executor intake.
   - No node artifacts are produced by Goal Runtime documentation, index, or governance phases.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -2677,12 +2663,11 @@ source_lineage:
   - pldg-20260616-001-goal-runtime-system:q-0002
 preserved_exact_tokens:
   - "Plan graph goals come after compiler contract"
-  - "Plan graph build"
   - "exact redesigned Chain Wizard flow"
   - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
 negative_constraints:
   - Do not make legacy Chain Wizard compatibility a dependency for accepted runtime flow.
-  - Do not let Goal Runtime bypass Plan_To_Node_Compilation, Executor intake, activation, or completion certification.
+  - Do not let Goal Runtime bypass Plan_To_Node_Compilation or Executor intake.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/Plan_To_Node_Compilation.md
@@ -2707,9 +2692,8 @@ gui_related: true
 gui_classification_reason: This requirement includes final visual styling, iconography, and layout for Goal
   UI surfaces.
 depends_on:
-- GRS-005
-- GRS-007
-- GRS-010
+- GRS-048
+- GRS-054
 - GRS-049
 unblocks: []
 acceptance_criteria:
@@ -2763,11 +2747,8 @@ compatibility_only_notes:
 
 Goal Runtime requires these data-shape families:
 
-- Goal state: `goal_id`, `parent_goal_id`, `status`, `objective`, `acceptance_criteria`, `non_goals`, `allowed_scope`, constraints, budget, `work_queue`, task list, `model_policy`, attachment manifest, child goals, `evidence_index`, evidence references, completion receipt, `goal_revision`, and recovery state.
 - Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`, plus Orchestrator GoalRun projections from `goal_run.started`, `goal_run.replanned`, `goal_run.blocked`, `goal_run.certified`, `goal_run.cancelled`, and `goal_run.stopped`. `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. The independent exact-family rulings for `goal.progressed` (GRS-069/CV-343), `goal.replanned` (GRS-070/CV-344), `goal.stopped` (GRS-071/CV-345), and `goal.verification_decided` (GRS-072/CV-346) likewise prohibit their current writes and preserve original historical interpretation. Historical records preserve original custody and cannot rebuild retired current Goal states or child topology.
 - **Compatibility/source lineage only:** older Goal update event fields goal_revision/previous_revision/objective_update/constraint_added/active_subgoals_notified/stale child goals do not define active body/event writers. Current updates consume GRS-048/054/064/068 and app GRS-086 with exact two-source objective history, no child Goals or constraint-role fields.
-- Goal Completion Receipt: tier, changed files/artifacts, checklist disposition, checks run/skipped, evidence refs, validator outputs, child receipts, verifier/adjudicator decision, unresolved/open items, degraded-mode reason, and source-to-target mapping when applicable.
-- Child goal state: `child_goal_id`, `parent_goal_id`, `agent_id`, `status`, `objective`, `allowed_scope`, `write_policy`, `budget`, `task_list`, `result_artifacts`, `completion_receipt`, stale/re-steer state, and `recovery_state`.
 - Progress state: `progress_fingerprint`, `blocker_signature`, artifact hashes, retry count, `repeat_count`, and no-progress continuation markers.
 - Write authority: canonical `write_mode` enum values are `read_only`, `proposal_only`, `isolated_worktree`, `direct_write_single_owner`, `direct_write_partitioned`, and `leased_writer`. The phrase "parent-granted single-writer lease" is a human-readable description of `leased_writer`, not a separate enum value.
 
@@ -3975,28 +3956,24 @@ This owner repair does not create or execute fixtures, oracle artifacts, checker
 
 ## 4. Integration Surfaces
 
-- Assistant Chat consumes Goal Runtime for visible activation, status, task tracker, pause/resume/stop/clear/update controls, evidence/activity display, completion reports, and child-goal expansion.
+- Assistant Chat consumes Goal Runtime for visible activation, status, task tracker, pause/resume/stop/clear/update controls, evidence/activity display, and completion reports.
 - Final GUI consumes ordinary model/Persona selection and GRS-055 Activity/Detail. Worker and verifier/adjudicator Goal model selectors remain retired by GRS-049; no Settings placement or app scope restores them.
 - Planning Ledger and Plan Document systems provide source-lineage and PlanUnit contracts for ledger-to-Plans goals.
-- Plan_To_Node_Compilation owns the accepted compiler boundary for plan graph build goals and prevents PlanUnit indexing from creating NodeSeed/WorkNode artifacts.
+- Plan_To_Node_Compilation owns the accepted compiler boundary and prevents PlanUnit indexing from creating NodeSeed/WorkNode artifacts; the plan_graph_build Goal template is retired by DL-478.
 - Permissions_System resolves global approval policy; Goal Runtime invokes approval for high-risk goal actions.
 - Runtime_Artifacts_Panel and storage owners consume Goal Runtime evidence and receipt identities for browsing, retention, and redaction.
-- Models_System and Multi-Account own concrete requested/effective model and account resolution for Goal runs, not a Goal-owned role cast or default map; provider-specific docs may contribute existing provider capability/model discovery surfaces, but exact Goal Runtime provider-default tier mappings remain deferred unless later promoted through a provider-specific hook.
+- Models_System and Multi-Account own concrete requested/effective model and account resolution for Goal runs under GRS-049; provider-specific docs may contribute existing provider capability/model discovery surfaces. Goal-owned roles and tier mappings are retired by DL-478.
 
 ## 5. Validation And Acceptance
 
 Goal Runtime implementation is acceptable only when:
 
 - all Goal Runtime PlanUnits include `gui_related: true|false`;
-- invisible internal goals, visible Assistant Chat goals, and Orchestrator Goal runtime flows share one lifecycle/state model;
+- invisible internal goals and visible Assistant Chat goals share one lifecycle/state model;
 - every goal produces a completion, degraded, stopped, or blocked receipt;
-- strong-certification goals block when verifier/adjudicator requirements cannot be met;
-- material mid-goal changes produce Goal Replan Events;
-- child goals are first-class runtime objects but cannot complete the parent;
-- child direct writes require isolation, partitioning, or a parent-granted single-writer lease;
-- evidence is replayable for standard/strong tiers and raw logs are capped/redacted;
+- completion evidence follows GRS-050 and raw logs are capped/redacted;
 - seal-phase governance validation uses the complete GRS-021 validator suite before accepting the sealed Goal Runtime packet;
-- WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, and final node queues are absent from Goal Runtime plan/index/governance phases; runtime PlanCompile and Executor may materialize runtime artifacts only through the accepted compiler, intake, activation, and certification chain.
+- WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, and final node queues are absent from Goal Runtime plan/index/governance phases; runtime PlanCompile and Executor may materialize runtime artifacts only through their owning compiler and intake contracts.
 
 ## 6. Plan-To-Node Readiness
 
@@ -4052,19 +4029,17 @@ The pre-seal compile phase leaves live Plans and `Plans/.plan_index/**` changes 
 ```yaml
 plan_unit_id: GRS-026
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun build envelope and its child-work, verification, repair, and certification flow are retired. The old text below is retained for lineage only.
   Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth. The lifecycle sequence preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without changing Executor dispatch ownership. Replan records preserve affected WorkNodes, cancelled or re-steered child work, remaining valid evidence, new revision, and next action without replacing the existing Goal Replan Event owner policy. GoalRun write authority consumes write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer through Permissions and Worktree owners rather than re-owning permission enforcement.
 gui_related: false
 gui_classification_reason: Runtime authority, state, receipts, and certification behavior are orchestration/control-plane behavior, not visual presentation.
 depends_on: [GRS-002, GRS-005, GRS-012, GRS-016, GRS-017, OP-020, EP-097]
 unblocks: [OP-022, OSI-428, EP-098, CV-288]
 acceptance_criteria:
-  - Orchestrator GoalRuns use Goal Runtime as the control envelope without replacing Orchestrator projections.
-  - The GoalRun lifecycle preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification.
-  - Executor/runtime scheduler remains the canonical owner for readiness, blocked overlays, retry/backoff, capacity, wakeups, and dispatch.
-  - GoalRun completion requires receipt-backed certification rather than worker, subagent, or WorkNode success alone.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
@@ -4096,7 +4071,6 @@ source_lineage:
 preserved_exact_tokens:
   - "Goal Runtime"
   - "Orchestrator"
-  - "control envelope"
   - "GoalRun"
   - "WorkGraph"
   - "WorkNode"
@@ -4314,7 +4288,7 @@ canonical_text: >-
   Configured checkpoints are HITL-only additions, while default escalation remains limited to credentials/secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, and security-sensitive approval. Internal repair escalation uses Overseer review and High-Effort Worker routing before user escalation when evidence permits.
 gui_related: false
 gui_classification_reason: Autonomy, HITL, and escalation policy are runtime/permission behavior.
-depends_on: [GRS-027, PS-116, HITL-036]
+depends_on: [GRS-053, PS-116, HITL-036]
 unblocks: [EP-102, GRS-030, OP-024]
 acceptance_criteria:
   - Default mode is hands-off with critical-only user escalation.
@@ -4361,9 +4335,10 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-030
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The Goal-owned plans-to-code certification receipt is retired with the GoalRun build flow. The old text below is retained for lineage only.
   Plans-to-code completion requires a GoalCompletionReceipt. Code complete means all WorkNodes are terminal with valid receipts, all required automated tests passed or are explicitly dispositioned, all source-control receipts are valid, rollback and safe-point requirements are satisfied, Auditor passed, no active blockers remain, no stale Plan/WorkGraph/currentness mismatch remains, final source state is clean or intentionally preserved, and final summary/evidence is written. GoalCompletionReceipt fields include rollback_requirements_satisfied, safe_point_requirements_satisfied, no_stale_plan_workgraph_currentness_mismatch, final_source_state, final_summary_ref, child_receipt_refs, worknode_receipt_refs, changed_artifact_refs, validator_outcomes, authority_check_refs, source_control_receipt_refs, test_receipt_refs, model_resolution_receipt_refs, unresolved_risks, and evidence_layers. Worker says done is insufficient; completion must preserve source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, and completion receipts as separate truth layers.
   GoalCompletionReceipt certification requires the exact code-complete evidence that all WorkNodes terminal, all automated tests passed or were dispositioned, and no active blockers remain. Plans to code completion is an artifact-backed handoff where Auditor verifies before final certification.
 gui_related: false
@@ -4371,9 +4346,7 @@ gui_classification_reason: Completion certification and evidence truth-layer pol
 depends_on: [GRS-027, GRS-029, EP-103, ATS-004]
 unblocks: [RAP-029, CV-289, OP-024]
 acceptance_criteria:
-  - GoalCompletionReceipt proves code-complete status from objective receipt criteria.
-  - Test, source-control, Auditor, blocker, currentness, and final evidence states are checked before completion.
-  - Evidence truth layers remain separate and auditable.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
@@ -4427,8 +4400,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: 'Approve And Build first validates a compare-and-swap approval boundary over the PlanningRun revision, topic map version, immutable pack identity, pack version, pack hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash shown in final review. It then atomically writes the immutable pack, approval_cas_receipt, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, pack hash, and approval CAS inputs; duplicate delivery returns the existing PlanCompileRun rather than creating another run. In the finished-product native runtime contract, ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and returns its identity synchronously before projection reconciliation; optional HITL checkpoints are policy exceptions, not the default. During the current bootstrap ledger-to-Plans lane, this remains product-runtime canon and does not launch PlanCompile. For broad stages the controller computes a bounded worklist and mandatory minimum parallel assignments, launches read-only subagents, records assignment and completion receipts, and rejects certification when required parallel work is absent. A required broad stage may reduce scope or block with a typed runtime-capability
-  error, but it may not silently substitute one broad agent for mandatory parallel analysis or review. Activation requires all required active-scope WorkNodeRequests to be accepted together; optional work must be explicitly excluded or deferred before activation, and a mixed result cannot silently start a partial build. After provisioning acceptance, one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes GoalRunStarted or BuildStarted through a transactional outbox. Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. Activation persists activation_pending, records_materialized, entrypoints_queued, start_event_pending, active, and cancelled_before_mutation
-  states; retries resume idempotently, duplicate commands return the existing GoalRun, and cancellation routes according to whether mutation began. Planning Wizard uses current Goal Runtime and Auditor-based AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than superseded experimental workflow machinery. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all findings are durably closed or a true typed blocker remains. Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision,
+  error, but it may not silently substitute one broad agent for mandatory parallel analysis or review. Activation requires all required active-scope WorkNodeRequests to be accepted together; optional work must be explicitly excluded or deferred before activation, and a mixed result cannot silently start a partial build. Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. Activation persists activation_pending, records_materialized, entrypoints_queued, start_event_pending, active, and cancelled_before_mutation
+  states; retries resume idempotently, duplicate commands return the existing PlanCompileRun, and cancellation routes according to whether mutation began. Planning Wizard workflow and Auditor own AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than Goal Runtime (DL-472, DL-478). The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all findings are durably closed or a true typed blocker remains. Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision,
   requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
@@ -4500,7 +4473,6 @@ correction_refs:
 preserved_exact_tokens:
 - PlanApproved
 - approval_cas_receipt
-- transactional outbox
 - idempotency_key
 - project_id
 - pack_hash
@@ -4516,9 +4488,6 @@ preserved_exact_tokens:
 - runtime-capability blocker
 - all required active-scope
 - mixed
-- GoalRunStarted
-- BuildStarted
-- activation transaction
 - activation commit
 - running
 - activation_pending
@@ -4854,7 +4823,6 @@ negative_constraints:
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): terminal authority is defined against SMPFS-182 and never includes a stored write grant to a human's terminal."
 observed_signal: Repeated failures cluster around agents/subagents inheriting wrong model or reasoning effort, running in circles, spending uncontrolled budget, or continuing after transport/tool failure. OpenCode and Codex show model/effort propagation confusion; Cline and Agent Zero show loop/spend/resource failures; Warp/Codex show UI/runtime stall modes.
-pm_current_coverage: PM already has Goal Runtime role-policy, progress fingerprints, hard budgets, parent/child goals, verification repair loop, provider/model requested/effective identity, and approval boundaries.
 pm_gap_or_delta: Controls are strong but scattered. PM needs one runtime envelope every main agent, subagent, delegated thread, background goal, terminal-bound task, browser/device session, and provider attempt must carry.
 proposal_or_recommendation: Define AgentControlEnvelope with autonomy_mode, write_surface, provider/model/effort policy, tool/MCP permission ceiling, context/token budgets, loop budgets, wall-clock budgets, terminal/browser/device authority, child-spawn policy, cancellation/steering semantics, progress heartbeat, and receipt refs.
 compile_disposition: create_new_planunit
@@ -4945,7 +4913,6 @@ preserved_exact_tokens:
 - Agent Zero
 negative_constraints: []
 observed_signal: Codex and OpenCode expose custom/subagent model and reasoning config gaps; Cline temporarily disabled/stabilized subagents in the SDK migration and has loop reports; Agent Zero release notes show child chats/parallel tools and non-destructive await timeouts.
-pm_current_coverage: PM has parent/child goal runtime policy, canonical child run identity for subagents, and prompt-packet subagent hard gates.
 pm_gap_or_delta: 'PM needs a single child execution lifecycle independent of prompt packets: spawn, admitted context, first event, heartbeat, partial result, await, cancellation, orphan reap, result settlement, and parent completion gating.'
 proposal_or_recommendation: Define SubagentExecutionContract and SubagentResultEnvelope. Child result is advisory unless marked allowed_to_write=false/true under parent policy; parent remains the only canonical writer where required. Include per-child model/effort settlement, context slice hash, tool ceiling, timeout, wait_agent/cancel semantics, and orphan reaper.
 compile_disposition: create_new_planunit
@@ -5037,7 +5004,6 @@ preserved_exact_tokens:
 - Codex
 negative_constraints: []
 observed_signal: OpenCode reports empty assistant loops, MCP resource-list spend loops, compaction loops, truncated tool-call repair loops, failed edit loops, and thinking-only loops. Cline reports truncated tool-call and no-match loops. Agent Zero reports monologue/tool loops. Pi reports hung tools/transport first-event hangs.
-pm_current_coverage: Executor has doom-loop guard and Goal Runtime has progress fingerprints, budgets, and verification repair loop.
 pm_gap_or_delta: The same simple identical-failure triple will not catch compaction loops, empty assistant loops, tool-result loops, failed edit loops, prompt-cache churn, first-event hangs, no-progress reasoning, and repeated subagent file-read loops.
 proposal_or_recommendation: 'Add LoopBreakerRegistry with typed families: identical_tool_failure, empty_assistant, no_tool_progress, repeated_edit_miss, compaction_no_gain, context_overflow_replay, MCP_resource_missing, first_event_timeout, transport_idle, reasoning_no_action, subagent_same_read, and spend_anomaly. Each family has fingerprint, max_count, required observation window, terminal action, and user-facing reason.'
 compile_disposition: create_new_planunit
@@ -5247,19 +5213,19 @@ status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Goal Runtime enumerates the shared envelope and event-specific payload minima for
-  all canonical goal and goal_run events, and defines the spec-level runtime
-  records LoopBreakerRegistry, AgentControlEnvelope, CertificationReceipt,
-  ChildAgentLease, WorkNodeRequests, AuditCycle, AuditFinding, and AuditClosure.
-  The closure preserves Goal Runtime as the semantic owner while consuming
-  Contracts_V0 for cross-surface field names, storage-plan for persistence and
-  replay, Executor for WorkNode scheduling and safe-point behavior, and
-  Permissions/Models/Multi-Account owners for authority and requested/effective
-  identity.
+  all canonical goal and goal_run events. LoopBreakerRegistry, AgentControlEnvelope,
+  ChildAgentLease, and WorkNodeRequests retain their owning runtime contracts.
+  CertificationReceipt, AuditCycle, AuditFinding, and AuditClosure belong to the
+  owning workflow and Auditor (DL-472, DL-478), not Goal Runtime; their Event Authority
+  field names remain unchanged. The closure consumes Contracts_V0 for cross-surface
+  field names, storage-plan for persistence and replay, Executor for WorkNode scheduling
+  and safe-point behavior, and Permissions/Models/Multi-Account owners for authority
+  and requested/effective identity.
 
   For exactly goal.created, all remaining v2 common-field, branch, identity and oracle clauses retain whole-v2 historical interpretation. Active-v3 field and original creation authority follow CV-341/SP-294/SIR-048/GRS-066; no other row is migrated or granted current emission by this exception.
 gui_related: false
 gui_classification_reason: This unit defines backend Goal Runtime event payload and record semantics, not visual presentation.
-depends_on: [GRS-005, GRS-026, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, EP-098, PNC-013]
+depends_on: [GRS-048, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, PNC-013]
 unblocks: []
 acceptance_criteria:
   - >-
@@ -5402,10 +5368,10 @@ Goal Runtime therefore distinguishes these aftermaths without inventing success:
 - a validated receipt and continuous canonical event lineage may resume or display its exact recorded lifecycle after normal currentness and authority checks;
 - while receipt/canonical-event recovery is in progress or its truth is not yet established, completion and resumability are unknown, no new mutation-capable scheduling begins, and no projection is promoted to receipt authority;
 - a projection rebuilt to the current survivor set remains degraded in its completeness/health when canonical history has a proven or possible gap; its receipt/evidence views carry recovery provenance and residual risk. This is derived-view quality, not a fifth GoalRecordV2 state or authority to emit `goal.degraded`; GRS-061 preserves the exact event for historical interpretation only;
-- missing, corrupt, quarantined, or unrecoverable canonical goal receipt data remains `goal.blocked` for completion/certification and names the affected receipt/family, storage recovery state, last verified backup boundary, known loss window, last recovery attempt, and next safe action;
-- canonical history loss that is unknown or may include mutation-authorizing, approval, safe-point, receipt, verification, or completion events blocks mutation and certification rather than using a degraded receipt as a success substitute.
+- missing, corrupt, quarantined, or unrecoverable canonical goal receipt data remains `goal.blocked` for completion and names the affected receipt/family, storage recovery state, last verified backup boundary, known loss window, last recovery attempt, and next safe action;
+- canonical history loss that is unknown or may include mutation-authorizing, approval, safe-point, receipt, verification, or completion events blocks mutation and completion rather than using a degraded receipt as a success substitute.
 
-Restoring a mandatory backup never synthesizes a newer completion. Goal Runtime reloads the restored receipt and event boundary, invalidates projections beyond that boundary, marks post-backup writes as the disclosed loss window, reconciles child/attempt/receipt refs, and reruns revision, authority, evidence, and certification checks before any resume. If the required backup is unavailable, Goal Runtime cannot reconstruct a `GoalCompletionReceipt` from worker claims, UI state, Runtime Artifacts, cached projections, or surviving ordinary goal events.
+Restoring a mandatory backup never synthesizes a newer completion. Goal Runtime reloads the restored receipt and event boundary, invalidates projections beyond that boundary, marks post-backup writes as the disclosed loss window, reconciles attempt/receipt refs, and reruns revision, authority, and GRS-050 completion-evidence checks before any resume. If the required backup is unavailable, Goal Runtime cannot reconstruct a canonical `goal_receipt` from worker claims, UI state, Runtime Artifacts, cached projections, or surviving ordinary goal events.
 
 Goal receipt, completion, degraded, stopped, blocked, recovery, evidence, and certification records retain indefinitely under the storage-owned authority policy. Open blocked/recovery, preserved-run, audit, certification, evidence, legal-hold, and referenced safe-point/restore-transaction anchors compose by union. Goal completion, archive, process exit, model switch, permission refresh, or ordinary age never clears those anchors.
 
@@ -5442,15 +5408,15 @@ canonical_text: |-
   Degraded survivor projection means derived-view quality/provenance, not GoalRecordV2.state or an active goal.degraded producer; GRS-061 governs the exact historical event. Existing canonical-loss mutation/completion fences remain unchanged.
 gui_related: true
 gui_classification_reason: Recovery availability, derived-view quality, provenance and safe-next-action disclosure are user-visible; degraded is not a fifth GoalRecordV2 state.
-depends_on: [GRS-005, GRS-012, GRS-019, SP-235, SP-236, SP-237]
+depends_on: [GRS-048, GRS-050, GRS-019, SP-235, SP-236, SP-237]
 unblocks: []
 acceptance_criteria:
-  - Per-family corruption/deletion fixtures never reconstruct a GoalCompletionReceipt from events, worker claims, artifacts, or projections.
-  - Recovery from a verified backup invalidates post-boundary projections, discloses the loss window, and reruns currentness, authority, evidence, and certification checks.
-  - Unknown receipt/event truth schedules no mutation and certifies no completion.
+  - Per-family corruption/deletion fixtures never reconstruct a canonical goal_receipt from events, worker claims, artifacts, or projections.
+  - Recovery from a verified backup invalidates post-boundary projections, discloses the loss window, and reruns currentness, authority, and GRS-050 completion-evidence checks.
+  - Unknown receipt/event truth schedules no mutation and allows no completion.
   - A current survivor projection with a canonical gap retains degraded projection quality or owner-blocked recovery, with integrity/recovery provenance; this does not add a GoalRecordV2 state or emit goal.degraded.
   - Unavailable mandatory backup leaves completion blocked and names the exact affected family, recovery state, boundary, and next safe action.
-  - Goal/receipt/recovery/evidence/certification anchors survive ordinary completion, archive, exit, age, model switch, and permission refresh.
+  - Goal/receipt/recovery/evidence anchors survive ordinary completion, archive, exit, age, model switch, and permission refresh.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Case L per-family goal receipt corruption, backup restore, continuity, and false-success fixtures
@@ -5472,7 +5438,7 @@ source_lineage:
   - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/CONSUMER_PROPAGATION_MAP.md
 negative_constraints:
   - Do not treat a canonical goal receipt as a disposable projection.
-  - Do not certify completion from surviving projections or ordinary events when receipt authority is missing or uncertain.
+  - Do not complete from surviving projections or ordinary events when receipt authority is missing or uncertain.
 owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
@@ -7723,7 +7689,6 @@ gui_related: false
 gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
 split_recommended: false
 depends_on:
-- GRS-026
 - GRS-031
 - SP-214
 - EP-118
@@ -7797,7 +7762,6 @@ gui_related: false
 gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
 split_recommended: false
 depends_on:
-- GRS-026
 - GRS-031
 - SP-214
 - EP-118
