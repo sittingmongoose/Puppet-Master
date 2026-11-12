@@ -155,8 +155,44 @@ class PlanOwner(PlanStoreOwner):
             slot.set(dict(plan_id=plan_id, run_id=run_id))
             return plan_id, run_id
 
+    def transition_run(self, scope, plan_id, run_id, new_state):
+        """A genuine owner run-state change: whole-value CAS, source_revision+1, new origin."""
+        w = self.world
+        with self.recorder.call(self.owner_id, 'transition_run', dict(state=new_state)):
+            key = self.keys(scope, plan_id, run_id)['run']
+            cell = w.cell('assistant_plan_run', key)
+            before = cell['value']
+            after = copy.deepcopy(before)
+            after['source_revision'] = before['source_revision'] + 1
+            after['record']['state'] = new_state
+            check(w, 'StoragePlanRun', after)
+            op = uid('TEST_ONLY:run-transition')
+            okey, origin = self.origin('assistant_plan_run', key, after, issuer_method='owner.assistant_plan.run.original.write.v1',
+                                       operation_id=op, transaction_id=uid('TEST_ONLY:tx'), causation_ref=op, prior=row_sha(before), at=self.clock.now())
+            w.write([w.put('assistant_plan_run', key, after, expected=cell['version']), w.put('plan_cancel_source_origin', okey, origin)])
+            return [('assistant_plan_run', key), ('plan_cancel_source_origin', okey)]
+
+    def approve_new_version(self, scope, plan_id):
+        """A genuine later approval: current/approved version +1 with a new approved hash."""
+        w = self.world
+        with self.recorder.call(self.owner_id, 'approve_new_version'):
+            key = self.keys(scope, plan_id)['plan']
+            cell = w.cell('assistant_plan_record', key)
+            before = cell['value']
+            after = copy.deepcopy(before)
+            after['source_revision'] = before['source_revision'] + 1
+            version = before['record']['current_version'] + 1
+            after['record'].update(current_version=version, approved_version=version,
+                                   approved_hash=row_sha(dict(plan=plan_id, version=version, steps=['TEST_ONLY revised step'])))
+            check(w, 'StorageAssistantPlanRecord', after)
+            op = uid('TEST_ONLY:plan-approval')
+            okey, origin = self.origin('assistant_plan_record', key, after, issuer_method='owner.assistant_plan.original.write.v1',
+                                       operation_id=op, transaction_id=uid('TEST_ONLY:tx'), causation_ref=op, prior=row_sha(before), at=self.clock.now())
+            w.write([w.put('assistant_plan_record', key, after, expected=cell['version']), w.put('plan_cancel_source_origin', okey, origin)])
+            return [('assistant_plan_record', key), ('plan_cancel_source_origin', okey)]
+
     def safe_stop(self, scope, plan_id, run_id, stop_epoch):
-        """The actual safe-stop result of the run after the genuine Stop (no effect on the run)."""
+        """The actual safe-stop result of the run after the genuine Stop; written by the joint commit."""
         w = self.world
         with self.recorder.call(self.owner_id, 'safe_stop') as slot:
             run = w.value('assistant_plan_run', self.keys(scope, plan_id, run_id)['run'])
@@ -164,7 +200,7 @@ class PlanOwner(PlanStoreOwner):
             key = uid('TEST_ONLY:safe-stop-result')
             value = dict(schema_id='pm.test_only.plan_safe_stop_result.v1', schema_version='1.0.0', plan_run_id=run_id,
                          plan_run_epoch=run['record']['plan_run_epoch'], user_stop_epoch=stop_epoch, safe=True, at=self.clock.now())
-            w.write([w.put(self.SAFE_STOP, key, value)])
+            self._issue(None, value, kind='safe_stop_result', ref=key)
             slot.set(dict(key=key))
             return key, value
 
@@ -226,7 +262,8 @@ class SchedulerOwner(PlanStoreOwner):
                                            operation_id=operation, transaction_id=tx, causation_ref=operation, prior=None, at=self.clock.now())
                 writes += [w.put('quota_resume_consent', key, value), w.put('plan_cancel_source_origin', okey, origin)]
                 ids['consents'].append(key)
-            w.write(writes)
+            if writes:
+                w.write(writes)
             slot.set(ids)
             return ids
 
@@ -247,6 +284,7 @@ class SchedulerOwner(PlanStoreOwner):
         """The owner's complete run selection: every run-targeted schedule, its binding and every run consent."""
         w = self.world
         with self.recorder.call(self.owner_id, 'state_run_selection') as slot:
+            require('scheduler/database_unavailable', getattr(self, 'available', True) is True)
             schedules = sorted(k for k, c in w.storage.cells.get('execution_schedule', {}).items()
                                if c['value']['record']['target_kind'] == 'assistant_plan_run' and c['value']['record']['target_id'] == run_id)
             consents = sorted(k for k, c in w.storage.cells.get('quota_resume_consent', {}).items() if c['value']['record']['run_id'] == run_id)
@@ -256,7 +294,7 @@ class SchedulerOwner(PlanStoreOwner):
                              consents=[dict(consent=k, consent_sha256=row_sha(w.value('quota_resume_consent', k))) for k in consents],
                              owner=self.native_owner(), complete=True)
             key = uid('TEST_ONLY:scheduler-selection')
-            w.write([w.put(self.SELECTION, key, statement)])
+            self._issue(None, statement, kind='run_selection', ref=key)
             slot.set(dict(key=key, schedules=len(schedules), consents=len(consents)))
             return key, statement
 
@@ -424,6 +462,7 @@ class BoundPlanCancel(AS.AssignedCancel):
         self.schedule_ids = w.scheduler.schedule_run(self.scope, self.plan_id, run, w.host_stop.record(self.scope)['user_stop_epoch'],
                                                     schedules=self.n_schedules, consents=self.n_consents)
         self.message_schedule_key = w.scheduler.schedule_message(self.scope)
+        w.holds.source(self.scope)
         self.commit_plan_binding(run)
 
     def commit_plan_binding(self, run):
@@ -860,6 +899,13 @@ class BoundPlanCancel(AS.AssignedCancel):
             require('C2/prepare/scheduler_selection_complete', self.scheduler_statement['complete'] is True
                     and len(self.scheduler_statement['schedules']) == self.n_schedules and len(self.scheduler_statement['consents']) == self.n_consents)
             self.callback_domain = 'TEST_ONLY:callback-domain:' + self.run_id
+            k = self.plan_keys()
+            plan_now, run_now = w.value('assistant_plan_record', k['plan']), w.value('assistant_plan_run', k['run'])
+            captured = self.capture_entry['original_plan']
+            binding = self.source['original_execution_binding']
+            require('C2/prepare/plan_source', same(plan_now, captured['plan']) and plan_now['record']['approved_version'] == binding['plan_version']
+                    and plan_now['record']['approved_hash'] == binding['plan_hash'])
+            require('C2/prepare/run_source', same(run_now, captured['run']) and run_now['record']['state'] in CANCELLABLE_RUN)
             ids, reserved = {}, []
             for role, owner in (('plan_operation', w.plans), ('scheduler_operation', w.scheduler), ('joint_transaction', w.plans),
                                 ('preparation', w.plans)):
@@ -965,7 +1011,8 @@ class BoundPlanCancel(AS.AssignedCancel):
             self.recheck('prepare', 'final', entry)
             require('C2/prepare/fence_final', w.storage.fence is self.fence)
             tx = w.write([w.put('TEST_ONLY:plan_identity_reservation', key, r) for key, r, o in reserved]
-                         + [w.put('TEST_ONLY:plan_commit_clock', clock_key, clock), w.put('TEST_ONLY:plan_receipt_owner', clock_key, receipt_owner)])
+                         + [w.put('TEST_ONLY:plan_commit_clock', clock_key, clock), w.put('TEST_ONLY:plan_receipt_owner', clock_key, receipt_owner),
+                            w.put(w.scheduler.SELECTION, self.scheduler_selection_key, self.scheduler_statement)])
             self.prepared, self.templates = prepared, templates
             slot.set(dict(tx=tx['tx_id'], targets=len(targets), slots=len(slots), numeric=len(numeric)))
             return copy.deepcopy(prepared)
@@ -1001,7 +1048,7 @@ class BoundPlanCancel(AS.AssignedCancel):
         return super().latch_and_reserve()
 
     # ---------------------------------------------------------- commit.v3 + participate.v3
-    def plan_commit(self):
+    def plan_commit(self, *, lose_ack=False):
         w = self.world
         with self.call('plan_commit') as slot:
             entry = self.observe_sources()
@@ -1013,10 +1060,6 @@ class BoundPlanCancel(AS.AssignedCancel):
                     and same(cancel_receipt['record'], self.progress['cancellation_receipt']))
             stop = w.host_stop.record(self.scope)
             require('C2/plan_commit/stop_latched', stop['latched'] is True and stop['user_stop_epoch'] == self.progress['stop_receipt']['after_user_stop_epoch'])
-            safe_key, safe = w.plans.safe_stop(self.scope, self.plan_id, self.run_id, stop['user_stop_epoch'])
-            self.at('plan_commit', 'after_safe_stop')
-            self.recheck('plan_commit', 'after_safe_stop', entry)
-            require('C2/plan_commit/safe_stop_epoch', safe['user_stop_epoch'] == stop['user_stop_epoch'] and safe['safe'] is True)
             prepared = self.prepared
             assignment_fields = {k: prepared[k] for k in ('reserved_identities', 'future_slots', 'targets', 'numeric_assignments',
                                                           'codec_resources', 'carrier_policy_admissions', 'current_cancel_assignment')}
@@ -1033,6 +1076,10 @@ class BoundPlanCancel(AS.AssignedCancel):
                     current = w.value(fam, key)
                     require('C2/plan_commit/before_source/' + target['target_id'], current is not None
                             and row_sha(current) == target['before_source']['source']['physical_value_sha256'])
+            safe_key, safe = w.plans.safe_stop(self.scope, self.plan_id, self.run_id, stop['user_stop_epoch'])
+            self.at('plan_commit', 'after_safe_stop')
+            self.recheck('plan_commit', 'after_safe_stop', entry)
+            require('C2/plan_commit/safe_stop_epoch', safe['user_stop_epoch'] == stop['user_stop_epoch'] and safe['safe'] is True)
             sel_key, statement = w.scheduler.selection(self.scope, self.run_id)
             require('C2/plan_commit/scheduler_membership', same({k: v for k, v in statement.items()}, self.scheduler_statement))
             self.at('plan_commit', 'after_scheduler_selection')
@@ -1084,12 +1131,43 @@ class BoundPlanCancel(AS.AssignedCancel):
                 else:
                     require('C2/plan_commit/new_absent/' + tid, cell is None)
                     writes.append(w.put(family, key, value))
+            writes.append(w.put(w.plans.SAFE_STOP, safe_key, safe))
             self.at('plan_commit', 'final')
             self.recheck('plan_commit', 'final', entry)
             tx = w.write(writes)
-            self.commit_admission, self.actual_targets = admission, actual
             slot.set(dict(tx=tx['tx_id'], writes=len(writes)))
+            if lose_ack:
+                raise Refusal('C2/plan_commit/ack_lost')
+            self.commit_admission, self.actual_targets = admission, actual
             return copy.deepcopy(admission)
+
+    def resolve_commit(self):
+        """After a lost joint-commit acknowledgement: resolve the one original commit from Storage only."""
+        w = self.world
+        with self.call('resolve_plan_commit') as slot:
+            keys = {t['target_id']: evaluate(t['physical_key_template'], {}) for t in self.prepared['targets']
+                    if t['target_id'] in ('plan_effect', 'schedule_quota_effect', 'result')}
+            families = dict(plan_effect='plan_cancel_effect', schedule_quota_effect='schedule_quota_cancel_effect', result='assistant_plan_cancel_result')
+            actual = {}
+            for tid, key in keys.items():
+                value = w.value(families[tid], key)
+                require('C2/resolve_plan_commit/unknown/' + tid, value is not None)
+                require('C2/resolve_plan_commit/joint_transaction/' + tid,
+                        (value['record'].get('original_transaction_id') or value['original_operation_identity']['original_joint_transaction_id'])
+                        == self.reserved['joint_transaction'])
+                actual[tid] = (families[tid], key, value, 'new_original', None)
+            result = actual['result'][2]
+            settlement = dict(kind='bound_plan_settled', original_execution_binding=self.source['original_execution_binding'],
+                              original_scope_proof_ref=self.key('goal_cancel_binding_selection'),
+                              original_scope_proof_sha256=row_sha(w.value('goal_cancel_binding_selection', self.key('goal_cancel_binding_selection'))),
+                              original_owner_settlement_ref=keys['result'], original_owner_settlement_sha256=row_sha(result),
+                              original_schedule_quota_invalidation_ref=keys['schedule_quota_effect'],
+                              original_schedule_quota_invalidation_sha256=row_sha(actual['schedule_quota_effect'][2]))
+            actual['owner_settlement'] = (None, None, settlement, 'passive_delivery', None)
+            self.actual_targets = actual
+            self.commit_admission = dict(actual_original_joint_transaction_id=self.reserved['joint_transaction'], resolved=True)
+            slot.set(dict(resolved=True))
+            return actual
 
     def scheduler_participate(self):
         """owner.scheduling.invalidate_cancelled_execution.participate.v3: same enlisted joint commit only."""
@@ -1100,7 +1178,8 @@ class BoundPlanCancel(AS.AssignedCancel):
             stored = w.value(sq[0], sq[1])
             require('C2/scheduler_participate/same_transaction', stored is not None and same(stored, sq[2])
                     and stored['record']['original_transaction_id'] == self.commit_admission['actual_original_joint_transaction_id'])
-            check(w, 'CommitResult', copy.deepcopy(self.commit_admission))
+            if not self.commit_admission.get('resolved'):
+                check(w, 'CommitResult', copy.deepcopy(self.commit_admission))
             slot.set(dict(participated=True))
             return copy.deepcopy(self.commit_admission)
 
@@ -1189,6 +1268,8 @@ class BoundPlanCancel(AS.AssignedCancel):
         w = self.world
         with self.call('read_retained_plan_effects', dict(kind=read_kind)) as slot:
             generation = w.storage.cell_generation
+            require('C2/read_retained_plan_effects/disclosure_permission',
+                    w.permissions.allowed(self.cancel_decision, self.actor_ref, 'goal.cancel') or getattr(self, 'audit_permission', False))
             request = check(w, 'RetainedEffectSelector', dict(selector=self.effect_selector(), read_kind=read_kind))
             settled = self.stored_settled()
             run_key = self.plan_keys()['run']
