@@ -149,5 +149,55 @@
       "value": "2017-01-01T00:59:60+01:00",
       "accepted": true
     }
+  ],
+  "order_cases": [
+    {
+      "id": "order.leap_fraction",
+      "earlier": "2016-12-31T23:59:60.1Z",
+      "later": "2016-12-31T23:59:60.9Z",
+      "relation": "before"
+    },
+    {
+      "id": "order.leap_extra_digits",
+      "earlier": "2016-12-31T23:59:60.0000001Z",
+      "later": "2016-12-31T23:59:60.000001Z",
+      "relation": "before"
+    },
+    {
+      "id": "order.leap_extra_before_tenth",
+      "earlier": "2016-12-31T23:59:60.0000001Z",
+      "later": "2016-12-31T23:59:60.9Z",
+      "relation": "before"
+    },
+    {
+      "id": "order.leap_whole_before_fraction",
+      "earlier": "2016-12-31T23:59:60Z",
+      "later": "2016-12-31T23:59:60.000001Z",
+      "relation": "before"
+    },
+    {
+      "id": "order.second_59_before_leap",
+      "earlier": "2016-12-31T23:59:59.999999999Z",
+      "later": "2016-12-31T23:59:60Z",
+      "relation": "before"
+    },
+    {
+      "id": "order.leap_before_next_second",
+      "earlier": "2016-12-31T23:59:60.999999999Z",
+      "later": "2017-01-01T00:00:00Z",
+      "relation": "before"
+    },
+    {
+      "id": "order.leap_offset_same_instant",
+      "earlier": "2017-01-01T00:59:60.5+01:00",
+      "later": "2016-12-31T23:59:60.5Z",
+      "relation": "same"
+    },
+    {
+      "id": "order.microseconds_unchanged",
+      "earlier": "2026-11-04T12:00:00.000001Z",
+      "later": "2026-11-04T12:00:00.000002Z",
+      "relation": "before"
+    }
   ]
 }

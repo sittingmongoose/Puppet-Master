@@ -88,6 +88,7 @@ PHASES = (
     'mat_capture_origin',
     'mat_manifest_identity',
     'mat_capture_worktree',
+    'mat_capture_worktree_rest',
     'mat_policy_degraded',
     'mat_receipt_ids',
     'producer_jcs',

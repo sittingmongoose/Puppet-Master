@@ -370,8 +370,10 @@ SPEC = [
     P('mat_manifest_identity', 'Materialization: safe_point.created independent manifest identity', [
         R('MK07_manifest_identity', '/source/source_ref', 'the independent bank manifest equals the payload manifest fields', 'manifest_identity', "value['bank_manifest'] != value['payload_manifest']"),
     ]),
-    P('mat_capture_worktree', 'Materialization: safe_point.created worktree fields are all or none', [
+    P('mat_capture_worktree', 'Materialization: safe_point.created worktree fields are all or none: worktree_id', [
         R('MK03_worktree_id', '/payload/worktree_id', 'is nonempty when any worktree field is present', 'partial_worktree', "value['any_present'] is True and not value['worktree_id']"),
+    ]),
+    P('mat_capture_worktree_rest', 'Materialization: safe_point.created worktree path, branch and HEAD (behind the payload worktree rows and the native record join)', [
         R('MK04_worktree_path', '/payload/worktree_path', 'is nonempty when any worktree field is present', 'partial_worktree', "value['any_present'] is True and not value['worktree_path']"),
         R('MK05_branch', '/payload/branch_name', 'is nonempty when any worktree field is present', 'partial_worktree', "value['any_present'] is True and not value['branch_name']"),
         R('MK06_head', '/payload/HEAD_sha', 'is nonempty when any worktree field is present', 'partial_worktree', "value['any_present'] is True and not value['HEAD_sha']"),

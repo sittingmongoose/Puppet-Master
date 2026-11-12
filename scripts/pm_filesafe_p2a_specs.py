@@ -332,6 +332,15 @@ def specs(builder):
     restored_specs(builder, M)
     number_specs(builder, M)
 
+    # Fix round 1 after the Opus recheck of part 2B: MK03 is reachable. A Project capture whose
+    # payload and native Project record both omit worktree_id, with path, branch and HEAD kept,
+    # passes the payload worktree rows (they apply only when worktree_id is present) and the
+    # original-record join, and is refused by MK03 alone.
+    def no_worktree_id(c, b):
+        payload(c).pop('worktree_id')
+        c['source']['native_project_record'].pop('worktree_id')
+    M('safe_point.created', 'original_project_0', 'MK03_worktree_id', no_worktree_id, tag='absent')
+
     def body_result(c, b):
         payload(c)['ts'] = '2026-11-04T12:00:09Z' if payload(c).get('ts') != '2026-11-04T12:00:09Z' else '2026-11-04T12:00:10Z'
     case = builder.materialize_case('filesafe.command_denied', builder.seeds('filesafe.command_denied')['original_project_0'],

@@ -91,7 +91,9 @@ def instant_key(value):
     so two timestamps of at most six fractional digits compare as those
     microseconds did. Digits past microseconds stay in the tuple. A real leap
     second sorts after that minute's second 59 and before the next POSIX
-    second. Year 0000 uses the proleptic Gregorian day count.
+    second; inside it the key keeps the leap second's own fraction
+    (microseconds, then the extra digits), so 60.1 sorts before 60.9 and
+    60.0000001 before 60.000001. Year 0000 uses the proleptic Gregorian day count.
     """
     shared_date_time(value, profile=EVENT_RECORD)
     match = _ACCEPTED.fullmatch(value)
@@ -113,7 +115,7 @@ def instant_key(value):
                + hour * 3600 + minute * 60 + second - offset)
     posix_us = seconds * 1_000_000 + micros
     if leap:
-        return (posix_us + (1_000_000 - micros) - 1, 1, *extra)
+        return (posix_us - micros + 999_999, 1, micros, *extra)
     return (posix_us, 0, *extra)
 
 
@@ -222,6 +224,11 @@ def format_case_failures():
     errors = format_errors(_Subclass('2026-02-01T10:00:00Z'))
     if not errors or not isinstance(errors[0].cause, Refusal) or errors[0].cause.reason != 'date_time_type':
         failures.append('date_time.str_subclass:date_time_type')
+    # Order cases: the window and retention rows compare instant_key tuples.
+    for case in pack.get('order_cases', []):
+        left, right = instant_key(case['earlier']), instant_key(case['later'])
+        if (left < right) != (case['relation'] == 'before') or (left == right) != (case['relation'] == 'same'):
+            failures.append(case['id'] + ':instant_order')
     return failures
 
 

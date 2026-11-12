@@ -31,6 +31,7 @@ FOLLOWERS = {
     'descriptor_jcs': ('descriptor_jcs_other',),
     'full_value_bytes': ('full_value_bytes_other',),
     'app_capture_scm_absent': ('app_capture_scm_absent_id',),
+    'mat_capture_worktree': ('mat_capture_worktree_rest',),
 }
 
 
