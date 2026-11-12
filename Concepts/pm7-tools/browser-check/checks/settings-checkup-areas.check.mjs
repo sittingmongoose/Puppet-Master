@@ -81,7 +81,7 @@ const SCROLL_TO = ([B, pick]) => {
 	while (sc && !(/(auto|scroll)/.test(getComputedStyle(sc).overflowY) && sc.scrollHeight > sc.clientHeight)) sc = sc.parentElement;
 	if (!el || !sc) return false;
 	const top = el.getBoundingClientRect().top - sc.getBoundingClientRect().top;
-	sc.scrollTop = pick === 'top' ? 0 : pick === 'last' ? sc.scrollTop + el.getBoundingClientRect().bottom - sc.getBoundingClientRect().bottom + 12 : sc.scrollTop + top - 12;
+	sc.scrollTop = pick === 'top' ? 0 : pick === 'last' ? sc.scrollTop + el.getBoundingClientRect().bottom - sc.getBoundingClientRect().bottom + 12 : sc.scrollTop + top - (pick === 'scope' ? 160 : 12);
 	return true;
 };
 
@@ -212,8 +212,10 @@ for (const surface of ['normal', 'sandbox']) {
 							['areas-top', 'the checkup\'s first areas', 'first'],
 							['areas-end', 'the checkup\'s last areas', 'last']
 						]) {
+							// frames for Jared: the demo's timed notices closed first (cosmetic only; nothing is judged from the frames)
+							await f.evaluate(() => { document.querySelectorAll('.n-card .n-x, .rs-card .n-x').forEach((x) => x.click()); try { window.PM_TITLEBAR_NOTIFY && PM_TITLEBAR_NOTIFY.clearAll(); } catch (e) { /* no notices */ } });
 							await f.evaluate(SCROLL_TO, [B, pick]);
-							await t.page.waitForTimeout(400);
+							await t.page.waitForTimeout(700);
 							await t.shot(`${look}-${name}`, `${look} 1390x900: ${why}`);
 						}
 						await f.evaluate(SCROLL_TO, [B, 'top']);
