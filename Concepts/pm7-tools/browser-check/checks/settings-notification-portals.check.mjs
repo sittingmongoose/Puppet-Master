@@ -14,8 +14,7 @@ async function box(t,f,label,w,h,close=true){
  else if(close){await t.page.keyboard.press('Escape');await t.settle();}
  return sheet;
 }
-export default async function(t){
- for(const look of (t.args.looks||'basic-light,friendly-dark,glass-dark,nier-dark').split(',')){
+async function checkLook(t,look){
   const args={...t.args,looks:look,bite:'1'};const rt=new Proxy(t,{get(o,k){if(k==='args')return args;const v=Reflect.get(o,k,o);return typeof v==='function'?v.bind(o):v;}});await route(rt);
   const f=t.root;await f.evaluate(()=>PM51.go('general','notifications'));await f.waitForSelector('[data-continuous-workspace-body="notifications"][data-workspace-mounted="true"]');await t.settle();
   const n=f.locator('[data-continuous-workspace-body="notifications"]');
@@ -51,5 +50,5 @@ export default async function(t){
    await press(t,action('dest-address'));await box(t,f,`${look} ${w} destination address`,w,h);
    await press(t,action('test'));await box(t,f,`${look} ${w} destination test`,w,h);
   }
- }
 }
+export const tests=Object.fromEntries(['basic-light','friendly-dark','glass-dark','nier-dark'].map(look=>[look,t=>checkLook(t,look)]));
