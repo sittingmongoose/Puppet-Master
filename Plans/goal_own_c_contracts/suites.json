@@ -200,7 +200,13 @@
         "projector": "scripts/pm_goal_dg_r_projector.py",
         "oracles": "scripts/pm_goal_dg_r_oracles.py",
         "shared_adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
-        "group_status_report": "reports/event-authority-20261111/DG-R.md"
+        "group_status_report": "reports/event-authority-20261111/DG-R.md",
+        "native_v7_merge_dependency": {
+          "branch": "plans/ea-goal-own-c3-w5-20261105",
+          "commit": "73c81fa47036793a3e25d0a3e72abc6156052598",
+          "package": "Plans/goal_run_certified_consumer_contracts/source-package.v2/",
+          "read": "read-only from git by verified blob id; not copied onto this branch"
+        }
       }
     },
     {

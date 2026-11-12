@@ -50,6 +50,7 @@ import pm_goal_test_numrule as NR
 import pm_goal_test_storage as S
 import pm_goal_test_owner_adapters as A
 from pm_goal_own_c3_w34b_roots import W4Roots
+from pm_goal_own_c3_w34_oracles import children as schema_children
 from pm_goal_own_c_oracles import Validator, FORMAT
 
 QUALIFICATION = 'TEST_ONLY'
@@ -178,6 +179,13 @@ class Roots:
     def lookup(self, realm, root):
         return self.registries[realm].resolver().lookup(root)
 
+    def follow(self, resolver, node, ref):
+        """Resolve one ``$ref`` for seeding under the same routing as validation."""
+        absolute = urldefrag(urljoin(resolver._base_uri, ref))[0]
+        if absolute == self.target_uri and absolute not in resolver._registry:
+            return self.target_registry.resolver(resolver._base_uri).lookup(ref)
+        return resolver.lookup(ref)
+
 
 # ------------------------------------------------------------------ seeding
 
@@ -246,7 +254,7 @@ class Seeder:
             resolver = resolver.in_subresource(Resource.from_contents(node, default_specification=DRAFT202012))
         out = [(node, resolver)]
         if '$ref' in node:
-            target = resolver.lookup(node['$ref'])
+            target = self.roots.follow(resolver, node, node['$ref'])
             out += self._layers(target.contents, target.resolver, path)
         for member in node.get('allOf', []):
             out += self._layers(member, resolver, path)
@@ -553,7 +561,8 @@ class World:
             self.cfg.get('segment_target_bytes', 65536)))
         self.registry = A.OwnerRegistry()
         self.recorder = self.registry.recorder
-        self.roots = Roots.get()
+        self.edition = self.cfg.get('edition', 'original_profile')
+        self.roots = RootsV7.get() if self.edition == 'native_v7' else Roots.get()
         self.seeder = Seeder(self.roots)
         self.clock = Clock(self.storage)
         self.sid = self.storage.storage_instance_id
@@ -1182,7 +1191,7 @@ class CancelWorld(World):
         res = self.roots.lookup('filesafe_consumer', FI + 'OriginalRestoreTransaction')
         node = res.contents
         if '$ref' in node:
-            res = res.resolver.lookup(node['$ref'])
+            res = self.roots.follow(res.resolver, node, node['$ref'])
             node = res.contents
         item = node['properties']['operations']['items']
         self.seeder.choices = _NonNull()
@@ -1951,7 +1960,9 @@ def _current_read(self, start=None):
 
 def _current_start_full(self):
     """The whole current Start argument, built once per held boundary."""
-    root = 'https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument'
+    # the edition's own current-Start root, as its CurrentSuccessfulReadback names it
+    res = self.roots.lookup('native_consumer', CP + 'CurrentSuccessfulReadback')
+    root = urljoin(res.resolver._base_uri, res.contents['properties']['current_start']['$ref'])
     prefer = Prefer({'': kind_choice(self.roots, 'native_consumer', 'original_started')})
     overlays = [('/kind', 'original_started')] + [('/value/' + k, v) for k, v in self.current_start()['value'].items()]
     return self.build_current('native_consumer', root, prefer, overlays, 'current_start_edit')
@@ -1980,3 +1991,204 @@ World.current_read = _current_read
 World.current_goal = _current_goal
 World.current_start_full = _current_start_full
 World.current_boundary = _current_boundary
+
+
+# ------------------------------------------------------------------ native-v7 edition
+
+W5_PACKAGE_COMMIT = '73c81fa47036793a3e25d0a3e72abc6156052598'
+W5_PACKAGE = {  # read-only from git; merge dependency, never copied onto this branch
+    'Plans/goal_run_certified_consumer_contracts/source-package.v2/resource-realms.json': '8e3452af2e8c7f8850fc394e29d83ff055f29c0b',
+    'Plans/goal_run_certified_consumer_contracts/source-package.v2/imports.json': 'e5e2a929dd573e836d96383c2643bf4225b836f4',
+    'Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json': 'c4013362336ff3bdcd41e2c42e116c8be86a3869',
+    'Plans/goal_run_certified_consumer_contracts/source-package.v2/methods.json': '4ef834dd9d6fc86a29d703aed1fb0f24a39aee18',
+}
+V7_URI_MAP_PATH = 'Plans/goal_run_certified_consumer_contracts/companion-differences.json'
+
+
+def git_blob(commit, path, blob_id):
+    """Exact bytes of one git blob, verified by its object id (read-only)."""
+    import subprocess
+    raw = subprocess.run(['git', '-C', str(ROOT), 'cat-file', 'blob', blob_id], capture_output=True, check=False).stdout
+    header = b'blob %d\0' % len(raw)
+    A.require('v7/blob_id/' + path, hashlib.sha1(header + raw).hexdigest() == blob_id)
+    listed = subprocess.run(['git', '-C', str(ROOT), 'rev-parse', commit + ':' + path], capture_output=True,
+                            text=True).stdout.strip()
+    A.require('v7/blob_at_commit/' + path, listed == blob_id)
+    return raw
+
+
+class RootsV7(Roots):
+    """W5 source-package.v2 realms with every location-scoped import routed.
+
+    Validation and seeding take the v3 root URIs the world uses and translate
+    them through the companion ``uri_map`` into the native-v7 roots; the realm
+    is the one whose whole bank holds that root. A ``$ref`` whose target is not
+    in the current realm follows only an import listed for the exact realm,
+    whole source hash, schema location and literal (or the inherited exact
+    edge), and nested references stay in the target realm.
+    """
+
+    _instance = None
+
+    @classmethod
+    def get(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+
+    def __init__(self):
+        pkg = {p: json.loads(git_blob(W5_PACKAGE_COMMIT, p, b)) for p, b in W5_PACKAGE.items()}
+        self.package = pkg
+        realms = pkg['Plans/goal_run_certified_consumer_contracts/source-package.v2/resource-realms.json']
+        realms = realms.get('realms', realms)
+        imports = pkg['Plans/goal_run_certified_consumer_contracts/source-package.v2/imports.json']
+        self.uri_map = json.loads((ROOT / V7_URI_MAP_PATH).read_text())['uri_map']
+        index = {}
+        for base, dirs, files in __import__('os').walk(ROOT / 'Plans'):
+            dirs[:] = [d for d in dirs if d not in ('_shards', '.plan_index', '.evidence', '.plan_migration')]
+            for name in files:
+                if name.endswith('.json'):
+                    path = Path(base) / name
+                    index.setdefault(sha256(path.read_bytes()), path)
+        self.registries, self.documents, self.node_origin, self.realm_of_uri = {}, {}, {}, {}
+        for realm, spec in realms.items():
+            docs = {}
+            for entry in spec['resources']:
+                path = ROOT / entry['path']
+                raw = path.read_bytes() if path.exists() else b''
+                if sha256(raw) != entry['sha256']:
+                    located = index.get(entry['sha256'])
+                    A.require('v7/resource_bytes/' + entry['path'], located is not None)
+                    raw = located.read_bytes()
+                A.require('v7/resource_hash/' + entry['path'], sha256(raw) == entry['sha256'])
+                doc = get(json.loads(raw), entry.get('json_pointer', '').lstrip('#'))
+                uri = entry['retrieval_uri']
+                A.require('v7/no_rebinding/' + uri, uri not in docs or sha256(json.dumps(docs[uri], sort_keys=True).encode())
+                          == sha256(json.dumps(doc, sort_keys=True).encode()))
+                docs[uri] = doc
+                self._index(realm, entry['sha256'], doc, '')
+                self.realm_of_uri.setdefault(uri, []).append(realm)
+            self.documents[realm] = docs
+            self.registries[realm] = Registry().with_resources(
+                (u, Resource.from_contents(d, default_specification=DRAFT202012)) for u, d in docs.items()).crawl()
+        self.routes = {}
+        for imp in imports['imports']:
+            self.routes[(imp['from_realm'], imp['from_whole_sha256'], imp['from_schema_location'],
+                         imp['literal_reference'])] = (imp['to_realm'], imp['to_retrieval_uri'])
+        for imp in imports.get('newly_authored_location_scoped_imports', []):
+            for loc in imp['from_schema_locations']:
+                self.routes[(imp['from_realm'], imp['from_whole_sha256'], loc['location'], loc['literal_reference'])] = (
+                    imp['to_realm'], imp['to_retrieval_uri'])
+        self.inherited = {(r, e['unresolved_retrieval_uri']): (e['to_realm'], e['to_retrieval_uri'])
+                          for e in imports.get('inherited_exact_edges', []) for r in e['from_realms']}
+        roots = self
+
+        def routed_ref(validator, ref, instance, schema):
+            resolver = validator._resolver
+            absolute = urldefrag(urljoin(resolver._base_uri, ref))[0]
+            if absolute in resolver._registry or not absolute:
+                yield from validator._validate_reference(ref=ref, instance=instance)
+                return
+            origin = roots.node_origin.get(id(schema))
+            guard('v7/route_origin', origin is not None)
+            realm, whole, location = origin
+            target = roots.routes.get((realm, whole, location + '/$ref', ref)) or roots.inherited.get((realm, absolute))
+            guard('v7/route_unlisted', target is not None)
+            to_realm, to_uri = target
+            fragment = urldefrag(urljoin(resolver._base_uri, ref))[1]
+            resolved = roots.registries[to_realm].resolver(to_uri).lookup(to_uri + ('#' + fragment if fragment else ''))
+            yield from validator.descend(instance, resolved.contents, resolver=resolved.resolver)
+        self.validator_class = jsonschema.validators.extend(Validator, {'$ref': routed_ref})
+        self._validators = {}
+        self.priority = ['companions', 'native', 'cancelled_native_consumer', 'cancelled_goal_consumer',
+                         'cancelled_filesafe_consumer', 'retained_original_d05', 'consumer']
+
+    def qualify(self, routes=None, inherited=None):
+        """Eager walk: every $ref in every whole resource of every realm resolves,
+        directly or through exactly one listed import."""
+        routes = self.routes if routes is None else routes
+        inherited = self.inherited if inherited is None else inherited
+        counts = dict(reference_sites=0, routed=0, unresolved=0, edge_sites=0)
+        unresolved = []
+        for realm, docs in self.documents.items():
+            reg = self.registries[realm]
+            for uri, doc in docs.items():
+                def walk(node, resolver):
+                    if isinstance(node, dict):
+                        if '$id' in node and node is not doc:
+                            resolver = resolver.in_subresource(Resource.from_contents(node, default_specification=DRAFT202012))
+                        if isinstance(node.get('$ref'), str):
+                            counts['reference_sites'] += 1
+                            ref = node['$ref']
+                            absolute = urldefrag(urljoin(resolver._base_uri, ref))[0]
+                            try:
+                                if absolute and absolute not in resolver._registry:
+                                    origin = self.node_origin[id(node)]
+                                    target = routes.get((origin[0], origin[1], origin[2] + '/$ref', ref)) or \
+                                        inherited.get((origin[0], absolute))
+                                    if target is None:
+                                        raise LookupError('unlisted')
+                                    to_realm, to_uri = target
+                                    fragment = urldefrag(urljoin(resolver._base_uri, ref))[1]
+                                    self.registries[to_realm].resolver(to_uri).lookup(
+                                        to_uri + ('#' + fragment if fragment else ''))
+                                    counts['routed'] += 1
+                                    if to_realm == 'retained_original_d05' and realm == 'cancelled_native_consumer':
+                                        counts['edge_sites'] += 1
+                                else:
+                                    resolver.lookup(ref)
+                            except Exception:  # noqa: BLE001
+                                counts['unresolved'] += 1
+                                unresolved.append((realm, uri, ref))
+                        for _, child in schema_children(node):
+                            walk(child, resolver)
+                walk(doc, reg.resolver(uri))
+        return counts, unresolved
+
+    def _index(self, realm, whole, node, path):
+        if isinstance(node, dict):
+            self.node_origin[id(node)] = (realm, whole, path)
+            for k, v in node.items():
+                self._index(realm, whole, v, path + '/' + k.replace('~', '~0').replace('/', '~1'))
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                self._index(realm, whole, v, path + '/%d' % i)
+
+    def translate(self, root):
+        base, _, fragment = root.partition('#')
+        return self.uri_map.get(base, base) + ('#' + fragment if fragment else '')
+
+    def realm_for(self, root, realm_hint=None):
+        base = urldefrag(root)[0]
+        realms = self.realm_of_uri.get(base, [])
+        guard('v7/root_unavailable', bool(realms))
+        if realm_hint in ('goal_consumer', 'filesafe_consumer'):
+            pref = 'cancelled_' + realm_hint
+            if pref in realms:
+                return pref
+        return next(r for r in self.priority + sorted(realms) if r in realms)
+
+    def validator(self, realm, root):
+        root = self.translate(root)
+        realm = self.realm_for(root, realm)
+        key = (realm, root)
+        if key not in self._validators:
+            self._validators[key] = self.validator_class({'$ref': root}, registry=self.registries[realm],
+                                                         format_checker=FORMAT)
+        return self._validators[key]
+
+    def lookup(self, realm, root):
+        root = self.translate(root)
+        return self.registries[self.realm_for(root, realm)].resolver().lookup(root)
+
+    def follow(self, resolver, node, ref):
+        absolute, fragment = urldefrag(urljoin(resolver._base_uri, ref))
+        if not absolute or absolute in resolver._registry:
+            return resolver.lookup(ref)
+        origin = self.node_origin.get(id(node))
+        guard('v7/route_origin', origin is not None)
+        realm, whole, location = origin
+        target = self.routes.get((realm, whole, location + '/$ref', ref)) or self.inherited.get((realm, absolute))
+        guard('v7/route_unlisted', target is not None)
+        to_realm, to_uri = target
+        return self.registries[to_realm].resolver(to_uri).lookup(to_uri + ('#' + fragment if fragment else ''))

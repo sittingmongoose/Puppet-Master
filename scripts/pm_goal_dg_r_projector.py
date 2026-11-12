@@ -144,6 +144,24 @@ class CombinedReducer:
 class Projector:
     """TEST_ONLY projector participant for one run's combined projection."""
 
+    ROOT_PREFIX = W.PR
+    NAMES = {}
+    PROFILE = PROFILE
+    GENERATION_PREFIX = 'grscg_'
+    CHECKPOINT_SCHEMA_ID = 'pm.goal_run_started_cancelled_checkpoint.reference.v1'
+
+    def root(self, name):
+        return self.ROOT_PREFIX + self.NAMES.get(name, name)
+
+    def row_key(self, scope):
+        return row_key(scope)
+
+    def checkpoint_key(self, scope):
+        return checkpoint_key(scope)
+
+    def dataset(self, generation_id):
+        return dataset(generation_id)
+
     def __init__(self, world):
         self.world = world
         self.roots = world.roots
@@ -213,7 +231,8 @@ class Projector:
         # the Storage event-index checkpoint named by the actual token
         token = snapshot.token
         res = self.roots.lookup('native_consumer', W.C + 'GenericSnapshot')
-        ck = res.resolver.lookup(res.contents['properties']['checkpoint']['$ref'])
+        node_ = res.contents['properties']['checkpoint']
+        ck = self.roots.follow(res.resolver, node_, node_['$ref'])
         node = ck.contents['properties']['generations']['patternProperties']['^eig_[0-9a-f]{64}$']
         sd.choices = W._NonNull()
         gen = sd._seed([(node, ck.resolver)], '/generic/checkpoint/generation')
@@ -337,14 +356,14 @@ class Projector:
         w = self.world
         scope = self.request()['scope']
         wrapper = dict(schema_id='pm.goal_run_projection.started_cancelled.reference.v1', schema_version='1.0.0',
-                       storage_instance_id=w.sid, physical_key=row_key(scope), dataset_name=dataset(generation_id),
+                       storage_instance_id=w.sid, physical_key=self.row_key(scope), dataset_name=self.dataset(generation_id),
                        event_identity=self.identity(record),
                        original_event_value_commitment=copy.deepcopy(record['original_event_value_commitment']),
                        content=dict(kind='inline', record=copy.deepcopy(record)))
-        table = dataset(generation_id)
+        table = self.dataset(generation_id)
 
         def fits(candidate):
-            return size(candidate) <= CAP and size(dict(table=table, key=row_key(scope), value=candidate)) <= CAP
+            return size(candidate) <= CAP and size(dict(table=table, key=self.row_key(scope), value=candidate)) <= CAP
         if force != 'event_reference' and force != 'record_reference' and fits(wrapper):
             return wrapper
         metadata = {k: copy.deepcopy(v) for k, v in record.items() if k != 'original_event'}
@@ -358,10 +377,10 @@ class Projector:
 
     def decode(self, wrapper, scope, generation_id):
         """Reconstruct the identical original record and recheck its predicates."""
-        self.roots.validate('native_consumer', W.PR + 'StorageProjection', wrapper, 'decode/row')
+        self.roots.validate('native_consumer', self.root('StorageProjection'), wrapper, 'decode/row')
         guard('decode/storage', wrapper['storage_instance_id'] == self.world.sid)
-        guard('decode/key', wrapper['physical_key'] == row_key(scope))
-        guard('decode/dataset', wrapper['dataset_name'] == dataset(generation_id))
+        guard('decode/key', wrapper['physical_key'] == self.row_key(scope))
+        guard('decode/dataset', wrapper['dataset_name'] == self.dataset(generation_id))
         content = wrapper['content']
         if content['kind'] == 'inline':
             record = copy.deepcopy(content['record'])
@@ -385,35 +404,35 @@ class Projector:
         if content['kind'] != 'inline':
             inline = dict(wrapper, content=dict(kind='inline', record=record))
             guard('decode/representation_minimal', not (size(inline) <= CAP and size(dict(
-                table=dataset(generation_id), key=row_key(scope), value=inline)) <= CAP))
+                table=self.dataset(generation_id), key=self.row_key(scope), value=inline)) <= CAP))
         return record
 
     def checkpoint_wrapper(self, logical):
         scope = self.request()['scope']
         wrapper = dict(schema_id='pm.goal_run_started_cancelled_checkpoint.reference.v1.storage', schema_version='1.0.0',
-                       storage_instance_id=self.world.sid, physical_key=checkpoint_key(scope),
+                       storage_instance_id=self.world.sid, physical_key=self.checkpoint_key(scope),
                        content=dict(kind='inline', checkpoint=copy.deepcopy(logical)))
-        op = dict(table='checkpoints', key=checkpoint_key(scope), value=wrapper)
+        op = dict(table='checkpoints', key=self.checkpoint_key(scope), value=wrapper)
         if size(wrapper) > CAP or size(op) > CAP:
             wrapper['content'] = dict(kind='payload_reference', reference=self.pack(logical))
-        self.roots.validate('native_consumer', W.PR + 'StorageCheckpoint', wrapper, 'checkpoint/wrapper')
+        self.roots.validate('native_consumer', self.root('StorageCheckpoint'), wrapper, 'checkpoint/wrapper')
         return wrapper
 
     def read_checkpoint(self, wrapper):
-        self.roots.validate('native_consumer', W.PR + 'StorageCheckpoint', wrapper, 'checkpoint/read')
+        self.roots.validate('native_consumer', self.root('StorageCheckpoint'), wrapper, 'checkpoint/read')
         scope = self.request()['scope']
-        guard('checkpoint/key', wrapper['physical_key'] == checkpoint_key(scope))
+        guard('checkpoint/key', wrapper['physical_key'] == self.checkpoint_key(scope))
         guard('checkpoint/storage', wrapper['storage_instance_id'] == self.world.sid)
         content = wrapper['content']
         logical = copy.deepcopy(content['checkpoint']) if content['kind'] == 'inline' else self.unpack(content['reference'])
-        self.roots.validate('native_consumer', W.PR + 'LogicalCheckpoint', logical, 'checkpoint/logical')
-        guard('checkpoint/logical_key', logical['physical_key'] == checkpoint_key(scope))
+        self.roots.validate('native_consumer', self.root('LogicalCheckpoint'), logical, 'checkpoint/logical')
+        guard('checkpoint/logical_key', logical['physical_key'] == self.checkpoint_key(scope))
         eq('checkpoint/scope', logical['scope'], scope)
         return logical
 
     # -- generations and publication ------------------------------------------------------
     def current_checkpoint(self):
-        cell = self.world.storage.cell('checkpoints', checkpoint_key(self.request()['scope']))
+        cell = self.world.storage.cell('checkpoints', self.checkpoint_key(self.request()['scope']))
         if cell is None:
             return None, None
         return cell, self.read_checkpoint(cell['value'])
@@ -423,12 +442,12 @@ class Projector:
         seed = w.storage.new_seed()
         anchor = S.sha256(NR.binding_value_bytes(['pm.goal_run_projection.generation_anchor.v1', w.sid, PROFILE, seed],
                                                  'generation/anchor'))
-        generation_id = 'grscg_' + anchor
-        gen = w.seeder.seed('native_consumer', W.PR + 'Generation', W._NonNull())
+        generation_id = self.GENERATION_PREFIX + anchor
+        gen = w.seeder.seed('native_consumer', self.root('Generation'), W._NonNull())
         w.bind(gen)
-        gen.update(generation_id=generation_id, state='staged', anchor_sha256=anchor, seed_hex=seed, profile=PROFILE,
+        gen.update(generation_id=generation_id, state='staged', anchor_sha256=anchor, seed_hex=seed, profile=self.PROFILE,
                    scope=copy.deepcopy(self.request()['scope']), source_token_at_birth=copy.deepcopy(token),
-                   dataset_name=dataset(generation_id), frontier_revision=0, prior_frontier_sha256=None,
+                   dataset_name=self.dataset(generation_id), frontier_revision=0, prior_frontier_sha256=None,
                    activated_at_utc=None, retired_at_utc=None, first_prepared_at_utc=w.clock.now(),
                    successor_generation_id=None, hold_refs=[])
         return gen
@@ -453,19 +472,19 @@ class Projector:
             cell, logical = self.current_checkpoint()
             existing_row = None
             if logical is not None and logical['current_generation_id'] is not None:
-                current_row = w.storage.cell(dataset(logical['current_generation_id']), row_key(scope))
+                current_row = w.storage.cell(self.dataset(logical['current_generation_id']), self.row_key(scope))
                 existing_row = None if current_row is None else current_row['value']
             private = dict(generic=self.generic_snapshot(snapshot, logical), actual_generic_sources=self.actual_sources(snapshot),
                            native_starts=starts, native_cancellations=cancellations,
                            checkpoint=None if cell is None else copy.deepcopy(cell['value']), existing_row=existing_row)
-            w.repair_filler('native_consumer', W.PR + 'CombinedProjectPrivate', private,
+            w.repair_filler('native_consumer', self.root('CombinedProjectPrivate'), private,
                             {'/native_starts', '/native_cancellations', '/checkpoint', '/existing_row', '/generic/frames'})
-            self.roots.validate('native_consumer', W.PR + 'CombinedProjectPrivate', private, 'projector/private')
+            self.roots.validate('native_consumer', self.root('CombinedProjectPrivate'), private, 'projector/private')
             self.last_private = private
             token = snapshot.token
             if logical is None:
-                logical = dict(schema_id='pm.goal_run_started_cancelled_checkpoint.reference.v1', schema_version='1.0.0',
-                               storage_instance_id=w.sid, scope=copy.deepcopy(scope), physical_key=checkpoint_key(scope),
+                logical = dict(schema_id=self.CHECKPOINT_SCHEMA_ID, schema_version='1.0.0',
+                               storage_instance_id=w.sid, scope=copy.deepcopy(scope), physical_key=self.checkpoint_key(scope),
                                current_generation_id=None, generations={})
             staged = [g for g in logical['generations'].values() if g['state'] == 'staged']
             if staged:
@@ -477,8 +496,8 @@ class Projector:
             else:
                 gen = logical['generations'][logical['current_generation_id']]
             row = self.represent(record, gen['generation_id'], force=force)
-            table = dataset(gen['generation_id'])
-            existing = w.storage.cell(table, row_key(scope))
+            table = self.dataset(gen['generation_id'])
+            existing = w.storage.cell(table, self.row_key(scope))
             if existing is not None and same(existing['value'], row) and gen['processed']['through_sequence_id'] == \
                     result['frontier_sequence']:
                 # retry after a lost acknowledgement: the first transaction stands
@@ -495,14 +514,14 @@ class Projector:
                                     through_sequence_id=result['frontier_sequence'], coverage_sha256=result['coverage_sha256'],
                                     retention_gap_sha256=S.sha256(NR.binding_value_bytes(
                                         [g['proof_sha256'] for g in snapshot.gaps], 'generation/gaps')),
-                                    row_key=row_key(scope), row_sha256=physical_sha256(row))
+                                    row_key=self.row_key(scope), row_sha256=physical_sha256(row))
             gen['last_transaction_id'] = 'TEST_ONLY:projector-tx:%d' % (w.storage.tx_counter + 1)
             new_logical['generations'][gen['generation_id']] = gen
-            self.roots.validate('native_consumer', W.PR + 'LogicalCheckpoint', new_logical, 'checkpoint/afterimage')
+            self.roots.validate('native_consumer', self.root('LogicalCheckpoint'), new_logical, 'checkpoint/afterimage')
             ck = self.checkpoint_wrapper(new_logical)
-            writes = [dict(table=table, key=row_key(scope), expected=None if existing is None else existing['version'],
+            writes = [dict(table=table, key=self.row_key(scope), expected=None if existing is None else existing['version'],
                            value=row),
-                      dict(table='checkpoints', key=checkpoint_key(scope), expected=None if cell is None else cell['version'],
+                      dict(table='checkpoints', key=self.checkpoint_key(scope), expected=None if cell is None else cell['version'],
                            value=ck)]
             for op in writes:
                 guard('operation/size', size({k: op[k] for k in ('table', 'key', 'value')}) <= CAP)
@@ -515,7 +534,7 @@ class Projector:
             if cut is not None:
                 return self.commit_in_child(writes, cut)
             tx = w.storage.transact(writes)
-            slot.set(dict(tx_id=tx['tx_id'], generation=gen['generation_id'], form=row['content']['kind']))
+            slot.set(dict(tx_id=tx['tx_id'], generation=gen['generation_id'], form=row.get('content', {}).get('kind', 'inline')))
             return dict(tx_id=tx['tx_id'], row=row, checkpoint=ck, generation_id=gen['generation_id'])
 
     def expired(self, gen):
@@ -539,7 +558,7 @@ class Projector:
         snapshot = GS.GenericSource(w.storage).acquire()
         guard('cutover/complete_coverage', gen['processed']['coverage_sha256'] == snapshot.coverage_sha256 and
               same(log_token(gen['processed']['generic_token']), log_token(snapshot.token)))
-        row = w.storage.cell(dataset(gen['generation_id']), row_key(self.request()['scope']))
+        row = w.storage.cell(self.dataset(gen['generation_id']), self.row_key(self.request()['scope']))
         guard('cutover/row', row is not None and physical_sha256(row['value']) == gen['processed']['row_sha256'])
         self.decode(row['value'], self.request()['scope'], gen['generation_id'])
         new = copy.deepcopy(logical)
@@ -551,7 +570,7 @@ class Projector:
         new['generations'][gen['generation_id']] = gen
         new['current_generation_id'] = gen['generation_id']
         ck = self.checkpoint_wrapper(new)
-        tx = w.storage.transact([dict(table='checkpoints', key=cell['key'] if 'key' in cell else checkpoint_key(
+        tx = w.storage.transact([dict(table='checkpoints', key=cell['key'] if 'key' in cell else self.checkpoint_key(
             self.request()['scope']), expected=cell['version'], value=ck)])
         return dict(tx_id=tx['tx_id'], current=gen['generation_id'], retired=prior)
 
@@ -580,7 +599,7 @@ class Projector:
         cell, logical = self.current_checkpoint()
         guard('read/no_checkpoint', logical is not None and logical['current_generation_id'] is not None)
         gen = logical['generations'][logical['current_generation_id']]
-        row = self.world.storage.cell(dataset(gen['generation_id']), row_key(self.request()['scope']))
+        row = self.world.storage.cell(self.dataset(gen['generation_id']), self.row_key(self.request()['scope']))
         guard('read/no_row', row is not None)
         guard('read/row_frontier', physical_sha256(row['value']) == gen['processed']['row_sha256'])
         return cell['value'], logical, gen, row['value']
@@ -609,7 +628,7 @@ class Projector:
             eq('final/projection', row2, row)
             again = self.consumer.inspect_original(self.request(), R.Presentation(w))
             eq('final/original', again, out['original'])
-            self.roots.validate('native_consumer', W.PR + 'CombinedHistoricalRead', out, 'historical/success')
+            self.roots.validate('native_consumer', self.root('CombinedHistoricalRead'), out, 'historical/success')
             slot.set(dict(sha256=physical_sha256(out)))
             return out
 
@@ -640,14 +659,14 @@ class Projector:
         cell, logical = self.current_checkpoint()
         existing = None
         if logical is not None and logical['current_generation_id'] is not None:
-            row = w.storage.cell(dataset(logical['current_generation_id']), row_key(self.request()['scope']))
+            row = w.storage.cell(self.dataset(logical['current_generation_id']), self.row_key(self.request()['scope']))
             existing = None if row is None else row['value']
         private = dict(generic=self.generic_snapshot(snapshot, logical), actual_generic_sources=self.actual_sources(snapshot),
                        native_starts=starts, native_cancellations=cancellations,
                        checkpoint=None if cell is None else copy.deepcopy(cell['value']), existing_row=existing)
-        w.repair_filler('native_consumer', W.PR + 'CombinedProjectPrivate', private,
+        w.repair_filler('native_consumer', self.root('CombinedProjectPrivate'), private,
                         {'/native_starts', '/native_cancellations', '/checkpoint', '/existing_row', '/generic/frames'})
-        self.roots.validate('native_consumer', W.PR + 'CombinedProjectPrivate', private, 'current/private_sources')
+        self.roots.validate('native_consumer', self.root('CombinedProjectPrivate'), private, 'current/private_sources')
         return private
 
     def read_current_cancelled(self):
@@ -695,7 +714,7 @@ class Projector:
                [acquired['original_stop_receipt'], acquired['original_stop_intent'], acquired['original_source_audit']])
             private = dict(projection_sources=self.combined_private(), actual_current_read=current_read,
                            current_disposition=readback)
-            self.roots.validate('native_consumer', W.PR + 'CurrentCancelledPrivate', private, 'current/private')
+            self.roots.validate('native_consumer', self.root('CurrentCancelledPrivate'), private, 'current/private')
             self.roots.validate('goal_consumer', W.GA + 'CurrentCancelledGoal', goal, 'current/goal')
             out = dict(kind='native_verified_cancelled_as_of_same_snapshot', original=historical['original'],
                        projection=historical['projection'], checkpoint=historical['checkpoint'],
@@ -704,7 +723,7 @@ class Projector:
             guard('reader/withdrawn', not self.reader_withdrawn)
             guard('permission/read', w.permissions['read'] is True)
             eq('final/current', self.current_sources(), current)
-            self.roots.validate('native_consumer', W.PR + 'CombinedCurrentRead', out, 'current/success')
+            self.roots.validate('native_consumer', self.root('CombinedCurrentRead'), out, 'current/success')
             slot.set(dict(sha256=physical_sha256(out)))
             return out
 
@@ -718,6 +737,82 @@ class Projector:
             if body is None or body['value']['record']['status'] != 'running':
                 return self.unavailable('STALE_NATIVE')
             raise W.Refusal('current_started/not_in_scope')
+
+
+V4_ROW_PREFIX = 'goal_run_projection.v4'
+V1_CHECKPOINT_PREFIX = 'goal_run_started_cancelled_checkpoint.v1'
+
+
+class ProjectorV7(Projector):
+    """Native-v7 edition: the companion consumer's own original inline projection.
+
+    The native-v7 originals keep their separate complete source-method
+    composition (W4 selection ``native_v7_dispatch``); they are never adapted
+    to the reference successor, which is selected for the original profile.
+    This edition therefore publishes the companion ``CombinedStorageProjection``
+    (``goal_run_projection.v4`` rows, inline record only) and the companion
+    ``CombinedCheckpoint`` under ``physical-families.json``'s exact table and
+    key recipes (K(s) = unpadded base64url). A row or operation above 16 KiB
+    has no route here and refuses before publication.
+    """
+
+    ROOT_PREFIX = W.C
+    NAMES = {'StorageProjection': 'CombinedStorageProjection', 'LogicalCheckpoint': 'CombinedCheckpoint',
+             'StorageCheckpoint': 'CombinedCheckpoint', 'Generation': 'CombinedGeneration'}
+    PROFILE = 'goal_run_started_cancelled_projector.v1'
+    GENERATION_PREFIX = 'grscg_'
+    CHECKPOINT_SCHEMA_ID = 'pm.goal_run_started_cancelled_checkpoint.v1'
+
+    def __init__(self, world):
+        guard('edition/native_v7_world', world.edition == 'native_v7')
+        super().__init__(world)
+
+    def row_key(self, scope):
+        return V4_ROW_PREFIX + ':' + S.k_component(scope['project_id']) + ':' + S.k_component(scope['goal_run_id'])
+
+    def checkpoint_key(self, scope):
+        return V1_CHECKPOINT_PREFIX + ':' + ':'.join(S.k_component(scope[k]) for k in
+                                                    ('storage_instance_id', 'project_id', 'goal_id', 'goal_run_id'))
+
+    def dataset(self, generation_id):
+        return V4_ROW_PREFIX + '@' + generation_id
+
+    def represent(self, record, generation_id, force=None):
+        scope = self.request()['scope']
+        wrapper = dict(schema_id='pm.goal_run_projection.started_cancelled.v4', schema_version='4.0.0',
+                       storage_instance_id=self.world.sid, physical_key=self.row_key(scope),
+                       dataset_name=self.dataset(generation_id), record=copy.deepcopy(record))
+        guard('representation/inline_oversize', size(wrapper) <= CAP and size(dict(
+            table=self.dataset(generation_id), key=self.row_key(scope), value=wrapper)) <= CAP)
+        self.roots.validate('native_consumer', self.root('StorageProjection'), wrapper, 'v7/row')
+        return wrapper
+
+    def decode(self, wrapper, scope, generation_id):
+        self.roots.validate('native_consumer', self.root('StorageProjection'), wrapper, 'decode/row')
+        guard('decode/storage', wrapper['storage_instance_id'] == self.world.sid)
+        guard('decode/key', wrapper['physical_key'] == self.row_key(scope))
+        guard('decode/dataset', wrapper['dataset_name'] == self.dataset(generation_id))
+        record = copy.deepcopy(wrapper['record'])
+        event = record['original_event']
+        eq('decode/full_value', record['original_event_value_commitment']['sha256'], NR.full_value_commitment(event))
+        custody = self.world.storage.authenticate_receipt(event['event_id'], record['first_append_receipt'])
+        eq('decode/custody_commitment', custody['original_event_value_commitment'], record['original_event_value_commitment'])
+        eq('decode/stored_event', self.world.storage.read_event(event['event_id']), event)
+        return record
+
+    def checkpoint_wrapper(self, logical):
+        self.roots.validate('native_consumer', self.root('LogicalCheckpoint'), logical, 'checkpoint/wrapper')
+        guard('checkpoint/inline_oversize', size(logical) <= CAP and size(dict(
+            table='checkpoints', key=self.checkpoint_key(self.request()['scope']), value=logical)) <= CAP)
+        return copy.deepcopy(logical)
+
+    def read_checkpoint(self, wrapper):
+        self.roots.validate('native_consumer', self.root('LogicalCheckpoint'), wrapper, 'checkpoint/read')
+        scope = self.request()['scope']
+        guard('checkpoint/key', wrapper['physical_key'] == self.checkpoint_key(scope))
+        guard('checkpoint/storage', wrapper['storage_instance_id'] == self.world.sid)
+        eq('checkpoint/scope', wrapper['scope'], scope)
+        return copy.deepcopy(wrapper)
 
 
 class _Prefer(W._NonNull):
