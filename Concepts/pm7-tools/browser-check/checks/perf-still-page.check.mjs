@@ -19,7 +19,8 @@
 //       compositor draws at most 15 frames a second (--set drawn=) and the main thread renders at most 10 (--set main=)
 //       in at least one of three 2 s traces (a toast leaving or a live update between them is not a loop). Usage shows
 //       live data (its numbers tween after each demo update, the demo engine ticks every 250 ms): its frames are logged
-//       with the script blocks that draw them, never judged; Jared's card held the icons, not live data;
+//       with the script blocks that draw them, never judged; Home's dashboard is live too: its compositor frames are
+//       judged and its main frames logged. Jared's card held the icons, not live data;
 //   (c) one real pointer move wakes it in that event: every animation it held is running again within 100 ms of the
 //       move, its currentTime ahead of where it was held by the time since the wake less that start (not reset, no
 //       jump);
@@ -211,7 +212,10 @@ export default async function (t) {
 			if (live) t.log(`${at}: NOTE live data (Usage): frames logged, not judged; quietest try draws ${x.drawn.perSec}/s, main ${x.mainFrames.perSec}/s, by ${named(x) || 'no script'}`);
 			else {
 				await t.check(`${at}: still, the compositor draws at most ${drawnMax} frames a second`, x.drawn.perSec <= drawnMax, `${x.drawn.perSec}/s in the quietest of ${tries.length} tries (${tries.join('; ')})`);
-				await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, x.mainFrames.perSec <= mainMax, `${x.mainFrames.perSec}/s, ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}`);
+				// Home's dashboard is live too (its widgets tick with the demo engine): its main frames are logged, the loops'
+				// cost is judged by what the compositor draws
+				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames ${x.mainFrames.perSec}/s logged, not judged${named(x) ? '; by ' + named(x) : ''}`);
+				else await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, x.mainFrames.perSec <= mainMax, `${x.mainFrames.perSec}/s, ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}`);
 			}
 			if (a.still) await t.check(`${at}: going still restyles at most ${toggleMax} elements`, !!(on && on.found) && on.first <= toggleMax, on && on.found ? `${on.first} elements in the frame that holds the loops (${on.firstFrameMs} ms frame); largest recalc in the next frames ${on.max} (${on.maxMs} ms), ${on.total} in ${on.steps}` : 'no style recalc after the state went on (or no mark): could not judge');
 
