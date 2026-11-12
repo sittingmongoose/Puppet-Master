@@ -30,7 +30,7 @@ Branch `plans/ea-w2-runtime-artifacts-20261104`; part 2A head `78bc525d65`; gate
 
 ## Fix round DR-P2B-FIX1: the S10a stop and its fix
 
-**The stop (2026-11-11, before this fix, at `d947359b1b`).** Every check passed except one standing trial. `S10a_ignore_authenticated_binding` cuts `H05b_original_binding` (SP-1101: the authenticated original's binding equals the requested original). With that row cut, the complete checker still passed over the four standing families (`standing.before-fix1.json`: 6 of 7 trials caught, `status: fail`). No negative in the checker corpus was refused by H05b alone. The guard tool proved H05b at its own table (`history`), so the gap was in complete-checker coverage only.
+**The stop (2026-11-11, before this fix, at `d947359b1b`).** Every check passed except one standing trial. `S10a_ignore_authenticated_binding` cuts `H05b_original_binding` (SP-1101: the authenticated original's binding equals the requested original). With that row cut, the complete checker still passed over the four standing families (`standing-checks.before-fix1.json`: 6 of 7 trials caught, `status: fail`). No negative in the checker corpus was refused by H05b alone. The guard tool proved H05b at its own table (`history`), so the gap was in complete-checker coverage only.
 
 **Why.** `resolve_history` sends the requested original through the shared `RetainedDispatcher`. When the dispatch row is cut, it goes on to `full_value_matches(requested event, authenticated original, requested result, requested custody)`. That function compares the requested event and custody with the authenticated original byte for byte (`F02_candidate_bytes`, `F13_custody_bytes`). Seven of the nine binding fields (Storage instance, scope, Project, event type, event id, idempotency key, value commitment) live in those bytes. The other two, Server and original owner operation, were fixed constants on the request and the authenticated side alike. So every H05b negative also changed bytes that F02 compares. The existing `foreign_binding` negative (another event id) was refused later by `F02_candidate_bytes` once H05b was cut.
 
@@ -196,9 +196,9 @@ Heavy runs went one at a time. Each started at 13.5 GB available, except the gua
 | `python3 scripts/pm-runtime-artifact-standing-checks.py --family <4 families> --case S11_remove_historical --case S12_ --case S10_remove_integer --case S10_remove_producer --case S10a_` before FIX1 | 1 | `fail`: 6/7 caught, `S10a_ignore_authenticated_binding` SURVIVED (`standing-checks.before-fix1.json`) |
 | the same at the FIX1 head | 0 | **`pass`: 7/7 caught**, 66 min, peak RSS 430 MB (`standing-checks.json`); the first FIX1 attempt stopped on its own memory raise after four trials (`aborted-fix1/`) |
 | `python3 scripts/pm-runtime-artifact-number-corpus.py` | 0 | `pass`: 45 values, 2,320 route runs, 0 disagreements, 0 untracked (`corpus.stdout`) |
-| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 (`selftest-numbers.stdout`) |
-| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `NOT_RUN_ADMISSION_REFUSED`: the inventory gate refuses on this tree (T199) (`selftest-all.stdout`) |
-| `python3 scripts/pm_event_datetime_inventory.py` | 1 | 341 failures, classified above (`inventory.stdout.gz`) |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 (`selftest-numbers-final.stdout`) |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `NOT_RUN_ADMISSION_REFUSED`: the inventory gate refuses on this tree (T199) (`selftest-all-final.stdout`) |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | 341 failures, classified above (`inventory-final.stdout`) |
 | `python3 scripts/pm_event_datetime.py --self-test` | 0 | runs nothing: no CLI (T200); not counted |
 | `python3 scripts/pm-runtime-artifact-guard-tables.py --family <f> --out tool/<f>` ×19, then `--family shared` (tool `004bdedd63`, unchanged) | 0 ×20 | 785 suites `PASS`, 3,042/3,042 row cells proved (`tool/<family>/summary.json`, `tool-aggregate.json`, `tool-before-after.json`) |
 | long-integer probes at the part 2A head and at part 2B | — | crashes at 2A, refusals through rows at 2B (`long-integer-probe-2a.txt`, `long-integer-probe-2b.txt`) |
