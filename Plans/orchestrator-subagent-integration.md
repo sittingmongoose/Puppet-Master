@@ -3964,6 +3964,41 @@ negative_constraints:
 owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
 ```
 
+### OSI-650 - Answered coordination heartbeat threshold
+
+For `coordination.agent_crashed`, the Orchestrator runtime policy value `coordination_heartbeat_expiry_ms` is **300000** under Jared's DL-095 answer (recorded in the landed `Plans/Decision_Log.md`; at drafting time on branch `plans/ea-s09-decisions-hb-scope-20261104`). This amendment supersedes OSI-438's pending-card, no-number and no-inference wording only. The current premise survives: Gap #30 and OSI-438 still use 30-second runtime liveness, four crash reasons and the same crash detector. No answer is extended to other policy values or application admission. A silent live agent is eligible for `heartbeat_expired` only when its observed age is strictly greater than 300000 ms; equality is insufficient. The payload keeps observed `heartbeat_age_ms`, not the threshold. The age is a CV-1100 integer token with no encoding cap; 300000 remains the policy comparison, not a numeric maximum. Process exit, verified process loss and deleted worktree evidence remain independent. Computer-sleep handling remains technical work and is not decided here. This owner edit must land with or after the recorded answer and before or with this family's admission. Under CV-1101 the shared `date_time` predicate checks `detected_at_utc` and the projection copies with `coordination_utc_z`, the EventRecord `occurred_at_utc` with `event_record`, and the Storage-assigned `observed_at_utc` and `persisted_at_utc` with `storage_utc_z`; the observed heartbeat age is not a timestamp field.
+
+```yaml
+plan_unit_id: OSI-650
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  coordination.agent_crashed adopts Jared's DL-095 answer: coordination_heartbeat_expiry_ms is 300000.
+  heartbeat_expired requires observed heartbeat_age_ms greater than 300000, not equality. This overrides
+  only OSI-438's pending value wording. Other crash evidence is independent; no threshold payload field,
+  admission, changed retention or application scope authorization is created.
+gui_related: false
+gui_classification_reason: Runtime crash evidence policy, no presentation.
+depends_on: [OSI-438]
+unblocks: []
+acceptance_criteria:
+  - Ages 299999 and 300000 do not infer heartbeat expiry; 300001 does.
+  - Crash resolution still requires the sole coordinator appender and revision checks.
+validation_surfaces: [python3 scripts/pm_coordination_events.py, python3 scripts/pm_coordination_wave2.py, Plans/coordination_wave2_oracles.json]
+risk_class: heartbeat_threshold_drift
+reasoning_tier: high
+context_scope: coordination_agent_crashed
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false}
+source_lineage:
+  - Plans/orchestrator-subagent-integration.md#OSI-438
+  - origin/plans/ea-s09-decisions-hb-scope-20261104:Plans/Decision_Log.md#DL-095
+preserved_exact_tokens: [coordination.agent_crashed, coordination_heartbeat_expiry_ms, '300000']
+negative_constraints: [No admission or extension of Jared's answer.]
+owner_hints: [Plans/orchestrator-subagent-integration.md]
+```
+
 ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Contracts_V0.md#CV-353, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Contracts_V0.md#Stable-active-agent-coordination-event-families
 
 #### Compatibility and debug mirror contract
