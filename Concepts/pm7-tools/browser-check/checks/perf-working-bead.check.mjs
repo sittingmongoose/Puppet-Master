@@ -18,6 +18,8 @@
 // measured). With --set snaps=<dir> it writes the mark frozen at eight moments of its turn per look (every animation in
 // the mark paused at the same time of its own), for comparing builds pixel by pixel.
 // --set looks=<a,b>  default all ten; --set settle=<ms> (default 40000). Both surfaces.
+// F1: a freshly mounted Processes-style nx-still mark plays its finite entrance on the moving element, then rests.
+// --set entranceOnly=1 runs that regression alone (including on main's single-SVG renderer).
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { traceEvents } from '../helpers/frame-trace.mjs';
@@ -64,6 +66,26 @@ export default async function (t) {
 	const f = await t.app.open({ query: 'pm-warm=0' });
 	await f.evaluate(() => document.fonts.ready.then(() => true));
 	await t.page.waitForTimeout(Number(t.args.settle ?? 40000));
+	await t.app.look('basic-dark');
+	await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 });
+	const entrance = await f.evaluate(async () => {
+		const host = document.createElement('span');
+		host.style.cssText = 'position:fixed;left:60px;top:60px;z-index:999999';
+		host.innerHTML = PM56_NEON.status('working', 14, 'nx-still');
+		document.body.appendChild(host);
+		try {
+			const mover = host.querySelector('svg.nx-st-spin') || host.querySelector('.nx-p');
+			const list = mover.getAnimations().filter((a) => a.playState === 'running');
+			const timing = list.map((a) => ({ name: a.animationName, ...a.effect.getTiming() }));
+			await Promise.race([Promise.all(list.map((a) => a.finished)), new Promise((r) => setTimeout(r, 3000))]);
+			await new Promise(requestAnimationFrame);
+			return { timing, resting: host.getAnimations({ subtree: true }).every((a) => a.playState !== 'running'), transform: getComputedStyle(mover).transform };
+		} finally { host.remove(); }
+	});
+	t.log(`still working entrance: ${JSON.stringify(entrance)}`);
+	await t.check('still Working: one finite entrance runs on the moving element immediately after mount', entrance.timing.length === 1 && entrance.timing[0].name === 'nx-st-working-0A' && entrance.timing[0].iterations === 1 && entrance.timing[0].duration === 440 && entrance.timing[0].fill === 'backwards' && entrance.timing[0].easing.replaceAll(' ', '') === 'cubic-bezier(0.2,0.75,0.25,1)', JSON.stringify(entrance.timing));
+	await t.check('still Working: the entrance ends at rest', entrance.resting && ['none', 'matrix(1, 0, 0, 1, 0, 0)'].includes(entrance.transform), JSON.stringify(entrance));
+	if (String(t.args.entranceOnly || '0') === '1') return;
 	const snaps = t.args.snaps ? path.resolve(String(t.args.snaps)) : null;
 	if (snaps) mkdirSync(snaps, { recursive: true });
 	const cdp = await t.page.context().newCDPSession(t.page);
