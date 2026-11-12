@@ -73,7 +73,7 @@
     var wasActive = this.active;
     this.active = !!(wantGL && this.gl && this.gl.ok && !this.gl.lost && !this.failedAt);
     if (wasActive !== this.active) v.renderer.invalidate();
-    v.fxCanvas.hidden = !this.active;
+    if (v.fxCanvas.hidden !== !this.active) v.fxCanvas.hidden = !this.active;
     v.canvas.style.opacity = this.active ? '0' : '';
     /* CPU path (or no GL wanted): static fallbacks only */
     var cpuScan = wantGL && !this.active && e.scanlines && e.scanlines.on;
