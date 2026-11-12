@@ -3184,7 +3184,7 @@
       var el = document.getElementById('pm6DashCooldown');
       if (!el) return;
       D.cooldown = Math.max(0, D.cooldown - 1);
-      if (root().classList.contains('active') && !pm7Html.hasAttribute('data-o55-open')) { el.textContent = fmtCooldown(D.cooldown); pm7DashCdDirty = false; }
+      if (root().classList.contains('active') && !pm7Html.hasAttribute('data-o55-open')) { var text = fmtCooldown(D.cooldown); if (el.textContent !== text) el.textContent = text; pm7DashCdDirty = false; }
       else { pm7DashCdDirty = true; }
     }, 1000);
     on('page.changed', function (p) {
