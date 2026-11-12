@@ -11,19 +11,21 @@
     "03369fe8ef0c",
     "08a8f50f70d5",
     "0b46dc9d4cd3",
-    "0f1e853ccc90",
     "11bdd4d2defc",
     "137870603729",
+    "1513febdc5ee",
     "1a4b531e5d92",
+    "1a98cb6686da",
+    "1d07456a8cdf",
     "234b7e2660f6",
     "2a11a12da021",
     "317c2b5e9230",
     "358cf281cd15",
     "3719fab19786",
-    "38bb4311debf",
     "39d4db970c2d",
     "3b7df4c2eb1f",
     "3c6533c6f1f7",
+    "3f93ec83e4a7",
     "413c3e00b6d3",
     "41d5c06f6898",
     "429e11b61065",
@@ -35,7 +37,6 @@
     "5c5af61bba84",
     "5d76f392b947",
     "64d8cfbfaab8",
-    "69004a213582",
     "6bd5dcfd0ff7",
     "6ce69b7cb1bf",
     "6e80587d5cba",
@@ -45,6 +46,7 @@
     "78b1871a4a20",
     "79f39d7a71b7",
     "7a8dab7c87c6",
+    "7c230a7a80db",
     "803d30c0fbe5",
     "823d841eff82",
     "83675e46cf81",
@@ -59,12 +61,10 @@
     "9382e6861971",
     "962a213c31a1",
     "967447366b04",
-    "98f9b8e46d9e",
     "99c0943d9fc9",
     "99e985a003ad",
     "9cc855d5b448",
     "9ec514338e8d",
-    "9ed5639decf6",
     "a00c6ccdf9f7",
     "a3d0a74d12cc",
     "a714650d8a51",
@@ -78,9 +78,8 @@
     "b749ea49c1ce",
     "ba7375ca3e44",
     "bde437c3b1f1",
-    "bf646406827b",
     "c8ebd22e8d91",
-    "cbd86df4b83f",
+    "c91e19c1ecb0",
     "cc4166b5bbc6",
     "cc77e30a2431",
     "d2482b4556a6",
@@ -91,9 +90,10 @@
     "dc5fe0f7148d",
     "de2e17b99814",
     "deb8077f9945",
+    "e0e49f8ed1a6",
+    "e51c3296b10b",
     "e602ecab4d76",
     "ea359af2b5c6",
-    "ec7687a8492a",
     "f11bccd0e5a0",
     "f2c9933a85da",
     "f4f9dacb53a0",
@@ -230,7 +230,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 51,
+   "count": 56,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -239,14 +239,18 @@
     "0f872955b9a1",
     "102348ee8268",
     "11d388842492",
+    "160d9c40da13",
     "1df06a42c9ab",
     "1e89965ec8c7",
     "237c1953c9a7",
+    "30211e1a7e33",
     "3144f19a6964",
+    "3a148e9930cd",
     "3f6bdb1dfac6",
     "41f4e93fb130",
     "42f5c483d3ad",
     "47b0783cbeb0",
+    "525092d31377",
     "5555c7df9632",
     "67573257f635",
     "6da0d97c81fa",
@@ -281,6 +285,7 @@
     "df3850d1ccf2",
     "e62a59ff2641",
     "eb336c21b3dd",
+    "ebc2af553cac",
     "fb950887822e",
     "fd82a957aafb",
     "fe9b3049d0f1"
@@ -823,11 +828,11 @@
    "fingerprints": [
     "001f09d79c32",
     "00c3231d2033",
-    "0f1e853ccc90",
+    "016579c42854",
+    "08a8f50f70d5",
     "11bdd4d2defc",
     "137870603729",
     "317c2b5e9230",
-    "38bb4311debf",
     "413c3e00b6d3",
     "453dc927749d",
     "5137962448e5",
@@ -835,7 +840,6 @@
     "5ad2b9efb7a8",
     "5c5af61bba84",
     "5d76f392b947",
-    "69004a213582",
     "6bd5dcfd0ff7",
     "6ce69b7cb1bf",
     "703cbaf9c52c",
@@ -845,11 +849,11 @@
     "83c3a438827c",
     "852d591f5785",
     "8a768e2e6f05",
+    "8b0de793ab4d",
     "90aedf9df523",
     "9382e6861971",
-    "98f9b8e46d9e",
+    "99c0943d9fc9",
     "9cc855d5b448",
-    "9ed5639decf6",
     "a00c6ccdf9f7",
     "a714650d8a51",
     "aa295ce65a48",
@@ -858,17 +862,18 @@
     "b3d3f3337f4c",
     "b749ea49c1ce",
     "bde437c3b1f1",
-    "bf646406827b",
-    "cbd86df4b83f",
     "cc4166b5bbc6",
     "cc77e30a2431",
+    "d5870e7d3bf0",
+    "d856023e0d2a",
     "d91eec6c5db9",
     "dc5fe0f7148d",
     "de2e17b99814",
     "e602ecab4d76",
     "ea359af2b5c6",
-    "ec7687a8492a",
     "f2c9933a85da",
+    "f8fbf2d09bde",
+    "fb13f20fa2a6",
     "fb1be17562a6",
     "fcbde0cf9119"
    ],
@@ -951,12 +956,14 @@
    "fingerprints": [
     "05f3221fafa3",
     "0f872955b9a1",
+    "160d9c40da13",
     "1df06a42c9ab",
     "1e89965ec8c7",
-    "237c1953c9a7",
+    "30211e1a7e33",
     "3144f19a6964",
-    "41f4e93fb130",
+    "3a148e9930cd",
     "47b0783cbeb0",
+    "525092d31377",
     "5555c7df9632",
     "6e7f4d13a6a9",
     "7efb9719345a",
@@ -966,7 +973,6 @@
     "9ab756ff1c91",
     "9bbda8d47e30",
     "a30d32e5cc7b",
-    "a40aa02ebc9f",
     "a56f058b4b3a",
     "b05520a9880a",
     "b486fe84d434",
@@ -977,8 +983,7 @@
     "d9e287f261e5",
     "dd5519df234d",
     "e62a59ff2641",
-    "eb336c21b3dd",
-    "fb950887822e",
+    "ebc2af553cac",
     "fe9b3049d0f1"
    ],
    "path": "",
@@ -1413,7 +1418,7 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 4606,
+   "failure_total": 4843,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1421,17 +1426,17 @@
      "sampled": 100
     },
     "evidence": {
-     "exported": 2146,
-     "reported": 2146,
+     "exported": 2262,
+     "reported": 2262,
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 79,
-     "sampled": 79
+     "reported": 84,
+     "sampled": 84
     },
     "plan_graph": {
-     "exported": 2146,
-     "reported": 2146,
+     "exported": 2262,
+     "reported": 2262,
      "sampled": 100
     },
     "spec_lock": {
@@ -1451,7 +1456,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 4606,
+   "failure_total": 4843,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
@@ -1459,18 +1464,18 @@
      "sampled": 50
     },
     "validate_evidence": {
-     "exported": 2146,
-     "reported": 2146,
+     "exported": 2262,
+     "reported": 2262,
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "exported": 79,
-     "reported": 79,
+     "exported": 84,
+     "reported": 84,
      "sampled": 50
     },
     "validate_plan_graph": {
-     "exported": 2146,
-     "reported": 2146,
+     "exported": 2262,
+     "reported": 2262,
      "sampled": 50
     },
     "verify_spec_lock": {
@@ -1480,11 +1485,11 @@
    }
   }
  },
- "commit": "e9c6a46389626c2c5d70b1ff98936172fb65e6c1",
+ "commit": "77e87db4d89b9b04732997152b24831c3667ce9c",
  "export_buckets": [
   {
    "check": "audit-governance",
-   "count": 2143,
+   "count": 2259,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1504,7 +1509,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 2143,
+   "count": 2259,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1524,7 +1529,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2143,
+   "count": 2259,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1554,7 +1559,7 @@
   },
   {
    "check": "run-gates",
-   "count": 51,
+   "count": 56,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -1563,14 +1568,18 @@
     "0f872955b9a1",
     "102348ee8268",
     "11d388842492",
+    "160d9c40da13",
     "1df06a42c9ab",
     "1e89965ec8c7",
     "237c1953c9a7",
+    "30211e1a7e33",
     "3144f19a6964",
+    "3a148e9930cd",
     "3f6bdb1dfac6",
     "41f4e93fb130",
     "42f5c483d3ad",
     "47b0783cbeb0",
+    "525092d31377",
     "5555c7df9632",
     "67573257f635",
     "6da0d97c81fa",
@@ -1605,6 +1614,7 @@
     "df3850d1ccf2",
     "e62a59ff2641",
     "eb336c21b3dd",
+    "ebc2af553cac",
     "fb950887822e",
     "fd82a957aafb",
     "fe9b3049d0f1"
@@ -1693,7 +1703,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2143,
+   "count": 2259,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1733,8 +1743,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-12T02:50:41Z",
- "run_dir": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-12T07:45:03Z",
+ "run_dir": "Plans/.plan_migration/pds-20261112-003-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"

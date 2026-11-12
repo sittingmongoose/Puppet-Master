@@ -17,6 +17,16 @@ NEW_IDS = frozenset((
     'safety.rules.allow-project-reading', 'safety.rules.incoming-chat-messages',
     'safety.rules.computer-use',
 ))
+PLACEMENT_IDS = frozenset((
+    'code.execution.auto-preset',
+    'code.execution.auto-weights',
+    'code.execution.computer-level',
+    'code.execution.in-use-less-often',
+    'code.execution.work-placement',
+    'code.execution.allowed-computers',
+    'code.execution.default-computer',
+))
+
 
 
 def snapshot_failures(record, rows):
@@ -162,7 +172,7 @@ def check(root=ROOT, corpus=None):
     errors = []
     counts = collections.Counter(rows=len(rows), categories=len(inventory['categories']),
                                  managers=len(pack['manager_registry']))
-    if len(rows) != len(inventory['settings']) or len(rows) != 1017 or not NEW_IDS <= rows.keys():
+    if len(rows) != len(inventory['settings']) or len(rows) != 1024 or not (NEW_IDS | PLACEMENT_IDS) <= rows.keys():
         errors.append('Settings identity census')
     if len(inventory['categories']) != 12 or len(pack['manager_registry']) != 38:
         errors.append('Settings category/manager census')
