@@ -4,7 +4,7 @@ Source: `Plans/Executor_Protocol.md`
 
 Source lines: L6080-L6148
 
-Source SHA256: `61d2b00bc963a1e65481a07917b65eab4f24f3d7f783d8142f5bba85efec0a64`
+Source SHA256: `96d03d8160253db09e54c3194dba8d8871a22e67d769f1715ab65dc3f9d13163`
 
 ---
 
@@ -23,7 +23,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Scheduler ownership, dispatch, retry/backoff, capacity, and provisional execution semantics are runtime behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, PNC-009, PS-115, W-071]
-unblocks: [OP-022, RGV-012]
+unblocks: [OP-022, RGV-012, RAP-027]
 acceptance_criteria:
   - Goal Runtime does not dispatch concrete graph nodes directly.
   - Executor scheduler readiness, blocked/backoff, retry, capacity, wakeup, and failure-class semantics remain canonical for WorkNodes.
