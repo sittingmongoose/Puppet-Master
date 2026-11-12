@@ -124887,6 +124887,2389 @@
       }
     },
     {
+      "family_id": "filemanager_operation_custody",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "filemanager_operation_custody.v1:{operation_identity_sha256}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.filemanager_operation_custody.v1",
+      "value_schema_ref": "Plans/filemanager_operation_contracts.schema.json#/$defs/operation_custody_value",
+      "owner_doc": "Plans/storage-plan.md#SP-560",
+      "producer": [
+        "filemanager.operation_custody.commit.v1"
+      ],
+      "consumers": [
+        "filemanager.operation_custody.resolve.v1",
+        "filemanager.path_snapshot.resolve.v1"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version"
+      ],
+      "optional_fields": [
+        "storage_instance_id",
+        "recovery_epoch",
+        "project_id",
+        "operation_id",
+        "root_slot_id",
+        "event_type",
+        "revision",
+        "phase",
+        "accepted_command",
+        "accepted_path_snapshots",
+        "settlement",
+        "complete_event",
+        "first_append_receipt",
+        "redaction_profile",
+        "noncompletion",
+        "value_ref"
+      ],
+      "nullable_fields": [
+        "settlement",
+        "complete_event",
+        "first_append_receipt",
+        "noncompletion"
+      ],
+      "replay_behavior": "Resolve the exact original canonical row under SP-560; no effect replay, invented original or current-state substitution. Decode inline logical custody or authenticate the SP-337 pack reference and exact closed resolved logical value; never accept a missing/changed referent.",
+      "migration": "StorageMigrationCoordinator installs both closed tables, readers, CAS writers and mandatory backup membership before activation. No legacy backfill or lazy rewrite. Prepared contracts grant no writes.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-560"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-560",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-560"
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-560"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "retention_compaction": "Original receipt/source-lineage and admission authority use existing Case L-3 authority retention, independent of the twelve pending event-history assignments. No expiry/count eviction or reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "No file bodies, credentials, tokens or secret-bearing values. Private receipt-only relative path components have current permission/deletion checks and never enter event payloads or generic history rendering.",
+      "legacy_canonical_crosswalk_status": "New bounded DL-045 technical binding; no generic receipt_record_baseline alias, event admission, native implementation or historical backfill.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.filemanager_operation_custody.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "$ref": "#/$defs/safe_id"
+          },
+          "recovery_epoch": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "project_id": {
+            "$ref": "#/$defs/safe_id"
+          },
+          "operation_id": {
+            "$ref": "#/$defs/safe_id"
+          },
+          "root_slot_id": {
+            "$ref": "#/$defs/safe_id"
+          },
+          "event_type": {
+            "enum": [
+              "file.copied",
+              "file.created",
+              "file.deleted",
+              "file.exported",
+              "file.moved",
+              "file.renamed",
+              "folder.copied",
+              "folder.created",
+              "folder.deleted",
+              "folder.exported",
+              "folder.moved",
+              "folder.renamed"
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "phase": {
+            "enum": [
+              "accepted",
+              "effect_settled",
+              "history_settled",
+              "no_event_settled"
+            ]
+          },
+          "accepted_command": {
+            "$ref": "#/$defs/accepted_command"
+          },
+          "accepted_path_snapshots": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/path_snapshot_entry"
+            }
+          },
+          "settlement": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/settlement"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "complete_event": {
+            "anyOf": [
+              {
+                "$ref": "event_record.schema.json"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "first_append_receipt": {
+            "anyOf": [
+              {
+                "$ref": "event_append_receipt_contracts.schema.json#/$defs/AppendReceipt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          },
+          "noncompletion": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/noncompletion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "value_ref": {
+            "type": "string",
+            "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/operation_custody"
+          },
+          {
+            "$ref": "#/$defs/operation_custody_reference"
+          }
+        ],
+        "description": "Physical value at most 16384 canonical MessagePack bytes. Larger logical values use the closed SP-337 reference alternative, verified before use and coherent backup.",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/filemanager_operation_contracts.schema.json",
+        "$defs": {
+          "safe_id": {
+            "type": "string",
+            "maxLength": 160,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+          },
+          "non_secret_ref": {
+            "type": "string",
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*(?![\\s\\S])",
+            "description": "Opaque typed original-owner reference. Resolve under the referenced owner with current authorization, deletion and retention checks; spelling alone proves neither existence nor access."
+          },
+          "path_ref": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 220,
+            "pattern": "^pm-path-ref:v1:[a-z][a-z0-9_-]{0,31}:[A-Za-z0-9][A-Za-z0-9._-]*(?![\\s\\S])",
+            "not": {
+              "pattern": "\\.\\."
+            },
+            "description": "Opaque handle to one exact path snapshot entry in the original operation receipt identified by receipt_ref. Scope segment must equal project; token resolves only inside that receipt and Project. Never decode as a filesystem path, use active focus, or grant access."
+          },
+          "path_snapshot_entry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path_ref",
+              "project_id",
+              "path_snapshot_revision",
+              "computer_id",
+              "root_identity_ref",
+              "relative_components",
+              "node_ref",
+              "node_kind"
+            ],
+            "properties": {
+              "path_ref": {
+                "$ref": "#/$defs/path_ref"
+              },
+              "project_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "path_snapshot_revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "computer_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "root_identity_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "relative_components": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "not": {
+                    "enum": [
+                      ".",
+                      ".."
+                    ]
+                  },
+                  "pattern": "^[^/\\\\\\u0000]+$"
+                }
+              },
+              "node_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "node_kind": {
+                "enum": [
+                  "file",
+                  "folder",
+                  "absent"
+                ]
+              }
+            }
+          },
+          "accepted_command": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "handler_target",
+              "correlation_id",
+              "origin",
+              "selected_root_ref",
+              "source_path_ref",
+              "destination_path_ref",
+              "destination_container_ref",
+              "deletion_mode",
+              "accepted_at_utc"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "handler_target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "correlation_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "origin": {
+                "enum": [
+                  "file_manager",
+                  "editor",
+                  "command_palette",
+                  "api"
+                ]
+              },
+              "selected_root_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_path_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/path_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "destination_path_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/path_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "destination_container_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "deletion_mode": {
+                "enum": [
+                  "os_trash",
+                  "permanent",
+                  "journaled_tombstone",
+                  null
+                ]
+              },
+              "accepted_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "settled_payload": {
+            "oneOf": [
+              {
+                "$ref": "event_payloads/file_manager/file_copied.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_created.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_deleted.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_exported.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_moved.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_renamed.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_copied.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_created.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_deleted.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_exported.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_moved.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_renamed.schema.json"
+              }
+            ]
+          },
+          "settlement": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "payload",
+              "path_snapshots",
+              "effect_status",
+              "settled_at_utc"
+            ],
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/settled_payload"
+              },
+              "path_snapshots": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/path_snapshot_entry"
+                }
+              },
+              "effect_status": {
+                "const": "completed"
+              },
+              "settled_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "operation_custody": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "project_id",
+              "operation_id",
+              "root_slot_id",
+              "event_type",
+              "revision",
+              "phase",
+              "accepted_command",
+              "accepted_path_snapshots",
+              "settlement",
+              "complete_event",
+              "first_append_receipt",
+              "redaction_profile",
+              "noncompletion"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_operation_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "project_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "operation_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "root_slot_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "event_type": {
+                "enum": [
+                  "file.copied",
+                  "file.created",
+                  "file.deleted",
+                  "file.exported",
+                  "file.moved",
+                  "file.renamed",
+                  "folder.copied",
+                  "folder.created",
+                  "folder.deleted",
+                  "folder.exported",
+                  "folder.moved",
+                  "folder.renamed"
+                ]
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "phase": {
+                "enum": [
+                  "accepted",
+                  "effect_settled",
+                  "history_settled",
+                  "no_event_settled"
+                ]
+              },
+              "accepted_command": {
+                "$ref": "#/$defs/accepted_command"
+              },
+              "accepted_path_snapshots": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/path_snapshot_entry"
+                }
+              },
+              "settlement": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/settlement"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "complete_event": {
+                "anyOf": [
+                  {
+                    "$ref": "event_record.schema.json"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "event_append_receipt_contracts.schema.json#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "noncompletion": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/noncompletion"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "accepted"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "settlement": {
+                      "type": "null"
+                    },
+                    "complete_event": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "noncompletion": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "effect_settled"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "settlement": {
+                      "$ref": "#/$defs/settlement"
+                    },
+                    "complete_event": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "noncompletion": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "history_settled"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "settlement": {
+                      "$ref": "#/$defs/settlement"
+                    },
+                    "complete_event": {
+                      "$ref": "event_record.schema.json"
+                    },
+                    "first_append_receipt": {
+                      "$ref": "event_append_receipt_contracts.schema.json#/$defs/AppendReceipt"
+                    },
+                    "noncompletion": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "no_event_settled"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "settlement": {
+                      "type": "null"
+                    },
+                    "complete_event": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "noncompletion": {
+                      "$ref": "#/$defs/noncompletion"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "family_control": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "event_type",
+              "family_revision",
+              "control_revision",
+              "state",
+              "admission_revision",
+              "last_admitted_sequence",
+              "writer_cutoff_sequence",
+              "reader_enabled",
+              "drain_operation_keys",
+              "redaction_profile"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_family_control.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "event_type": {
+                "enum": [
+                  "file.copied",
+                  "file.created",
+                  "file.deleted",
+                  "file.exported",
+                  "file.moved",
+                  "file.renamed",
+                  "folder.copied",
+                  "folder.created",
+                  "folder.deleted",
+                  "folder.exported",
+                  "folder.moved",
+                  "folder.renamed"
+                ]
+              },
+              "family_revision": {
+                "const": "1.0.0"
+              },
+              "control_revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "state": {
+                "enum": [
+                  "prepared",
+                  "active",
+                  "draining",
+                  "withdrawn"
+                ]
+              },
+              "admission_revision": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "last_admitted_sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "writer_cutoff_sequence": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reader_enabled": {
+                "type": "boolean"
+              },
+              "drain_operation_keys": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^filemanager_operation_custody\\.v1:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "admission_revision": {
+                      "type": "null"
+                    },
+                    "last_admitted_sequence": {
+                      "const": 0
+                    },
+                    "writer_cutoff_sequence": {
+                      "type": "null"
+                    },
+                    "reader_enabled": {
+                      "const": false
+                    },
+                    "drain_operation_keys": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "active",
+                        "draining",
+                        "withdrawn"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "admission_revision": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "prepared",
+                        "active",
+                        "draining"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "writer_cutoff_sequence": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "withdrawn"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "writer_cutoff_sequence": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "drain_operation_keys": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "active"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "drain_operation_keys": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "noncompletion": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "terminal_status",
+              "effect_state",
+              "evidence_refs",
+              "settled_at_utc"
+            ],
+            "properties": {
+              "terminal_status": {
+                "enum": [
+                  "failed",
+                  "cancelled",
+                  "no_op"
+                ]
+              },
+              "effect_state": {
+                "enum": [
+                  "no_effect",
+                  "rolled_back",
+                  "partial_settled"
+                ]
+              },
+              "evidence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
+              },
+              "settled_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "operation_custody_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "value_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_operation_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "value_ref": {
+                "type": "string",
+                "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+              }
+            }
+          },
+          "operation_custody_value": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_operation_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "project_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "operation_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "root_slot_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "event_type": {
+                "enum": [
+                  "file.copied",
+                  "file.created",
+                  "file.deleted",
+                  "file.exported",
+                  "file.moved",
+                  "file.renamed",
+                  "folder.copied",
+                  "folder.created",
+                  "folder.deleted",
+                  "folder.exported",
+                  "folder.moved",
+                  "folder.renamed"
+                ]
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "phase": {
+                "enum": [
+                  "accepted",
+                  "effect_settled",
+                  "history_settled",
+                  "no_event_settled"
+                ]
+              },
+              "accepted_command": {
+                "$ref": "#/$defs/accepted_command"
+              },
+              "accepted_path_snapshots": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/path_snapshot_entry"
+                }
+              },
+              "settlement": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/settlement"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "complete_event": {
+                "anyOf": [
+                  {
+                    "$ref": "event_record.schema.json"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "event_append_receipt_contracts.schema.json#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "noncompletion": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/noncompletion"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "value_ref": {
+                "type": "string",
+                "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+              }
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/operation_custody"
+              },
+              {
+                "$ref": "#/$defs/operation_custody_reference"
+              }
+            ],
+            "description": "Physical value at most 16384 canonical MessagePack bytes. Larger logical values use the closed SP-337 reference alternative, verified before use and coherent backup."
+          },
+          "family_control_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "value_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_family_control.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "value_ref": {
+                "type": "string",
+                "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+              }
+            }
+          },
+          "family_control_value": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_family_control.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "event_type": {
+                "enum": [
+                  "file.copied",
+                  "file.created",
+                  "file.deleted",
+                  "file.exported",
+                  "file.moved",
+                  "file.renamed",
+                  "folder.copied",
+                  "folder.created",
+                  "folder.deleted",
+                  "folder.exported",
+                  "folder.moved",
+                  "folder.renamed"
+                ]
+              },
+              "family_revision": {
+                "const": "1.0.0"
+              },
+              "control_revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "state": {
+                "enum": [
+                  "prepared",
+                  "active",
+                  "draining",
+                  "withdrawn"
+                ]
+              },
+              "admission_revision": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "last_admitted_sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "writer_cutoff_sequence": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reader_enabled": {
+                "type": "boolean"
+              },
+              "drain_operation_keys": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 97,
+                  "maxLength": 97,
+                  "pattern": "^filemanager_operation_custody\\.v1:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "value_ref": {
+                "type": "string",
+                "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+              }
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/family_control"
+              },
+              {
+                "$ref": "#/$defs/family_control_reference"
+              }
+            ],
+            "description": "Physical value at most 16384 canonical MessagePack bytes. Larger logical values use the closed SP-337 reference alternative, verified before use and coherent backup."
+          }
+        }
+      }
+    },
+    {
+      "family_id": "filemanager_family_control",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "filemanager_family_control.v1:{hex(storage_instance_id)}:{event_type}:1.0.0",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.filemanager_family_control.v1",
+      "value_schema_ref": "Plans/filemanager_operation_contracts.schema.json#/$defs/family_control_value",
+      "owner_doc": "Plans/storage-plan.md#SP-560",
+      "producer": [
+        "storage.filemanager_family_control.cas.v1"
+      ],
+      "consumers": [
+        "FileManager exact-family writer gate",
+        "FileManager exact-family history readers"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version"
+      ],
+      "optional_fields": [
+        "storage_instance_id",
+        "event_type",
+        "family_revision",
+        "control_revision",
+        "state",
+        "admission_revision",
+        "last_admitted_sequence",
+        "writer_cutoff_sequence",
+        "reader_enabled",
+        "drain_operation_keys",
+        "redaction_profile",
+        "value_ref"
+      ],
+      "nullable_fields": [
+        "admission_revision",
+        "writer_cutoff_sequence"
+      ],
+      "replay_behavior": "Resolve the exact original canonical row under SP-560; no effect replay, invented original or current-state substitution. Decode inline logical custody or authenticate the SP-337 pack reference and exact closed resolved logical value; never accept a missing/changed referent.",
+      "migration": "StorageMigrationCoordinator installs both closed tables, readers, CAS writers and mandatory backup membership before activation. No legacy backfill or lazy rewrite. Prepared contracts grant no writes.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-560"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-560",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-560"
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-560"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "retention_compaction": "Original receipt/source-lineage and admission authority use existing Case L-3 authority retention, independent of the twelve pending event-history assignments. No expiry/count eviction or reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "No file bodies, credentials, tokens or secret-bearing values. Private receipt-only relative path components have current permission/deletion checks and never enter event payloads or generic history rendering.",
+      "legacy_canonical_crosswalk_status": "New bounded DL-045 technical binding; no generic receipt_record_baseline alias, event admission, native implementation or historical backfill.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.filemanager_family_control.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "$ref": "#/$defs/safe_id"
+          },
+          "event_type": {
+            "enum": [
+              "file.copied",
+              "file.created",
+              "file.deleted",
+              "file.exported",
+              "file.moved",
+              "file.renamed",
+              "folder.copied",
+              "folder.created",
+              "folder.deleted",
+              "folder.exported",
+              "folder.moved",
+              "folder.renamed"
+            ]
+          },
+          "family_revision": {
+            "const": "1.0.0"
+          },
+          "control_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "active",
+              "draining",
+              "withdrawn"
+            ]
+          },
+          "admission_revision": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "last_admitted_sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "writer_cutoff_sequence": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reader_enabled": {
+            "type": "boolean"
+          },
+          "drain_operation_keys": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 97,
+              "maxLength": 97,
+              "pattern": "^filemanager_operation_custody\\.v1:[0-9a-f]{64}(?![\\s\\S])"
+            }
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          },
+          "value_ref": {
+            "type": "string",
+            "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/family_control"
+          },
+          {
+            "$ref": "#/$defs/family_control_reference"
+          }
+        ],
+        "description": "Physical value at most 16384 canonical MessagePack bytes. Larger logical values use the closed SP-337 reference alternative, verified before use and coherent backup.",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/filemanager_operation_contracts.schema.json",
+        "$defs": {
+          "safe_id": {
+            "type": "string",
+            "maxLength": 160,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+          },
+          "non_secret_ref": {
+            "type": "string",
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*(?![\\s\\S])",
+            "description": "Opaque typed original-owner reference. Resolve under the referenced owner with current authorization, deletion and retention checks; spelling alone proves neither existence nor access."
+          },
+          "path_ref": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 220,
+            "pattern": "^pm-path-ref:v1:[a-z][a-z0-9_-]{0,31}:[A-Za-z0-9][A-Za-z0-9._-]*(?![\\s\\S])",
+            "not": {
+              "pattern": "\\.\\."
+            },
+            "description": "Opaque handle to one exact path snapshot entry in the original operation receipt identified by receipt_ref. Scope segment must equal project; token resolves only inside that receipt and Project. Never decode as a filesystem path, use active focus, or grant access."
+          },
+          "path_snapshot_entry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path_ref",
+              "project_id",
+              "path_snapshot_revision",
+              "computer_id",
+              "root_identity_ref",
+              "relative_components",
+              "node_ref",
+              "node_kind"
+            ],
+            "properties": {
+              "path_ref": {
+                "$ref": "#/$defs/path_ref"
+              },
+              "project_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "path_snapshot_revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "computer_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "root_identity_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "relative_components": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "not": {
+                    "enum": [
+                      ".",
+                      ".."
+                    ]
+                  },
+                  "pattern": "^[^/\\\\\\u0000]+$"
+                }
+              },
+              "node_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "node_kind": {
+                "enum": [
+                  "file",
+                  "folder",
+                  "absent"
+                ]
+              }
+            }
+          },
+          "accepted_command": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "handler_target",
+              "correlation_id",
+              "origin",
+              "selected_root_ref",
+              "source_path_ref",
+              "destination_path_ref",
+              "destination_container_ref",
+              "deletion_mode",
+              "accepted_at_utc"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "handler_target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "correlation_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "origin": {
+                "enum": [
+                  "file_manager",
+                  "editor",
+                  "command_palette",
+                  "api"
+                ]
+              },
+              "selected_root_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_path_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/path_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "destination_path_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/path_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "destination_container_ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "deletion_mode": {
+                "enum": [
+                  "os_trash",
+                  "permanent",
+                  "journaled_tombstone",
+                  null
+                ]
+              },
+              "accepted_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "settled_payload": {
+            "oneOf": [
+              {
+                "$ref": "event_payloads/file_manager/file_copied.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_created.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_deleted.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_exported.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_moved.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/file_renamed.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_copied.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_created.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_deleted.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_exported.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_moved.schema.json"
+              },
+              {
+                "$ref": "event_payloads/file_manager/folder_renamed.schema.json"
+              }
+            ]
+          },
+          "settlement": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "payload",
+              "path_snapshots",
+              "effect_status",
+              "settled_at_utc"
+            ],
+            "properties": {
+              "payload": {
+                "$ref": "#/$defs/settled_payload"
+              },
+              "path_snapshots": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/path_snapshot_entry"
+                }
+              },
+              "effect_status": {
+                "const": "completed"
+              },
+              "settled_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "operation_custody": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "project_id",
+              "operation_id",
+              "root_slot_id",
+              "event_type",
+              "revision",
+              "phase",
+              "accepted_command",
+              "accepted_path_snapshots",
+              "settlement",
+              "complete_event",
+              "first_append_receipt",
+              "redaction_profile",
+              "noncompletion"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_operation_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "project_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "operation_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "root_slot_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "event_type": {
+                "enum": [
+                  "file.copied",
+                  "file.created",
+                  "file.deleted",
+                  "file.exported",
+                  "file.moved",
+                  "file.renamed",
+                  "folder.copied",
+                  "folder.created",
+                  "folder.deleted",
+                  "folder.exported",
+                  "folder.moved",
+                  "folder.renamed"
+                ]
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "phase": {
+                "enum": [
+                  "accepted",
+                  "effect_settled",
+                  "history_settled",
+                  "no_event_settled"
+                ]
+              },
+              "accepted_command": {
+                "$ref": "#/$defs/accepted_command"
+              },
+              "accepted_path_snapshots": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/path_snapshot_entry"
+                }
+              },
+              "settlement": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/settlement"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "complete_event": {
+                "anyOf": [
+                  {
+                    "$ref": "event_record.schema.json"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "event_append_receipt_contracts.schema.json#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "noncompletion": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/noncompletion"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "accepted"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "settlement": {
+                      "type": "null"
+                    },
+                    "complete_event": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "noncompletion": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "effect_settled"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "settlement": {
+                      "$ref": "#/$defs/settlement"
+                    },
+                    "complete_event": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "noncompletion": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "history_settled"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "settlement": {
+                      "$ref": "#/$defs/settlement"
+                    },
+                    "complete_event": {
+                      "$ref": "event_record.schema.json"
+                    },
+                    "first_append_receipt": {
+                      "$ref": "event_append_receipt_contracts.schema.json#/$defs/AppendReceipt"
+                    },
+                    "noncompletion": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "no_event_settled"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "settlement": {
+                      "type": "null"
+                    },
+                    "complete_event": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "noncompletion": {
+                      "$ref": "#/$defs/noncompletion"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "family_control": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "event_type",
+              "family_revision",
+              "control_revision",
+              "state",
+              "admission_revision",
+              "last_admitted_sequence",
+              "writer_cutoff_sequence",
+              "reader_enabled",
+              "drain_operation_keys",
+              "redaction_profile"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_family_control.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "event_type": {
+                "enum": [
+                  "file.copied",
+                  "file.created",
+                  "file.deleted",
+                  "file.exported",
+                  "file.moved",
+                  "file.renamed",
+                  "folder.copied",
+                  "folder.created",
+                  "folder.deleted",
+                  "folder.exported",
+                  "folder.moved",
+                  "folder.renamed"
+                ]
+              },
+              "family_revision": {
+                "const": "1.0.0"
+              },
+              "control_revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "state": {
+                "enum": [
+                  "prepared",
+                  "active",
+                  "draining",
+                  "withdrawn"
+                ]
+              },
+              "admission_revision": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "last_admitted_sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "writer_cutoff_sequence": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reader_enabled": {
+                "type": "boolean"
+              },
+              "drain_operation_keys": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^filemanager_operation_custody\\.v1:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "admission_revision": {
+                      "type": "null"
+                    },
+                    "last_admitted_sequence": {
+                      "const": 0
+                    },
+                    "writer_cutoff_sequence": {
+                      "type": "null"
+                    },
+                    "reader_enabled": {
+                      "const": false
+                    },
+                    "drain_operation_keys": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "active",
+                        "draining",
+                        "withdrawn"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "admission_revision": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "prepared",
+                        "active",
+                        "draining"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "writer_cutoff_sequence": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "withdrawn"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "writer_cutoff_sequence": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "drain_operation_keys": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "active"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "drain_operation_keys": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "noncompletion": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "terminal_status",
+              "effect_state",
+              "evidence_refs",
+              "settled_at_utc"
+            ],
+            "properties": {
+              "terminal_status": {
+                "enum": [
+                  "failed",
+                  "cancelled",
+                  "no_op"
+                ]
+              },
+              "effect_state": {
+                "enum": [
+                  "no_effect",
+                  "rolled_back",
+                  "partial_settled"
+                ]
+              },
+              "evidence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
+              },
+              "settled_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "operation_custody_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "value_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_operation_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "value_ref": {
+                "type": "string",
+                "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+              }
+            }
+          },
+          "operation_custody_value": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_operation_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "project_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "operation_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "root_slot_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "event_type": {
+                "enum": [
+                  "file.copied",
+                  "file.created",
+                  "file.deleted",
+                  "file.exported",
+                  "file.moved",
+                  "file.renamed",
+                  "folder.copied",
+                  "folder.created",
+                  "folder.deleted",
+                  "folder.exported",
+                  "folder.moved",
+                  "folder.renamed"
+                ]
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "phase": {
+                "enum": [
+                  "accepted",
+                  "effect_settled",
+                  "history_settled",
+                  "no_event_settled"
+                ]
+              },
+              "accepted_command": {
+                "$ref": "#/$defs/accepted_command"
+              },
+              "accepted_path_snapshots": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/path_snapshot_entry"
+                }
+              },
+              "settlement": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/settlement"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "complete_event": {
+                "anyOf": [
+                  {
+                    "$ref": "event_record.schema.json"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "event_append_receipt_contracts.schema.json#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "noncompletion": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/noncompletion"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "value_ref": {
+                "type": "string",
+                "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+              }
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/operation_custody"
+              },
+              {
+                "$ref": "#/$defs/operation_custody_reference"
+              }
+            ],
+            "description": "Physical value at most 16384 canonical MessagePack bytes. Larger logical values use the closed SP-337 reference alternative, verified before use and coherent backup."
+          },
+          "family_control_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "value_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_family_control.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "value_ref": {
+                "type": "string",
+                "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+              }
+            }
+          },
+          "family_control_value": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.filemanager_family_control.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "$ref": "#/$defs/safe_id"
+              },
+              "event_type": {
+                "enum": [
+                  "file.copied",
+                  "file.created",
+                  "file.deleted",
+                  "file.exported",
+                  "file.moved",
+                  "file.renamed",
+                  "folder.copied",
+                  "folder.created",
+                  "folder.deleted",
+                  "folder.exported",
+                  "folder.moved",
+                  "folder.renamed"
+                ]
+              },
+              "family_revision": {
+                "const": "1.0.0"
+              },
+              "control_revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "state": {
+                "enum": [
+                  "prepared",
+                  "active",
+                  "draining",
+                  "withdrawn"
+                ]
+              },
+              "admission_revision": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "last_admitted_sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "writer_cutoff_sequence": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reader_enabled": {
+                "type": "boolean"
+              },
+              "drain_operation_keys": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 97,
+                  "maxLength": 97,
+                  "pattern": "^filemanager_operation_custody\\.v1:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "value_ref": {
+                "type": "string",
+                "pattern": "^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\\s\\S])"
+              }
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/family_control"
+              },
+              {
+                "$ref": "#/$defs/family_control_reference"
+              }
+            ],
+            "description": "Physical value at most 16384 canonical MessagePack bytes. Larger logical values use the closed SP-337 reference alternative, verified before use and coherent backup."
+          }
+        }
+      }
+    },
+    {
       "family_id": "alert_acknowledged_operation",
       "storage_kind": "redb",
       "status": "materialized",
@@ -222583,6 +224966,20 @@
         "storage_group": "event_log",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "F3-714: bounded SP-278 frontier",
+        "max_value_bytes": 16384
+      },
+      "filemanager_operation_custody": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-560: inline through 16384 bytes; larger complete logical values use verified SP-337 BLAKE3/size/media references. Mandatory coherent backup includes referents. Existing 2147483648-byte group canonical budget is advisory.",
+        "max_value_bytes": 16384
+      },
+      "filemanager_family_control": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-560: inline through 16384 bytes; larger complete logical values use verified SP-337 BLAKE3/size/media references. Mandatory coherent backup includes referents. Existing 2147483648-byte group canonical budget is advisory.",
         "max_value_bytes": 16384
       }
     },
