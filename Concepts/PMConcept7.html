@@ -119543,8 +119543,11 @@ function o55Humanize(raw) {
   if (/^[a-z0-9]+(?:[_-][a-z0-9]+)+$/.test(s) || /^[a-z]{3,}$/.test(s)) { const t = s.replace(/[_-]+/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1); }
   return s;
 }
+/* A model value may be the atomic { provider_entry_id, model_id, effort } (Settings batch 3, DL-476). It is shown the
+   way that model's string choice is shown, and read and stored unchanged. */
+const o55Scalar = v => (v && typeof v === 'object' && !Array.isArray(v) && typeof v.model_id === 'string') ? v.model_id : v;
 PM51.valueLabel = (id, raw) => {
-  const k = String(raw == null ? '' : raw);
+  const k = String(raw == null ? '' : o55Scalar(raw));
   const row = O55R[id];
   if (row && o55Has(row.options, k)) return row.options[k];
   const per = O55L.bySetting[id];
@@ -119561,6 +119564,7 @@ PM51.valueText = (setting, v) => {
   if (v === true) return 'On';
   if (v === false) return 'Off';
   if (v == null || v === '') return (O55R[setting.id] || {}).empty || 'Not set';
+  if (o55Scalar(v) !== v) return PM51.valueLabel(setting.id, o55Scalar(v));
   if (Array.isArray(v)) return v.length ? v.map(x => (x && typeof x === 'object') ? o55ObjectLine(x) : PM51.valueLabel(setting.id, x)).join(', ') : ((O55R[setting.id] || {}).emptyList || 'None');
   /* a map's keys read in words when rows.d names them (`keys`), and its numbers carry `valueUnit` */
   if (typeof v === 'object') { const r = O55R[setting.id] || {}; const e = Object.entries(v); return e.length ? e.slice(0, 4).map(([k, x]) => `${(r.keys && r.keys[k]) || o55Humanize(k)}: ${(x && typeof x === 'object') ? '…' : PM51.valueLabel(setting.id, x)}${r.valueUnit && typeof x === 'number' ? ' ' + r.valueUnit : ''}`).join(', ') + (e.length > 4 ? ` and ${e.length - 4} more` : '') : 'None'; }
@@ -119604,7 +119608,7 @@ PM51.choiceReason = (id, value, current) => {
 const o55SegmentFits = (setting, opts) => opts.length <= 4 && opts.reduce((n, o) => n + PM51.valueLabel(setting.id, o).length, 0) <= 34;
 function o55Select(setting, value, opts) {
   const list = opts.slice();
-  const cur = value == null ? '' : String(value);
+  const cur = value == null ? '' : String(o55Scalar(value));
   if (!list.map(String).includes(cur)) list.unshift(cur); /* never pretend the first choice is the current one */
   return PM51.dropdown(cur, list.map(o => { const why = PM51.choiceReason(setting.id, o, cur); return Object.assign({ value: o, label: PM51.valueLabel(setting.id, o), meta: PM51.valueHint(setting.id, o) }, why ? { disabled: true, reason: why, why: true } : {}); }), { action: 'change-setting', data: { setting: setting.id }, label: PM51.rowLabel(setting), search: list.length > 10 });
 }
