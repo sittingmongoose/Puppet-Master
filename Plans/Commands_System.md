@@ -7743,27 +7743,31 @@ canonical_text: >-
   (handlers::bsd::finding_dismiss), cmd.bsd.catch_up.release (handlers::bsd::catch_up_release),
   cmd.chat.teach.revoke (handlers::assistant_memory::teach_revoke), cmd.chat.teach.set_lock
   (handlers::assistant_memory::teach_set_lock) and cmd.chat.memory.export
-  (handlers::assistant_memory::export). Each starts handler_unavailable; its controls render disabled
-  with command_not_registered until central registration, Event Authority, storage and production
-  wiring close; expected_event_types stays empty until Event Authority admits a family; and no
-  page-local handler, alias or toast simulates success.
-  DL-138 requires companion schemas and fixtures now in the existing owner pairs:
-  collaborative_workflows_contracts.schema.json owns ChatRoomEndRequest/ChatRoomEndResult and
+  (handlers::assistant_memory::export). Each starts handler_unavailable; cmd.chat.teach.set_lock is
+  internal compatibility only with no ordinary control, while admitted current controls render
+  disabled with command_not_registered until central registration, Event Authority, storage and
+  production wiring close; expected_event_types stays empty until Event Authority admits a family;
+  and no page-local handler, alias or toast simulates success. DL-138 requires companion schemas and
+  fixtures now in the existing owner pairs: collaborative_workflows_contracts.schema.json owns
+  ChatRoomEndRequest/ChatRoomEndResult and
   BrainstormLeadResearchRequest/BrainstormLeadResearchResult; back_seat_driver_contracts.schema.json
-  owns BSDFindingDismissRequest/BSDFindingDismissResult and BSDCatchUpReleaseRequest/BSDCatchUpReleaseResult;
-  assistant_memory_contracts.schema.json owns TeachRevokeRequest/TeachRevokeResult,
-  TeachLockRequest/TeachLockResult with locked, and MemoryExportRequest/ArtifactExportResult with scope,
-  plus the existing TeachConfirmRequest/TeachConfirmResult gaining locked. Each pair must validate
-  closed request/result fields, accepted examples and one-constraint negative fixtures. These
-  contract artifacts do not establish native handler availability or event admission.
+  owns BSDFindingDismissRequest/BSDFindingDismissResult and
+  BSDCatchUpReleaseRequest/BSDCatchUpReleaseResult; assistant_memory_contracts.schema.json owns
+  TeachRevokeRequest/TeachRevokeResult, TeachLockRequest/TeachLockResult with locked, and
+  MemoryExportRequest/ArtifactExportResult with scope, plus the existing
+  TeachConfirmRequest/TeachConfirmResult gaining locked. Each pair must validate closed
+  request/result fields, accepted examples and one-constraint negative fixtures. These contract
+  artifacts do not establish native handler availability or event admission.
 gui_related: true
-gui_classification_reason: "Fixes the dispatch identity and disabled state of visible End discussion, Check it, Dismiss, Don't wait, Turn off, Lock and Export controls."
+gui_classification_reason: >-
+  Keeps current module dispatch owners and makes the legacy Teach lock command internal, with no
+  ordinary GUI producer.
 split_recommended: false
 depends_on: [UCC-171]
 unblocks: [WM-063, CS-087]
 acceptance_criteria:
   - "Each of the seven commands dispatches to exactly its named sole handler."
-  - "Each renders disabled with command_not_registered and reports handler_unavailable until admission."
+  - "Each current ordinary control renders disabled; the retained lock command renders no control and remains internal compatibility with command_not_registered and reports handler_unavailable until admission."
   - "No event type is expected for any of the seven before Event Authority admits one."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -7785,6 +7789,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-07"
   - "Plans/Decision_Log.md#DL-130"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "scope"
   - "locked"

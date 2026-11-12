@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2938-L3389
+Source lines: L2949-L3409
 
-Source SHA256: `97faab694153c72d63820ff8cda4b76c90bc8ae49ecc97b54f36ef6d20797ff7`
+Source SHA256: `60372b88d295fa47f5461fef7f5fca40f5852e4ee35a66f9e1be2684b41e3b7a`
 
 ---
 
@@ -29,8 +29,9 @@ canonical_text: Ordinary replies show no memory-use citations, chips, counts, pr
   are retired UI only, never a fourth stored state. Memory is not rules and the 350-token ceiling stays
   internal.
 gui_related: true
-gui_classification_reason: The capsule preview label, the list grouping and the in-chat memory marks are user-visible
-  presentation of memory state.
+gui_classification_reason: >-
+  Defines the saved-note page and the sole successful-save acknowledgment; no preview, state-face,
+  verification group or in-chat use mark is exposed.
 depends_on:
 - AMS-014
 - AMS-018
@@ -68,6 +69,7 @@ source_lineage:
   B-AMS-03, B-AMS-04, B-AMS-05 (part) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
 - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - See what your next message will include
 - What's in capsule now
@@ -185,21 +187,24 @@ plan_unit_id: AMS-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Memory never changes or unlocks a user-locked taught rule. Remove the automatic locked-rule-change
-  notice, Review link, Keep my rule / Edit my rule… decision panel and memory-generated change proposal
-  workflow. A real necessary rule change is an ordinary task decision; requested rule edits use Instructions/Teach
-  and explicit user cmd.chat.teach.set_lock protection. No maintenance or summarization weakens a locked
-  rule.
+canonical_text: >-
+  Memory never changes or unlocks a retained protected taught rule. Automatic rule-change notices,
+  Review links, Keep my rule / Edit my rule decision panels and memory-generated rule proposals are
+  retired. A necessary rule change is an ordinary task decision; requested edits use the
+  written-instruction owner at Settings > Personas & Crews > Defaults > Standing instructions.
+  Legacy cmd.chat.teach.set_lock and locked-record codecs remain internal compatibility/protection
+  only, without an ordinary lock/unlock or rollback control. Internal upkeep cannot weaken retained
+  protections.
 gui_related: true
-gui_classification_reason: The chat line and the Memory decision are user-visible, and their answers dispatch commands.
+gui_classification_reason: >-
+  Retires the ordinary locked-rule proposal and lock/unlock surfaces while preserving internal
+  protections.
 depends_on: [AMS-047, AMS-021]
 unblocks: []
 acceptance_criteria:
-- Memory never changes or unlocks a user-locked taught rule. Remove the automatic locked-rule-change notice,
-  Review link, Keep my rule / Edit my rule… decision panel and memory-generated change proposal workflow.
-  A real necessary rule change is an ordinary task decision; requested rule edits use Instructions/Teach
-  and explicit user cmd.chat.teach.set_lock protection. No maintenance or summarization weakens a locked
-  rule.
+  - "Requested written-rule edits use their existing instruction writer; Memory never edits those rules or offers lock/unlock, conflict, source or rollback controls."
+  - "Retained protected records keep their internal safeguards; maintenance and summarization never weaken them."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -216,6 +221,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
 - Plans/Decision_Log.md#DL-130
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens: ["It won't change unless you say so.", "Keep my rule", "Edit my rule…", "cmd.chat.teach.open_memory", "cmd.chat.memory.discard", "cmd.chat.teach.set_lock", "DL-130"]
 negative_constraints:
 - Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
@@ -236,7 +242,9 @@ canonical_text: included_teaching_ids records each rule/version actually include
   independently of whether it was obeyed. Keep internal records; inclusion proves no compliance. Retire
   ordinary Followed/Missed/Used reply receipts and named-rule hovers; Instructions remains directly inspectable.
 gui_related: true
-gui_classification_reason: The record backs a user-visible note on replies about applied rules.
+gui_classification_reason: >-
+  Internal inclusion records are retained without reply rule/verification receipts; written
+  instructions remain directly editable.
 depends_on: [AMS-018, AMS-025]
 unblocks: [AMS-053]
 acceptance_criteria:
@@ -260,6 +268,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
 - Plans/Decision_Log.md#DL-116
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens: ["included_teaching_ids", "Followed", "Used", "DL-116"]
 negative_constraints:
 - Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.

@@ -4,7 +4,7 @@ Source: `Plans/agent-rules-context.md`
 
 Source lines: L95-L110
 
-Source SHA256: `212cf76ee5e4a1c283b0d769c6a03a740e09169e4f0b29c03edfbf8d7c095c02`
+Source SHA256: `abc7dcb9b880d42034005d801131e1eb874cebd74eed7af23de2a74cb86375e6`
 
 ---
 
@@ -13,7 +13,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 ### In-app instructions editor reconciliation
 
-The in-app project instructions editor writes the same runtime-consumed project rules and instruction files defined by this document.
+The in-app project instructions editor writes the same runtime-consumed project rules and instruction files defined by this document. Jared’s 2026-11-12 answer at 8:12 AM EST was "Keep them there": Rules for every project and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions. The first writes the existing application-rule source and the second the actual Project rule source; neither is a saved-note Memory control.
 
 Rules:
 - the editor must show the canonical path and scope for the file being edited

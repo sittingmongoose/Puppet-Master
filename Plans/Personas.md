@@ -298,7 +298,7 @@ Child Persona context rules:
 - inject the effective child Persona content resolved from PM Persona storage.
 - include current task, working context, required constraints, and requested/effective runtime state.
 - include the current effective context-shaping state without making a lossy child copy the only truth.
-- do not forward Assistant memory to child runs.
+- do not copy private parent/app-thread memory into a child handoff; this is not a ban on authorized read-only access to current Project and same-user personal notes. Such reads use AMS-026/054 permissions/source restrictions and create no child-owned memory.
 - child runs inherit only the effective compatible subset of parent-allowed tools, skills, plugins, and MCP capabilities.
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Permissions_System.md
@@ -1502,16 +1502,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Child Persona injection uses a reconstructed handoff bundle, and Persona default_mode applies below explicit run-envelope mode and above the system default.
+  Child Persona injection uses a reconstructed handoff bundle, and Persona default_mode applies
+  below explicit run-envelope mode and above the system default. Child handoff never copies private
+  parent/app-thread memory. Independently authorized helpers may read current Project and same-user
+  personal notes read-only under AMS-026/054 source restrictions, with no other-Project access,
+  mutation or helper-owned store.
 gui_related: false
 gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Child runs inject effective child Persona content resolved from PM storage.
-  - Child handoff includes current task, working context, required constraints, requested/effective runtime state, and effective context-shaping state.
-  - Run-envelope mode overrides Persona default_mode.
+  - "Child runs inject effective child Persona content resolved from PM storage."
+  - "Child handoff includes current task, working context, required constraints, requested/effective runtime state, and effective context-shaping state."
+  - "Run-envelope mode overrides Persona default_mode."
+  - "Authorized Project/personal-note read succeeds under the existing scope/source gates; private app-thread forwarding and helper writes remain refused."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1526,6 +1531,7 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0028
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0029
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "reconstructed handoff bundle"
   - "do not forward Assistant memory"
@@ -1533,7 +1539,7 @@ preserved_exact_tokens:
   - "Explicit run-envelope `mode`"
   - "System default (`regular`)"
 negative_constraints:
-  - "Do not forward Assistant memory to child runs."
+  - "Do not copy private parent/app-thread memory into child handoffs or use a handoff to bypass source restrictions; authorized read-only Project/personal-note access remains permitted."
   - "Do not make a lossy child copy the only truth."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md"
@@ -3395,6 +3401,7 @@ source_lineage:
 - chat:work-through-teach-gaps
 - Plans/Personas.md#11.8-teacher
 - Plans/Personas.md#P-040-teacher-core-persona
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0090
 - atom-0121
@@ -3448,18 +3455,17 @@ preserved_exact_tokens:
 - avoid guessing
 - handoff
 negative_constraints:
-- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
-  in Personas.md.
-- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
-- Do not present Teacher as a separate feature detached from Teach.
-- Do not let Teacher claim authority without visible source/context disclosure.
-- Do not allow Teacher to perform unsafe mutations as teaching gestures.
-- Do not let Teacher quietly become a builder or auditor.
-- Do not silently switch Persona/model/tool path without disclosure.
-- Do not discard Teacher context during handoff.
-- Do not certify Teacher on a small happy-path chat only.
-- Do not let Teacher answer capability or settings questions without live/source-backed state.
-- Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed.
+  - "Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases in Personas.md."
+  - "Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only."
+  - "Do not present Teacher as a separate feature detached from Teach."
+  - "Teacher must not invent PM authority or task evidence. Ordinary non-memory task citations and missing-coverage disclosure remain; saved-note sources and per-run context inclusion stay internal without a source inspector or memory-use receipt."
+  - "Do not allow Teacher to perform unsafe mutations as teaching gestures."
+  - "Do not let Teacher quietly become a builder or auditor."
+  - "Do not silently switch Persona/model/tool path without disclosure."
+  - "Do not discard Teacher context during handoff."
+  - "Do not certify Teacher on a small happy-path chat only."
+  - "Do not let Teacher answer capability or settings questions without live/source-backed state."
+  - "Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed."
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/Personas.md

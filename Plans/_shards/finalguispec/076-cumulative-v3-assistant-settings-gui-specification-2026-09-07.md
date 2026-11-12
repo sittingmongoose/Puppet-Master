@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38539-L39253
+Source lines: L38545-L39259
 
-Source SHA256: `096e90f5b88794bae1dc7fb84066d9390824a4d400c3ae816d55702840a8f95d`
+Source SHA256: `ed4a2ca21d03be44b0dd07092082ba191161006ce7b8237c7e3a9dd4a5823b93`
 
 ---
 
@@ -205,7 +205,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   4. `web-routes` (Web search, scrape policies)
   5. `media-routes` (Image/audio generation routing)
   6. `back-seat-driver` (BSD sensitivity, stage bindings, catch-up policy)
-  7. `memory-context-instructions` (Context window, rehydration, instructions)
+  7. `memory-context-instructions` (Memory: one saved-note page; instructions, context and history live in their owners)
   8. `goals-crew-personas` (Agent rosters, personas, Goal V2 defaults)
   9. `permissions-filesafe` (File safe boundaries, tool approvals)
   10. `commands-shortcuts` (Keybindings, command palette)

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40675-L41914
+Source lines: L40681-L41912
 
-Source SHA256: `096e90f5b88794bae1dc7fb84066d9390824a4d400c3ae816d55702840a8f95d`
+Source SHA256: `ed4a2ca21d03be44b0dd07092082ba191161006ce7b8237c7e3a9dd4a5823b93`
 
 ---
 
@@ -1015,40 +1015,31 @@ plan_unit_id: F3-579
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Teach is a standard sheet of F3-566 and the only capture form: the wand''s Teach…, /teach,
-  natural-language intent and Save as a rule… all open it, prefilled with the rule text and its source,
-  and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark, Teach Puppet
-  Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the rule field, with
-  example rules that fill it. Under it one safety line says either that no password or key was spotted
-  or, in the warm tone, that the text looks like a password or key and must be removed to save. The plate
-  is three nested rings, This thread inside the available This project ring inside Everywhere, each a
-  button with a helper; Everywhere stays disabled with its reason until the tick "It''s safe to use in
-  my other projects" is set, and in correct mode the wider rings are disabled because an edit cannot widen
-  a rule. A Locked tick says only the user can change the rule (ACD-481). Beside them, the rule card shows
-  the rule exactly as it will be saved, with its scope, lock and source message; when a similar rule exists,
-  the old and new wording are shown side by side with a choice between Replace the old rule and Keep both,
-  and saving waits for it. The foot holds Cancel and one primary, Save rule, Save and replace or Save
-  as version 2. In the chat each change is one receipt line of F3-569''s grammar: Rule saved, Rule updated
-  to a new version, Rule turned off, with several saves in a row coalesced into one line. Your rules is
-  an editor document (the taught memory document): one row per rule with its words, its scope, lock and
-  version, a state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock
-  or Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher
-  stays a Persona, and the sheet says Teach isn''t the Teacher Persona. Routine replies show no memory-use
-  citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers, verification
-  badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to memory · View
-  line appear; View opens the same Memory page as a sheet and highlights the saved note. Requested save/edit
-  confirmation stays brief. Task evidence and ordinary links remain available. In No project omit the
-  inapplicable Project ring; Everywhere is the existing public_safe user-taught scope, not a new Computer
-  memory tier. Keep the public-safe checkbox, correction narrowing and source evidence; the display name
-  changes no historical teaching record.'
+canonical_text: >-
+  Teach is the standard F3-566 sheet for deliberate written instructions, reached by the wand Teach,
+  /teach, natural-language intent and Save as a rule through cmd.chat.teach.capture (ACD-477).
+  Opening or Cancel writes nothing; existing confirmation, secret/privacy screening, stale-revision
+  refusal and retained protections still apply. It edits through the existing instruction writer and
+  returns to Settings > Personas & Crews > Defaults > Standing instructions, where Rules for every
+  project and Rules for this project live. A Teacher answer offered as a saved note instead uses the
+  same Memory page and AMS-141 Add/Edit/Delete at This project or Every project. The old nested This
+  thread/project/Everywhere rings, public-safe scope tick, Locked checkbox, source/lock/version
+  preview, Replace/Keep both chooser and separate Your rules taught-memory document are retired.
+  Internal compatibility records and legacy protected-state custody remain, without ordinary
+  lock/unlock, conflict, source or rollback controls. Teacher remains a Persona, distinct from
+  Teach. Only a durable successful save may add Saved to memory · View to a reply; View opens the
+  one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail,
+  verification or Followed/Missed decoration is shown. Ordinary task evidence/links remain
+  available, and no No project view invents a Project or a Computer memory tier.
 gui_related: true
 gui_classification_reason: "Defines the Teach sheet, its chat receipts and the Your rules document."
 split_recommended: false
 depends_on: [F3-566, ACD-477, ACD-481, DL-127, DL-116, F3-570]
 unblocks: []
 acceptance_criteria:
-- Teach retains explicit scoped rule capture and user lock/revoke safety; ordinary rule-use/check receipts
-  retire.
+  - "Every deliberate Teach entry uses the existing written-instruction owner and confirms before storage; saved notes use the one Memory page and AMS-141 at the two allowed levels."
+  - "No scope rings, public-safe tick, lock/conflict/source/rollback workbench, taught-memory duplicate document or rule-use/save-update receipt appears."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -1074,6 +1065,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F08,B-F13,C-F11
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"

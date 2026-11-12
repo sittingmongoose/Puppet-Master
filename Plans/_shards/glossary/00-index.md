@@ -1,24 +1,24 @@
 # Shard Index: Plans/Glossary.md
 
-Generated: 2026-11-04T18:52:55Z
+Generated: 2026-11-12T14:39:42Z
 
-Source SHA256: `8c61b60acbf4956c1044fe272bd679c94d8c27237a59e7054ecc4f076aa7d74d`
+Source SHA256: `a63c96ba124b2bc011958e01d7e7090e71667525faf183296956e1db7cd1d794`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `7c7127d2ac47e99ba123b4536789ead74172fc2b83af52a6663e215b46d9385f`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L23 `927edcac3d7dbe975e5c508bb7482c25661c51e62d920686e673a4921780e5d7`
-- [003 - 0. Scope](003-0.-scope.md) L25-L31 `1726d490909002036770c3963d02eab0b50653a1c9173341f2bae23c4be3a1c6`
-- [004 - 1. Canonical platform name](004-1.-canonical-platform-name.md) L33-L39 `286b7afa52036d9846070c57f6efe95554c64db40d4c9e16bf19fc8d0cf45eb8`
-- [005 - 2. Core terms](005-2.-core-terms.md) L41-L291 `73cb0f7a1042268f65563209cd00318bb94d39a8bda840e37d02cdd11704ea96`
-- [006 - 4. Evidence](006-4.-evidence.md) L293-L301 `f2538c66d597846a4b54c0bb3db531bcc8810f3693c5262a2554e7ceaf7753c4`
-- [007 - 5. Secret handling](007-5.-secret-handling.md) L303-L311 `50e26e4a49d9ffc20c6a027be8b8145c30584ebdac0d26dfbb37875c368ff975`
-- [008 - 6. Primitives](008-6.-primitives.md) L313-L354 `ef2addc6baa62419363d5ccb1e73249a1c27c963b30cc543919e944f6dac3f2d`
-- [009 - References](009-references.md) L356-L359 `a973beb04647b47acbf3af343be7742e5b5edf651df048e560c19239fce6d75c`
-- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L361-L365 `96debfe6877eb0e34575600cdec27b50ce80eff34e9bbf6b962830c951567cb1`
-- [011 - PlanUnits](011-planunits.md) L367-L1695 `c81ff7addd3f14dfc360ecae0f48f8cd5e53205c0bb4f71bc1e2aa008651de40`
-- [012 - Migration Coverage](012-migration-coverage.md) L1697-L1707 `5b4a7968bfacb2f379665f10f729e6c9068c1941e610bcc6d96698405416805e`
-- [013 - Ledger Compile Addendum - pldg-20260626-001-feature-name](013-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1710-L2192 `64a549ffb486d46f3739c4d67d0705e6b887b00e980bca2b413c6e2a65d39dd4`
-- [014 - DL-180 to DL-185 — Panels, Tabs And The Words Around Them (2026-10-09)](014-dl-180-to-dl-185-panels-tabs-and-the-words-around-them-2026-10-0.md) L2194-L2688 `26a400d73684d06220c571fdf6fbdb254834c209a4c0b87de1c90e482af8972b`
+- [001 - Preamble](001-preamble.md) L1-L1 `acd02f7117a3460751683e1915e1a716d9fb9d0cde26fcea52399d493fc4d6b0`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L23 `e91310a562af30865e54a0bf030d3386a44d7419cafe8331f23265150192435d`
+- [003 - 0. Scope](003-0.-scope.md) L25-L31 `22d992ca4cd91e39f30ef40e66f8ef94a8b36352938abc979bb84e15c7ee8d98`
+- [004 - 1. Canonical platform name](004-1.-canonical-platform-name.md) L33-L39 `b0034de6fa8593fc82fa319ec9d435933237e4606913482564d45d50684641d8`
+- [005 - 2. Core terms](005-2.-core-terms.md) L41-L291 `9a1cd06ce2e2a644ee2994a481c094a61dd62dd7ee140b0cbae49445246a5a12`
+- [006 - 4. Evidence](006-4.-evidence.md) L293-L301 `ead3b23636be85bfc35b6079fa40fc81cd77660cde67303b7b6773ae51007871`
+- [007 - 5. Secret handling](007-5.-secret-handling.md) L303-L311 `46ead9b10b54e986958b635e09e44280efa5496d8297a9afc02cf8564befbd89`
+- [008 - 6. Primitives](008-6.-primitives.md) L313-L354 `56a96deae05d25157999006e65cf6a26f5437c1c1d2c274c0003e40b80f5cbfc`
+- [009 - References](009-references.md) L356-L359 `aebf20ad6a89727729f4d5c7b362456f17e7e41a076edff1c76875df252fb535`
+- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L361-L365 `7d98243e32b559641637e34cf2a690f13060a745f83e71f34fb586a4114d39d0`
+- [011 - PlanUnits](011-planunits.md) L367-L1695 `c9cd4fddfbfe81847be6806b27136cde8ef22fae4dd60565f796aa5e692de821`
+- [012 - Migration Coverage](012-migration-coverage.md) L1697-L1707 `7e177c42326613fcebcc9969dda922d17cff17b3a6451a4eee2e5e90e108b339`
+- [013 - Ledger Compile Addendum - pldg-20260626-001-feature-name](013-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1710-L2193 `b3aac3ac501b63962c4de378630579a2b0a916584c9cac8f8b6eec4be68e29e3`
+- [014 - DL-180 to DL-185 — Panels, Tabs And The Words Around Them (2026-10-09)](014-dl-180-to-dl-185-panels-tabs-and-the-words-around-them-2026-10-0.md) L2195-L2689 `b12f6f56c8aa82036202e9142e76d905f0604306aebe608ffe6dc444b6934071`

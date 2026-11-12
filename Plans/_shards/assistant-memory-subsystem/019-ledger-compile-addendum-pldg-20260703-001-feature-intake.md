@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2596-L2799
+Source lines: L2606-L2810
 
-Source SHA256: `97faab694153c72d63820ff8cda4b76c90bc8ae49ecc97b54f36ef6d20797ff7`
+Source SHA256: `60372b88d295fa47f5461fef7f5fca40f5852e4ee35a66f9e1be2684b41e3b7a`
 
 ---
 
@@ -158,11 +158,11 @@ acceptance_criteria:
   (P1) is source lineage; its citation-surfacing recommendation is retired, not a mandate for reply memory
   citations.'
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- User can list/get/update/delete memory stores and individual memories with version history, provenance, redaction, and rollback.
-- Model responses that use memories can surface citations or evidence receipts.
-- Memory consolidation failures are typed, retryable or surfaced, and never silently drop required memories.
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-new-contracts-verify.py"
+  - "Users can view/add/edit/delete notes and inspect Archived on the one Memory page at the two allowed levels; store/history/provenance/rollback machinery remains internal."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
+  - "Internal consolidation failures remain typed and never silently drop required data."
 risk_class: p1_agent_control_subagents_hardening
 reasoning_tier: standard
 context_scope: agent_control_subagents
@@ -181,6 +181,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:10
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0087
 external_atom_id: extrepo-20260703-0083

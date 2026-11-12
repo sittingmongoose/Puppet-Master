@@ -609,7 +609,9 @@ canonical_text: 'This document owns Memory: reusable facts, preferences, lessons
   and existing local Tantivy/USearch storage remain internal contracts. The old Assistant-only title is
   historical; authorized helper reads follow AMS-026.'
 gui_related: true
-gui_classification_reason: The authority packet names the GUI Gist Review panel and user-visible memory subsystem scope.
+gui_classification_reason: >-
+  Names the current saved-note Memory boundary; Gist Review in the historical authority packet does
+  not create a second GUI surface.
 depends_on: []
 unblocks: [AMS-003, AMS-005, AMS-021]
 acceptance_criteria:
@@ -631,6 +633,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0002
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Assistant-Only Memory Subsystem (Canonical SSOT)"
   - "Evidence-Backed Gists"
@@ -1035,7 +1038,9 @@ canonical_text: 'Add writes a new MemoryGist from plain text with inferred kind 
   workbench or second Notes it took document appears. Instructions, History/privacy, chat capacity controls
   and Run limits stay in their owners outside Memory.'
 gui_related: true
-gui_classification_reason: List, edit, verify, pin, delete, and half-life edits are user-visible GUI operations.
+gui_classification_reason: >-
+  The one Memory page shows note text, two-level availability, updated time, Add/Edit/Delete and
+  Archived, without retired verification/pin/decay controls.
 depends_on: [AMS-008]
 unblocks: [AMS-021]
 acceptance_criteria:
@@ -1070,6 +1075,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "list/edit/verify/pin/delete/half-life edits"
   - "MemoryGist"
@@ -1441,6 +1447,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0022
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0023
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Memory is continuity and project state. Memory is not rules."
   - "350"
@@ -1451,7 +1458,7 @@ preserved_exact_tokens:
   - "Verified-only"
 negative_constraints:
   - "Unverified gists may be included only by explicit user action."
-  - "Pinned Unverified gists must not be auto-included unless assistant.memory.allow_pinned_unverified_injection = true."
+  - "Retired pinned-Unverified/manual-verification bypasses stay disabled under SSYS-059. Internal AMS-014 support and source/permission gating apply; no user pin or verification control admits an unsupported claim."
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1705,7 +1712,9 @@ canonical_text: 'Maintenance remains local and in-process, behind the page. Rebu
   approvals. No immediate automatic maintenance is authorized. Internal operations retain truthful success/failure
   state; storage health and real-failure recovery stay with their existing owners.'
 gui_related: true
-gui_classification_reason: User-invokable GUI maintenance actions and success/failure status are visible UI behavior.
+gui_classification_reason: >-
+  Internal maintenance and existing recovery remain behind the page; no user-invokable Memory
+  workbench or button is planned.
 depends_on: [AMS-021, AMS-022]
 unblocks: []
 acceptance_criteria:
@@ -1730,6 +1739,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "user-invokable in GUI"
   - "internal maintenance jobs"
@@ -2743,11 +2753,11 @@ acceptance_criteria:
   (P1) is source lineage; its citation-surfacing recommendation is retired, not a mandate for reply memory
   citations.'
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- User can list/get/update/delete memory stores and individual memories with version history, provenance, redaction, and rollback.
-- Model responses that use memories can surface citations or evidence receipts.
-- Memory consolidation failures are typed, retryable or surfaced, and never silently drop required memories.
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-new-contracts-verify.py"
+  - "Users can view/add/edit/delete notes and inspect Archived on the one Memory page at the two allowed levels; store/history/provenance/rollback machinery remains internal."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
+  - "Internal consolidation failures remain typed and never silently drop required data."
 risk_class: p1_agent_control_subagents_hardening
 reasoning_tier: standard
 context_scope: agent_control_subagents
@@ -2766,6 +2776,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:10
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0087
 external_atom_id: extrepo-20260703-0083
@@ -2956,8 +2967,9 @@ canonical_text: Ordinary replies show no memory-use citations, chips, counts, pr
   are retired UI only, never a fourth stored state. Memory is not rules and the 350-token ceiling stays
   internal.
 gui_related: true
-gui_classification_reason: The capsule preview label, the list grouping and the in-chat memory marks are user-visible
-  presentation of memory state.
+gui_classification_reason: >-
+  Defines the saved-note page and the sole successful-save acknowledgment; no preview, state-face,
+  verification group or in-chat use mark is exposed.
 depends_on:
 - AMS-014
 - AMS-018
@@ -2995,6 +3007,7 @@ source_lineage:
   B-AMS-03, B-AMS-04, B-AMS-05 (part) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
 - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - See what your next message will include
 - What's in capsule now
@@ -3112,21 +3125,24 @@ plan_unit_id: AMS-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Memory never changes or unlocks a user-locked taught rule. Remove the automatic locked-rule-change
-  notice, Review link, Keep my rule / Edit my rule… decision panel and memory-generated change proposal
-  workflow. A real necessary rule change is an ordinary task decision; requested rule edits use Instructions/Teach
-  and explicit user cmd.chat.teach.set_lock protection. No maintenance or summarization weakens a locked
-  rule.
+canonical_text: >-
+  Memory never changes or unlocks a retained protected taught rule. Automatic rule-change notices,
+  Review links, Keep my rule / Edit my rule decision panels and memory-generated rule proposals are
+  retired. A necessary rule change is an ordinary task decision; requested edits use the
+  written-instruction owner at Settings > Personas & Crews > Defaults > Standing instructions.
+  Legacy cmd.chat.teach.set_lock and locked-record codecs remain internal compatibility/protection
+  only, without an ordinary lock/unlock or rollback control. Internal upkeep cannot weaken retained
+  protections.
 gui_related: true
-gui_classification_reason: The chat line and the Memory decision are user-visible, and their answers dispatch commands.
+gui_classification_reason: >-
+  Retires the ordinary locked-rule proposal and lock/unlock surfaces while preserving internal
+  protections.
 depends_on: [AMS-047, AMS-021]
 unblocks: []
 acceptance_criteria:
-- Memory never changes or unlocks a user-locked taught rule. Remove the automatic locked-rule-change notice,
-  Review link, Keep my rule / Edit my rule… decision panel and memory-generated change proposal workflow.
-  A real necessary rule change is an ordinary task decision; requested rule edits use Instructions/Teach
-  and explicit user cmd.chat.teach.set_lock protection. No maintenance or summarization weakens a locked
-  rule.
+  - "Requested written-rule edits use their existing instruction writer; Memory never edits those rules or offers lock/unlock, conflict, source or rollback controls."
+  - "Retained protected records keep their internal safeguards; maintenance and summarization never weaken them."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -3143,6 +3159,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
 - Plans/Decision_Log.md#DL-130
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens: ["It won't change unless you say so.", "Keep my rule", "Edit my rule…", "cmd.chat.teach.open_memory", "cmd.chat.memory.discard", "cmd.chat.teach.set_lock", "DL-130"]
 negative_constraints:
 - Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
@@ -3163,7 +3180,9 @@ canonical_text: included_teaching_ids records each rule/version actually include
   independently of whether it was obeyed. Keep internal records; inclusion proves no compliance. Retire
   ordinary Followed/Missed/Used reply receipts and named-rule hovers; Instructions remains directly inspectable.
 gui_related: true
-gui_classification_reason: The record backs a user-visible note on replies about applied rules.
+gui_classification_reason: >-
+  Internal inclusion records are retained without reply rule/verification receipts; written
+  instructions remain directly editable.
 depends_on: [AMS-018, AMS-025]
 unblocks: [AMS-053]
 acceptance_criteria:
@@ -3187,6 +3206,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
 - Plans/Decision_Log.md#DL-116
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens: ["included_teaching_ids", "Followed", "Used", "DL-116"]
 negative_constraints:
 - Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
@@ -3398,43 +3418,49 @@ plan_unit_id: AMS-141
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: 'Typed payload definitions (DL-333) for the twelve cmd.chat.memory.* commands that UI_Command_Catalog
-  UCC-084 and UCC-085 register and UCC-230 routes to this doc: the Gist Review actions verify, edit, pin,
-  discard, toggle_auto_save_unverified and preview_capsule, and the maintenance commands rebuild_lexical_index,
-  rebuild_semantic_index, verification_sweep, dedup_sweep, summarize_monthly and prune_archive. The definitions
-  block below gives each command its args, owner request and owner result in pm.command_payload_definitions.v1,
-  with error and disabled-reason codes narrowed from the overlay''s closed sets. DL-402 binds monthly
-  summary and prune archive to archive-only: a memory is deleted only when the user deletes it, originals
-  keep their evidence references, and neither job archives or merges a pinned memory. DL-403 holds both
-  commands unavailable, automatically and from the Memory panel, until approved cutoffs exist; DL-446
-  and DL-447 record the returned cutoffs and keep runs waiting for their application and the remaining
-  definition, review and recording approvals; the definitions record that hold as owner state maintenance_cutoffs_pending,
-  which UCC-230 maps to not_configured (DL-341). DL-444 and DL-445 keep dedup_sweep unavailable the same
-  way until their answer is applied and the remaining approvals pass, recorded as owner state dedup_hold_pending,
-  also mapped to not_configured; each of the three definitions ties its owner state to that code in owner_state_codes.
-  The wired owner request ChatOwnerCommandRequestV2 requires a thread_id that the Project-scoped catalog
-  rows do not carry, and the rows require a project_id that AMS-054 app memory leaves null; each definition
-  records both disagreements in its judgments for the chat and memory owners, and chooses no thread_id
-  value. prune_archive''s policy can never change DL-447''s cutoffs, pin exclusion or DL-402''s archive-only
-  rule. gist_id is the canon name UCC-230''s identity_aliases records for the overlay identity memory_item_id,
-  and every judgment is in its definition''s judgments list (DL-341). DL-475 adds cmd.chat.memory.add
-  and cmd.chat.memory.delete and replaces Edit args with explicit memory_scope, plain text, optional title,
-  gist_id and expected_revision. The new MemoryNoteAddRequestV1/MemoryNoteEditRequestV1/MemoryNoteDeleteRequestV1
-  and MemoryNoteMutationResultV1 in assistant_memory_contracts.schema.json are the concrete owner contracts.
-  The owner authenticates the memory scope and source constraints, checks current revision before Edit/Delete,
-  infers kind, commits canonical records/tombstones before indexes, and returns a durable receipt before
-  acknowledgment. Delete is not Discard; suppression prevents old transcripts/replay/rebuild/restore/import
-  from silently resaving the deleted content. Bulk deletion freezes the confirmed scope and exact note
-  IDs and uses this same owner for each, reporting any incomplete result honestly. Old Verify/Pin/Discard/toggle/preview
-  definitions remain support/compatibility contracts with no ordinary UI producer; user dispatch cannot
-  restore them or bypass support gates. Maintenance definitions retain their holds and source/admission
-  gaps; this change does not enable them. These definitions add no EventRecord writer or native handler
-  proof. Edit may supply destination_scope to explicitly request a supported availability change. memory_scope
-  always identifies the current source; destination_scope never merely relabels it. Recheck both scopes,
-  provenance and privacy, preserve versions and legacy protection, and commit destination plus source
-  disposition through the same owner before claiming a move. A failure leaves the original available under
-  its original scope; unavailable native cross-scope ownership stays handler_unavailable. Private app-thread
-  content never broadens automatically.'
+canonical_text: >-
+  Typed payload definitions (DL-333) for the twelve cmd.chat.memory.* commands that
+  UI_Command_Catalog UCC-084 and UCC-085 register and UCC-230 routes to this doc: the Gist Review
+  actions verify, edit, pin, discard, toggle_auto_save_unverified and preview_capsule, and the
+  maintenance commands rebuild_lexical_index, rebuild_semantic_index, verification_sweep,
+  dedup_sweep, summarize_monthly and prune_archive. The definitions block below gives each command
+  its args, owner request and owner result in pm.command_payload_definitions.v1, with error and
+  disabled-reason codes narrowed from the overlay's closed sets. DL-402 binds monthly summary and
+  prune archive to archive-only: a memory is deleted only when the user deletes it, originals keep
+  their evidence references, and neither job archives or merges a pinned memory. DL-403 holds both
+  commands unavailable to internal/support execution until approved cutoffs exist; no Memory-panel
+  control is exposed; DL-446 and DL-447 record the returned cutoffs and keep runs waiting for their
+  application and the remaining definition, review and recording approvals; the definitions record
+  that hold as owner state maintenance_cutoffs_pending, which UCC-230 maps to not_configured
+  (DL-341). DL-444 and DL-445 keep dedup_sweep unavailable the same way until their answer is
+  applied and the remaining approvals pass, recorded as owner state dedup_hold_pending, also mapped
+  to not_configured; each of the three definitions ties its owner state to that code in
+  owner_state_codes. The wired owner request ChatOwnerCommandRequestV2 requires a thread_id that the
+  Project-scoped catalog rows do not carry, and the rows require a project_id that AMS-054 app
+  memory leaves null; each definition records both disagreements in its judgments for the chat and
+  memory owners, and chooses no thread_id value. prune_archive's policy can never change DL-447's
+  cutoffs, pin exclusion or DL-402's archive-only rule. gist_id is the canon name UCC-230's
+  identity_aliases records for the overlay identity memory_item_id, and every judgment is in its
+  definition's judgments list (DL-341). DL-475 adds cmd.chat.memory.add and cmd.chat.memory.delete
+  and replaces Edit args with explicit memory_scope, plain text, optional title, gist_id and
+  expected_revision. The new
+  MemoryNoteAddRequestV1/MemoryNoteEditRequestV1/MemoryNoteDeleteRequestV1 and
+  MemoryNoteMutationResultV1 in assistant_memory_contracts.schema.json are the concrete owner
+  contracts. The owner authenticates the memory scope and source constraints, checks current
+  revision before Edit/Delete, infers kind, commits canonical records/tombstones before indexes, and
+  returns a durable receipt before acknowledgment. Delete is not Discard; suppression prevents old
+  transcripts/replay/rebuild/restore/import from silently resaving the deleted content. Bulk
+  deletion freezes the confirmed scope and exact note IDs and uses this same owner for each,
+  reporting any incomplete result honestly. Old Verify/Pin/Discard/toggle/preview definitions remain
+  support/compatibility contracts with no ordinary UI producer; user dispatch cannot restore them or
+  bypass support gates. Maintenance definitions retain their holds and source/admission gaps; this
+  change does not enable them. These definitions add no EventRecord writer or native handler proof.
+  Edit may supply destination_scope to explicitly request a supported availability change.
+  memory_scope always identifies the current source; destination_scope never merely relabels it.
+  Recheck both scopes, provenance and privacy, preserve versions and legacy protection, and commit
+  destination plus source disposition through the same owner before claiming a move. A failure
+  leaves the original available under its original scope; unavailable native cross-scope ownership
+  stays handler_unavailable. Private app-thread content never broadens automatically.
 gui_related: true
 gui_classification_reason: Defines the Memory page, actions or reply presentation.
 depends_on: [UCC-230, UCC-084, UCC-085, CV-333, DL-333, DL-402, DL-403, DL-444, DL-445, DL-446, DL-447, DL-341]
@@ -3459,6 +3485,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - cmd.chat.memory.verify
 - cmd.chat.memory.edit
@@ -3986,7 +4013,7 @@ command_payload_definitions:
       choice:
       - not_configured
       gap_note: 'No catalog row states disabled reasons for the memory commands. Plans/Decision_Log.md#DL-444 and
-        #DL-445 (approved scope) keep automatic jobs and panel buttons unavailable until the answer is applied and
+        #DL-445 (approved scope) keep internal automatic/support jobs unavailable until the answer is applied and
         all remaining definition, review and recording approvals pass. The definition shows that hold as owner state
         dedup_hold_pending, which UCC-230''s owner_state_code_map maps to not_configured (DL-444, DL-445; DL-341).
         assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
@@ -4052,8 +4079,8 @@ command_payload_definitions:
       choice:
       - not_configured
       gap_note: 'Owner state maintenance_cutoffs_pending, which UCC-230''s owner_state_code_map maps to not_configured
-        (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved
-        cutoffs exist, and the button shows unavailable with that reason. DL-446 returned the cutoffs and keeps
+        (DL-403; DL-341 resolution 3): neither job runs, through automatic or internal support execution, until approved
+        cutoffs exist, and the internal request stays unavailable with that reason. DL-446 returned the cutoffs and keeps
         runs waiting for their application and the remaining definition, review and recording approvals, so the
         state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
   - command_id: cmd.chat.memory.prune_archive
@@ -4119,8 +4146,8 @@ command_payload_definitions:
       choice:
       - not_configured
       gap_note: 'Owner state maintenance_cutoffs_pending, which UCC-230''s owner_state_code_map maps to not_configured
-        (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved
-        cutoffs exist, and the button shows unavailable with that reason. DL-447 returned the cutoffs and keeps
+        (DL-403; DL-341 resolution 3): neither job runs, through automatic or internal support execution, until approved
+        cutoffs exist, and the internal request stays unavailable with that reason. DL-447 returned the cutoffs and keeps
         runs waiting for their application and the remaining definition, review and recording approvals, so the
         state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
   - command_id: cmd.chat.memory.add
