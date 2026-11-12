@@ -77,7 +77,9 @@ def started_world(cfg=None, base=None):
     if (cfg or {}).get('edition')=='native_v7':
         from pm_goal_dg_int_cancel import CancelWorld
         w=CancelWorld(cfg,base=base)
-    else:w = IW.S1CancelWorld(cfg, base=base)
+    else:
+        from pm_goal_dg_int_old import World
+        w=World(cfg,base=base)
     sw = w.start_world
     w.native = IW.S1NativeOwner(w, sw.owners['native'])
     w.d01 = IW.S1D01Owner(w, sw.owners['d01'], sw.edition)
@@ -93,7 +95,8 @@ def cancelled_world(cfg=None, base=None):
     if (cfg or {}).get('edition')=='native_v7':
         from pm_goal_dg_int_cancel import CancelWorld
         return CancelWorld(cfg,base=base).build()
-    return IW.S1CancelWorld(cfg, base=base).build()
+    from pm_goal_dg_int_old import World
+    return World(cfg,base=base).build()
 
 
 class LegacyConsumer(C2.Consumer):
@@ -184,16 +187,24 @@ class LegacyConsumer(C2.Consumer):
         causes,effects=self.goal_causes(original)
         self.source_owner.enroll(dict(legacy_sources=self.legacy_sources(original),goal_causes=causes,filesafe_effects=effects),
                                  self.world.permission.current(self.request()['scope']['goal_run_id']))
-        if hasattr(self.iw,'certified_world'):
+        if self.profile=='native_v7':
             v=self.iw.certified_world
             v.disclosure.acquire(v.scope)
         return self.publish_projection(self.request()['scope'], LEGACY_OP)
+
+    def validate(self,root,value,code,*,original=True):
+        if not original and hasattr(self,'iw') and hasattr(self.iw.roots,'translate'):
+            uri=self.rep_uri_reference()+'#/$defs/'+root
+            translated=self.iw.roots.translate(uri)
+            if translated!=uri:
+                return self.iw.roots.validate('consumer',uri,value,code)
+        return super().validate(root,value,code,original=original)
 
     # -- method arguments, each validated in its realm -----------------------------
     def legacy_sources(self, original):
         started = [original] if self.branch == 'started' else []
         cancelled = [original] if self.branch == 'cancelled' else []
-        if self.branch == 'cancelled':
+        if self.branch == 'cancelled' and self.iw.start_cause['kind']=='original_started':
             started = [SR.original_started(self.sw, where='legacy_sources/started')]
         value = dict(originals=[dict(profile='all_writers.v7' if self.profile=='native_v7' else 'original_started_cancelled',
                                     started=started,cancelled=cancelled)],
@@ -209,9 +220,10 @@ class LegacyConsumer(C2.Consumer):
         projection_sources = dict(generic=rp.generic_snapshot(snapshot, None), actual_generic_sources=rp.actual_sources(snapshot),
                                   native_starts=starts, native_cancellations=cancellations, checkpoint=None,
                                   existing_row=None)
-        self.iw.repair_filler(CONSUMER_REALM, RW.PR + 'CombinedProjectPrivate', projection_sources,
+        private_root=rp.root('CombinedProjectPrivate')
+        self.iw.repair_filler(CONSUMER_REALM, private_root, projection_sources,
                               {'/native_starts', '/native_cancellations', '/checkpoint', '/existing_row', '/generic/frames'})
-        self.iw.roots.validate(CONSUMER_REALM, RW.PR + 'CombinedProjectPrivate', projection_sources,
+        self.iw.roots.validate(CONSUMER_REALM, private_root, projection_sources,
                                'argument/projection_sources')
         if self.branch == 'started':
             value = dict(projection_sources=projection_sources, current_native=current_native)
@@ -376,8 +388,9 @@ class LegacyConsumer(C2.Consumer):
                                                                      'control_selection')] +
                     [rb['d06_readback']['original_event']['event'],
                      rb['d06_readback']['original_d01_lineage']['pointer']] +
+                    [rb['current_start']['kind']] +
                     [rb['current_start']['value'][k] for k in ('control', 'initial_control_origin', 'commit', 'origin',
-                                                                'd01_current')] +
+                                                                'd01_current') if k in rb['current_start']['value']] +
                     [g['current_stop'][k] for k in ('original_stop_intent', 'original_stop_receipt',
                                                     'original_source_audit')])
                 unavailable_if(stage + '/final_current', 'SOURCE_CHANGED',
@@ -405,6 +418,7 @@ class LegacyConsumer(C2.Consumer):
             kind = 'original_started' if self.branch == 'started' else 'original_cancelled'
             out = dict(kind=kind, original=original, projection=opened['row'], checkpoint=opened['stored'],
                        current_state_asserted=False)
-            self.validate('HistoricalStartedOriginal' if self.branch == 'started' else 'HistoricalCancelledOriginal', out,
+            result=('HistoricalStarted' if self.branch=='started' else 'HistoricalCancelled')+('V7' if self.profile=='native_v7' else 'Original')
+            self.validate(result, out,
                           stage + '/result', original=False)
             return out

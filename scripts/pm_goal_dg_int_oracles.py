@@ -140,11 +140,11 @@ def int_cases(run):
     cancelled = lambda: P7.cancelled_world({}, base=BASE)  # noqa: E731
 
     def full_path(w):
-        c = RR.Consumer(w)
+        c = getattr(w,'consumer_class',RR.Consumer)(w)
         pres, req = RR.Presentation(w), request_of(w)
         passive(w, lambda: c.inspect_original(req, pres))
         passive(w, lambda: c.read_retained_native(req, pres))
-        p = RP.Projector(w)
+        p = getattr(w,'projector_class',RP.Projector)(w)
         published = p.project()
         RW.guard('int/published', 'reason' not in published)
         p.cutover()
@@ -194,7 +194,7 @@ def int_cases(run):
     def cell_substituted_at_rest(w):
         commit = w.start_cause['commit']
         substitute_cell(w, commit.family, commit.key, lambda v: v['record'].update(dispatch_released=True))
-        RR.Consumer(w).inspect_original(request_of(w), RR.Presentation(w))
+        getattr(w,'consumer_class',RR.Consumer)(w).inspect_original(request_of(w), RR.Presentation(w))
     run.case(g, 'INT/s1_commit_substituted_at_rest_after_adoption', 'negative', with_world(cancelled, cell_substituted_at_rest),
              'select/cell_substituted')
 
@@ -202,7 +202,7 @@ def int_cases(run):
         origin = w.start_cause['origin']
         w.storage.transact([dict(table=origin.family, key=origin.key, expected=w.storage.cell(origin.family, origin.key)[
             'version'], delete=True)])
-        RR.Consumer(w).read_retained_native(request_of(w), RR.Presentation(w))
+        getattr(w,'consumer_class',RR.Consumer)(w).read_retained_native(request_of(w), RR.Presentation(w))
     run.case(g, 'INT/s1_start_origin_withdrawn', 'negative', with_world(cancelled, start_withdrawn), 'select/cell_substituted')
 
 
@@ -376,10 +376,10 @@ def p4_cases(run):
 
     def v7_r2(w):
         IW_ = IW
-        c = RR.Consumer(w)
+        c = getattr(w,'consumer_class',RR.Consumer)(w)
         pres, req = RR.Presentation(w), request_of(w)
         passive(w, lambda: c.inspect_original(req, pres))
-        p = RP.ProjectorV7(w)
+        p = getattr(w,'projector_class',RP.ProjectorV7)(w)
         p.project()
         p.cutover()
         passive(w, p.read_historical)
@@ -463,19 +463,19 @@ def p4_cases(run):
 
 def note_event(w):
     ev = unrelated_event(w)
-    ev.update(event_id='TEST_ONLY:note:' + w.sid[:8], event_type='goal_test.note', payload_schema_id='TEST_ONLY:goal_test.note.v1',
+    ev.update(event_id='TEST_ONLY:note:' + w.sid[:8], event_type='run.started', payload_schema_id='https://puppetmaster.local/schemas/pm/run_started.schema.json',
               idempotency_key='TEST_ONLY:note:' + w.sid[:8], project_id=w.scope['project_id'])
     return ev
 
 
 def unrelated_event(w):
     return dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project',
-                event_id='TEST_ONLY:unrelated:' + w.sid[:8], event_type='goal_test.unrelated',
+                event_id='TEST_ONLY:unrelated:' + w.sid[:8], event_type='run.started',
                 project_id='TEST_ONLY-project-unrelated', thread_id=None, run_id=None, node_id=None, attempt_id=None,
                 actor_ref='TEST_ONLY:actor:unrelated', requested_account_ref=None, effective_account_ref=None,
                 occurred_at_utc=w.clock.now(), producer_sequence_id=None, correlation_id='TEST_ONLY:correlation:unrelated',
                 causation_event_id=None, parent_event_id=None, idempotency_key='TEST_ONLY:unrelated:' + w.sid[:8],
-                payload_schema_id='TEST_ONLY:unrelated.v1', payload=dict(qualification=QUALIFICATION), payload_ref=None,
+                payload_schema_id='https://puppetmaster.local/schemas/pm/run_started.schema.json', payload=dict(qualification=QUALIFICATION), payload_ref=None,
                 redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key',
                 migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
                                compatibility_event_type=None))

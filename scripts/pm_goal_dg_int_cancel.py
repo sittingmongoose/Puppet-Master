@@ -16,6 +16,7 @@ from pathlib import Path
 
 import pm_goal_test_owner_adapters as A
 import pm_goal_test_storage as S
+import pm_goal_test_source as GS
 import pm_goal_dg_s_world as SW
 import pm_goal_dg_s_start as ST
 import pm_goal_dg_s_readers as SR
@@ -186,7 +187,7 @@ class Consumer(RR.Consumer):
         eq('native/before_control_selection', result['before_control'], intent['before_control'])
         before, after = w.resolve(intent['before_body']), w.resolve(result['after_body'])
         bctl, actl = w.resolve(intent['before_control']), w.resolve(result['after_control'])
-        guard('native/before_nonterminal', rec(before)['status'] in NONTERMINAL)
+        guard('native/before_nonterminal', rec(before)['status'] in RR.NONTERMINAL)
         guard('native/after_cancelled', rec(after)['status'] == 'cancelled')
         guard('native/revision_once', rec(after)['revision'] == rec(before)['revision'] + 1)
         eq('native/activation_preserved', rec(after)['activation_state'], rec(before)['activation_state'])
@@ -218,6 +219,27 @@ class Consumer(RR.Consumer):
         # the exact v3 Event, first receipt and original value from Storage's own record
         self._check_event(native, candidate, result, before, after, effects)
         self._check_start(native, intent, upd)
+        # The genuine C3 publication settles this exact D06/D05 graph. A
+        # publication for another genuine native cancellation is insufficient.
+        settlement=cpub['original_owner_settlement']
+        eq('goal/c3_settlement_kind',settlement['kind'],'workflow_settled')
+        eq('goal/c3_native_result_key',settlement['original_owner_settlement_ref'],self._find_selector(native['result'])['physical_key'])
+        eq('goal/c3_native_result',settlement['original_owner_settlement_sha256'],physical_sha256(native['result']))
+        proof=w.storage.cell(G.C3.SCOPE_PROOF,settlement['original_scope_proof_ref'])
+        guard('goal/c3_scope_proof_missing',proof is not None)
+        eq('goal/c3_scope_proof',physical_sha256(proof['value']),settlement['original_scope_proof_sha256'])
+        R.validate('c3_goal',G.C3.CM+'StorageWorkflowScopeProof',proof['value'],'goal/c3_proof')
+        pr=proof['value']['record']
+        eq('goal/c3_scope_run',pr['goal_run_id'],scope['goal_run_id'])
+        for name,value in (('d06_result',native['result']),('d06_origin',native['publish_origin']),
+                           ('d05_result',ss['aggregate_result']),('d05_origin',ss['aggregate_origin'])):
+            eq('goal/c3_proof/'+name,pr[name]['complete_value_sha256'],physical_sha256(value))
+        w.goal_bridge.verify_custody(proof['value'],'goal/c3_proof_custody')
+        ge=w.storage.read_event(published['event_id'])
+        guard('goal/c3_registered', (ge['event_type'],ge['scope_kind'],ge['payload_schema_id']) in GS.event_family_registration()[0])
+        eq('goal/c3_event_family',ge['event_type'],'goal.cancelled')
+        eq('goal/c3_event_receipt',ge['payload']['cancellation_receipt_sha256'],cpub['cancellation_receipt_sha256'])
+        eq('goal/c3_event_audit',ge['payload']['source_audit_sha256'],physical_sha256(audit))
 
 
 class Projector(RP.ProjectorV7):
@@ -310,14 +332,55 @@ class CancelWorld(IW.S1CancelWorld):
         self._adopt_closure([s.wrapper for k,s in self.start_cause.items() if k!='kind']+[self.head.wrapper])
 
     def current_start_full(self):
-        if self.cfg.get('start','started')=='started':return RW.World.current_start_full(self)
+        if self.cfg.get('start','started')=='started':
+            value=RW.World.current_start_full(self)
+            value['value']['d01_current']=self.current_executor()
+            res=self.roots.lookup('native_consumer',RW.CP+'CurrentSuccessfulReadback')
+            from urllib.parse import urljoin
+            root=urljoin(res.resolver._base_uri,res.contents['properties']['current_start']['$ref'])
+            self.roots.validate('native_consumer',root,value,'int/current/actual_start_source')
+            return value
         sw=self.start_world
-        value=dict(kind='prestart',value=dict(d01_current=sw.owners['d01'].current_source(sw.owners['native'].current()),
+        value=dict(kind='prestart',value=dict(d01_current=self.current_executor(),
               control=sw.owners['native'].start_control()['value'],initial_control_origin=SR.birth_record(sw)['initial_control_origin']))
         res=self.roots.lookup('native_consumer',RW.CP+'CurrentSuccessfulReadback')
         from urllib.parse import urljoin
         root=urljoin(res.resolver._base_uri,res.contents['properties']['current_start']['$ref'])
         self.roots.validate('native_consumer',root,value,'int/current/no_start')
+        return value
+
+    def _start(self):
+        super()._start()
+        selection=self.head.wrapper['record']['activation_origin']
+        self.activation_origin=self.issued[(selection['family_id'],selection['physical_key'],selection['physical_value_sha256'])]
+
+    def _scheduler_stop(self):
+        super()._scheduler_stop()
+        w,owner=self,self.scheduler
+        op=self.ops['scheduler_stop']
+        record=dict(scope=dict(self.scope),revision=1,owner=copy.deepcopy(self.start_world.ctx.workflow_owner),
+            run_control=self.sched['run_control'].selector(),inventory_head=self.sched['inventory'].selector(),
+            pending_wakes=[],pending_delays=[],capacity_reservations=[],unacknowledged_dispatches=[],
+            stop=self.sched['scheduler_stop'].selector(),previous_control=None,last_origin_operation_id=op,pending_operation_id=None)
+        control=owner.issue_physical('executor_workflow_scheduler_control','native_consumer',RW.WO+'StorageSchedulerControl',
+            owner.key('executor_workflow_scheduler_control'),[('/record',record)])
+        self.sched['scheduler_control']=control
+        sw=self.start_world;families=ST.d01_families(sw.edition)
+        pointer=self.storage.cell(families['pointer'],sw.owners['d01'].pointer_key())
+        after=copy.deepcopy(pointer['value'])
+        after['record'].update(inventory_head=self.sched['inventory'].selector(),scheduler_control=control.selector())
+        sw.edition.bank.validate(sw.edition.d01+'#/$defs/StorageCurrentPointer',after,'int/scheduler/pointer')
+        self.storage.transact([dict(table=families['pointer'],key=sw.owners['d01'].pointer_key(),expected=pointer['version'],value=after)])
+
+    def current_executor(self):
+        sw=self.start_world
+        value=sw.owners['d01'].current_source(sw.owners['native'].current())
+        if hasattr(self,'sched'):
+            for field,name in [('run_control','run_control'),('run_result','native_cancel_result'),
+                               ('run_origin','native_cancel_origin'),('coverage','coverage'),('inventory','inventory'),
+                               ('scheduler','scheduler_control')]:
+                if name in self.sched:value[field]=copy.deepcopy(self.sched[name].wrapper['record'])
+        sw.edition.bank.validate(sw.edition.d01+'#/$defs/CurrentSource',value,'int/current/executor')
         return value
 
     def _birth(self):
@@ -447,7 +510,17 @@ class CancelWorld(IW.S1CancelWorld):
 
     def _d06(self):
         super()._d06()
-        if self.cfg.get('stop_after')=='prepare':return
+        self.finish_goal_cancellation()
+
+    def continue_d06(self):
+        super().continue_d06()
+        self.finish_goal_cancellation()
+
+    def finish_goal_cancellation(self):
+        # An uncertain or merely prepared native outcome cannot issue the Goal
+        # Event. Re-entry finishes C3 only after the original D06 is published.
+        if getattr(self,'cancellation',None) is None:return
+        if 'original_control_publication' in self.goal_cause:return
         consumer=Consumer(self)
         native,_,_=consumer.assemble(consumer.tuple(RR.Presentation(self)))
         self._adopt_closure([native])
@@ -487,7 +560,7 @@ class CancelWorld(IW.S1CancelWorld):
                         operation_id=stored.wrapper['value']['operation_id'], codec='messagepack_canonical')
         w.d05.source_owner_id=w.goal_bridge.world.native.d05.owner_id
         self.original_d05_goal_stop=self.goal_stop_sources()
-        self.original_d05_executor=self.start_world.owners['d01'].current_source(self.start_world.owners['native'].current())
+        self.original_d05_executor=self.current_executor()
         bridge=w.goal_bridge
         ca,run=bridge.world,bridge.route.wf_run
         def actual(family,key,root):
@@ -602,7 +675,7 @@ class CancelWorld(IW.S1CancelWorld):
             ('/source_readback/reservation_lineage',run['lineage']),
             ('/current_boundary/scope',dict(self.scope)),('/current_boundary/current_goal_stop',gss),
             ('/current_boundary/current_domain_cut',ss['final_domain_cut'].wrapper['value']),
-            ('/current_boundary/current_executor',self.start_world.owners['d01'].current_source(self.start_world.owners['native'].current())),
+            ('/current_boundary/current_executor',self.current_executor()),
             ('/current_boundary/reservation_lineage',run['lineage']),
             ('/current_boundary/original_boundary',ca.native.writers.boundary(self.d05,agg['operation_id']))]
         flush=ss['complete_required_flush_history'][-1]
@@ -621,7 +694,23 @@ class CancelWorld(IW.S1CancelWorld):
         event=value['d06_readback']['original_event']['event']
         value['d06_readback']['original_event']['custody']=self.storage.first_custody(event['event_id'])
         value['d06_readback']['safe_stop']['whole_original_safe_stop']=self.successful_safe_stop()
+        sw=self.start_world;families=ST.d01_families(sw.edition)
+        value['d06_readback']['original_d01_lineage']['pointer']=copy.deepcopy(
+            self.storage.cell(families['pointer'],sw.owners['d01'].pointer_key())['value'])
         self.roots.validate('native_consumer',RW.CP+'CurrentSuccessfulReadback',value,'int/current/actual_safe_stop')
+        return value
+
+    def current_read(self,start=None):
+        executor=self.current_executor()
+        stop=dict(scope=dict(self.scope),stop=self.sched['scheduler_stop'].wrapper['record'],
+            stop_origin=self.sched['d01_stop_origin'].wrapper['record'],scheduler=self.sched['scheduler_control'].wrapper['record'],
+            inventory=self.sched['inventory'].wrapper['record'],native_cancel_result=self.sched['native_cancel_result'].wrapper['record'],
+            native_cancel_origin=self.sched['native_cancel_origin'].wrapper['record'],run_control=self.sched['run_control'].wrapper['record'],
+            pointer=executor['pointer'])
+        value=dict(d06_current=dict(scope=dict(self.scope),executor=executor,scheduler_stop=stop),
+            whole_safe_stop=self.successful_safe_stop(),current_start=start if start is not None else self.current_start_full())
+        if self.knob('current_read_edit'):self.knob('current_read_edit')(value)
+        self.roots.validate('native_consumer',RW.CP+'CurrentRead',value,'int/current/actual_read')
         return value
 
     def current_goal(self):

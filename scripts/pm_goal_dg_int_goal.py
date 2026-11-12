@@ -13,6 +13,7 @@ from __future__ import annotations
 import ast
 import base64
 import copy
+import hashlib
 import json
 from pathlib import Path
 from urllib.parse import urljoin
@@ -241,7 +242,7 @@ class Route(C3.WorkflowCancel):
         # These aggregate roots depend on the edition of the whole Start/cancel
         # graph. Every child is checked in its own selected complete resource realm.
         bridge=self.world.bridge
-        if bridge.sw.edition.name=='native_v7' and ref in (CN.NA+'BeforeStopNativeEntry',CN.NA+'OriginalOwnersNativeEntry'):
+        if ref in (CN.NA+'BeforeStopNativeEntry',CN.NA+'OriginalOwnersNativeEntry'):
             bridge.check_companion(ref,value)
             return O.exact_numbers(value,'int/c3/native_v7')
         return super().ncheck(ref,value)
@@ -606,17 +607,27 @@ class Bridge:
         return count
 
     def check_companion(self,ref,value):
-        path=Path(__file__).resolve().parents[1]/'Plans/goal_own_c_contracts/dg-int-native-v7-v1/c3-native-realms.json'
-        selection=json.loads(path.read_text())
+        native=self.sw.edition.name=='native_v7'
+        path=Path(__file__).resolve().parents[1]/('Plans/goal_own_c_contracts/dg-int-native-v7-v1/c3-native-realms.json' if native else
+            'Plans/goal_own_c_contracts/dg-int-original-c3-v1/c3-original-realms.json')
+        roots=self.cancel_world.roots if self.cancel_world is not None else RW.RootsV7.get()
+        manifest=roots.selection if native else roots.original_selection
+        pin=manifest['aggregate_selection']
+        require('int/c3/aggregate_selection_path',path==Path(__file__).resolve().parents[1]/pin['path'])
+        raw=path.read_bytes()
+        require('int/c3/aggregate_whole_hash',hashlib.sha256(raw).hexdigest()==pin['sha256'])
+        prior=pin['predecessor']
+        require('int/c3/aggregate_predecessor',hashlib.sha256((Path(__file__).resolve().parents[1]/prior['path']).read_bytes()).hexdigest()==prior['sha256'])
+        selection=json.loads(raw)
         selected=selection['roots'][ref.rsplit('/',1)[-1]]
         require('int/c3/companion_members',type(value) is dict and set(value)==set(selected['properties']))
         v7=self.cancel_world.roots if self.cancel_world is not None else RW.RootsV7.get()
         for key,route in selected['properties'].items():
-            if route['realm']=='native_v7_current_start':
+            if route['realm'] in ('native_v7_current_start','original_current_start'):
                 res=v7.lookup('native_consumer',RW.CP+'CurrentSuccessfulReadback')
                 target=urljoin(res.resolver._base_uri,res.contents['properties']['current_start']['$ref'])
                 v7.validate('native_consumer',target,value[key],'int/c3/companion/'+key)
-            elif route['realm']=='native_v7':
+            elif route['realm'] in ('native_v7','original_cancelled'):
                 v7.validate('native_consumer',route['schema_ref'],value[key],'int/c3/companion/'+key)
             else:self.world.roots.check('native',route['schema_ref'],value[key])
         self.companion_calls.append(dict(original_root=ref,selected_companion=selected['uri']))

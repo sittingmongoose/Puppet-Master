@@ -87,6 +87,9 @@ class Guard(W.GuardReader):
 class Coordinator(W.Coordinator):
     def current_sources(self,ctx,*,stage):
         w=self.world
+        require(stage+'/coordinator_epoch',ctx['coordinator_owner_epoch']==self.owner_epoch)
+        require(stage+'/request_scope',ctx['request']['scope']==ctx['scope']==w.coord_scope(w.scope))
+        require(stage+'/request_profile',ctx['request']['installed_profile_sha256']==w.profile_sha)
         require(stage+'/execution_owner_epoch',w.goal_bridge.world.native.run.owner_epoch==w.sw.ctx.workflow_owner['owner_epoch'])
         roles=dict(native='native_source',goal='goal',standard='standard',assignment='assignment',
                    invocation='invocation',resolver='resolver',references='references',causal='causality',
@@ -98,8 +101,16 @@ class Coordinator(W.Coordinator):
             original=A.acquire(w.registry,handle[0],roles[name],handle[1])[1]
             require(stage+'/original/'+name,A.same(original,ctx['src'][name]))
         candidate=A.acquire(w.registry,w.native.owner_id,'native',ctx['candidate_handle'])[1]
+        require(stage+'/candidate_epoch',w.native.custody(ctx['candidate_handle'])['owner_epoch']==w.native.owner_epoch)
         require(stage+'/candidate_original',candidate['whole']==ctx['native_candidate'])
         producer=A.acquire(w.registry,w.producer.owner_id,'producer',ctx['producer_handle'])[1]
+        require(stage+'/producer_epoch',w.producer.custody(ctx['producer_handle'])['owner_epoch']==w.producer.owner_epoch)
+        require(stage+'/identity_epoch',w.identity.custody(ctx['identity_handle'])['owner_epoch']==w.identity.owner_epoch)
+        identity=A.acquire(w.registry,w.identity.owner_id,'identity',ctx['identity_handle'])[1]
+        require(stage+'/identity_original',identity==ctx['identity'])
+        profile=A.acquire(w.registry,ctx['handles']['descriptor'][0],'profile',ctx['handles']['descriptor'][1])[1]
+        require(stage+'/descriptor_epoch',w.profile.custody(ctx['handles']['descriptor'][1])['owner_epoch']==w.profile.owner_epoch)
+        require(stage+'/descriptor_profile',profile['profile_sha256']==w.profile_sha)
         require(stage+'/producer_original',producer['producer25']==ctx['producer25'] and
                 producer['whole_producer_source']==ctx['producer_source'])
         goal=w.sw.owners['goal'].current_argument()
@@ -737,7 +748,7 @@ def build_context(w,*,op='TEST_ONLY:operation:certified:dg-int'):
                 goal=src['goal'],identity=A.acquire(w.registry,w.identity.owner_id,'identity',identity)[1],
                 producer25=event,producer_source=prepared['whole_producer_source'],producer_handle=producer,
                 handles=handles,candidate_handle=candidate,native_candidate=A.acquire(w.registry,w.native.owner_id,'native',candidate)[1]['whole'],
-                request=request,guards={},presented={})
+                request=request,guards={},presented={},identity_handle=identity,coordinator_owner_epoch=w.coordinator.owner_epoch)
 
 
 def run(w,ctx):
