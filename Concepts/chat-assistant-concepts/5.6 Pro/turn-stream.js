@@ -29,6 +29,8 @@
      has gone each carries on from where it stopped: a reply's words, a spring, a hold's timing. rest.ms is the time
      the window has taken so far, in motion time. */
   var rest = { on: false, at: 0, ms: 0 };
+  /* a send flight's next frame, put aside while the window is open (fly; lane C3) */
+  var restingFlights = [];
   function clockNow() { return window.PM56_CLOCK ? window.PM56_CLOCK.now() : performance.now(); }
   function now() { return (rest.on ? rest.at : clockNow()) - rest.ms; }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -1299,7 +1301,11 @@
         S.style.transform = 'translate(' + bx.toFixed(2) + 'px,' + by.toFixed(2) + 'px) scale(' + ss.toFixed(4) + ')';
         S.style.opacity = String(op); S.style.filter = blur ? 'blur(' + blur.toFixed(2) + 'px)' : 'none'; S.style.clipPath = clip;
       }
-      if (t < 1) requestAnimationFrame(frame);
+      /* (under the onboarding window the flight stands where it is, under the window's scrim, and carries on at the
+         close from there, on this module's clock, which skipped the window: rest, wire. Lane C3, R1 review of lane C2:
+         that clock stands still meanwhile, so t stayed under 1 and this frame asked for the next on every refresh for
+         as long as the window was open) */
+      if (t < 1) { if (rest.on) restingFlights.push(frame); else requestAnimationFrame(frame); }
       else {
         document.body.classList.remove('tx-flying');
         land(id);
@@ -1353,6 +1359,7 @@
         room.lastTs = null;
         wakeRoom();
         if (streams.size || directors.size) kick();
+        restingFlights.splice(0).forEach(function (f) { requestAnimationFrame(f); });
       });
     }
     c.registerTurnOwner(owner);
