@@ -12,6 +12,27 @@ const computerPickers = (f, box) => f.evaluate((box) => {
 	return Array.from(root.querySelectorAll('[role="radiogroup"]')).filter((g) => /This computer|Home NAS|Studio Mac/.test(Array.from(g.querySelectorAll('[role="radio"]')).map((r) => r.textContent).join(' '))
 		&& Array.from(g.querySelectorAll('[role="radio"]')).filter((r) => /^(This computer|Home NAS|Studio Mac)/.test(r.textContent.trim())).length >= 2).length;
 }, box);
+/* Save closes the form by giving the focus back to the button that opened it, and the browser scrolls the plate to that
+   button. A press made during that scroll lands nowhere ("moving: it went 159 px during the 90 ms hover"), so a control
+   is pressed only after its box and every scroller around it have held still for three frames. */
+const holdStill = (f, sel, ms = 4000) => f.evaluate(async ([sel, ms]) => {
+	const el = document.querySelector(sel); if (!el) return false;
+	const scrollers = [];
+	for (let n = el.parentElement; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+		if (/(auto|scroll)/.test(getComputedStyle(n).overflowY)) scrollers.push(n);
+	}
+	const box = () => { const r = el.getBoundingClientRect(); return [r.left, r.top, r.width, r.height, ...scrollers.map((s) => s.scrollTop), document.documentElement.scrollTop, document.body.scrollTop]; };
+	const same = (a, b) => a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) < 1);
+	const end = performance.now() + ms;
+	let prev = box(), still = 0, frames = 0;
+	while (performance.now() < end) {
+		await new Promise((r) => requestAnimationFrame(() => r()));
+		const now = box();
+		still = same(prev, now) ? still + 1 : 0; prev = now; frames++;
+		if (frames >= 6 && still >= 3) return true;
+	}
+	return false;
+}, [sel, ms]);
 
 export const tests = {
 	async 'Project page: Where work runs'(t) {
@@ -133,6 +154,8 @@ export const tests = {
 		await t.app.click(t, f, '[data-c-key="wk:def:here"]');
 		await t.app.click(t, f, '[data-plate="work"] [data-c-key="f:save"]');
 		await t.app.until(t, f, 'loom saved: Chosen: This computer', () => /Chosen: This computer by Jared/.test((document.querySelector('[data-plate="work"] .pmu-cardsub') || {}).textContent || ''), null, 10000);
+		// the form's close returned the focus, and with it a scroll, to the button that opened it: press Why once it holds still
+		await holdStill(f, '[data-plate="work"] [data-c-key="wk:why:0"]');
 		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:0"]');
 		await t.page.waitForTimeout(300);
 		const lw = await dlg.textContent();
