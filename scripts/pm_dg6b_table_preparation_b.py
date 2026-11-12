@@ -1,4 +1,4 @@
-"""DG6B guard table preparation_b: Prepared-oracle fences: no admission, pending retention, operation schema binding.
+"""DG6B guard table preparation_b: Prepared-oracle fences: no admission, approved value retention, operation schema binding.
 
 Method B guard rows for scripts/pm-dg6b-event-contracts.py, written by
 scripts/pm-dg6b-table-generate.py (edit the row spec there, never this file).
@@ -18,7 +18,7 @@ def PR05_unregistered(value, context):
 
 
 def PR06_retention_pending(value, context):
-    return 'retention_pending' if value['retention_refs'].count('PENDING_RETENTION_DECISION') != len(value['retention_refs']) else None
+    return 'retention_pending' if value['retention_refs'] != ['RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-CONFIG-CURRENT', 'RP-PLUGIN-HOOK-APPLICATION-90D', 'RP-PLUGIN-HOOK-APPLICATION-90D', 'RP-PLUGIN-HOOK-APPLICATION-90D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D', 'RP-PLUGIN-OPERATIONS-APPLICATION-2555D'] else None
 
 
 def PR07_value_schema_valid(value, context):
@@ -33,7 +33,7 @@ def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('PR05_unregistered', g.Invariant('/registered', 'no DG6B family is on the live registry'), 'prepared_membership', PR05_unregistered),
-        g.Guard('PR06_retention_pending', g.Invariant('/retention_refs', 'every operation value family has PENDING_RETENTION_DECISION'), 'retention_pending', PR06_retention_pending),
+        g.Guard('PR06_retention_pending', g.Invariant('/retention_refs', 'every operation value family has its exact deck-4 Q3/Q4/Q5 policy'), 'retention_pending', PR06_retention_pending),
         g.Guard('PR07_value_schema_valid', g.Invariant('/value_schema_errors', 'every registered operation value schema is a valid schema'), 'invalid_schema', PR07_value_schema_valid),
         g.Guard('PR08_operation_binding', g.Invariant('/value_schema_digests', 'equals the DG6B operation definitions (value schemas valid)'), 'operation_schema_binding', PR08_operation_binding),
     ])

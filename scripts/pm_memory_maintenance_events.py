@@ -1978,7 +1978,7 @@ def main():
                   or v['family_id'] in ['memory_index_lexical_selector', 'memory_index_semantic_selector']]
     assert len(own_values) == 6
     for value in own_values:
-        assert value['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
+        assert value['retention_policy_ref'] == ('RP-PROJECTION-3GEN' if value['family_id'].endswith('_selector') else 'RP-MEMORY-MAINTENANCE-APPLICATION-2555D')
         assert value['status'] == 'deferred_not_build_blocking'
         assert value['value_schema'] == {**ops['$defs'], **target_schemas}[value['value_schema_ref'].rsplit('/', 1)[1]]
     for contract in families.values():
