@@ -132,12 +132,12 @@ class Clock:
 class World:
     """One TEST_ONLY Storage plus the registered owners of one cancellation case."""
 
-    def __init__(self, work, *, shared=None, faults=None):
+    def __init__(self, work, *, shared=None, faults=None, storage_cls=None):
         self.shared = shared or Shared.get()
         self.roots, self.codec = self.shared.roots, self.shared.codec
         self.recorder = A.MethodRecorder()
         self.registry = A.OwnerRegistry(self.recorder)
-        self.storage = S.TestOwnerStorage.create(work, faults=faults)
+        self.storage = (storage_cls or S.TestOwnerStorage).create(work, faults=faults)
         self.storage_id = self.storage.storage_instance_id
         self.appender = A.AppendOwner(self.registry, self.storage)
         self.permissions = PermissionOwner(self)
@@ -620,6 +620,7 @@ class SIROwner(WorldOwner):
     """Original SIR command acceptance, outcome and immutable terminal (SIR-049/050)."""
     role = 'sir'
     ACCEPTED = 'TEST_ONLY:sir_accepted_dispatch'
+    OUTCOME = 'sir_command_outcome'
 
     def __init__(self, world, **kw):
         super().__init__(world, **kw)
@@ -673,7 +674,11 @@ class SIROwner(WorldOwner):
                           dispatch_id=uid('TEST_ONLY:dispatch'), command_outcome_ref=uid('TEST_ONLY:outcome'),
                           acceptance_ref=uid('TEST_ONLY:protected-user-cancel-acceptance'), source_authority_ref=self.owner_id,
                           owner_epoch=self.owner_epoch, accepted_at=self.clock.now())
-            self.world.write([self.world.put(self.ACCEPTED, request['command_instance_id'], record)])
+            # The acknowledgement is durable (written and read back) before any later reservation.
+            outcome = dict(schema_id='pm.test_only.sir_command_outcome.v1', schema_version='1.0.0', record=nonterminal)
+            self.world.write([self.world.put(self.ACCEPTED, request['command_instance_id'], record),
+                              self.world.put(self.OUTCOME, request['command_instance_id'], outcome)])
+            require('sir/acknowledgement_readback', same(self.world.value(self.OUTCOME, request['command_instance_id']), outcome))
             handle = self._issue(None, record, kind='accepted_dispatch', ref=request_ref)
             self.accepted[request['command_instance_id']] = dict(request=copy.deepcopy(request), handle=handle, record=copy.deepcopy(record))
             slot.set(dict(operation_id=operation_id))

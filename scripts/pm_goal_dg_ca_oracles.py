@@ -43,7 +43,7 @@ import pm_goal_dg_ca_c1 as C1
 
 HERE = Path(__file__).resolve().parent
 REFUSALS = (A.AdapterRefusal, S.StorageRefusal, NR.NumruleRefusal, OWNC.Refusal)
-LANE_FILES = ('pm_goal_dg_ca_owners.py', 'pm_goal_dg_ca_c1.py', 'pm_goal_dg_ca_crash.py', 'pm_goal_dg_ca_c2.py', 'pm_goal_dg_ca_c3.py', 'pm_goal_dg_ca_c4.py')
+LANE_FILES = ('pm_goal_dg_ca_owners.py', 'pm_goal_dg_ca_c1.py', 'pm_goal_dg_ca_crash.py', 'pm_goal_dg_ca_assignment.py', 'pm_goal_dg_ca_c4_cases.py', 'pm_goal_dg_ca_c2.py', 'pm_goal_dg_ca_c2_cases.py', 'pm_goal_dg_ca_c4_inspection.py')
 
 
 def code_of(error):
@@ -233,6 +233,10 @@ def c1_positive(suite, state):
     A.require('C1/positive/publication_custody', A.same(pub['first_append_receipt'], custody['first_append_receipt'])
               and pub['original_append_result']['sequence_id'] == stored['sequence_id'])
     A.require('C1/positive/storage_times', stored['observed_at_utc'] <= stored['persisted_at_utc'])
+    A.require('C1/positive/accepted_occurrence', stored['payload']['cancelled_at_utc'] == route.source['producer_metadata']['occurred_at_utc']
+              == stored['occurred_at_utc'] == route.progress['cancellation_receipt']['accepted_at'])
+    A.require('C1/positive/full_value_result', A.same(w.storage.full_value_result(stored['event_id'])['original_event_value_commitment'],
+              pub['original_event_value_commitment']))
     # Terminal published once through the append reservation (Phase D).
     r = w.storage.reservation_state(route.operation_id)
     A.require('C1/positive/terminal_published', r['state'] == 'published')
@@ -677,6 +681,18 @@ def c1_cases(suite):
             e(w, route)
             return w, getattr(route, m)
         suite.negative(G, 'C1/substituted_custody/%s' % method, substituted, expected, boundary=method + '/entry')
+
+    def substituted_accepted_occurrence():
+        w, route = c1_until(suite, 'freeze_event')
+        receipt = dict(route.progress['cancellation_receipt'], accepted_at='2000-01-01T00:00:00.000Z')
+        route.progress = dict(route.progress, cancellation_receipt=receipt)
+        head_key = route.key('goal_cancel_progress') + ':head'
+        w.storage.cells['goal_cancel_progress'][route.progress_key(route.progress['progress_epoch'])]['value'] = route.wrap('StorageProgress', route.progress)
+        w.storage.cells['goal_cancel_progress'][head_key]['value'] = route.wrap('StorageProgress', route._head(route.progress['progress_epoch'], route.progress))
+        w.storage.cells['goal_cancel_receipt'][route.key('goal_cancel_receipt')]['value'] = route.wrap('StorageCancellationReceipt', receipt)
+        return w, route.freeze_event
+    suite.negative(G, 'C1/custody/receipt_accepted_at_not_source_occurrence', substituted_accepted_occurrence,
+                   'C1/freeze_event/accepted_occurrence', boundary='freeze_event/entry')
 
     def substituted_operation():
         w, route = c1_route(suite)

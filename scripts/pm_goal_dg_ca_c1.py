@@ -116,10 +116,12 @@ class NoAssociationCancel(Route):
     # ------------------------------------------------------------ setup
     def setup(self, *, state, prior_stop, objective):
         w = self.world
-        w.registration.register_all()
-        install_handle, install_decision = w.permissions.grant(w.binding.owner_id, {'storage_instance_id': w.storage_id},
-                                                               'goal.execution_binding.install_writer_domain')
-        w.binding.install_writer_domain(w.permissions.selection(install_decision))
+        if w.binding.domain_generation == 0:
+            # One writer-domain installation per Storage; later Goals are born under it.
+            w.registration.register_all()
+            install_handle, install_decision = w.permissions.grant(w.binding.owner_id, {'storage_instance_id': w.storage_id},
+                                                                   'goal.execution_binding.install_writer_domain')
+            w.binding.install_writer_domain(w.permissions.selection(install_decision))
         _, create_decision = w.permissions.grant(self.actor_ref, {'storage_instance_id': w.storage_id}, 'goal.create')
         self.birth_none(objective, create_decision)
         if prior_stop:
@@ -508,7 +510,7 @@ class NoAssociationCancel(Route):
                 original_revision=self.request['expected_revision'], original_currentness_hash=self.request['expected_currentness_hash'],
                 stop_receipt_ref=self.key('goal_cancel_stop_receipt'), stop_receipt_sha256=row_sha(stop_receipt),
                 user_stop_epoch=self.progress['stop_receipt']['after_user_stop_epoch'], cancel_reason='user_cancelled',
-                accepted_at=w.goal.clock.now()))
+                accepted_at=self.source['producer_metadata']['occurred_at_utc']))
             progress = self._progress('receipt_committed', cancellation_receipt=receipt)
             self.at('commit_receipt', 'final')
             self.recheck('commit_receipt', 'final', entry)
@@ -557,6 +559,8 @@ class NoAssociationCancel(Route):
             receipt = self.progress['cancellation_receipt']
             stored = w.value('goal_cancel_receipt', self.key('goal_cancel_receipt'))
             require('C1/freeze_event/receipt_custody', stored is not None and same(stored['record'], receipt))
+            require('C1/freeze_event/accepted_occurrence', receipt['accepted_at'] == self.source['producer_metadata']['occurred_at_utc']
+                    and receipt['cancellation_id'] == self.source['normalized_identity']['operation_id'])
             metadata = self.source['producer_metadata']
             payload = dict(schema_id=PAYLOAD_SCHEMA, schema_version='3.0.0', **{k: self.scope[k] for k in ('project_id', 'thread_id', 'goal_id')},
                            operation_id=self.operation_id, command_instance_id=self.request['command_instance_id'],
