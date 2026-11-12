@@ -1,0 +1,3622 @@
+{
+  "schema_id": "pm.executor_event_schema_reference_fixtures.v1",
+  "native_execution": "NOT_RUN",
+  "families": {
+    "attempt.completed": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "attempt.started": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "node.blocked": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "node.completed": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "node.started": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "node.unblocked": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "plan.decomposition_degraded": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "remediation.resolved": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "remediation.spawned": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "run.completed": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "run.graph_integrity_failed": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "run.node_backoff_expired": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "run.node_backoff_started": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "run.node_ready": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "run.node_retry_scheduled": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ],
+    "scheduler.pass": [
+      {
+        "case": "S9-resolving-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "project": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/project"
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-unvisited-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/properties/project_id"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-escaped-pointer",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a/b~c": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#/$defs/a~1b~0c"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "target": {
+                "$anchor": "project",
+                "type": "string",
+                "minLength": 1
+              },
+              "unused": {
+                "$ref": "#project"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unused": {
+                    "$ref": "#/$defs/target"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-resolving-cycle",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "a": {
+                "$ref": "#/$defs/b"
+              },
+              "b": {
+                "$ref": "#/$defs/a"
+              }
+            }
+          }
+        ],
+        "expected": "accept"
+      },
+      {
+        "case": "S9-unresolved-reachable-local",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {}
+          },
+          {
+            "path": "properties/project_id",
+            "value": {
+              "$ref": "#/$defs/missing"
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-definition",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-unvisited-branch",
+        "changes": [
+          {
+            "path": "anyOf",
+            "value": [
+              true,
+              {
+                "$ref": "#/$defs/missing"
+              }
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-anchor",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-nested-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "nested": {
+                "$id": "nested",
+                "type": "object",
+                "$defs": {
+                  "unused": {
+                    "$ref": "#/$defs/missing"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-unresolved-external-resource",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "https://puppetmaster.invalid/missing.schema.json#/$defs/missing"
+              }
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "S9-non-schema-pointer-target",
+        "changes": [
+          {
+            "path": "$defs",
+            "value": {
+              "unused": {
+                "$ref": "#/title"
+              }
+            }
+          },
+          {
+            "path": "title",
+            "value": "not a schema"
+          }
+        ],
+        "expected": "reject"
+      }
+    ]
+  }
+}

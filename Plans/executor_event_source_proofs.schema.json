@@ -1,0 +1,375 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/executor_event_source_proofs/1.0.0",
+  "$defs": {
+    "attempt_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "attempt_state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "work_reconciled": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "attempt_state",
+        "work_reconciled"
+      ]
+    },
+    "attempt_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "attempt_state": {
+          "enum": [
+            "admitted"
+          ]
+        },
+        "snapshots_durable": {
+          "enum": [
+            true
+          ]
+        },
+        "baseline_valid": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "attempt_state",
+        "snapshots_durable",
+        "baseline_valid"
+      ]
+    },
+    "node_blocked": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "episode_state": {
+          "enum": [
+            "new"
+          ]
+        },
+        "cause_current": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "episode_state",
+        "cause_current"
+      ]
+    },
+    "node_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "node_state": {
+          "enum": [
+            "verified",
+            "verify_pending"
+          ]
+        },
+        "verification_evidence_valid": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "node_state",
+        "verification_evidence_valid"
+      ]
+    },
+    "node_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "node_state": {
+          "enum": [
+            "queued"
+          ]
+        },
+        "dependencies_satisfied": {
+          "enum": [
+            true
+          ]
+        },
+        "attempt_admitted": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "node_state",
+        "dependencies_satisfied",
+        "attempt_admitted"
+      ]
+    },
+    "node_unblocked": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "episode_state": {
+          "enum": [
+            "unresolved"
+          ]
+        },
+        "resolution_evidence_durable": {
+          "enum": [
+            true
+          ]
+        },
+        "recovery_anchor_release_permitted": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "episode_state",
+        "resolution_evidence_durable",
+        "recovery_anchor_release_permitted"
+      ]
+    },
+    "plan_decomposition_degraded": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "graph_state": {
+          "enum": [
+            "pre_lock"
+          ]
+        },
+        "degradation_evidence_valid": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "graph_state",
+        "degradation_evidence_valid"
+      ]
+    },
+    "remediation_resolved": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "remediation_state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "child_terminal": {
+          "enum": [
+            true
+          ]
+        },
+        "resolution_evidence_durable": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "remediation_state",
+        "child_terminal",
+        "resolution_evidence_durable"
+      ]
+    },
+    "remediation_spawned": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "parent_state": {
+          "enum": [
+            "classified_failure"
+          ]
+        },
+        "remediation_budget_available": {
+          "enum": [
+            true
+          ]
+        },
+        "child_admitted": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "parent_state",
+        "remediation_budget_available",
+        "child_admitted"
+      ]
+    },
+    "run_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "run_state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "work_reconciled": {
+          "enum": [
+            true
+          ]
+        },
+        "terminal_evidence_valid": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "run_state",
+        "work_reconciled",
+        "terminal_evidence_valid"
+      ]
+    },
+    "run_graph_integrity_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "run_state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "integrity_check_failed": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "run_state",
+        "integrity_check_failed"
+      ]
+    },
+    "run_node_backoff_expired": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "backoff_state": {
+          "enum": [
+            "active"
+          ]
+        },
+        "timer_matches_original": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "backoff_state",
+        "timer_matches_original"
+      ]
+    },
+    "run_node_backoff_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "prior_attempt_state": {
+          "enum": [
+            "classified_failure"
+          ]
+        },
+        "retry_budget_available": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "prior_attempt_state",
+        "retry_budget_available"
+      ]
+    },
+    "run_node_ready": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "readiness_state": {
+          "enum": [
+            "not_ready"
+          ]
+        },
+        "dependencies_satisfied": {
+          "enum": [
+            true
+          ]
+        },
+        "spec_lock_valid": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "readiness_state",
+        "dependencies_satisfied",
+        "spec_lock_valid"
+      ]
+    },
+    "run_node_retry_scheduled": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "prior_attempt_state": {
+          "enum": [
+            "classified_failure"
+          ]
+        },
+        "retry_budget_available": {
+          "enum": [
+            true
+          ]
+        },
+        "baseline_valid": {
+          "enum": [
+            true
+          ]
+        }
+      },
+      "required": [
+        "prior_attempt_state",
+        "retry_budget_available",
+        "baseline_valid"
+      ]
+    },
+    "scheduler_pass": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "wake_set_state": {
+          "enum": [
+            "pending"
+          ]
+        },
+        "pass_already_committed": {
+          "enum": [
+            false
+          ]
+        }
+      },
+      "required": [
+        "wake_set_state",
+        "pass_already_committed"
+      ]
+    }
+  }
+}

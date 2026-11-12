@@ -30691,3 +30691,867 @@ negative_constraints:
 owner_hints:
 - Plans/Contracts_V0.md
 ```
+
+
+## CV-500 — attempt.completed prepared Event Authority contract
+
+Newly authored owner contract: `attempt.completed@1.0.0` uses the independently closed schema `Plans/event_payload_attempt_completed.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/attempt_completed/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `attempt.completed` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-210 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `attempt.completed`: EP-210 and `executor.attempt_completed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `attempt.completed` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-500; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-500
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: attempt.completed@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- attempt.completed uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- attempt.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-210, ContractName:Plans/Contracts_V0.md#CV-500, ContractName:Plans/storage-plan.md#SP-500
+
+
+## CV-501 — attempt.started prepared Event Authority contract
+
+Newly authored owner contract: `attempt.started@1.0.0` uses the independently closed schema `Plans/event_payload_attempt_started.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/attempt_started/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `attempt.started` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-211 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `attempt.started`: EP-211 and `executor.attempt_started.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `attempt.started` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-501; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-501
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: attempt.started@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- attempt.started uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- attempt.started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-211, ContractName:Plans/Contracts_V0.md#CV-501, ContractName:Plans/storage-plan.md#SP-501
+
+
+## CV-502 — node.blocked prepared Event Authority contract
+
+Newly authored owner contract: `node.blocked@1.0.0` uses the independently closed schema `Plans/event_payload_node_blocked.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/node_blocked/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `node.blocked` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-212 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `run.node_blocked`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `node.blocked`: EP-212 and `executor.node_blocked.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `node.blocked` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-502; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-502
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: node.blocked@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.blocked uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.blocked
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-212, ContractName:Plans/Contracts_V0.md#CV-502, ContractName:Plans/storage-plan.md#SP-502
+
+
+## CV-503 — node.completed prepared Event Authority contract
+
+Newly authored owner contract: `node.completed@1.0.0` uses the independently closed schema `Plans/event_payload_node_completed.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/node_completed/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `node.completed` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-213 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `node.completed`: EP-213 and `executor.node_completed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `node.completed` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-503; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-503
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: node.completed@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.completed uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-213, ContractName:Plans/Contracts_V0.md#CV-503, ContractName:Plans/storage-plan.md#SP-503
+
+
+## CV-504 — node.started prepared Event Authority contract
+
+Newly authored owner contract: `node.started@1.0.0` uses the independently closed schema `Plans/event_payload_node_started.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/node_started/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `node.started` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-214 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `node.started`: EP-214 and `executor.node_started.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `node.started` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-504; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-504
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: node.started@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.started uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-214, ContractName:Plans/Contracts_V0.md#CV-504, ContractName:Plans/storage-plan.md#SP-504
+
+
+## CV-505 — node.unblocked prepared Event Authority contract
+
+Newly authored owner contract: `node.unblocked@1.0.0` uses the independently closed schema `Plans/event_payload_node_unblocked.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/node_unblocked/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `node.unblocked` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-215 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `run.node_unblocked`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `node.unblocked`: EP-215 and `executor.node_unblocked.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `node.unblocked` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-505; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-505
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: node.unblocked@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.unblocked uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.unblocked
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-215, ContractName:Plans/Contracts_V0.md#CV-505, ContractName:Plans/storage-plan.md#SP-505
+
+
+## CV-506 — plan.decomposition_degraded prepared Event Authority contract
+
+Newly authored owner contract: `plan.decomposition_degraded@1.0.0` uses the independently closed schema `Plans/event_payload_plan_decomposition_degraded.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/plan_decomposition_degraded/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `plan.decomposition_degraded` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-216 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `plan.decomposition_degraded`: EP-216 and `executor.plan_decomposition_degraded.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `plan.decomposition_degraded` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-506; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-506
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: plan.decomposition_degraded@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- plan.decomposition_degraded uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- plan.decomposition_degraded
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-216, ContractName:Plans/Contracts_V0.md#CV-506, ContractName:Plans/storage-plan.md#SP-506
+
+
+## CV-507 — remediation.resolved prepared Event Authority contract
+
+Newly authored owner contract: `remediation.resolved@1.0.0` uses the independently closed schema `Plans/event_payload_remediation_resolved.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/remediation_resolved/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `remediation.resolved` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-217 remain normative beyond schema shape checks. `remediation.resolved` retains the current success -> fixed, ceiling_exceeded -> replan_required, terminal failed -> abandoned import mapping; nonterminal failed is never guessed. This compatibility statement changes no sibling's payload.
+
+Exact legacy alias for this family: `run.remediation_completed`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `remediation.resolved`: EP-217 and `executor.remediation_resolved.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `remediation.resolved` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-507; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-507
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: remediation.resolved@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- remediation.resolved uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- remediation.resolved
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-217, ContractName:Plans/Contracts_V0.md#CV-507, ContractName:Plans/storage-plan.md#SP-507
+
+
+## CV-508 — remediation.spawned prepared Event Authority contract
+
+Newly authored owner contract: `remediation.spawned@1.0.0` uses the independently closed schema `Plans/event_payload_remediation_spawned.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/remediation_spawned/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `remediation.spawned` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-218 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `run.remediation_started`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `remediation.spawned`: EP-218 and `executor.remediation_spawned.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `remediation.spawned` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-508; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-508
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: remediation.spawned@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- remediation.spawned uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- remediation.spawned
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-218, ContractName:Plans/Contracts_V0.md#CV-508, ContractName:Plans/storage-plan.md#SP-508
+
+
+## CV-509 — run.completed prepared Event Authority contract
+
+Newly authored owner contract: `run.completed@1.0.0` uses the independently closed schema `Plans/event_payload_run_completed.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/run_completed/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `run.completed` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-219 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.completed`: EP-219 and `executor.run_completed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `run.completed` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-509; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-509
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: run.completed@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.completed uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-219, ContractName:Plans/Contracts_V0.md#CV-509, ContractName:Plans/storage-plan.md#SP-509
+
+
+## CV-510 — run.graph_integrity_failed prepared Event Authority contract
+
+Newly authored owner contract: `run.graph_integrity_failed@1.0.0` uses the independently closed schema `Plans/event_payload_run_graph_integrity_failed.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/run_graph_integrity_failed/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `run.graph_integrity_failed` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-220 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.graph_integrity_failed`: EP-220 and `executor.run_graph_integrity_failed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `run.graph_integrity_failed` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-510; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-510
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: run.graph_integrity_failed@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.graph_integrity_failed uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.graph_integrity_failed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-220, ContractName:Plans/Contracts_V0.md#CV-510, ContractName:Plans/storage-plan.md#SP-510
+
+
+## CV-511 — run.node_backoff_expired prepared Event Authority contract
+
+Newly authored owner contract: `run.node_backoff_expired@1.0.0` uses the independently closed schema `Plans/event_payload_run_node_backoff_expired.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/run_node_backoff_expired/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `run.node_backoff_expired` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-221 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.node_backoff_expired`: EP-221 and `executor.run_node_backoff_expired.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `run.node_backoff_expired` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-511; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-511
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: run.node_backoff_expired@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_backoff_expired uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_backoff_expired
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-221, ContractName:Plans/Contracts_V0.md#CV-511, ContractName:Plans/storage-plan.md#SP-511
+
+
+## CV-512 — run.node_backoff_started prepared Event Authority contract
+
+Newly authored owner contract: `run.node_backoff_started@1.0.0` uses the independently closed schema `Plans/event_payload_run_node_backoff_started.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/run_node_backoff_started/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `run.node_backoff_started` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-222 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.node_backoff_started`: EP-222 and `executor.run_node_backoff_started.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `run.node_backoff_started` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-512; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-512
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: run.node_backoff_started@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_backoff_started uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_backoff_started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-222, ContractName:Plans/Contracts_V0.md#CV-512, ContractName:Plans/storage-plan.md#SP-512
+
+
+## CV-513 — run.node_ready prepared Event Authority contract
+
+Newly authored owner contract: `run.node_ready@1.0.0` uses the independently closed schema `Plans/event_payload_run_node_ready.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/run_node_ready/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `run.node_ready` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-223 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.node_ready`: EP-223 and `executor.run_node_ready.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `run.node_ready` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-513; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-513
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: run.node_ready@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_ready uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_ready
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-223, ContractName:Plans/Contracts_V0.md#CV-513, ContractName:Plans/storage-plan.md#SP-513
+
+
+## CV-514 — run.node_retry_scheduled prepared Event Authority contract
+
+Newly authored owner contract: `run.node_retry_scheduled@1.0.0` uses the independently closed schema `Plans/event_payload_run_node_retry_scheduled.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/run_node_retry_scheduled/1.0.0`). It is a proposed payload version only, and grants no current write permission. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `run.node_retry_scheduled` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-224 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.node_retry_scheduled`: EP-224 and `executor.run_node_retry_scheduled.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `run.node_retry_scheduled` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-514; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-514
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: run.node_retry_scheduled@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_retry_scheduled uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_retry_scheduled
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-224, ContractName:Plans/Contracts_V0.md#CV-514, ContractName:Plans/storage-plan.md#SP-514
+
+
+## CV-515 — scheduler.pass prepared Event Authority contract
+
+Newly authored owner contract: `scheduler.pass@1.0.0` uses the independently closed schema `Plans/event_payload_scheduler_pass.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/scheduler_pass/1.0.0`). It is a proposed payload version only, and grants no current write permission. Both candidate and selected score shapes enforce the existing integer manual_priority range 0..100 inclusive and document default 50; these score fields remain required-present. Required, optional and closed enum fields in that schema reconcile this family's existing minima; additional fields and wrong versions reject. Shape descriptors are redacted structural labels, opaque refs are not retrieval authority, and freeform reason/outcome codes must resolve their actual owner domain; no secrets, source bodies, local absolute paths or capability content may be embedded.
+
+For `scheduler.pass` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z, without stripping, normalization or ignored trailing LF/CR/whitespace. Date/time validity remains mandatory. The exact-end schema guard and full-string format checker both apply; source-consistent trailing-LF negatives and isolated schema-field negatives run through the full semantic checker.
+
+
+`project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-225 remain normative beyond schema shape checks.
+
+Exact legacy alias for this family: `run.scheduler_analysis`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `scheduler.pass`: EP-225 and `executor.scheduler_pass.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
+For `scheduler.pass` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-515; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
+
+```yaml
+plan_unit_id: CV-515
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: scheduler.pass@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- scheduler.pass uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- scheduler.pass
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-225, ContractName:Plans/Contracts_V0.md#CV-515, ContractName:Plans/storage-plan.md#SP-515
