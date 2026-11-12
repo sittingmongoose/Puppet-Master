@@ -31,6 +31,7 @@ export const tests={
   const sizes=(t.args.sizes?String(t.args.sizes).split(','):['1920x1080','1280x900']).map(v=>v.split('x').map(Number));
   const motions=t.args.motion?String(t.args.motion).split(','):['no-preference','reduce','app'];
   const records=[];
+  t.log(`Chrome version ${t.page.context().browser().version()}`);
   t.log(`DECLARED ${looks.length*sizes.length*motions.length*4} cells ${surface}; real click and keyboard Space; ${await t.page.evaluate(()=>navigator.userAgent)}`);
   for(const look of looks) for(const [w,h] of sizes) for(const motion of motions){
    await setMotionMedia(t,motion); await t.viewport(w,h);
