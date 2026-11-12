@@ -3748,7 +3748,7 @@ The former 20-row Plan depth & questions group and 26-row Terminal & shell group
 | Commands & Shortcuts | Shortcuts (one shortcut list in three groups, everywhere, in the message box and in the terminal, with clashes checked across all three; shortcut hints, with clash display on CS-081's warn policy; More options: Reset and back up); Commands (Safety; Your commands; More options: Defaults for new commands, Built-in names) |
 | Testing & Debug | Profiles (Running sessions); When to test (the one switch for all automated testing; Before merging); What it can test, was Browser & Native (Browser testing; Desktop and mobile apps; Behind the scenes; More options: Test tools and windows); Debug (Debug profiles; What debugging may do on its own; More options: Debug loop limits); History (Keeping proof) |
 | Memory | One page: memory switch, search, All / This project / Every project level filter, saved-note list, Add/Edit/Delete and collapsed Archived; the chat button opens the same page as a sheet. Instructions, History/privacy, capacity and Run limits stay outside it. |
-| Goals | Defaults for host continuation, interruption handling and progress; Goal evidence under GRS-050, with a read-only evidence receipt; no Active Goals tab. Templates, replan/check policies, certification levels and earned receipt strength are retired by DL-478. |
+| Goals | Defaults for host continuation, interruption handling, progress and what new Goals may change; Goal evidence under GRS-050, with a read-only evidence receipt; no Active Goals tab. Templates, replan/check policies, certification levels and earned receipt strength are retired by DL-478. |
 | Personas | Personas (Your personas; inside the selected persona: About this persona, How it answers, Spending cap, Tools and instructions; More options: Skipped settings); Crews (Crews; New crews start with; Crew Auto); Group work (BrainStorm: who takes part; BrainStorm: debate and vote; Review; Chat Room); Helpers (Helper agents; Which helpers; Keeping helpers safe; More options: Limits for all agents, Helper contracts); Defaults (Choosing a persona; In a chat) |
 | Back Seat Driver | Overview (one Advisor group; More options: Expert options); Stages (Where the advisor watches); Findings |
 | Source Control | Code Services (each service connected through a guided set-up; GitHub sign-in inside GitHub; push access by SSH key or HTTPS token); Local Tools; Repositories (Create a new repository; Contribute to another project; Workspaces for chats; Before and after each run; More options: Workspace storage); Defaults & Safety (Git on this server: the name and email on changes, how Git signs in and signing changes, set up by Set up Git; Files that need care: big files and files never saved in history; How runs use version history; Safety, with protected branches as an editable list; Recovery; More options: Source Control panel); Actions & Pipelines (Pinned workflows; Keeping checks current) |
@@ -3891,7 +3891,7 @@ that would reach an outside computer or service says so and, in the concept, is 
   saved in history); protected branches are an editable list.
 - Settings sets defaults and does no live work: no view shows, starts, pauses or stops a live chat or Goal. Goals are
   started in the assistant chat or by the Planning Wizard, so Goals in Settings holds the defaults every new Goal
-  starts with for host continuation and interruption handling, plus GRS-050 evidence; Goal templates and checking
+  starts with for host continuation, interruption handling and what it may change, plus GRS-050 evidence; Goal templates and checking
   policies are retired by DL-478. Saved notes have only This project and Every project levels, and private thread records stay internal; one chat's own
   actions, such as Squeeze now, live in that chat's menu.
 - A persona's tuning rows (Creativity, Word choice range, Spending cap) read Same as the project until the persona
@@ -4058,7 +4058,7 @@ status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: 'Settings sets defaults and runs guided set-ups; it does no live work. No Settings view
   shows, starts, pauses or stops a live chat or Goal: Goals start in the assistant chat or the Planning
-  Wizard, Goals in Settings holds host-continuation/interruption defaults and GRS-050 evidence, and one chat''s
+  Wizard, Goals in Settings holds host-continuation/interruption defaults, the new-Goal write ceiling and GRS-050 evidence, and one chat''s
   own actions live in that chat''s menu. Every set-up listed in the presentation section''s owner-routes
   subsection runs in the onboarding wizard''s form and ends with its result shown where it was started,
   changeable and removable. A permission profile carries its four answers and its own rules, which form
