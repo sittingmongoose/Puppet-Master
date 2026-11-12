@@ -358,7 +358,7 @@ Direct providers with coding-plan-branded products keep provider-specific reset 
 
 `Z.AI Coding Plan` usage remains `Z.AI` provider usage with plan-dependent quota/reset semantics on the coding-plan endpoint. Until the active plan proves exact windows, PM labels the reset evidence as plan-dependent instead of presenting a fixed reset countdown.
 
-Gemini CLI structured session stats from `gemini -p ... --output-format json` may include `usage`, `modelUsage`, `permission_denials`, and `fast_mode_state`; PM records these as provider/runtime evidence rather than as a universal quota counter.
+Gemini CLI is retired (UF-021, DL-332): its structured session stats from `gemini -p ... --output-format json` (`usage`, `modelUsage`, `permission_denials`, `fast_mode_state`) are source-lineage only. PM does not ingest or record them as active usage evidence.
 
 Usage evidence must keep the `documented/default expectation` separate from the `effective observed state` whenever provider docs, runtime output, or account-specific behavior disagree.
 
