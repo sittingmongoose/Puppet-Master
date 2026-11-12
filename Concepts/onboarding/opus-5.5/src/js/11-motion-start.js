@@ -298,8 +298,8 @@
      { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
      last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also PM_WARM.log): the last 200
      { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome, watched: false on a GPU step judged without
-     its watch, watchReset: true on the first row after an interval that no row shows set the count of steady watches
-     back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
+     its watch, steadyMs / slowMs (the adaptive watch bars, rounded to 0.1 ms), watchReset: true on the first row after
+     an interval that no row shows set the count of steady watches back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
      nothing queued (warming off), so an owner that waits for it never waits on a software-rendered computer */
   const warmFlag = (v) => { try { return new RegExp('(?:^|[?&])pm-warm=' + v + '(?:&|$)').test(location.search); } catch (_) { return false; } };
   const warmOff = warmFlag('0'), warmForce = warmFlag('force');
@@ -397,9 +397,12 @@
     const s = warmDeltas.slice().sort((a, b) => a - b);
     return s[Math.floor(s.length / 2)];
   };
+  /* Log-only snapshots: no gate, timer or watch decision reads these. */
+  let watchSteadyLog = null, watchSlowLog = null;
   const lateMs = () => Math.max(40, 3 * median());
   const onTime = (d) => d <= 1.5 * median();
   const note = (d) => {
+    watchSlowLog = lateMs(); // the slow bar before this noted interval enters the rolling median
     /* over the slow bar: the watch is needed again (watchClean, below) */
     if (d > lateMs()) { warmLateAt = performance.now(); watchClean = 0; watchResets++; }
     warmD1 = warmD2; warmD2 = d;
@@ -424,6 +427,11 @@
   const quiet = () => { warmWhy = blocked(); if (LASTING[warmWhy]) warmQuietSince = performance.now(); return !warmWhy; };
   const logStep = (st, cpuMs, frameMs, late, outcome) => {
     const row = { owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome };
+    if (!st.cpu) {
+      row.steadyMs = Math.round((watchSteadyLog == null ? Math.max(STEADY_MS, 1.5 * median()) : watchSteadyLog) * 10) / 10;
+      row.slowMs = Math.round((watchSlowLog == null ? lateMs() : watchSlowLog) * 10) / 10;
+    }
+    watchSteadyLog = watchSlowLog = null;
     /* a GPU step judged without its watch (watching(), below) */
     if (st.unwatched) row.watched = false;
     /* the count of steady watches set back to zero by an interval no row shows (watchUnseen, at WATCH_KEEP below) */
@@ -552,10 +560,13 @@
      watchReset: true: since the row before it, an interval over the slow bar that no row's frameMs shows set the count
      of steady watches back to zero. Without it a replay of the log believed 16 steady watches still stood and called
      the next, rightly watched, step needless. Only the log changes: watchResets counts every such reset, watchUnseen
-     holds the word until the next row */
+     holds the word until the next row. steadyMs captures the bar at watched(); slowMs captures note()'s latest slow
+     bar before inserting that interval. Rows without those decisions report the current bars. Both are rounded to
+     0.1 ms for replay: the later display-rate sample cannot stand in for this rolling 30-interval median.
+     watchSteadyLog / watchSlowLog are log-only; the existing decisions below read their existing expressions. */
   const WATCH_KEEP = 16, STEADY_MS = 25;
   const watching = () => watchClean < WATCH_KEEP;
-  const watched = (frameMs) => { watchClean = Math.max.apply(null, frameMs) <= Math.max(STEADY_MS, 1.5 * median()) ? watchClean + 1 : 0; };
+  const watched = (frameMs) => { watchSteadyLog = Math.max(STEADY_MS, 1.5 * median()); watchClean = Math.max.apply(null, frameMs) <= Math.max(STEADY_MS, 1.5 * median()) ? watchClean + 1 : 0; };
   /* the watch after a GPU step (v3.5 item 1): the frames from the one at 'from' until 300 ms after the step's frame t;
      done(the worst of those intervals), or done(-1) when the page was hidden meanwhile */
   const warmWatch = (t, from, vis, done) => {

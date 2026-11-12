@@ -3,14 +3,19 @@
 // fails on is written in the check's header.
 export const KEEP = 16, STEADY_MS = 25;
 
-// steps: PM_WARM.log rows ({ t, owner, name, frameMs, watched }), oldest first; hz: the display's refresh rate.
+// steps: PM_WARM.log rows ({ t, owner, name, frameMs, watched, steadyMs, slowMs }), oldest first.
+// Adaptive per-row bars win; old pages without them fall back to hz, the later display-rate sample.
 export function replayWatch(steps, hz) {
-	const gap = 1000 / hz, steady = Math.max(STEADY_MS, 1.5 * gap), slow = Math.max(40, 3 * gap);
+	const gap = 1000 / hz, fallbackSteady = Math.max(STEADY_MS, 1.5 * gap), fallbackSlow = Math.max(40, 3 * gap);
+ let steady = fallbackSteady, slow = fallbackSlow, adaptive = 0;
 	// hi and lo: the highest and the lowest value the product's counter can have here (see the header). Logged intervals
 	// are rounded to 1 ms, so a value within 1 ms of a bar counts for whichever side keeps the check from a false failure.
 	let hi = 0, lo = 0, longest = 0, gpu = 0, watched = 0, unwatched = 0, overSlow = 0, resets = 0;
 	const early = [], needless = [];
 	for (const e of steps) {
+  steady = Number.isFinite(e.steadyMs) && e.steadyMs > 0 ? e.steadyMs : fallbackSteady;
+  slow = Number.isFinite(e.slowMs) && e.slowMs > 0 ? e.slowMs : fallbackSlow;
+  if (steady === e.steadyMs && slow === e.slowMs) adaptive++;
 		// the product's own word that the counter went back to zero since the row before, by an interval no row shows (an
 		// admission frame, or a step the page's hiding left unjudged): it holds on any row, one without frameMs too
 		if (e.watchReset === true) { hi = 0; lo = 0; resets++; }
@@ -33,5 +38,5 @@ export function replayWatch(steps, hz) {
 		}
 		longest = Math.max(longest, lo);
 	}
-	return { steady, slow, gpu, watched, unwatched, overSlow, resets, longest, early, needless };
+	return { steady, slow, adaptive, gpu, watched, unwatched, overSlow, resets, longest, early, needless };
 }

@@ -15,7 +15,8 @@
 // watched GPU step whose every interval is within the steady bar, back to zero for a watched step with one over it, and
 // back to zero for ANY judged interval over the slow bar (max(40 ms, 3x the refresh interval)). The log does not say
 // whether a two-interval row is a cpu step (no part in the counter) or a light chain's last watched step (counted), so
-// the replay keeps the highest and the lowest value the counter can have had, and fails only on what is certain.
+// Product rows carry steadyMs/slowMs from the queue's rolling median; older logs fall back to the later sampled
+// display rate. The replay keeps the highest and the lowest value the counter can have had, and fails only on what is certain.
 // Intervals the queue notes but no row shows set the counter back to zero too: the two frames it looks at before
 // admitting a step (an admission attempt, admitted or not, writes no row) and those of a step whose judging the page's
 // hiding cut short (its row has frameMs null). For those the product writes watchReset: true on the next row it logs,
@@ -52,7 +53,7 @@ export default async function (t) {
 	while (Date.now() < until) {
 		const snap = await f.evaluate(() => {
 			const w = window.PM_WARM; if (!w) return null;
-			return { state: w.state(), log: (w.log || []).map((e) => ({ t: e.t, owner: e.owner, name: e.name, frameMs: e.frameMs || null, outcome: e.outcome, watched: e.watched, watchReset: e.watchReset })) };
+			return { state: w.state(), log: (w.log || []).map((e) => ({ t: e.t, owner: e.owner, name: e.name, frameMs: e.frameMs || null, outcome: e.outcome, watched: e.watched, watchReset: e.watchReset, steadyMs: e.steadyMs, slowMs: e.slowMs })) };
 		});
 		if (!snap) { await t.check('the page has the warm-up queue (PM_WARM)', false, 'window.PM_WARM is missing: could not judge'); return; }
 		state = snap.state;
@@ -64,8 +65,8 @@ export default async function (t) {
 	}
 	const hz = await refreshRate(f);
 	const steps = [...seen.values()].sort((a, b) => a.t - b.t);
-	const { steady, slow, gpu, watched, unwatched, overSlow, resets, longest, early, needless } = replayWatch(steps, hz);
-	t.log(`${look}: ${hz.toFixed(0)} Hz, steady bar ${steady.toFixed(0)} ms, slow bar ${slow.toFixed(0)} ms; ${steps.length} steps logged, ${gpu} GPU steps (${watched} watched, ${unwatched} not), ${overSlow} rows with an interval over the slow bar, ${resets} rows saying watchReset, longest certain run of steady watches ${longest}; queue ${JSON.stringify(state)}`);
+	const { steady, slow, adaptive, gpu, watched, unwatched, overSlow, resets, longest, early, needless } = replayWatch(steps, hz);
+	t.log(`${look}: ${hz.toFixed(0)} Hz, last steady bar ${steady.toFixed(1)} ms, slow bar ${slow.toFixed(1)} ms (${adaptive} rows carry adaptive bars; older rows use the display rate); ${steps.length} steps logged, ${gpu} GPU steps (${watched} watched, ${unwatched} not), ${overSlow} rows with an interval over the slow bar, ${resets} rows saying watchReset, longest certain run of steady watches ${longest}; queue ${JSON.stringify(state)}`);
 	const judged = gpu >= 40;
 	await t.check('the queue ran GPU steps here', judged, `${gpu} GPU steps in ${steps.length} logged steps${judged ? '' : ` (queue ${JSON.stringify(state)}): could not judge`}`);
 	if (!judged) return;
