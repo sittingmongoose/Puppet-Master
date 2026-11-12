@@ -42,7 +42,7 @@ async function checkLook(t,look){
     await press(t,menuItem(item));await box(t,f,`${look} ${w} sound ${item}`,w,h);
    }
    await tab('Destinations');
-   await press(t,n.locator('[data-action="pm51-notifications-pick"]').filter({hasText:'Project Discord'}).first());
+   await press(t,n.locator('.resource-row').filter({hasText:'Project Discord'}).first());
    for(const item of ['Edit','Remove']){
     await press(t,n.locator('.pm51-detail-actions button[aria-label="More actions"]').first());await box(t,f,`${look} ${w} destination menu`,w,h,false);
     await press(t,menuItem(item));await box(t,f,`${look} ${w} destination ${item}`,w,h);
