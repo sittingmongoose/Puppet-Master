@@ -1,0 +1,505 @@
+{
+  "scope": "round_8_new_guards_over_complete_lane_pair_inventory",
+  "status": "pass",
+  "implementation_commit": "ec476040a569d117e5315891e6749169d57f8b6c",
+  "guard_count": 3,
+  "isolated_negative_pairs": 6910,
+  "acceptance_flips": 20,
+  "unrelated_flips": 0,
+  "baseline_assertions": 20448,
+  "whole_checker_mutants": 3,
+  "rows": [
+    {
+      "guard": "O11",
+      "rule": "predecessor: original event, SP-286 first result and custody authentication",
+      "negatives_that_flip": [
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_inline_forged_original"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_inline_forged_first_receipt"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_inline_forged_custody"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_packed_forged_original"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_packed_forged_first_receipt"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_packed_forged_custody"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_inline_forged_original"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_inline_forged_first_receipt"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_inline_forged_custody"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_packed_forged_original"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_packed_forged_first_receipt"
+        ],
+        [
+          "O11",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_packed_forged_custody"
+        ]
+      ],
+      "flip_count": 12,
+      "other_negatives_still_rejected": 6898,
+      "unrelated_flips": 0,
+      "masked": [],
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "14dd2e1ab3b40783b707ce933844719533a0096fa5f53083b0b395f5745383ba",
+      "full_checker_families": [
+        {
+          "family": "runtime_artifact.api_web_call",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 7
+        },
+        {
+          "family": "runtime_artifact.artifact_version",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 7
+        },
+        {
+          "family": "runtime_artifact.before_after_snapshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.browser_recording",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.code_diff",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.context_snapshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.cost_usage",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.document",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.evidence",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.failed_attempts",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.hitl_approval",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.implementation_plan",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.reasoning_summary",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.restore_point",
+          "exit_code": 1,
+          "status": "fail",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.screenshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.subagent_lineage",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.suggested_next_steps",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.validation_test",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        }
+      ]
+    },
+    {
+      "guard": "O12",
+      "rule": "predecessor recorded recipe support and explicit historical dispatch",
+      "negatives_that_flip": [
+        [
+          "O12",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_inline_unsupported_recipe"
+        ],
+        [
+          "O12",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_packed_unsupported_recipe"
+        ],
+        [
+          "O12",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_inline_unsupported_recipe"
+        ],
+        [
+          "O12",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_packed_unsupported_recipe"
+        ]
+      ],
+      "flip_count": 4,
+      "other_negatives_still_rejected": 6906,
+      "unrelated_flips": 0,
+      "masked": [],
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "1743703ce2c03d5a24cd55e1c8bdad4e1daf2e2df22531a22f682c92089ec387",
+      "full_checker_families": [
+        {
+          "family": "runtime_artifact.api_web_call",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.artifact_version",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.before_after_snapshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.browser_recording",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.code_diff",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.context_snapshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.cost_usage",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.document",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.evidence",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.failed_attempts",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.hitl_approval",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.implementation_plan",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.reasoning_summary",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.restore_point",
+          "exit_code": 1,
+          "status": "fail",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.screenshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.subagent_lineage",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.suggested_next_steps",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.validation_test",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        }
+      ]
+    },
+    {
+      "guard": "O13",
+      "rule": "predecessor: forward authenticated historical source inspection",
+      "negatives_that_flip": [
+        [
+          "O13",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_inline_withdrawn"
+        ],
+        [
+          "O13",
+          "runtime_artifact.restore_point",
+          "numeric_inline_to_packed_withdrawn"
+        ],
+        [
+          "O13",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_inline_withdrawn"
+        ],
+        [
+          "O13",
+          "runtime_artifact.restore_point",
+          "numeric_packed_to_packed_withdrawn"
+        ]
+      ],
+      "flip_count": 4,
+      "other_negatives_still_rejected": 6906,
+      "unrelated_flips": 0,
+      "masked": [],
+      "whole_checker_exit": 1,
+      "linked_same_rule_guards": [],
+      "mutant_sha256": "86db2c3974afa2f90d3058277f224630585aed0a70367dff5849b9f29af1eea0",
+      "full_checker_families": [
+        {
+          "family": "runtime_artifact.api_web_call",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.artifact_version",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.before_after_snapshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.browser_recording",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.code_diff",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.context_snapshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.cost_usage",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.document",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.evidence",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.failed_attempts",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.hitl_approval",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.implementation_plan",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.reasoning_summary",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.restore_point",
+          "exit_code": 1,
+          "status": "fail",
+          "available_ram_GB": 9
+        },
+        {
+          "family": "runtime_artifact.screenshot",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.subagent_lineage",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.suggested_next_steps",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        },
+        {
+          "family": "runtime_artifact.validation_test",
+          "exit_code": 0,
+          "status": "pass",
+          "available_ram_GB": 8
+        }
+      ]
+    }
+  ],
+  "proof_limit": "Legacy diagnostic matrix, not shared-tool certification. Whole-condition cuts and duplicate-site inventory migrate to pm_guard_isolation.py in Sweep P1.",
+  "raw_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/complete-guard-removal.json",
+    "sha256": "f797d8ea8cb5b62bcaaa8da29b5364f63a945f3a2fea578ae6e45099255fb135"
+  }
+}
