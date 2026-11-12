@@ -26266,7 +26266,7 @@
       "label":
         "View Helper Work Contract",
       "desc":
-        "Opens from a running Goal.",
+        "Opens the work contract for a subagent supervised by its parent agent.",
       "type": "action",
       "scope": [
         "run"
@@ -26274,7 +26274,7 @@
       "tier": "advanced",
       "search": [
         "child lease",
-        "parent goal",
+        "parent agent",
         "allowed node",
         "return channel"
       ],

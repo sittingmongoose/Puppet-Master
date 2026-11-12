@@ -9181,7 +9181,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  P1-MODEL-SELECTION-ROUTER (P1) is compiled as canonical Puppet Master intent for Model selection per role/skill/tool/subagent: Add ModelSelectionRouter with task_kind, risk_class, context_size, modalities, tool_need, verification_tier, cost_policy, latency_policy, provider availability, and fallback chain. Do not hardcode model names; use capability tiers. The preserved PM gap/delta is: PM should map tasks to model/effort through a scored router instead of static defaults while preserving user policy and certification-tier rules. The observed external-repo signal remains source-lineage evidence: Codex discussions request per-skill model selection and issues show custom subagent model config not honored; OpenCode issues request model variants and subagent model/effort selection; Cline SDK centralizes session/Plan/Act coordination and provider migration.
+  P1-MODEL-SELECTION-ROUTER (P1) is compiled as canonical Puppet Master intent for Model selection per role/skill/tool/subagent: Add ModelSelectionRouter with task_kind, risk_class, context_size, modalities, tool_need, verification_tier, cost_policy, latency_policy, provider availability, and fallback chain. Do not hardcode model names; use capability tiers. The preserved PM gap/delta is: PM should map tasks to model/effort through a scored router instead of static defaults while preserving user policy and explicitly configured workflow Review requirements. The observed external-repo signal remains source-lineage evidence: Codex discussions request per-skill model selection and issues show custom subagent model config not honored; OpenCode issues request model variants and subagent model/effort selection; Cline SDK centralizes session/Plan/Act coordination and provider migration.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -9189,16 +9189,14 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Low-risk summarization can select cheaper model only when certification policy allows.
-- Verifier/adjudicator model cannot downgrade below risk tier.
+- Low-risk summarization can select a cheaper model when user and workflow policy allow.
 - Router output is requested/effective and auditable.
 - User can pin or forbid providers per project/account.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Low-risk summarization can select cheaper model only when certification policy allows.
-- Verifier/adjudicator model cannot downgrade below risk tier.
+- Low-risk summarization can select a cheaper model when user and workflow policy allow.
 - Router output is requested/effective and auditable.
 - User can pin or forbid providers per project/account.
 risk_class: p1_provider_capability_and_metadata_hardening
@@ -9248,8 +9246,8 @@ preserved_exact_tokens:
 - Cline
 negative_constraints: []
 observed_signal: Codex discussions request per-skill model selection and issues show custom subagent model config not honored; OpenCode issues request model variants and subagent model/effort selection; Cline SDK centralizes session/Plan/Act coordination and provider migration.
-pm_current_coverage: PM already has provider/model precedence by scope and Goal Runtime model-role policy.
-pm_gap_or_delta: PM should map tasks to model/effort through a scored router instead of static defaults while preserving user policy and certification-tier rules.
+pm_current_coverage: PM already has provider/model precedence by scope. Goal Runtime model-role policy is retired by DL-478; Goals use the initiating chat model.
+pm_gap_or_delta: PM should map tasks to model/effort through a scored router instead of static defaults while preserving user policy and explicitly configured workflow Review requirements.
 proposal_or_recommendation: Add ModelSelectionRouter with task_kind, risk_class, context_size, modalities, tool_need, verification_tier, cost_policy, latency_policy, provider availability, and fallback chain. Do not hardcode model names; use capability tiers.
 compile_disposition: create_new_planunit
 ```
