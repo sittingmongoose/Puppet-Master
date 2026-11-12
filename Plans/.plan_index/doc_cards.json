@@ -2018,10 +2018,6 @@
         "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/storage-plan.md",
-        "Plans/storage-plan.md#SP-660",
-        "Plans/storage-plan.md#SP-661",
-        "Plans/storage-plan.md#SP-662",
-        "Plans/storage-plan.md#SP-663",
         "Plans/storage_value_registry.json",
         "Plans/testing_session_command_contracts.schema.json",
         "Plans/testing_session_event_payloads.schema.json",
@@ -2305,7 +2301,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "00eb645a24abffbb223dd3cc98d05bbc32d4166e867e770275b6105ac16ded06",
+      "sha256": "386441675814b6b950c18cd4c7cfb8377f69e77650580a962a34efa13e728370",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 147,
@@ -4855,10 +4851,6 @@
         "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
-        "Plans/storage-plan.md#SP-660",
-        "Plans/storage-plan.md#SP-661",
-        "Plans/storage-plan.md#SP-662",
-        "Plans/storage-plan.md#SP-663",
         "Plans/storage_recovery_contracts.schema.json",
         "Plans/storage_value_registry.json",
         "Plans/touch_closure.json",
@@ -5796,7 +5788,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "fded35ddddcb9a85d20666f733fbbca3fecbfcc8123316122db7c938367d20e7",
+      "sha256": "0c544296f2733cdba0125b3f1e2ebd8b1a0a1c5d4e2644954373af85bc757c51",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 531,
@@ -8651,10 +8643,6 @@
         "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/storage-plan.md",
-        "Plans/storage-plan.md#SP-660",
-        "Plans/storage-plan.md#SP-661",
-        "Plans/storage-plan.md#SP-662",
-        "Plans/storage-plan.md#SP-663",
         "Plans/usage-feature.md",
         "future Assistant Chat DRY disclosure UI",
         "future Assistant Chat Teacher thread",
@@ -9520,7 +9508,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "7e8b70c5a25e29054d494c8fd67b5ca1a6fee80d40744c049ca457df76a3a8ec",
+      "sha256": "eada60007251ae36eceae856c50cdee78db2bfc9ac4c2b7834fac369d87e9992",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 671,
@@ -17778,7 +17766,7 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "e82cc09c0579a14e5b071eb4a61e5e8ecc3249ee9a59680a25077efb82528a64",
+      "sha256": "2937ee6273963b17ae05260af88dd8d9861572783613076f8eb79461d537ac56",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 78,
@@ -19672,10 +19660,6 @@
         "Plans/seglog_frame_v2_wire_fixtures.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
-        "Plans/storage-plan.md#SP-660",
-        "Plans/storage-plan.md#SP-661",
-        "Plans/storage-plan.md#SP-662",
-        "Plans/storage-plan.md#SP-663",
         "Plans/storage_boot_history_floor.schema.json",
         "Plans/storage_boot_history_pending.schema.json",
         "Plans/storage_boot_original_source_contracts.schema.json",
@@ -20359,7 +20343,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "fecbda2d60857860655aa02332e79ace1f832f9730317dc38dc04ced6c09bf9a",
+      "sha256": "7fd0efd5ca892c016b0e1cb43aa267d00dd362aa4c168df5a44ef289d0590881",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 508,
@@ -22812,7 +22796,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-12T11:43:31Z",
+  "generated_at_utc": "2026-11-12T13:00:34Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

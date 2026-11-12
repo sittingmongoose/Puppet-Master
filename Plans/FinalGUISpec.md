@@ -52123,7 +52123,7 @@ reasoning_tier: high
 context_scope: alert_acknowledged
 implementation_surfaces:
 - Plans/event_payloads/attention/alert_acknowledged.schema.json
-- Plans/storage-plan.md#SP-660
+- Plans/storage-plan.md
 node_compile_hint:
   mode: contract_only
   create_worknodes: false
@@ -52169,7 +52169,7 @@ reasoning_tier: high
 context_scope: alert_dismissed
 implementation_surfaces:
 - Plans/event_payloads/attention/alert_dismissed.schema.json
-- Plans/storage-plan.md#SP-661
+- Plans/storage-plan.md
 node_compile_hint:
   mode: contract_only
   create_worknodes: false
@@ -52215,7 +52215,7 @@ reasoning_tier: high
 context_scope: alert_rule_muted
 implementation_surfaces:
 - Plans/event_payloads/attention/alert_rule_muted.schema.json
-- Plans/storage-plan.md#SP-662
+- Plans/storage-plan.md
 node_compile_hint:
   mode: contract_only
   create_worknodes: false
@@ -52261,7 +52261,7 @@ reasoning_tier: high
 context_scope: alert_snoozed
 implementation_surfaces:
 - Plans/event_payloads/attention/alert_snoozed.schema.json
-- Plans/storage-plan.md#SP-663
+- Plans/storage-plan.md
 node_compile_hint:
   mode: contract_only
   create_worknodes: false

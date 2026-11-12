@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L9940-L11201
 
-Source SHA256: `00eb645a24abffbb223dd3cc98d05bbc32d4166e867e770275b6105ac16ded06`
+Source SHA256: `386441675814b6b950c18cd4c7cfb8377f69e77650580a962a34efa13e728370`
 
 ---
 
@@ -668,7 +668,7 @@ reasoning_tier: high
 context_scope: alert_acknowledged
 implementation_surfaces:
 - Plans/event_payloads/attention/alert_acknowledged.schema.json
-- Plans/storage-plan.md#SP-660
+- Plans/storage-plan.md
 node_compile_hint:
   mode: contract_only
   create_worknodes: false
@@ -717,7 +717,7 @@ reasoning_tier: high
 context_scope: alert_dismissed
 implementation_surfaces:
 - Plans/event_payloads/attention/alert_dismissed.schema.json
-- Plans/storage-plan.md#SP-661
+- Plans/storage-plan.md
 node_compile_hint:
   mode: contract_only
   create_worknodes: false
@@ -766,7 +766,7 @@ reasoning_tier: high
 context_scope: alert_rule_muted
 implementation_surfaces:
 - Plans/event_payloads/attention/alert_rule_muted.schema.json
-- Plans/storage-plan.md#SP-662
+- Plans/storage-plan.md
 node_compile_hint:
   mode: contract_only
   create_worknodes: false
@@ -815,7 +815,7 @@ reasoning_tier: high
 context_scope: alert_snoozed
 implementation_surfaces:
 - Plans/event_payloads/attention/alert_snoozed.schema.json
-- Plans/storage-plan.md#SP-663
+- Plans/storage-plan.md
 node_compile_hint:
   mode: contract_only
   create_worknodes: false
