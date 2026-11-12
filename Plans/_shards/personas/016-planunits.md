@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L697-L3206
+Source lines: L697-L3212
 
-Source SHA256: `4138e13128be18d02583c75f2b833991062cb86948b71a1ad700aa1a1c8cbd33`
+Source SHA256: `412a320ea426e7dcc04d5eedd944aaf3807858dd7af937d121a5606792ef17ad`
 
 ---
 
@@ -816,16 +816,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Child Persona injection uses a reconstructed handoff bundle, and Persona default_mode applies below explicit run-envelope mode and above the system default.
+  Child Persona injection uses a reconstructed handoff bundle, and Persona default_mode applies
+  below explicit run-envelope mode and above the system default. Child handoff never copies private
+  parent/app-thread memory. Independently authorized helpers may read current Project and same-user
+  personal notes read-only under AMS-026/054 source restrictions, with no other-Project access,
+  mutation or helper-owned store.
 gui_related: false
 gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Child runs inject effective child Persona content resolved from PM storage.
-  - Child handoff includes current task, working context, required constraints, requested/effective runtime state, and effective context-shaping state.
-  - Run-envelope mode overrides Persona default_mode.
+  - "Child runs inject effective child Persona content resolved from PM storage."
+  - "Child handoff includes current task, working context, required constraints, requested/effective runtime state, and effective context-shaping state."
+  - "Run-envelope mode overrides Persona default_mode."
+  - "Authorized Project/personal-note read succeeds under the existing scope/source gates; private app-thread forwarding and helper writes remain refused."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -840,6 +845,7 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0028
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0029
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "reconstructed handoff bundle"
   - "do not forward Assistant memory"
@@ -847,7 +853,7 @@ preserved_exact_tokens:
   - "Explicit run-envelope `mode`"
   - "System default (`regular`)"
 negative_constraints:
-  - "Do not forward Assistant memory to child runs."
+  - "Do not copy private parent/app-thread memory into child handoffs or use a handoff to bypass source restrictions; authorized read-only Project/personal-note access remains permitted."
   - "Do not make a lossy child copy the only truth."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md"

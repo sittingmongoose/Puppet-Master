@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27348-L28048
+Source lines: L27352-L28040
 
-Source SHA256: `b4d0a4d8ff0879dc647c9d6989ddfc930317d1880d11b8e99d9862e330f0de7a`
+Source SHA256: `a1e62de14816f795e9fc94a55c2795ad1d75949b990d7aa6e5c0b78d5622f373`
 
 ---
 
@@ -123,39 +123,31 @@ plan_unit_id: ACD-477
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: 'Teach capture and confirm (section 6). The wand''s Teach…, /teach, natural-language intent
-  and Save as a rule… in a message''s More row each dispatch cmd.chat.teach.capture with mode new, prefilled
-  with the proposed rule text and a reference to its source message; the user''s message stays in the
-  chat as sent. Editing a taught rule dispatches cmd.chat.teach.capture with mode correct. Capture only
-  opens the capture step, and the capture step is the Teach sheet (FinalGUISpec F3-579) for every entry
-  point, /teach and natural-language intent included: there is no inline capture card in the chat (DL-127).
-  The save action is cmd.chat.teach.confirm, and Cancel, close and Escape are cmd.chat.teach.cancel, which
-  persists nothing. Scope is exactly one of thread, project and user, shown nested from narrowest to widest
-  as This thread, This project and Every project. The user scope needs public_safe: the user''s explicit
-  statement that the rule holds no private names, links or code; without it confirm refuses user scope
-  and says why. In correct mode the scope may stay or narrow but never widen; a wider rule is a new rule.
-  Before confirm the capture step screens the text for passwords, keys and tokens; when one is found it
-  says so in words and confirm stays refused until it is removed. When a similar taught rule is in reach,
-  the capture step shows the old and the new wording side by side and confirm waits for the user''s choice:
-  replace the old rule, which records supersedes_memory_id and keeps the old version in history, or keep
-  both. The user may also mark the rule locked at confirm (ACD-481). The confirm request is TeachConfirmRequest
-  {scope, public_safe, locked, conflict_resolution: replace:<memory_id> | keep_both, supersedes_memory_id?}.
-  Each confirmed change leaves one receipt line in the chat (saved, or updated to a new version), and
-  consecutive saves coalesce into one line. DL-475 retires ordinary Followed/Missed rule receipts and
-  the taught_rule_check reply-fix producer; internal inclusion/check records remain. In No project omit
-  the project choice, retain thread and user with the user label Everywhere, and preserve public_safe,
-  screening, conflict, locked-rule and no-widening checks. Settings'' Computer layer changes behavior
-  defaults, not a new Teach memory scope. Conversion keeps thread rules thread-wide and does not widen
-  them.'
+canonical_text: >-
+  The wand Teach, /teach, natural-language instruction intent and Save as a rule open the existing
+  Teach step through cmd.chat.teach.capture; capture persists nothing and Cancel remains
+  cmd.chat.teach.cancel. Written instruction changes use their instruction owner and return to
+  Settings > Personas & Crews > Defaults > Standing instructions. A Teacher answer offered as a
+  saved note instead uses the shared Memory page and AMS-141 Add/Edit/Delete owner. This project and
+  Every project are the only visible saved-note levels. Add/Edit/Delete use AMS-141 quiet Memory
+  contracts; automatic fading/archiving, deletion suppression, privacy and existing source
+  restrictions remain. Private app-thread records stay private and are not a third visible level. No
+  thread-level selector, locked checkbox, Replace/Keep both chooser, source preview or automatic
+  save/update receipt is shown. Existing TeachConfirmRequest thread/public_safe/locked/conflict
+  fields are compatibility/storage inputs, not an ordinary UI contract. Legacy protections, privacy
+  checks and revision refusal remain; capture never changes the Persona to Teacher. Only a durable
+  successful save may add Saved to memory · View to a reply; View opens the one Memory page as a
+  sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or
+  Followed/Missed decoration is shown.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
 depends_on: [ACD-469, DL-127, DL-116, AMS-053]
 unblocks: [F3-570, F3-574, F3-579]
 acceptance_criteria:
-- Teach capture/confirm/cancel, public_safe, screening, lock, narrowing and explicit conflict choices
-  remain.
-- No ordinary Followed/Missed receipt or taught_rule_check fix-link producer remains.
+  - "All saved-note entry points reuse the same Memory page and typed Add/Edit/Delete owner at This project or Every project."
+  - "Teach persists nothing on open/cancel and uses the existing written-instruction owner; no lock/conflict/source/rollback picker or third saved-note level appears."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -186,6 +178,7 @@ source_lineage:
   wizard/prd builder/orchestrator that isn''t.'
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -209,12 +202,8 @@ preserved_exact_tokens:
   - "Missed 1 of your rules"
   - "AMS-053"
 negative_constraints:
-  - "Do not persist anything on capture."
-  - "Do not let an edit widen a rule's scope."
-  - "Do not save text that looks like a password, key or token."
-  - "Do not overwrite a similar rule without the user's replace choice."
-  - "Do not render an inline capture card for /teach or natural-language intent."
-  - "Do not show a rule as followed because it was included in the reply's context."
+  - "Do not persist on capture/cancel, save secrets, silently broaden availability, overwrite protected records or restore old capture controls."
+  - "Do not turn /teach into a Teacher Persona switch or an alternate Memory manager."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -440,24 +429,22 @@ plan_unit_id: ACD-481
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Taught-rule lock and revocation remain Instructions/Your rules actions. cmd.chat.teach.set_lock
-  is the explicit user lock/unlock; automated memory upkeep cannot weaken it. cmd.chat.teach.revoke checks
-  current revision, sets revoked_at and prevents old versions returning; its inline confirmation and explicit
-  user-operation receipt remain. Remove Memory-sheet rule-revoke producers and automatic memory rule-change
-  proposal panels. The user opens Instructions/Teach for requested edits; Memory never edits a standing
-  rule.
+canonical_text: >-
+  Written instructions remain directly editable through Settings > Personas & Crews > Defaults >
+  Standing instructions. Memory never edits a standing instruction. Existing Teach lock/revocation
+  and version codecs remain for internal compatibility and protection; cmd.chat.teach.set_lock has
+  no ordinary GUI producer. No user lock/unlock or rollback control and no automatic memory
+  rule-change proposal panel is shown. Explicit user edits/deletions still use the owning
+  instruction or Memory writer with revision/privacy checks; automatic upkeep cannot weaken retained
+  protections.
 gui_related: true
 gui_classification_reason: "Defines how a user locks, unlocks and turns off a taught rule."
 split_recommended: false
 depends_on: [ACD-477, DL-130]
 unblocks: [F3-579]
 acceptance_criteria:
-- Taught-rule lock and revocation remain Instructions/Your rules actions. cmd.chat.teach.set_lock is the
-  explicit user lock/unlock; automated memory upkeep cannot weaken it. cmd.chat.teach.revoke checks current
-  revision, sets revoked_at and prevents old versions returning; its inline confirmation and explicit
-  user-operation receipt remain. Remove Memory-sheet rule-revoke producers and automatic memory rule-change
-  proposal panels. The user opens Instructions/Teach for requested edits; Memory never edits a standing
-  rule.
+  - "Written instructions and saved notes use their separate existing owners; no Memory rule editor, lock/unlock, conflict or rollback control exists."
+  - "Legacy protected records retain their internal safeguards without ordinary UI producers."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -478,6 +465,7 @@ source_lineage:
 - 'IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)'
 - Plans/Decision_Log.md#DL-130
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "cmd.chat.teach.set_lock"
   - "cmd.chat.teach.revoke"

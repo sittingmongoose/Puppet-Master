@@ -460,25 +460,21 @@ What Teach stores:
 - recurring environment facts such as canonical commands, repository structure, or approval expectations
 - negative constraints such as "never edit derived files" or "always plan before execution for risky tasks"
 
-Persistence scope:
-- each taught item MUST declare a scope before commit: `thread`, `project`, or `user`
-- `thread` scope persists only with the current thread and its descendants where lineage explicitly carries that memory
-- `project` scope persists across future threads in the same project/workspace
-- `user` scope persists as a user-level preference only when the content is not project-confidential; the user asserts that explicitly (`public_safe`) before `user` can be chosen, and confirm refuses `user` scope without it (ACD-477)
-- an edit (`mode: correct`) may keep or narrow a rule's scope but never widen it; a wider scope is a new rule
-- persisted Teach records store at minimum `memory_id`, `scope`, `source_thread_id`, `author_message_id`, `captured_at`, and `normalized_fact`, plus optional `supersedes_memory_id` / `revoked_at`
+Persistence scope and user controls (DL-475):
+- Saved notes use only This project and Every project, through the same Memory page and AMS-141 Add/Edit/Delete contracts. Teacher may offer an explicit save, but one-off guidance never saves automatically.
+- Old thread/project/user Teach codecs remain readable for retained records; thread-private content is not a new visible memory level or a helper handoff.
+- Source identity, provenance, version/supersession/conflict, legacy lock protection and rollback custody remain internal. No lock/unlock, conflict chooser, source inspector or rollback control is shown.
+- New ordinary capture does not set a legacy lock or silently broaden availability; secret checks, source restrictions, stale-revision refusal and protected-record safeguards still apply.
+- Deliberately written rules live in Settings > Personas & Crews > Defaults > Standing instructions, as Rules for every project and Rules for this project, through the existing instruction writer. Teach is separate from the saved-note Memory page.
 
 Effect on future responses:
-- taught knowledge is retrieved into future prompt assembly as explicit memory/context rather than as undocumented hidden prompt mutation
-- when a taught fact materially changes an answer, plan, or execution choice, the assistant should be able to disclose that the response was influenced by taught memory
-- conflicting teachings do not silently overwrite prior knowledge; PM records supersession or revocation so the user can audit why a newer fact won. When a similar taught rule exists, confirm waits for the user's explicit choice between replacing it (`conflict_resolution: replace`, recorded as `supersedes_memory_id`) and keeping both (`keep_both`) (ACD-477)
-- taught knowledge may influence future responses, planning posture, tool-selection defaults, and code-generation choices only within its approved persistence scope
+- Saved notes may affect future work only under their authorized scope and source restrictions; helper reads remain permission-checked and read-only.
+- Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown.
+- Ordinary task evidence and requested instruction editing keep their own owners; memory use is never cited or proved by an inclusion record.
 
 Safety and audit rules:
-- users can inspect, narrow, supersede, or revoke taught knowledge later
-- turning one rule off is `cmd.chat.teach.revoke`, and locking or unlocking one rule is `cmd.chat.teach.set_lock`, which is the explicit user unlock this section's first paragraph requires (DL-130, ACD-481)
-- Teach MUST NOT persist secrets, tokens, passwords, or other credentials; the capture step screens the text before confirm, says in words when it looks like a secret, and confirm stays refused until it is removed
-- ordinary one-off chat instructions do not become taught knowledge unless the user explicitly confirms persistence
+- One-off Teacher guidance is not automatically saved, and secrets are never persisted.
+- Internal history, conflicts, legacy protections and deletion suppression remain enforceable without a user workbench.
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md
 
@@ -2028,7 +2024,7 @@ Rule: For Assistant turns with a selected project, chat context assembly MUST ca
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/assistant-memory-subsystem.md#8-integration-points, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
 
-Rule: Automatic memory injection in chat MUST apply eligibility gating per the Assistant-memory SSOT (Verified-only by default; any Unverified inclusion requires explicit user action).
+Rule: Automatic memory injection in chat MUST apply AMS-014 support and source/permission gating. Legacy manual-verification or pinned-Unverified bypasses remain disabled under SSYS-059; no user verification/pin action admits unsupported claims.
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
 
@@ -2040,7 +2036,7 @@ Rule: Authorized read-only helper access follows AMS-026; private app-thread and
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 
-Rule: Gist Review actions in Assistant chat MUST dispatch canonical `cmd.chat.memory.*` UI command IDs from `Plans/UI_Command_Catalog.md` and MUST NOT use ad-hoc command identifiers.
+Rule (DL-475): the one Memory page/sheet dispatches only the current Add/Edit/Delete and shared-page navigation contracts from `Plans/UI_Command_Catalog.md`; no Gist Review, verification, pin, capsule-preview, source, lock/conflict or upkeep control is produced. Retained legacy command IDs are internal compatibility/support only.
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ### 17.5 Project retrieval injection (chat/code/logs) — “RAG” for long threads (project-only)
@@ -4824,15 +4820,21 @@ plan_unit_id: ACD-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach is an explicit capture workflow for durable codebase knowledge, user preferences, and workflow constraints. It uses user-locked records and requires explicit user confirmation before storage; it is not a separate closed mode_overlay.
+canonical_text: >-
+  Teach is explicit deliberate standing-instruction capture through its existing writer at Settings
+  > Personas & Crews > Defaults > Standing instructions. It requires confirmation before storage,
+  preserves secret/privacy/revision and retained protected-record safeguards internally, and creates
+  no separate closed mode_overlay. A requested saved note instead uses AMS-141 Add/Edit/Delete on
+  the shared Memory page at This project or Every project; no lock/unlock, conflict, source or
+  rollback controls appear.
 gui_related: false
 gui_classification_reason: Teach capture and memory persistence behavior are backend/chat workflow behavior rather than visual implementation.
 depends_on: []
 unblocks: [ACD-021, ACD-022]
 acceptance_criteria:
-  - Teach may be invoked through /teach or equivalent natural-language persistence intent.
-  - Persistence requires explicit user-confirming action before knowledge is stored.
-  - Teach does not create a separate closed mode_overlay.
+  - "Teach opens the existing written-instruction owner through /teach or equivalent deliberate intent and persists only after confirmation."
+  - "Saved notes reuse AMS-141 and the two allowed levels without a separate capture or inspection workflow."
+  - "Legacy protected-record state is internal and Teach creates no separate closed mode_overlay."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4848,6 +4850,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "user-locked"
   - "/teach"
@@ -4916,23 +4919,19 @@ plan_unit_id: ACD-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach scope, conflict/supersession, revocation and secret exclusion remain auditable instruction
-  safety rules. Inclusion records are internal and never proof of compliance. Routine replies show no
-  memory-use citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers,
-  verification badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to
-  memory · View line appear; View opens the same Memory page as a sheet and highlights the saved note.
-  Requested save/edit confirmation stays brief. Task evidence and ordinary links remain available.
+canonical_text: >-
+  Teach and saved-note persistence retain scope, secret exclusion, revisions and legacy protections
+  internally; inclusion records prove no compliance. Only a durable successful save may add Saved to
+  memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation,
+  receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown.
+  Ordinary task evidence remains available; written instructions use their separate owner.
 gui_related: false
 gui_classification_reason: Teach audit and secret-exclusion behavior are memory governance requirements, not GUI implementation.
 depends_on: [ACD-020, ACD-021]
 unblocks: []
 acceptance_criteria:
-- Teach scope, conflict/supersession, revocation and secret exclusion remain auditable instruction safety
-  rules. Inclusion records are internal and never proof of compliance. Routine replies show no memory-use
-  citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers, verification
-  badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to memory · View
-  line appear; View opens the same Memory page as a sheet and highlights the saved note. Requested save/edit
-  confirmation stays brief. Task evidence and ordinary links remain available.
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
+  - "No source/verification/rule receipt, named-note hover, conflict/lock/rollback control or third saved-note level is exposed."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4949,6 +4948,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "explicit memory/context"
   - "MUST NOT persist secrets, tokens, passwords, or other credentials"
@@ -13038,7 +13038,9 @@ canonical_text: Memory is one saved-note page, opened from Settings and as that 
   world claims still require scoped current evidence. Edits invalidate stale summary/index eligibility
   and are checked internally; no pinned/manual bypass can make unsupported claims proven.
 gui_related: true
-gui_classification_reason: Gist Review actions and UI command IDs are visible chat commands.
+gui_classification_reason: >-
+  The shared Memory page/sheet has current CRUD/navigation controls only; Gist Review is a
+  historical identity and produces no separate surface.
 depends_on: [ACD-186]
 unblocks: []
 acceptance_criteria:
@@ -13070,6 +13072,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "cmd.chat.memory.*"
 negative_constraints:
@@ -23944,11 +23947,14 @@ plan_unit_id: ACD-426
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach is deliberate standing-instruction capture; Teacher is a Persona in an ordinary
-  Assistant chat. Help and natural-language Teacher summons retain the shared chat runtime. /teach opens
-  cmd.chat.teach.capture, the same Teach sheet used by Save as a rule; explicit scoped confirm/cancel,
-  screening, lock, narrowing and revocation remain. Reusable learned notes use the separate Memory page
-  Add/Edit/Delete, without the duplicate verification document or capture ceremony for a user preference.
+canonical_text: >-
+  Teach is deliberate standing-instruction capture; Teacher is a Persona in an ordinary Assistant
+  chat. Help and natural-language Teacher summons retain the shared chat runtime. /teach opens
+  cmd.chat.teach.capture and the existing instruction owner at Settings > Personas & Crews >
+  Defaults > Standing instructions. Confirm/cancel, secret screening, revision checks and retained
+  protected-record safeguards remain; no user lock/unlock, conflict, source or rollback control is
+  shown. Reusable saved notes use the separate shared Memory page Add/Edit/Delete at This project or
+  Every project, without a third visible scope or duplicate verification document.
 gui_related: true
 gui_classification_reason: Defines Teacher-in-chat threads, help launches, activity cards, capture UI, and thread
   states.
@@ -23960,11 +23966,8 @@ unblocks:
 - G-026
 - ATS-014
 acceptance_criteria:
-- Teach is deliberate standing-instruction capture; Teacher is a Persona in an ordinary Assistant chat.
-  Help and natural-language Teacher summons retain the shared chat runtime. /teach opens cmd.chat.teach.capture,
-  the same Teach sheet used by Save as a rule; explicit scoped confirm/cancel, screening, lock, narrowing
-  and revocation remain. Reusable learned notes use the separate Memory page Add/Edit/Delete, without
-  the duplicate verification document or capture ceremony for a user preference.
+  - "Teach and Teacher remain distinct, using the existing chat and written-instruction owners."
+  - "Saved notes use only This project and Every project on the one Memory page; no lock/conflict/source/rollback controls, receipts or duplicate document."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -24015,6 +24018,7 @@ source_lineage:
 - Concepts/PMConcept.html#chat-thread-sidebar
 - Concepts/PMConcept.html#switchToChatThread
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0090
 - atom-0093
@@ -24138,7 +24142,7 @@ owner_hints:
 - Plans/Glossary.md
 ```
 
-Amended 2026-09-27: the explicit capture card through which an answer is saved as taught memory is the Teach sheet, prefilled from the answer (DL-127, ACD-477); there is no inline capture card in the chat. The later unlock and revoke actions are `cmd.chat.teach.set_lock` and `cmd.chat.teach.revoke` (DL-130, ACD-481).
+DL-475 supersedes the 2026-09-27 capture presentation: requested saved notes use the shared Memory page and AMS-141 Add/Edit/Delete at This project or Every project. Deliberate written rules use the existing Teach/instruction writer at Settings > Personas & Crews > Defaults > Standing instructions. No inline capture card or user lock/unlock, conflict/source/rollback control appears; cmd.chat.teach.set_lock remains internal compatibility only, while explicit instruction revocation stays with its owner.
 
 ## Ledger Compile Addendum - pldg-20260627-001-feature-intake
 
@@ -27460,39 +27464,31 @@ plan_unit_id: ACD-477
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: 'Teach capture and confirm (section 6). The wand''s Teach…, /teach, natural-language intent
-  and Save as a rule… in a message''s More row each dispatch cmd.chat.teach.capture with mode new, prefilled
-  with the proposed rule text and a reference to its source message; the user''s message stays in the
-  chat as sent. Editing a taught rule dispatches cmd.chat.teach.capture with mode correct. Capture only
-  opens the capture step, and the capture step is the Teach sheet (FinalGUISpec F3-579) for every entry
-  point, /teach and natural-language intent included: there is no inline capture card in the chat (DL-127).
-  The save action is cmd.chat.teach.confirm, and Cancel, close and Escape are cmd.chat.teach.cancel, which
-  persists nothing. Scope is exactly one of thread, project and user, shown nested from narrowest to widest
-  as This thread, This project and Every project. The user scope needs public_safe: the user''s explicit
-  statement that the rule holds no private names, links or code; without it confirm refuses user scope
-  and says why. In correct mode the scope may stay or narrow but never widen; a wider rule is a new rule.
-  Before confirm the capture step screens the text for passwords, keys and tokens; when one is found it
-  says so in words and confirm stays refused until it is removed. When a similar taught rule is in reach,
-  the capture step shows the old and the new wording side by side and confirm waits for the user''s choice:
-  replace the old rule, which records supersedes_memory_id and keeps the old version in history, or keep
-  both. The user may also mark the rule locked at confirm (ACD-481). The confirm request is TeachConfirmRequest
-  {scope, public_safe, locked, conflict_resolution: replace:<memory_id> | keep_both, supersedes_memory_id?}.
-  Each confirmed change leaves one receipt line in the chat (saved, or updated to a new version), and
-  consecutive saves coalesce into one line. DL-475 retires ordinary Followed/Missed rule receipts and
-  the taught_rule_check reply-fix producer; internal inclusion/check records remain. In No project omit
-  the project choice, retain thread and user with the user label Everywhere, and preserve public_safe,
-  screening, conflict, locked-rule and no-widening checks. Settings'' Computer layer changes behavior
-  defaults, not a new Teach memory scope. Conversion keeps thread rules thread-wide and does not widen
-  them.'
+canonical_text: >-
+  The wand Teach, /teach, natural-language instruction intent and Save as a rule open the existing
+  Teach step through cmd.chat.teach.capture; capture persists nothing and Cancel remains
+  cmd.chat.teach.cancel. Written instruction changes use their instruction owner and return to
+  Settings > Personas & Crews > Defaults > Standing instructions. A Teacher answer offered as a
+  saved note instead uses the shared Memory page and AMS-141 Add/Edit/Delete owner. This project and
+  Every project are the only visible saved-note levels. Add/Edit/Delete use AMS-141 quiet Memory
+  contracts; automatic fading/archiving, deletion suppression, privacy and existing source
+  restrictions remain. Private app-thread records stay private and are not a third visible level. No
+  thread-level selector, locked checkbox, Replace/Keep both chooser, source preview or automatic
+  save/update receipt is shown. Existing TeachConfirmRequest thread/public_safe/locked/conflict
+  fields are compatibility/storage inputs, not an ordinary UI contract. Legacy protections, privacy
+  checks and revision refusal remain; capture never changes the Persona to Teacher. Only a durable
+  successful save may add Saved to memory · View to a reply; View opens the one Memory page as a
+  sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or
+  Followed/Missed decoration is shown.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
 depends_on: [ACD-469, DL-127, DL-116, AMS-053]
 unblocks: [F3-570, F3-574, F3-579]
 acceptance_criteria:
-- Teach capture/confirm/cancel, public_safe, screening, lock, narrowing and explicit conflict choices
-  remain.
-- No ordinary Followed/Missed receipt or taught_rule_check fix-link producer remains.
+  - "All saved-note entry points reuse the same Memory page and typed Add/Edit/Delete owner at This project or Every project."
+  - "Teach persists nothing on open/cancel and uses the existing written-instruction owner; no lock/conflict/source/rollback picker or third saved-note level appears."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27523,6 +27519,7 @@ source_lineage:
   wizard/prd builder/orchestrator that isn''t.'
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -27546,12 +27543,8 @@ preserved_exact_tokens:
   - "Missed 1 of your rules"
   - "AMS-053"
 negative_constraints:
-  - "Do not persist anything on capture."
-  - "Do not let an edit widen a rule's scope."
-  - "Do not save text that looks like a password, key or token."
-  - "Do not overwrite a similar rule without the user's replace choice."
-  - "Do not render an inline capture card for /teach or natural-language intent."
-  - "Do not show a rule as followed because it was included in the reply's context."
+  - "Do not persist on capture/cancel, save secrets, silently broaden availability, overwrite protected records or restore old capture controls."
+  - "Do not turn /teach into a Teacher Persona switch or an alternate Memory manager."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -27777,24 +27770,22 @@ plan_unit_id: ACD-481
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Taught-rule lock and revocation remain Instructions/Your rules actions. cmd.chat.teach.set_lock
-  is the explicit user lock/unlock; automated memory upkeep cannot weaken it. cmd.chat.teach.revoke checks
-  current revision, sets revoked_at and prevents old versions returning; its inline confirmation and explicit
-  user-operation receipt remain. Remove Memory-sheet rule-revoke producers and automatic memory rule-change
-  proposal panels. The user opens Instructions/Teach for requested edits; Memory never edits a standing
-  rule.
+canonical_text: >-
+  Written instructions remain directly editable through Settings > Personas & Crews > Defaults >
+  Standing instructions. Memory never edits a standing instruction. Existing Teach lock/revocation
+  and version codecs remain for internal compatibility and protection; cmd.chat.teach.set_lock has
+  no ordinary GUI producer. No user lock/unlock or rollback control and no automatic memory
+  rule-change proposal panel is shown. Explicit user edits/deletions still use the owning
+  instruction or Memory writer with revision/privacy checks; automatic upkeep cannot weaken retained
+  protections.
 gui_related: true
 gui_classification_reason: "Defines how a user locks, unlocks and turns off a taught rule."
 split_recommended: false
 depends_on: [ACD-477, DL-130]
 unblocks: [F3-579]
 acceptance_criteria:
-- Taught-rule lock and revocation remain Instructions/Your rules actions. cmd.chat.teach.set_lock is the
-  explicit user lock/unlock; automated memory upkeep cannot weaken it. cmd.chat.teach.revoke checks current
-  revision, sets revoked_at and prevents old versions returning; its inline confirmation and explicit
-  user-operation receipt remain. Remove Memory-sheet rule-revoke producers and automatic memory rule-change
-  proposal panels. The user opens Instructions/Teach for requested edits; Memory never edits a standing
-  rule.
+  - "Written instructions and saved notes use their separate existing owners; no Memory rule editor, lock/unlock, conflict or rollback control exists."
+  - "Legacy protected records retain their internal safeguards without ordinary UI producers."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27815,6 +27806,7 @@ source_lineage:
 - 'IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)'
 - Plans/Decision_Log.md#DL-130
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "cmd.chat.teach.set_lock"
   - "cmd.chat.teach.revoke"
@@ -28138,156 +28130,157 @@ plan_unit_id: ACD-500
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: 'Everything the chat and its wizards open lands in the home centre through the one opening module (Plans/FinalGUISpec.md#F3-634,
-  Plans/DRY_Rules.md#DR-071); the chat keeps no placement or dedupe rule of its own (DL-180, D7, D8). Files open by F3-634''s
-  file rules from every place a person clicks one in the chat: a file name or path in a message or card, a diff view,
-  a Changes row of Activity Detail, a transcript file record, and a Read: or Edited: entry of the files-touched strip.
-  A single click opens the panel''s one preview tab, with an italic label, which the next single click replaces; a double
-  click, an edit or dragging the tab keeps it; a file already open anywhere is revealed where it is, never opened twice;
-  Alt+click opens it in a new panel. A diff opens the editor in its diff mode at the file and line it names, never a
-  diff drawn by the chat. Everything else the user clicks in the chat opens and takes focus, each as its tab kind (F3-635):
-  a plan revision, a Deep Plan document or its discovery rounds as a plan tab (ACD-455), every Open plan button and a
-  bound Goal''s Open exact Plan · Vn opening that exact version through cmd.chat.plan.open_version (DL-157, Plans/UI_Command_Catalog.md#UCC-176),
-  the Plan''s own tab while that version is current and its retained read-only document otherwise, never Plan Details;
-  a collaboration run view and its evidence as a run tab (ACD-480); a subagent''s or a helper''s history as a transcript
-  tab (ACD-485); the thread''s More Details as that thread''s context tab, one per thread (ACD-448); a fetched page or
-  a link as a browser tab; a search, MCP, app-inspector or work record as a record tab; the rules list, Gist Review,
-  a revert''s files, a debug investigation, a lens source and Wonderer results as document tabs; an artifact card''s
-  Open, an attachment''s Open and an artifact embedded in a plan as the artifact viewer tab (Plans/Runtime_Artifacts_Panel.md#RAP-065),
-  or the editor for a file; a Mermaid diagram card''s Open in editor as an editor buffer tab holding the diagram''s source,
-  and its Open detached preview as the artifact viewer tab showing the rendered diagram, never a separate window (section
-  28); a command''s session as its terminal tab (ACD-502). Each open dispatches the route Plans/UI_Command_Catalog.md#UCC-200
-  lists for the thing opened, with the placement fields of Plans/Contracts_V0.md#CV-360. What an agent opens by itself,
-  for example a Deep Plan document it wrote (ACD-041) or a terminal it started (ACD-502), lands as a background tab with
-  the hollow square and a polite announcement, never takes keyboard focus and never changes the active tab of a panel
-  the user is typing in; files an agent opens open kept, and terminals, browsers, dashboards and the tool tabs go where
-  F3-634''s kind affinity puts them. These stay out of the panels: Activity Detail stays inside the chat (D3, F3-637,
-  v3 item 2); the wand''s setup sheets, the debug-target prompt and the thread dialogs are app modals in the one overlay
-  root (Plans/DRY_Rules.md#DR-067); Plan Export and PDF are a download or a print window; Send to Planning Wizard goes
-  to the Planning Wizard page; an attachment''s More Info stays a popover. The chat''s Goal tab is gone (DL-147): View
-  goal shows the Goal panel of Activity Detail. The 5.6 Pro chat''s contract with its editor pane maps onto the module
-  this way. Open or focus by a stable identity is the module''s one id, one tab rule: the chat names the thing by its
-  domain identity (a plan revision, a run, a child run''s thread, a thread''s context, a file path, an artifact and its
-  version, a terminal session), the tab kind derives the tab id, and aliases resolve to one tab, so a plan''s query form
-  and its plan id open one tab. The chat supplies the label of a tab whose body it draws and may change it. It draws
-  into a body the host owns and redraws it when asked; the host owns the strip, the panel and the placement (F3-635''s
-  host contract). Closing is cmd.panel_tab.close (cmd.editor.close_tab is its alias), and the host tells the chat when
-  a tab it draws has closed, so a run card gets its controls back. The host tells the chat which tab is active in each
-  panel, so Plans/FinalGUISpec.md#F3-569''s run-card rule holds while a run tab is active. Narrow reveal is F3-634''s
-  narrow rule and Plans/FinalGUISpec.md#F3-636''s panel switcher. The chat is never a tab. Return to chat retires for
-  Home: no tab ever covers the chat, and when the chat has folded to its narrow edge strip that strip opens it again
-  (F3-636). The chat column is F3-637''s: fixed on the right from the title bar to the status bar, never a tab, never
-  in the split tree and never moved inside the window; Pop out in the desktop app is its only way to move and Dock back
-  returns it to its column; the web client offers no Pop out and the chat stays in its column (F3-637) (Plans/UI_Command_Catalog.md#UCC-203).
-  A popped-out chat starts back in its column after a restart: the pop-out is never saved (DL-187, D32). Showing and
-  hiding the chat are F3-637''s (cmd.panel.switch with chat, UCC-203); the chat stays an entry of the left rail, which
-  shows or hides the column on every page (DL-187, D40). The chat has no layout mode to choose: the Chat Layout setting
-  retires (Plans/Settings_System.md#SSYS-050, DL-187). Its default width, drag range, the limit that keeps the centre
-  wide enough, the one that keeps the Usage page''s board at least 400 px wide, how it eases and folds in narrow windows,
-  and the choice Keep the chat open in narrow windows, which sits on the chat''s own header menu and is not a Settings
-  row, are F3-637''s and F3-636''s; they replace every chat minimum this document stated (ACD-458, ACD-480, v3 item 19).
-  The chat sizes itself by its own column, never by the window (ACD-501). The History list is the 5.6 Pro chat''s and
-  the only thread-history list (ACD-444''s Chats rail goes when the chat is ported). It opens as a flyout over the chat
-  by default; pinning it widens the column by the list''s own width instead of narrowing the messages. The pin is kept
-  in the chat column state of the home layout record (Plans/storage-plan.md#SP-330), and the setting general.interaction.chat-history-list
-  (Plans/Settings_System.md#SSYS-050) gives only its starting value where no choice is saved. Activity Detail stays inside
-  the chat (F3-637, ACD-453, v3 item 2), never a panel tab. The 5.6 Pro chat''s inline Shell box is replaced by a compact
-  command card (D27). It shows the command, the folder it ran in, its status as a glyph and words, how long it ran (counting
-  while it runs), the last lines of its output as plain text, and who ran it. Amended 2026-10-10 (DL-185, terminal SPEC
-  section 11 at 01c5e78c42): the status words are Running, Needs input, Done, Failed and Interrupted, and canon adds
-  Ended with the earlier session, described below; a stopped command says its exit code in words after its status, "Failed
-  · exited 101", "Done · exited 0", "Interrupted · exited 130", and a failed command with no exit code reads Failed alone,
-  so the exit code is part of the status. Interrupted is muted and still, in the tone of the one status set''s Skipped
-  mark (Plans/FinalGUISpec.md#F3-585), with no motion. The elapsed time is set in tabular figures and updated once a
-  second from one timer that every card shares, so the line never shifts. The output is ACD-126''s 5-line collapsed and
-  15-line expanded preview of the last lines: the lines above the window are counted at the top as "N earlier lines"
-  ("1 earlier line"), the first row fading into that count; lines keep their spacing, never wrap and scroll sideways,
-  a cut-off line fading at its edge; a line is cut at 1000 characters; a finished command with no output says "No output";
-  expanded also shows the whole command and folder. Who ran it: "You ran in <folder>", or the terminal gutter''s agent
-  mark and "<Agent> ran in <folder>" with the name in the primary ink, from the command record''s by (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183).
-  In a chat 360 px wide the failure line wraps after / and :: so a file:line stays whole, and who and where take a line
-  of their own. Nothing on the card moves on first paint; a status change rolls the status word over while its line slides
-  to its new width, the glyph settles in each look''s motion language, and the exit words, the failure line and Rerun
-  in Terminal come in after; new output scrolls the window a row at a time, jumping when more than 3 lines arrive at
-  once; expanding and collapsing grow and shrink from the last line; under Reduced Motion only 120 ms fades remain. Text
-  reaches 4.5:1 and marks 3:1 in every look and mode, hover states included. Its states read the command card states
-  of ACD-146 and are never a second lifecycle: running for starting, running and restoring while the restore is under
-  way; ok (Done) for exited with exit code 0; failed for failed and exited with any other code; interrupted for terminated;
-  waiting (Needs input) for attention_required; ended for disconnected before the command finished and for a restore
-  that did not bring its session back. Ended is honest about what is not known: a command whose session ended while it
-  still ran (the page reloaded, the app restarted or its session disconnected) is neither done nor failed, so the card
-  shows the words Ended with the earlier session, with no exit code, never Running, Done or Failed, as the terminal''s
-  own command mark does (SMPFS-180''s indeterminate finalisation, Plans/FinalGUISpec.md#F3-641). Its actions are 24 px
-  text buttons and follow its session: Open in Terminal, only while the command has a live terminal session, opens or
-  reveals that session''s terminal tab through F3-634 (ACD-502); Rerun in Terminal once the command has stopped (ACD-108,
-  ACD-502); View output only when there is no session (ACD-129). View output, and View output log in the card''s menu,
-  open the command''s retained output as an editor buffer tab: read-only, kept and never a preview, titled with its command
-  line, opened and taking focus through F3-634 by cmd.panel_tab.open with an editor buffer spec, the same tab the terminal''s
-  Open output in an editor tab opens (Plans/FinalGUISpec.md#F3-641, Plans/UI_Command_Catalog.md#UCC-201). The chat never
-  draws the output in a viewer of its own. Output lines keep their spacing, never wrap and scroll sideways. The card
-  has no pill, no coloured side stripe and no box nested inside a card, and the chat never draws a terminal of its own.
-  Explaining commands is the Teacher persona''s job in the chat (Plans/Personas.md section 11.8, DL-181, D19): when the
-  user asks about a command or its output, Teacher answers as an ordinary reply in the thread. The command card and the
-  terminal carry no Explain action, and Teacher never reads a terminal on its own and never types into one. This supersedes
-  the 5.6 Pro chat''s own editor pane as the host of what it opens and its inline Shell box (concept lineage), the left
-  editor/document tab system and Return to chat of ACD-455 and v3 item 15 for Home, the "beside the chat" wording of
-  ACD-480 and ACD-485, the 360 px chat minimum of ACD-458 and v3 item 19, and the chat''s Goal tab. Amended DL-260, Jared
-  2026-10-31: only real product behavior remains an implementation requirement. DL-259 FX-1 final, 2026-10-31: an export/print
-  attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt
-  and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created.
-  A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure
-  or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command,
-  receipt family or platform-detection mechanism.'
+canonical_text: >-
+  Everything the chat and its wizards open lands in the home centre through the one opening module
+  (Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071); the chat keeps no placement or dedupe
+  rule of its own (DL-180, D7, D8). Files open by F3-634's file rules from every place a person
+  clicks one in the chat: a file name or path in a message or card, a diff view, a Changes row of
+  Activity Detail, a transcript file record, and a Read: or Edited: entry of the files-touched
+  strip. A single click opens the panel's one preview tab, with an italic label, which the next
+  single click replaces; a double click, an edit or dragging the tab keeps it; a file already open
+  anywhere is revealed where it is, never opened twice; Alt+click opens it in a new panel. A diff
+  opens the editor in its diff mode at the file and line it names, never a diff drawn by the chat.
+  Everything else the user clicks in the chat opens and takes focus, each as its tab kind (F3-635):
+  a plan revision, a Deep Plan document or its discovery rounds as a plan tab (ACD-455), every Open
+  plan button and a bound Goal's Open exact Plan · Vn opening that exact version through
+  cmd.chat.plan.open_version (DL-157, Plans/UI_Command_Catalog.md#UCC-176), the Plan's own tab while
+  that version is current and its retained read-only document otherwise, never Plan Details; a
+  collaboration run view and its evidence as a run tab (ACD-480); a subagent's or a helper's history
+  as a transcript tab (ACD-485); the thread's More Details as that thread's context tab, one per
+  thread (ACD-448); a fetched page or a link as a browser tab; a search, MCP, app-inspector or work
+  record as a record tab; the written-rules owner, a revert's files, a debug investigation, a lens
+  source and Wonderer results as document tabs; an artifact card's Open, an attachment's Open and an
+  artifact embedded in a plan as the artifact viewer tab (Plans/Runtime_Artifacts_Panel.md#RAP-065),
+  or the editor for a file; a Mermaid diagram card's Open in editor as an editor buffer tab holding
+  the diagram's source, and its Open detached preview as the artifact viewer tab showing the
+  rendered diagram, never a separate window (section 28); a command's session as its terminal tab
+  (ACD-502). Each open dispatches the route Plans/UI_Command_Catalog.md#UCC-200 lists for the thing
+  opened, with the placement fields of Plans/Contracts_V0.md#CV-360. What an agent opens by itself,
+  for example a Deep Plan document it wrote (ACD-041) or a terminal it started (ACD-502), lands as a
+  background tab with the hollow square and a polite announcement, never takes keyboard focus and
+  never changes the active tab of a panel the user is typing in; files an agent opens open kept, and
+  terminals, browsers, dashboards and the tool tabs go where F3-634's kind affinity puts them. These
+  stay out of the panels: Activity Detail stays inside the chat (D3, F3-637, v3 item 2); the wand's
+  setup sheets, the debug-target prompt and the thread dialogs are app modals in the one overlay
+  root (Plans/DRY_Rules.md#DR-067); Plan Export and PDF are a download or a print window; Send to
+  Planning Wizard goes to the Planning Wizard page; an attachment's More Info stays a popover. The
+  chat's Goal tab is gone (DL-147): View goal shows the Goal panel of Activity Detail. The 5.6 Pro
+  chat's contract with its editor pane maps onto the module this way. Open or focus by a stable
+  identity is the module's one id, one tab rule: the chat names the thing by its domain identity (a
+  plan revision, a run, a child run's thread, a thread's context, a file path, an artifact and its
+  version, a terminal session), the tab kind derives the tab id, and aliases resolve to one tab, so
+  a plan's query form and its plan id open one tab. The chat supplies the label of a tab whose body
+  it draws and may change it. It draws into a body the host owns and redraws it when asked; the host
+  owns the strip, the panel and the placement (F3-635's host contract). Closing is
+  cmd.panel_tab.close (cmd.editor.close_tab is its alias), and the host tells the chat when a tab it
+  draws has closed, so a run card gets its controls back. The host tells the chat which tab is
+  active in each panel, so Plans/FinalGUISpec.md#F3-569's run-card rule holds while a run tab is
+  active. Narrow reveal is F3-634's narrow rule and Plans/FinalGUISpec.md#F3-636's panel switcher.
+  The chat is never a tab. Return to chat retires for Home: no tab ever covers the chat, and when
+  the chat has folded to its narrow edge strip that strip opens it again (F3-636). The chat column
+  is F3-637's: fixed on the right from the title bar to the status bar, never a tab, never in the
+  split tree and never moved inside the window; Pop out in the desktop app is its only way to move
+  and Dock back returns it to its column; the web client offers no Pop out and the chat stays in its
+  column (F3-637) (Plans/UI_Command_Catalog.md#UCC-203). A popped-out chat starts back in its column
+  after a restart: the pop-out is never saved (DL-187, D32). Showing and hiding the chat are
+  F3-637's (cmd.panel.switch with chat, UCC-203); the chat stays an entry of the left rail, which
+  shows or hides the column on every page (DL-187, D40). The chat has no layout mode to choose: the
+  Chat Layout setting retires (Plans/Settings_System.md#SSYS-050, DL-187). Its default width, drag
+  range, the limit that keeps the centre wide enough, the one that keeps the Usage page's board at
+  least 400 px wide, how it eases and folds in narrow windows, and the choice Keep the chat open in
+  narrow windows, which sits on the chat's own header menu and is not a Settings row, are F3-637's
+  and F3-636's; they replace every chat minimum this document stated (ACD-458, ACD-480, v3 item 19).
+  The chat sizes itself by its own column, never by the window (ACD-501). The History list is the
+  5.6 Pro chat's and the only thread-history list (ACD-444's Chats rail goes when the chat is
+  ported). It opens as a flyout over the chat by default; pinning it widens the column by the list's
+  own width instead of narrowing the messages. The pin is kept in the chat column state of the home
+  layout record (Plans/storage-plan.md#SP-330), and the setting
+  general.interaction.chat-history-list (Plans/Settings_System.md#SSYS-050) gives only its starting
+  value where no choice is saved. Activity Detail stays inside the chat (F3-637, ACD-453, v3 item
+  2), never a panel tab. The 5.6 Pro chat's inline Shell box is replaced by a compact command card
+  (D27). It shows the command, the folder it ran in, its status as a glyph and words, how long it
+  ran (counting while it runs), the last lines of its output as plain text, and who ran it. Amended
+  2026-10-10 (DL-185, terminal SPEC section 11 at 01c5e78c42): the status words are Running, Needs
+  input, Done, Failed and Interrupted, and canon adds Ended with the earlier session, described
+  below; a stopped command says its exit code in words after its status, "Failed · exited 101",
+  "Done · exited 0", "Interrupted · exited 130", and a failed command with no exit code reads Failed
+  alone, so the exit code is part of the status. Interrupted is muted and still, in the tone of the
+  one status set's Skipped mark (Plans/FinalGUISpec.md#F3-585), with no motion. The elapsed time is
+  set in tabular figures and updated once a second from one timer that every card shares, so the
+  line never shifts. The output is ACD-126's 5-line collapsed and 15-line expanded preview of the
+  last lines: the lines above the window are counted at the top as "N earlier lines" ("1 earlier
+  line"), the first row fading into that count; lines keep their spacing, never wrap and scroll
+  sideways, a cut-off line fading at its edge; a line is cut at 1000 characters; a finished command
+  with no output says "No output"; expanded also shows the whole command and folder. Who ran it:
+  "You ran in <folder>", or the terminal gutter's agent mark and "<Agent> ran in <folder>" with the
+  name in the primary ink, from the command record's by
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183). In a chat 360 px wide the failure line
+  wraps after / and :: so a file:line stays whole, and who and where take a line of their own.
+  Nothing on the card moves on first paint; a status change rolls the status word over while its
+  line slides to its new width, the glyph settles in each look's motion language, and the exit
+  words, the failure line and Rerun in Terminal come in after; new output scrolls the window a row
+  at a time, jumping when more than 3 lines arrive at once; expanding and collapsing grow and shrink
+  from the last line; under Reduced Motion only 120 ms fades remain. Text reaches 4.5:1 and marks
+  3:1 in every look and mode, hover states included. Its states read the command card states of
+  ACD-146 and are never a second lifecycle: running for starting, running and restoring while the
+  restore is under way; ok (Done) for exited with exit code 0; failed for failed and exited with any
+  other code; interrupted for terminated; waiting (Needs input) for attention_required; ended for
+  disconnected before the command finished and for a restore that did not bring its session back.
+  Ended is honest about what is not known: a command whose session ended while it still ran (the
+  page reloaded, the app restarted or its session disconnected) is neither done nor failed, so the
+  card shows the words Ended with the earlier session, with no exit code, never Running, Done or
+  Failed, as the terminal's own command mark does (SMPFS-180's indeterminate finalisation,
+  Plans/FinalGUISpec.md#F3-641). Its actions are 24 px text buttons and follow its session: Open in
+  Terminal, only while the command has a live terminal session, opens or reveals that session's
+  terminal tab through F3-634 (ACD-502); Rerun in Terminal once the command has stopped (ACD-108,
+  ACD-502); View output only when there is no session (ACD-129). View output, and View output log in
+  the card's menu, open the command's retained output as an editor buffer tab: read-only, kept and
+  never a preview, titled with its command line, opened and taking focus through F3-634 by
+  cmd.panel_tab.open with an editor buffer spec, the same tab the terminal's Open output in an
+  editor tab opens (Plans/FinalGUISpec.md#F3-641, Plans/UI_Command_Catalog.md#UCC-201). The chat
+  never draws the output in a viewer of its own. Output lines keep their spacing, never wrap and
+  scroll sideways. The card has no pill, no coloured side stripe and no box nested inside a card,
+  and the chat never draws a terminal of its own. Explaining commands is the Teacher persona's job
+  in the chat (Plans/Personas.md section 11.8, DL-181, D19): when the user asks about a command or
+  its output, Teacher answers as an ordinary reply in the thread. The command card and the terminal
+  carry no Explain action, and Teacher never reads a terminal on its own and never types into one.
+  This supersedes the 5.6 Pro chat's own editor pane as the host of what it opens and its inline
+  Shell box (concept lineage), the left editor/document tab system and Return to chat of ACD-455 and
+  v3 item 15 for Home, the "beside the chat" wording of ACD-480 and ACD-485, the 360 px chat minimum
+  of ACD-458 and v3 item 19, and the chat's Goal tab. Amended DL-260, Jared 2026-10-31: only real
+  product behavior remains an implementation requirement. DL-259 FX-1 final, 2026-10-31: an
+  export/print attempt that fails before producing a PDF closes any unusable temporary print window
+  and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening
+  the print flow alone is not proof that a file was created. A receipt records only the artifact
+  owner’s actual result and never claims a successful PDF that was not made; failure or cancellation
+  leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export
+  command, receipt family or platform-detection mechanism. DL-475 overrides the historical Gist
+  Review document route: Memory opens the same saved-note page as a sheet, never an additional
+  rules/source/verification document.
 gui_related: true
 gui_classification_reason: Defines where everything the chat opens lands, the chat column as the chat reads it, the compact command card and how Teacher explains commands.
 split_recommended: false
 depends_on: [DL-180, DL-181, DL-185, DL-187, DL-188, DL-157, F3-634, F3-635, F3-636, F3-637, F3-569, F3-641, DR-071, CV-360, UCC-200, UCC-201, UCC-203, SP-330, SSYS-050, SMPFS-180, SMPFS-183, ACD-126, ACD-146]
 unblocks: [ACD-039, ACD-041, ACD-416, ACD-444, ACD-453, ACD-455, ACD-458, ACD-485, ACD-501, ATS-075]
 acceptance_criteria:
-- Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file
-  records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a
-  file already open anywhere, and opens a new panel on Alt+click, all through F3-634.
-- Plans, run views, transcripts, the thread's context, browsers, records, documents, artifacts and terminals the user
-  opens from the chat open as their F3-635 tab kinds and take focus; nothing the chat opens is drawn in a pane of its
-  own or as a centred modal.
-- A Mermaid diagram card's Open in editor opens its source in an editor tab and its Open detached preview opens the artifact
-  viewer tab, never a separate window (DL-180).
-- What an agent opens by itself lands as a background tab with the hollow square and an announcement and never takes
-  keyboard focus.
-- Activity Detail, the wand's setup sheets, Plan Export and Send to Planning Wizard never become panel tabs, and no Goal
-  tab exists.
-- Opening the same plan, run, child transcript or thread context twice reveals one tab; closing a tab the chat draws
-  tells the chat, and the active tab in each panel is reported to it.
-- The chat's width, drag range and narrow behaviour are F3-637's and F3-636's; no unit of this document states another
-  chat minimum, and no tab covers the chat at any width.
-- History is a flyout by default, pinning it widens the column by the list's width, the pin is saved in the home layout
-  record, and only one thread-history list exists after the port.
-- The command card shows the command, folder, status words with the exit code, elapsed time, the last lines with the
-  count of earlier lines, and who ran it; Open in Terminal appears only with a session and reveals its terminal tab;
-  Rerun in Terminal and View output follow ACD-108 and ACD-129.
-- 'Amended 2026-10-10 (DL-185, terminal SPEC section 11): a stopped command''s status reads Done · exited 0, Failed ·
-  exited <code> or Interrupted · exited <code>, and Failed alone when it has no exit code; Interrupted is muted and still;
-  the count of lines above the window reads N earlier lines at the top of the output; who ran it reads You ran in <folder>
-  or <Agent> ran in <folder> beside the agent mark; the elapsed time never shifts the line; a finished command with no
-  output reads No output; at 360 px the failure line keeps file:line whole; nothing moves on first paint and Reduced
-  Motion leaves only 120 ms fades; text reaches 4.5:1 and marks 3:1 in every look and mode.'
-- 'Amended 2026-10-10 (DL-187): a popped-out chat starts back in its column after a restart, the left rail''s Chat entry
-  shows or hides the column on every page, the chat offers no layout mode, and Keep the chat open in narrow windows is
-  on the chat''s header menu, not in Settings.'
-- 'Amended 2026-10-10 (DL-188, lead ruling F8): every Open plan button and a bound Goal''s Open exact Plan · Vn open
-  that version through cmd.chat.plan.open_version and the one opening module, never Plan Details.'
-- View output and View output log on a command with no terminal session open its output as a read-only, kept editor buffer
-  tab through F3-634 (cmd.panel_tab.open with an editor buffer spec), never a preview and never a viewer drawn by the
-  chat (DL-180, F3-641).
-- A command whose session ended while it still ran shows Ended with the earlier session with no exit code, never Running,
-  Done or Failed (SMPFS-180, F3-641).
-- The command card has no pill, no coloured side stripe and no nested box, and no terminal is drawn inside the chat.
-- Teacher explains a command only when the user asks, in the chat; no Explain action exists on the card or in the terminal.
-- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
-  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
-  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
-  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
-  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
+  - "Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a file already open anywhere, and opens a new panel on Alt+click, all through F3-634."
+  - "Plans, run views, transcripts, the thread's context, browsers, records, documents, artifacts and terminals the user opens from the chat open as their F3-635 tab kinds and take focus; nothing the chat opens is drawn in a pane of its own or as a centred modal."
+  - "A Mermaid diagram card's Open in editor opens its source in an editor tab and its Open detached preview opens the artifact viewer tab, never a separate window (DL-180)."
+  - "What an agent opens by itself lands as a background tab with the hollow square and an announcement and never takes keyboard focus."
+  - "Activity Detail, the wand's setup sheets, Plan Export and Send to Planning Wizard never become panel tabs, and no Goal tab exists."
+  - "Opening the same plan, run, child transcript or thread context twice reveals one tab; closing a tab the chat draws tells the chat, and the active tab in each panel is reported to it."
+  - "The chat's width, drag range and narrow behaviour are F3-637's and F3-636's; no unit of this document states another chat minimum, and no tab covers the chat at any width."
+  - "History is a flyout by default, pinning it widens the column by the list's width, the pin is saved in the home layout record, and only one thread-history list exists after the port."
+  - "The command card shows the command, folder, status words with the exit code, elapsed time, the last lines with the count of earlier lines, and who ran it; Open in Terminal appears only with a session and reveals its terminal tab; Rerun in Terminal and View output follow ACD-108 and ACD-129."
+  - "Amended 2026-10-10 (DL-185, terminal SPEC section 11): a stopped command's status reads Done · exited 0, Failed · exited <code> or Interrupted · exited <code>, and Failed alone when it has no exit code; Interrupted is muted and still; the count of lines above the window reads N earlier lines at the top of the output; who ran it reads You ran in <folder> or <Agent> ran in <folder> beside the agent mark; the elapsed time never shifts the line; a finished command with no output reads No output; at 360 px the failure line keeps file:line whole; nothing moves on first paint and Reduced Motion leaves only 120 ms fades; text reaches 4.5:1 and marks 3:1 in every look and mode."
+  - "Amended 2026-10-10 (DL-187): a popped-out chat starts back in its column after a restart, the left rail's Chat entry shows or hides the column on every page, the chat offers no layout mode, and Keep the chat open in narrow windows is on the chat's header menu, not in Settings."
+  - "Amended 2026-10-10 (DL-188, lead ruling F8): every Open plan button and a bound Goal's Open exact Plan · Vn open that version through cmd.chat.plan.open_version and the one opening module, never Plan Details."
+  - "View output and View output log on a command with no terminal session open its output as a read-only, kept editor buffer tab through F3-634 (cmd.panel_tab.open with an editor buffer spec), never a preview and never a viewer drawn by the chat (DL-180, F3-641)."
+  - "A command whose session ended while it still ran shows Ended with the earlier session with no exit code, never Running, Done or Failed (SMPFS-180, F3-641)."
+  - "The command card has no pill, no coloured side stripe and no nested box, and no terminal is drawn inside the chat."
+  - "Teacher explains a command only when the user asks, in the chat; no Explain action exists on the card or in the terminal."
+  - "DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism."
+  - "Memory opens the one shared saved-note page/sheet; historical Gist Review document identities do not create another editor."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -28340,6 +28333,7 @@ source_lineage:
   (concept-only Studio inventory, not product counts or native APIs)
 - 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
   1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Open in Terminal"
   - "Rerun in Terminal"
@@ -28970,31 +28964,39 @@ plan_unit_id: ACD-507
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: 'PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared mark/row/empty/sheet
-  functions rather than innerHTML hooks, observers or layered legacy drawings. Cast/role props, helper marks, Activity
-  agent rows, sheet host by Close, Scheduled/Memory faces, Plans, wand and sleeping empty lists share kit/parts. Host
-  watches at 420 ms, wonders while typing, oops on unusable primary without activation and cheers on success; blink changes,
-  stable last-pointer gaze, no random wink, paused shared sway. Lift-off is one overlay-owned copy released on finish.
-  Pip in Orbit centre has current-tool badge and hands off with thinking placeholder, one Pip per reply. No added chat
-  capability/welcome-back message. Main-button keyboard/pointer acknowledgement ≤100 ms, single commit; fix busy stall
-  instead of delaying dispatch. Parts use SSYS-056’s one transaction and app voice obeys master/chat mute. PC1/X3 sheet
-  motion (2026-10-29): a host drops in when its sheet opens, using the shared rig and installed parts. Dots, sleep and
-  happy faces never follow the pointer; other gaze retains the last known position. Retro entrance/face changes step;
-  live NieR sheet changes cut with a bounded flicker, no black frame. Effective Reduced Motion/Still snaps to the settled
-  state without entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement
-  stays ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, DL-260: sheet hosts, face lists and Orbit consume
-  the shared Pip kit; chat mute gates that same sound owner. Existing controls acknowledge within 100 ms and commit once
-  without replaying activation. Transcript reconciliation preserves the shared loader’s owner identity and attributes,
-  never a replacement observer or private loader. Source adapter and scheduling helper spellings remain lineage only.
-  QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
-  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the
-  one shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single
-  Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
-  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. DL-259
-  Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR 0.16), no
-  stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply.'
+canonical_text: >-
+  PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
+  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings.
+  Cast/role props, helper marks, Activity agent rows, sheet host by Close, Scheduled delivery faces
+  (Memory rows have no delivery or verification faces), Plans, wand and sleeping empty lists share
+  kit/parts. Host watches at 420 ms, wonders while typing, oops on unusable primary without
+  activation and cheers on success; blink changes, stable last-pointer gaze, no random wink, paused
+  shared sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit centre has
+  current-tool badge and hands off with thinking placeholder, one Pip per reply. No added chat
+  capability/welcome-back message. Main-button keyboard/pointer acknowledgement ≤100 ms, single
+  commit; fix busy stall instead of delaying dispatch. Parts use SSYS-056’s one transaction and app
+  voice obeys master/chat mute. PC1/X3 sheet motion (2026-10-29): a host drops in when its sheet
+  opens, using the shared rig and installed parts. Dots, sleep and happy faces never follow the
+  pointer; other gaze retains the last known position. Retro entrance/face changes step; live NieR
+  sheet changes cut with a bounded flicker, no black frame. Effective Reduced Motion/Still snaps to
+  the settled state without entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app
+  marks remain static; acknowledgement stays ≤100 ms with no dispatch deferral or double commit.
+  PC1–PC5/S5, DL-260: sheet hosts, face lists and Orbit consume the shared Pip kit; chat mute gates
+  that same sound owner. Existing controls acknowledge within 100 ms and commit once without
+  replaying activation. Transcript reconciliation preserves the shared loader’s owner identity and
+  attributes, never a replacement observer or private loader. Source adapter and scheduling helper
+  spellings remain lineage only. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is
+  the person alone, head and shoulders in each family’s materials and small-size maps. It carries no
+  marionette cross, strings, holding arm/control or connection to a cross, and is never an agent
+  Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the one
+  shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent
+  strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger
+  use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the
+  head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind
+  glyph matches its sheet head; do not fork a second wand or fallback icon. DL-259 Q1 B, Jared
+  2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR
+  0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture
+  gates still apply.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -29007,21 +29009,13 @@ depends_on:
 - DR-072
 unblocks: []
 acceptance_criteria:
-- Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific entrance/change/rest
-  behavior.
-- Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never activates.
-- Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives and
-  owner states.
-- All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown gates.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
-  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the
-  one shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single
-  Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
-  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
-- 'DL-259 Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR
-  0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply.'
+  - "Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific entrance/change/rest behavior."
+  - "Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never activates."
+  - "Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives and owner states."
+  - "All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown gates."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the one shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
+  - "DL-259 Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR 0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply."
+  - "Memory rows are quiet note rows with no delivery or verification face."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -29044,6 +29038,7 @@ source_lineage:
 - 'DL-260 implementation lineage only: PM56_PIP, PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn,
   O55.sound.pip.chatMute, PMX kept-subtree slots, ppYou/PX_YOU/pnYou and the press helper are source adapters, not native
   product APIs.'
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

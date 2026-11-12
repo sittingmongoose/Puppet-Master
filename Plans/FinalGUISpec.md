@@ -28656,13 +28656,16 @@ plan_unit_id: F3-403
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Teach/Teacher uses the Assistant Chat window/thread model rather than a detached teaching app. Help
-  icons on major surfaces launch a new Teacher thread with current-surface context. Teacher thread presentation
-  includes persona badge, low-end/fast model source, context/model chips, source/context disclosure, activity cards,
-  footer status where relevant, and thread states such as working, unread, blocked, degraded, draft, archived, or
-  handoff. Guided GUI overlay uses highlight/spotlight, anchored captions, Back, Next, Stop, Let me try, and Do
-  it controls, confirmation for mutations, degraded state recovery, keyboard and screen-reader accessibility, responsive
-  behavior, and no stale target stepping.
+canonical_text: >-
+  Teach/Teacher uses the Assistant Chat window/thread model rather than a detached teaching app.
+  Help icons on major surfaces launch a new Teacher thread with current-surface context. Teacher
+  thread presentation includes persona badge, low-end/fast model source, capacity/cost/model
+  information and useful compaction status, with source/context records internal and no composition
+  inspector or per-run inclusion receipt, activity cards, footer status where relevant, and thread
+  states such as working, unread, blocked, degraded, draft, archived, or handoff. Guided GUI overlay
+  uses highlight/spotlight, anchored captions, Back, Next, Stop, Let me try, and Do it controls,
+  confirmation for mutations, degraded state recovery, keyboard and screen-reader accessibility,
+  responsive behavior, and no stale target stepping.
 gui_related: true
 gui_classification_reason: Defines visible help icons, Teacher thread chrome, source panels, overlay captions, controls,
   degraded states, and responsive/accessibility behavior.
@@ -28673,10 +28676,10 @@ depends_on:
 unblocks:
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage."
+  - "Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this compile."
+  - "Teacher chat has no user-facing context source composition, raw/curated inspection or per-run inclusion receipt; ordinary task evidence remains available."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -28719,6 +28722,8 @@ source_lineage:
 - Concepts/PMConcept.html#chat-thread-sidebar
 - Concepts/PMConcept.html#switchToChatThread
 - chat:pmconcept-gui-reference
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0103
 - atom-0104
@@ -28821,39 +28826,38 @@ preserved_exact_tokens:
 - runtime popovers
 - activity cards
 negative_constraints:
-- Do not bury Teach behind only slash commands.
-- Do not add a loud or decorative help affordance that competes with primary workflow controls.
-- Do not launch Teacher without current-surface context.
-- Do not create a detached Teacher-only shell that hides standard Assistant Chat controls.
-- Do not omit requested/effective persona or model disclosure from the Teacher thread.
-- Do not make Teacher launch a modal that blocks normal navigation as the only path.
-- Do not use raw cursor/click automation as the teaching UI.
-- Do not obscure the target control with the explanatory caption.
-- Do not allow Teacher to click destructive/mutating controls without confirmation and permission gates.
-- Do not fork labels between surfaces.
-- Do not make context help available only from the full Help page.
-- Do not include generic examples when current surface context is available.
-- Do not silently mutate an existing non-Teacher thread into Teacher mode.
-- Do not lose the originating surface/control context during launch.
-- Do not require users to know `/teach` before discovering help.
-- Do not invent a separate chat product surface for Teacher.
-- Do not hide requested/effective Persona/model state.
-- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
-- Do not obscure the target control with the explanation caption.
-- Do not make the overlay inaccessible without keyboard or screen-reader fallback.
-- Do not trap the user in the overlay without Stop/return-to-chat.
-- Do not keep stepping through a stale or missing UI target.
-- Do not hide permission/capability/model degraded states.
-- Do not turn degraded guidance into generic apology text without a next action.
-- Do not treat PMConcept.html as final or canonical UI truth.
-- Do not copy the concept HTML/CSS directly into canonical Plans or implementation.
-- Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile.
-- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
-- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
-- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
-- Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details.
-- Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility
-  checks.
+  - "Do not bury Teach behind only slash commands."
+  - "Do not add a loud or decorative help affordance that competes with primary workflow controls."
+  - "Do not launch Teacher without current-surface context."
+  - "Do not create a detached Teacher-only shell that hides standard Assistant Chat controls."
+  - "Do not omit requested/effective persona or model disclosure from the Teacher thread."
+  - "Do not make Teacher launch a modal that blocks normal navigation as the only path."
+  - "Do not use raw cursor/click automation as the teaching UI."
+  - "Do not obscure the target control with the explanatory caption."
+  - "Do not allow Teacher to click destructive/mutating controls without confirmation and permission gates."
+  - "Do not fork labels between surfaces."
+  - "Do not make context help available only from the full Help page."
+  - "Do not include generic examples when current surface context is available."
+  - "Do not silently mutate an existing non-Teacher thread into Teacher mode."
+  - "Do not lose the originating surface/control context during launch."
+  - "Do not require users to know `/teach` before discovering help."
+  - "Do not invent a separate chat product surface for Teacher."
+  - "Do not hide requested/effective Persona/model state."
+  - "Do not show Save as taught memory unless the content is eligible and user confirmation is still required."
+  - "Do not obscure the target control with the explanation caption."
+  - "Do not make the overlay inaccessible without keyboard or screen-reader fallback."
+  - "Do not trap the user in the overlay without Stop/return-to-chat."
+  - "Do not keep stepping through a stale or missing UI target."
+  - "Do not hide permission/capability/model degraded states."
+  - "Do not turn degraded guidance into generic apology text without a next action."
+  - "Do not treat PMConcept.html as final or canonical UI truth."
+  - "Do not copy the concept HTML/CSS directly into canonical Plans or implementation."
+  - "Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile."
+  - "Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher."
+  - "Keep Teacher Persona/model and capacity/cost/compaction information when launching from Help or a summon; ordinary PM task evidence stays attributable, without memory-use citations, context inspection or per-run source receipts."
+  - "Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant."
+  - "Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details."
+  - "Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility checks."
 owner_hints:
 - Plans/FinalGUISpec.md
 - Plans/UI_Command_Catalog.md
@@ -38052,7 +38056,8 @@ Directly after the quota-wait strip sits the dock (ACD-476): at most three one-l
 
 Attachments render inside their associated turn as compact visual objects and participate in the existing message-hover chrome: metadata and actions are hidden at rest on pointer-capable widths and always available at phone widths under the existing rule. There is no permanent `PNG · 2.8 MB` clutter. A project reference that changed since the message shows a compact stale badge on the object rather than a warning paragraph, with the historical revision explained on hover and both live and materialized versions in Details. Generated artifacts use the same card grammar and disclose version and producing workflow in Details.
 
-What a wand module attaches to an ordinary reply is one line each (F3-570): the files row under a reply that changed files (`Changed 3 files +5 −3 · Revert`), which is visible at rest, and the quiet ticks in the reply's meta row (a memory note taken; the rule note, `Followed 1 of your rules` for rules whose check the reply passed or `Missed 1 of your rules` when a check failed (DL-116); `Sent on schedule` on a message that a schedule sent; `Simple explanation` on a reply written in Simple), which follow that row's existing message-chrome visibility. Each finished reply's message actions may offer `Explain this reply simply`, which adds one simpler reply at the end of the thread and never rewrites the reply it explains (F3-581, DL-126).
+Ordinary reply chrome retains the files row for actual file changes, scheduled-message and Simple explanation state under their existing owners. Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown. A finished reply may still offer Explain this reply simply through F3-581; ordinary task evidence remains available.
+
 
 ### 6. Plan card
 
@@ -38104,7 +38109,8 @@ The quota wait strip described in section 4 links to Usage detail from its reset
 
 ### 14. Teach, Teacher, memory, ELI5, Debug and Revert
 
-`/teach`, natural language, the wand's `Teach…` and `Save as a rule…` all open the Teach sheet, prefilled with the proposed knowledge and its scope; the explicit capture card this sentence used to name is superseded and not planned (DL-127, F3-579). **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior. Its only chat traces are a quiet tick in the reply's meta row when a note is taken and one verified tick when a check later proves it; a note going out of date makes no chat noise. These satisfy this rule (F3-574).
+Teach entry points use the existing written-instruction step and never change the Persona to Teacher. Written rules live in Settings > Personas & Crews > Defaults > Standing instructions. A requested saved note uses the shared Memory page at This project or Every project, with Add/Edit/Delete and Archived, not an alternate Teach/verification document. Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown. Provenance, verification, inclusion and version history stay internal; no source/lock/conflict/rollback workbench or state faces appear.
+
 
 ELI5 is its own small sheet, opened from the wand's `ELI5` row, with the quick dot by the message box as the one-click on and off; a chat's own override replaces the project default, which replaces the app default that Settings owns (ACD-484, F3-581, DL-126). Switching ELI5 is not a one-shot "simplify this output" action and never rewrites a reply; the separate `Explain this reply simply` action on a finished reply writes one extra, simpler reply only when the user asks. The wand check this paragraph used to name is superseded. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes, the message overflow and the files row under the reply that changed files when eligible, previews the exact files in one compact confirm sheet before dispatching the canonical whole-turn revert, reports each outcome as one receipt line, and stays distinct from Rewind in the thread and message overflow (ACD-478, F3-574).
 
@@ -38733,7 +38739,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   4. `web-routes` (Web search, scrape policies)
   5. `media-routes` (Image/audio generation routing)
   6. `back-seat-driver` (BSD sensitivity, stage bindings, catch-up policy)
-  7. `memory-context-instructions` (Context window, rehydration, instructions)
+  7. `memory-context-instructions` (Memory: one saved-note page; instructions, context and history live in their owners)
   8. `goals-crew-personas` (Agent rosters, personas, Goal V2 defaults)
   9. `permissions-filesafe` (File safe boundaries, tool approvals)
   10. `commands-shortcuts` (Keybindings, command palette)
@@ -41679,40 +41685,31 @@ plan_unit_id: F3-579
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Teach is a standard sheet of F3-566 and the only capture form: the wand''s Teach…, /teach,
-  natural-language intent and Save as a rule… all open it, prefilled with the rule text and its source,
-  and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark, Teach Puppet
-  Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the rule field, with
-  example rules that fill it. Under it one safety line says either that no password or key was spotted
-  or, in the warm tone, that the text looks like a password or key and must be removed to save. The plate
-  is three nested rings, This thread inside the available This project ring inside Everywhere, each a
-  button with a helper; Everywhere stays disabled with its reason until the tick "It''s safe to use in
-  my other projects" is set, and in correct mode the wider rings are disabled because an edit cannot widen
-  a rule. A Locked tick says only the user can change the rule (ACD-481). Beside them, the rule card shows
-  the rule exactly as it will be saved, with its scope, lock and source message; when a similar rule exists,
-  the old and new wording are shown side by side with a choice between Replace the old rule and Keep both,
-  and saving waits for it. The foot holds Cancel and one primary, Save rule, Save and replace or Save
-  as version 2. In the chat each change is one receipt line of F3-569''s grammar: Rule saved, Rule updated
-  to a new version, Rule turned off, with several saves in a row coalesced into one line. Your rules is
-  an editor document (the taught memory document): one row per rule with its words, its scope, lock and
-  version, a state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock
-  or Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher
-  stays a Persona, and the sheet says Teach isn''t the Teacher Persona. Routine replies show no memory-use
-  citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers, verification
-  badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to memory · View
-  line appear; View opens the same Memory page as a sheet and highlights the saved note. Requested save/edit
-  confirmation stays brief. Task evidence and ordinary links remain available. In No project omit the
-  inapplicable Project ring; Everywhere is the existing public_safe user-taught scope, not a new Computer
-  memory tier. Keep the public-safe checkbox, correction narrowing and source evidence; the display name
-  changes no historical teaching record.'
+canonical_text: >-
+  Teach is the standard F3-566 sheet for deliberate written instructions, reached by the wand Teach,
+  /teach, natural-language intent and Save as a rule through cmd.chat.teach.capture (ACD-477).
+  Opening or Cancel writes nothing; existing confirmation, secret/privacy screening, stale-revision
+  refusal and retained protections still apply. It edits through the existing instruction writer and
+  returns to Settings > Personas & Crews > Defaults > Standing instructions, where Rules for every
+  project and Rules for this project live. A Teacher answer offered as a saved note instead uses the
+  same Memory page and AMS-141 Add/Edit/Delete at This project or Every project. The old nested This
+  thread/project/Everywhere rings, public-safe scope tick, Locked checkbox, source/lock/version
+  preview, Replace/Keep both chooser and separate Your rules taught-memory document are retired.
+  Internal compatibility records and legacy protected-state custody remain, without ordinary
+  lock/unlock, conflict, source or rollback controls. Teacher remains a Persona, distinct from
+  Teach. Only a durable successful save may add Saved to memory · View to a reply; View opens the
+  one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail,
+  verification or Followed/Missed decoration is shown. Ordinary task evidence/links remain
+  available, and no No project view invents a Project or a Computer memory tier.
 gui_related: true
 gui_classification_reason: "Defines the Teach sheet, its chat receipts and the Your rules document."
 split_recommended: false
 depends_on: [F3-566, ACD-477, ACD-481, DL-127, DL-116, F3-570]
 unblocks: []
 acceptance_criteria:
-- Teach retains explicit scoped rule capture and user lock/revoke safety; ordinary rule-use/check receipts
-  retire.
+  - "Every deliberate Teach entry uses the existing written-instruction owner and confirms before storage; saved notes use the one Memory page and AMS-141 at the two allowed levels."
+  - "No scope rings, public-safe tick, lock/conflict/source/rollback workbench, taught-memory duplicate document or rule-use/save-update receipt appears."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -41738,6 +41735,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F08,B-F13,C-F11
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -49254,70 +49252,78 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  X1, X3, A1–A5, S8/S9; DL-235/DL-239. Pip is the Puppet Master brand: crossed control held by the user,
-  brace-shaped head, eyes joined by strings to underside screw eyes 5 units in from the sticks’ lower tips.
-  One solver joins both ends in every still and sampled moving pose; rods are opaque, rear rod
-  solid-shaded; NieR nodes square; Retro strings redraw pixelwise. The 24 px static title-bar mark takes no
-  click or state and yields to mark-only density without moving the bell. The favicon and release tile are
-  static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with manifest. Logical micro ≤18, small 19–40
-  and full >40 tiers remain consistent across DPR. Each look reads its tokens: Friendly vinyl, Glass clear
-  blue lens/rim/base without brow band, Basic flat single accent without cheeks, Retro pixel grids, NieR
-  ink/visor/diamond. NieR Pip shows eyes through the band on live and static marks, including title bar, app
-  icon and tray, at every size (X3 B, Jared 2026-10-30). Every animated asset has a
-  complete still base. The always-on tray (A2 B, Jared 2026-10-30) uses A3’s aggregate status faces across
-  Projects; waiting always wins
-  and complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS
+  X1, X3, A1–A5, S8/S9; DL-235/DL-239. Pip is the Puppet Master brand: crossed control held by the
+  user, brace-shaped head, eyes joined by strings to underside screw eyes 5 units in from the
+  sticks’ lower tips. One solver joins both ends in every still and sampled moving pose; rods are
+  opaque, rear rod solid-shaded; NieR nodes square; Retro strings redraw pixelwise. The 24 px static
+  title-bar mark takes no click or state and yields to mark-only density without moving the bell.
+  The favicon and release tile are static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with
+  manifest. Logical micro ≤18, small 19–40 and full >40 tiers remain consistent across DPR. Each
+  look reads its tokens: Friendly vinyl, Glass clear blue lens/rim/base without brow band, Basic
+  flat single accent without cheeks, Retro pixel grids, NieR ink/visor/diamond. NieR Pip shows eyes
+  through the band on live and static marks, including title bar, app icon and tray, at every size
+  (X3 B, Jared 2026-10-30). Every animated asset has a complete still base. The always-on tray (A2
+  B, Jared 2026-10-30) uses A3’s aggregate status faces across Projects; waiting always wins and
+  complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS
   notifications and Friendly’s app tile use Pip while in-app cards keep their kind marks and the
-  notification stack remains the only in-app notification entry. Individual agents consume F3-594’s Pip
-  primitive; small category marks consume robot. Mood mappings in glyph_catalog.json add no keys;
-  onboarding expressions remain illustration unless paired to an owner state. Brand, tray, icon,
-  notification faces and loader are independent of Pip parts. No per-instance stylesheet, random render
-  IDs, second kit or per-surface palette. A1/A3/X2 app/tray detail (2026-10-29): the fixed Basic Dark app
-  tile becomes a plain mark at 24 px and below. macOS tray is a template mark, Windows a colour mark.
-  Working may use the approved four-frame flip, below needs-you’s priority; effective Reduced Motion holds
-  its recognizable working rest frame, and every static NieR brand/app/tray mark remains static.
-  State/accessibility and aggregate precedence never depend on the motion. A5 full mood→default key table:
-  idle→idle; think/working→working; happy/done→complete; alert/wonder/needs-you→waiting; error/oops→failed;
-  sleep/paused→paused; watch→idle (decorative choice preview); wink→complete (once-only decorative Ready
-  sign-off); blocked→blocked; stopping→pending; stopped→skipped; lost→warning; scheduled→pending;
-  unsaved→change-modified. All 22 existing keys remain. Typed owner state overrides the default expression
-  association: queued sleep remains pending, Memory Unverified thinks with pending, reviewing/recovering
-  think with their own keys, mixed alert remains mixed, blocked oops stays blocked, empty sleeping
-  illustration creates no paused record, and illustrative oops never fabricates failure/attention. The
-  existing tour word pip-done is unrelated to Pip. A3 aggregate tray precedence across Projects, highest
-  first: waiting/needs-you > failed > blocked > working > paused > complete > idle. Blocked retains the
-  existing blocked key and its worried face, distinct from a question. Complete is a celebration eligible
-  for about 10 s only when no higher-priority work/attention remains; active work or a new ask immediately
-  supersedes it. Do not turn queued/dependency/illustrative states into questions or failures; preserve
-  lower-priority facts and freshness in the accessible summary. Never replace a stale projection with a
-  healthy zero. W1: Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier
-  selection across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
-  brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of title, app
-  and tray rest marks. A1/A3/X3, PM7 Step4, 2026-10-30: release asset names are app/puppet-master.ico
-  (16,20,24,32,48,64,128,256), app/puppet-master.icns, app/png/<size>.png (16 through 1024),
-  app/macos-1024.png and app/tile.svg. Tray exports use tray/macos/<key>-black.svg and -white.svg plus 16/32
-  PNGs, tray/windows/<key>.svg plus 16/20/24/32 PNGs, and working-flip SVGs from the shared micro Think
-  drawing. The fixed app-level tray set follows A1’s app-icon logic rather than a Project’s changing look:
-  macOS template ink, Windows Basic Dark colour; seven status faces and A3 precedence remain. The exported
-  manifest under the title lane icons directory is source/export evidence, not certification of a signed
-  native bundle. The shared brand owner supplies static and live marks and density variants; the title mark remains non-interactive.
-  A1/W1-40, PM7 Step4 audit: lock the Basic Dark release-asset EXPORT palette used when no live page is
-  painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
+  notification stack remains the only in-app notification entry. Individual agents consume F3-594’s
+  Pip primitive; small category marks consume robot. Mood mappings in glyph_catalog.json add no
+  keys; onboarding expressions remain illustration unless paired to an owner state. Brand, tray,
+  icon, notification faces and loader are independent of Pip parts. No per-instance stylesheet,
+  random render IDs, second kit or per-surface palette. A1/A3/X2 app/tray detail (2026-10-29): the
+  fixed Basic Dark app tile becomes a plain mark at 24 px and below. macOS tray is a template mark,
+  Windows a colour mark. Working may use the approved four-frame flip, below needs-you’s priority;
+  effective Reduced Motion holds its recognizable working rest frame, and every static NieR
+  brand/app/tray mark remains static. State/accessibility and aggregate precedence never depend on
+  the motion. A5 full mood→default key table: idle→idle; think/working→working; happy/done→complete;
+  alert/wonder/needs-you→waiting; error/oops→failed; sleep/paused→paused; watch→idle (decorative
+  choice preview); wink→complete (once-only decorative Ready sign-off); blocked→blocked;
+  stopping→pending; stopped→skipped; lost→warning; scheduled→pending; unsaved→change-modified. All
+  22 existing keys remain. Typed owner state overrides the default expression association: queued
+  sleep remains pending, retained Memory verification state is internal and produces no row face,
+  reviewing/recovering think with their own keys, mixed alert remains mixed, blocked oops stays
+  blocked, empty sleeping illustration creates no paused record, and illustrative oops never
+  fabricates failure/attention. The existing tour word pip-done is unrelated to Pip. A3 aggregate
+  tray precedence across Projects, highest first: waiting/needs-you > failed > blocked > working >
+  paused > complete > idle. Blocked retains the existing blocked key and its worried face, distinct
+  from a question. Complete is a celebration eligible for about 10 s only when no higher-priority
+  work/attention remains; active work or a new ask immediately supersedes it. Do not turn
+  queued/dependency/illustrative states into questions or failures; preserve lower-priority facts
+  and freshness in the accessible summary. Never replace a stale projection with a healthy zero. W1:
+  Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier selection
+  across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
+  brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of
+  title, app and tray rest marks. A1/A3/X3, PM7 Step4, 2026-10-30: release asset names are
+  app/puppet-master.ico (16,20,24,32,48,64,128,256), app/puppet-master.icns, app/png/<size>.png (16
+  through 1024), app/macos-1024.png and app/tile.svg. Tray exports use tray/macos/<key>-black.svg
+  and -white.svg plus 16/32 PNGs, tray/windows/<key>.svg plus 16/20/24/32 PNGs, and working-flip
+  SVGs from the shared micro Think drawing. The fixed app-level tray set follows A1’s app-icon logic
+  rather than a Project’s changing look: macOS template ink, Windows Basic Dark colour; seven status
+  faces and A3 precedence remain. The exported manifest under the title lane icons directory is
+  source/export evidence, not certification of a signed native bundle. The shared brand owner
+  supplies static and live marks and density variants; the title mark remains non-interactive.
+  A1/W1-40, PM7 Step4 audit: lock the Basic Dark release-asset EXPORT palette used when no live page
+  is painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
   rgba(255,255,255,.08). These fixed file-export values are distinct from live token-role mixing;
-  app/tray/favicon exports use this one palette rather than resampling per surface.
-  A4 A, PM7 Step4 review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
-  status-key mood mapping, with the kind glyph beside the title. It consumes the shared brand renderer and status/mood projection, never a second renderer or a new binding. OS notification branding remains a native integration requirement;
-  the concept tile does not certify OS delivery or a native notification bundle.
-  A5/PC2, PM7 companion review fix1, 2026-10-30 (Astra A6/Muse1): surface_status_faces.agents describes chat
-  agent rows. Working uses the public working mood, rendered as the distinct three-dot dots face by the
-  shared kit; think remains the intentional chat reviewing/recovering face. Platform rows consume the shared status-face mapping: working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These
-  are decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the plain-band drawing without eyes is legacy/gallery-only and no product caller may use it.
-  A1/A3/L4, PM7 companion review fix1, 2026-10-30 (Astra A1, title re-export): manifest.json in the title
-  lane icons bundle is SHA-256 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500, re-hashed
-  for all 141 files. Its two animated Working SVGs are byte-equal to the final kit at ff9476a5c8: micro
-  Think 1.95 s, separate rest/control/lid reduced-motion drawing. Static file bytes are unchanged; per-file
-  manifest provenance distinguishes them from the two new exports. This supersedes the earlier
-  export-manifest citation, not A1’s fixed palette or native-certification boundary.
+  app/tray/favicon exports use this one palette rather than resampling per surface. A4 A, PM7 Step4
+  review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
+  status-key mood mapping, with the kind glyph beside the title. It consumes the shared brand
+  renderer and status/mood projection, never a second renderer or a new binding. OS notification
+  branding remains a native integration requirement; the concept tile does not certify OS delivery
+  or a native notification bundle. A5/PC2, PM7 companion review fix1, 2026-10-30 (Astra A6/Muse1):
+  surface_status_faces.agents describes chat agent rows. Working uses the public working mood,
+  rendered as the distinct three-dot dots face by the shared kit; think remains the intentional chat
+  reviewing/recovering face. Platform rows consume the shared status-face mapping:
+  working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These are
+  decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the
+  plain-band drawing without eyes is legacy/gallery-only and no product caller may use it. A1/A3/L4,
+  PM7 companion review fix1, 2026-10-30 (Astra A1, title re-export): manifest.json in the title lane
+  icons bundle is SHA-256 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500,
+  re-hashed for all 141 files. Its two animated Working SVGs are byte-equal to the final kit at
+  ff9476a5c8: micro Think 1.95 s, separate rest/control/lid reduced-motion drawing. Static file
+  bytes are unchanged; per-file manifest provenance distinguishes them from the two new exports.
+  This supersedes the earlier export-manifest citation, not A1’s fixed palette or
+  native-certification boundary.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -49328,13 +49334,12 @@ depends_on:
 - SSYS-010
 unblocks: []
 acceptance_criteria:
-- Title mark is static and non-interactive at every density and DPR; no bell displacement.
-- All assets and live consumers share geometry/tokens and connected strings; static base remains visible without
-  CSS.
-- Always-on tray visibility and A3 priority agree with the shared work projection; minimize-to-tray affects Close only.
-- The ≤24 px app mark and macOS-template/Windows-colour tray exports match the kit; four-frame Working becomes
-  still under Reduced Motion/NieR.
-- Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence.
+  - "Title mark is static and non-interactive at every density and DPR; no bell displacement."
+  - "All assets and live consumers share geometry/tokens and connected strings; static base remains visible without CSS."
+  - "Always-on tray visibility and A3 priority agree with the shared work projection; minimize-to-tray affects Close only."
+  - "The ≤24 px app mark and macOS-template/Windows-colour tray exports match the kit; four-frame Working becomes still under Reduced Motion/NieR."
+  - "Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence."
+  - "Memory saved-note rows expose no delivery/verification state faces; retained verification-state accounting stays internal."
 validation_surfaces:
 - "scripts/pm-shard-plans.py"
 - "scripts/pm-plan-index.py"
@@ -49355,6 +49360,7 @@ source_lineage:
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 - "DL-260 source lineage only (no product API or implementation obligation): PMLogo.mark/svg/dataUrl/favicon/tierFor/period/kit/TRAY/trayFace/moodFor/onLook/STATUS_FACE, eyes:false, pm7-brand-mark, pm-brand-mark/pm-brand-word and app-name data-mode full|mark were concept API/markup spellings. The accepted Pip geometry, palette, status mappings and native export provenance remain product requirements."
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - '#121212'
 - '#E8E8E8'

@@ -6,6 +6,68 @@ import json
 from pathlib import Path
 
 
+RETIRED_MEMORY_COMMANDS = frozenset(
+    "cmd.chat.memory." + action for action in (
+        "verify", "pin", "discard", "toggle_auto_save_unverified", "preview_capsule",
+        "rebuild_lexical_index", "rebuild_semantic_index", "verification_sweep",
+        "dedup_sweep", "summarize_monthly", "prune_archive",
+    )
+)
+INTERNAL_ONLY_COMMANDS = RETIRED_MEMORY_COMMANDS | {"cmd.chat.teach.set_lock"}
+
+
+def producer_failures(production: dict, bindings: dict, fixtures: dict, touch: dict):
+    """Inspect producer contracts, not handler availability or legacy identity enums."""
+    failures = []
+    entries = production["entries"]
+    for command in RETIRED_MEMORY_COMMANDS:
+        rows = [row for row in entries.values() if row.get("ui_command_id") == command]
+        if len(rows) != 1:
+            failures.append({"code": "quiet_memory_internal_owner", "command": command})
+    for key, row in entries.items():
+        if row.get("ui_command_id") in INTERNAL_ONLY_COMMANDS:
+            if row.get("ui_disposition") != "internal_support_only":
+                failures.append({"code": "quiet_memory_live_production", "row": key})
+
+    def walk(value, path):
+        if isinstance(value, dict):
+            if value.get("command_id") == "cmd.chat.teach.open_memory" and "gui_consumers" in value:
+                if set(value["gui_consumers"]) != {"wand", "chat_header", "memory_save_receipt"}:
+                    failures.append({"code": "quiet_memory_open_producers", "path": path})
+            if value.get("command_id") == "cmd.review.send_findings_to_agent" and "gui_consumers" in value:
+                if set(value["gui_consumers"]) != {"review_card", "review_panel"}:
+                    failures.append({"code": "quiet_memory_review_producers", "path": path})
+            if value.get("command_id") in INTERNAL_ONLY_COMMANDS and "gui_consumers" in value:
+                if value.get("ui_disposition") != "internal_support_only" or value["gui_consumers"]:
+                    failures.append({"code": "quiet_memory_live_binding", "path": path,
+                                     "command": value["command_id"]})
+            for key, child in value.items():
+                walk(child, path + "/" + key)
+        elif isinstance(value, list):
+            for index, child in enumerate(value):
+                walk(child, path + "/" + str(index))
+
+    walk(bindings, "bindings")
+    walk(fixtures, "fixtures")
+    profiles = set()
+    for profile in touch["profiles"]:
+        commands = set(profile.get("command_ids", []))
+        if "cmd.chat.teach.open_memory" in commands:
+            if set(profile.get("gui_triggers", [])) != {"wand", "chat_header", "memory_save_receipt"}:
+                failures.append({"code": "quiet_memory_open_touch_producers",
+                                 "profile": profile["profile_id"]})
+        if commands & INTERNAL_ONLY_COMMANDS:
+            profiles.add(profile["profile_id"])
+            if (commands - INTERNAL_ONLY_COMMANDS or profile.get("gui_triggers")
+                    or profile.get("ui_disposition") != "internal_support_only"):
+                failures.append({"code": "quiet_memory_live_touch_profile",
+                                 "profile": profile["profile_id"]})
+    for row in touch["rows"]:
+        if row[3] in INTERNAL_ONLY_COMMANDS and row[1] not in profiles:
+            failures.append({"code": "quiet_memory_missing_internal_profile", "row": row[0]})
+    return failures
+
+
 def evaluate(rule: str, record: dict):
     if rule == "read":
         if not record["enabled"] or not record["source_allowed"]:
@@ -82,4 +144,11 @@ def check(root: Path):
         failures.append({"code": "quiet_memory_live_inventory"})
     if len({key for key in retired if key.startswith("memory.")}) != 43 or live & retired:
         failures.append({"code": "quiet_memory_retired_inventory"})
-    return failures, {"quiet_memory_cases": len(cases)}
+    def read(name):
+        return json.loads((root / "Plans" / name).read_text())
+    failures.extend(producer_failures(
+        read("Wiring_Matrix.production.json"), read("projects_refresh_command_bindings.json"),
+        read("projects_refresh_command_bindings.fixtures.json"), read("touch_closure.json"),
+    ))
+    return failures, {"quiet_memory_cases": len(cases),
+                      "quiet_memory_retired_commands": len(RETIRED_MEMORY_COMMANDS)}

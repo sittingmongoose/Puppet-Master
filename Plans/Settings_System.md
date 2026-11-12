@@ -3890,7 +3890,7 @@ that would reach an outside computer or service says so and, in the concept, is 
 - Settings sets defaults and does no live work: no view shows, starts, pauses or stops a live chat or Goal. Goals are
   started in the assistant chat or by the Planning Wizard, so Goals in Settings holds the defaults every new Goal
   starts with, templates (which can be created, edited, duplicated, exported and deleted) and the recovery and check
-  rules; memories kept for one chat read One chat and a new memory is kept for the project or for you; one chat's own
+  rules; saved notes have only This project and Every project levels, and private thread records stay internal; one chat's own
   actions, such as Squeeze now, live in that chat's menu.
 - A persona's tuning rows (Creativity, Word choice range, Spending cap) read Same as the project until the persona
   sets its own value, which is then set with a slider or amount that can go back to the project's; a persona-only row
@@ -3909,42 +3909,49 @@ plan_unit_id: SSYS-040
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: 'Every Settings view draws short everyday groups first, each in reading order with its
-  master switch first, and folds rarely changed groups into the view''s one disclosure, labelled More
-  options, at the end. The plain pages are App & Input, Editor & Terminal (was Editor & Runtime), Containers
-  (was Containers & Execution), Planning & Interviews and Advanced Settings, and the page groups, manager
-  tab groups and canonical-id moves are those recorded in this section; they are presentation over unchanged
-  manager keys, routes, detail ids, command ids and inventory ids. Hand-written rows that repeat an inventory
-  row and every manager-owned copy of a choice an inventory row makes are retired: the inventory row,
-  drawn once or bound into its manager''s own control, is the one control. Rows read in plain words: a
-  decided label and sentence, else the inventory label in sentence case with names kept; options read
-  as words while the stored value is unchanged; numbers show units and stay within bounds, including bounds
-  that follow another setting; search shows the row''s own label. A row that depends on a switch or choice
-  shows only while it applies. No action opens a generic preview panel: each action row routes to its
-  owner surface or runs a form, check, confirm, list or order flow bound to the owner''s command and availability.
-  Lists, maps and structured values open structured editors; rows that describe one account or service
-  are edited inside it. DL-475: Memory is one saved-note page, opened from Settings and as that same page
-  in the chat Memory button/wand sheet. It has one on/off switch, search including archived notes, a level
-  filter All / This project / Every project, text/level/updated list rows, Add memory, Edit, Delete and
-  collapsed Archived. Title is optional, kind inferred. Delete all names the exact scope; deletion is
-  distinct from Discard/archive and cannot be silently undone from old chats. Verification, sources, pins,
-  conflicts, ranking, preview, upkeep and competing recovery controls stay off the page. Instructions,
-  History/privacy, chat capacity and Run limits remain separate. Fading reduces influence, archiving retains
-  an old note outside ordinary use, and deletion is a user action. Compatibility reads are defined in
-  the Memory compatibility table below; they grant no retired setting writer or source-access relaxation.'
+canonical_text: >-
+  Every Settings view draws short everyday groups first, each in reading order with its master
+  switch first, and folds rarely changed groups into the view's one disclosure, labelled More
+  options, at the end. The plain pages are App & Input, Editor & Terminal (was Editor & Runtime),
+  Containers (was Containers & Execution), Planning & Interviews and Advanced Settings, and the page
+  groups, manager tab groups and canonical-id moves are those recorded in this section; they are
+  presentation over unchanged manager keys, routes, detail ids, command ids and inventory ids.
+  Hand-written rows that repeat an inventory row and every manager-owned copy of a choice an
+  inventory row makes are retired: the inventory row, drawn once or bound into its manager's own
+  control, is the one control. Rows read in plain words: a decided label and sentence, else the
+  inventory label in sentence case with names kept; options read as words while the stored value is
+  unchanged; numbers show units and stay within bounds, including bounds that follow another
+  setting; search shows the row's own label. A row that depends on a switch or choice shows only
+  while it applies. No action opens a generic preview panel: each action row routes to its owner
+  surface or runs a form, check, confirm, list or order flow bound to the owner's command and
+  availability. Lists, maps and structured values open structured editors; rows that describe one
+  account or service are edited inside it. DL-475: Memory is one saved-note page, opened from
+  Settings and as that same page in the chat Memory button/wand sheet. It has one on/off switch,
+  search including archived notes, a level filter All / This project / Every project,
+  text/level/updated list rows, Add memory, Edit, Delete and collapsed Archived. Title is optional,
+  kind inferred. Delete all names the exact scope; deletion is distinct from Discard/archive and
+  cannot be silently undone from old chats. Verification, sources, pins, conflicts, ranking,
+  preview, upkeep and competing recovery controls stay off the page. Instructions, History/privacy,
+  chat capacity and Run limits remain separate. Fading reduces influence, archiving retains an old
+  note outside ordinary use, and deletion is a user action. Compatibility reads are defined in the
+  Memory compatibility table below; they grant no retired setting writer or source-access
+  relaxation. Jared, 2026-11-12 at 8:12 AM EST: "Keep them there". Rules for every project and Rules
+  for this project live in Settings > Personas & Crews > Defaults > Standing instructions, through
+  the existing instruction writer and source IDs; they are not Memory-page contents.
 gui_related: true
 gui_classification_reason: Governs the visible grouping, order, disclosure, labels, visibility, action routes and editors of every Settings page and manager.
 split_recommended: false
 depends_on: [SSYS-006, SSYS-013, SSYS-015, SSYS-020, SSYS-033, SSYS-035, DL-180]
 unblocks: []
 acceptance_criteria:
-  - Every manager view and plain page renders its everyday groups first and at most one More options disclosure, last; a landing from search, the page index or Details on a folded row opens it first.
-  - Plain-page and manager group orders and the canonical-id moves match this section; manager_id keys, routes, detail ids, command ids and inventory ids are unchanged.
-  - No retired hand-written row or manager-owned copy renders, and each inventory id still renders exactly once, a manager's bound control counting as its home; an inventory row retired by SSYS-050 renders nowhere.
-  - Every label, option, unit and search result reads in plain words while stored values and inventory titles stay unchanged and searchable; word defaults of toggles resolve by the on/off table without overwriting a saved choice.
-  - A dependent row hides only while its condition fails, keeps its stored value, stays findable, and never hides a blocking error, consent boundary, unavailable reason or requested/effective difference; Glass controls keep SSYS-010 disclosure.
-  - No Settings action opens a generic preview panel; each action row reaches its owner route or a flow that dispatches its owner command, or shows the owner's unavailable reason, and SSYS-013 operations route to their owner surface.
-  - List, key/value and structured rows open structured editors; no secret is rendered; per-account and per-service rows are edited inside their account or service.
+  - "Every manager view and plain page renders its everyday groups first and at most one More options disclosure, last; a landing from search, the page index or Details on a folded row opens it first."
+  - "Plain-page and manager group orders and the canonical-id moves match this section; manager_id keys, routes, detail ids, command ids and inventory ids are unchanged."
+  - "No retired hand-written row or manager-owned copy renders, and each inventory id still renders exactly once, a manager's bound control counting as its home; an inventory row retired by SSYS-050 renders nowhere."
+  - "Every label, option, unit and search result reads in plain words while stored values and inventory titles stay unchanged and searchable; word defaults of toggles resolve by the on/off table without overwriting a saved choice."
+  - "A dependent row hides only while its condition fails, keeps its stored value, stays findable, and never hides a blocking error, consent boundary, unavailable reason or requested/effective difference; Glass controls keep SSYS-010 disclosure."
+  - "No Settings action opens a generic preview panel; each action row reaches its owner route or a flow that dispatches its owner command, or shows the owner's unavailable reason, and SSYS-013 operations route to their owner surface."
+  - "List, key/value and structured rows open structured editors; no secret is rendered; per-account and per-service rows are edited inside their account or service."
+  - "Rules for every project and Rules for this project remain in Settings > Personas & Crews > Defaults > Standing instructions and write the existing canonical instruction sources."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: settings_information_architecture_or_duplicate_control_drift
@@ -3963,6 +3970,7 @@ source_lineage:
 - Concepts/onboarding/opus-5.5/src/settings/kit.d/65-flows.js
 - SSYS-035
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "More options"
   - "App & Input"
@@ -4125,6 +4133,7 @@ source_lineage:
 - 'source_ref:projects-pass2-20261103:S8–S11/N15; Jared: "I approve the outstanding questions with their
   recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Make a copy"
   - "Same as the project"
@@ -4137,6 +4146,8 @@ negative_constraints:
 owner_hints:
   - Plans/Settings_System.md
   - Plans/Permissions_System.md
+stale_retired_dispositions:
+  - "One chat is retained only as historical/private-thread vocabulary; visible saved-note levels are exactly This project and Every project."
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS

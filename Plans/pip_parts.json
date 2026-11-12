@@ -28,7 +28,7 @@
       "label": "Status faces in lists",
       "group": "Where Pip appears",
       "default_enabled": true,
-      "help": "In Scheduled and Memory, each row’s status icon is Pip’s face: sent is happy, failed says oops, waiting sleeps.",
+      "help": "In Scheduled, each row’s delivery-status icon is Pip’s face: sent is happy, failed says oops, waiting sleeps. Memory notes use the quiet text list without delivery-status faces.",
       "size": 3
     },
     {

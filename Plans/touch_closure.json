@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-      "source_sha256": "7523571e5c0a76f7e73691688eb55e1953b5ee547f50741ce04bcda24272a277",
+      "source_sha256": "7245ea1d7235d307bfc370aef4f4e6929d462c0e5fafb36d4b40454d0f61a04d",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -8437,7 +8437,9 @@
       "wiring_status": "specified",
       "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
       "gui_triggers": [
-        "Puppet Master Assistant > teach_capture"
+        "wand",
+        "chat_header",
+        "memory_save_receipt"
       ],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
@@ -18293,10 +18295,8 @@
       "handler_owner": "handlers::chat::memory_dedup_sweep",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18334,7 +18334,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.dedup_sweep"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-216",
@@ -18355,10 +18356,8 @@
       "handler_owner": "handlers::chat::memory_discard",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18396,7 +18395,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.discard"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-217",
@@ -18479,10 +18479,8 @@
       "handler_owner": "handlers::chat::memory_pin",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18520,7 +18518,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.pin"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-219",
@@ -18541,10 +18540,8 @@
       "handler_owner": "handlers::chat::memory_preview_capsule",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18582,7 +18579,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.preview_capsule"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-220",
@@ -18603,10 +18601,8 @@
       "handler_owner": "handlers::chat::memory_prune_archive",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18644,7 +18640,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.prune_archive"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-221",
@@ -18665,10 +18662,8 @@
       "handler_owner": "handlers::chat::memory_rebuild_lexical_index",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18706,7 +18701,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.rebuild_lexical_index"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-222",
@@ -18727,10 +18723,8 @@
       "handler_owner": "handlers::chat::memory_rebuild_semantic_index",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18768,7 +18762,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.rebuild_semantic_index"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-223",
@@ -18789,10 +18784,8 @@
       "handler_owner": "handlers::chat::memory_summarize_monthly",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18830,7 +18823,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.summarize_monthly"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-224",
@@ -18851,10 +18845,8 @@
       "handler_owner": "handlers::chat::memory_toggle_auto_save_unverified",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18892,7 +18884,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.toggle_auto_save_unverified"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-225",
@@ -18913,10 +18906,8 @@
       "handler_owner": "handlers::chat::memory_verification_sweep",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -18954,7 +18945,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.verification_sweep"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-226",
@@ -18975,10 +18967,8 @@
       "handler_owner": "handlers::chat::memory_verify",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
-      "gui_triggers": [
-        "Assistant Chat surface"
-      ],
+      "production_or_simulation": "Internal support/compatibility contract only (DL-475); ordinary GUI producer retired, not merely unavailable. No control, placeholder, keyboard trigger or rendered native proof is admitted.",
+      "gui_triggers": [],
       "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
       "reverse_consumers": [
         "Plans/assistant-chat-design.md",
@@ -19016,7 +19006,8 @@
       ],
       "command_ids": [
         "cmd.chat.memory.verify"
-      ]
+      ],
+      "ui_disposition": "internal_support_only"
     },
     {
       "profile_id": "TCP-FB-227",
@@ -43316,7 +43307,7 @@
       "command",
       "cmd.chat.memory.verify",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.verify has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-MEMORY-002",
@@ -46564,7 +46555,7 @@
       "command",
       "cmd.chat.memory.dedup_sweep",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.dedup_sweep has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-123",
@@ -46572,7 +46563,7 @@
       "command",
       "cmd.chat.memory.discard",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.discard has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-124",
@@ -46580,7 +46571,7 @@
       "command",
       "cmd.chat.memory.pin",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.pin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-125",
@@ -46588,7 +46579,7 @@
       "command",
       "cmd.chat.memory.preview_capsule",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.preview_capsule has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-126",
@@ -46596,7 +46587,7 @@
       "command",
       "cmd.chat.memory.prune_archive",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.prune_archive has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-127",
@@ -46604,7 +46595,7 @@
       "command",
       "cmd.chat.memory.rebuild_lexical_index",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.rebuild_lexical_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-128",
@@ -46612,7 +46603,7 @@
       "command",
       "cmd.chat.memory.rebuild_semantic_index",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.rebuild_semantic_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-129",
@@ -46620,7 +46611,7 @@
       "command",
       "cmd.chat.memory.summarize_monthly",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.summarize_monthly has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-130",
@@ -46628,7 +46619,7 @@
       "command",
       "cmd.chat.memory.toggle_auto_save_unverified",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.toggle_auto_save_unverified has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-131",
@@ -46636,7 +46627,7 @@
       "command",
       "cmd.chat.memory.verification_sweep",
       "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.memory.verification_sweep has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "DL-475 permanently retires the ordinary GUI producer. The exact action remains internal support/compatibility only, under its original permission/scope/source/native/maintenance holds; no control or unavailable placeholder is rendered."
     ],
     [
       "TOUCH-FB-132",

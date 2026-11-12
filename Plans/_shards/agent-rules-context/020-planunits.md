@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L310-L2333
+Source lines: L310-L2338
 
-Source SHA256: `212cf76ee5e4a1c283b0d769c6a03a740e09169e4f0b29c03edfbf8d7c095c02`
+Source SHA256: `abc7dcb9b880d42034005d801131e1eb874cebd74eed7af23de2a74cb86375e6`
 
 ---
 
@@ -637,10 +637,15 @@ plan_unit_id: ARC-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: 'Configuration and GUI preserves the in-app instructions editor requirements: the editor writes the same runtime-consumed
-  project rules and instruction files, shows canonical path and scope, keeps project rules at .puppet-master/project-rules.md
-  unless explicitly updated, must not create a shadow instruction source unread by the rules pipeline, and shows save, validation,
-  lint, and dirty-state feedback while exposing Application rules and Project rules surfaces.'
+canonical_text: >-
+  Configuration and GUI preserves the in-app instructions editor requirements: the editor writes the
+  same runtime-consumed project rules and instruction files, shows canonical path and scope, keeps
+  project rules at .puppet-master/project-rules.md unless explicitly updated, must not create a
+  shadow instruction source unread by the rules pipeline, and shows save, validation, lint, and
+  dirty-state feedback while exposing Application rules and Project rules surfaces. Rules for every
+  project and Rules for this project live in Settings > Personas & Crews > Defaults > Standing
+  instructions (Jared: "Keep them there", 2026-11-12, 8:12 AM EST), with the same runtime-consumed
+  application/project sources, no shadow editor or store.
 gui_related: true
 gui_classification_reason: This unit covers in-app editor UI, settings panels, tooltips, validation, lint, and dirty-state
   feedback.
@@ -648,12 +653,11 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
-  bridge.
-- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
-  own contracts.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+  - "Covered source spans remain losslessly available for exact-text audit."
+  - "The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge."
+  - "Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their own contracts."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Both named rule editors remain in Settings > Personas & Crews > Defaults > Standing instructions and preserve their existing canonical writer/path/permission behavior."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -668,6 +672,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0013
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0014
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - Configuration and GUI (Planning Only)
 - In-app instructions editor reconciliation

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29812
+Source lines: L26794-L29818
 
-Source SHA256: `4e3dfa74f06aec9d101395e15bdb2cd622d96069a66d8212529542469bc0071c`
+Source SHA256: `82478c7594ff6692d654c2c8dce9729656606680a362df2fc9014242d077f2d3`
 
 ---
 
@@ -2946,36 +2946,39 @@ plan_unit_id: DL-475
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Jared''s 2026-11-11 decisions, relayed verbatim by pm7-build: "ok that memory system looks good"
-  (about 11:05 PM EST); "No named sets"; "No switch"; "goals may not use crews at all. Goals run with whatever the
-  persona and model was in the chat thread that started it. crews could spawn goals though, same for plans or reviews
-  and some of the other systems." (Goals about 7:30 PM EST).
-
-
-  The approved quiet Memory design supersedes DL-474''s still-open Q2 memory choices: one Memory page, This project
-  and Every project levels, one memory switch, search/level filter/list/Add/Edit/Delete/Archived; the chat Memory
-  button opens that same page as a sheet. Personal notes can live at Every project, resolving MEM-SCOPE. The Assistant
-  remains writer/manager; Crews, reviews and chat helpers may read Project and personal notes read-only under source
-  restrictions. Private app-thread memory stays private; no helper-owned store or other-Project access follows.
-  Saved to memory · View appears only after a real save; memory-use chips/counts/preview/ribbon/ranking/pin/conflict/source/verification
-  UI and ordinary Followed/Missed rule receipts retire. Fading and archive-only upkeep stay built in, preserving
-  saved pin protections and DL-403/444–447 holds. Delete is a real user action with durable suppression against
-  silent recreation from old chats. No new memory database, service or per-helper store is introduced.
-
-
-  DL-474''s Q2 Goals questions are closed: no new-Goal Persona/Crew default, no named test profiles and no Ask me
-  to confirm completion switch. Goals use their initiating chat Persona/model, never use Crews, and finish when
-  proof is in while existing pauses remain. Existing Let the assistant test its work and Speed or thoroughness steer
-  testing. Crews, plans, reviews and similar systems may start separate Goals with no parent edge under GRS-052.
-  The concept drops New Goals start with, Run test profile and Ask me to confirm; these three were never Plans inventory
-  rows. DL-474 remains history, not a current list of unanswered Q2 questions.
-
-
-  Retire 43 memory.* inventory rows from search, All Settings and transfer; eight remain in their proper owners.
-  SSYS-040 defines all 51 dispositions/compatibility reads and source-off/privacy migration to equivalent or stricter
-  read restrictions. Existing storage architecture, bounded context, source/currentness and native admission gates
-  remain. This decision authorizes these owner contracts and required companion alignment, not native implementation
-  or governance resealing.'
+canonical_text: >-
+  Jared's 2026-11-11 decisions, relayed verbatim by pm7-build: "ok that memory system looks good"
+  (about 11:05 PM EST); "No named sets"; "No switch"; "goals may not use crews at all. Goals run
+  with whatever the persona and model was in the chat thread that started it. crews could spawn
+  goals though, same for plans or reviews and some of the other systems." (Goals about 7:30 PM EST).
+  The approved quiet Memory design supersedes DL-474's still-open Q2 memory choices: one Memory
+  page, This project and Every project levels, one memory switch, search/level
+  filter/list/Add/Edit/Delete/Archived; the chat Memory button opens that same page as a sheet.
+  Personal notes can live at Every project, resolving MEM-SCOPE. The Assistant remains
+  writer/manager; Crews, reviews and chat helpers may read Project and personal notes read-only
+  under source restrictions. Private app-thread memory stays private; no helper-owned store or
+  other-Project access follows. Saved to memory · View appears only after a real save; memory-use
+  chips/counts/preview/ribbon/ranking/pin/conflict/source/verification UI and ordinary
+  Followed/Missed rule receipts retire. Fading and archive-only upkeep stay built in, preserving
+  saved pin protections and DL-403/444–447 holds. Delete is a real user action with durable
+  suppression against silent recreation from old chats. No new memory database, service or
+  per-helper store is introduced.  DL-474's Q2 Goals questions are closed: no new-Goal Persona/Crew
+  default, no named test profiles and no Ask me to confirm completion switch. Goals use their
+  initiating chat Persona/model, never use Crews, and finish when proof is in while existing pauses
+  remain. Existing Let the assistant test its work and Speed or thoroughness steer testing. Crews,
+  plans, reviews and similar systems may start separate Goals with no parent edge under GRS-052. The
+  concept drops New Goals start with, Run test profile and Ask me to confirm; these three were never
+  Plans inventory rows. DL-474 remains history, not a current list of unanswered Q2 questions.
+  Retire 43 memory.* inventory rows from search, All Settings and transfer; eight remain in their
+  proper owners. SSYS-040 defines all 51 dispositions/compatibility reads and source-off/privacy
+  migration to equivalent or stricter read restrictions. Existing storage architecture, bounded
+  context, source/currentness and native admission gates remain. This decision authorizes these
+  owner contracts and required companion alignment, not native implementation or governance
+  resealing. Follow-up, Jared 2026-11-12 at 8:12 AM EST: "Keep them there". Rules for every project
+  and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions.
+  The existing application/project instruction writer and storage remain; Memory does not become
+  their editor. Ordinary Memory/Teach capture has no lock, conflict, source or rollback controls;
+  retained legacy protection and codecs remain internal.
 gui_related: true
 gui_classification_reason: Records the approved Memory page/reply behavior and removes concept-only Goals controls.
 depends_on:
@@ -2988,9 +2991,10 @@ depends_on:
 - GRS-052
 unblocks: []
 acceptance_criteria:
-- All Q2 memory and Goals questions in DL-474 have the explicit dispositions above.
-- The exact Jared quotes are preserved; DL-474 remains unchanged history.
-- No source restriction is relaxed, private app thread shared, held cleanup enabled or native readiness inferred.
+  - "All Q2 memory and Goals questions in DL-474 have the explicit dispositions above."
+  - "The exact Jared quotes are preserved; DL-474 remains unchanged history."
+  - "No source restriction is relaxed, private app thread shared, held cleanup enabled or native readiness inferred."
+  - "Jared’s exact follow-up \"Keep them there\" is preserved, and both named rule editors remain in Settings > Personas & Crews > Defaults > Standing instructions."
 validation_surfaces:
 - scripts/pm-settings-layering-check.py
 - scripts/pm-command-payload-defs-check.py
@@ -3011,6 +3015,7 @@ source_lineage:
 - share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-settings-batch2.md
 - share/puppet-master/2026-11-11-memory-review/PACKET.md#3-proposed-pm-design
 - share/puppet-master/2026-11-11-memory-review/mock/README.md
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - ok that memory system looks good
 - No named sets
@@ -3021,6 +3026,7 @@ preserved_exact_tokens:
 - This project
 - Every project
 - Saved to memory
+- "Keep them there"
 negative_constraints:
 - No Goal uses a Crew.
 - No new database, memory service or per-helper store.

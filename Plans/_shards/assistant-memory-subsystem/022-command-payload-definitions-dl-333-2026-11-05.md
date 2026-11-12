@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L3392-L4322
+Source lines: L3412-L4349
 
-Source SHA256: `97faab694153c72d63820ff8cda4b76c90bc8ae49ecc97b54f36ef6d20797ff7`
+Source SHA256: `60372b88d295fa47f5461fef7f5fca40f5852e4ee35a66f9e1be2684b41e3b7a`
 
 ---
 
@@ -17,43 +17,49 @@ plan_unit_id: AMS-141
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: 'Typed payload definitions (DL-333) for the twelve cmd.chat.memory.* commands that UI_Command_Catalog
-  UCC-084 and UCC-085 register and UCC-230 routes to this doc: the Gist Review actions verify, edit, pin,
-  discard, toggle_auto_save_unverified and preview_capsule, and the maintenance commands rebuild_lexical_index,
-  rebuild_semantic_index, verification_sweep, dedup_sweep, summarize_monthly and prune_archive. The definitions
-  block below gives each command its args, owner request and owner result in pm.command_payload_definitions.v1,
-  with error and disabled-reason codes narrowed from the overlay''s closed sets. DL-402 binds monthly
-  summary and prune archive to archive-only: a memory is deleted only when the user deletes it, originals
-  keep their evidence references, and neither job archives or merges a pinned memory. DL-403 holds both
-  commands unavailable, automatically and from the Memory panel, until approved cutoffs exist; DL-446
-  and DL-447 record the returned cutoffs and keep runs waiting for their application and the remaining
-  definition, review and recording approvals; the definitions record that hold as owner state maintenance_cutoffs_pending,
-  which UCC-230 maps to not_configured (DL-341). DL-444 and DL-445 keep dedup_sweep unavailable the same
-  way until their answer is applied and the remaining approvals pass, recorded as owner state dedup_hold_pending,
-  also mapped to not_configured; each of the three definitions ties its owner state to that code in owner_state_codes.
-  The wired owner request ChatOwnerCommandRequestV2 requires a thread_id that the Project-scoped catalog
-  rows do not carry, and the rows require a project_id that AMS-054 app memory leaves null; each definition
-  records both disagreements in its judgments for the chat and memory owners, and chooses no thread_id
-  value. prune_archive''s policy can never change DL-447''s cutoffs, pin exclusion or DL-402''s archive-only
-  rule. gist_id is the canon name UCC-230''s identity_aliases records for the overlay identity memory_item_id,
-  and every judgment is in its definition''s judgments list (DL-341). DL-475 adds cmd.chat.memory.add
-  and cmd.chat.memory.delete and replaces Edit args with explicit memory_scope, plain text, optional title,
-  gist_id and expected_revision. The new MemoryNoteAddRequestV1/MemoryNoteEditRequestV1/MemoryNoteDeleteRequestV1
-  and MemoryNoteMutationResultV1 in assistant_memory_contracts.schema.json are the concrete owner contracts.
-  The owner authenticates the memory scope and source constraints, checks current revision before Edit/Delete,
-  infers kind, commits canonical records/tombstones before indexes, and returns a durable receipt before
-  acknowledgment. Delete is not Discard; suppression prevents old transcripts/replay/rebuild/restore/import
-  from silently resaving the deleted content. Bulk deletion freezes the confirmed scope and exact note
-  IDs and uses this same owner for each, reporting any incomplete result honestly. Old Verify/Pin/Discard/toggle/preview
-  definitions remain support/compatibility contracts with no ordinary UI producer; user dispatch cannot
-  restore them or bypass support gates. Maintenance definitions retain their holds and source/admission
-  gaps; this change does not enable them. These definitions add no EventRecord writer or native handler
-  proof. Edit may supply destination_scope to explicitly request a supported availability change. memory_scope
-  always identifies the current source; destination_scope never merely relabels it. Recheck both scopes,
-  provenance and privacy, preserve versions and legacy protection, and commit destination plus source
-  disposition through the same owner before claiming a move. A failure leaves the original available under
-  its original scope; unavailable native cross-scope ownership stays handler_unavailable. Private app-thread
-  content never broadens automatically.'
+canonical_text: >-
+  Typed payload definitions (DL-333) for the twelve cmd.chat.memory.* commands that
+  UI_Command_Catalog UCC-084 and UCC-085 register and UCC-230 routes to this doc: the Gist Review
+  actions verify, edit, pin, discard, toggle_auto_save_unverified and preview_capsule, and the
+  maintenance commands rebuild_lexical_index, rebuild_semantic_index, verification_sweep,
+  dedup_sweep, summarize_monthly and prune_archive. The definitions block below gives each command
+  its args, owner request and owner result in pm.command_payload_definitions.v1, with error and
+  disabled-reason codes narrowed from the overlay's closed sets. DL-402 binds monthly summary and
+  prune archive to archive-only: a memory is deleted only when the user deletes it, originals keep
+  their evidence references, and neither job archives or merges a pinned memory. DL-403 holds both
+  commands unavailable to internal/support execution until approved cutoffs exist; no Memory-panel
+  control is exposed; DL-446 and DL-447 record the returned cutoffs and keep runs waiting for their
+  application and the remaining definition, review and recording approvals; the definitions record
+  that hold as owner state maintenance_cutoffs_pending, which UCC-230 maps to not_configured
+  (DL-341). DL-444 and DL-445 keep dedup_sweep unavailable the same way until their answer is
+  applied and the remaining approvals pass, recorded as owner state dedup_hold_pending, also mapped
+  to not_configured; each of the three definitions ties its owner state to that code in
+  owner_state_codes. The wired owner request ChatOwnerCommandRequestV2 requires a thread_id that the
+  Project-scoped catalog rows do not carry, and the rows require a project_id that AMS-054 app
+  memory leaves null; each definition records both disagreements in its judgments for the chat and
+  memory owners, and chooses no thread_id value. prune_archive's policy can never change DL-447's
+  cutoffs, pin exclusion or DL-402's archive-only rule. gist_id is the canon name UCC-230's
+  identity_aliases records for the overlay identity memory_item_id, and every judgment is in its
+  definition's judgments list (DL-341). DL-475 adds cmd.chat.memory.add and cmd.chat.memory.delete
+  and replaces Edit args with explicit memory_scope, plain text, optional title, gist_id and
+  expected_revision. The new
+  MemoryNoteAddRequestV1/MemoryNoteEditRequestV1/MemoryNoteDeleteRequestV1 and
+  MemoryNoteMutationResultV1 in assistant_memory_contracts.schema.json are the concrete owner
+  contracts. The owner authenticates the memory scope and source constraints, checks current
+  revision before Edit/Delete, infers kind, commits canonical records/tombstones before indexes, and
+  returns a durable receipt before acknowledgment. Delete is not Discard; suppression prevents old
+  transcripts/replay/rebuild/restore/import from silently resaving the deleted content. Bulk
+  deletion freezes the confirmed scope and exact note IDs and uses this same owner for each,
+  reporting any incomplete result honestly. Old Verify/Pin/Discard/toggle/preview definitions remain
+  support/compatibility contracts with no ordinary UI producer; user dispatch cannot restore them or
+  bypass support gates. Maintenance definitions retain their holds and source/admission gaps; this
+  change does not enable them. These definitions add no EventRecord writer or native handler proof.
+  Edit may supply destination_scope to explicitly request a supported availability change.
+  memory_scope always identifies the current source; destination_scope never merely relabels it.
+  Recheck both scopes, provenance and privacy, preserve versions and legacy protection, and commit
+  destination plus source disposition through the same owner before claiming a move. A failure
+  leaves the original available under its original scope; unavailable native cross-scope ownership
+  stays handler_unavailable. Private app-thread content never broadens automatically.
 gui_related: true
 gui_classification_reason: Defines the Memory page, actions or reply presentation.
 depends_on: [UCC-230, UCC-084, UCC-085, CV-333, DL-333, DL-402, DL-403, DL-444, DL-445, DL-446, DL-447, DL-341]
@@ -78,6 +84,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - cmd.chat.memory.verify
 - cmd.chat.memory.edit
@@ -605,7 +612,7 @@ command_payload_definitions:
       choice:
       - not_configured
       gap_note: 'No catalog row states disabled reasons for the memory commands. Plans/Decision_Log.md#DL-444 and
-        #DL-445 (approved scope) keep automatic jobs and panel buttons unavailable until the answer is applied and
+        #DL-445 (approved scope) keep internal automatic/support jobs unavailable until the answer is applied and
         all remaining definition, review and recording approvals pass. The definition shows that hold as owner state
         dedup_hold_pending, which UCC-230''s owner_state_code_map maps to not_configured (DL-444, DL-445; DL-341).
         assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
@@ -671,8 +678,8 @@ command_payload_definitions:
       choice:
       - not_configured
       gap_note: 'Owner state maintenance_cutoffs_pending, which UCC-230''s owner_state_code_map maps to not_configured
-        (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved
-        cutoffs exist, and the button shows unavailable with that reason. DL-446 returned the cutoffs and keeps
+        (DL-403; DL-341 resolution 3): neither job runs, through automatic or internal support execution, until approved
+        cutoffs exist, and the internal request stays unavailable with that reason. DL-446 returned the cutoffs and keeps
         runs waiting for their application and the remaining definition, review and recording approvals, so the
         state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
   - command_id: cmd.chat.memory.prune_archive
@@ -738,8 +745,8 @@ command_payload_definitions:
       choice:
       - not_configured
       gap_note: 'Owner state maintenance_cutoffs_pending, which UCC-230''s owner_state_code_map maps to not_configured
-        (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved
-        cutoffs exist, and the button shows unavailable with that reason. DL-447 returned the cutoffs and keeps
+        (DL-403; DL-341 resolution 3): neither job runs, through automatic or internal support execution, until approved
+        cutoffs exist, and the internal request stays unavailable with that reason. DL-447 returned the cutoffs and keeps
         runs waiting for their application and the remaining definition, review and recording approvals, so the
         state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
   - command_id: cmd.chat.memory.add

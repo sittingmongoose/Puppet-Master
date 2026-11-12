@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3802-L22997
+Source lines: L3798-L23000
 
-Source SHA256: `b4d0a4d8ff0879dc647c9d6989ddfc930317d1880d11b8e99d9862e330f0de7a`
+Source SHA256: `a1e62de14816f795e9fc94a55c2795ad1d75949b990d7aa6e5c0b78d5622f373`
 
 ---
 
@@ -1033,15 +1033,21 @@ plan_unit_id: ACD-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach is an explicit capture workflow for durable codebase knowledge, user preferences, and workflow constraints. It uses user-locked records and requires explicit user confirmation before storage; it is not a separate closed mode_overlay.
+canonical_text: >-
+  Teach is explicit deliberate standing-instruction capture through its existing writer at Settings
+  > Personas & Crews > Defaults > Standing instructions. It requires confirmation before storage,
+  preserves secret/privacy/revision and retained protected-record safeguards internally, and creates
+  no separate closed mode_overlay. A requested saved note instead uses AMS-141 Add/Edit/Delete on
+  the shared Memory page at This project or Every project; no lock/unlock, conflict, source or
+  rollback controls appear.
 gui_related: false
 gui_classification_reason: Teach capture and memory persistence behavior are backend/chat workflow behavior rather than visual implementation.
 depends_on: []
 unblocks: [ACD-021, ACD-022]
 acceptance_criteria:
-  - Teach may be invoked through /teach or equivalent natural-language persistence intent.
-  - Persistence requires explicit user-confirming action before knowledge is stored.
-  - Teach does not create a separate closed mode_overlay.
+  - "Teach opens the existing written-instruction owner through /teach or equivalent deliberate intent and persists only after confirmation."
+  - "Saved notes reuse AMS-141 and the two allowed levels without a separate capture or inspection workflow."
+  - "Legacy protected-record state is internal and Teach creates no separate closed mode_overlay."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1057,6 +1063,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "user-locked"
   - "/teach"
@@ -1125,23 +1132,19 @@ plan_unit_id: ACD-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach scope, conflict/supersession, revocation and secret exclusion remain auditable instruction
-  safety rules. Inclusion records are internal and never proof of compliance. Routine replies show no
-  memory-use citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers,
-  verification badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to
-  memory · View line appear; View opens the same Memory page as a sheet and highlights the saved note.
-  Requested save/edit confirmation stays brief. Task evidence and ordinary links remain available.
+canonical_text: >-
+  Teach and saved-note persistence retain scope, secret exclusion, revisions and legacy protections
+  internally; inclusion records prove no compliance. Only a durable successful save may add Saved to
+  memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation,
+  receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown.
+  Ordinary task evidence remains available; written instructions use their separate owner.
 gui_related: false
 gui_classification_reason: Teach audit and secret-exclusion behavior are memory governance requirements, not GUI implementation.
 depends_on: [ACD-020, ACD-021]
 unblocks: []
 acceptance_criteria:
-- Teach scope, conflict/supersession, revocation and secret exclusion remain auditable instruction safety
-  rules. Inclusion records are internal and never proof of compliance. Routine replies show no memory-use
-  citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers, verification
-  badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to memory · View
-  line appear; View opens the same Memory page as a sheet and highlights the saved note. Requested save/edit
-  confirmation stays brief. Task evidence and ordinary links remain available.
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
+  - "No source/verification/rule receipt, named-note hover, conflict/lock/rollback control or third saved-note level is exposed."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1158,6 +1161,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "explicit memory/context"
   - "MUST NOT persist secrets, tokens, passwords, or other credentials"
@@ -9247,7 +9251,9 @@ canonical_text: Memory is one saved-note page, opened from Settings and as that 
   world claims still require scoped current evidence. Edits invalidate stale summary/index eligibility
   and are checked internally; no pinned/manual bypass can make unsupported claims proven.
 gui_related: true
-gui_classification_reason: Gist Review actions and UI command IDs are visible chat commands.
+gui_classification_reason: >-
+  The shared Memory page/sheet has current CRUD/navigation controls only; Gist Review is a
+  historical identity and produces no separate surface.
 depends_on: [ACD-186]
 unblocks: []
 acceptance_criteria:
@@ -9279,6 +9285,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "cmd.chat.memory.*"
 negative_constraints:

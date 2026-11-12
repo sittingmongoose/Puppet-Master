@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L547-L2578
+Source lines: L547-L2588
 
-Source SHA256: `97faab694153c72d63820ff8cda4b76c90bc8ae49ecc97b54f36ef6d20797ff7`
+Source SHA256: `60372b88d295fa47f5461fef7f5fca40f5852e4ee35a66f9e1be2684b41e3b7a`
 
 ---
 
@@ -73,7 +73,9 @@ canonical_text: 'This document owns Memory: reusable facts, preferences, lessons
   and existing local Tantivy/USearch storage remain internal contracts. The old Assistant-only title is
   historical; authorized helper reads follow AMS-026.'
 gui_related: true
-gui_classification_reason: The authority packet names the GUI Gist Review panel and user-visible memory subsystem scope.
+gui_classification_reason: >-
+  Names the current saved-note Memory boundary; Gist Review in the historical authority packet does
+  not create a second GUI surface.
 depends_on: []
 unblocks: [AMS-003, AMS-005, AMS-021]
 acceptance_criteria:
@@ -95,6 +97,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0002
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Assistant-Only Memory Subsystem (Canonical SSOT)"
   - "Evidence-Backed Gists"
@@ -499,7 +502,9 @@ canonical_text: 'Add writes a new MemoryGist from plain text with inferred kind 
   workbench or second Notes it took document appears. Instructions, History/privacy, chat capacity controls
   and Run limits stay in their owners outside Memory.'
 gui_related: true
-gui_classification_reason: List, edit, verify, pin, delete, and half-life edits are user-visible GUI operations.
+gui_classification_reason: >-
+  The one Memory page shows note text, two-level availability, updated time, Add/Edit/Delete and
+  Archived, without retired verification/pin/decay controls.
 depends_on: [AMS-008]
 unblocks: [AMS-021]
 acceptance_criteria:
@@ -534,6 +539,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "list/edit/verify/pin/delete/half-life edits"
   - "MemoryGist"
@@ -905,6 +911,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0022
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0023
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Memory is continuity and project state. Memory is not rules."
   - "350"
@@ -915,7 +922,7 @@ preserved_exact_tokens:
   - "Verified-only"
 negative_constraints:
   - "Unverified gists may be included only by explicit user action."
-  - "Pinned Unverified gists must not be auto-included unless assistant.memory.allow_pinned_unverified_injection = true."
+  - "Retired pinned-Unverified/manual-verification bypasses stay disabled under SSYS-059. Internal AMS-014 support and source/permission gating apply; no user pin or verification control admits an unsupported claim."
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1169,7 +1176,9 @@ canonical_text: 'Maintenance remains local and in-process, behind the page. Rebu
   approvals. No immediate automatic maintenance is authorized. Internal operations retain truthful success/failure
   state; storage health and real-failure recovery stay with their existing owners.'
 gui_related: true
-gui_classification_reason: User-invokable GUI maintenance actions and success/failure status are visible UI behavior.
+gui_classification_reason: >-
+  Internal maintenance and existing recovery remain behind the page; no user-invokable Memory
+  workbench or button is planned.
 depends_on: [AMS-021, AMS-022]
 unblocks: []
 acceptance_criteria:
@@ -1194,6 +1203,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "user-invokable in GUI"
   - "internal maintenance jobs"

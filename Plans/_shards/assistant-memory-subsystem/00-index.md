@@ -1,32 +1,32 @@
 # Shard Index: Plans/assistant-memory-subsystem.md
 
-Generated: 2026-11-12T06:05:23Z
+Generated: 2026-11-12T14:39:42Z
 
-Source SHA256: `97faab694153c72d63820ff8cda4b76c90bc8ae49ecc97b54f36ef6d20797ff7`
+Source SHA256: `60372b88d295fa47f5461fef7f5fca40f5852e4ee35a66f9e1be2684b41e3b7a`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `22bdea6c437cdfbcdca60d5b68bed2f4c8f47d9f509b84b1f596590542acf2d1`
-- [002 - Change Summary](002-change-summary.md) L6-L13 `46de95b27ce9f6f4fa26357d37ffbfa04e4db19fc853fc97e6714706425d7592`
-- [003 - 0. Scope and boundary](003-0.-scope-and-boundary.md) L15-L29 `f223e67a136f6431403e1ff882ba69001540832c184af908cb2fbbd8d2c6663d`
-- [004 - 1. Capability boundary (Assistant-only)](004-1.-capability-boundary-assistant-only.md) L30-L67 `84ebfc768c2c10a1e82ee56f473f185177bc2295265e6e3927c2e7e78be324ac`
-- [005 - 2. Physical storage layout (per project)](005-2.-physical-storage-layout-per-project.md) L68-L91 `fd2f115c9b95365920fe062b6ce598ae1d4f4db8ed11f3ec5350fda67c65ef89`
-- [006 - 3. Data model (Evidence-Backed Gists; GUI-first)](006-3.-data-model-evidence-backed-gists-gui-first.md) L92-L177 `b66663750f729bcc88313f4ac2dd62d8c73fb978205c5bcd46636aa5d891afdd`
-- [007 - 4. Retrieval + indexing contracts](007-4.-retrieval-indexing-contracts.md) L178-L233 `2f0bcbbe8f5c518cee6860837569fb41c1ce7febfd15b99091e6840a404fff40`
-- [008 - 5. Verification + triggers (Evidence-Backed Gists)](008-5.-verification-triggers-evidence-backed-gists.md) L234-L311 `88754cb6420b059081bf68a4d047e0375adec1df873f964b03879575603d81a7`
-- [009 - 6. Prompt injection contract (token protection)](009-6.-prompt-injection-contract-token-protection.md) L312-L366 `a86641f46b80f5dfc9f6a42414a34d0b3b620a7904a41b58799ee537f7680f8b`
-- [010 - 7. GUI + maintenance operations](010-7.-gui-maintenance-operations.md) L367-L398 `7f28ffeb81cb33afcd338a56dc8f47ae7fb000e54a940b7026578853274c00e5`
-- [011 - 8. Integration points](011-8.-integration-points.md) L399-L431 `a574a689ac3847b085745f277d38de39c681a4ec416013f360456653a4541ac8`
-- [012 - 9. Deterministic defaults](012-9.-deterministic-defaults.md) L432-L495 `7d265f9f6e98f62096b2914087db3969f0150896d134b2d16bb09369756b9835`
-- [013 - 10. Acceptance criteria (testable)](013-10.-acceptance-criteria-testable.md) L496-L510 `1d1893380fe8d5f1d923c732703e76b5823ce441aebe727e9d39dc64c5e07c05`
-- [014 - 11. Non-goals](014-11.-non-goals.md) L512-L522 `14e678c4027799147642fd019b69624992d23cab5f3757fd1961b8ed20f77c18`
-- [015 - 12. Runtime Owner Reference Map](015-12.-runtime-owner-reference-map.md) L523-L539 `1b2da3c7de1150510859251d48d921e41bf03b7b5ca5d84fc2cdcb14abdd56c8`
-- [016 - Owner / Consumer Map](016-owner-consumer-map.md) L541-L545 `31549cc28ffbae692d63dadda589b988dda3cac1b29229214ba5bd8cee7209f6`
-- [017 - PlanUnits](017-planunits.md) L547-L2578 `bb570aa54095437cd2f1da9c263f8e44ba86ed01596d26089b195becab7e09a2`
-- [018 - Migration Coverage](018-migration-coverage.md) L2580-L2594 `95dfb8b1f2b2cf7013fd62426ea63ef7bc4bbec0cfe4c6fa1710b8bc4f6eaf8c`
-- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L2596-L2799 `6be9e8c66c481e03c07f9fa6fa5716d24611d26435c20a6ca8553768dfbfe153`
-- [020 - Claim-Level Verification And Notebook Boundary Addendum (2026-09-05)](020-claim-level-verification-and-notebook-boundary-addendum-2026-09-.md) L2801-L2936 `831ab50c1ef93f96bfbb2937778523bf532410f93a76fa5dda758fc6ecfe7ad9`
-- [021 - Wand Modules Redesign Addendum (2026-09-27)](021-wand-modules-redesign-addendum-2026-09-27.md) L2938-L3389 `98968e3eba07ddc2691b859149f66a74d9d46468c24ddba65ae127c3199a97a2`
-- [022 - Command payload definitions (DL-333, 2026-11-05)](022-command-payload-definitions-dl-333-2026-11-05.md) L3392-L4322 `ca453c5c44278b8a9c8f9b56a75a4b84fb56958202046d71166d2bce667b844e`
+- [001 - Preamble](001-preamble.md) L1-L4 `ef1c9c90298c587d55bfcc80beea9b92cd3c55642f21d9240aa05ee350af9bfc`
+- [002 - Change Summary](002-change-summary.md) L6-L13 `431d1761b4ac13ae04ba3d47cf16c7e88e9e04f181eb82556705d805f64aafd9`
+- [003 - 0. Scope and boundary](003-0.-scope-and-boundary.md) L15-L29 `8b7714e6ac24a8f633ac0e5306b9dc09d4746099225ea906191a4df45f57949c`
+- [004 - 1. Capability boundary (Assistant-only)](004-1.-capability-boundary-assistant-only.md) L30-L67 `3a96d7733b09884bd3519fb1524a457c61e0af8db72270911d49f8a513e21c89`
+- [005 - 2. Physical storage layout (per project)](005-2.-physical-storage-layout-per-project.md) L68-L91 `2cc55eac8762b454e621bce3ca38176c167bd8a4606979fd2afb540818a7df78`
+- [006 - 3. Data model (Evidence-Backed Gists; GUI-first)](006-3.-data-model-evidence-backed-gists-gui-first.md) L92-L177 `976592472698b480b8e636f1e2528147bf5954fb414e5f14c528b4e3b97d6776`
+- [007 - 4. Retrieval + indexing contracts](007-4.-retrieval-indexing-contracts.md) L178-L233 `6e4cbdaefc8c1078aa4f38b5f2f673758a391b25d1f623fe242fa067481eb3dc`
+- [008 - 5. Verification + triggers (Evidence-Backed Gists)](008-5.-verification-triggers-evidence-backed-gists.md) L234-L311 `daa504d551780bce6ced25483bb0ac1ae8a5c3700682f1daa2f2e00c2badedd7`
+- [009 - 6. Prompt injection contract (token protection)](009-6.-prompt-injection-contract-token-protection.md) L312-L366 `131436396adf4bc77b433201fb381cdf17a56fccfabd27a80c63bf83a945902b`
+- [010 - 7. GUI + maintenance operations](010-7.-gui-maintenance-operations.md) L367-L398 `8c60f41e32d050ac26ee1e5a76cededee620c2ae8041f4e2606a82d09bec2476`
+- [011 - 8. Integration points](011-8.-integration-points.md) L399-L431 `cb91ff378c46f0c9b7c49f96055c8c0acd9a78d2e524bbbcbbe871f765d32af1`
+- [012 - 9. Deterministic defaults](012-9.-deterministic-defaults.md) L432-L495 `b4ee701ad2c27ac1bb4c87eb9f70de7bc30159bbc2def29ef2a569b735acf0ed`
+- [013 - 10. Acceptance criteria (testable)](013-10.-acceptance-criteria-testable.md) L496-L510 `d865933cce6c9dff6b41026d3eae1dffc96ad26544afa2120aca8aad1465ef36`
+- [014 - 11. Non-goals](014-11.-non-goals.md) L512-L522 `ffa6a0efba2c89dcf87b7d8b4de7eca4d7d60c5763dd80426772722a4c146782`
+- [015 - 12. Runtime Owner Reference Map](015-12.-runtime-owner-reference-map.md) L523-L539 `6004bfe60100e6b1fa33e5838cc26dd9878488655e63a99bc383f30c9f511764`
+- [016 - Owner / Consumer Map](016-owner-consumer-map.md) L541-L545 `123b03f0d5ba83ce72cfacbfa54d517fb52f18a0719aa5cfc7747c16cadbd309`
+- [017 - PlanUnits](017-planunits.md) L547-L2588 `bd345a032bd6a5224288d2fa94847b76c2381d6b596b0b4499dd4710cde954b4`
+- [018 - Migration Coverage](018-migration-coverage.md) L2590-L2604 `ba217843cc8cec765b9771206c51ee9590b6ddb8a070387aa8596d7fad64f7f8`
+- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L2606-L2810 `d9e52b8341b03b5b0d584e5e2b070e9e8b68938866001121ab305e22f3a75288`
+- [020 - Claim-Level Verification And Notebook Boundary Addendum (2026-09-05)](020-claim-level-verification-and-notebook-boundary-addendum-2026-09-.md) L2812-L2947 `36ccaf14931931ddd537002441b6a7a77ff1935e98be643098e427dcffaa0100`
+- [021 - Wand Modules Redesign Addendum (2026-09-27)](021-wand-modules-redesign-addendum-2026-09-27.md) L2949-L3409 `0d98e26a31c171675fd90d3e840390c3e8debb8f9c6855892abb69bfe55d5a99`
+- [022 - Command payload definitions (DL-333, 2026-11-05)](022-command-payload-definitions-dl-333-2026-11-05.md) L3412-L4349 `193dfd560b5e5363b769531d0e67f2947b68e2241d31bba363d579d2b5fc5850`

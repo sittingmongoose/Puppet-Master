@@ -917,7 +917,7 @@ ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/storage-
 | Providers | One effective controller; native opacity; capability resolution | `Plans/CLI_Bridged_Providers.md`, `Plans/Models_System.md` |
 | Usage | Helper attribution, exactly-once, occupancy vs cumulative | `Plans/usage-feature.md` |
 | Storage/backup/host | Owned families, backup participation, lease fencing | `Plans/storage-plan.md`, `Plans/Backup_Restore_System.md`, `Plans/Project_Sync_and_Backbone.md` |
-| Settings | memory.notebook.* Project-scoped values | `Plans/Settings_System.md` |
+| Compatibility input | Legacy memory.notebook.* values are migration-only reads, absent from live Settings/search/transfer; built-in notebook policy stays with its owner | `Plans/Settings_System.md`, WN-018 |
 | Commands/UI wiring | cmd.chat.open_working_notebook, cmd.chat.request_fresh_context, cmd.orchestrator.open_notebook catalog rows; fail-closed until production wiring exists | `Plans/UI_Command_Catalog.md`, `Plans/UI_Wiring_Rules.md` |
 
 Internal notebook state writes performed inside read-only work (ask/plan modes) are explicitly policy-limited sidecar writes to PM-owned notebook storage. They never confer target-project mutation authority, never widen tool or external-write ceilings, and never require switching to regular/yolo modes.
