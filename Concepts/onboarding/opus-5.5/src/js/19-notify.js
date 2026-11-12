@@ -529,7 +529,7 @@
        2026-10-29: a click landed on a card at opacity 0). Once shown it takes clicks, and covers what is under it (Jared,
        2026-10-30). A class, not an inline style: Usage's stage rule gives its cards pointer events with !important, which
        beat the inline none there (final check F3-5); 26-notify-00-core.css answers it for entering and leaving cards */
-    c.classList.add('pmn-entering');
+    if (!c.classList.contains('pmn-entering')) c.classList.add('pmn-entering');
     const shown = () => { if (c.isConnected && !c.classList.contains('pmn-leaving')) c.classList.remove('pmn-entering'); };
     const play = (e, f, o) => {
       const a = e && typeof e.animate === 'function' ? e.animate(f, Object.assign({ fill: 'backwards', delay: delay || 0 }, o)) : null;
