@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L40681-L41912
 
-Source SHA256: `ed4a2ca21d03be44b0dd07092082ba191161006ce7b8237c7e3a9dd4a5823b93`
+Source SHA256: `e91c83671f32789274a25cacbebe26bd589974d9bd9bcd3b3111474388c7dcb8`
 
 ---
 
@@ -1038,7 +1038,7 @@ depends_on: [F3-566, ACD-477, ACD-481, DL-127, DL-116, F3-570]
 unblocks: []
 acceptance_criteria:
   - "Every deliberate Teach entry uses the existing written-instruction owner and confirms before storage; saved notes use the one Memory page and AMS-141 at the two allowed levels."
-  - "No scope rings, public-safe tick, lock/conflict/source/rollback workbench, taught-memory duplicate document or rule-use/save-update receipt appears."
+  - "No scope rings, public-safe tick, lock/conflict/source/rollback workbench, taught-memory duplicate document or automatic rule-use, rule-check or save/update receipt appears. A deliberate instruction save or edit confirms with the existing Rule saved · View Teach receipt, whose View opens Settings > Personas & Crews > Defaults > Standing instructions."
   - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json

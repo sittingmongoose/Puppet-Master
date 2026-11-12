@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L6016-L6310
 
-Source SHA256: `a6d93820c1a7ff45ddd576e8b590752e4ac3ebe14c32214063e15b34018321b2`
+Source SHA256: `0da28ffc13dc522838eeae1a1baf45906934d251ef6965873f31916de1b6c968`
 
 ---
 
@@ -160,7 +160,7 @@ acceptance_criteria:
   - "Only the surfaces UCC-172 names are added to existing entries."
   - "crew_auto_receipt appears only on assistant.redesign.cmd.chat_crew_auto_open_config and has no candidate exclusion. No wiring entry or candidate exclusion exists for cmd.runtime.automation_stop.set; it is excluded only as deliberately not registered. eli5_sheet is wired only as WM-064 states."
   - "Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from static closure."
-  - "No Memory proposal/Teach-receipt/preview/verification/pin/cleanup or ordinary rule-check fix-link producer remains; current Memory CRUD and written instructions retain separate owners."
+  - "No Memory proposal/preview/verification/pin/cleanup producer, no Teach receipt that opens Memory and no ordinary rule-check fix-link producer remains; the deliberate Teach receipt (teach_receipt) opens Standing instructions, and current Memory CRUD and written instructions retain separate owners."
   - "cmd.chat.teach.set_lock keeps its candidate exclusion but renders no ordinary control and no disabled placeholder (DL-475, CS-085, UCC-171)."
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py validate-wiring-matrix

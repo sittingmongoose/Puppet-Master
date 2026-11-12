@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3798-L23000
+Source lines: L3799-L23003
 
-Source SHA256: `b39d1daa693597934798f516954a3d30119aec7651d4624c976f58531d26c7e4`
+Source SHA256: `15fe0b5f9591a6b23d74bb2d75e5a4b70a13bda9a8043f7add956db1af4ab389`
 
 ---
 
@@ -1144,7 +1144,7 @@ depends_on: [ACD-020, ACD-021]
 unblocks: []
 acceptance_criteria:
   - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
-  - "No source/verification/rule receipt, named-note hover, conflict/lock/rollback control or third saved-note level is exposed."
+  - "No source or verification receipt, automatic rule-use or rule-check receipt, named-note hover, conflict/lock/rollback control or third saved-note level is exposed. The deliberate Rule saved · View Teach receipt stays; its View opens Settings > Personas & Crews > Defaults > Standing instructions."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4873,8 +4873,10 @@ canonical_text: >-
   Investigation Context may render as card, `/chip/panel`, or compact
   equivalent with explicit attach, `/removal/revocation`, `/revoke`,
   provenance, timestamp, redaction/truncation state, filtering, and actions
-  `Open target`, `Open artifacts`, `Export bundle`, `Revalidate target`,
-  `Revoke item`, and `Show raw in Context Detail Pane`.
+  `Open target`, `Open artifacts`, `Export bundle`, `Revalidate target`
+  and `Revoke item`. `Show raw in Context Detail Pane` is retired (DL-475):
+  raw payloads stay internal (ACD-092), and investigation evidence opens
+  through `Open artifacts`.
 gui_related: true
 gui_classification_reason: Rendering, filtering, and actions are visible Investigation Context UI.
 depends_on: [ACD-092, ACD-095, ACD-097, ACD-099]
@@ -4882,7 +4884,7 @@ unblocks: []
 acceptance_criteria:
   - Investigation Context renders as a card, /chip/panel, or compact equivalent.
   - Attach, removal/revocation, provenance, timestamps, redaction/truncation, and filtering are visible.
-  - Open, export, revalidate, revoke, and raw-detail actions are available where supported.
+  - Open, export, revalidate and revoke actions are available where supported; no raw-detail action opens the Context Detail Pane (DL-475).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
