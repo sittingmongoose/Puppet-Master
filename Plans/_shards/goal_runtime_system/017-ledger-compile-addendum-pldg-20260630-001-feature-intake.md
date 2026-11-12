@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L1045-L2745
+Source lines: L1045-L2760
 
-Source SHA256: `700740d819bf70a0fb61030bbf2ff4082954ffcca15c443e210c3a284ecf8374`
+Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614`
 
 ---
 
@@ -1662,50 +1662,65 @@ plan_unit_id: GRS-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Goal chip/status/task-drawer styling, persistence substrate, and provider-specific model-role tier mappings are required implementation-bound decisions for the Goal Runtime product surface. The Goal implementation plan must bind each choice to named owner docs, durable state records, provider-policy records, validation surfaces, and acceptance evidence before production readiness can be certified. The accepted runtime contract requires functional Assistant Chat controls, durable goal state, separate worker and verifier/adjudicator policy surfaces, and certification-tier verifier requirements; unresolved styling, persistence, or provider defaults must block certification rather than remain as unbound implementation gaps.
+canonical_text: Goal chip/status/task-drawer styling and persistence bind to their named owner docs, durable
+  state/event families, validation surfaces and acceptance evidence before production readiness. Model/account
+  selection belongs to Models System and Multi-Account under GRS-049; the Goal uses its initiating chat choice
+  and has no own model-role policy, certification tier or required verifier/adjudicator cast. Retired provider-specific
+  Goal model-default/tier maps are not unresolved implementation choices and cannot block a Goal outcome. Any
+  genuine review is an explicitly configured Review run or workflow-owned certification step, preserving that
+  owner’s bounded authority and evidence requirements.
 gui_related: true
-gui_classification_reason: This requirement includes final visual styling, iconography, and layout for Goal UI surfaces.
+gui_classification_reason: This requirement includes final visual styling, iconography, and layout for Goal
+  UI surfaces.
 depends_on:
-  - GRS-005
-  - GRS-007
-  - GRS-010
+- GRS-005
+- GRS-007
+- GRS-010
+- GRS-049
 unblocks: []
 acceptance_criteria:
 - Goal visual styling binds to owner-doc UI contracts before certification.
-- 'Persistence binds to durable state and event-log contracts before certification. Amended 2026-10-31 (DL-270): the substrate is no longer an open choice. Goal records and events persist in the canonical seglog and redb families (SP-335, SP-336, SP-340), and SQLite-format engines are excluded (SP-342). Closing this gate means checking the binding against those units.'
-- Provider defaults bind to separate worker/verifier-adjudicator policy and strong-certification blocking rules before certification.
+- 'Persistence binds to durable state and event-log contracts before certification. Amended 2026-10-31 (DL-270):
+  the substrate is no longer an open choice. Goal records and events persist in the canonical seglog and redb
+  families (SP-335, SP-336, SP-340), and SQLite-format engines are excluded (SP-342). Closing this gate means
+  checking the binding against those units.'
+- Model/account selection follows Models System, Multi-Account and GRS-049; no Goal-owned model defaults, role
+  cast or certification tier is recreated.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - UI design, persistence, and provider-policy reviews
+- python3 scripts/pm-plan-index.py validate
+- UI design, persistence, and provider-policy reviews
 risk_class: implementation_binding_drift
 reasoning_tier: standard
 context_scope: goal_runtime_implementation_bindings
 implementation_surfaces:
-  - Plans/Goal_Runtime_System.md
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/Goal_Runtime_System.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: goal_runtime_implementation_bindings
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0017
-  - pldg-20260616-001-goal-runtime-system:atom-0031
-  - pldg-20260616-001-goal-runtime-system:atom-0104
-  - pldg-20260616-001-goal-runtime-system:atom-0105
-  - pldg-20260616-001-goal-runtime-system:q-0003
-  - pldg-20260616-001-goal-runtime-system:q-0004
-  - pldg-20260616-001-goal-runtime-system:q-0005
+- pldg-20260616-001-goal-runtime-system:atom-0017
+- pldg-20260616-001-goal-runtime-system:atom-0031
+- pldg-20260616-001-goal-runtime-system:atom-0104
+- pldg-20260616-001-goal-runtime-system:atom-0105
+- pldg-20260616-001-goal-runtime-system:q-0003
+- pldg-20260616-001-goal-runtime-system:q-0004
+- pldg-20260616-001-goal-runtime-system:q-0005
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "final visual styling, iconography, and exact layout"
-  - "database tables, project files, or a hybrid"
-  - "default model-role tier mappings"
-  - "worker, planner, evaluator, verifier, and adjudicator"
+- final visual styling, iconography, and exact layout
+- database tables, project files, or a hybrid
+- default model-role tier mappings
+- worker, planner, evaluator, verifier, and adjudicator
 negative_constraints:
-  - Do not treat deferred styling as absence of required Goal controls.
-  - Do not hard-code provider-specific model defaults as canonical correctness requirements in this compile.
+- Do not treat deferred styling as absence of required Goal controls.
+- Do not hard-code provider-specific model defaults as canonical correctness requirements in this compile.
 owner_hints:
-  - Plans/Goal_Runtime_System.md
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/Goal_Runtime_System.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical provider-default/tier mapping and separate Goal worker/verifier policy language is retired by
+  GRS-049; it is not current readiness or completion authority.
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L7649-L7734
+Source lines: L7690-L7793
 
-Source SHA256: `34ea4b6c2934cb4e6aaf64baa418c10460c117e15e78acb895b7187bf3a79a75`
+Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
 
 ---
 
@@ -18,18 +18,36 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, model profiles, and provider-specific owner docs such as Plans/Provider_OpenCode.md, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding. Old tier-era wording may remain only as compatibility/search aliases where necessary; capability_lane and agent_role are Models-owned binding inputs, while write_mode and certification_tier are consumed references from Goal Runtime, Contracts, storage, Permissions, and Worktree owner surfaces rather than Models-owned enforcement or certification semantics.
+  Model routing uses six jobs: Planning and supervising (overseer), Everyday building (worker), Easy,
+  routine jobs (low_effort_worker), Design and layout (gui_frontend_worker), The hardest jobs
+  (high_effort_worker), and Checking finished work (auditor). Resolve the configured model/depth through
+  §2; a blank job follows Everyday model, except Easy, routine jobs follows Everyday building. Keep
+  configured provider/account/model-profile identity, capability evidence and requested/effective
+  receipts. Old low_cost_executor maps to low_effort_worker,
+  standard_reviewer/verifier/adjudicator/certifier map to auditor, high_reasoning_orchestrator maps to
+  overseer as compatibility input names only, without restoring retired Goal roles. Missing usable models
+  after named inheritance return typed blocked states with recovery; never arbitrary defaults. Preserve
+  per-piece build policies, parent ceilings and separate checking versus implementation selections.
+  Helpers may use any parent-selected available model and effort; available means allowed and runnable
+  under policy/parent ceilings, otherwise ordinary job/everyday defaults apply. Models owns no
+  write_mode, lease or certification semantics.
 gui_related: false
 gui_classification_reason: Lane binding resolution is backend model/provider policy; FinalGUISpec owns visible Settings controls.
 depends_on:
-  - MS-108
+- MS-005
+- MS-108
 unblocks: []
 acceptance_criteria:
-  - Model resolution accepts capability_lane and agent_role inputs for Orchestrator Goal Runtime.
-  - Required lane roles resolve through configured providers, accounts, and model profiles.
-  - requested/effective identity and capability evidence are exposed to runtime receipts and GUI projections.
-  - Missing required bindings return unconfigured-lane blockers instead of selecting arbitrary defaults.
-  - Legacy tier labels are treated only as compatibility/search aliases; capability_lane and agent_role remain Models-owned binding inputs, while write_mode and certification_tier are carried as owner-surface references rather than Models-owned enforcement or certification semantics.
+- Six job routes resolve configured providers, accounts, model profiles and model/depth pairs.
+- Easy, routine jobs inherits Everyday building when blank and handles only small, low-risk, non-GUI implementation.
+- Legacy lane bindings are compatibility reads; ambiguous retired maps are disclosed and do not write new job
+  defaults automatically.
+- A required job with no usable model after inheritance blocks with recovery instead of choosing arbitrarily.
+- Cheap implementation never acts as verifier, adjudicator or certifier; checking and implementation remain
+  distinct requests.
+- Parent-selected helper model and effort obey actual authority, availability and policy ceilings without a
+  separate Settings row.
+- Receipts preserve requested/effective identity and capability evidence.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future capability-lane resolver review
@@ -80,10 +98,10 @@ preserved_exact_tokens:
   - "write_mode"
   - "certification_tier"
 negative_constraints:
-  - Do not hardcode provider/model defaults.
-  - Do not resolve low_cost_executor lanes as verifier, adjudicator, or certifier roles.
-  - Do not preserve old tier-era wording as the canonical execution model.
-  - Do not make Models_System own write_mode enforcement, worktree lease policy, or certification semantics.
+- Do not hardcode provider/model defaults.
+- Do not resolve low_cost_executor or low_effort_worker as verifier, adjudicator or certifier work.
+- Do not revive tier-era or Goal certification roles.
+- Do not make Models own write_mode enforcement, worktree leases or certification semantics.
 owner_hints:
   - Plans/Models_System.md
   - Plans/FinalGUISpec.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1358-L1436
+Source lines: L1320-L1385
 
-Source SHA256: `34ea4b6c2934cb4e6aaf64baa418c10460c117e15e78acb895b7187bf3a79a75`
+Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
 
 ---
 
@@ -15,30 +15,17 @@ This addendum elaborates how the canonical provider/model precedence owner secti
 ### Persona, execution-unit, and scope policy inputs
 
 
-1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
+1. **Persona axis**: Users select behaviour, instructions and mutation_policy; the Persona supplies no model/provider/depth default.
 2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
-3. **Scope axis**: Ordinary defaults consume Everywhere → Computer → optional Project through SSYS-002/059; worktree/run/owner policies remain their existing narrower inputs and ceilings, not another ordinary store.
+3. **Scope axis**: Model defaults offer Everywhere and optional Project through SSYS-002/059; Computer remains execution context and a capacity ceiling, never an extra model-default store. Worktree/run/owner policies retain their narrower inputs and ceilings.
 
 ### Precedence chain for provider/model selection
 
-When a unit needs to select a provider and model, resolve in this order:
-
-1. **Explicit run-envelope override**: If the run was launched with `--provider=X --model=Y`, use those.
-2. **Scoped owner policy**: If the active execution_unit_type has a policy (e.g., "node-type uses Copilot"), apply it.
-3. **Persona preference**: Use the active Persona's default model and provider.
-4. **Surface or stage default**: If the UI surface or execution stage has a default (e.g., "code review prefers GPT-4"), use it.
-5. **Project own default**: omit for No project.
-6. **Computer own default**: actual work Computer.
-7. **Everywhere/factory configuration default**: consume the one Settings resolver.
-8. **Last-used state**: only where permitted.
-9. **Provider default**: after capability/account filtering.
+Resolve through §2 and MS-005/MS-099 only. The order is explicit run, scoped owner policy, surface/stage default, manually selected account default, This project list, Everywhere/factory list. Missing sources fall through; eligibility, ceilings and cost gates always apply.
 
 ### Settings resolution and override semantics
 
-
-- **Conservative policy**: tiers 1, 2, 5, 6, 7, 9 under MS-100; exclude Persona/stage defaults and preserve scoped/parent ceilings. The old numeric shorthand is superseded.
-- **Standard policy** (default): Use tiers 1–7 (explicit override through Everywhere/factory defaults); respect all configuration.
-- **Aggressive policy**: Use all tiers 1–9; auto-select the cheapest or fastest model if multiple are available and equally suitable.
+`ai.models.resolution-policy` is retired. Conservative policy, Standard policy and Aggressive policy are compatibility-read names only; none may skip or add a rung. Old values are retained for inspection with a retirement notice and omitted from new saves and transfers. Presets are picker shortcuts, not another stored default or precedence policy.
 
 ### Provider capability and cost gating
 
@@ -76,7 +63,7 @@ When a provider and model are selected, emit a `selection_reason` object:
 selection_reason {
   selected_provider: string,           // e.g., 'openai', 'anthropic', 'github'
   selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
-  precedence_tier: number,             // 1–9, using the versioned MS-005/099 source order
+  precedence_tier: number,             // 1–6, using the versioned MS-005/099 source order
   fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
   alternatives: Array,                 // Other models that were considered and why they were skipped
   selection_time_utc: string,          // When the decision was made

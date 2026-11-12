@@ -1,21 +1,21 @@
 # Shard Index: Plans/OpenCode_Coverage_Matrix.md
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-11-12T13:55:25Z
 
-Source SHA256: `d775247c8b00867abc5374cd74a1973a1943935b5395298ef7079d37c0c9682e`
+Source SHA256: `e89c8e4a8a74a1c1b541b2dfd2f1ed215f0037bb1e5389fded9d781e7e7e78f1`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L6 `7ab7c53993ab0a993c018fd785714e6b8c8972301bbb544e60f43ad745d489fc`
-- [002 - 1. Scope and Method](002-1.-scope-and-method.md) L8-L66 `7890bf5041e9d7b8777b021fdd71e9c0402bbd43aee9e03844ad00e8fe200a87`
-- [003 - 2. Coverage Matrix](003-2.-coverage-matrix.md) L68-L123 `0237d49a15cb462368f7ebf4c1c2bd7c8eea467acf3245b5eafe126d5937b579`
-- [004 - 3. DRY Authority Audit](004-3.-dry-authority-audit.md) L124-L147 `f64702f76930d97d07bc96455348b24da12399a34e3a4d358d7effeb8421ebba`
-- [005 - 4. GUI + Config Wiring Audit](005-4.-gui-config-wiring-audit.md) L149-L205 `e00bea6063587fca6446919adebe716c66b7ea55a98f66444bfbd4aaf9a20e27`
-- [006 - 5. Mandatory Fix List](006-5.-mandatory-fix-list.md) L207-L247 `e1685f032c9657a701819190e4ad8a1183aa8f735a4d4634960d11226acbbdf3`
-- [007 - 6. Summary](007-6.-summary.md) L249-L256 `e21f97f4abcd8a9b3f372eb32e2b38f46eab29f40053e568e7c4f4e2dc70c385`
-- [008 - Owner / Consumer Map](008-owner-consumer-map.md) L258-L262 `b43996472b2b7f05ac8a29c33fab332a09c80791d5f486303436dd41edf7f6f6`
-- [009 - PlanUnits](009-planunits.md) L264-L1197 `3f25bdb2151c21aea0bc59f9a9b336f7380d1b674281e004890426a551fd05eb`
-- [010 - Migration Coverage](010-migration-coverage.md) L1199-L1209 `2c3fad531a5a79c4d2e583857da49fb4e813f15ef5b624e84f68925d61464c4a`
-- [011 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1211-L1215 `e484426a568479718435896dcff09c131b2e0318a500947dd9f113a53b30a5d2`
+- [001 - Preamble](001-preamble.md) L1-L6 `9d556051e5eb7532d2d6c71a5b405bf3d96f1574f8e8ce9fd14e6e3398477ab3`
+- [002 - 1. Scope and Method](002-1.-scope-and-method.md) L8-L66 `56d66dac10c3ff553b7cc0e16f1915a1b019775d490994613c61c1425cd36293`
+- [003 - 2. Coverage Matrix](003-2.-coverage-matrix.md) L68-L123 `e7584d3fd0a9b70a97b2d03aa77add10308b1e18b19079e93fef8d5be3c15ece`
+- [004 - 3. DRY Authority Audit](004-3.-dry-authority-audit.md) L124-L147 `eac8f3ca64d4a55aa7a1a5fc6c2c199281f49172237b06c3f865ea5d9bbc1602`
+- [005 - 4. GUI + Config Wiring Audit](005-4.-gui-config-wiring-audit.md) L149-L205 `2e9b7eea8a4ac78e3794bc5f7dbb3097f855cbf696c0404f44a3abed8cbdd3f5`
+- [006 - 5. Mandatory Fix List](006-5.-mandatory-fix-list.md) L207-L247 `d50863c1eac9efe86eda5c49f785a6a3808102d1dc20ac56ce0240e31165defb`
+- [007 - 6. Summary](007-6.-summary.md) L249-L256 `8cd8fb542f0ac1f0ced4c00bd3bd50055745da7c95a113e8a850708e132ab411`
+- [008 - Owner / Consumer Map](008-owner-consumer-map.md) L258-L262 `38b6ff828d084d6716d7988fd510ebda337badbc4a9558cf94971a237378e812`
+- [009 - PlanUnits](009-planunits.md) L264-L1197 `bc434781c6f487c6cc9c36311afcf8e4bb80e7ed4117185e3566e17aa1480fda`
+- [010 - Migration Coverage](010-migration-coverage.md) L1199-L1209 `40da18b22ab71ed744a2d0d0ceab3cb4380fef01b2a2a46997118cd9095fc225`
+- [011 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1211-L1215 `b7e3c787d476eb15a55f38c27d390e30a61dccc29cc5938ed602365a33b87692`

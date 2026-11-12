@@ -2422,7 +2422,7 @@ The registry below is preserved as an owner-routing and search/migration lineage
 | Tab | Final GUI responsibility | Owner detail |
 |---|---|---|
 | General | App-wide theme, appearance, onboarding, and ordinary preference rows | FinalGUISpec plus storage settings keys |
-| Models / Providers | Model, provider, account, runtime, Default Crew, and Goal Mode worker/verifier-adjudicator selector entrypoints | Models_System, Multi-Account, Goal_Runtime_System, provider docs, Agent Config |
+| Models / Providers | Model/depth defaults, provider, account, runtime and Persona-only Default Crew entrypoints | Models_System, Multi-Account, Goal_Runtime_System, provider docs, Agent Config |
 | Tiers (retired alias) | Compatibility/search alias only; visible execution navigation uses Nodes, Packages, Lanes, Seams, or Branching surfaces | Orchestrator, Run Graph, Worktree, and node/package/lane owner docs |
 | Branching | Git/worktree policy, branch defaults, merge/push posture, and recovery entrypoints | WorktreeGitImprovement and GitHub integration docs |
 | Verification | Validation pass settings, report visibility, and gate/run quality preferences | chain-wizard, Project Output Artifacts, and Progression Gates docs |
@@ -2479,7 +2479,7 @@ carries apply there unchanged; legacy redirects from Settings to Agent Config be
 
 Agent Config owns the visible provider/model/account/instruction management surface and mirrors Skills owner vocabulary for Skills, Personas, bundled, protected_core, catalog_installed, manual_import, project_local, global_local, pm_enhanced, disabled, and ready_with_warnings rows. Agent Config rows expose source/readiness and recovery context, while Settings remains the durable preference surface.
 
-The Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, default model, tool posture, and output format defaults applied automatically while that persona is active), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.
+The Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, supported non-model answer controls, tool posture, and output format defaults applied while that persona is active; no model, provider, preset or depth field), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Persona/provider/model/preset/effort fields retired by MD2 are inert compatibility reads only: preserve old bytes and historical receipts, omit them from new writes and imports, never apply them as model defaults or recreate editable fields. Choose model/depth through Settings > Models > Default models or the run picker under Models §2. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.
 
 Agent Config `/data` records include a durable `provider_entry` row with `provider_entry_id`, `runtime_platform_id`, `model_provider_id`, provider family, account/profile identity, and `auth_surface` auth-state metadata. Richer provider fields extend the visible `/provider` row without renaming the existing `auth_surface` or account/provider auth-state terms.
 
@@ -2491,7 +2491,7 @@ Selection and failover explanations use a stable reason-code family: `manual_pin
 
 Requested/effective persona and `/model/variant/runtime` controls show project-owned multi-account policy, effective account selection, and provider-gap disclosure together: provider capability rows distinguish `honored`, `skipped`, and `clamped` states while preserving the `/effective` runtime value.
 
-Default Crew default-config is an Agent-Config feature-surface. The panel exposes enable/disable, ordered crew members, per-member default-model and provider/runtime (`/provider`) selectors, and the first-run crew confirmation UX. Before launch, that confirmation resolves each member's model -> provider/runtime mapping and reconfirms it whenever mappings or `/defaults/restrictions` materially change; if Copilot is selected for any member, the visible confirmation normalizes the whole crew to Copilot and explains the crew-level provider constraint.
+Default Crew default-config is an Agent-Config feature-surface. The panel exposes enable/disable and ordered Persona-only crew defaults, with no per-member model/runtime defaults. Each invocation opens the Crew sheet, seeded from Everyday building (Review from Checking finished work; other rows from Everyday model), where model and depth can be changed for that invocation. Before launch, that confirmation resolves each member's model -> provider/runtime mapping and reconfirms it whenever mappings or `/defaults/restrictions` materially change; if Copilot is selected for any member, the visible confirmation normalizes the whole crew to Copilot and explains the crew-level provider constraint.
 
 #### 7.4.8A Docker Manager Panel Spec
 
@@ -4283,7 +4283,7 @@ Support states:
 - `partially supported`
 - `unsupported`
 
-For each control (platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents), the editor must:
+For each surviving non-model Persona control (temperature/top_p/talkativeness/tool-permission coupling/subagent eligibility), the editor must:
 - show normal editing when supported,
 - show warning styling and explanatory tooltip when partially supported,
 - show disabled control plus explanation when unsupported.
@@ -4298,13 +4298,9 @@ Minimum provider rows to display:
 
 ### 19.2 Persona editor fields (expanded)
 
-In addition to existing Persona fields, the editor must support:
-- `default_platform`
-- `default_model`
-- `default_variant`
+The editor supports only the surviving non-model Persona fields below. Persona/provider/model/preset/effort fields retired by MD2 are inert compatibility reads only: preserve old bytes and historical receipts, omit them from new writes and imports, never apply them as model defaults or recreate editable fields. Choose model/depth through Settings > Models > Default models or the run picker under Models §2.
 - `temperature`
 - `top_p`
-- `reasoning_effort`
 - `talkativeness`
 - `preferred_tools`
 - `discouraged_tools`
@@ -4323,8 +4319,8 @@ In addition to existing Persona fields, the editor must support:
 
 
 The editor should be able to communicate states like:
-- `Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.`
-- `Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented.`
+- `Claude Code: Persona prompt/response controls follow route support; unavailable temperature/top_p controls are skipped with a reason. Model and effort are chosen in the run picker or defaults list.`
+- `Cursor CLI: Persona prompt/rules steering and non-model controls follow the concrete route capability snapshot; model and effort are not Persona preferences.`
 - `Direct/API providers: strongest support for exact runtime controls.`
 
 ### 19.4 Surface-level Persona controls
@@ -4387,7 +4383,7 @@ If a control is skipped, the UI must disclose it in at least one of:
 - Every disclosure must include: control name, requested value, effective value (if any), and human-readable reason.
 - When a limitation is known before execution, render the control disabled or warning-badged in place; do not let the user believe it is actionable.
 - When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.
-- Disclosures must name the provider explicitly (for example: `Claude Code ignored reasoning_effort=high; provider does not support that control on this model`).
+- Disclosures must name the provider explicitly (for example: `Claude Code skipped temperature; this transport does not expose that Persona control`). Run-requested effort disclosure remains in the model picker/run history owner; it is not a Persona field.
 
 ### 19.8 Interview/Builder/Orchestrator mapping editors
 
@@ -11927,9 +11923,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Agent-Config setup copy separates setup success from operational evidence, exposes stable
-  selection and failover reason codes plus requested/effective runtime controls, and owns Default
-  Crew default-config confirmation and provider constraint explanation.
+  Agent-Config setup copy separates setup success from operational evidence, exposes stable selection and
+  failover reason codes plus requested/effective runtime controls, and owns Default Crew default-config
+  confirmation and provider constraint explanation. Default Crew now stores only ordered Personas and
+  enablement. Per-member model/runtime defaults retire; the invocation sheet still resolves and confirms
+  each row, including existing Copilot whole-crew normalization.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible setup, failover, provider-gap, and Default Crew controls.
@@ -21216,54 +21214,56 @@ plan_unit_id: F3-283
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona editor shows provider support states `supported`, `partially supported`, and
-  `unsupported` for Persona controls and renders normal editing, warning styling/tooltips, or
-  disabled controls with explanations for Claude Code, Cursor CLI, OpenCode, and Direct/API
-  providers.
+canonical_text: The Persona editor shows supported, partially supported and unsupported states only for surviving
+  non-model answer, prompt, tool and permission controls. Route support governs editing/warnings/disabled explanations.
+  Model/provider/preset/variant/depth fields are retired; their old exact-token list is inert compatibility
+  vocabulary, not an editor field set.
 gui_related: true
-gui_classification_reason: >-
-  This unit defines the visible Persona editor compatibility matrix.
+gui_classification_reason: This unit defines the visible Persona editor compatibility matrix.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: persona_editor_compatibility_state_matrix
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0169"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0169
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "Persona editor"
-- "supported"
-- "partially supported"
-- "unsupported"
-- "platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents"
-- "warning styling"
-- "explanatory tooltip"
-- "disabled control plus explanation"
-- "Claude Code"
-- "Cursor CLI"
-- "OpenCode"
-- "Direct/API providers"
+- Persona editor
+- supported
+- partially supported
+- unsupported
+- platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents
+- warning styling
+- explanatory tooltip
+- disabled control plus explanation
+- Claude Code
+- Cursor CLI
+- OpenCode
+- Direct/API providers
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- The preserved platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents
+  list records the old mixed field set only; model/provider/variant/effort entries are retired.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-284 - Talkativeness Support State Rule
@@ -21321,52 +21321,59 @@ plan_unit_id: F3-285
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona editor supports fields for default platform/model/variant, temperature, top_p,
-  reasoning_effort, talkativeness, preferred/discouraged tools, tool usage guidance, and
-  aliases.
+canonical_text: 'The Persona editor supports temperature, top_p, talkativeness, preferred/discouraged tools,
+  tool usage guidance and aliases subject to provider capability and existing authority limits. It has no default
+  platform, model, preset/variant or reasoning-effort/depth field. Persona/provider/model/preset/effort fields
+  retired by MD2 are inert compatibility reads only: preserve old bytes and historical receipts, omit them
+  from new writes and imports, never apply them as model defaults or recreate editable fields. Choose model/depth
+  through Settings > Models > Default models or the run picker under Models §2.'
 gui_related: true
-gui_classification_reason: >-
-  This unit defines visible Persona editor fields despite the source inference being false.
+gui_classification_reason: Defines visible non-model Persona authoring fields and inert old-data retirement
+  disclosure.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: expanded_persona_editor_field_set
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0170"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0170
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "default_platform"
-- "default_model"
-- "default_variant"
-- "temperature"
-- "top_p"
-- "reasoning_effort"
-- "talkativeness"
-- "preferred_tools"
-- "discouraged_tools"
-- "tool_usage_guidance"
-- "aliases"
-negative_constraints: []
-compatibility_only_notes: []
+- default_platform
+- default_model
+- default_variant
+- temperature
+- top_p
+- reasoning_effort
+- talkativeness
+- preferred_tools
+- discouraged_tools
+- tool_usage_guidance
+- aliases
+negative_constraints:
+- Do not preselect a model/provider/preset/depth by activating or importing a Persona.
+compatibility_only_notes:
+- default_platform, default_model, default_variant and reasoning_effort are preserved exact tokens for inert
+  old-data inspection only.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-286 - Talkativeness Labels And Enum Values
@@ -21433,43 +21440,45 @@ plan_unit_id: F3-287
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona compatibility panel can communicate provider-specific support examples for Claude
-  Code, Cursor CLI, and Direct/API providers.
+canonical_text: Persona compatibility copy describes only surviving non-model Persona controls using concrete
+  route capability evidence. Claude Code, Cursor CLI and Direct/API examples must not imply that a Persona
+  owns a model or effort default. Model/depth selection belongs to the common defaults list or run picker.
 gui_related: true
-gui_classification_reason: >-
-  This unit preserves visible Persona compatibility copy examples.
+gui_classification_reason: This unit preserves visible Persona compatibility copy examples.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: persona_compatibility_panel_copy_examples
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0171"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0171
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings."
-- "Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented."
-- "Direct/API providers: strongest support for exact runtime controls."
+- 'Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.'
+- 'Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited
+  or undocumented.'
+- 'Direct/API providers: strongest support for exact runtime controls.'
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-288 - Requested Effective Persona Surface Identity Boundary
@@ -27387,16 +27396,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings must expose a Goal Mode option with two separate model selections: one for the worker model and one for the verifier/adjudicator model. The verifier/adjudicator model is configured separately from ordinary worker execution. Settings may present inheritance as a convenience only when the inherited worker model satisfies the required certification-tier policy; strong-certification goals must block rather than merely warn if verifier/adjudicator requirements cannot be met.
+  The two Goal Mode worker and verifier/adjudicator model selectors are retired with the Goal role cast.
+  Goals use the ordinary Assistant chat choice, and independent checking uses the Review sheet and
+  Checking finished work default. Read old ai.models.goal-worker-model and ai.models.goal-verifier-model
+  as inert compatibility data only, never reconstituting Goal-owned model or certification-tier policy.
+  No Goals model selectors appear in Settings, search, All Settings, reset or new transfer writes.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings GUI controls for Goal Mode model selection.
 depends_on:
-  - GRS-010
+- GRS-049
+- MS-108
 unblocks: []
 acceptance_criteria:
-  - Goal Mode settings include separate worker and verifier/adjudicator model selectors.
-  - The UI does not collapse verifier/adjudicator and worker model choice into one setting.
-  - Any inheritance UI reflects the runtime requirement that certification-tier policy must be satisfied.
+- No separate Goal worker/verifier model selector is exposed.
+- Goals use the ordinary chat model and independent Review selections remain separate work requests.
+- Old saved selectors remain inspectable as retired compatibility data without affecting a run.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Settings GUI review
@@ -27425,8 +27439,7 @@ preserved_exact_tokens:
   - "verifier/adjudicator model"
   - "must block, not merely warn"
 negative_constraints:
-  - Do not collapse Goal Mode worker and verifier/adjudicator model selection into one setting.
-  - Do not present verifier/adjudicator inheritance as valid when certification-tier policy is not satisfied.
+- Do not recreate retired Goal model-role or certification-tier settings.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Goal_Runtime_System.md
@@ -27442,26 +27455,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings must expose Orchestrator Goal Runtime policy controls without becoming the policy owner. Capability-lane bindings cover low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier, and each lane binds to configured providers, accounts, and model profiles rather than hardcoded defaults. Settings also exposes subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory; verification policy controls for verification strictness, validators by WorkNode type, independent review, evidence-span requirements, completion receipt requirements, repair-loop policy, and degraded-mode behavior; write policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults; and Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction. Missing required lane or policy configuration surfaces an unconfigured-lane or typed blocked state with recovery actions before a GoalRun can silently choose arbitrary runtime behavior.
+  Settings must expose Orchestrator Goal Runtime policy controls without becoming the policy owner. The one Default models list offers Planning and supervising, Everyday building, Easy, routine jobs, Design and layout, The hardest jobs and Checking finished work, resolved through Models_System MS-109 with configured providers, accounts and model profiles. A blank job names its inherited source and current model/depth; Easy, routine jobs follows Everyday building and never checks work. The old capability-lane binding editor and helper model/depth rows are retired. Settings also exposes subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory; verification policy controls for verification strictness, validators by WorkNode type, independent review, evidence-span requirements, completion receipt requirements, repair-loop policy, and degraded-mode behavior; write policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults; and Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction. A required job with no usable model after named inheritance, or a missing required policy, surfaces a typed blocked state with recovery actions before dispatch; no arbitrary runtime behavior is selected.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings controls and blocked-state recovery for model/provider lane binding.
 depends_on:
-  - F3-393
-  - MS-109
-  - PS-115
-  - GRS-027
-  - OSI-428
-  - W-071
-  - RAP-027
+- MS-109
+- PS-115
+- GRS-049
+- OSI-428
+- W-071
+- RAP-027
 unblocks: []
 acceptance_criteria:
-  - Settings expose capability-lane bindings for low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier.
-  - Lane selectors bind to configured providers, accounts, and model profiles.
+  - Settings expose the six MS-109 job defaults, including Easy, routine jobs, with model/depth chosen in the shared overlay picker.
+  - Job selectors bind to configured providers, accounts and model profiles; blank rows disclose their named source and effective pair.
   - Settings expose subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent use.
   - Settings expose verification strictness, validators by WorkNode type, independent review, evidence-span, completion receipt, repair-loop policy, and degraded-mode controls.
   - Settings expose write-policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults.
   - Settings expose Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction.
-  - Missing required lanes surface an unconfigured-lane blocked state and recovery path.
+  - A required job with no usable model after inheritance surfaces a typed blocked state and recovery path.
   - The GUI does not imply provider-specific default models, own runtime policy semantics, or authorize arbitrary fallback selection.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -27528,7 +27540,7 @@ preserved_exact_tokens:
   - "redaction"
 negative_constraints:
   - Do not hardcode provider or model defaults.
-  - Do not silently select arbitrary models when a required lane is missing.
+  - Do not silently select arbitrary models when a required job has no usable model.
   - Do not let Settings replace Models, Permissions, Worktree, Goal Runtime, Subagent, or Runtime Artifacts policy authority.
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -27678,51 +27690,59 @@ plan_unit_id: F3-396
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Settings exposes the six plans-to-code model controls named by Models_System: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model.
-  Settings copy must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop; legacy source may refer to the same loop as audit/repair/audit. Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or search, not as visible model controls.
-  Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control.
+canonical_text: |-
+  Settings exposes seven plans-to-code controls in one Default models list: Default Model, Overseer Model, Worker Model, Low-Effort Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to- repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model. Settings copy must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop; legacy source may refer to the same loop as audit/repair/audit. Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or search, not as visible model controls. Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control. Low-Effort Worker Model is labelled Easy, routine jobs and inherits Everyday building when blank; it is restricted to small, low-risk, non-design implementation, never checking. The list has Everywhere and This project tabs, then naming, explaining, BSD and enabled media rows. Every Settings model picker reuses the chat composer picker as ACD-438 defines it: one open picker keeps the model list visible while showing the selected route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are chosen and committed as one atomic value; the same picker stays open throughout model and depth choice. A model without supported levels shows none, and unknown capability stays unknown. Settings saves the pair atomically in the row’s declared scope, with no separate effort Settings row and no page reflow. Blank rows name their fallback source and current model/depth. Exact unlisted names require one small successful call before saving; a refused or unreachable name is never saved, and acceptance proves no capability. Helpers have no model or depth Settings row, and Persona/command model fields are removed. Presets and nicknames remain below the list, with What actually ran a visible run-history link. The PRD Builder, Planning Wizard, building and Scout use the common defaults and allow overrides; no redesign of those screens is specified here.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings labels and help text for model routing.
-depends_on: [MS-110]
-unblocks: [OP-023]
+depends_on:
+- MS-110
+- ACD-438
+unblocks:
+- OP-023
 acceptance_criteria:
-  - Settings displays exactly the six named controls for this flow.
-  - No Executor Model control is shown.
-  - GUI/frontend and high-effort roles have clear Settings labels without exposing internal subrole sprawl.
-  - Auditor settings copy describes an audit-to-repair loop until certified or critical block; legacy Pass 1 / Pass 2 / Pass 3 labels are compatibility/search aliases only, not model selectors.
+- 'Settings displays exactly seven named controls for this flow: Everyday model and the six jobs.'
+- No Executor Model control is shown.
+- GUI/frontend and high-effort roles have clear Settings labels without exposing internal subrole sprawl.
+- Auditor settings copy describes an audit-to-repair loop until certified or critical block; legacy Pass 1 / Pass 2 / Pass 3 labels are compatibility/search aliases only, not model selectors.
+- 'Every Settings model picker reuses the chat composer picker as ACD-438 defines it: one open picker keeps the model list visible while showing the selected route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are chosen and committed as one atomic value; the same picker stays open throughout model and depth choice. A model without supported levels shows none, and unknown capability stays unknown.'
+- A route without proven effort levels shows no effort choices; unknown capability stays unknown.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
-  - future Settings model selector review
+- python3 scripts/pm-plans-verify.py run-gates
+- future Settings model selector review
 risk_class: settings_model_role_drift
 reasoning_tier: standard
 context_scope: model_settings_gui
-implementation_surfaces: [Plans/FinalGUISpec.md, Plans/Models_System.md]
-node_compile_hint: {mode: settings_model_role_controls, create_worknodes: false}
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
+node_compile_hint:
+  mode: settings_model_role_controls
+  create_worknodes: false
 source_lineage:
-  - pldg-20260617-001-plans-to-code-handoff:atom-0018
-  - pldg-20260617-001-plans-to-code-handoff:atom-0021
-  - pldg-20260617-001-plans-to-code-handoff:atom-0022
-  - pldg-20260617-001-plans-to-code-handoff:atom-0023
-  - pldg-20260617-001-plans-to-code-handoff:corr-0001
-  - pldg-20260617-001-plans-to-code-handoff:corr-0003
+- pldg-20260617-001-plans-to-code-handoff:atom-0018
+- pldg-20260617-001-plans-to-code-handoff:atom-0021
+- pldg-20260617-001-plans-to-code-handoff:atom-0022
+- pldg-20260617-001-plans-to-code-handoff:atom-0023
+- pldg-20260617-001-plans-to-code-handoff:corr-0001
+- pldg-20260617-001-plans-to-code-handoff:corr-0003
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Default Model"
-  - "Overseer Model"
-  - "Worker Model"
-  - "GUI / Frontend Worker Model"
-  - "High-Effort Worker Model"
-  - "Auditor Model"
-  - "Auditor audit-to-repair loop"
-  - "audit/repair/audit"
-  - "critical block"
-  - "No Executor Model"
+- Default Model
+- Overseer Model
+- Worker Model
+- GUI / Frontend Worker Model
+- High-Effort Worker Model
+- Auditor Model
+- Auditor audit-to-repair loop
+- audit/repair/audit
+- critical block
+- No Executor Model
 negative_constraints:
-  - Do not expose a long list of internal subrole settings.
-  - Do not create an Executor Model setting.
+- Do not expose a long list of internal subrole settings.
+- Do not create an Executor Model setting.
 owner_hints:
-  - Plans/FinalGUISpec.md
-  - Plans/Models_System.md
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
 ```
 
 ### F3-397 - Animated Plan Compile Tab UX
@@ -30233,22 +30253,18 @@ plan_unit_id: F3-424
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Chat mode, model, and effort popouts render as body-portaled overlays above stream overflow
-  clipping so they are never clipped by the scrollport; the persona dropdown remains inline
-  with an overflow flip when it would exit the viewport. Footer FAB items reveal with a
-  spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as
-  instant show and hide with no animation.
+canonical_text: |-
+  Chat mode popouts and the one combined model/depth picker render as body-portaled overlays above stream overflow clipping so they are never clipped by the scrollport; the persona dropdown remains inline with an overflow flip when it would exit the viewport. Footer FAB items reveal with a spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as instant show and hide with no animation.
 gui_related: true
 gui_classification_reason: This unit defines visible chat overlay layering and motion behavior.
 split_recommended: false
 depends_on: [F3-422, ACD-438]
 unblocks: []
 acceptance_criteria:
-- "Mode, model, and effort popouts render above stream overflow clipping in both chat mounts and are never clipped by the scrollport."
-- "The persona dropdown remains inline and flips its opening direction when it would overflow the viewport."
-- "FAB items reveal with a spring stagger; reduced motion renders instant show and hide."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Mode popouts and the combined model/depth picker render above stream overflow clipping in both chat mounts and are never clipped by the scrollport.
+- The persona dropdown remains inline and flips its opening direction when it would overflow the viewport.
+- FAB items reveal with a spring stagger; reduced motion renders instant show and hide.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -32003,7 +32019,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias. The registry carries the exact seven Case L Storage & Retention rows that section 15.6 owns: system.advanced.chat-history-retention, system.advanced.runtime-history-days, system.advanced.diagnostic-history-days, system.advanced.released-safe-point-days, system.advanced.preserved-terminal-runs, system.advanced.request-storage-compaction and system.advanced.inspect-holds-quarantine; their row contracts are section 15.6's, and deletion and hold rules remain storage-owned.
+  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain- language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias. The registry carries the exact seven Case L Storage & Retention rows that section 15.6 owns: system.advanced.chat-history-retention, system.advanced.runtime-history-days, system.advanced.diagnostic-history-days, system.advanced.released-safe-point-days, system.advanced.preserved-terminal-runs, system.advanced.request-storage-compaction and system.advanced.inspect-holds-quarantine; their row contracts are section 15.6's, and deletion and hold rules remain storage-owned. Settings batch 3 (models), Jared 2026-11-12, removes the 18 model-related rows registered in settings_inventory.json compatibility_reads and admits Easy, routine jobs, one per-account model/depth default, and video/speech/music model rows. The live census is derived from unique active inventory IDs, never a dated fixed number. Retired values have read-only compatibility inspection/omission notices, no active search/All Settings/reset controls or new transfer writes. The image provider row folds into the single Making pictures route; independent effort folds into the everyday model choice. Model picker metadata and model/depth value shape are owned by settings_inventory.schema.json.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false

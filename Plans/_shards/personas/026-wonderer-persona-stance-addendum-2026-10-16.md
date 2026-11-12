@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3674-L3819
+Source lines: L3689-L3834
 
-Source SHA256: `412a320ea426e7dcc04d5eedd944aaf3807858dd7af937d121a5606792ef17ad`
+Source SHA256: `89f739fc13a4639be43f3ed8569d8e03342b4fd621622614ec8ab2b72e88f1b3`
 
 ---
 
@@ -71,7 +71,7 @@ canonical_text: Personas owns each Persona as a whole record with stable persona
   a new field-by-field Persona layer. Every project reach includes No project; Only these projects excludes
   application-scope selection. Project switches declare project_switch_ids=[personas.library.disabled-bundled],
   limited to mutable bundled specialties by stable ID; core built-ins cannot be disabled or shadowed.
-  Definition fields such as model, body, tool lists and skills remain whole Persona fields. A version
+  Definition fields such as body, tool lists and skills remain whole Persona fields; retired model/provider/preset/effort fields are inert compatibility reads. A version
   for a Project is an entire same-id definition through the existing save-as-override owner action. Save
   writes the current home with expected revision and narrow Undo/re-target feedback. Selection defaults
   use the Settings resolver through Everywhere, Computer, optional Project and thread, then the Models

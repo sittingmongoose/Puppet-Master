@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L789-L3547
+Source lines: L788-L3547
 
-Source SHA256: `c0b219b0450e1afc7d8f24fc7ce7db1002b0d81ee56d18e3fa7c0b1a802b4ce2`
+Source SHA256: `863b525b3833fdd01ebeb6925f6baef415ffdf1525912a2c5fbaa5526e439c63`
 
 ---
 
@@ -721,22 +721,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  A User Command file consists of YAML frontmatter plus a Markdown template body,
-  with canonical fields for name, description, arguments, persona/model/mode
-  overrides, permissions_profile_override, and override_builtin.
+  A User Command file consists of YAML frontmatter plus a Markdown template body, with canonical fields
+  for name, description, arguments, Persona/mode overrides, permissions_profile_override and
+  override_builtin. MD2 NEITHER removes the saved model_override and GUI model field: compatibility-read
+  old values as inert data, disclose retirement, preserve source for inspection, and omit from
+  create/update/import writes.
 gui_related: false
 gui_classification_reason: Command schema and frontmatter field definitions are file-format semantics.
 split_recommended: false
 depends_on: [CS-013]
 unblocks: [CS-015, CS-018, CS-020]
 acceptance_criteria:
-  - COMMAND-SCHEMA remains the anchor for User Command file structure.
-  - Frontmatter examples preserve description, persona, mode, model, subtask, permissions_profile_override, and override_builtin.
-  - name is required, must pass validation, and MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes.
-  - description is required and remains a short user-facing description.
-  - arguments remains an optional array<object> for positional argument schema.
-  - persona_override, mode_override, model_override, and permissions_profile_override remain requested overrides subject to their owner systems.
-  - override_builtin remains reserved for future non-chat extension points and MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes.
+- COMMAND-SCHEMA remains the file-structure anchor.
+- Frontmatter preserves description, Persona, mode, subtask, permissions_profile_override and override_builtin;
+  no new model_override is written.
+- Name/description/arguments retain their existing validation and reserved-name restrictions.
+- Persona, mode and permissions overrides remain subject to their owner systems.
+- Old model_override values are readable as retired data only and never affect model selection.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1198,23 +1199,22 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  Command provider, model, account, Persona, worker-policy, mode, and runtime
-  surface overrides are explicit child requests capped by parent authority, with
-  UI-visible requested/effective fields and policy remap reasons whenever
-  compatibility, availability, policy, or account binding changes the launched
-  runtime/model/effort result.
+  Commands carry no saved model or effort under MD2 NEITHER. Old model_override or GUI model values are
+  inert compatibility inputs, excluded from new owner writes and transfer apply with an omission notice.
+  Real run-envelope and existing per-piece build model/runtime requests still use Models_System §2,
+  parent ceilings and requested/effective disclosure, as do account, Persona, worker-policy and mode
+  overrides; account changes do not replace an already requested model. /model/account/worker-policy
+  remains a runtime request family, never a command-definition model field.
 gui_related: true
 gui_classification_reason: The requested/effective override grammar is explicitly displayed in command UI.
 split_recommended: false
 depends_on: [CS-020, CS-021]
 unblocks: [CS-023]
 acceptance_criteria:
-  - Command UI shows requested override, effective result, inheritance source, and policy remap reason.
-  - Command overrides are explicit child requests, not bypasses around the runtime model.
-  - Command mode overrides are capped by parent mode authority.
-  - Command model/runtime surface overrides become explicit child requests.
-  - Explicit requests do not silently fallback.
-  - Requested versus effective runtime/model/effort fields remain visible when remaps occur because of compatibility or policy.
+- Command definitions and editors expose no model/depth field.
+- Compatibility reads disclose retired saved model values without selecting a model or writing new defaults.
+- Real run and per-piece requests preserve parent ceilings and requested/effective reasons.
+- Explicit requests do not silently fallback.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1590,10 +1590,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  New Command opens an editor form for name, description, Persona, mode, model,
-  subtask, permissions profile override, override built-in, template body, and
-  project-local or global save scope, using canonical validation and syntax
-  highlighting for command template patterns.
+  New Command opens an editor form for name, description, Persona, mode, subtask, permissions profile
+  override, override built-in, template body and project-local/global save scope, with existing
+  validation and syntax highlighting. There is no saved model or depth field under MD2 NEITHER; old
+  model_override data remains inspection-only through compatibility reads.
 gui_related: true
 gui_classification_reason: The create editor form is a visible command authoring UI.
 split_recommended: true
@@ -1604,7 +1604,7 @@ acceptance_criteria:
   - New Command opens an editor form.
   - Name is validated per section 2.5 and collision-checked per section 2.4.
   - Description is required and has max 200 chars.
-  - Persona, Mode, Model, Subtask, Permissions profile override, and Override built-in controls are present as specified.
+  - Persona, Mode, Subtask, Permissions profile override and Override built-in controls are present; no command model field is offered.
   - Override built-in is visible only in Expert mode.
   - Reserved Assistant Chat slash commands fail validation even if Override built-in is enabled.
   - Template body uses a Markdown editor with syntax highlighting for $ARGUMENTS, $N, @path, and !`cmd` patterns.
@@ -1729,10 +1729,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  Every command save validates the file against the command schema, displays
-  inline errors for reserved names, invalid formats, missing description,
-  invalid mode, invalid model, and invalid override_builtin use, and blocks save
-  until all errors are resolved.
+  Every command save validates the active command schema, displays inline errors for reserved names,
+  invalid formats, missing description, invalid mode, retired model-field write attempts and invalid
+  override_builtin use, and blocks until resolved. Compatibility imports may inspect and disclose old
+  model_override fields, but commit omits them; no retired model field is written or applied as a run
+  request.
 gui_related: true
 gui_classification_reason: Inline save validation errors and blocked saves are visible editor behavior.
 split_recommended: true
@@ -1741,7 +1742,7 @@ depends_on: [CS-013, CS-014, CS-025, CS-030]
 unblocks: [CS-049]
 acceptance_criteria:
   - Every save validates the command file against section 3 schema.
-  - Inline errors are displayed for reserved name collision, invalid name format, missing description, invalid mode value, and invalid model format.
+  - Inline errors are displayed for reserved name collision, invalid name format, missing description, invalid mode value and retired-field write attempts.
   - If override_builtin: true is set while the command name matches a reserved Assistant Chat slash command, inline validation explains that override_builtin does not apply to canonical reserved chat commands.
   - Save is blocked until errors are resolved.
 validation_surfaces:

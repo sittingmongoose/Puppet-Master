@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1444-L7537
+Source lines: L1393-L7575
 
-Source SHA256: `34ea4b6c2934cb4e6aaf64baa418c10460c117e15e78acb895b7187bf3a79a75`
+Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
 
 ---
 
@@ -184,13 +184,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Settings retain source, request and execution axes. Model selection consumes SSYS-002/059 for ordinary defaults.
-  The canonical source order is 1 explicit run-envelope override, 2 scoped owner policy, 3 Persona preference,
-  4 surface/stage default, 5 Project own default, 6 work Computer own default, 7 Everywhere (then factory configuration
-  default), 8 permitted last-used state, 9 provider fallback. Skip missing/inapplicable rungs, including Project
-  for app work; preserve every applicable parent/managed ceiling, supported capability, account/route/currentness
-  and requested/effective reason. The one Settings resolver supplies default values; the existing Models owner
-  applies its selection policy. No model option/variant field merge is invented.
+  The canonical model source order is 1 explicit run-envelope override, 2 scoped owner policy for the
+  active execution unit, 3 surface/stage default, 4 manually selected account default, 5 This project
+  defaults list when a real Project applies, 6 Everywhere then factory defaults. Skip
+  missing/inapplicable sources. Computer defaults, Persona preference, command-saved model, last-used
+  state and provider default are not model selection rungs. Account defaults count only when the person
+  explicitly sends the run to that account and no earlier source names a model; automatic account
+  rotation never activates them. Preserve parent/managed ceilings, runnable routes, capability evidence,
+  cost gates, requested/effective identity and resolver reasons. A build policy and a page default retain
+  their existing meaning as technical detail. The Settings resolver supplies only the offered levels of
+  the list, without inventing a model/effort field merge.
 gui_related: false
 gui_classification_reason: The unit covers resolver policy and precedence rather than direct GUI presentation.
 split_recommended: false
@@ -2165,8 +2168,11 @@ plan_unit_id: MS-040
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona runtime preferences may define default_platform, default_model, default_variant, temperature, top_p,
-  and reasoning_effort in PERSONA.md frontmatter using the canonical provider_id/model_id model format.
+canonical_text: >-
+  Personas may carry temperature, top_p and other capability-filtered answer controls, but no
+  provider/model/variant/effort default. Old PERSONA.md default_platform, default_model, default_variant
+  and reasoning_effort are compatibility-read only; disclose their retirement, preserve source bytes for
+  inspection and omit them from new writes. See Personas §3.2.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -2222,8 +2228,11 @@ plan_unit_id: MS-041
 unit_type: selection_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona runtime preferences participate at priority 2, are overridden by explicit run-envelope or surface-level
-  overrides, override lower defaults, and log warnings plus fall through when preferred runtime choices are unavailable.
+canonical_text: >-
+  Persona preference no longer supplies a model selection source. Old preferred
+  platform/model/variant/effort fields are inert compatibility reads and never preselect or block a
+  model; use the fixed §2 normal defaults. Answer-control filtering still records requested/effective
+  outcomes.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -2256,7 +2265,7 @@ preserved_exact_tokens:
 - falls through to the next priority level
 - run is NOT blocked
 negative_constraints:
-- Unavailable Persona preferred platform/model/variant must not block the run.
+- Unavailable retired Persona fields must not block the run or silently become shared defaults.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -2276,7 +2285,7 @@ plan_unit_id: MS-042
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Unsupported Persona runtime controls such as temperature, top_p, or reasoning_effort are recorded as skipped
+canonical_text: Unsupported Persona runtime controls such as temperature or top_p are recorded as skipped
   and excluded from effective runtime state instead of silently ignored.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
@@ -2431,8 +2440,11 @@ plan_unit_id: MS-045
 unit_type: variant_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Built-in variants default, fast, and powerful resolve dynamically from available providers; unavailable target
-  models fall back to default.
+canonical_text: >-
+  Built-in variants default, fast, and powerful resolve dynamically from available providers; unavailable
+  target models fall back to default. Smallest/cheapest available model means allowed and runnable now;
+  missing small routes fall back with disclosure. Teach also enforces MS-117 on every resolution,
+  including no-small-model cases, and naming freezes its resolved request without silent substitution.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -2485,11 +2497,16 @@ plan_unit_id: MS-046
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Custom variants are defined in config with unique validated names, canonical model IDs, and optional descriptions
-  capped at 200 characters.
-gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
-  behavior rather than direct GUI presentation.
+canonical_text: >-
+  Custom variants are defined in config with unique validated names, canonical model IDs, and optional
+  descriptions capped at 200 characters. The preset model field uses the shared model/depth picker and
+  WL4 B validation: test a new typed exact name with one small call before save, never save a refused or
+  unreachable name, and infer no capabilities from acceptance. Existing imported/unavailable presets can
+  be read with a warning and disclosed runtime fallback; a warning alone does not permit a new
+  unvalidated model save.
+gui_related: true
+gui_classification_reason: >-
+  Defines the preset editor model/depth picker and save refusal for unvalidated typed model names.
 split_recommended: false
 depends_on:
 - MS-044
@@ -2644,8 +2661,11 @@ plan_unit_id: MS-049
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: When a variant is selected, its model becomes the active model at priority 3 for subsequent runs and persists
-  per session unless config.default_variant sets cross-session default behavior.
+canonical_text: >-
+  Selecting or cycling to a variant selects its model as a priority-1 run/session choice. It remains
+  local to that session; config.default_variant and ai.models.default-variant are retired compatibility
+  inputs and never create a persistent default. Presets stay selectable through the picker, configurable
+  preset key and command palette.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -2696,7 +2716,10 @@ plan_unit_id: MS-050
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: A Persona may specify a preferred variant with default_variant in PERSONA.md frontmatter.
+canonical_text: >-
+  Per-Persona default_variant is retired: compatibility-read old fields as inert source data, disclose
+  removal, and omit from new Persona writes. Presets remain model picker shortcuts, not Persona-owned
+  model defaults.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -2747,8 +2770,9 @@ plan_unit_id: MS-051
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: When a Persona default_variant is set, that variant is pre-selected while the Persona is active, and the user
-  can still cycle to another variant during the session.
+canonical_text: >-
+  Activating a Persona never preselects a model or variant. Old default_variant values are inert
+  compatibility data. A person may still select or cycle presets as explicit run/session model choices.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -2970,8 +2994,13 @@ plan_unit_id: MS-055
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: The Chat panel model picker displays cleaned primary labels, runtime-platform secondary labels when needed,
-  capability indicators, and the exact raw canonical model ID in the detailed inspector.
+canonical_text: >-
+  The Chat panel model picker displays cleaned primary labels, runtime-platform secondary labels when
+  needed, capability indicators, and the exact raw canonical model ID in the detailed inspector. Reuse
+  this picker as a floating overlay in every model row, with depth inside the same picker. Permit an
+  exact name only after one small service/account call accepts it; refusal or unreachable service saves
+  nothing. That success proves no capability, and unknown vision/effort/tool features stay unknown until
+  proven.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -3024,8 +3053,11 @@ plan_unit_id: MS-056
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Selecting a model in the picker creates a priority-1 requested override and duplicate runtime surfaces for
-  the same canonical ID are disambiguated with concrete runtime surface state.
+canonical_text: >-
+  Selecting a model in the picker creates a priority-1 requested override and duplicate runtime surfaces
+  for the same canonical ID are disambiguated with concrete runtime surface state. A Settings picker
+  writes only its declared default scope as one model/depth value. A typed name uses the same requested-
+  model pipeline only after WL4 B validation; failed validation preserves the previous saved value.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -3078,7 +3110,18 @@ unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Settings > Models shows provider/runtime grouping, concrete runtime surface availability, current defaults and sources, supported image-generation model/route rows, and stale/silent/partial discovery state without inferring unsupported when discovery is silent or stale. Image-generation support in Settings is route-specific rather than Gemini-primary: OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct where verified, and disabled/capability-gated/unverified provider rows are displayed separately from broader text-only public `agy` capability rows.
+  Settings > Models shows provider/runtime grouping, concrete runtime surface availability, current
+  defaults and sources, supported image-generation model/route rows, and stale/silent/partial discovery
+  state without inferring unsupported when discovery is silent or stale. Image-generation support in
+  Settings is route-specific rather than Gemini-primary: OpenAI API-key `gpt-image-2`, Responses
+  `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`,
+  Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct where verified, and
+  disabled/capability-gated/unverified provider rows are displayed separately from broader text-only
+  public `agy` capability rows. One Default models list offers Everywhere and This project only, showing
+  the named fallback source and its current model/depth. §7.2 owns all rows, including the six jobs,
+  naming, Teach, BSD and per-kind media routes. Depth is chosen inside the model picker, with no separate
+  helper/model/depth setting. Presets and nicknames remain below, More options links What actually ran to
+  run history, and Service tried first moves to Limits & switching.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -3539,8 +3582,11 @@ plan_unit_id: MS-065
 unit_type: delta_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Puppet Master keeps OpenCode identifier format while adding configurable model priority, Persona file default_model
-  overrides, config.default_variant, Rust provider facade normalization, and Rust auto-compaction integration.
+canonical_text: >-
+  Puppet Master keeps the OpenCode model identifier format, Rust provider facade normalization and Rust
+  auto-compaction integration. Model selection uses the fixed §2 order. config.model_priority, Persona
+  default_model and config.default_variant are retired compatibility reads only, never active selection
+  controls.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -3593,8 +3639,10 @@ plan_unit_id: MS-066
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Puppet Master adds a full Chat model picker dropdown, dedicated Models settings tab, and per-Persona override
-  editing beyond the OpenCode TUI baseline.
+canonical_text: >-
+  Puppet Master adds the full Chat model/depth picker overlay and the one Default models list in Settings
+  beyond the OpenCode TUI baseline. Persona model editing is retired; all rows use shared picker behavior
+  with supported effort and WL4 B validation of typed names.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -3702,8 +3750,10 @@ plan_unit_id: MS-068
 unit_type: acceptance_criteria
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Acceptance criteria require Persona default_model to override lower-priority defaults but yield to explicit
-  run-envelope or tier-config settings, and unavailable Persona models must warn and fall through without blocking the run.
+canonical_text: >-
+  Persona default_model is compatibility-read only and supplies no model precedence. Retired preferences
+  never block a run or bypass the ordinary model resolver; disclose the retirement without mutating
+  shared defaults.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -3739,7 +3789,7 @@ preserved_exact_tokens:
 - fall through
 - run MUST NOT be blocked
 negative_constraints:
-- If a Persona specifies an unavailable model, the run MUST NOT be blocked.
+- Retired Persona model preferences never select or block a model.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -3759,8 +3809,12 @@ plan_unit_id: MS-069
 unit_type: acceptance_criteria
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Acceptance criteria require built-in variants to resolve dynamically and fall back to default when unavailable,
-  and custom variants to validate unique name and model availability or log warnings.
+canonical_text: >-
+  Built-in variants resolve dynamically and fall back to default with disclosure when unavailable. Custom
+  variants validate unique name and canonical model identity, with WL4 B checking a typed exact name
+  before any new save; refusal or unreachable service saves nothing. Existing unavailable config entries
+  remain inspectable with warnings and runtime fallback, without allowing warning-only saves of new
+  names.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -3923,8 +3977,10 @@ plan_unit_id: MS-072
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: A Persona may request platform/provider, model, variant, temperature, top_p, reasoning_effort, and provider-specific
-  runtime options.
+canonical_text: >-
+  A Persona may request temperature, top_p and supported provider-specific answer controls, but no
+  platform/provider, model, variant or reasoning_effort default. Those retired selection fields are
+  accepted only by compatibility readers and excluded from new writes.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -3978,18 +4034,21 @@ plan_unit_id: MS-073
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona preferences participate in effective run assembly only after passing through the provider capability
-  matrix.
+canonical_text: 'Only surviving non-model Persona controls participate in effective run assembly after the
+  provider capability matrix: prompt/response style, permitted sampling controls, tools and permissions. Model/provider/preset/depth
+  preferences are retired and cannot be restored by capability support. Resolve run model/depth through Models
+  §2 and the shared ACD-438 picker.'
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
-  behavior rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or
+  backend contract behavior rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-072
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving
+  coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -4005,6 +4064,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0050
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - effective run assembly
 - MUST pass through a provider capability matrix
@@ -4018,8 +4078,8 @@ owner_boundary_notes:
 owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs: []
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 ### MS-074 - Effective Selection Identity Fields
 
@@ -4102,14 +4162,16 @@ unit_type: selection_policy
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Model selection consumes SSYS-002/059 for ordinary defaults. The canonical source order is 1 explicit run-envelope
-  override, 2 scoped owner policy, 3 Persona preference, 4 surface/stage default, 5 Project own default, 6 work
-  Computer own default, 7 Everywhere (then factory configuration default), 8 permitted last-used state, 9 provider
-  fallback. Skip missing/inapplicable rungs, including Project for app work; preserve every applicable parent/managed
-  ceiling, supported capability, account/route/currentness and requested/effective reason. The one Settings resolver
-  supplies default values; the existing Models owner applies its selection policy. No model option/variant field
-  merge is invented. Former six-tier summaries and 1-7 indexes are historical shorthand for this canonical order,
-  never competing ladders.
+  The canonical model source order is 1 explicit run-envelope override, 2 scoped owner policy for the
+  active execution unit, 3 surface/stage default, 4 manually selected account default, 5 This project
+  defaults list when a real Project applies, 6 Everywhere then factory defaults. Skip
+  missing/inapplicable sources. Computer defaults, Persona preference, command-saved model, last-used
+  state and provider default are not model selection rungs. Account defaults count only when the person
+  explicitly sends the run to that account and no earlier source names a model; automatic account
+  rotation never activates them. Preserve parent/managed ceilings, runnable routes, capability evidence,
+  cost gates, requested/effective identity and resolver reasons. A build policy and a page default retain
+  their existing meaning as technical detail. The Settings resolver supplies only the offered levels of
+  the list, without inventing a model/effort field merge.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -4281,9 +4343,10 @@ plan_unit_id: MS-078
 unit_type: surface_default_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Interview GUI/UI/UX Gemini preference is a surface/stage default at precedence level 3 when trigger conditions
-  match, no explicit override wins, Gemini is configured and capable, and validation stages do not auto-switch without user
-  or stage override.
+canonical_text: >-
+  Interview GUI/UI/UX Gemini preference remains a surface/stage default at technical source 3 under §2
+  when its existing trigger conditions match, no earlier source wins, Gemini is configured and capable,
+  and validation stages do not auto-switch without explicit user or stage override.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
   or settings behavior.
@@ -4599,19 +4662,22 @@ plan_unit_id: MS-083
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token limits,
-  fallback-chain eligibility, provenance, and requested/effective model identity from one canonical machine-readable
-  capability snapshot produced by the shared capability resolver and provider/model metadata inputs.
+canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token
+  limits, fallback-chain eligibility, provenance, and requested/effective model identity from one canonical
+  machine-readable capability snapshot produced by the shared capability resolver and provider/model metadata
+  inputs.
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
-  semantics rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or
+  backend execution semantics rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-079
 unblocks: []
 acceptance_criteria:
-- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and staleness state.
-- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc UI-only logic.
+- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and
+  staleness state.
+- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc
+  UI-only logic.
 - Requested/effective model identity and fallback/clamp state remain visible to runtime and GUI consumers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -4627,6 +4693,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0058
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - canonical machine-readable snapshot contract
 - provider_id
@@ -4656,19 +4723,22 @@ preserved_exact_tokens:
 negative_constraints:
 - Every control disclosure shown to the user must be derivable from the snapshot without ad hoc UI-only logic.
 - Do not source snapshot fields from legacy platform_specs or platform_specs.rs.
-- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque capability states.
+- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque
+  capability states.
 compatibility_only_notes:
 - platform_specs and platform_specs.rs are retired source-lineage only.
+- The old persona_reasoning_effort capability token is an inert compatibility alias, not a Persona preference.
+  Current effort capability is run-owned; current candidate_source follows Models §2 (the example uses config_default).
 stale_retired_dispositions:
-- Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at, and selectable_unit_ids
-  so boot-time refresh and stale catalog state remain inspectable.
+- Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at,
+  and selectable_unit_ids so boot-time refresh and stale catalog state remain inspectable.
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
 owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs: []
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 
 ### MS-084 - Account Routing Capability Metadata Snapshot
@@ -4863,8 +4933,11 @@ plan_unit_id: MS-087
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona-related model/runtime controls in GUI reflect provider support states as supported, partially_supported
-  with warning badge and tooltip, or unsupported with explanatory disabled text.
+canonical_text: >-
+  Persona-related model/runtime controls in GUI reflect provider support states as supported,
+  partially_supported with warning badge and tooltip, or unsupported with explanatory disabled text.
+  Persona model/depth controls are retired; this gating applies to remaining Persona answer controls and
+  actual run model/effort choices.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
   or settings behavior.
@@ -4977,8 +5050,11 @@ plan_unit_id: MS-089
 unit_type: implementation_reference
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: OpenCode role object runtime shape is implementation-reference evidence; Puppet Master uses Persona as the
-  canonical stored contract and adds provider capability disclosure instead of assuming all backends honor all knobs.
+canonical_text: >-
+  OpenCode role object runtime shape is implementation-reference evidence; Puppet Master uses Persona as
+  the canonical stored contract and adds provider capability disclosure instead of assuming all backends
+  honor all knobs. Provider-native model/variant fields remain source evidence; PM Personas carry
+  behaviour and answer controls only, while model/depth defaults resolve through §2/§7.2.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -5094,8 +5170,11 @@ plan_unit_id: MS-091
 unit_type: runtime_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Model/provider selection fallback remains separate from runtime retry classification; unavailable Persona-preferred
-  models fall through selection, while provider execution failures map to runtime taxonomy such as provider_transient.
+canonical_text: >-
+  Model/provider selection fallback remains separate from runtime retry classification. Retired Persona
+  model fields are inert compatibility reads, never selection candidates or blockers; post-selection
+  provider failures still map to the shared runtime taxonomy, including provider_transient, without a
+  feature-local retry policy.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -5426,9 +5505,13 @@ plan_unit_id: MS-097
 unit_type: settings_model
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Default Crew configuration belongs under model/runtime settings and includes enablement, ordered crew members,
-  per-member model/runtime selectors, and immediate whole-crew Copilot normalization because Copilot is a crew-level provider
-  constraint.
+canonical_text: >-
+  Default Crew Settings stores enablement and an ordered list of Personas only, without per-member
+  model/runtime defaults. Every invocation opens the Crew sheet; new Crew rows start from Everyday
+  building, new Review rows from Checking finished work, other new rows from Everyday model. Each
+  resolves the named row through §2; no Persona contributes a model. The sheet may override model/depth
+  for that invocation, freezes requested/effective identity, and preserves whole-crew Copilot
+  normalization because Copilot remains a crew-level provider constraint.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
   or settings behavior.
@@ -5486,10 +5569,12 @@ unit_type: audit_policy
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  The provider/model policy and audit surfaces preserve Persona and execution-unit axes and distinguish Everywhere,
-  work Computer, optional Project and narrower worktree/run scopes. Device is relevant only to screen rows, never
-  model execution. In No project, omit Project/worktree when absent; record the actual Server/Host/Environment.
-  Local-model capacity rows consume the declared Computer ceiling after requested defaults resolve.
+  The provider/model policy and audit surfaces preserve Persona and execution-unit axes and distinguish
+  Everywhere, work Computer, optional Project and narrower worktree/run scopes. Device is relevant only
+  to screen rows, never model execution. In No project, omit Project/worktree when absent; record the
+  actual Server/Host/Environment. Local-model capacity rows consume the declared Computer ceiling after
+  requested defaults resolve. The Default models list is the declared exception: Everywhere and optional
+  Project only; Computer model defaults retire while host capacity ceilings remain.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -5553,14 +5638,16 @@ unit_type: selection_policy
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Model selection consumes SSYS-002/059 for ordinary defaults. The canonical source order is 1 explicit run-envelope
-  override, 2 scoped owner policy, 3 Persona preference, 4 surface/stage default, 5 Project own default, 6 work
-  Computer own default, 7 Everywhere (then factory configuration default), 8 permitted last-used state, 9 provider
-  fallback. Skip missing/inapplicable rungs, including Project for app work; preserve every applicable parent/managed
-  ceiling, supported capability, account/route/currentness and requested/effective reason. The one Settings resolver
-  supplies default values; the existing Models owner applies its selection policy. No model option/variant field
-  merge is invented. The former 1-7 tier numbering is superseded by this explicit 1-9 order; no owner scope loses
-  its permission ceiling.
+  The canonical model source order is 1 explicit run-envelope override, 2 scoped owner policy for the
+  active execution unit, 3 surface/stage default, 4 manually selected account default, 5 This project
+  defaults list when a real Project applies, 6 Everywhere then factory defaults. Skip
+  missing/inapplicable sources. Computer defaults, Persona preference, command-saved model, last-used
+  state and provider default are not model selection rungs. Account defaults count only when the person
+  explicitly sends the run to that account and no earlier source names a model; automatic account
+  rotation never activates them. Preserve parent/managed ceilings, runnable routes, capability evidence,
+  cost gates, requested/effective identity and resolver reasons. A build policy and a page default retain
+  their existing meaning as technical detail. The Settings resolver supplies only the offered levels of
+  the list, without inventing a model/effort field merge.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime selection, UI surface defaults, or inspector/audit presentation
   behavior.
@@ -5621,12 +5708,10 @@ unit_type: settings_policy
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  The expanded 1-9 order in MS-005/099 keeps Standard as default: Standard uses tiers 1–7. Aggressive admits 1–9
-  and retains its existing capability/cost tie handling. Conservative obeys the explicit existing exclusion of
-  Persona and surface/stage defaults: tiers 1, 2, 5, 6, 7 and 9, while never bypassing scoped/parent/managed ceilings.
-  The older numeric shorthand tier 1 or tier 3+ conflicts with that explicit exclusion and is superseded; it does
-  not authorize Persona or stage values. No new recommendation, quality-ranking or variant-merge algorithm is
-  added.
+  The old conservative, standard and aggressive model-resolution policies are retired. Compatibility
+  readers accept ai.models.resolution-policy as inert source data, show its retirement, and omit it from
+  new Settings saves and transfer apply. The fixed six-source order in MS-005/099 always applies; old
+  policy names and tier numbers remain historical receipt vocabulary only.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
   rather than direct GUI presentation.
@@ -5665,7 +5750,7 @@ preserved_exact_tokens:
 - tiers 1-7
 - cheapest or fastest model
 negative_constraints:
-- Conservative policy must not apply stage defaults or persona preferences.
+- Retired resolution policies never add, remove or reorder model sources.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -5917,23 +6002,23 @@ plan_unit_id: MS-105
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  Provider/model selection emits a selection_reason object carrying selected provider/model, precedence tier,
-  optional fallback reason, alternatives considered, selection timestamp, and execution unit identity. precedence_tier
-  uses the MS-005/099 1–9 order and names the source level/key; include actual work Server/Host/Environment and
-  null Project in app scope. Original historical audit records retain their original tier version/bytes; a number
-  from an older recipe is never silently reinterpreted. Computer capacity limits retain requested/effective and
-  clamp reasons.
+canonical_text: Provider/model selection emits a selection_reason object carrying selected provider/model,
+  precedence tier, optional fallback reason, alternatives considered, selection timestamp, and execution unit
+  identity. precedence_tier uses the versioned MS-005/099 1–6 order and names the source level/key; include
+  actual work Server/Host/Environment and null Project in app scope. Original historical audit records retain
+  their original tier version/bytes; a number from an older recipe is never silently reinterpreted. Computer
+  capacity limits retain requested/effective and clamp reasons.
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
-  rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend
+  audit behavior rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-099
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving
+  coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -5951,6 +6036,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0077
 - 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
   settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - selection_reason
 - selected_provider
@@ -5967,7 +6053,10 @@ preserved_exact_tokens:
 - '''claude-3-opus'''
 - 1-7
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- ModelPrecedenceAuditV2 / scoped_owner_ladder_v2 and models.strategy_tier_allowed describe historical audit
+  decoding only. They preserve old numeric tiers/policy names without permitting them as current emitters,
+  selection sources or Settings choices.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
@@ -5975,8 +6064,8 @@ owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs:
 - 'ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md'
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 
 ### MS-106 - Selection Reason Audit Trail Traceability

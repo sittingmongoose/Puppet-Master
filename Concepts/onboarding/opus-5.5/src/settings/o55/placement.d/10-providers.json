@@ -187,8 +187,6 @@
    "ids": [
     "ai.models.default-provider",
     "ai.models.default-model",
-    "ai.models.default-variant",
-    "ai.models.reasoning-effort",
     "general.interaction.provider-disclosure",
     "ai.usage.auto-refresh-discovery"
    ]
@@ -206,10 +204,6 @@
   {
    "section": "providers-jobs-more",
    "ids": [
-    "ai.models.goal-worker-model",
-    "ai.models.goal-verifier-model",
-    "ai.models.subagent-model",
-    "ai.models.subagent-effort",
     "ai.models.teach-model",
     "ai.models.thread-title-model"
    ]
@@ -248,11 +242,6 @@
   {
    "section": "providers-lanes",
    "ids": [
-    "ai.models.lane-bindings",
-    "ai.models.role-policy",
-    "ai.models.per-lane-platform",
-    "ai.models.per-lane-model",
-    "ai.models.execution-role",
     "ai.models.requested-effective-inspector"
    ]
   },
@@ -272,7 +261,6 @@
    "ids": [
     "ai.models.provider-fallback",
     "ai.models.provider-priority",
-    "ai.models.resolution-policy",
     "ai.usage.auto-resume-default"
    ]
   },

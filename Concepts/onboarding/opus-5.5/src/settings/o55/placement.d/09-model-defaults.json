@@ -1,0 +1,45 @@
+{
+ "_about": "Build companions for canonical Settings model row admission/retirement (DL-476). The model design and picker implementation remain with the concept owner.",
+ "retire_ids": [
+  "ai.models.default-variant",
+  "ai.models.execution-role",
+  "ai.models.goal-verifier-model",
+  "ai.models.goal-worker-model",
+  "ai.models.lane-bindings",
+  "ai.models.per-lane-model",
+  "ai.models.per-lane-platform",
+  "ai.models.reasoning-effort",
+  "ai.models.resolution-policy",
+  "ai.models.role-policy",
+  "ai.models.subagent-effort",
+  "ai.models.subagent-model",
+  "extensions.commands.command-model",
+  "media.image.provider",
+  "personas.tuning.default-model",
+  "personas.tuning.default-platform",
+  "personas.tuning.default-variant",
+  "personas.tuning.reasoning-effort"
+ ],
+ "overrides": [
+  {
+   "section": "providers-home",
+   "ids": [
+    "ai.accounts.default-model"
+   ]
+  },
+  {
+   "section": "providers-jobs",
+   "ids": [
+    "ai.models.low-effort-worker-model"
+   ]
+  },
+  {
+   "section": "media-abilities",
+   "ids": [
+    "media.capabilities.video-model",
+    "media.capabilities.tts-model",
+    "media.capabilities.music-model"
+   ]
+  }
+ ]
+}

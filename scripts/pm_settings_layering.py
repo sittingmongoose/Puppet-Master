@@ -27,6 +27,79 @@ PLACEMENT_IDS = frozenset((
     'code.execution.default-computer',
 ))
 
+MODEL_RETIRED_IDS = frozenset((
+    'ai.models.default-variant', 'personas.tuning.default-variant',
+    'ai.models.goal-worker-model', 'ai.models.goal-verifier-model',
+    'ai.models.lane-bindings', 'ai.models.role-policy',
+    'ai.models.per-lane-platform', 'ai.models.per-lane-model',
+    'ai.models.execution-role', 'ai.models.resolution-policy',
+    'ai.models.reasoning-effort', 'ai.models.subagent-model',
+    'ai.models.subagent-effort', 'personas.tuning.default-model',
+    'personas.tuning.default-platform', 'personas.tuning.reasoning-effort',
+    'extensions.commands.command-model', 'media.image.provider',
+))
+
+
+def model_defaults_failures(inventory):
+    """Static admission and compatibility checks; no native model dispatch or cost claim."""
+    errors = []
+    rows = {row['id']: row for row in inventory['settings']}
+    retired = set(inventory.get('retired_input_ids', []))
+    compat = inventory.get('compatibility_reads', {})
+    contract = inventory.get('model_defaults', {})
+    list_ids = set(contract.get('list_setting_ids', []))
+    account_id = contract.get('account_setting_id')
+    expected_models = {
+        'ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model',
+        'ai.models.low-effort-worker-model', 'ai.models.gui-worker-model',
+        'ai.models.high-effort-worker-model', 'ai.models.auditor-model',
+        'ai.models.thread-title-model', 'ai.models.teach-model',
+        'safety.approvals.bsd-model', 'media.image.model', 'media.io.vision-fallback-model',
+        'media.capabilities.video-model', 'media.capabilities.tts-model',
+        'media.capabilities.music-model',
+    }
+    if list_ids != expected_models or account_id != 'ai.accounts.default-model':
+        errors.append('model_defaults: incomplete list/account admission')
+    if not MODEL_RETIRED_IDS <= retired or MODEL_RETIRED_IDS & rows.keys():
+        errors.append('model_defaults: retired model rows are missing or active')
+    if set(compat) - retired or not MODEL_RETIRED_IDS <= compat.keys():
+        errors.append('model_defaults: incomplete compatibility reads')
+    for key, read in compat.items():
+        if (read.get('write_policy') != 'omit_retired_key'
+                or read.get('transfer_policy') != 'omit_with_notice'
+                or read.get('search_policy') != 'explain_retirement'
+                or not read.get('label') or not read.get('search')
+                or not read.get('read_rule') or set(read.get('replacement_ids', [])) - rows.keys()):
+            errors.append(key + ': invalid retirement/transfer/search disposition')
+    if contract.get('source_order') != [
+            'manual_override', 'scope_policy', 'surface_default', 'manual_account_default',
+            'project_list', 'everywhere_factory_list']:
+        errors.append('model_defaults: selection source order')
+    for key in sorted(list_ids | {account_id}):
+        row = rows.get(key)
+        if row is None:
+            errors.append(str(key) + ': missing model row')
+            continue
+        picker = row.get('model_picker', {})
+        if (row['type'] != 'model_picker' or picker.get('effort') != 'inside_picker'
+                or picker.get('allow_exact_name') is not True
+                or picker.get('validate_before_save') != 'small_call'):
+            errors.append(key + ': model/depth picker or exact-name validation')
+        levels = row['layering']['may_differ_by']
+        if levels != ([] if key == account_id else ['everywhere', 'project']):
+            errors.append(key + ': model defaults offered at an unapproved level')
+        source = picker.get('inherit_from')
+        if source not in {'factory', 'smallest_available', 'none', 'automatic_vision', 'normal_defaults'} and source not in list_ids:
+            errors.append(key + ': missing named fallback source')
+    easy = rows.get('ai.models.low-effort-worker-model', {})
+    if easy.get('model_picker', {}).get('inherit_from') != 'ai.models.worker-model':
+        errors.append('model_defaults: routine jobs do not follow Everyday building')
+    if rows.get('ai.models.teach-model', {}).get('default') != 'Default':
+        errors.append('model_defaults: Teach must default to the smallest available model')
+    if rows.get('safety.approvals.bsd-model', {}).get('model_picker', {}).get('inherit_from') != 'ai.models.auditor-model':
+        errors.append('model_defaults: BSD does not follow Checking finished work')
+    return errors
+
 
 
 def snapshot_failures(record, rows):
@@ -169,10 +242,10 @@ def check(root=ROOT, corpus=None):
     inventory = corpus.document('Plans/settings_inventory.json')
     pack = corpus.document('Plans/settings_system_contract_fixtures.json')
     rows = {row['id']: row for row in inventory['settings']}
-    errors = []
+    errors = model_defaults_failures(inventory)
     counts = collections.Counter(rows=len(rows), categories=len(inventory['categories']),
                                  managers=len(pack['manager_registry']))
-    if len(rows) != len(inventory['settings']) or len(rows) != 981 or not (NEW_IDS | PLACEMENT_IDS) <= rows.keys():
+    if len(rows) != len(inventory['settings']) or not rows or not (NEW_IDS | PLACEMENT_IDS) <= rows.keys():
         errors.append('Settings identity census')
     if len(inventory['categories']) != 12 or len(pack['manager_registry']) != 38:
         errors.append('Settings category/manager census')

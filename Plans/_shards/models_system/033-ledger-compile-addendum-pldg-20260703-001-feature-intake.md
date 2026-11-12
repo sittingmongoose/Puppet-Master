@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8664-L9594
+Source lines: L8754-L9693
 
-Source SHA256: `34ea4b6c2934cb4e6aaf64baa418c10460c117e15e78acb895b7187bf3a79a75`
+Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
 
 ---
 
@@ -519,7 +519,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  P2-MODEL-CATALOG-CONFIDENCE-UI (P2) is compiled as canonical Puppet Master intent for Provider/catalog confidence and user explanation: Add ModelCapabilityConfidence UI: verified_live, provider_reported, inferred, configured_static, stale, unknown, unsupported, with last_refresh and route/account scope. The preserved PM gap/delta is: Expose capability source confidence in Settings/model picker so users understand why a model shows/hides vision, effort, cache, or context controls. The observed external-repo signal remains source-lineage evidence: Recent issues show model catalogs with wrong context windows, missing modalities, ghost models, static capability assumptions, and route-specific gaps.
+  P2-MODEL-CATALOG-CONFIDENCE-UI (P2) is compiled as canonical Puppet Master intent for Provider/catalog
+  confidence and user explanation: Add ModelCapabilityConfidence UI: verified_live, provider_reported,
+  inferred, configured_static, stale, unknown, unsupported, with last_refresh and route/account scope.
+  The preserved PM gap/delta is: Expose capability source confidence in Settings/model picker so users
+  understand why a model shows/hides vision, effort, cache, or context controls. The observed external-
+  repo signal remains source-lineage evidence: Recent issues show model catalogs with wrong context
+  windows, missing modalities, ghost models, static capability assumptions, and route-specific gaps. An
+  exact unlisted name is validated by one small call before saving, never saved on refusal or unreachable
+  service. Name acceptance proves no feature; unknown vision/effort/cache/context remains unknown until
+  the concrete route proves it.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

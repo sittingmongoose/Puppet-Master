@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6910-L7377
+Source lines: L6910-L7350
 
-Source SHA256: `c0b219b0450e1afc7d8f24fc7ce7db1002b0d81ee56d18e3fa7c0b1a802b4ce2`
+Source SHA256: `863b525b3833fdd01ebeb6925f6baef415ffdf1525912a2c5fbaa5526e439c63`
 
 ---
 
@@ -209,7 +209,7 @@ display/local-handoff data and never appear in results, receipts, or exports.
 
 Every create, update, and import-commit entry validates exactly the CS-033 set before any write:
 `reserved name collision` (§2.4 incl. `override_builtin` limits), `invalid name format` (§2.5),
-`missing description` (required, max 200 chars), `invalid mode value`, `invalid model format`,
+`missing description` (required, max 200 chars), `invalid mode value`, retired-field write attempts,
 and `override_builtin` misuse (`override_builtin: true` against a reserved Assistant Chat slash
 command). F2 validates the single edited field plus the resulting whole file. Inline errors name
 the failing check; the commit stays blocked until all resolve. Validation failure writes nothing
@@ -328,35 +328,8 @@ plan_unit_id: CS-081
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'The Settings Commands & Shortcuts manager routes eight Commands-owned typed local owner actions
-  over route:settings/commands-shortcuts: commands.create (Create command asserting target absence), commands.update
-  (immediate hero-sheet field mutation asserting exact current content, with atomic cross-root Scope moves),
-  commands.delete (Delete command with danger-modal proof naming the target and §2.3 reveal), commands.preview
-  (side-effect-free dry-run render: sample-argument substitution only, inert file/shell placeholders, no bash/read
-  ask-flow, no read, no execution, no submit, identical in viewer and writer modes), commands.import_preview/commands.import_commit
-  (bound-plan import sharing the file-mutation contract), commands.export (bounded nonsecret manifest collection),
-  and commands.reset_all (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/
-  reset, shortcuts backup, the hints toggle, the clash-handling choice (extensions.commands.conflict-handling),
-  the keyboard layout select (extensions.commands.keyboard-layout), and the palette toggle (extensions.commands.command-palette-visibility)
-  reuse the Settings-owned settings.transaction route against inventory-offered exact level/key rows through
-  SSYS-059; remaining selected controls are view-only. Every file mutation consumes actor plus permission snapshot,
-  binds applicable Project roots or the exact Computer/library root by id, generation, and fingerprint, resolves
-  targets under FileSafe containment with symlink guard, asserts expected content and list generation, fails
-  closed on stale or mismatched state with no automatic retry, replays only on idempotency-key plus identical
-  payload, validates the exact CS-033 set before any write, requires storage writer mode, writes atomically
-  with durable readback, and identifies files by root-bound non-secret refs. The sole native owner handler
-  is handlers::commands::apply_local_action; local actions are not UICommand catalog entries.
-
-
-  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
-  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
-  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
-  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
-  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
-  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
-  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
-  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
-  handlers remain handler_unavailable.'
+canonical_text: |-
+  The Settings Commands & Shortcuts manager routes eight Commands-owned typed local owner actions over route:settings/commands-shortcuts: commands.create (Create command asserting target absence), commands.update (immediate hero-sheet field mutation asserting exact current content, with atomic cross-root Scope moves), commands.delete (Delete command with danger-modal proof naming the target and §2.3 reveal), commands.preview (side-effect-free dry-run render: sample-argument substitution only, inert file/shell placeholders, no bash/read ask-flow, no read, no execution, no submit, identical in viewer and writer modes), commands.import_preview/commands.import_commit (bound-plan import sharing the file-mutation contract), commands.export (bounded nonsecret manifest collection), and commands.reset_all (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/ reset, shortcuts backup, the hints toggle, the clash-handling choice (extensions.commands.conflict-handling), the keyboard layout select (extensions.commands.keyboard-layout), and the palette toggle (extensions.commands.command-palette-visibility) reuse the Settings- owned settings.transaction route against inventory-offered exact level/key rows through SSYS-059; remaining selected controls are view-only. Every file mutation consumes actor plus permission snapshot, binds applicable Project roots or the exact Computer/library root by id, generation, and fingerprint, resolves targets under FileSafe containment with symlink guard, asserts expected content and list generation, fails closed on stale or mismatched state with no automatic retry, replays only on idempotency-key plus identical payload, validates the exact CS-033 set before any write, requires storage writer mode, writes atomically with durable readback, and identifies files by root-bound non- secret refs. The sole native owner handler is handlers::commands::apply_local_action; local actions are not UICommand catalog entries.  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere. Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project versions and sole owner. Computer installations, credentials and protected source trust never travel in copy. Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.* local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable handlers remain handler_unavailable. MD2 NEITHER removes model from active command overrides: old model/model_override values are compatibility-read for inspection only and omitted with notice on new/imported writes; the CS-033 validation set now rejects retired-field writes instead of validating a command model format.
 gui_related: true
 gui_classification_reason: The census routes every selected mutating control of the Commands & Shortcuts Settings
   manager, binds Settings-valued controls to their transaction route, and classifies presentation controls
@@ -389,7 +362,7 @@ acceptance_criteria:
   target_exists, confirmation_mismatch, plan_mismatch, and idempotency_conflict fail closed with no write and
   no automatic retry.
 - Every create, update, and import entry validates reserved name collision, invalid name format, missing description,
-  invalid mode value, invalid model format, and override_builtin misuse, blocks on any failure, and writes
+  invalid mode value, retired-field write attempts and override_builtin misuse, blocks on any failure, and writes
   nothing.
 - Preview substitutes sample arguments only, renders @file and !shell as inert placeholders with no bash/read
   ask-flow, no file read, no execution, and no agent submission, and renders identically in viewer and writer

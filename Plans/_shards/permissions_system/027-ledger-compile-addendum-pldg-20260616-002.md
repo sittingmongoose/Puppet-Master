@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L8007-L8069
 
-Source SHA256: `a0cf0b71c715aa1c940d564604ddcd3cad2c7df51d7c14f494aff39888732573`
+Source SHA256: `07f421deae2ade55fa8d42be15441bb8a345d113941bdaa45093c6ee45521caa`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
 canonical_text: >-
-  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer modes, plus blocked-action payloads for missing lane bindings, overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.
+  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer modes, plus blocked-action payloads for a required job with no usable model after named inheritance (MS-109), overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.
 gui_related: false
 gui_classification_reason: Write authority and blocker payloads are permission/runtime policy; GUI surfaces consume their visible projections.
 depends_on:
@@ -27,7 +27,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Permission checks consume write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer.
-  - Missing capability lanes and overlapping write surfaces produce typed blockers.
+  - A required job with no usable model after named inheritance and overlapping write surfaces produce typed blockers; legacy unconfigured-lane is read vocabulary only.
   - Invisible/internal goals cannot exceed predeclared authority.
   - Recoverable blockers name the user, Settings, worktree, or approval action needed to proceed.
 validation_surfaces:
