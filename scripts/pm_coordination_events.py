@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import base64
 import copy
-import datetime as dt
 import hashlib
 import importlib.util
 import json
@@ -31,14 +30,27 @@ from typing import Any
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
 
-# DO-C8-N5 (sweep part 2B): `canonical`, `idempotency_key` and `event_id_preimage` are DCO's part 2B edition,
-# byte for byte (plans/ea-w2-coordination-20261104 at 2ec9d21d70), with its `pm_coordination_numbers` helper.
-if str(Path(__file__).resolve().parent) not in sys.path:  # loaded by file path (tests): find the sibling helper
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-from pm_coordination_numbers import decimal_integer  # noqa: E402
-
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "scripts") not in sys.path:
+    sys.path.insert(0, str(ROOT / "scripts"))
+
+from pm_coordination_guard_bridge import gate_code, gate_items
+from pm_coordination_numbers import (
+    SEALED_TIMESTAMP_PROFILE,
+    TIMESTAMP_FIELDS,
+    application_bounds_match,
+    coordination_timestamp,
+    decimal_integer,
+    epoch_token,
+    integer_slot_code,
+    retained_override_refused,
+    retained_record_verifies,
+    retained_retry_matches,
+    timestamp_accepted,
+)
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z
+from pm_event_numbers import Refusal, current_append_policy
 PAYLOAD_PATH = "Plans/coordination_event_payloads.schema.json"
 PAYLOAD_SCHEMA_URI = "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json"
 PROJECTION_PATH = "Plans/coordination_projection_contracts.schema.json"
@@ -148,6 +160,15 @@ PLATFORM_ID = {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^
 PATH_REF = {"type": "string", "minLength": 1, "maxLength": 1024,
             "pattern": r"^(?![A-Za-z]:[\\/])(?![~\\])(?!\.{1,2}(?:/|$))(?![\s\S]*/\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"}
 PROJECTION_MEMBERS = ("agent_projection", "file_projection", "operation_projection", "snapshot_projection", "checkpoint")
+# Enumerate the separately governed app edition; arbitrary suffixes grant no exemption.
+PROJECT_PROJECTION_DEFS = frozenset((
+    "id", "timestamp", "event_id", "non_secret_ref", "path_ref", "status_reason",
+    "operation_summary", "agent_projection", "agent_terminal", "file_projection",
+    "operation_projection", "snapshot_projection", "snapshot_agent", "snapshot_claim",
+    "checkpoint", "checkpoint_core", "retired_generation", "durable_read_token",
+))
+APPLICATION_PROJECTION_DEFS = frozenset(name + "ApplicationV1" for name in PROJECT_PROJECTION_DEFS)
+
 PROJECTION_SCHEMA_IDS = {
     "agent_projection": "pm.storage_value.coordination_agent_projection.v1",
     "file_projection": "pm.storage_value.coordination_file_projection.v1",
@@ -161,6 +182,14 @@ CLAIM_BOUNDARY = (
     "checkpoint or pin moves, and no native producer, crash detector, append path, projector, reader, durability, "
     "security, readiness, currentness or seal is proved."
 )
+
+
+def _gate(phase: str, items: list[Any]) -> list[Any]:
+    return gate_items(phase, items)
+
+
+def _code(phase: str, code: str | None) -> str | None:
+    return gate_code(phase, code)
 
 
 def load(path: str, root: Path = ROOT) -> Any:
@@ -222,11 +251,14 @@ def idempotency_key(event_type: str, project_id: str, agent_id: str, recovery_ep
 
 
 def key_recovery_epoch(key: str) -> int | None:
-    """The key's recovery epoch: its second-to-last colon field, base 10 without sign or leading zeros."""
+    """The key's recovery epoch: its second-to-last colon field, as a CV-1100 integer token.
+
+    There is no 2**53 or 4300-digit cap. Leading zeros, signs and non-integers are not tokens.
+    """
     parts = key.rsplit(":", 2)
-    if len(parts) != 3 or not re.fullmatch(r"0|[1-9][0-9]*", parts[1]):
+    if len(parts) != 3:
         return None
-    return int(parts[1])
+    return epoch_token(parts[1])
 
 
 def event_id_preimage(storage_instance_id: str, recovery_epoch: int, project_id: str, event_type: str,
@@ -288,36 +320,39 @@ def normalize_observed_path(worktree_root: str, observed: str) -> str | None:
 
 
 def valid_utc(value: Any) -> bool:
-    """CV-353 rule 5: an RFC 3339 UTC timestamp ending in Z that names a real calendar instant."""
-    if not isinstance(value, str):
-        return False
-    match = re.fullmatch(r"([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]{1,9})?Z", value)
-    if not match:
-        return False
-    try:
-        dt.datetime(*(int(part) for part in match.groups()))
-    except ValueError:
-        return False
-    return True
+    """CV-353 rule 5 via CV-1101 date_time, profile coordination_utc_z.
+
+    The owner schema pattern still requires uppercase T and at most nine
+    fraction digits. This predicate is what refuses a calendar, a leap second
+    on the wrong day, hour 24 and a trailing LF, and what accepts a real leap
+    second and year 0000. The spelling is not rewritten.
+    """
+    return coordination_timestamp(value)
 
 
-def static_payload_rejection(event_type: str, payload: dict[str, Any]) -> str | None:
-    """The CV-353 and SP-320 cross-field rules a JSON Schema cannot state. Runs after schema validation."""
+def static_payload_rejection(event_type: str, payload: dict[str, Any], root: Path = ROOT) -> str | None:
+    """The CV-353 and SP-320 cross-field rules a JSON Schema cannot state. Runs after schema validation.
+
+    Integer slots use CV-1100 current_integer. JSON Schema treats 1.0 as an integer; this row does not.
+    """
+    schema = load(PAYLOAD_PATH, root)
+    if integer_slot_code(schema, DEF_BY_TYPE[event_type], payload) is not None:
+        return _code("payload_instance", "payload_integer_slots")
     for field in ("started_at_utc", "observed_at_utc", "finished_at_utc", "detected_at_utc", "aborted_at_utc", "exported_at_utc"):
         if field in payload and not valid_utc(payload[field]):
-            return "valid_utc_datetime"
+            return _code("payload_instance", "valid_utc_datetime")
     if event_type == MIRROR:
-        return None
+        return _code("payload_instance", None)
     epoch = key_recovery_epoch(payload["idempotency_key"])
     if epoch is None or payload["idempotency_key"] != idempotency_key(event_type, payload["project_id"], payload["agent_id"], epoch,
                                                                       payload["agent_revision"]):
-        return "identity_recipe"
+        return _code("payload_instance", "identity_recipe")
     if event_type == "coordination.agent_file_ownership_updated" and payload["path_hash"] != path_hash(payload["path_ref"]):
-        return "path_hash_recipe"
+        return _code("payload_instance", "path_hash_recipe")
     if event_type == "coordination.agent_aborted" and payload["abort_reason"] == "parent":
         if payload["aborted_by_ref"] != "run:" + payload.get("parent_run_id", ""):
-            return "abort_ref_join"
-    return None
+            return _code("payload_instance", "abort_ref_join")
+    return _code("payload_instance", None)
 
 
 def producer_digest(event_type: str, payload: dict[str, Any]) -> str:
@@ -337,7 +372,7 @@ def schema_registry(root: Path = ROOT) -> Registry:
 
 @lru_cache(maxsize=64)
 def definition_validator(document_uri: str, definition: str, root: Path = ROOT) -> Draft202012Validator:
-    """Validator for one $defs entry; format is not asserted (calendar validity is valid_utc)."""
+    """Validator for one $defs entry. jsonschema format is not installed; valid_utc calls date_time."""
     schema = {"$schema": "https://json-schema.org/draft/2020-12/schema", "$ref": f"{document_uri}#/$defs/{definition}"}
     return Draft202012Validator(schema, registry=schema_registry(root))
 
@@ -353,10 +388,10 @@ def projection_valid(definition: str, value: Any, root: Path = ROOT) -> bool:
 def payload_rejection(event_type: str, payload: Any, root: Path = ROOT) -> str | None:
     """First failing check layer of CV-353 for one payload: schema, then the static rules."""
     if event_type not in DEF_BY_TYPE:
-        return "unknown_event_type"
+        return _code("payload_instance", "unknown_event_type")
     if not payload_valid(event_type, payload, root):
-        return "schema"
-    return static_payload_rejection(event_type, payload)
+        return _code("payload_instance", "schema")
+    return static_payload_rejection(event_type, payload, root)
 
 
 def null_admitting_nodes(node: Any, path: str = "#") -> list[str]:
@@ -385,14 +420,15 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     try:
         Draft202012Validator.check_schema(payloads)
     except Exception as error:  # noqa: BLE001 - reported as a structural failure.
-        return [{"error": "payload_schema_invalid", "detail": str(error)[:300]}]
+        return _gate("payload_schema", [{"error": "payload_schema_invalid", "detail": str(error)[:300]}])
     if payloads.get("$id") != PAYLOAD_SCHEMA_URI:
         failures.append({"error": "payload_schema_uri"})
     defs = payloads.get("$defs", {})
     members = [DEF_BY_TYPE[event_type] for event_type in SEVEN] + ["debug_mirror_exported"]
-    if set(defs) != {"lineage_envelope", "non_secret_ref", *members, *BOARD_MEMBERS}:
+    app_members = {DEF_BY_TYPE[event_type] + "ApplicationV1" for event_type in SEVEN}
+    if set(defs) != {"lineage_envelope", "non_secret_ref", *members, *app_members, *BOARD_MEMBERS}:
         failures.append({"error": "payload_schema_definition_census", "detail": sorted(defs)})
-        return failures
+        return _gate("payload_schema", failures)
     if payloads.get("oneOf") != [{"$ref": f"{PAYLOAD_SCHEMA_URI}#/$defs/{name}"} for name in members]:
         failures.append({"error": "payload_schema_root_members"})
     envelope = defs["lineage_envelope"]
@@ -435,10 +471,32 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "platform_pattern", "definition": "lineage_envelope"})
     if defs["agent_file_ownership_updated"].get("properties", {}).get("path_ref") != PATH_REF:
         failures.append({"error": "path_ref_pattern", "definition": "agent_file_ownership_updated"})
-    nulls = null_admitting_nodes(payloads)
+    project_payloads = copy.deepcopy(payloads)
+    project_payloads["$defs"] = {name: value for name, value in defs.items() if name not in app_members and name not in BOARD_MEMBERS}
+    # Scan Project references before accepting the pruned view: otherwise a Project
+    # field can reach a nullable app subtree that the null scan cannot see.
+    allowed_defs = set(defs) - app_members - set(BOARD_MEMBERS)
+    def isolated_refs(node: Any, path: str = "#") -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key in ("$ref", "$dynamicRef", "$recursiveRef"):
+                    local = value.removeprefix(PAYLOAD_SCHEMA_URI) if isinstance(value, str) else ""
+                    parts = local.split("/")
+                    if (len(parts) < 3 or parts[:2] != ["#", "$defs"]
+                            or parts[2] not in allowed_defs):
+                        failures.append({"error": "project_payload_reference_not_isolated",
+                                         "detail": path + "/" + key})
+                isolated_refs(value, path + "/" + key)
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                isolated_refs(value, f"{path}/{index}")
+    isolated_refs(project_payloads)
+    nulls = null_admitting_nodes(project_payloads)
     if nulls:
         failures.append({"error": "payload_schema_admits_null", "detail": nulls[:5]})
-    return failures
+    if not application_bounds_match(payloads):
+        failures.append({"error": "application_integer_bounds_match"})
+    return _gate("payload_schema", failures)
 
 
 def board_member_definition_failures(owner_defs: dict[str, Any], orchestrator_defs: dict[str, Any]) -> list[dict[str, Any]]:
@@ -455,6 +513,7 @@ def board_member_definition_failures(owner_defs: dict[str, Any], orchestrator_de
         codes = missing or oracles.run_rows(guards.BOARD_MEMBER_ROWS[1:], view)
         failures += [{"error": code, "definition": name} for code in codes]
     return failures
+
 
 def board_member_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     return board_member_definition_failures(load(PAYLOAD_PATH, root)["$defs"], load(BOARD_PAYLOAD_PATH, root)["$defs"])
@@ -532,10 +591,12 @@ def projection_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     try:
         Draft202012Validator.check_schema(projections)
     except Exception as error:  # noqa: BLE001
-        return [{"error": "projection_schema_invalid", "detail": str(error)[:300]}]
+        return _gate("projection_schema", [{"error": "projection_schema_invalid", "detail": str(error)[:300]}])
     if projections.get("$id") != PROJECTION_SCHEMA_URI:
         failures.append({"error": "projection_schema_uri"})
     defs = projections.get("$defs", {})
+    if set(defs) != PROJECT_PROJECTION_DEFS | APPLICATION_PROJECTION_DEFS:
+        failures.append({"error": "projection_schema_definition_census", "detail": sorted(defs)})
     if projections.get("oneOf") != [{"$ref": f"#/$defs/{name}"} for name in PROJECTION_MEMBERS]:
         failures.append({"error": "projection_schema_root_members"})
     for name in PROJECTION_MEMBERS:
@@ -564,7 +625,7 @@ def projection_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "stored_live_snapshot_fence"})
     if projections.get("x-pm-event-authority-binding") != expected_binding():
         failures.append({"error": "coordination_authority_binding_mismatch"})
-    return failures
+    return _gate("projection_schema", failures)
 
 
 def checkpoint_failures(value: dict[str, Any]) -> list[str]:
@@ -594,14 +655,110 @@ def checkpoint_failures(value: dict[str, Any]) -> list[str]:
     return sorted(set(failures))
 
 
+# These prefixed rows cannot fail alone: a retired scope disagreement is also
+# checkpoint_retired_core_other_key, and publication reuse is not recursed into
+# because the nested call clears retired_generations.
+PROJECTION_UNPROVABLE = (
+    "retired_checkpoint_scope_partition",
+    "retired_checkpoint_publication_reused",
+)
+
+
+def _gate_projection(items: list[str]) -> list[str]:
+    proved = [item for item in items if item not in PROJECTION_UNPROVABLE]
+    entailed = [item for item in items if item in PROJECTION_UNPROVABLE]
+    proved_names = set(_gate("projection_value", proved))
+    entailed_names = set(_gate("projection_unprovable", entailed))
+    return [item for item in items if item in proved_names or item in entailed_names]
+
+
+# Projection copies of CV-353 timestamps. The field set is derived from the schema, never listed by
+# hand: every property whose schema is a $ref to the projection document's timestamp or
+# timestampApplicationV1 definition, directly or as a oneOf/anyOf/allOf branch, in the projection
+# document and in the application-workflow definitions that its ApplicationV1 entries point to.
+# Null is the withdrawn_at_utc absence, not a timestamp.
+PROJECTION_TIMESTAMP_DEFS = ("timestamp", "timestampApplicationV1")
+APPLICATION_CONTRACTS_PATH = "Plans/application_workflow_contracts.schema.json"
+APPLICATION_CONTRACTS_URI = "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json"
+
+
+def _projection_timestamp_node(node: Any, local: bool) -> bool:
+    """True when the property schema resolves to the projection timestamp definitions."""
+    if not isinstance(node, dict):
+        return False
+    ref = node.get("$ref")
+    if type(ref) is str:
+        target, marker, name = ref.partition("#/$defs/")
+        if marker and name in PROJECTION_TIMESTAMP_DEFS and (target == PROJECTION_SCHEMA_URI or (local and target == "")):
+            return True
+    for keyword in ("oneOf", "anyOf", "allOf"):
+        branches = node.get(keyword)
+        if isinstance(branches, list) and any(_projection_timestamp_node(branch, local) for branch in branches):
+            return True
+    return False
+
+
+def projection_timestamp_sites(root: Path = ROOT) -> list[tuple[str, str, str]]:
+    """Every (document, owning schema pointer, field) whose property schema is a projection timestamp."""
+    projection = load(PROJECTION_PATH, root)
+    sites: list[tuple[str, str, str]] = []
+
+    def walk(document: str, node: Any, pointer: str, local: bool) -> None:
+        if isinstance(node, dict):
+            properties = node.get("properties")
+            if isinstance(properties, dict):
+                for field, item in properties.items():
+                    if _projection_timestamp_node(item, local):
+                        sites.append((document, pointer, field))
+            for key, item in node.items():
+                walk(document, item, pointer + "/" + key.replace("~", "~0").replace("/", "~1"), local)
+        elif isinstance(node, list):
+            for index, item in enumerate(node):
+                walk(document, item, f"{pointer}/{index}", local)
+
+    walk(PROJECTION_PATH, projection, "#", True)
+    external = sorted({definition["$ref"].split("#/$defs/", 1)[1] for definition in projection.get("$defs", {}).values()
+                       if isinstance(definition, dict) and type(definition.get("$ref")) is str
+                       and definition["$ref"].startswith(APPLICATION_CONTRACTS_URI + "#/$defs/")})
+    if external:
+        application = load(APPLICATION_CONTRACTS_PATH, root).get("$defs", {})
+        for name in external:
+            walk(APPLICATION_CONTRACTS_PATH, application.get(name), "#/$defs/" + name, False)
+    return sites
+
+
+def projection_time_fields(root: Path = ROOT) -> frozenset[str]:
+    """The projection timestamp field names, derived from projection_timestamp_sites."""
+    return frozenset(field for _document, _pointer, field in projection_timestamp_sites(root))
+
+
+def projection_timestamp_bad(value: Any, fields: frozenset[str] | None = None) -> bool:
+    """True when a string at a projection timestamp field misses coordination_utc_z.
+
+    A str subclass is passed to date_time, which refuses it (date_time_type)."""
+    fields = projection_time_fields() if fields is None else fields
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if key in fields and isinstance(item, str) and not coordination_timestamp(item):
+                return True
+            if isinstance(item, (dict, list)) and projection_timestamp_bad(item, fields):
+                return True
+    elif isinstance(value, list):
+        return any(projection_timestamp_bad(item, fields) for item in value)
+    return False
+
+
 def projection_value_failures(definition: str, value: Any, root: Path = ROOT) -> list[str]:
     if not projection_valid(definition, value, root):
-        return ["schema"]
+        return _gate_projection(["schema"])
+    failures: list[str] = []
+    if projection_timestamp_bad(value, projection_time_fields(root)):
+        failures.append("projection_timestamp")
     if definition == "checkpoint":
-        return checkpoint_failures(value)
-    if definition == "file_projection" and value["path_hash"] != path_hash(value["path_ref"]):
-        return ["path_hash_recipe"]
-    return []
+        failures.extend(checkpoint_failures(value))
+    elif definition == "file_projection" and value["path_hash"] != path_hash(value["path_ref"]):
+        failures.append("path_hash_recipe")
+    return _gate_projection(failures)
 
 
 # --- Admission ledger and the registry rows it prepares (DL-045, DL-077, DL-078) -----------------------------------
@@ -685,11 +842,11 @@ def ledger_failures(ledger: dict[str, Any] | None = None, *, root: Path = ROOT) 
         failures.append({"error": "ledger_schema", "pointer": "/" + "/".join(str(part) for part in error.absolute_path),
                          "detail": error.message[:200]})
     if failures:
-        return failures
+        return _gate("ledger", failures)
     rows = ledger["rows"]
     if [row["event_type"] for row in rows] != list(SEVEN) + [MIRROR]:
         failures.append({"error": "ledger_row_order"})
-        return failures
+        return _gate("ledger", failures)
     registry_schema = load(REGISTRY_SCHEMA_PATH, root)
     family_validator = Draft202012Validator({"$ref": "#/$defs/family", "$defs": registry_schema["$defs"]})
     binding = {entry.get("event_type"): entry for entry in
@@ -739,7 +896,17 @@ def ledger_failures(ledger: dict[str, Any] | None = None, *, root: Path = ROOT) 
         failures.append({"error": "mirror_payload_schema_unresolved", "event_type": MIRROR})
     if not ref_resolves(mirror["semantic_owner_ref"], root):
         failures.append({"error": "mirror_owner_ref_unresolved", "event_type": MIRROR})
-    return failures
+    # These rows do not fail alone: each one is preceded by the ledger schema or by
+    # prepared_registry_row_mismatch on the same edit. They stay enforced.
+    entailed_codes = {
+        "prepared_registry_row_schema", "ledger_owner_join", "prepared_payload_schema_unresolved",
+        "prepared_registry_row_ref_unresolved", "ledger_retention_binding", "mirror_owner_ref_unresolved",
+    }
+    proved = [item for item in failures if item["error"] not in entailed_codes]
+    entailed = [item for item in failures if item["error"] in entailed_codes]
+    proved_names = {item["error"] for item in _gate("ledger", proved)}
+    entailed_names = {item["error"] for item in _gate("ledger_unprovable", entailed)}
+    return [item for item in failures if item["error"] in proved_names or item["error"] in entailed_names]
 
 
 def registry_membership_failures(registry: dict[str, Any] | None = None, ledger: dict[str, Any] | None = None,
@@ -765,9 +932,9 @@ def registry_membership_failures(registry: dict[str, Any] | None = None, ledger:
     for family in families:
         event_type = family.get("event_type")
         if isinstance(event_type, str) and event_type.startswith("coordination.") and event_type not in admitted:
-            if not any(failure.get("event_type") == event_type for failure in failures):
+            if not [failure for failure in failures if failure.get("event_type") == event_type]:
                 failures.append({"error": "unexpected_coordination_registry_family", "event_type": event_type})
-    return failures
+    return _gate("registry", failures)
 
 
 @lru_cache(maxsize=2)
@@ -804,7 +971,7 @@ def registry_preflight_failures(ledger: dict[str, Any] | None = None, registry: 
         if schema_errors or added:
             failures.append({"error": "prepared_row_not_admissible", "event_type": row["event_type"],
                              "detail": (schema_errors + [failure.get("error") for failure in added])[:5]})
-    return failures
+    return _gate("preflight", failures)
 
 
 # --- Storage value registry rows (SP-320 keyed value compositions) --------------------------------------------------
@@ -852,7 +1019,7 @@ def projections_bundle(root: Path = ROOT) -> dict[str, Any]:
     projections = load(PROJECTION_PATH, root)
     generic = load(GENERIC_PATH, root)
     mapping = {GENERIC_CURSOR_REF: "#/$defs/generic_source_cursor"}
-    bundle_defs = {name: rewrite_refs(copy.deepcopy(definition), mapping) for name, definition in projections["$defs"].items()}
+    bundle_defs = {name: rewrite_refs(copy.deepcopy(definition), mapping) for name, definition in projections["$defs"].items() if name not in APPLICATION_PROJECTION_DEFS}
     bundle_defs["generic_source_cursor"] = copy.deepcopy(generic["$defs"]["coverage"]["properties"]["last_frame"])
     return {
         "$id": "pm.storage_value.coordination_read_model_projections.v1",
@@ -1118,7 +1285,13 @@ def svr_failures(svr: dict[str, Any] | None = None, *, root: Path = ROOT) -> lis
     for policy_id, expected_policy in EXPECTED_POLICIES.items():
         if canonical(policies.get(policy_id)) != canonical(expected_policy):
             failures.append({"error": "coordination_retention_policy_changed", "policy_id": policy_id})
-    return failures
+    # An invalid value_schema also differs from the SP-320 materialization, so that
+    # row cannot be the only failure. It stays enforced in its own table.
+    proved = [item for item in failures if item["error"] != "coordination_storage_value_schema_invalid"]
+    entailed = [item for item in failures if item["error"] == "coordination_storage_value_schema_invalid"]
+    proved_names = {item["error"] for item in _gate("svr", proved)}
+    entailed_names = {item["error"] for item in _gate("svr_unprovable", entailed)}
+    return [item for item in failures if item["error"] in proved_names or item["error"] in entailed_names]
 
 
 # --- Transition model (SP-320 "Admission, identity and compare-and-swap" and "Transition table") --------------------
@@ -1150,11 +1323,12 @@ class CoordinationStore:
         digest = producer_digest(event_type, payload)
         prior = self.dedupe.get(identity)
         if prior is not None:
-            if prior["digest"] == digest:
-                return {"result": "exact_retry_original_result", "event_id": prior["event_id"]}
-            return {"result": "idempotency_conflict"}
+            # SP-1101: the stored recipe id is the frozen SP-320 recipe, not a caller flag.
+            if retained_retry_matches(prior.get("recipe_id"), prior["digest"], digest):
+                return self._accepted({"result": "exact_retry_original_result", "event_id": prior["event_id"]})
+            return {"result": _code("transition", "idempotency_conflict")}
         if event_type not in self.admitted:
-            return {"result": "quarantined_before_append"}
+            return {"result": _code("transition", "quarantined_before_append")}
         rejection = payload_rejection(event_type, payload, self.root)
         if rejection:
             return {"result": rejection}
@@ -1163,26 +1337,32 @@ class CoordinationStore:
         revision = payload["agent_revision"]
         if agent is None:
             if event_type != "coordination.agent_registered":
-                return {"result": "coordination_conflict:not_registered"}
+                return {"result": _code("transition", "coordination_conflict:not_registered")}
         else:
             if event_type == "coordination.agent_registered":
                 # SP-320's transition table: a terminal agent refuses any event as already_terminal, and a registered,
                 # non-terminal agent refuses a registration as already_registered; neither reaches the revision rule.
-                return {"result": "coordination_conflict:already_terminal" if "terminal" in agent
-                        else "coordination_conflict:already_registered"}
+                code = ("coordination_conflict:already_terminal" if "terminal" in agent
+                        else "coordination_conflict:already_registered")
+                return {"result": _code("transition", code)}
+            fixed_mismatch = [field for field in LINEAGE_FIXED if payload.get(field) != agent[field]]
+            optional_mismatch = [field for field in LINEAGE_OPTIONAL if field in payload and payload[field] != agent.get(field)]
             if (revision != agent["agent_revision"] + 1
                     or ("expected_previous_revision" in payload and payload["expected_previous_revision"] != revision - 1)
                     or ("last_applied_event_id" in payload and payload["last_applied_event_id"] != agent["last_applied_event_id"])):
-                return {"result": "coordination_conflict:stale_revision"}
+                return {"result": _code("transition", "coordination_conflict:stale_revision")}
             if "terminal" in agent:
-                return {"result": "coordination_conflict:already_terminal"}
-            if any(payload.get(field) != agent[field] for field in LINEAGE_FIXED):
-                return {"result": "coordination_conflict:lineage_mismatch"}
-            if any(field in payload and payload[field] != agent.get(field) for field in LINEAGE_OPTIONAL):
-                return {"result": "coordination_conflict:lineage_mismatch"}
+                return {"result": _code("transition", "coordination_conflict:already_terminal")}
+            if fixed_mismatch or optional_mismatch:
+                return {"result": _code("transition", "coordination_conflict:lineage_mismatch")}
             if not self.changes_something(event_type, payload, agent):
-                return {"result": "coordination_unchanged"}
-        return self.append(event_type, payload, identity, digest)
+                return {"result": _code("transition", "coordination_unchanged")}
+        return self._accepted(self.append(event_type, payload, identity, digest))
+
+    def _accepted(self, result: dict[str, Any]) -> dict[str, Any]:
+        if _code("transition", None) is not None:
+            raise RuntimeError("transition table refused a successful coordination result")
+        return result
 
     def changes_something(self, event_type: str, payload: dict[str, Any], agent: dict[str, Any]) -> bool:
         if event_type == "coordination.agent_status_updated":
@@ -1199,7 +1379,7 @@ class CoordinationStore:
         agent_id, revision = payload["agent_id"], payload["agent_revision"]
         new_id = event_id(self.storage_instance_id, self.recovery_epoch, payload["project_id"], event_type, agent_id, revision)
         self.sequence += 1
-        self.dedupe[identity] = {"digest": digest, "event_id": new_id}
+        self.dedupe[identity] = {"digest": digest, "event_id": new_id, "recipe_id": "coordination-sp320-string-array-v1"}
         when = payload[FAMILY_TIME[event_type]]
         if event_type == "coordination.agent_registered":
             agent = {field: payload[field] for field in ("project_id", "run_id", "agent_id", "agent_type", "platform", "started_at_utc")}
@@ -1263,32 +1443,56 @@ class CoordinationStore:
 
 
 def envelope_rejection(record: dict[str, Any], storage_instance_id: str, recovery_epoch: int) -> str | None:
-    """The first failing CV-353 rule 8 join of a coordination EventRecord, or None."""
-    body = record["payload"]
-    event_type = record["event_type"]
+    """The first failing CV-353 rule 8 join of a coordination EventRecord, or None.
+
+    projector_replay_only is the current-writer refusal replay_only_not_appendable (CV-1100
+    current_append_policy). Other non-dedupe policies stay replay_policy. A retained original is
+    not read here.
+    """
+    body = record["payload"] if isinstance(record.get("payload"), dict) else {}
+    event_type = record.get("event_type")
+    failed: list[str] = []
     if event_type not in FAMILY_TIME:
-        return "unknown_event_type"
-    if record["scope_kind"] != "project" or record["project_id"] is None:
-        return "project_only"
-    if record["payload_ref"] is not None:
-        return "inline_only"
-    if record["payload_schema_id"] != f"pm.coordination_event.{DEF_BY_TYPE[event_type]}.schema.v1":
-        return "payload_schema_id"
-    if (record["project_id"] != body.get("project_id") or record["run_id"] != body.get("run_id")
-            or record["thread_id"] != body.get("thread_id") or record["node_id"] != body.get("node_id")
-            or record["attempt_id"] is not None or record["idempotency_key"] != body.get("idempotency_key")):
-        return "payload_envelope_identity"
-    if record["redaction_profile"] != "no_secrets":
-        return "redaction_profile"
-    if record["replay_policy"] != "dedupe_by_idempotency_key":
-        return "replay_policy"
-    if record["occurred_at_utc"] != body.get(FAMILY_TIME[event_type]):
-        return "occurred_at_join"
-    if (key_recovery_epoch(body["idempotency_key"]) != recovery_epoch
-            or record["event_id"] != event_id(storage_instance_id, recovery_epoch, body["project_id"], event_type, body["agent_id"],
-                                              body["agent_revision"])):
-        return "identity_recipe"
-    return None
+        failed.append("unknown_event_type")
+    else:
+        if record.get("scope_kind") != "project" or record.get("project_id") is None:
+            failed.append("project_only")
+        if record.get("payload_ref") is not None:
+            failed.append("inline_only")
+        if record.get("payload_schema_id") != f"pm.coordination_event.{DEF_BY_TYPE[event_type]}.schema.v1":
+            failed.append("payload_schema_id")
+        if (record.get("project_id") != body.get("project_id") or record.get("run_id") != body.get("run_id")
+                or record.get("thread_id") != body.get("thread_id") or record.get("node_id") != body.get("node_id")
+                or record.get("attempt_id") is not None or record.get("idempotency_key") != body.get("idempotency_key")):
+            failed.append("payload_envelope_identity")
+        if record.get("redaction_profile") != "no_secrets":
+            failed.append("redaction_profile")
+        policy = record.get("replay_policy")
+        if policy == "projector_replay_only":
+            try:
+                current_append_policy(policy)
+            except Refusal:
+                failed.append("replay_only_not_appendable")
+        elif policy != "dedupe_by_idempotency_key":
+            failed.append("replay_policy")
+        if not timestamp_accepted(record.get("occurred_at_utc"), EVENT_RECORD):
+            failed.append("envelope_occurred_at")
+        if any(not timestamp_accepted(record.get(field), STORAGE_UTC_Z)
+               for field in ("observed_at_utc", "persisted_at_utc")):
+            failed.append("envelope_storage_time")
+        if record.get("occurred_at_utc") != body.get(FAMILY_TIME[event_type]):
+            failed.append("occurred_at_join")
+        epoch = key_recovery_epoch(body.get("idempotency_key", ""))
+        identity_ok = False
+        if epoch == recovery_epoch and isinstance(body.get("project_id"), str) and isinstance(body.get("agent_id"), str):
+            try:
+                identity_ok = record.get("event_id") == event_id(
+                    storage_instance_id, recovery_epoch, body["project_id"], event_type, body["agent_id"], body["agent_revision"])
+            except Refusal:
+                identity_ok = False
+        if not identity_ok:
+            failed.append("identity_recipe")
+    return _code("envelope", failed[0] if failed else None)
 
 
 # --- Fixtures ------------------------------------------------------------------------------------------------------
@@ -1347,6 +1551,10 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
         if list(envelope_validator.iter_errors(record)):
             failures.append({"error": "valid_event_envelope_schema", "case_id": case["case_id"]})
         if envelope_rejection(record, store_id, epoch) is not None or payload_rejection(record["event_type"], record["payload"], root):
+            failures.append({"error": "valid_event_rejected", "case_id": case["case_id"]})
+        replay_only = copy.deepcopy(record)
+        replay_only["replay_policy"] = "projector_replay_only"
+        if envelope_rejection(replay_only, store_id, epoch) != "replay_only_not_appendable":
             failures.append({"error": "valid_event_rejected", "case_id": case["case_id"]})
     event_rejections: dict[str, set[str]] = {}
     for case in fixtures["invalid_events"]:
@@ -1431,6 +1639,7 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
             failures.append({"error": "family_without_own_event_join_cases", "event_type": event_type,
                              "detail": sorted(set(FAMILY_EVENT_JOINS) - event_rejections.get(event_type, set()))})
         per_family[event_type] = counts
+    failures = _gate("fixtures", failures)
     return {
         "failures": failures,
         "positive_payload_cases": len(fixtures["payloads"]),
@@ -1479,7 +1688,7 @@ def validation_case_failures(ledger: dict[str, Any] | None = None, fixtures: dic
             failures.append({"error": "family_cases_not_named_by_ledger_row", "event_type": event_type, "detail": sorted(own - named)})
     if set(sequence_types) - claimed_sequences:
         failures.append({"error": "transition_sequence_unclaimed", "detail": sorted(set(sequence_types) - claimed_sequences)})
-    return failures
+    return _gate("validation", failures)
 
 
 def ats_oracle_failures(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT) -> list[dict[str, Any]]:
@@ -1488,10 +1697,280 @@ def ats_oracle_failures(fixtures: dict[str, Any] | None = None, *, root: Path = 
     text = (root / ATS_PATH).read_text(encoding="utf-8")
     marker = '<a id="coordination-event-oracles-dl-045-2026-09-25"></a>'
     if marker not in text:
-        return [{"error": "ats_coordination_oracle_entry_missing"}]
+        return _gate("ats", [{"error": "ats_coordination_oracle_entry_missing"}])
     section = text.split(marker, 1)[1]
     missing = [oracle["oracle_id"] for oracle in fixtures["required_native_oracles"] if f"`{oracle['oracle_id']}`" not in section]
-    return [{"error": "ats_native_oracle_not_named", "detail": missing}] if missing else []
+    return _gate("ats", [{"error": "ats_native_oracle_not_named", "detail": missing}] if missing else [])
+
+
+# One probe per projection timestamp site (DCO-N3), written out here and checked against the schema
+# walk (projection_timestamp_sites), so a new site or a dropped field fails the census.
+# Instance probes run the whole projection check on a positive fixture with one field changed:
+# (document, owning schema pointer, field, definition, positive case, instance path).
+PROJECTION_TIMESTAMP_INSTANCE_PROBES = (
+    (PROJECTION_PATH, "#/$defs/agent_projection", "started_at_utc", "agent_projection", "projection_agent_running", ("started_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/agent_terminal", "occurred_at_utc", "agent_projection", "projection_agent_crashed", ("terminal", "occurred_at_utc")),
+    (PROJECTION_PATH, "#/$defs/agent_terminalApplicationV1", "occurred_at_utc", "agent_terminalApplicationV1",
+     "projection_agent_terminal_application", ("occurred_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/file_projection", "observed_at_utc", "file_projection", "projection_file_claim", ("observed_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/operation_projection", "first_observed_at_utc", "operation_projection", "projection_operation_latest",
+     ("first_observed_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/operation_projection", "last_observed_at_utc", "operation_projection", "projection_operation_latest",
+     ("last_observed_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint", "updated_at_utc", "checkpoint", "checkpoint_current", ("updated_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint", "published_at_utc", "checkpoint", "checkpoint_current", ("published_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint", "withdrawn_at_utc", "checkpoint", "checkpoint_withdrawn", ("withdrawn_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint/allOf/2/then", "withdrawn_at_utc", "checkpoint", "checkpoint_withdrawn", ("withdrawn_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint_core", "updated_at_utc", "checkpoint", "checkpoint_with_retired_generation",
+     ("retired_generations", 0, "checkpoint_core", "updated_at_utc")),
+    (PROJECTION_PATH, "#/$defs/checkpoint_core", "published_at_utc", "checkpoint", "checkpoint_with_retired_generation",
+     ("retired_generations", 0, "checkpoint_core", "published_at_utc")),
+    (PROJECTION_PATH, "#/$defs/checkpoint_core", "withdrawn_at_utc", "checkpoint", "checkpoint_with_retired_generation",
+     ("retired_generations", 0, "checkpoint_core", "withdrawn_at_utc")),
+    (PROJECTION_PATH, "#/$defs/checkpoint_core/allOf/2/then", "withdrawn_at_utc", "checkpoint", "checkpoint_with_retired_generation",
+     ("retired_generations", 0, "checkpoint_core", "withdrawn_at_utc")),
+)
+# These ApplicationV1 sites sit in definitions that need application_context or the
+# application-workflow document, which this offline registry does not resolve, so no instance
+# reaches them here. Each is probed as a node: its field is in the derived set and the string check
+# refuses what the owner pattern admits.
+PROJECTION_TIMESTAMP_NODE_PROBES = (
+    (PROJECTION_PATH, "#/$defs/checkpoint_coreApplicationV1", "updated_at_utc"),
+    (PROJECTION_PATH, "#/$defs/checkpoint_coreApplicationV1", "withdrawn_at_utc"),
+    (PROJECTION_PATH, "#/$defs/checkpoint_coreApplicationV1", "published_at_utc"),
+    (PROJECTION_PATH, "#/$defs/checkpoint_coreApplicationV1/allOf/2/then", "withdrawn_at_utc"),
+    (PROJECTION_PATH, "#/$defs/file_projectionApplicationV1", "observed_at_utc"),
+    (PROJECTION_PATH, "#/$defs/operation_projectionApplicationV1", "first_observed_at_utc"),
+    (PROJECTION_PATH, "#/$defs/operation_projectionApplicationV1", "last_observed_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationCheckpointApplicationV1", "updated_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationCheckpointApplicationV1", "withdrawn_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationCheckpointApplicationV1", "published_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationCheckpointApplicationV1/allOf/2/then", "withdrawn_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationProjectionApplicationV1", "started_at_utc"),
+)
+
+
+def set_path(value: Any, path: tuple[Any, ...], item: Any) -> Any:
+    """A deep copy of value with the one leaf at path replaced."""
+    changed = copy.deepcopy(value)
+    node = changed
+    for step in path[:-1]:
+        node = node[step]
+    node[path[-1]] = item
+    return changed
+
+
+def projection_timestamp_probe_failures(fixtures: dict[str, Any], accepts: tuple[str, ...], refuses: tuple[str, ...],
+                                        subclass: type, root: Path = ROOT) -> list[dict[str, Any]]:
+    """The census and the per-site projection timestamp probes."""
+    failures: list[dict[str, Any]] = []
+
+    def fail(case_id: str, detail: Any) -> None:
+        failures.append({"error": "timestamp_profile", "case_id": case_id, "detail": detail})
+
+    listed = {probe[:3] for probe in PROJECTION_TIMESTAMP_INSTANCE_PROBES} | set(PROJECTION_TIMESTAMP_NODE_PROBES)
+    sites = set(projection_timestamp_sites(root))
+    if sites != listed:
+        fail("projection/census", {"unprobed": sorted(sites - listed), "not_in_schema": sorted(listed - sites)})
+    fields = projection_time_fields(root)
+    projection = load(PROJECTION_PATH, root)
+    for name in PROJECTION_TIMESTAMP_DEFS:
+        checker = Draft202012Validator(projection["$defs"][name])
+        if not all(checker.is_valid(value) for value in refuses):
+            fail(f"projection/{name}/pattern", "the owner pattern now refuses a form only date_time used to refuse")
+    positives = {case["case_id"]: case for case in fixtures["projection_values"]}
+    for document, pointer, field, definition, case_id, path in PROJECTION_TIMESTAMP_INSTANCE_PROBES:
+        site = f"projection/{pointer.removeprefix('#/$defs/')}/{field}"
+        base = positives.get(case_id)
+        if base is None or base["definition"] != definition or projection_value_failures(definition, base["value"], root):
+            fail(site + "/base", case_id)
+            continue
+        for value in refuses:
+            got = projection_value_failures(definition, set_path(base["value"], path, value), root)
+            if got != ["projection_timestamp"]:
+                fail(f"{site}/refuse/{value!r}", got)
+        for value in accepts:
+            got = projection_value_failures(definition, set_path(base["value"], path, value), root)
+            if got:
+                fail(f"{site}/accept/{value}", got)
+        got = projection_value_failures(definition, set_path(base["value"], path, subclass(accepts[0])), root)
+        if got != ["projection_timestamp"]:
+            fail(site + "/subclass", got)
+    for document, pointer, field in PROJECTION_TIMESTAMP_NODE_PROBES:
+        site = f"projection-node/{document}/{pointer.removeprefix('#/$defs/')}/{field}"
+        if field not in fields:
+            fail(site + "/field", sorted(fields))
+            continue
+        if not all(projection_timestamp_bad({field: value}, fields) for value in refuses):
+            fail(site + "/refuse", "the string check admitted a refused form")
+        if any(projection_timestamp_bad({field: value}, fields) for value in accepts):
+            fail(site + "/accept", "the string check refused an owner-valid form")
+    return failures
+
+
+def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
+    """The 15 payload date-time fields, their projection copies, and the envelope times.
+
+    jsonschema does not enforce format. The owner pattern still refuses a
+    lowercase t, a lowercase z, an offset and more than nine fraction digits.
+    date_time is what decides the calendar, the leap second, hour 24 and a
+    trailing LF. coordination_utc_z is sealed; event_record is not selected
+    for these payload fields.
+    """
+    from pm_event_datetime import EVENT_RECORD as broad
+    from pm_event_datetime import date_time
+
+    failures: list[dict[str, Any]] = []
+
+    def fail(case_id: str, detail: Any) -> None:
+        failures.append({"error": "timestamp_profile", "case_id": case_id, "detail": detail})
+
+    schema = load(PAYLOAD_PATH, root)
+    found = []
+    for name, definition in schema.get("$defs", {}).items():
+        properties = definition.get("properties", {}) if isinstance(definition, dict) else {}
+        for field, node in properties.items():
+            if isinstance(node, dict) and node.get("format") == "date-time":
+                found.append((name, field, node))
+    expected = {
+        ("agent_registered", "started_at_utc"),
+        ("agent_status_updated", "observed_at_utc"),
+        ("agent_operation_updated", "observed_at_utc"),
+        ("agent_file_ownership_updated", "observed_at_utc"),
+        ("agent_unregistered", "finished_at_utc"),
+        ("agent_crashed", "detected_at_utc"),
+        ("agent_aborted", "aborted_at_utc"),
+        ("debug_mirror_exported", "exported_at_utc"),
+        ("agent_registeredApplicationV1", "started_at_utc"),
+        ("agent_status_updatedApplicationV1", "observed_at_utc"),
+        ("agent_operation_updatedApplicationV1", "observed_at_utc"),
+        ("agent_file_ownership_updatedApplicationV1", "observed_at_utc"),
+        ("agent_unregisteredApplicationV1", "finished_at_utc"),
+        ("agent_crashedApplicationV1", "detected_at_utc"),
+        ("agent_abortedApplicationV1", "aborted_at_utc"),
+    }
+    if {(name, field) for name, field, _node in found} != expected or SEALED_TIMESTAMP_PROFILE != "coordination_utc_z":
+        fail("census", sorted(name + "/" + field for name, field, _node in found))
+        return failures
+    accepts = (
+        "2016-12-31T23:59:60Z",
+        "0000-01-01T00:00:00Z",
+        "2026-09-25T04:10:00.123456789Z",
+    )
+    profile_refuses = (
+        "2026-02-30T04:10:00Z",
+        "2026-09-25T24:00:00Z",
+        "2026-09-25T04:10:00Z\n",
+        "2026-09-25T23:59:60Z",
+        "2026-09-25T04:60:00Z",
+    )
+    pattern_refuses_profile_accepts = (
+        "2026-09-25t04:10:00Z",
+        "2026-09-25T04:10:00.1234567890123Z",
+    )
+    pattern_and_profile_refuse = (
+        "2026-09-25T04:10:00+00:00",
+        "2026-09-25T04:10:00-00:00",
+        "2026-09-25T04:10:00z",
+    )
+    if date_time("2026-09-25T04:10:00+00:00", profile=broad) != "2026-09-25T04:10:00+00:00":
+        fail("broad-profile-offset", "event_record should admit a numeric offset")
+    if coordination_timestamp("2026-09-25T04:10:00+00:00"):
+        fail("coordination-profile-offset", "coordination_utc_z admitted an offset")
+
+    class _Subclass(str):
+        pass
+
+    fixtures = load(FIXTURE_PATH, root)
+    bases = {}
+    for case in fixtures["payloads"]:
+        bases.setdefault(case["event_type"], case["payload"])
+    for name, field, node in found:
+        checker = Draft202012Validator(node)
+        for value in accepts:
+            if not checker.is_valid(value) or not coordination_timestamp(value):
+                fail(f"{name}/{field}/accept/{value}", "pattern or profile refused an owner-valid form")
+        for value in profile_refuses:
+            if not checker.is_valid(value) or coordination_timestamp(value):
+                fail(f"{name}/{field}/profile-refuse/{value!r}", "pattern rejected it, or the profile accepted it")
+        for value in pattern_refuses_profile_accepts:
+            if checker.is_valid(value) or not coordination_timestamp(value):
+                fail(f"{name}/{field}/pattern-only/{value}", "owner pattern and profile disagreed with the recorded split")
+        for value in pattern_and_profile_refuse:
+            if checker.is_valid(value) or coordination_timestamp(value):
+                fail(f"{name}/{field}/both-refuse/{value}", "pattern or profile accepted a non-Z form")
+        event_type = next((item for item, definition in DEF_BY_TYPE.items() if definition == name), None)
+        if event_type is None:
+            continue
+        payload = bases[event_type]
+        time_field = FAMILY_TIME.get(event_type, field)
+        for value in accepts:
+            rejection = payload_rejection(event_type, dict(payload, **{time_field: value}), root)
+            if rejection is not None:
+                fail(f"payload/{event_type}/accept/{value}", rejection)
+        for value in profile_refuses:
+            rejection = payload_rejection(event_type, dict(payload, **{time_field: value}), root)
+            if rejection != "valid_utc_datetime":
+                fail(f"payload/{event_type}/refuse/{value!r}", rejection)
+        if payload_rejection(event_type, dict(payload, **{time_field: _Subclass(accepts[0])}), root) != "valid_utc_datetime":
+            fail(f"payload/{event_type}/subclass", "a str subclass must refuse as valid_utc_datetime")
+    record = next(case["record"] for case in fixtures["valid_events"] if case["event_type"] == "coordination.agent_registered")
+    context = fixtures["storage_context"]
+    store, epoch = context["storage_instance_id"], context["recovery_epoch"]
+    # The payload family time carries the same value, so the CV-353 rule 8 join holds and only the
+    # event_record check can refuse it (a stale copy would also fail occurred_at_join).
+    hour_value = "2026-09-25T24:00:00Z"
+    hour = dict(record, occurred_at_utc=hour_value,
+                payload=dict(record["payload"], **{FAMILY_TIME[record["event_type"]]: hour_value}))
+    if envelope_rejection(hour, store, epoch) != "envelope_occurred_at":
+        fail("envelope/hour-24", envelope_rejection(hour, store, epoch))
+    offset = dict(record, observed_at_utc="2026-09-25T04:00:00+00:00")
+    if envelope_rejection(offset, store, epoch) != "envelope_storage_time":
+        fail("envelope/offset", envelope_rejection(offset, store, epoch))
+    lowered = dict(record, persisted_at_utc="2026-09-25T04:00:00.200000z")
+    if envelope_rejection(lowered, store, epoch) != "envelope_storage_time":
+        fail("envelope/lowercase-z", envelope_rejection(lowered, store, epoch))
+    trailed = dict(record, persisted_at_utc="2026-09-25T04:00:00.200000Z\n")
+    if envelope_rejection(trailed, store, epoch) != "envelope_storage_time":
+        fail("envelope/trailing-lf", envelope_rejection(trailed, store, epoch))
+    leap = "2016-12-31T23:59:60Z"
+    leap_record = dict(record, occurred_at_utc=leap, payload=dict(record["payload"], started_at_utc=leap))
+    if envelope_rejection(leap_record, store, epoch) is not None:
+        fail("envelope/leap", envelope_rejection(leap_record, store, epoch))
+    file_row = next(case["value"] for case in fixtures["projection_values"] if case["definition"] == "file_projection")
+    if projection_value_failures("file_projection", dict(file_row, observed_at_utc="2026-09-25T24:00:00Z"), root) != ["projection_timestamp"]:
+        fail("projection/hour-24", projection_value_failures("file_projection", dict(file_row, observed_at_utc="2026-09-25T24:00:00Z"), root))
+    if projection_value_failures("file_projection", dict(file_row, observed_at_utc="2026-09-25T04:10:00Z\n"), root) != ["projection_timestamp"]:
+        fail("projection/trailing-lf", "trailing LF was not the projection timestamp row")
+    if projection_value_failures("file_projection", dict(file_row, observed_at_utc=leap), root):
+        fail("projection/leap", "a legitimate leap second was refused")
+    failures.extend(projection_timestamp_probe_failures(fixtures, accepts, profile_refuses, _Subclass, root))
+    retained_good = json.dumps({"started_at_utc": leap, "date_time_profile": "event_record"}).encode()
+    retained_bad = json.dumps({"observed_at_utc": "2026-09-25T24:00:00Z", "date_time_profile": "event_record"}).encode()
+    if not retained_record_verifies(retained_good) or retained_record_verifies(retained_bad) or not retained_override_refused():
+        fail("retained-profile", {
+            "good": retained_record_verifies(retained_good),
+            "bad": retained_record_verifies(retained_bad),
+            "override": retained_override_refused(),
+        })
+    # The frozen verifier on a full EventRecord also checks the envelope times (DCO-N2).
+    whole = json.dumps(record).encode()
+    envelope_bad = {
+        "observed-offset": dict(record, observed_at_utc="2026-09-25T04:00:00+00:00"),
+        "persisted-hour-24": dict(record, persisted_at_utc="2026-09-25T24:00:00Z"),
+        "occurred-feb-30": dict(record, occurred_at_utc="2026-02-30T04:00:00Z"),
+        "occurred-missing": {key: item for key, item in record.items() if key != "occurred_at_utc"},
+    }
+    if not retained_record_verifies(whole):
+        fail("retained-envelope-good", "the valid fixture record did not verify")
+    for name, changed in envelope_bad.items():
+        if retained_record_verifies(json.dumps(changed).encode()):
+            fail("retained-envelope/" + name, "the frozen verifier accepted a bad envelope time")
+    if not retained_retry_matches("coordination-sp320-string-array-v1", "ab" * 32, "ab" * 32):
+        fail("retained-retry", "exact digest retry no longer resolves")
+    if retained_retry_matches("forged-recipe", "ab" * 32, "ab" * 32):
+        fail("retained-forged", "a forged recipe id resolved")
+    return failures
 
 
 def validate(*, root: Path = ROOT) -> dict[str, Any]:
@@ -1512,6 +1991,7 @@ def validate(*, root: Path = ROOT) -> dict[str, Any]:
         failures.extend(dict(failure, check=name) for failure in check(root=root))
     fixtures = fixture_report(root=root)
     failures.extend(dict(failure, check="fixtures") for failure in fixtures.pop("failures"))
+    failures.extend(dict(failure, check="timestamp_profile") for failure in timestamp_profile_failures(root=root))
     ledger = load(LEDGER_PATH, root)
     statuses = {row["event_type"]: row["admission_status"] for row in ledger["rows"]}
     return {
