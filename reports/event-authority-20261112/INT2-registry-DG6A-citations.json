@@ -1,0 +1,2565 @@
+{
+  "source_tree_head": "e638a6e347985893339d2377e2822da2e832f5ca",
+  "prior_source_head": "c7b3deb332085ca4c5bf4bc81eda5ecbbedc23b1",
+  "source_grade_sha256": "dbb6ec27b110aaab26dde5edd102802d24f10ea730cd936e284d6d9d5b21be89",
+  "proposed_grade_sha256": "8a7867466c25db4e46d3d490f252f36300fb5eea7fe894cdee9549a1dc0a2675",
+  "quotes_checked": 475,
+  "changes": [
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39978,
+            39978
+          ],
+          "after": [
+            40029,
+            40029
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "currently absent means\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39996,
+            39996
+          ],
+          "after": [
+            40047,
+            40047
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39978,
+            39978
+          ],
+          "after": [
+            40029,
+            40029
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "handlers::alert::acknowledge, produces this exact family. Existing closed\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39979,
+            39979
+          ],
+          "after": [
+            40030,
+            40030
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40003,
+            40003
+          ],
+          "after": [
+            40054,
+            40054
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Identity is Project-scoped EventRecord\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39985,
+            39985
+          ],
+          "after": [
+            40036,
+            40036
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "project~base64url_no_pad(UTF8(project_id)); envelope project_id equals payload project_id,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39986,
+            39986
+          ],
+          "after": [
+            40037,
+            40037
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Request digest covers\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39991,
+            39991
+          ],
+          "after": [
+            40042,
+            40042
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "retries\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40008,
+            40008
+          ],
+          "after": [
+            40059,
+            40059
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40086,
+            40086
+          ],
+          "after": [
+            40137,
+            40137
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40040,
+            40040
+          ],
+          "after": [
+            40091,
+            40091
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_acknowledged_operation.schema.json.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40010,
+            40010
+          ],
+          "after": [
+            40061,
+            40061
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40012,
+            40012
+          ],
+          "after": [
+            40063,
+            40063
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Transition: unacknowledged\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39981,
+            39981
+          ],
+          "after": [
+            40032,
+            40032
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "projector.alert_acknowledged.history@1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40017,
+            40017
+          ],
+          "after": [
+            40068,
+            40068
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "SP-278 and DL-076:\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40020,
+            40020
+          ],
+          "after": [
+            40071,
+            40071
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "CAS the exact subject revision\\",
+      "changes": {
+        "lines": {
+          "before": [
+            39998,
+            39998
+          ],
+          "after": [
+            40049,
+            40049
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Compatibility/withdrawal: only payload\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40033,
+            40033
+          ],
+          "after": [
+            40084,
+            40084
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "withdrawn under whole-value CAS.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40037,
+            40037
+          ],
+          "after": [
+            40088,
+            40088
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40045,
+            40045
+          ],
+          "after": [
+            40096,
+            40096
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "scripts/pm-dg6a-domain.py",
+      "unit": "validator",
+      "quote": "kwargs['format_checker'] = FORMATS",
+      "changes": {
+        "lines": {
+          "before": [
+            116,
+            116
+          ],
+          "after": [
+            141,
+            141
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40125,
+            40125
+          ],
+          "after": [
+            40176,
+            40176
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40144,
+            40144
+          ],
+          "after": [
+            40195,
+            40195
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40125,
+            40125
+          ],
+          "after": [
+            40176,
+            40176
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "handlers::alert::dismiss, produces this exact family. Existing closed payload\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40126,
+            40126
+          ],
+          "after": [
+            40177,
+            40177
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40151,
+            40151
+          ],
+          "after": [
+            40202,
+            40202
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40133,
+            40133
+          ],
+          "after": [
+            40184,
+            40184
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40133,
+            40133
+          ],
+          "after": [
+            40184,
+            40184
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40139,
+            40139
+          ],
+          "after": [
+            40190,
+            40190
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "retries\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40156,
+            40156
+          ],
+          "after": [
+            40207,
+            40207
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40234,
+            40234
+          ],
+          "after": [
+            40285,
+            40285
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40188,
+            40188
+          ],
+          "after": [
+            40239,
+            40239
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_dismissed_operation.schema.json.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40158,
+            40158
+          ],
+          "after": [
+            40209,
+            40209
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40160,
+            40160
+          ],
+          "after": [
+            40211,
+            40211
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Transition: unacknowledged,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40128,
+            40128
+          ],
+          "after": [
+            40179,
+            40179
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "projector.alert_dismissed.history@1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40165,
+            40165
+          ],
+          "after": [
+            40216,
+            40216
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "SP-278 and DL-076:\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40168,
+            40168
+          ],
+          "after": [
+            40219,
+            40219
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "CAS the exact subject revision\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40146,
+            40146
+          ],
+          "after": [
+            40197,
+            40197
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Compatibility/withdrawal: only payload 1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40181,
+            40181
+          ],
+          "after": [
+            40232,
+            40232
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "withdrawn under whole-value CAS.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40185,
+            40185
+          ],
+          "after": [
+            40236,
+            40236
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40193,
+            40193
+          ],
+          "after": [
+            40244,
+            40244
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "scripts/pm-dg6a-domain.py",
+      "unit": "validator",
+      "quote": "kwargs['format_checker'] = FORMATS",
+      "changes": {
+        "lines": {
+          "before": [
+            116,
+            116
+          ],
+          "after": [
+            141,
+            141
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40272,
+            40272
+          ],
+          "after": [
+            40323,
+            40323
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40291,
+            40291
+          ],
+          "after": [
+            40342,
+            40342
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40272,
+            40272
+          ],
+          "after": [
+            40323,
+            40323
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "handlers::alert::mute_rule, produces this exact family. Existing closed\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40273,
+            40273
+          ],
+          "after": [
+            40324,
+            40324
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40298,
+            40298
+          ],
+          "after": [
+            40349,
+            40349
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40280,
+            40280
+          ],
+          "after": [
+            40331,
+            40331
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40280,
+            40280
+          ],
+          "after": [
+            40331,
+            40331
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Request digest covers the full admitted command, subject alert_rule_id,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40286,
+            40286
+          ],
+          "after": [
+            40337,
+            40337
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "retries\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40303,
+            40303
+          ],
+          "after": [
+            40354,
+            40354
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40381,
+            40381
+          ],
+          "after": [
+            40432,
+            40432
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40335,
+            40335
+          ],
+          "after": [
+            40386,
+            40386
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_rule_muted_operation.schema.json.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40305,
+            40305
+          ],
+          "after": [
+            40356,
+            40356
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40307,
+            40307
+          ],
+          "after": [
+            40358,
+            40358
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Transition: unmuted\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40275,
+            40275
+          ],
+          "after": [
+            40326,
+            40326
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "projector.alert_rule_muted.history@1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40312,
+            40312
+          ],
+          "after": [
+            40363,
+            40363
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "SP-278 and DL-076:\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40315,
+            40315
+          ],
+          "after": [
+            40366,
+            40366
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "CAS the exact subject revision\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40293,
+            40293
+          ],
+          "after": [
+            40344,
+            40344
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Compatibility/withdrawal: only payload 1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40328,
+            40328
+          ],
+          "after": [
+            40379,
+            40379
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "withdrawn under whole-value CAS.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40332,
+            40332
+          ],
+          "after": [
+            40383,
+            40383
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40340,
+            40340
+          ],
+          "after": [
+            40391,
+            40391
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "scripts/pm-dg6a-domain.py",
+      "unit": "validator",
+      "quote": "kwargs['format_checker'] = FORMATS",
+      "changes": {
+        "lines": {
+          "before": [
+            116,
+            116
+          ],
+          "after": [
+            141,
+            141
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40419,
+            40419
+          ],
+          "after": [
+            40470,
+            40470
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40438,
+            40438
+          ],
+          "after": [
+            40489,
+            40489
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40419,
+            40419
+          ],
+          "after": [
+            40470,
+            40470
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "handlers::alert::snooze, produces this exact family. Existing closed payload\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40420,
+            40420
+          ],
+          "after": [
+            40471,
+            40471
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40445,
+            40445
+          ],
+          "after": [
+            40496,
+            40496
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40427,
+            40427
+          ],
+          "after": [
+            40478,
+            40478
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40427,
+            40427
+          ],
+          "after": [
+            40478,
+            40478
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40433,
+            40433
+          ],
+          "after": [
+            40484,
+            40484
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "retries\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40450,
+            40450
+          ],
+          "after": [
+            40501,
+            40501
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40528,
+            40528
+          ],
+          "after": [
+            40579,
+            40579
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40482,
+            40482
+          ],
+          "after": [
+            40533,
+            40533
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_snoozed_operation.schema.json.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40452,
+            40452
+          ],
+          "after": [
+            40503,
+            40503
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40454,
+            40454
+          ],
+          "after": [
+            40505,
+            40505
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Transition: unacknowledged\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40422,
+            40422
+          ],
+          "after": [
+            40473,
+            40473
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "projector.alert_snoozed.history@1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40459,
+            40459
+          ],
+          "after": [
+            40510,
+            40510
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "SP-278 and DL-076:\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40462,
+            40462
+          ],
+          "after": [
+            40513,
+            40513
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "CAS the exact subject revision\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40440,
+            40440
+          ],
+          "after": [
+            40491,
+            40491
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Compatibility/withdrawal: only payload 1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40475,
+            40475
+          ],
+          "after": [
+            40526,
+            40526
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "withdrawn under whole-value CAS.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40479,
+            40479
+          ],
+          "after": [
+            40530,
+            40530
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40487,
+            40487
+          ],
+          "after": [
+            40538,
+            40538
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "scripts/pm-dg6a-domain.py",
+      "unit": "validator",
+      "quote": "kwargs['format_checker'] = FORMATS",
+      "changes": {
+        "lines": {
+          "before": [
+            116,
+            116
+          ],
+          "after": [
+            141,
+            141
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40890,
+            40890
+          ],
+          "after": [
+            40941,
+            40941
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "currently absent: deny before journal, record/body write, append",
+      "changes": {
+        "lines": {
+          "before": [
+            40940,
+            40940
+          ],
+          "after": [
+            40991,
+            40991
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40890,
+            40890
+          ],
+          "after": [
+            40941,
+            40941
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "handlers::concern::create commits this family, after independently authenticating one of those five creator",
+      "changes": {
+        "lines": {
+          "before": [
+            40895,
+            40895
+          ],
+          "after": [
+            40946,
+            40946
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
+      "changes": {
+        "lines": {
+          "before": [
+            40952,
+            40952
+          ],
+          "after": [
+            41003,
+            41003
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Identity: Project-only EventRecord 2.0.0, scope_kind=project, envelope project_id equals payload and original",
+      "changes": {
+        "lines": {
+          "before": [
+            40911,
+            40911
+          ],
+          "after": [
+            40962,
+            40962
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "project~base64url_no_pad(UTF8(project_id)). No application/default/focus",
+      "changes": {
+        "lines": {
+          "before": [
+            40912,
+            40912
+          ],
+          "after": [
+            40963,
+            40963
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Request digest",
+      "changes": {
+        "lines": {
+          "before": [
+            40931,
+            40931
+          ],
+          "after": [
+            40982,
+            40982
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "retries recover append; settled retries",
+      "changes": {
+        "lines": {
+          "before": [
+            40959,
+            40959
+          ],
+          "after": [
+            41010,
+            41010
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "PENDING_RETENTION_DECISION, with Case L-3 audit-authority/ordinary telemetry and RP-PROJECTION-3GEN",
+      "changes": {
+        "lines": {
+          "before": [
+            41036,
+            41036
+          ],
+          "after": [
+            41087,
+            41087
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Custody: canonical record and original operation are non-rebuildable original authority. Preserve immutable original",
+      "changes": {
+        "lines": {
+          "before": [
+            40978,
+            40978
+          ],
+          "after": [
+            41029,
+            41029
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "backup/restore includes all of them with the original Storage source under one verified recovery boundary.",
+      "changes": {
+        "lines": {
+          "before": [
+            40980,
+            40980
+          ],
+          "after": [
+            41031,
+            41031
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Birth is absent -> active at concern_revision=1, never acknowledged/resolved/dismissed, never a",
+      "changes": {
+        "lines": {
+          "before": [
+            40902,
+            40902
+          ],
+          "after": [
+            40953,
+            40953
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "projector.concern_created.history@1.0.0 and reader.concern_created.history@1.0.0 expose passive",
+      "changes": {
+        "lines": {
+          "before": [
+            40988,
+            40988
+          ],
+          "after": [
+            41039,
+            41039
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            40990,
+            40990
+          ],
+          "after": [
+            41041,
+            41041
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "CAS creates concern_record.v1:{project_id}:{concern_id}",
+      "changes": {
+        "lines": {
+          "before": [
+            40943,
+            40943
+          ],
+          "after": [
+            40994,
+            40994
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Compatibility: only the exact current payload 1.0.0 and declared value schemas are selected;",
+      "changes": {
+        "lines": {
+          "before": [
+            41017,
+            41017
+          ],
+          "after": [
+            41068,
+            41068
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "withdrawn publication or missing coverage is unavailable. Source-generation change requires",
+      "changes": {
+        "lines": {
+          "before": [
+            41007,
+            41007
+          ],
+          "after": [
+            41058,
+            41058
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "NOT_RUN. Nothing here admits an event or makes a native writer available.'",
+      "changes": {
+        "lines": {
+          "before": [
+            41041,
+            41041
+          ],
+          "after": [
+            41092,
+            41092
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "scripts/pm-dg6a-domain.py",
+      "unit": "validator",
+      "quote": "kwargs['format_checker'] = FORMATS",
+      "changes": {
+        "lines": {
+          "before": [
+            116,
+            116
+          ],
+          "after": [
+            141,
+            141
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "canonical_text: 'Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40566,
+            40566
+          ],
+          "after": [
+            40617,
+            40617
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host",
+      "changes": {
+        "lines": {
+          "before": [
+            40594,
+            40594
+          ],
+          "after": [
+            40645,
+            40645
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40566,
+            40566
+          ],
+          "after": [
+            40617,
+            40617
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "handlers::panel::redock in the shared panel shell, is this family''s sole producer. Successful transition is",
+      "changes": {
+        "lines": {
+          "before": [
+            40569,
+            40569
+          ],
+          "after": [
+            40620,
+            40620
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
+      "changes": {
+        "lines": {
+          "before": [
+            40607,
+            40607
+          ],
+          "after": [
+            40658,
+            40658
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;",
+      "changes": {
+        "lines": {
+          "before": [
+            40580,
+            40580
+          ],
+          "after": [
+            40631,
+            40631
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;",
+      "changes": {
+        "lines": {
+          "before": [
+            40580,
+            40580
+          ],
+          "after": [
+            40631,
+            40631
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar",
+      "changes": {
+        "lines": {
+          "before": [
+            40589,
+            40589
+          ],
+          "after": [
+            40640,
+            40640
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40680,
+            40680
+          ],
+          "after": [
+            40731,
+            40731
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt",
+      "changes": {
+        "lines": {
+          "before": [
+            40673,
+            40673
+          ],
+          "after": [
+            40724,
+            40724
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate",
+      "changes": {
+        "lines": {
+          "before": [
+            40621,
+            40621
+          ],
+          "after": [
+            40672,
+            40672
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Successful transition is",
+      "changes": {
+        "lines": {
+          "before": [
+            40569,
+            40569
+          ],
+          "after": [
+            40620,
+            40620
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "projector.panel_redocked.history@1.0.0 and reader.panel_redocked.history@1.0.0 expose passive record-backed",
+      "changes": {
+        "lines": {
+          "before": [
+            40631,
+            40631
+          ],
+          "after": [
+            40682,
+            40682
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "SP-278/DL-076: complete",
+      "changes": {
+        "lines": {
+          "before": [
+            40633,
+            40633
+          ],
+          "after": [
+            40684,
+            40684
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "CAS committed -> settled with original_append_result_ref",
+      "changes": {
+        "lines": {
+          "before": [
+            40610,
+            40610
+          ],
+          "after": [
+            40661,
+            40661
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_redocked.schema.json is the original 1.0.0",
+      "changes": {
+        "lines": {
+          "before": [
+            40656,
+            40656
+          ],
+          "after": [
+            40707,
+            40707
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "withdrawn token, cursor beyond frontier or missing",
+      "changes": {
+        "lines": {
+          "before": [
+            40648,
+            40648
+          ],
+          "after": [
+            40699,
+            40699
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "NOT_RUN.",
+      "changes": {
+        "lines": {
+          "before": [
+            40678,
+            40678
+          ],
+          "after": [
+            40729,
+            40729
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "scripts/pm-dg6a-domain.py",
+      "unit": "validator",
+      "quote": "kwargs['format_checker'] = FORMATS",
+      "changes": {
+        "lines": {
+          "before": [
+            116,
+            116
+          ],
+          "after": [
+            141,
+            141
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "canonical_text: 'Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40728,
+            40728
+          ],
+          "after": [
+            40779,
+            40779
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host",
+      "changes": {
+        "lines": {
+          "before": [
+            40756,
+            40756
+          ],
+          "after": [
+            40807,
+            40807
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40728,
+            40728
+          ],
+          "after": [
+            40779,
+            40779
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "handlers::panel::undock in the shared panel shell, is this family''s sole producer. Successful transition is",
+      "changes": {
+        "lines": {
+          "before": [
+            40731,
+            40731
+          ],
+          "after": [
+            40782,
+            40782
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
+      "changes": {
+        "lines": {
+          "before": [
+            40769,
+            40769
+          ],
+          "after": [
+            40820,
+            40820
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;",
+      "changes": {
+        "lines": {
+          "before": [
+            40742,
+            40742
+          ],
+          "after": [
+            40793,
+            40793
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;",
+      "changes": {
+        "lines": {
+          "before": [
+            40742,
+            40742
+          ],
+          "after": [
+            40793,
+            40793
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar",
+      "changes": {
+        "lines": {
+          "before": [
+            40751,
+            40751
+          ],
+          "after": [
+            40802,
+            40802
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40842,
+            40842
+          ],
+          "after": [
+            40893,
+            40893
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt",
+      "changes": {
+        "lines": {
+          "before": [
+            40835,
+            40835
+          ],
+          "after": [
+            40886,
+            40886
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate",
+      "changes": {
+        "lines": {
+          "before": [
+            40783,
+            40783
+          ],
+          "after": [
+            40834,
+            40834
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Successful transition is",
+      "changes": {
+        "lines": {
+          "before": [
+            40731,
+            40731
+          ],
+          "after": [
+            40782,
+            40782
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "projector.panel_undocked.history@1.0.0 and reader.panel_undocked.history@1.0.0 expose passive record-backed",
+      "changes": {
+        "lines": {
+          "before": [
+            40793,
+            40793
+          ],
+          "after": [
+            40844,
+            40844
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "SP-278/DL-076: complete",
+      "changes": {
+        "lines": {
+          "before": [
+            40795,
+            40795
+          ],
+          "after": [
+            40846,
+            40846
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "CAS committed -> settled with original_append_result_ref",
+      "changes": {
+        "lines": {
+          "before": [
+            40772,
+            40772
+          ],
+          "after": [
+            40823,
+            40823
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_undocked.schema.json is the original 1.0.0",
+      "changes": {
+        "lines": {
+          "before": [
+            40818,
+            40818
+          ],
+          "after": [
+            40869,
+            40869
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "withdrawn token, cursor beyond frontier or missing",
+      "changes": {
+        "lines": {
+          "before": [
+            40810,
+            40810
+          ],
+          "after": [
+            40861,
+            40861
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "NOT_RUN.",
+      "changes": {
+        "lines": {
+          "before": [
+            40840,
+            40840
+          ],
+          "after": [
+            40891,
+            40891
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "scripts/pm-dg6a-domain.py",
+      "unit": "validator",
+      "quote": "kwargs['format_checker'] = FORMATS",
+      "changes": {
+        "lines": {
+          "before": [
+            116,
+            116
+          ],
+          "after": [
+            141,
+            141
+          ]
+        }
+      }
+    }
+  ]
+}
