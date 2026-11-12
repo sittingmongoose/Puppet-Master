@@ -8,7 +8,7 @@ Everything here is TEST_ONLY. No event-registry row, admission, Decision Log ent
 
 ## Head
 
-`@@HEAD@@` on both push URLs (GitHub and the NAS), confirmed with `git ls-remote`.
+`ba3afd826e (report commit; the report names its own parent work)` on both push URLs (GitHub and the NAS), confirmed with `git ls-remote`.
 
 ## Merges
 
