@@ -139,7 +139,21 @@
      as the animationiteration event did. Not that event: with one listener for it anywhere in the page, Chrome wakes
      the main thread at every loop boundary of every CSS animation on the page, compositor ones too, for the rest of
      the session (PMConcept7 at rest: about 10 of its 35-55 main frames a second; lane A, 2026-11-10). */
-  var beatT = 0, beatAnim = null, beatIter = -1;
+  var beatT = 0, beatAnim = null, beatIter = -1, beatTiming = null, beatMO = null;
+  /* Settings rescales the live CSS animation without replacing it. Observe its override sheet only while Stop is
+     present, so a pending boundary timer can follow that change before its old deadline. No iteration listener. */
+  function watchBeat() {
+    if (beatMO || !window.MutationObserver || !document.head) return;
+    beatMO = new MutationObserver(function (records) {
+      var changed = records.some(function (r) {
+        if (r.target.id === 'o55-look-scale' || (r.target.parentNode && r.target.parentNode.id === 'o55-look-scale')) return true;
+        return Array.prototype.some.call(r.addedNodes, function (n) { return n.id === 'o55-look-scale'; }) ||
+          Array.prototype.some.call(r.removedNodes, function (n) { return n.id === 'o55-look-scale'; });
+      });
+      if (changed) { clearTimeout(beatT); beat(); }
+    });
+    beatMO.observe(document.head, { childList: true, subtree: true, characterData: true });
+  }
   function breath(b) {
     var g = b.querySelector('.ss-g'), list = g && g.getAnimations ? g.getAnimations() : [];
     for (var i = 0; i < list.length; i++) if (list[i].animationName === 'ss-breathe' || list[i].animationName === 'ss-breathe-w') return list[i];
@@ -148,13 +162,23 @@
   function beat() {
     beatT = 0;
     var b = live();
-    if (!b || b.getAttribute('data-ss') !== 'stop') { beatAnim = null; return; }
+    if (!b || b.getAttribute('data-ss') !== 'stop') {
+      beatAnim = null; beatTiming = null;
+      if (beatMO) { beatMO.disconnect(); beatMO = null; }
+      return;
+    }
+    watchBeat();
     var a = breath(b), t = a && a.playState === 'running' && a.effect ? a.effect.getComputedTiming() : null;
+    var rate = a && a.playbackRate;
     /* not styled yet, hidden or under reduced motion: no loop to follow, so look again later */
-    if (!t || typeof t.localTime !== 'number' || !(t.duration > 0)) { beatAnim = null; beatT = setTimeout(beat, 500); return; }
+    if (!t || typeof t.localTime !== 'number' || !(t.duration > 0) || !(rate > 0)) { beatAnim = null; beatT = setTimeout(beat, 500); return; }
     /* the loop's start delay (--ss-ld) still running: look again as it ends */
-    if (t.currentIteration == null) { beatAnim = null; beatT = setTimeout(beat, Math.max(16, t.delay - t.localTime + 4)); return; }
-    if (a === beatAnim && t.currentIteration > beatIter) {
+    if (t.currentIteration == null) { beatAnim = null; beatT = setTimeout(beat, Math.max(16, (t.delay - t.localTime) / rate + 4)); return; }
+    var same = a === beatAnim && beatTiming && t.duration === beatTiming.duration && t.delay === beatTiming.delay && rate === beatTiming.rate;
+    var phase = t.localTime - t.delay - t.currentIteration * t.duration;
+    /* A late task, a seek or a timing change can have crossed an iteration far from its boundary. Never treat
+       "iteration advanced" alone as permission to change cadence; re-arm from the timing read in this callback. */
+    if (same && t.currentIteration > beatIter && phase >= 0 && phase / rate <= 32) {
       var want = now() - lastTok < 900 ? 'flowing' : 'waiting';
       if (want !== flow) {
         flow = want; flowed = true;
@@ -165,7 +189,8 @@
       }
     }
     beatAnim = a; beatIter = t.currentIteration;
-    beatT = setTimeout(beat, Math.max(16, t.delay + (t.currentIteration + 1) * t.duration - t.localTime + 4));
+    beatTiming = { duration: t.duration, delay: t.delay, rate: rate };
+    beatT = setTimeout(beat, Math.max(16, (t.delay + (t.currentIteration + 1) * t.duration - t.localTime) / rate + 4));
   }
 
   /* A pointer that sends stays over the chip as it turns into Stop; NieR's rust hover waits until that pointer has

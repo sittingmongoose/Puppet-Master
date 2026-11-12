@@ -14,6 +14,9 @@
 //
 // --set looks=<a,b> (default basic-dark)   --set settle=<ms> (default 30000)
 // Both surfaces. No Stop chip, or fewer than two switches seen, fails as "could not judge".
+// F2 also changes Settings' Animation speed from Measured to Fast during the first flowing loop. That live change
+// must retain the animation/start and rescale its duration, and every ensuing cadence change must remain near a
+// boundary. --set speedOnly=1 runs only this regression for the main/rc3 controls.
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 
 const WATCH = () => {
@@ -58,6 +61,36 @@ export default async function (t) {
 		await f.evaluate(() => PM_PAGES.go('dashboard'));
 		await parkPointer(t.page, W, H);
 		await t.page.waitForTimeout(3000);
+		await t.check(`${look}: Settings accepts Measured animation speed`, await f.evaluate(() => PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured', false, false)));
+		await f.evaluate(() => PM56_DEMO.pauseWorking());
+		await t.page.waitForTimeout(250);
+		await f.evaluate(WATCH);
+		const speed = await f.evaluate(async () => {
+			PM56_SENDSTOP.token(); PM56_DEMO.startWorking();
+			await new Promise((r) => setTimeout(r, 100));
+			const b = document.querySelector('.pm56-host .sendstop, #pmRoot .sendstop');
+			const a = b?.querySelector('.ss-g')?.getAnimations().find((x) => x.animationName === 'ss-breathe');
+			if (!a) return { error: 'no flowing animation after start' };
+			const initial = { flow: b.getAttribute('data-flow'), ...a.effect.getTiming() };
+			await new Promise((r) => setTimeout(r, Math.max(0, 1000 - Number(a.currentTime))));
+			const changedAt = document.timeline.currentTime;
+			const accepted = PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Fast', false, false);
+			await new Promise((r) => setTimeout(r, 100));
+			const current = b.querySelector('.ss-g').getAnimations().find((x) => x.animationName === 'ss-breathe');
+			const changed = current && { sameAnimation: current === a, ...current.effect.getTiming() };
+			await new Promise((r) => setTimeout(r, 5500));
+			return { initial, changedAt, accepted, changed };
+		});
+		const live = await f.evaluate(() => { const R = window.__beat; clearInterval(R.poll); R.mo.disconnect(); return R.recs; });
+		t.log(`${look} live Animation speed change: ${JSON.stringify(speed)}; records ${JSON.stringify(live)}`);
+		await t.check(`${look}: live Fast setting rescales the flowing animation in place`, speed.accepted && speed.initial?.flow === 'flowing' && speed.initial.duration === 2200 && speed.initial.delay === 800 && speed.changed?.sameAnimation && speed.changed.duration === 1320 && speed.changed.delay === 800, JSON.stringify(speed));
+		const changes = live.filter((r) => r.attr === 'data-flow' && r.errMs != null && r.flowed && r.t >= speed.changedAt);
+		await t.check(`${look}: a cadence change is seen after live Animation speed changes`, changes.length > 0, JSON.stringify(changes));
+		await t.check(`${look}: every cadence change after live Animation speed stays within ${near} ms of a boundary`, changes.length > 0 && changes.every((r) => Math.abs(r.errMs) <= near), JSON.stringify(changes));
+		await f.evaluate(() => PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured', false, false));
+		if (String(t.args.speedOnly || '0') === '1') continue;
+		await f.evaluate(() => PM56_DEMO.pauseWorking());
+		await t.page.waitForTimeout(250);
 		await f.evaluate(() => window.PM56_DEMO.startWorking());
 		await t.page.waitForTimeout(1500);
 		const init = await f.evaluate(WATCH);
