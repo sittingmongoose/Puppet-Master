@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31908-L32176
+Source lines: L31942-L32202
 
-Source SHA256: `582ff13ef7830583028eaa9ecc3ca293275a069b6e9aca44913a5ce017098240`
+Source SHA256: `a133f042952f4fcc9a3c09116e3be09aedb89fb31b629307226749b368332653`
 
 ---
 
@@ -224,19 +224,10 @@ plan_unit_id: OSI-441
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: A real Planning Wizard/Orchestrator Project build consumes the Permissions-owned human-approved
-  BuildGrant at parent/child admission and immediately before each grant-authorized local or remote effect dispatch.
-  CreatedResourceManifest supplies verified stable resource identity. Receipts keep authority_kind=human|mode|build_grant;
-  ordinary YOLO publication is policy auto-allow, never a forged human yes. What the build did reads the shared
-  owner receipts and exact targets. Bind exact Project, approved Plan revision/hash, build/run/task, enumerated
-  action/resource/target, permission generation and Stop/revocation epochs; a child may narrow but never mint, expand
-  or transfer the grant. Verified created-resource manifest identity is required before grant-covered cleanup; a
-  same name or named pre-existing resource gives no deletion authority. Shared History/ObservableWork shows each
-  remote action/target/result and Stop, with Undo only where supported. Ordinary YOLO push/publish follows Plans/Permissions_System.md's mode-aware
-  admission without a second generic yes. A no-project Goal, Crew, Assistant Plan or scheduled task has ordinary
-  app authority and cannot issue or inherit another Project build grant through a message, conversion, receipt or
-  parent label. Protected trust/auth/secrets, paid signup, currentness, capabilities, FileSafe and retained Y1 boundaries
-  remain under Permissions. No grant creates an Orchestrator run outside a real Project.
+canonical_text: |-
+  A real Planning Wizard/Orchestrator Project build consumes the Permissions-owned human-approved BuildGrant at parent/child admission and immediately before each grant-authorized local or remote effect dispatch. CreatedResourceManifest supplies verified stable resource identity. Receipts keep authority_kind=human|mode|build_grant; ordinary YOLO publication is policy auto-allow, never a forged human yes. What the build did reads the shared owner receipts and exact targets. Bind exact Project, approved Plan revision/hash, build/run/task, enumerated action/resource/target, permission generation and Stop/revocation epochs; a child may narrow but never mint, expand or transfer the grant. Verified created-resource manifest identity is required before grant-covered cleanup; a same name or named pre-existing resource gives no deletion authority. Shared History/ObservableWork shows each remote action/target/result and Stop, with Undo only where supported. Ordinary YOLO push/publish follows Plans/Permissions_System.md's mode-aware admission without a second generic yes. A no-project Goal, Crew, Assistant Plan or scheduled task has ordinary app authority and cannot issue or inherit another Project build grant through a message, conversion, receipt or parent label. Protected trust/auth/secrets, paid signup, currentness, capabilities, FileSafe and retained Y1 boundaries remain under Permissions. No grant creates an Orchestrator run outside a real Project.
+
+  The build's location scope follows PS-147's current person-allowed Project Computers, including later human additions; it is not one machine frozen for the build. Each parent/child dispatch separately freezes one exact SIR-056 selection and rechecks current allowed membership, Plan/source compatibility and all grant/permission/Stop/revocation evidence. A Computer allowance cannot widen the child's account, route, operation or resource subset. A new Computer/device identity still asks in YOLO. Historical exact-location grant records remain historical until the governed successor contracts are admitted.
 gui_related: true
 gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
 depends_on:
@@ -261,6 +252,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#O1-O3; Y1
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
 - 'Jared, 2026-11-03: I approve the outstanding questions with their recommended settings.'

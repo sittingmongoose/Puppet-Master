@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L29422-L33083
+Source lines: L29422-L33275
 
-Source SHA256: `f80be12686299431277ddda1e924d5ae429b0010be452c072bea541c970de0a5`
+Source SHA256: `cd75d604ac17a35a1d9cf74dd719b784e8c653ce16cfc8c64352d847c0213e85`
 
 ---
 
@@ -3669,4 +3669,196 @@ negative_constraints:
 - No new retention policy or automatic queue release.
 owner_hints:
 - Plans/assistant-chat-design.md
+```
+
+### ACD-571 - Bundle Revision Requested Event Semantics
+
+```yaml
+plan_unit_id: ACD-571
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: '`bundle.revision_requested` has current semantic ownership here under ACD-049/050, not retired
+  Chain Wizard ownership. The document review owner accepts Resubmit with Annotations for open durable annotations,
+  after validating the selected document/bundle version, annotation eligibility and current permission snapshot.
+  A request does not apply patches or auto-run Multi-Pass Review. The request has no predecessor; predecessor_event_id
+  is null. Source references resolve the exact immutable request/result/interruption recovery evidence, without
+  embedding document or annotation bodies. Existing revision_run.v1 state remains governed by Storage; these event
+  additions do not install a new runner, command or state store. The family adopts CV-590 for its exact closed payload/joins
+  and SP-575 for original append custody and passive history. Current writes remain disabled until individual admission.
+  This contracts only already specified Deep Plan targeted revision, not PRD/PlanningRun ledger mutation or a new
+  cross-workflow event producer.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-049
+- ACD-050
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_requested
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### ACD-572 - Bundle Revision Started Event Semantics
+
+```yaml
+plan_unit_id: ACD-572
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: '`bundle.revision_started` has current semantic ownership here under ACD-049/050, not retired Chain
+  Wizard ownership. The targeted revision runner starts only after the exact requested event has its first successful
+  AppendReceipt. predecessor_event_id names that request for the same project/thread/bundle/revision. On resume
+  the predecessor is instead the exact interrupted event for this revision. Start is recorded before running the
+  revision; requested/effective capabilities remain distinct. Source references resolve the exact immutable request/result/interruption
+  recovery evidence, without embedding document or annotation bodies. Existing revision_run.v1 state remains governed
+  by Storage; these event additions do not install a new runner, command or state store. The family adopts CV-591
+  for its exact closed payload/joins and SP-576 for original append custody and passive history. Current writes
+  remain disabled until individual admission. This contracts only already specified Deep Plan targeted revision,
+  not PRD/PlanningRun ledger mutation or a new cross-workflow event producer.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-049
+- ACD-050
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_started
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### ACD-573 - Bundle Revision Completed Event Semantics
+
+```yaml
+plan_unit_id: ACD-573
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: '`bundle.revision_completed` has current semantic ownership here under ACD-049/050, not retired
+  Chain Wizard ownership. The targeted revision runner reports completion only after the validated output document
+  versions and annotation outcomes have committed under FileSafe and the existing revision recovery owner. predecessor_event_id
+  names the exact started event. Completion neither starts execution nor runs Multi-Pass Review. Source references
+  resolve the exact immutable request/result/interruption recovery evidence, without embedding document or annotation
+  bodies. Existing revision_run.v1 state remains governed by Storage; these event additions do not install a new
+  runner, command or state store. The family adopts CV-592 for its exact closed payload/joins and SP-577 for original
+  append custody and passive history. Current writes remain disabled until individual admission. This contracts
+  only already specified Deep Plan targeted revision, not PRD/PlanningRun ledger mutation or a new cross-workflow
+  event producer.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-049
+- ACD-050
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_completed
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### ACD-574 - Bundle Revision Interrupted Event Semantics
+
+```yaml
+plan_unit_id: ACD-574
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: '`bundle.revision_interrupted` has current semantic ownership here under ACD-049/050, not retired
+  Chain Wizard ownership. The targeted revision runner records an actual interruption after start, preserving revision_id,
+  safe-point metadata and already validated annotation outcomes under ACD-050. predecessor_event_id names the exact
+  started event. This event does not convert interruption into successful completion or silently retry effects.
+  Source references resolve the exact immutable request/result/interruption recovery evidence, without embedding
+  document or annotation bodies. Existing revision_run.v1 state remains governed by Storage; these event additions
+  do not install a new runner, command or state store. The family adopts CV-593 for its exact closed payload/joins
+  and SP-578 for original append custody and passive history. Current writes remain disabled until individual admission.
+  This contracts only already specified Deep Plan targeted revision, not PRD/PlanningRun ledger mutation or a new
+  cross-workflow event producer.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-049
+- ACD-050
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_interrupted
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```

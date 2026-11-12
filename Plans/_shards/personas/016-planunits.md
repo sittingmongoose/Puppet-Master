@@ -4,7 +4,7 @@ Source: `Plans/Personas.md`
 
 Source lines: L697-L3206
 
-Source SHA256: `a12aec9c9617a9938d1c3da2a31971d52a70f9da3c58974c13134b64f82c4bdd`
+Source SHA256: `3ee9193b2c63fa5046e6465c52a699057571a816c190554078c3cb6dfaac2269`
 
 ---
 
@@ -395,7 +395,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  PERSONA.md consists of YAML frontmatter followed by Markdown body, with frontmatter fields and enum/value meanings defined by the Personas schema.
+  PERSONA.md consists of YAML frontmatter followed by Markdown body; its frontmatter fields are id, name, description, default_mode, default_platform, default_permissions_profile, default_model, default_variant, temperature, top_p, reasoning_effort, talkativeness, default_skill_refs, disabled_plugins, preferred_tools, discouraged_tools, tool_usage_guidance, tags and aliases, and the field definitions own each one's required, recommended or optional status and its enum and value meanings. The tags field is a free string list: phase, task, subtask, iteration, cross-phase, language, domain and framework are suggested kinds, not a closed enum. DL-474 confirms that Settings row personas.library.persona-tags uses the same free tag input and existing Persona-owned storage.
 gui_related: false
 gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
 split_recommended: false

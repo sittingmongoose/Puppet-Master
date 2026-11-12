@@ -698,6 +698,58 @@
      "compatibility_event_type": null
     }
    }
+  },
+  "2abbcf1a7234fa6aee23e25b2c0d21bd113761b8398ded157ad78b97e389d664": {
+   "source": {
+    "path": "Plans/small_owner_event_fixtures.json",
+    "origin": "json",
+    "pointer": "/families/0/rebuild_cases/8/overrides/event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "3.0.0",
+    "scope_kind": "project",
+    "project_id": "project:actual-1",
+    "thread_id": "thread:format_applied:1",
+    "run_id": "run:format:1",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "ref:actor.format_applied",
+    "requested_account_ref": "ref:account.requested",
+    "effective_account_ref": "ref:account.effective",
+    "producer_sequence_id": null,
+    "correlation_id": "correlation:format_applied:original",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+    "event_type": "format.applied",
+    "occurred_at_utc": "2026-11-04T12:00:00Z",
+    "observed_at_utc": "2026-11-04T12:00:01Z",
+    "persisted_at_utc": "2026-11-04T12:00:02Z",
+    "sequence_id": 41,
+    "idempotency_key": "format.applied:896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+    "payload_schema_id": "pm.event_payload.format_applied.v1",
+    "payload": {
+     "schema_version": "1.0.0",
+     "operation_id": "op:format_applied:original",
+     "project_id": "project:actual-1",
+     "formatter_id": "formatter_id:format_applied:1",
+     "file_path": "src/main.rs",
+     "diff_bytes": 1,
+     "timestamp": "2026-11-04T12:00:00Z",
+     "tool_output_ref": "ref:source.1",
+     "formatted_output_ref": "ref:source.1"
+    },
+    "payload_ref": null,
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
   }
  },
  "nodes": [
@@ -1498,6 +1550,54 @@
    "origin": "json",
    "pointer": "/$defs/EventRecord",
    "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/event_record_v3.schema.json",
+   "origin": "json",
+   "pointer": "",
+   "control": "2abbcf1a7234fa6aee23e25b2c0d21bd113761b8398ded157ad78b97e389d664"
+  },
+  {
+   "path": "Plans/event_record_v3.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
   }
  ]
 }
