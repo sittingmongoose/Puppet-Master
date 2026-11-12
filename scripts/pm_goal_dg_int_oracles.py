@@ -455,7 +455,7 @@ def p4_cases(run):
         c = IR.IntConsumer(w)
         return c.rebuild(IR.run_scope(w))
     run.case(g, 'P4/r2_goal_cancelled_v1_event_is_unregistered', 'negative',
-             with_world(lambda: RW.CancelWorld({}, base=BASE).build(), unregistered_goal_event),
+             with_world(lambda: IW.S1CancelWorld({}, base=BASE).build(), unregistered_goal_event),
              'advance/halt/reducer/unregistered_record')
 
 
