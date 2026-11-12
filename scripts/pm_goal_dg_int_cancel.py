@@ -557,7 +557,8 @@ class CancelWorld(IW.S1CancelWorld):
         families=ST.d01_families(self.start_world.edition)
         ptr=self.storage.cell(families['pointer'],self.start_world.owners['d01'].pointer_key())
         head=SW.resolve_selector(self.storage,ptr['value']['record']['workflow_head'],'int/terminal/head')
-        self.head=self.d01.adopt(head,families['workflow_head'],RW.WO+'StorageWorkflowHead')
+        self.head=self.d01.adopt(head,families['workflow_head'],RW.WO+'StorageWorkflowHead',
+                                 key=ptr['value']['record']['workflow_head']['physical_key'])
         self._adopt_closure([current['body'],current['control'],head])
 
     def _d06(self):
