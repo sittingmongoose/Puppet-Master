@@ -2842,7 +2842,7 @@ Required rule:
 ### 2. Recovery options
 
 When FileSafe allows user recovery, runtime/UI surfaces must expose exact options.
-- Align `tool.denied` emission with the normalized `filesafe_blocked` outcome taxonomy so guard events and terminal outcomes tell the same story.
+- Per DL-430, a FileSafe block saves only its dedicated FileSafe refusal entry and never emits `tool.denied`; general tool-denial history is reserved for policy or user refusals. The tool view shows the FileSafe reason and ordered allowed recovery actions using the normalized `filesafe_blocked` outcome taxonomy. The block is distinct from execution failure and is never retried automatically.
 - Blocked-state payloads use `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, `preserved-local-work`, prerequisite metadata, and `detail_ref?`; deprecated field names such as `allowed_actions[]` and `blocked_reason` must not appear in new canonical schemas.
 - Graph-local `Retry/Replan/Reopen/Approve/Deny` and `/Replan/Reopen/Approve/Deny` labels normalize to canonical `cmd.runtime` / `cmd.runtime.*` recovery commands before display or persistence.
 - `/interview` and `/remediation` flows use the shared `failure_class`, `blocked_reason_code`, and `allowed_action_ids[]` taxonomy; wizard/interview blocked-state is persistent runtime state, not thread-local conversational metadata.

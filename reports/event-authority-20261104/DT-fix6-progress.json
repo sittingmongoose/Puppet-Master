@@ -1,0 +1,21 @@
+{
+  "status": "complete",
+  "implementation_head": "417200479ddff92213b905e9ecdbb3d6fea87692",
+  "findings": {
+    "F16": "shared_NUMRULE_sweep; all new caps/recipe selectors removed",
+    "S1": "fixed",
+    "S2": "fixed"
+  },
+  "guard_inventory": {
+    "predicates": 174,
+    "covered": 174,
+    "uncovered": []
+  },
+  "grade_counts": {
+    "ABSENT": 25,
+    "PASS": 182,
+    "PARTIAL": 7,
+    "CONFLICT": 2
+  },
+  "native_execution": "NOT_RUN"
+}
