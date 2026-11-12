@@ -5025,7 +5025,7 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Every subagent working for a Goal receives a ChildAgentLease whose parent_goal_id names that initiating Goal (never another Goal: no parent/child Goal edge, GRS-052), with allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
+- Every subagent working for a Goal receives a ChildAgentLease whose parent_goal_id names that initiating Goal (never another Goal; no parent/child Goal edge, GRS-052), with allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
 - A child/subagent cannot spawn further agents unless its lease explicitly grants delegation_depth > 0.
 - Parent sees child terminal errors as typed failed outcomes, never empty successful completion.
 - Subagent cache/context lineage is separate from parent stable-prefix/cache lineage unless explicitly linked by a receipt.
@@ -5033,7 +5033,7 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Every subagent working for a Goal receives a ChildAgentLease whose parent_goal_id names that initiating Goal (never another Goal: no parent/child Goal edge, GRS-052), with allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
+- Every subagent working for a Goal receives a ChildAgentLease whose parent_goal_id names that initiating Goal (never another Goal; no parent/child Goal edge, GRS-052), with allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
 - A child/subagent cannot spawn further agents unless its lease explicitly grants delegation_depth > 0.
 - Parent sees child terminal errors as typed failed outcomes, never empty successful completion.
 - Subagent cache/context lineage is separate from parent stable-prefix/cache lineage unless explicitly linked by a receipt.

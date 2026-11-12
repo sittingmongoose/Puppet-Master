@@ -3483,7 +3483,7 @@ plan_unit_id: PG-059
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Progression_Gates.md
-canonical_text: 'Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details. A context-aware incomplete-content validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason,
+canonical_text: 'Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details. A context-aware incomplete-content validator runs at Planning Wizard approval, Plan Compile certification, and WorkNode completion (Goal completion carries no check, DL-478) across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason,
   risk, approver, downstream disposition, expiration or reopen condition, and evidence; broad permission to leave TODOs is invalid. Planning is compile-ready only when all required topics are Ready or explicitly excluded, ledgers are synchronized, topic plans compiled and audited, invalidations resolved, final integration and final audit completed, testing requirements captured, project context current, source lineage complete, zero-incomplete gate passed, and immutable ApprovedPlanPack can be created.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
@@ -3539,7 +3539,6 @@ preserved_exact_tokens:
 - Planning Wizard approval
 - Plan Compile certification
 - WorkNode completion
-- Goal completion
 - context-aware
 - user_approved_incomplete_item
 - compile-ready
