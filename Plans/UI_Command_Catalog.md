@@ -16874,12 +16874,12 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 | `run_dock` | The one to three lines above the composer that carry live runs and needs-you items; transcript-backed items follow ACD-476’s offscreen rule, owner-projected Work items use their own identity. | `cmd.collaboration.open`, `cmd.questionnaire.resume`, `cmd.chat.processes.open` |
 | `wonderer_workspace` | The BrainStorm Wonderer workspace, an editor-pane document like the run view (CWR-020). | `cmd.brainstorm.synthesize_plan`, `cmd.collaboration.pause`, `cmd.collaboration.resume`, `cmd.collaboration.research_lead` (DL-218) |
 | `questionnaire_card` | The existing questionnaire host's question and What we agreed cards; this surface ID is newly registered by UCC-206 under DL-218. | `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.grill_me.wrap_up`, `cmd.questionnaire.grill_me.confirm`, `cmd.questionnaire.grill_me.keep_going` |
-| `memory_proposal_line` | The one in-chat line that proposes a memory for review (AMS-047). | `cmd.chat.teach.open_memory` |
+| `memory_save_receipt` | Saved to memory · View after a durable save; opens the shared Memory page with the saved note selected (DL-475). | `cmd.chat.teach.open_memory` |
 | `bsd_note` | The Back Seat Driver advisor note in the transcript, with its catch-up, failure and safety lines (BSD-030). | `cmd.bsd.finding.open`, `cmd.bsd.assignment.resume`, `cmd.bsd.assignment.retry`, `cmd.chat.open_thread_context_details` |
 | `schedule_sheet` | The Schedule Message sheet. The wand row only opens it; its primary commits. | `cmd.chat.schedule_message` |
 | `scheduled_message_card` | A scheduled message in the transcript (SQR-012). | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.chat.open_thread` |
 | `schedule_manager` | The Scheduled and Automations manager. | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.execution_window.update`, `cmd.execution_window.cancel`, `cmd.chat.open_thread`, `cmd.chat.plan.open_version` (a build row's Open plan, DL-157) |
-| `memory_sheet` | The Memory sheet. | `cmd.chat.memory.verify`, `cmd.chat.memory.pin`, `cmd.chat.memory.discard`, `cmd.chat.memory.preview_capsule`, `cmd.chat.memory.toggle_auto_save_unverified`, `cmd.chat.teach.capture` |
+| `memory_sheet` | The same Memory page as Settings, opened as a sheet (DL-475). | `cmd.chat.memory.add`, `cmd.chat.memory.edit`, `cmd.chat.memory.delete` |
 | `message_files_row` | The files row under an assistant message that changed files (ACD-478). It opens the Revert confirm sheet, which is not a command. | none of its own; it leads to `revert_confirm` |
 | `revert_confirm` | The Revert confirm sheet over the turn's change manifest (ACD-478). | `cmd.chat.revert` |
 | `chat_header` | The chat header title and its states (ACD-479). | `cmd.chat.thread.regenerate_title` |
@@ -16900,9 +16900,9 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 - `cmd.chat.plan.build_with_crew`: the Crew configuration sheet in Build With Crew mode is its GUI producer. That sheet's Start dispatches this command and never `cmd.collaboration.start`; one atomic PlanRun and CrewRun (MODAL-013).
 - `cmd.chat.revert`: only the `revert_confirm` primary dispatches it. The sheet is the confirmation, and the `expected_turn_manifest_sha256` it sends is the hash of the manifest the sheet shows. Opening the sheet from `message_files_row`, the wand row, Changes or the message menu is not a command. The outcome is the FileSafe restore outcome; there is no `kept` outcome and no conflict-dismissal outcome, and leaving the files as they are is a local dismiss that writes no record. "See what's blocking it" only opens the Revert document at that file.
 - `cmd.chat.thread.regenerate_title`: gains the `chat_header` surface. Its label is set by UCC-173 (DL-134).
-- `cmd.chat.teach.capture` opens the Teach sheet from the wand and the Memory sheet, and carries `mode` (`new`, or `correct` for editing an existing rule). The sheet's save is `cmd.chat.teach.confirm` with the `TeachConfirmRequest` fields of ACD-477; its Cancel, ×, Escape and scrim are `cmd.chat.teach.cancel`.
-- `cmd.chat.teach.open_memory` stays the one memory route: the wand's "Memory…" and the proposal line's Review both reach it.
-- `cmd.chat.memory.preview_capsule`: "See what your next message will include" on the `memory_sheet` is this row, a preview computation with no persisted domain event.
+- `cmd.chat.teach.capture` opens the separate Teach sheet from the wand and Instructions, and carries `mode` (`new`, or `correct` for editing an existing rule). The sheet's save is `cmd.chat.teach.confirm` with the `TeachConfirmRequest` fields of ACD-477; its Cancel, ×, Escape and scrim are `cmd.chat.teach.cancel`.
+- `cmd.chat.teach.open_memory` stays the one memory route: the wand's "Memory…", the chat-header Memory button and the successful-save View reach the same Memory page; the old proposal line is retired (DL-475).
+- DL-475 retires the user-facing capsule preview; its compatibility/support definition has no ordinary producer.
 - `cmd.questionnaire.resume`: BrainStorm "Answer now" on `run_dock` and on `brainstorm_card` opens the existing questionnaire. While the questionnaire family is `candidate_not_registered`, both render disabled with `command_not_registered`.
 - `cmd.runtime.approve` and `cmd.runtime.decline`: a needs-you decision is taken only on its `workflow_card`. The `run_dock` line points to the card and never takes a permission decision.
 
@@ -16915,37 +16915,39 @@ plan_unit_id: UCC-169
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'The controls this unit covers add source surfaces, not commands; the redesign''s nine new
-  command identities are registered in UCC-171 and UCC-174 (CDRY-022, CDRY-023). New surfaces: run_dock, wonderer_workspace,
-  memory_proposal_line, bsd_note, schedule_sheet, scheduled_message_card, schedule_manager, memory_sheet, message_files_row,
-  revert_confirm and chat_header. Existing surfaces join more rows: mode_menu, natural_language and plan_schedule
-  produce cmd.collaboration.configure; wand produces cmd.chat.teach.open_memory and cmd.chat.teach.capture;
-  brainstorm_card and run_dock produce cmd.questionnaire.resume for BrainStorm "Answer now", disabled with
-  command_not_registered while the family is candidate_not_registered; workflow_card alone produces cmd.runtime.approve,
-  cmd.runtime.decline and cmd.permissions.review_request; review and Chat Room cards and panels produce cmd.chat.todos.open.
-  memory_sheet produces cmd.chat.memory.preview_capsule, a preview computation with no persisted domain event.
-  cmd.chat.plan.build_with_crew is produced by the Crew sheet in Build With Crew mode and never decomposes
-  into cmd.collaboration.start. cmd.chat.revert is dispatched only by revert_confirm, whose expected_turn_manifest_sha256
-  is the hash of the manifest it shows; there is no kept or conflict-dismissal outcome. chat_header produces
-  cmd.chat.thread.regenerate_title, whose label UCC-173 sets. cmd.chat.teach.capture carries mode new or correct;
-  the Teach sheet saves through cmd.chat.teach.confirm and closes through cmd.chat.teach.cancel. Every added
-  surface takes the UCC-156 availability and disabled-reason obligation. The Plan card''s Cancel schedule control
-  produces cmd.execution_window.cancel from plan_card (SQR-013, DL-138), alongside schedule_manager; it cancels
-  only the future execution schedule through the existing request, never an already-running plan. PM7 S5: wand
-  Pip… is one Settings-editor producer, ui.settings.pip_editor.open; part/preset changes reuse UCC-120 Settings
-  transactions, no chat capability or new mutation command.
-
-
-  Current projects-refresh contract: The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration
-  kinds, participant/message actions and Crew Auto admit explicit app siblings and original exact Project contracts.
-  Scope, original accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config
-  revisions and canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew
-  bindings. No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification
-  is revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and
-  Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults to linked
-  new destination records after safe stop/fence. The exact consumer contract is UCC-218/WM-104 and Plans/projects_refresh_command_bindings.json.
-  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
-  remain as specified; unavailable handlers remain handler_unavailable.'
+canonical_text: 'The controls this unit covers add source surfaces, not commands; the redesign''s nine
+  new command identities are registered in UCC-171 and UCC-174 (CDRY-022, CDRY-023). New surfaces: run_dock,
+  wonderer_workspace, memory_save_receipt, bsd_note, schedule_sheet, scheduled_message_card, schedule_manager,
+  memory_sheet, message_files_row, revert_confirm and chat_header. Existing surfaces join more rows: mode_menu,
+  natural_language and plan_schedule produce cmd.collaboration.configure; wand produces cmd.chat.teach.open_memory
+  and cmd.chat.teach.capture; brainstorm_card and run_dock produce cmd.questionnaire.resume for BrainStorm
+  "Answer now", disabled with command_not_registered while the family is candidate_not_registered; workflow_card
+  alone produces cmd.runtime.approve, cmd.runtime.decline and cmd.permissions.review_request; review and
+  Chat Room cards and panels produce cmd.chat.todos.open. DL-475: memory_sheet is the shared Memory page
+  and produces cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete. The chat_header Memory
+  button, wand and successful-save memory_save_receipt View produce cmd.chat.teach.open_memory, the same
+  shared-page route; the save receipt selects the saved note. No memory_proposal_line or memory preview
+  producer remains. Teach stays separate in Instructions. cmd.chat.plan.build_with_crew is produced by
+  the Crew sheet in Build With Crew mode and never decomposes into cmd.collaboration.start. cmd.chat.revert
+  is dispatched only by revert_confirm, whose expected_turn_manifest_sha256 is the hash of the manifest
+  it shows; there is no kept or conflict-dismissal outcome. chat_header produces cmd.chat.thread.regenerate_title,
+  whose label UCC-173 sets. cmd.chat.teach.capture carries mode new or correct; the Teach sheet saves
+  through cmd.chat.teach.confirm and closes through cmd.chat.teach.cancel. Every added surface takes the
+  UCC-156 availability and disabled-reason obligation. The Plan card''s Cancel schedule control produces
+  cmd.execution_window.cancel from plan_card (SQR-013, DL-138), alongside schedule_manager; it cancels
+  only the future execution schedule through the existing request, never an already-running plan. PM7
+  S5: wand Pip… is one Settings-editor producer, ui.settings.pip_editor.open; part/preset changes reuse
+  UCC-120 Settings transactions, no chat capability or new mutation command. Current projects-refresh
+  contract: The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration kinds, participant/message
+  actions and Crew Auto admit explicit app siblings and original exact Project contracts. Scope, original
+  accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config revisions and
+  canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew bindings.
+  No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification is
+  revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and
+  Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults
+  to linked new destination records after safe stop/fence. The exact consumer contract is UCC-218/WM-104
+  and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay resources and all unrelated
+  PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Names the visible sheets, cards, dock lines and header that produce existing commands,
   and their disabled states.
@@ -17004,6 +17006,7 @@ source_lineage:
   lines B-CMD-03, B-CMD-04, B-ACD-12
 - Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.execution_window.cancel
 - plan_card
@@ -17285,7 +17288,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 
 | Control | Disposition | Surfaces |
 |---|---|---|
-| Wand "Memory…"; Review on the proposal line | Command, `cmd.chat.teach.open_memory` | `wand`, `memory_proposal_line` |
+| Wand "Memory…", chat-header Memory button and Saved to memory · View | Command, `cmd.chat.teach.open_memory` | `wand`, `chat_header`, `memory_save_receipt` |
 | Tabs, filter, selecting a row | View | `memory_sheet` |
 | "See what your next message will include" | Command, `cmd.chat.memory.preview_capsule` | `memory_sheet` |
 | Verify, Pin or Unpin, Discard | Command, `cmd.chat.memory.verify`, `cmd.chat.memory.pin` (pinned), `cmd.chat.memory.discard` | `memory_sheet` |
@@ -17305,7 +17308,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Rule text, examples, scope, "safe for my other projects", Locked, Replace or Keep both | Draft (`TeachConfirmRequest`, including locked, UCC-172) | `teach_capture` |
 | Save rule; Save and replace; Save as version 2 | Command, `cmd.chat.teach.confirm` | `teach_capture` |
 | Cancel, ×, Escape, scrim | Command, `cmd.chat.teach.cancel` | `teach_capture` |
-| Receipt "Rule saved · View" | Command, `cmd.chat.teach.open_memory` | `teach_receipt` |
+| Receipt "Rule saved · View" | Existing Instructions navigation; separate from the saved-note Memory page (DL-475) | `teach_receipt` |
 | "See what your next message will include" in the taught-rules document | Command, `cmd.chat.memory.preview_capsule` | `teach_document` |
 | Edit a rule | Command, `cmd.chat.teach.capture` with mode correct | `teach_document`, `memory_sheet` |
 | Lock, Unlock | New, `cmd.chat.teach.set_lock` (UCC-171) | `teach_document` |
@@ -17614,7 +17617,7 @@ This unit adds the surfaces and row revisions that were waiting on the owner's a
 
 **Two new surfaces.**
 - `teach_document`, the taught-rules document, produces `cmd.chat.teach.capture` ("Teach a rule", and Edit with mode correct), `cmd.chat.teach.set_lock`, `cmd.chat.teach.revoke` and `cmd.chat.memory.export`.
-- `teach_receipt`, the one receipt line that a confirmed change leaves in the chat, produces `cmd.chat.teach.open_memory`.
+- `teach_receipt`, the explicit rule-change receipt, opens Instructions; it is no longer a saved-note Memory producer (DL-475).
 
 **Crew Auto (DL-119, DL-120, DL-135).**
 - `cmd.chat.crew_auto.open_config` is produced by three controls: the "Crew Auto settings…" row in `multi_agent_menu`, the "Settings…" link in the Crew sheet (`workflow_modal`), and the Change control of the Crew Auto note in the chat (`crew_auto_receipt`).
@@ -17639,7 +17642,7 @@ canonical_text: 'Every Teach entry (slash, natural language, the wand, the messa
   dispatches cmd.chat.teach.capture and opens the one Teach sheet, which teach_capture names; there is
   no in-chat capture card and capture writes no memory (DL-127). TeachConfirmRequest gains locked; afterwards
   only cmd.chat.teach.set_lock changes the lock (DL-130). teach_document produces cmd.chat.teach.capture,
-  cmd.chat.teach.set_lock, cmd.chat.teach.revoke and cmd.chat.memory.export; teach_receipt produces cmd.chat.teach.open_memory.
+  cmd.chat.teach.set_lock, cmd.chat.teach.revoke and cmd.chat.memory.export; teach_receipt opens Instructions, not the saved-note Memory page (DL-475).
   cmd.chat.crew_auto.open_config is produced by the Crew Auto settings… row in multi_agent_menu and by
   the Crew sheet''s Settings… link in workflow_modal, and by the Change control of the Crew Auto note
   on crew_auto_receipt, the one line Crew Auto is on for this project that turning Crew Auto on for the
