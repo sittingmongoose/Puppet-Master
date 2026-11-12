@@ -428,6 +428,8 @@ def test_index(s, work):
         st.first_custody(g.event_id) or 1/0)
     s.positive('index', 'native_current_event_source_v4', lambda: src.native_current_event_source(
         'TEST_ONLY:native-read:1', read)['generic']['token'] == read.read_token or 1/0)
+    s.negative('index', 'native_current_source_read_id_type', lambda: src.native_current_event_source(None, read),
+               'index/native_source_schema')
 
     def retire_removes_rows():
         sealed = next(x['generation'] for x in st.segments if x['sealed'])
@@ -578,8 +580,6 @@ def test_index(s, work):
     s.negative('index', 'index_source_wrong_type', lambda: G.EventRecordIndexSource(dict()), 'index_source/storage_type')
     s.negative('index', 'storage_dataset_absent', lambda: st.index_rows('eig_' + '0' * 64),
                'index/dataset_unavailable')
-    s.negative('index', 'native_current_source_read_id_type', lambda: src.native_current_event_source(None, read),
-               'index/native_source_schema')
 
     # generic source: the token fields batch 2 adds
     gs = G.GenericSource(st)
