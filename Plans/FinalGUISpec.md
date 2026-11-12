@@ -46106,7 +46106,8 @@ canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D
   with a yes or no submenu, Change setup... (on a Crew disabled until it is cancelled: "This Crew builds one plan version.
   Cancel it first.") or Run again with changes... once finished, Run another review (Review only), Download transcript
   and Open in new panel; a transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a
-  context tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
+  context tab has Preview compact, which shows only capacity, cost, model and compaction facts (raw and serialized context
+  stays internal, with no Redacted JSON action); a record has Show in chat, which reveals and marks the work row
   in its thread or says the message is not available, and Copy. Each row dispatches its content owner''s existing command
   or is view-local; none adds a command id here. Amended 2026-10-29 (PC5; PM7): Seat hues remain this one owner table.
   Pip reads them rather than owning another palette; gold crown/hat are role material and do not change the seat or status
