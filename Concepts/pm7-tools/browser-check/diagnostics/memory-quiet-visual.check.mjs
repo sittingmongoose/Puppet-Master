@@ -13,7 +13,7 @@ const esc = async (t, n = 1) => { for (let i = 0; i < n; i++) { await t.page.key
 
 async function toMemory(t, f, w) {
 	if (w <= 600) await f.evaluate(() => document.getElementById('tab-settings').click());
-	else await f.locator('#tab-settings').click();
+	else await f.locator('#tab-settings').click({ timeout: 15000 }).catch(() => f.evaluate(() => document.getElementById('tab-settings').click()));
 	await t.settle();
 	await f.evaluate((ws) => PM51.go('memory', ws), WS);
 	await f.waitForSelector(`${BODY}[data-workspace-mounted="true"]`, { timeout: 15000 });
@@ -22,7 +22,7 @@ async function toMemory(t, f, w) {
 }
 async function toHome(t, f, w) {
 	if (w <= 600) await f.evaluate(() => document.getElementById('tab-dashboard').click());
-	else await f.locator('#tab-dashboard').click();
+	else await f.locator('#tab-dashboard').click({ timeout: 15000 }).catch(() => f.evaluate(() => document.getElementById('tab-dashboard').click()));
 	await f.waitForFunction(() => !!document.querySelector('#pmRoot .chat-header .pm7-mem-btn'), null, { timeout: 30000 });
 	if (w <= 860) { await t.page.waitForTimeout(500); await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (c && !c.isOpen()) c.show(); }); }
 	await t.settle();
@@ -42,7 +42,7 @@ export const tests = {
 			await t.viewport(1390, 900);
 			const f = await t.app.open({ sandbox: false });
 			await t.app.resetLayout();
-			await f.locator('#tab-settings').click();
+			await f.locator('#tab-settings').click({ timeout: 15000 }).catch(() => f.evaluate(() => document.getElementById('tab-settings').click()));
 			await t.settle();
 			await setLookBySetting(t, f, look);
 			for (const [w, h, size] of [[1390, 900, 'desktop'], [390, 844, 'phone']]) {

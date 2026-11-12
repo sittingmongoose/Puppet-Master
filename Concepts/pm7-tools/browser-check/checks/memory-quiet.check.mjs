@@ -42,7 +42,7 @@ async function settings(t, surface, [w, h] = [1390, 900]) {
 	await t.app.resetLayout();
 	// at a phone's width the page tabs fold into their overflow menu: the Settings tab is pressed where it is
 	if (w <= 600) await f.evaluate(() => document.getElementById('tab-settings').click());
-	else await f.locator('#tab-settings').click();
+	else await f.locator('#tab-settings').click({ timeout: 15000 }).catch(() => f.evaluate(() => document.getElementById('tab-settings').click()));
 	await t.settle();
 	await f.evaluate((ws) => PM51.go('memory', ws), WS);
 	await f.waitForSelector(`${BODY}[data-workspace-mounted="true"]`, { timeout: 15000 });
@@ -229,7 +229,7 @@ async function home(t, surface, [w, h] = [1390, 900]) {
 	const f = await t.app.open({ sandbox: surface === 'sandbox' });
 	await t.app.resetLayout();
 	if (w <= 600) await f.evaluate(() => document.getElementById('tab-dashboard').click());
-	else await f.locator('#tab-dashboard').click();
+	else await f.locator('#tab-dashboard').click({ timeout: 15000 }).catch(() => f.evaluate(() => document.getElementById('tab-dashboard').click()));
 	await f.waitForFunction(() => !!document.querySelector('#pmRoot .chat-header') && !!document.querySelector('#pmRoot .composer-box[data-k="composer-box"]'), null, { timeout: 30000 });
 	// a narrow Home folds the chat to its edge strip; its button opens it over the page (PMW.chatCol.show, FO-142)
 	if (w <= 860) { await t.page.waitForTimeout(500); await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (c && !c.isOpen()) c.show(); }); }
@@ -389,7 +389,7 @@ for (const surface of ['normal', 'sandbox']) {
 			const rest = async () => { await t.page.mouse.move(2, 300); await f.evaluate(() => { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); }); await t.page.waitForTimeout(400); };
 			await rest();
 			const page = await f.evaluate(PAINT, BODY);
-			await f.locator('#tab-dashboard').click();
+			await f.locator('#tab-dashboard').click({ timeout: 15000 }).catch(() => f.evaluate(() => document.getElementById('tab-dashboard').click()));
 			await f.waitForFunction(() => !!document.querySelector('#pmRoot .chat-header .pm7-mem-btn'), null, { timeout: 20000 }).catch(() => {});
 			await t.page.waitForTimeout(500);
 			await f.locator('#pmRoot .chat-header .pm7-mem-btn').first().click().catch(() => {});

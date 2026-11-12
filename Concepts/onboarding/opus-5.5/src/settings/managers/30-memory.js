@@ -311,6 +311,16 @@
     style.textContent = out.join('\n');
     document.head.appendChild(style);
   }
+  /* custom properties Settings writes on its own elements (Glass's panel transparency, for one) follow it into the sheet */
+  function syncInline() {
+    if (!sheet) return;
+    const st = sheet.el.style;
+    [...st].filter(p => p.startsWith('--')).forEach(p => st.removeProperty(p));
+    for (const host of [document.getElementById('panel-settings'), document.getElementById('pm-settings-root')]) {
+      if (!host) continue;
+      for (const p of host.style) if (p.startsWith('--')) st.setProperty(p, host.style.getPropertyValue(p));
+    }
+  }
   function openSheet({ flash: id = '', from = null } = {}) {
     const panel = chatPanel(); if (!panel) return { ok: false, error: 'no_chat' };
     sheetLook();
@@ -322,6 +332,7 @@
     if (n) { lightUp(n.id); if (n.archived) UI.sheet.arch = true; }
     redraw('sheet', true);
     if (!portalWas) { portalWas = window.PM7_SETTINGS_TOME.portal; window.PM7_SETTINGS_TOME.portal = () => (sheet && !sheet.layer.hidden ? sheet.portal : portalWas()); }
+    syncInline();
     s.layer.hidden = false;
     s.layer.classList.toggle('is-narrow', narrow());
     placeSheet();
