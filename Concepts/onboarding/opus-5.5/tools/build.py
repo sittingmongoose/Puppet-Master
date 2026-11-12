@@ -34,6 +34,7 @@ import base_source
 import active_descendant_rewrite
 import css_bucket_split
 import css_media_split
+import css_comment_lint
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
@@ -518,6 +519,11 @@ def lint_sources() -> list[str]:
     problems.extend(_home().lint())
     # The 5.6 Pro chat port's own sources (pm7-port/css, pm7-port/js): emoji, pills, side stripes, unscoped selectors.
     problems.extend(_chat56().lint())
+    # A CSS comment that ends early (`(width/height/min-*/ overflow)` closes at `min-*/`) turns its own words into a
+    # selector prelude, and the browser drops the whole rule after them with no console error: FO-166 found
+    # `.pm-home-surface` missing that way in base/style/pm6-css-dashboard.css, so every Home surface lost its basis,
+    # border, radius, surface background and isolation. Source sheets only; check() lints the built page's <style> bodies.
+    problems.extend(css_comment_lint.tree_problems([PKG / 'base' / 'style', SRC]))
     return problems
 
 
@@ -825,7 +831,7 @@ def check(built: str) -> list[str]:
     warn_inert_sources()
     problems = (lint_liquid_glass_slots() + lint_sources() + syntax_check(built) + _rail().published_problems(built)
                 + _glyphs().published_problems(built) + _home().published_problems(built)
-                + _chat56().published_problems(built))
+                + _chat56().published_problems(built) + css_comment_lint.page_problems(built, 'built page'))
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', 'id="pm7-settings-data"',
                                   "'.pm7gt-callout", ".closest('.pm7gt')",
