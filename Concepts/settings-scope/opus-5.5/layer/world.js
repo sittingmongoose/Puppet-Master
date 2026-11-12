@@ -49,6 +49,94 @@
   const portal = () => (W.PM7_SETTINGS_TOME && W.PM7_SETTINGS_TOME.portal ? W.PM7_SETTINGS_TOME.portal() : D.body);
   const root = () => D.getElementById('pm-settings-root');
 
+  /* ------------------------------------------------------------------ is this a path? One reader for the layer
+     Review Sol max F1: Always allow decided "host-dependent" with a regexp that saw a path only at the start of a word,
+     so a path behind "=", in quotes, on a drive written C:/, relative with backslashes, or on a UNC share offered
+     Everywhere and could be saved there. Every place in the layer that asks "is this a path?" asks this one reader:
+     the Always allow editor and its save guard, broad detection, folder-rule matching and the home-folder read.
+     It splits text the way a shell does (quotes keep a word together and come off) and reads each word. A word is a
+     path when
+       - it starts at a root: / (and //host), \\host, ~ or ~user, a drive (C: then / or \), a variable then a
+         separator ($HOME/, ${HOME}/, %USERPROFILE%\, $env:USERPROFILE\), or file:
+       - it is relative by its dots: . .. ./ ../ .\ ..\
+       - a backslash stands between two names (tools\runner reads as a Windows path, the careful reading)
+       - it names a script or program file by its extension (.sh .ps1 .bat .cmd .exe .py .js and the like)
+     The value of --opt=value or NAME=value (each part of a , ; or : list) and a value written against a one-letter
+     flag (-I/usr/include) are read the same way. The program word (the first, after sudo, env and NAME=value) is a
+     path whenever it holds a / or a \: a shell runs such a command by its location, not from PATH. A web address
+     (https://...) is never a path. */
+  const PATH_EXT = /\.(sh|bash|zsh|fish|ps1|psm1|bat|cmd|exe|py|js|mjs|cjs|ts|rb|pl|php|lua)\b/i;
+  const PATH_URL = /^[a-z][a-z0-9+.-]*:\/\//i;
+  const PATH_ROOTS = [
+    ['unc', /^(\\\\|\/\/)[^\\/]/],
+    ['home', /^~[\w.-]*(?=[\\/]|$)/],
+    ['home', /^(\$HOME|\$\{HOME\}|%USERPROFILE%|%HOMEPATH%|\$env:USERPROFILE|\$env:HOME)(?=[\\/]|$)/i],
+    ['drive', /^[A-Za-z]:(?=[\\/]|$)/],
+    ['variable', /^(\$\{?\w+\}?|%\w+%|\$env:\w+)(?=[\\/])/i],
+    ['file', /^file:/i],
+    ['root', /^\//],
+    ['relative', /^\.{1,2}(?=[\\/]|$)/]
+  ];
+  const PATH_LIST = /[,;]|(?<!(?:^|[,;])[A-Za-z]):(?!\/\/)/;
+  function shellWords(text) {
+    const out = []; let cur = '', has = false, q = null;
+    for (const ch of String(text == null ? '' : text)) {
+      if (q) { if (ch === q) q = null; else cur += ch; continue; }
+      if (ch === '"' || ch === "'") { q = ch; has = true; continue; }
+      if (/\s/.test(ch)) { if (has || cur) out.push(cur); cur = ''; has = false; continue; }
+      cur += ch;
+    }
+    if (has || cur) out.push(cur);
+    return out;
+  }
+  // where the program word is: past sudo and env (and their flags) and any NAME=value before it
+  function programAt(ws) {
+    let i = 0;
+    while (i < ws.length) {
+      const w = ws[i];
+      if (w === 'sudo' || w === 'env') { i++; while (i < ws.length && /^-/.test(ws[i])) i++; continue; }
+      if (/^[A-Za-z_]\w*=/.test(w)) { i++; continue; }
+      break;
+    }
+    return i;
+  }
+  function pathWord(word, program, depth) {
+    const w = String(word == null ? '' : word); depth = depth || 0;
+    if (!w || (PATH_URL.test(w) && !/^file:/i.test(w))) return null;
+    for (const [root, re] of PATH_ROOTS) if (re.test(w)) return { path: w, root };
+    if (depth < 3) {
+      const eq = /^[^=\\/]+=(.+)$/.exec(w);                       // --prefix=/opt/release, PATH=/opt/bin:/usr/bin
+      if (eq) { for (const part of eq[1].split(PATH_LIST)) { const r = pathWord(part, false, depth + 1); if (r) return r; } return null; }
+      const glued = /^-[A-Za-z](.+)$/.exec(w);                   // -I/usr/include, -o./out
+      if (glued) { const r = pathWord(glued[1], false, depth + 1); if (r) return r; }
+    }
+    if (/[\w.$%~-]\\[\w.$%~-]/.test(w)) return { path: w, root: 'relative' };
+    if (program && /[\\/]/.test(w)) return { path: w, root: 'relative' };
+    if (PATH_EXT.test(w)) return { path: w, root: 'relative', file: true };
+    return null;
+  }
+  const paths = {
+    words: shellWords,
+    programAt,
+    program(text) { const ws = shellWords(text), i = programAt(ws); return i < ws.length ? ws[i] : ''; },
+    // one word: a path or null; `program` reads it as the word a shell runs
+    word: (w, program) => pathWord(w, !!program, 0),
+    // every path in a piece of text, in order: [{ path, root, file, program, at }]
+    find(text) {
+      const ws = shellWords(text), i = programAt(ws), out = [];
+      ws.forEach((w, k) => { const r = pathWord(w, k === i, 0); if (r) out.push(Object.assign({ program: k === i, at: k }, r)); });
+      return out;
+    },
+    // the same path written either way: quotes off, \ as /, one separator at a time, no separator at the end
+    norm(text) {
+      let s = shellWords(text).join(' ').replace(/\\/g, '/');
+      const lead = /^\/\//.test(s) ? '//' : '';
+      s = lead + s.slice(lead.length).replace(/\/{2,}/g, '/');
+      if (s.length > 1 && !/^[A-Za-z]:\/$/.test(s)) s = s.replace(/\/+$/, '');
+      return s;
+    }
+  };
+
   /* ------------------------------------------------------------------ the layer's own storage
      Only the review options and the one-time tip are kept (psx.settings-scope.v1); every read and write is guarded,
      and a page with no storage (a sandboxed preview) keeps them in memory. Never written into a project snapshot. */
@@ -140,6 +228,7 @@
   const REASONS = {
     names_a_program: ['Each computer has its own, because a program can be in a different place on each computer.', 'Programs differ per computer'],
     names_a_folder: ['Each computer has its own, because a folder is in a different place on each computer.', 'Folders differ per computer'],
+    names_a_path: ['Each computer has its own, because a path names a place on one computer.', 'Paths differ per computer'],
     about_hardware: ['Each computer has its own, because it depends on what that computer can do.', 'Depends on the computer'],
     about_the_network: ['Each computer has its own, because each one reaches the internet its own way.', 'Network differs per computer'],
     about_this_project: ['Each project has its own, because it’s about that project’s own files.', 'Belongs to one project'],
@@ -553,7 +642,7 @@
   }
 
   Object.assign(PSX, {
-    D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip,
+    D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip, paths,
     store, COMPUTERS, HOSTS, DEVICES, PROJECTS, MENU_PROJECTS, projectById, DEFAULTS, DEF, IDS, REASONS, computerIds, home,
     homeName: () => placeName('computer', home()), bagOf,
     projectName, placeName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,

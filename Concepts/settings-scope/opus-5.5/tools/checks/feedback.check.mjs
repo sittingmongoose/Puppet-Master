@@ -808,6 +808,127 @@ export default async function (t) {
 		await settle(t, 900);
 		await pic(t, 'copy-new-homenas', 'New Project › Start like tastebook on Home NAS: Copilot can’t be used there; accounts only, never secrets', '.psx-sheet.psx-copy');
 		await run(t, () => window.PSX.closeSheets());
+
+		/* review Sol max F2 (guided flows 3.07, SSYS-062): Keep them fixed, then one row (Profile in use) and one kind
+		   (Automation) unticked, then "Copy what recipe-app gets from Home NAS" (Helpers at once, Profile in use,
+		   FileSafe). The row and the kind stay out of the plan, the ticks, the counts and the preview; in Settings they stay
+		   out of the write too. FileSafe, which nobody unticked, still comes, so the opt-in is shown doing its part.
+		   Then the other order: the computer's values first, Profile in use unticked there, then Keep them fixed */
+		const F2 = { row: 'safety.rules.permission-preset', kind: 'orchestrator_automation', fs: 'safety.protection.filesafe-integration', help: 'branching.subagents.max-parallel' };
+		const f2walk = async (where) => run(t, async ([F, where]) => {
+			const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), out = { where };
+			const sh = () => document.querySelector('.psx-sheet.psx-copy');
+			if (where === 'new') {
+				await P.command({ cmd: 'moment', id: 'copy-new' }); await wait(700);
+				const more = sh().querySelector('[data-act="more"]'); if (more) { more.click(); await wait(250); }
+				const r = sh().querySelector('input[name="psx-src"][value="recipe-app"]'); if (r) { r.click(); await wait(300); }
+			} else {
+				// a destination with none of the three as its own, so every one of them would be a change
+				const dst = P.PROJECTS.map((p) => p.id).find((p) => p !== 'recipe-app' && ![F.row, F.fs, F.help].some((id) => P.has(P.W.project[p], id)));
+				out.dst = dst; P.setCtx({ project: dst }); await wait(500);
+				P.copy.open({ mode: 'settings', src: 'recipe-app' }); await wait(500);
+			}
+			const adv = sh().querySelector('details.psx-adv'); if (adv && !adv.open) { sh().querySelector('details.psx-adv > summary').click(); await wait(250); }
+			out.src = P.copy.st.src;
+			const click = async (sel) => { const el = sh().querySelector(sel); if (!el) return false; el.click(); await wait(250); return true; };
+			const openKind = async (k) => { const b = sh().querySelector(`[data-act="openkind"][data-kind="${k}"]`); if (b && b.getAttribute('aria-expanded') !== 'true') { b.click(); await wait(220); } };
+			const btnN = () => { const m = /Copy (\d+) setting/.exec(sh().querySelector('.psx-sheet-foot .btn.primary').textContent); return m ? +m[1] : -1; };
+			const kindBox = (k) => { const b = sh().querySelector(`input[data-act="kind"][data-kind="${k}"]`); const m = b && /(\d+) of (\d+)/.exec(b.closest('label').textContent); return b ? { of: m ? [+m[1], +m[2]] : null, checked: b.checked, mixed: b.indeterminate } : null; };
+			const ids = () => P.copy.plan().rows.map((x) => x.id);
+			const inKind = (list, k) => list.filter((id) => P.copy.kindOf(id) === k);
+			out.comp = [...sh().querySelectorAll('input[data-act="fromcomp"]')].map((x) => x.closest('label').textContent.replace(/\s+/g, ' ').trim())[0] || '';
+			// Keep them fixed, then Profile in use unticked, then the whole Automation kind unticked
+			await click('input[data-act="fixed"]');
+			await openKind('permissions_security');
+			const rb0 = sh().querySelector(`input[data-id="${F.row}"]`); out.rowListed = !!rb0; out.rowWasOn = !!rb0 && rb0.checked;
+			if (rb0 && rb0.checked) await click(`input[data-id="${F.row}"]`);
+			const kb0 = sh().querySelector(`input[data-act="kind"][data-kind="${F.kind}"]`); out.kindWasOn = !!kb0 && kb0.checked;
+			if (kb0 && !kb0.checked) await click(`input[data-act="kind"][data-kind="${F.kind}"]`);
+			await click(`input[data-act="kind"][data-kind="${F.kind}"]`);
+			const i0 = ids();
+			out.before = { n: btnN(), T: P.copy.totals().n, row: i0.includes(F.row), kind: inKind(i0, F.kind).length, fs: i0.includes(F.fs) };
+			// then the computer's values
+			await click('input[data-act="fromcomp"]');
+			await openKind(F.kind); await openKind('permissions_security');
+			const i1 = ids();
+			out.after = { n: btnN(), T: P.copy.totals().n, row: i1.includes(F.row), kind: inKind(i1, F.kind), fs: i1.includes(F.fs) };
+			const rb1 = sh().querySelector(`input[data-id="${F.row}"]`); out.rowBox = rb1 ? rb1.checked : 'not listed';
+			const hb = sh().querySelector(`input[data-id="${F.help}"]`); out.helpBox = hb ? hb.checked : 'not listed';
+			out.kindBox = kindBox(F.kind); out.permBox = kindBox('permissions_security');
+			out.permOn = inKind(i1, 'permissions_security').length;
+			out.comes = (sh().querySelector('.psx-card') || {}).innerText || '';
+			out.compAfter = [...sh().querySelectorAll('input[data-act="fromcomp"]')].map((x) => x.closest('label').textContent.replace(/\s+/g, ' ').trim())[0] || '';
+			// the preview
+			sh().querySelector('.psx-sheet-foot .btn.primary').click(); await wait(400);
+			const names = [...sh().querySelectorAll('li .psx-li-name')].map((x) => x.textContent.trim());
+			out.preview = { rows: names.length, row: names.some((x) => x.startsWith(P.label(F.row) + ':')), kind: names.filter((x) => inKind(Object.keys(P.DEF), F.kind).some((id) => x.startsWith(P.label(id) + ':'))), fs: names.some((x) => x.startsWith(P.label(F.fs) + ':')), left: ((sh().querySelector('[data-k="leftout"]') || {}).textContent || '').trim() };
+			if (where === 'settings') {
+				const before = JSON.parse(JSON.stringify(P.W.project[out.dst] || {}));
+				sh().querySelector('.psx-sheet-foot .btn.primary').click(); await wait(1600);
+				const now = P.W.project[out.dst] || {};
+				out.write = { row: P.has(now, F.row), help: P.has(now, F.help), kind: inKind(Object.keys(now), F.kind).filter((id) => !P.has(before, id)), fs: P.has(now, F.fs), n: Object.keys(now).filter((id) => !P.has(before, id)).length };
+			}
+			return out;
+		}, [F2, where]);
+		for (const where of ['new', 'settings']) {
+			await reset(t);
+			const w = await f2walk(where);
+			const W2 = where === 'new' ? 'New Project › Like recipe-app' : `Copy settings into ${w.dst} from recipe-app`;
+			await t.check(`F2 (Sol max), ${W2}: the walk reached its controls (Keep them fixed listed Profile in use, ticked, and Automation was selected)`, w.src === 'recipe-app' && w.rowListed && w.rowWasOn && w.kindWasOn && !w.before.row && w.before.kind === 0 && w.before.fs, JSON.stringify(w));
+			await t.check(`F2 (Sol max), ${W2}: after Copy what recipe-app gets from Home NAS, the unticked Profile in use and the unticked Automation kind stay out of the plan; FileSafe still comes`, !w.after.row && !w.after.kind.length && w.after.fs, JSON.stringify(w.after));
+			await t.check(`F2 (Sol max), ${W2}: the ticks agree: Profile in use and Helpers at once unticked, Automation unticked, Permissions’ count is what the plan holds`, w.rowBox === false && w.helpBox === false && !!w.kindBox && !w.kindBox.checked && !w.kindBox.mixed && w.kindBox.of && w.kindBox.of[0] === 0 && !!w.permBox && w.permBox.of && w.permBox.of[0] === w.permOn, JSON.stringify({ rowBox: w.rowBox, helpBox: w.helpBox, kindBox: w.kindBox, permBox: w.permBox, permOn: w.permOn }));
+			await t.check(`F2 (Sol max), ${W2}: the counts: the button and the plan agree and nothing was added (FileSafe was already kept fixed); the opt-in says what stays as usual`, w.after.n === w.after.T && w.after.n === w.before.n && /Profile in use/.test(w.compAfter) && /stays as usual, as you chose/.test(w.compAfter), JSON.stringify({ before: w.before, after: { n: w.after.n, T: w.after.T }, comp: w.compAfter }));
+			await t.check(`F2 (Sol max), ${W2}: the preview lists neither Profile in use nor an Automation setting, lists FileSafe, and names what stays as usual`, w.preview.rows > 0 && !w.preview.row && !w.preview.kind.length && w.preview.fs && /Profile in use/.test(w.preview.left), JSON.stringify(w.preview));
+			if (where === 'settings') await t.check(`F2 (Sol max), ${W2}: Copy writes neither Profile in use nor an Automation setting into ${w.dst}, and writes FileSafe`, !!w.write && !w.write.row && !w.write.help && !w.write.kind.length && w.write.fs && w.write.n === w.after.T, JSON.stringify(w.write));
+			if (where === 'new') await pic(t, 'f2-preview', 'F2: New Project like recipe-app, Keep them fixed, Profile in use and Automation unticked, then the Home NAS values: the preview leaves both out and says so', '.psx-sheet.psx-copy');
+			await run(t, () => window.PSX.closeSheets()); await settle(t, 300);
+		}
+		// the other order: the computer's values first, Profile in use unticked among them, then Keep them fixed
+		await reset(t);
+		const rev = await run(t, async (F) => {
+			const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), out = {};
+			const sh = () => document.querySelector('.psx-sheet.psx-copy');
+			await P.command({ cmd: 'moment', id: 'copy-new' }); await wait(700);
+			const more = sh().querySelector('[data-act="more"]'); if (more) { more.click(); await wait(250); }
+			const r = sh().querySelector('input[name="psx-src"][value="recipe-app"]'); if (r) { r.click(); await wait(300); }
+			const adv = sh().querySelector('details.psx-adv'); if (adv && !adv.open) { sh().querySelector('details.psx-adv > summary').click(); await wait(250); }
+			sh().querySelector('input[data-act="fromcomp"]').click(); await wait(250);
+			const ob = sh().querySelector('[data-act="openkind"][data-kind="permissions_security"]'); if (ob && ob.getAttribute('aria-expanded') !== 'true') { ob.click(); await wait(220); }
+			const rb = sh().querySelector(`input[data-id="${F.row}"]`); out.listed = !!rb; out.wasOn = !!rb && rb.checked;
+			if (rb && rb.checked) { rb.click(); await wait(250); }
+			out.afterUntick = P.copy.plan().rows.some((x) => x.id === F.row);
+			sh().querySelector('input[data-act="fixed"]').click(); await wait(250);
+			out.afterFixed = P.copy.plan().rows.some((x) => x.id === F.row);
+			const rb2 = sh().querySelector(`input[data-id="${F.row}"]`); out.box = rb2 ? rb2.checked : 'not listed';
+			return out;
+		}, F2);
+		await t.check('F2 (Sol max), the other order: the Home NAS values list Profile in use with its own tick; unticked there, turning Keep them fixed on doesn’t bring it back', rev.listed && rev.wasOn && !rev.afterUntick && !rev.afterFixed && rev.box === false, JSON.stringify(rev));
+		/* the same rule inside one kind: Keep them fixed on, the Automation kind unticked, then one of its rows ticked by
+		   itself. Only that row joins; the old build re-selected the whole kind, bringing back every row in it */
+		await reset(t);
+		const one = await run(t, async (F) => {
+			const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), out = {};
+			const sh = () => document.querySelector('.psx-sheet.psx-copy');
+			await P.command({ cmd: 'moment', id: 'copy-new' }); await wait(700);
+			const more = sh().querySelector('[data-act="more"]'); if (more) { more.click(); await wait(250); }
+			const r = sh().querySelector('input[name="psx-src"][value="recipe-app"]'); if (r) { r.click(); await wait(300); }
+			const adv = sh().querySelector('details.psx-adv'); if (adv && !adv.open) { sh().querySelector('details.psx-adv > summary').click(); await wait(250); }
+			sh().querySelector('input[data-act="fixed"]').click(); await wait(250);
+			const inKind = () => P.copy.plan().rows.filter((x) => P.copy.kindOf(x.id) === F.kind).map((x) => x.id);
+			out.inKindBefore = inKind().length;
+			const kb = sh().querySelector(`input[data-act="kind"][data-kind="${F.kind}"]`); if (kb && kb.checked) { kb.click(); await wait(250); }
+			out.afterKindOff = inKind().length;
+			const ob = sh().querySelector(`[data-act="openkind"][data-kind="${F.kind}"]`); if (ob && ob.getAttribute('aria-expanded') !== 'true') { ob.click(); await wait(220); }
+			const box = sh().querySelector(`.psx-kind-rows input[data-kind="${F.kind}"]:not(:checked)`); out.ticked = box && box.dataset.id;
+			if (box) { box.click(); await wait(250); }
+			out.after = inKind();
+			return out;
+		}, F2);
+		await t.check('F2: in a deselected kind, ticking one row brings only that row; the rest of the kind stays out', one.inKindBefore > 1 && one.afterKindOff === 0 && !!one.ticked && one.after.length === 1 && one.after[0] === one.ticked, JSON.stringify(one));
+		// found while proving F2's write: a setting with no value can't be kept fixed, so it is never counted or previewed
+		const noValue = await run(t, () => window.PSX.copy.plan().rows.filter((x) => x.fixed && x.value === undefined).map((x) => x.id));
+		await t.check('F2: Keep them fixed counts, previews and writes no setting that has no value (each one it counts is written)', !noValue.length, noValue.join(', '));
+		await run(t, () => window.PSX.closeSheets());
 	});
 
 	/* ------------------------------------------------------------------ guided flows 8.03-8.04: Always allow
@@ -899,7 +1020,7 @@ export default async function (t) {
 		const states = () => run(t, STATES);
 		const ed = async (id) => run(t, (i) => {
 			const e = document.querySelector(`.psx-sheet [data-always="${i}"]`); if (!e) return null;
-			return { pat: [...e.querySelectorAll('[data-pat]')].map((r) => r.checked), where: [...e.querySelectorAll('[data-where]')].map((r) => r.value + ':' + r.checked), save: e.querySelector('[data-always-save]').getAttribute('aria-disabled'), note: !!e.querySelector('[data-k="noeverywhere"]'), covers: (e.querySelector('[data-k="covers"]') || {}).textContent || '', preview: (e.querySelector('[data-k="preview"]') || {}).textContent || '' };
+			return { pat: [...e.querySelectorAll('[data-pat]')].map((r) => r.checked), where: [...e.querySelectorAll('[data-where]')].map((r) => r.value + ':' + r.checked), save: e.querySelector('[data-always-save]').getAttribute('aria-disabled'), note: !!e.querySelector('[data-k="noeverywhere"]'), noteText: (e.querySelector('[data-k="noeverywhere"]') || {}).textContent || '', cleared: ((e.querySelector('[data-k="cleared"]') || {}).textContent || '').replace(/\s+/g, ' ').trim(), covers: (e.querySelector('[data-k="covers"]') || {}).textContent || '', preview: (e.querySelector('[data-k="preview"]') || {}).textContent || '' };
 		}, id);
 		// a step or an answer the page doesn't offer fails its case and the walk goes on (an older build has no home read)
 		const has = async (sel) => (await t.root.locator(sel).count()) > 0;
@@ -953,6 +1074,107 @@ export default async function (t) {
 		e = await ed('release');
 		await t.check('N2: git push origin * typed on the release step is about git, not a path, so Everywhere is offered (PS-144: what the rule is about)', !!e && e.where.some((x) => /^everywhere/.test(x)) && !e.note, JSON.stringify(e));
 		await t.root.locator(`${sh} [data-always-cancel="release"]`).click(); await settle(t, 200);
+
+		/* review Sol max F1: seven spellings offered Everywhere on b5e34f24a5 (a path behind =, a quoted path, a drive
+		   written C:/, a relative backslash path, a UNC share) and one was saved there. Each is typed as your own pattern
+		   on npm test, a step whose own target is portable, so only the pattern can hide Everywhere. It must be hidden,
+		   with a line naming the path; and on a build that still offers it, choosing it and Add the rule (the reviewer's
+		   save) must keep no Everywhere rule */
+		const HOST7 = [['npm --prefix=/opt/release test', '/opt/release'], ['npm --prefix=../other test', '../other'], ['"/opt/tools/runner" test', '/opt/tools/runner'], ['"../tools/runner" test', '../tools/runner'], ['C:/Tools/runner test', 'C:/Tools/runner'], ['.\\tools\\runner test', '.\\tools\\runner'], ['\\\\nas\\share\\runner test', '\\\\nas\\share\\runner']];
+		const typeOwn = async (id, pat) => {
+			if (!(await has(`${sh} [data-always="${id}"]`))) { await t.root.locator(`${sh} [data-ask="${id}"][data-a="always"]`).click(); await settle(t, 200); }
+			if (!(await t.root.locator(`${sh} [data-always="${id}"] [data-pat="own"]`).isChecked())) { await t.root.locator(`${sh} [data-always="${id}"] [data-pat="own"]`).check(); await settle(t, 150); }
+			await t.root.locator(`${sh} [data-always="${id}"] [data-pat-own]`).fill(pat); await settle(t, 220);
+		};
+		const keptRules = () => run(t, () => window.PSX.approvals.st.rules.map((r) => `${r.pattern} @ ${r.where}`));
+		for (const [pat, word] of HOST7) {
+			await open('regular');
+			await typeOwn('test', pat);
+			e = await ed('test');
+			const offered = !!e && e.where.some((x) => /^everywhere/.test(x));
+			let saved = [];
+			if (offered) {
+				await t.root.locator(`${sh} [data-always="test"] [data-where="everywhere"]`).check(); await settle(t, 150);
+				await t.root.locator(`${sh} [data-always-save="test"]`).click(); await settle(t, 250);
+				saved = (await keptRules()).filter((r) => / @ everywhere$/.test(r));
+				if (pat === HOST7[0][0]) { await run(t, () => window.__psxScrollTo(document.querySelector('.psx-sheet [data-k="rules"]'), 'center')); await settle(t, 200); await pic(t, 'f1-before-saved-everywhere', `F1 on a build that offers it: ${pat} kept as a command rule Everywhere`, '.psx-sheet'); }
+			} else if (pat === HOST7[0][0]) { await run(t, () => window.__psxScrollTo(document.querySelector('.psx-sheet [data-k="noeverywhere"]'), 'center')); await settle(t, 200); await pic(t, 'f1-host-no-everywhere', `F1: ${pat} typed on npm test: Everywhere hidden, and the line names /opt/release`, '.psx-sheet'); }
+			await t.check(`F1 (Sol max): ${pat} on npm test hides Everywhere, the line names ${word}, and no Everywhere rule can be kept`, !!e && !offered && e.note && e.noteText.includes(word) && !saved.length, JSON.stringify({ where: e && e.where, line: e && e.noteText, saved }));
+		}
+		/* the save guard on its own: Everywhere chosen for the portable npm test, then the pattern swapped for each
+		   spelling with no redraw (an editor still showing Everywhere) and Add the rule pressed. The guard reads the exact
+		   pattern with the editor's classifier: it keeps nothing, clears the place and says why */
+		for (const [pat, word] of HOST7) {
+			await open('regular');
+			await typeOwn('test', 'npm test');
+			await t.root.locator(`${sh} [data-always="test"] [data-where="everywhere"]`).check(); await settle(t, 150);
+			await run(t, (p) => { window.PSX.approvals.st.edit.pattern = p; const i = document.querySelector('.psx-sheet [data-pat-own]'); if (i) i.value = p; }, pat);
+			await t.root.locator(`${sh} [data-always-save="test"]`).click(); await settle(t, 250);
+			const g = await run(t, () => ({ rules: window.PSX.approvals.st.rules.map((r) => `${r.pattern} @ ${r.where}`), note: ((document.querySelector('.psx-note') || {}).innerText || '').replace(/\s+/g, ' ').trim(), cleared: !!document.querySelector('.psx-sheet [data-always="test"] [data-k="cleared"]') }));
+			await t.check(`F1 (Sol max): the save guard keeps no Everywhere rule for ${pat} from an editor that still showed Everywhere, clears the place and says why`, !g.rules.some((r) => / @ everywhere$/.test(r)) && /Not kept/.test(g.note) && g.note.includes(word) && g.cleared, JSON.stringify(g));
+			if (pat === HOST7[0][0]) await pic(t, 'f1-guard', 'F1: the save guard refused Everywhere for npm --prefix=/opt/release test and said why', null);
+		}
+		/* controls: portable patterns still offer Everywhere with no line against them; a web address is not a path (the
+		   old reader took .sh in https://bun.sh/install for a script); one is kept Everywhere */
+		const PORTABLE = ['npm test', 'npm test *', 'git push origin *', 'npm run build', 'git push origin feature/tags', 'docker push ghcr.io/jared/loom:1.4.0', 'npm publish --registry=https://registry.npmjs.org', 'NODE_ENV=production npm test', 'make -j8 test', 'curl -fsSL https://bun.sh/install'];
+		await open('regular');
+		for (const pat of PORTABLE) {
+			await typeOwn('test', pat);
+			e = await ed('test');
+			await t.check(`F1 control: ${pat} still offers Everywhere, with no line against it`, !!e && e.where.some((x) => /^everywhere/.test(x)) && !e.note, JSON.stringify(e));
+		}
+		await typeOwn('test', 'npm test *');
+		await t.root.locator(`${sh} [data-always="test"] [data-where="everywhere"]`).check(); await settle(t, 150);
+		await t.root.locator(`${sh} [data-always-save="test"]`).click(); await settle(t, 250);
+		{ const got = await states(); const bad = same(got, Object.assign(expect('regular', ['test', 'always'], ['npm test *', ['test', 'test2']]), {}), 'regular', { pattern: 'npm test *', kind: 'command', where: 'everywhere' }); await t.check('F1 control: npm test * is kept Everywhere and listed as a command rule Everywhere; it covers the repeat', !bad.length, bad.join(' | ')); }
+		/* a place the pattern no longer allows is cleared, and the editor says so and why: Everywhere chosen for npm test,
+		   then the pattern becomes one of the seven, and /usr/local/bin/npm test (a path the old reader saw too, where the
+		   place was cleared without a word). Choosing a place again takes the line away */
+		for (const [pat, word] of [['npm --prefix=/opt/release test', '/opt/release'], ['/usr/local/bin/npm test', '/usr/local/bin/npm']]) {
+			await open('regular');
+			await typeOwn('test', 'npm test');
+			await t.root.locator(`${sh} [data-always="test"] [data-where="everywhere"]`).check(); await settle(t, 150);
+			await t.root.locator(`${sh} [data-always="test"] [data-pat-own]`).fill(pat); await settle(t, 250);
+			e = await ed('test');
+			await t.check(`F1 (Sol max): npm test changed to ${pat} clears the chosen Everywhere, says so and why, and Add the rule waits for a place`, !!e && e.where.every((x) => /:false$/.test(x)) && !e.where.some((x) => /^everywhere/.test(x)) && /Everywhere, was cleared/.test(e.cleared) && e.noteText.includes(word) && e.save === 'true', JSON.stringify(e));
+			if (pat === '/usr/local/bin/npm test') await pic(t, 'f1-cleared', `F1: Everywhere was chosen for npm test; the pattern became ${pat}, so Everywhere was cleared, with the reason`, '.psx-sheet');
+			await t.root.locator(`${sh} [data-always="test"] [data-where="computer"]`).check(); await settle(t, 150);
+			e = await ed('test');
+			await t.check(`F1: after ${pat}, choosing On this computer takes the cleared line away and Add the rule is ready`, !!e && !e.cleared && e.save !== 'true', JSON.stringify(e));
+		}
+		/* the one reader, read through the page's own functions: every place that asks "is this a path?" (E, the save
+		   guard's classifier, F's named script, D's folder matching and B's home read) */
+		const reader = await run(t, () => {
+			const A = window.PSX.approvals, S = Object.fromEntries(A.ASKS.map((x) => [x.id, x]));
+			const MORE = ['C:\\Tools\\runner test', 'npm --prefix ~/x test', '$HOME/bin/runner', '%USERPROFILE%\\bin\\runner.exe', 'tools/runner test', 'gcc -I/usr/include x', 'PATH=/opt/bin npm test', '//nas/share/runner', '~\\bin\\runner', 'node --require=./hook.js app', "npm --prefix='/opt/x' test", 'prettier --write .', 'tools\\runner test', 'npm --prefix="C:\\Program Files\\x" test'];
+			const out = { hostMissed: MORE.filter((p) => !A.hostDependent(p, S.test)) };
+			out.hostOfMatches = typeof A.hostOf === 'function' ? MORE.concat(['npm test *', 'git *']).filter((p) => !!A.hostOf(p, S.test) !== A.hostDependent(p, S.test)) : ['no hostOf'];
+			// F: a package runner after NAME=value is still a package runner then *
+			out.broadMissed = ['NODE_ENV=production npm *', 'env CI=1 npx *'].filter((p) => !A.isBroad(p, S.test));
+			// D: a folder rule written with a trailing separator or in quotes covers the folder it names
+			out.foldMissed = ['/mnt/team-share/release-notes/', '"/mnt/team-share/release-notes"', '/mnt//team-share/release-notes'].filter((p) => !A.test(p, '/mnt/team-share/release-notes', true));
+			out.foldWrong = ['/mnt/team-share/release-notes-old', '"/mnt/team-share"'].filter((p) => A.test(p, '/mnt/team-share/release-notes', true));
+			// B: the home read is a home-folder path, read by the same reader
+			out.homeRead = [A.MODEL.homeRead(S.home, true), A.MODEL.homeRead(Object.assign({}, S.home, { target: '/mnt/team-share/release-checklist.md' }), true), A.MODEL.homeRead(S.home, false)];
+			return out;
+		});
+		await t.check('F1: the one reader also catches C:\\ paths, ~ and $HOME, %USERPROFILE%, a program run by its location, a flag’s glued path, NAME=/path, //host and quoted Windows paths', !reader.hostMissed.length && !reader.hostOfMatches.length, JSON.stringify(reader));
+		await t.check('F1: broad detection reads the program past NAME=value and env, so NODE_ENV=production npm * is broad', !reader.broadMissed.length, JSON.stringify(reader.broadMissed));
+		await t.check('F1: folder-rule matching reads paths the same way: a trailing separator, quotes or a doubled separator still cover the folder, and nothing wider or other', !reader.foldMissed.length && !reader.foldWrong.length, JSON.stringify(reader));
+		await t.check('F1: the home read takes PS-145’s exception only for a home-folder path, read by the same reader', JSON.stringify(reader.homeRead) === '[true,false,false]', JSON.stringify(reader.homeRead));
+		/* the same weakness in Settings: a row whose value is a place on one computer must be that computer's own (or the
+		   project's), whatever its control. The check's own oracle, not the page's reader: an absolute path */
+		const valuePaths = await run(t, () => {
+			const P = window.PSX, ABS = /^(\/|~[\w.-]*([\\/]|$)|[A-Za-z]:[\\/]|\\\\|file:)/i, out = { rows: [], bad: [] };
+			for (const id of Object.keys(P.DEF)) {
+				const s = window.PM51.setting(id), v = s && typeof s.value === 'string' ? s.value.trim() : '';
+				if (!ABS.test(v)) continue;
+				const d = P.DEF[id]; out.rows.push(id);
+				if (d.home !== 'computer' && d.home !== 'project') out.bad.push(`${id} = ${v} (${d.home || (d.may || []).join('+')})`);
+			}
+			return out;
+		});
+		await t.check(`F1, the same weakness in Settings: each of the ${valuePaths.rows.length} rows whose value is an absolute path belongs to each computer (or to the project), never an everywhere value`, valuePaths.rows.length > 0 && !valuePaths.bad.length, JSON.stringify(valuePaths));
 		// F (broad) and E (host-dependent), on the page's own functions with its own steps
 		const units = await run(t, () => {
 			const A = window.PSX.approvals;

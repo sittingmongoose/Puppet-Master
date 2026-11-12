@@ -79,6 +79,10 @@
     if (/(proxy|\.port$|-port$|bind-address|listen-)/.test(id)) return { home: 'computer', host: true, reason: 'about_the_network' };
     if (/(gpu|vram|cpu-cores|memory-limit-mb|hardware)/.test(id)) return { home: 'computer', host: true, reason: 'about_hardware' };
     if (s.control === 'path' || /(cli-path|binary-path|-binary$|executable|terminal\.shell$|launch-config|docker-host|socket-path)/.test(id)) return { home: 'computer', host: true, reason: /(dir|folder|location)$/.test(id) && !/cli|binary/.test(id) ? 'names_a_folder' : 'names_a_program' };
+    /* review Sol max F1, the same weakness here: a row whose value is a place on one computer (an absolute path, read by
+       the layer's one path reader: /, ~, a drive, a UNC share, file:) is each computer's own, whatever its control.
+       A value is one word, never a command line, so "anthropic/claude-sonnet-4" stays a model's name */
+    if (typeof s.value === 'string' && (() => { const f = PSX.paths.word(s.value.trim(), false); return !!f && /^(root|home|drive|unc|file)$/.test(f.root); })()) return { home: 'computer', host: true, reason: 'names_a_path' };
     if (/^general\.visual\./.test(id) || /^general\.interaction\.(sound|submit-key|haptic)/.test(id) || /^general\.startup\.window/.test(id) || /(keyboard-shortcuts|font-family|ui-scale|zoom-level)/.test(id)) return { may: ['device'], screen: true };
     // a safety row: the more careful of a computer's and a project's own (1.4)
     if (/^safety\./.test(id) && !Array.isArray(s.value) && (typeof s.value !== 'object' || s.value === null)) return { may: ['computer', 'project'], combine: 'more_careful', careful: carefulOrder(s, id), safety: true };
