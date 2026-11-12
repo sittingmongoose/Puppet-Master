@@ -4135,5 +4135,104 @@
       }
     }
   ],
-  "validation": "Immutable Git-source quote checks pass. Serial audit and seven full regression rechecks queued; no passing runtime result claimed yet."
+  "validation": {
+    "status": "pass",
+    "full_replays": [
+      {
+        "label": "RECHECK-DG6A-regression-alert.acknowledged",
+        "exit": 0,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DG6A-regression-alert.acknowledged.log",
+        "sha256": "fd831867a56ed8b9051c0029e3e9ac683ff04a119562d315833e5febc667f2de",
+        "observed": {
+          "status": "pass",
+          "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+          "executed_head": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+          "cases": 129
+        }
+      },
+      {
+        "label": "RECHECK-DG6A-regression-alert.dismissed",
+        "exit": 0,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DG6A-regression-alert.dismissed.log",
+        "sha256": "691bc3351a6b18c7a20de3ce61227e83f75ca66aa088bd9c3bbcfa1df7dbdbb3",
+        "observed": {
+          "status": "pass",
+          "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+          "executed_head": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+          "cases": 129
+        }
+      },
+      {
+        "label": "RECHECK-DG6A-regression-alert.rule_muted",
+        "exit": 0,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DG6A-regression-alert.rule_muted.log",
+        "sha256": "aa3e93a4ec1d32f4174fffaa31c43efc8bf52475e8f0b823779b6a01d75f37d6",
+        "observed": {
+          "status": "pass",
+          "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+          "executed_head": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+          "cases": 129
+        }
+      },
+      {
+        "label": "RECHECK-DG6A-regression-alert.snoozed",
+        "exit": 0,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DG6A-regression-alert.snoozed.log",
+        "sha256": "5edab2b941289d9c11b47b953feb1fd0a118384f0f0d56565daf6e4b61732a10",
+        "observed": {
+          "status": "pass",
+          "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+          "executed_head": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+          "cases": 155
+        }
+      },
+      {
+        "label": "RECHECK-DG6A-regression-panel.redocked",
+        "exit": 0,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DG6A-regression-panel.redocked.log",
+        "sha256": "991fc46da76ae52481e067521a24094ad5ab352900dc924ba5f33a71a4f03f38",
+        "observed": {
+          "status": "pass",
+          "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+          "executed_head": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+          "cases": 167
+        }
+      },
+      {
+        "label": "RECHECK-DG6A-regression-panel.undocked",
+        "exit": 0,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DG6A-regression-panel.undocked.log",
+        "sha256": "6883fcd629ad446c40a352b5a0a9bd99f0afeb8515e4e947dbcfe130573d182e",
+        "observed": {
+          "status": "pass",
+          "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+          "executed_head": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+          "cases": 167
+        }
+      },
+      {
+        "label": "RECHECK-DG6A-regression-concern.created",
+        "exit": 0,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DG6A-regression-concern.created.log",
+        "sha256": "1ce037a619c58a6aff7fe7a525c3ebc3399a62401ef19d0a6f03015e9a991bd4",
+        "observed": {
+          "status": "pass",
+          "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+          "executed_head": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+          "cases": 129
+        }
+      },
+      {
+        "label": "RECHECK-DG6A-audit-grade",
+        "exit": 0,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DG6A-audit-grade.log",
+        "sha256": "60f40f9e80b9dca3de67162b825d7b89b0bf042ec81d4d79d7241dd30da0498b",
+        "observed": {
+          "status": "pass",
+          "citations": 475,
+          "families": 16
+        }
+      }
+    ]
+  }
 }
