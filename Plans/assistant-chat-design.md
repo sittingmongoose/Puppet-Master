@@ -2049,7 +2049,7 @@ Rule: Project retrieval injection MUST remain **separate** from Assistant memory
 
 Rule: Project retrieval injection MUST respect:
 - **Thread-local Auto Retrieval override** (chip; default On; user can disable per thread).
-- **Per-project retrieval settings** (allowlist + modes + budgets; Settings/Memory).
+- **Per-project retrieval settings** (allowlist + modes + budgets; no longer under Settings/Memory, and none of them is a Memory-page control since DL-475): which project files are searchable stays with the Indexing settings (FinalGUISpec F3-107), and retrieval modes and budgets use built-in owner behavior with the existing policy/source restrictions and smaller limits (SSYS-040 hides the old `memory.retention.retrieval-*` tuning rows).
 - **Context Lens overlays** (§17.6) to avoid injecting muted content or ignoring focused selections.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
@@ -13139,7 +13139,7 @@ canonical_text: >-
   Project retrieval injection respects the Thread-local Auto Retrieval chip,
   per-project retrieval settings, and Context Lens overlays.
 gui_related: true
-gui_classification_reason: Retrieval chips, Settings/Memory controls, and Context Lens overlays are visible or user-configurable UI.
+gui_classification_reason: Retrieval chips and Context Lens overlays are visible or user-configurable UI; per-project retrieval has no Memory-page control (DL-475).
 depends_on: [ACD-190]
 unblocks: [ACD-194]
 acceptance_criteria:
