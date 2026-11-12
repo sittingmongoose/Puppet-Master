@@ -3107,7 +3107,7 @@
       if (q && typeof q.pct === 'number' && Math.round(q.pct) !== D.usagePct) {
         D.usagePct = Math.round(q.pct);
         var pctEl = document.getElementById('pm6DashUsagePct');
-        if (pctEl) pctEl.textContent = D.usagePct + '%';
+        if (pctEl && pctEl.textContent !== D.usagePct + '%') pctEl.textContent = D.usagePct + '%';
         refreshKind('quota_summary');
       }
     }
