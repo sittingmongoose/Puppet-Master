@@ -550,7 +550,7 @@ class CancelWorld(IW.S1CancelWorld):
                     self.storage.committed_version(host.FAMILY,host.key(scope),physical_sha256(current)) and
                     stored.wrapper['schema_id']==ref['schema_id'] and stored.wrapper['schema_version']==ref['schema_version'])
                 if valid:return copy.deepcopy(stored.wrapper)
-            except (A.AdapterRefusal,RW.Refusal,S.StorageRefusal,NR.NumruleRefusal,SW.DGRefusal,KeyError,TypeError):
+            except (A.AdapterRefusal,RW.Refusal,S.StorageRefusal,RW.NR.NumruleRefusal,SW.DGRefusal,KeyError,TypeError):
                 pass
             raise error
 
