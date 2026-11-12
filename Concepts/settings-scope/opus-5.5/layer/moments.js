@@ -557,8 +557,10 @@
       remote: { answers: ['once', 'session', 'no'], yoloAsks: false, rule: null },
       'remote-delete': { answers: ['once', 'no'], yoloAsks: true, rule: null }
     },
-    // B, the path exception: a home read the task needs (a step marked home), while FileSafe is on
-    homeRead: (a, fileSafe) => !!a.home && !!fileSafe,
+    /* B, the path exception: a home read the task needs (a step marked home), while FileSafe is on. Review Sol max F1:
+       the step's target is read by the layer's one path reader too, so a step marked home whose path isn't in the home
+       folder never takes the exception */
+    homeRead: (a, fileSafe) => !!a.home && !!fileSafe && PSX.paths.find(a.target).some((f) => f.root === 'home'),
     /* C. how long an answer lasts. step: this step only (§6.1 "Once authorizes one invocation"; §2.3 deny blocks the
        invocation). run: the same request later in this run and this run mode, gone at a new run or a switch of Run
        mode (§6.1 "for session is ephemeral under approval_scope_key"; PS-113; §2 Rules 3). rule: a kept rule, in every
@@ -593,15 +595,35 @@
     { id: 'delete', what: 'Delete a branch on GitHub', kind: 'remote-delete', cmd: 'git push origin --delete old-ui', target: 'git push origin --delete old-ui', why: 'Deleting on the remote still asks, naming the branch.', report: 'Deleted the branch old-ui on origin. No safe Undo: push it again from a local copy to bring it back.' }
   ];
   const ruleKind = (a) => MODEL.kinds[a.kind].rule;
+  const PATHS = PSX.paths;
   /* E. host-dependent: what the rule allows depends on one computer. A folder rule always is; a command rule is when
-     its pattern names a path or a script, when its program is a file command (read, rm and the like), or when its
-     program is a wildcard (*, ./scripts/*: programs at every location). Review A-r4 N2: it comes from the pattern, what
-     the rule is about (PS-144), never from the step it was typed on. The file-command and wildcard-program parts are
-     concept choices: a pattern that can match a program by its path is about that location */
-  const hostText = (t) => /(^|\s)(~|\.{1,2}\/|\/|[A-Za-z]:\\)/.test(t) || /\.(sh|ps1|bat|cmd|exe|py)\b/.test(t);
+     its pattern names a path anywhere in it (PSX.paths, the layer's one path reader: behind "=", in quotes, a drive with
+     either separator, backslashes, ~, a UNC share), runs a program by its location, or names a script file; when its
+     program is a file command (read, rm and the like); or when its program is a wildcard (*: programs at every
+     location). Review A-r4 N2: it comes from the pattern, what the rule is about (PS-144), never from the step it was
+     typed on. The file-command and wildcard-program parts are concept choices: a pattern that can match a program by
+     its path is about that location.
+     Review Sol max F1: hostOf() is the one classifier. The editor's places, its line saying why, the line saying a
+     chosen place was cleared, and the save guard all call it, so what the editor offers and what Add the rule keeps
+     can never differ. It says why: { why: folder | path | file | program | filecmd | wildcard, word } or null */
   const FILE_CMDS = /^(read|write|edit|list|open|cat|less|head|tail|ls|cp|mv|rm|rmdir|mkdir|touch|chmod|chown|find|grep|tar|zip|unzip)$/i;
-  const words = (p) => { const w = String(p || '').trim().split(/\s+/).filter(Boolean); return w[0] === 'sudo' ? w.slice(1) : w; };
-  const hostDependent = (pattern, a) => { const p = String(pattern || '').trim(), w = words(p); return (!!a && ruleKind(a) === 'path') || hostText(p) || (!!w[0] && (FILE_CMDS.test(w[0]) || w[0].includes('*'))) || p === '*'; };
+  const hostOf = (pattern, a) => {
+    if (a && ruleKind(a) === 'path') return { why: 'folder' };
+    const p = String(pattern || '').trim(); if (!p) return null;
+    const f = PATHS.find(p)[0];
+    if (f) return { why: f.program ? 'program' : f.file ? 'file' : 'path', word: f.path };
+    const prog = PATHS.program(p);
+    if (prog && prog.includes('*')) return { why: 'wildcard', word: prog };
+    if (prog && FILE_CMDS.test(prog)) return { why: 'filecmd', word: prog };
+    return null;
+  };
+  const hostDependent = (pattern, a) => !!hostOf(pattern, a);
+  // the reason, in the words the editor and the guard show; `code` wraps the word it found
+  const hostWhy = (h, code) => {
+    if (!h) return '';
+    const w = code ? `<code>${esc(h.word)}</code>` : h.word;
+    return { folder: 'a folder rule is about a path on one computer', path: `it names ${w}, a path on one computer`, file: `it names the file ${w}, which is on one computer`, program: `it runs ${w} by its location on one computer`, filecmd: `${w} works on the files of one computer`, wildcard: `${w} can match a program by its location on one computer` }[h.why];
+  };
   /* F. broad: the preview warns, and the rule can still be made. A command rule is broad when its program is a
      wildcard (*, ./scripts/*), when it starts with sudo and has a *, when a shell or interpreter runs * or inline code,
      or when one program word, with or without flags, is followed by * (npm *, npx *, git *, rm -rf *, read *). A named
@@ -609,11 +631,14 @@
      is broad when it reaches past the file or folder the step asked for (/mnt/team-share/**). The whole list is a
      concept choice: canon names none */
   const SHELLS = /^(bash|sh|zsh|fish|dash|ksh|csh|tcsh|pwsh|powershell|cmd(\.exe)?|env|eval|exec|xargs|python[0-9.]*|node|deno|bun|ruby|perl|php|lua|osascript)$/i;
-  const isScript = (w) => /[\\/]/.test(w) || /\.(sh|ps1|bat|cmd|exe|py|js|mjs|ts|rb|pl|php|lua)$/i.test(w);
+  // review Sol max F1: a named script is a word the path reader reads as a program by its location or a script file
+  const isScript = (w) => !!PATHS.word(w, true);
+  const words = (p) => { const all = PATHS.words(p); return all.slice(PATHS.programAt(all)); };
   const isBroad = (pattern, a) => {
     const p = String(pattern || '').trim(); if (!p) return false;
-    if (a && ruleKind(a) === 'path') { const lit = p.split('*')[0].replace(/\/+$/, ''); return p.includes('*') && lit !== a.target && !lit.startsWith(a.target + '/'); }
-    const all = p.split(/\s+/), w = words(p);
+    // a folder rule: its literal start and the step's path, each written one way (quotes off, either separator)
+    if (a && ruleKind(a) === 'path') { const lit = PATHS.norm(p.split('*')[0]), tgt = PATHS.norm(a.target); return p.includes('*') && lit !== tgt && !lit.startsWith(tgt + '/'); }
+    const all = PATHS.words(p), w = words(p);
     if (all[0] === 'sudo' && p.includes('*')) return true;
     if (!w.length || w[0].includes('*')) return true;
     if (SHELLS.test(w[0])) { if (!p.includes('*')) return false; const next = w.slice(1).find((x) => !x.startsWith('-')); return !next || !isScript(next); }
@@ -626,7 +651,10 @@
     if (/\s\*$/.test(t)) { t = t.replace(/\s\*$/, ''); tail = '(\\s.*)?'; } else if (path && /\/\*{1,2}$/.test(t)) { t = t.replace(/\/\*{1,2}$/, ''); tail = '(/.*)?'; }
     return new RegExp('^' + [...t].map((ch) => (ch === '*' ? '.*' : ch === '?' ? '.' : ch.replace(/[.+^${}()|[\]\\]/g, '\\$&'))).join('') + tail + '$');
   };
-  const test = (pattern, target, path) => { try { return globRe(pattern, path).test(target); } catch (e) { return false; } };
+  /* review Sol max F1: a folder rule and the path it is matched against are each written one way by the path reader
+     (quotes off, \ as /, one separator at a time, none at the end), so "/mnt/team-share/release-notes/" or a quoted
+     path covers the folder it names, as the broad check already read it */
+  const test = (pattern, target, path) => { try { return path ? globRe(PATHS.norm(pattern), true).test(PATHS.norm(target)) : globRe(pattern, false).test(target); } catch (e) { return false; } };
   /* D. a rule covers a step only when the step's kind takes that rule kind and the pattern matches the step's target:
      a command rule covers commands, never a path, a push, a publish or a deletion on the remote ("Domain classes remain
      separate from generic tool allow"; PS-146 "No generic tool allow ... is substitute for ... domain authority"); a
@@ -665,9 +693,11 @@
        chosen for you, the preview says what it matches, and only then is the rule kept (guided-flows 8.03) */
     const editor = (a) => {
       const e = st.edit, pat = e.pattern != null ? e.pattern : '', kind = ruleKind(a);
-      const host = hostDependent(pat || a.target, a);
-      const places = MODEL.places(kind, host);
-      if (e.where && !places.includes(e.where)) e.where = null;
+      const host = hostOf(pat || a.target, a);
+      const places = MODEL.places(kind, !!host);
+      // review Sol max F1: a place the pattern no longer allows is cleared, and the editor says so and why
+      if (e.where && !places.includes(e.where)) { e.cleared = e.where; e.where = null; }
+      if (e.where) e.cleared = null;
       const matches = [], misses = [];
       if (pat.trim()) a.samples.forEach((x) => (test(pat, x, kind === 'path') ? matches : misses).push(x));
       const broad = !!pat.trim() && isBroad(pat, a);
@@ -682,7 +712,8 @@
         ${pat.trim() ? `<p class="psx-p" data-k="preview">${mark(broad ? 'warning' : 'info')} <b>Matches:</b> ${esc(matches.join(' · ') || 'none of these')}${misses.length ? `. <b>Still asks:</b> ${esc(misses.join(' · '))}` : ''}.${broad ? ' This one is broad.' : ''}</p>` : `<p class="psx-p psx-muted">Choose a pattern to see what it would match.</p>`}
         <p class="psx-p psx-muted" data-k="covers">${esc(scope)}</p>
         <div class="psx-h">Where it applies</div><div class="psx-copy-choice" role="radiogroup" aria-label="Where the rule applies">${whereHtml}</div>
-        ${places.includes('everywhere') ? '' : `<p class="psx-p psx-muted" data-k="noeverywhere">${mark('info')} Everywhere isn’t offered: ${kind === 'path' ? 'a folder rule is about a path on one computer' : 'this rule is about a path, a folder or a program’s location on one computer'}.</p>`}
+        ${places.includes('everywhere') ? '' : `<p class="psx-p psx-muted" data-k="noeverywhere">${mark('info')} Everywhere isn’t offered: ${hostWhy(host, true)}.</p>`}
+        ${e.cleared ? `<p class="psx-p" data-k="cleared" data-cleared="${esc(e.cleared)}" role="status">${mark('warning')} <b>Your choice, ${esc(PLACE[e.cleared][0])}, was cleared</b> ${places.includes(e.cleared) ? 'while the pattern was about one computer' : 'for that reason'}. Choose where it applies again; nothing is chosen for you.</p>` : ''}
         <div class="psx-li-end" style="justify-content:flex-start"><button type="button" class="psx-tb is-primary" data-always-save="${a.id}"${ready ? '' : ' aria-disabled="true"'}>Add the rule</button><button type="button" class="psx-tb" data-always-cancel="${a.id}">Cancel</button></div>
       </div></li>`;
     };
@@ -720,7 +751,17 @@
     const focusIn = (s, id) => { const f = s.body.querySelector(`[data-always="${id}"] input`); if (f) try { f.focus(); } catch (e) { /* gone */ } };
     const always = (a, pattern, where, s) => {
       const kind = ruleKind(a);
-      if (!kind || !MODEL.places(kind, hostDependent(pattern, a)).includes(where)) return;
+      if (!kind) return;
+      /* review Sol max F1: the guard asks the editor's own classifier about the exact pattern it is about to keep. A
+         place that pattern doesn't allow is never kept: it is cleared, the editor says why, and a note says nothing
+         was kept */
+      const host = hostOf(pattern, a);
+      if (!MODEL.places(kind, !!host).includes(where)) {
+        if (st.edit) { st.edit.cleared = PLACE[where] ? where : null; st.edit.where = null; }
+        draw(s);
+        PSX.note({ title: 'Not kept', body: `${PLACE[where] ? PLACE[where][0] : 'That place'} isn’t offered for ${pattern}: ${hostWhy(host)}. Choose where it applies; no rule was kept.`, mark: 'warning' });
+        return;
+      }
       st.rules.push({ kind, pattern, where, at: at(a) });
       st.edit = null;
       st.done[a.id] = { mark: 'complete', word: 'Allowed, rule kept', text: `${a.report} Kept as a ${RULE_WORD[kind]}: ${pattern}, ${PLACE[where][2]}.`, by: 'always' };
@@ -731,7 +772,7 @@
     // a new run (Run it again, or a switch of Run mode) starts with no answers and no session answers; kept rules
     // apply to the whole of every later run
     const start = () => { st.done = {}; st.edit = null; st.session = []; st.run += 1; st.fileSafe = fileSafeNow(); st.rules.forEach((r) => { r.at = -1; }); settle(); draw(s); };
-    PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); }, st, MODEL, ASKS, covers, hostDependent, isBroad, test };
+    PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); }, st, MODEL, ASKS, covers, hostDependent, hostOf, isBroad, test };
     start();
   }
 

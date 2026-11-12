@@ -78,7 +78,7 @@ projects-redesign.
 
 | File | What |
 |---|---|
-| `layer/world.js` | `window.PSX`: helpers, the layer's storage (`psx.settings-scope.v1`, review options and the one-time tip only, with an in-memory fallback), the demo world (`PSX.W`, `PSX.freshWorld()`), world transactions with History and Undo, the note, sheets and menus |
+| `layer/world.js` | `window.PSX`: helpers, the path reader (`PSX.paths`, the one answer to "is this a path?"), the layer's storage (`psx.settings-scope.v1`, review options and the one-time tip only, with an in-memory fallback), the demo world (`PSX.W`, `PSX.freshWorld()`), world transactions with History and Undo, the note, sheets and menus |
 | `layer/resolve.js` | `PSX.resolve(id, ctx)` and `PSX.selfTest()` (BUILD-SPEC section 5's 16 cases, and 6 more from the fix pass: an AI service's own value, Changed under a limit, an adopted safety row and an adopted limit row) |
 | `layer/guard.js` | The one guarded write path, `PSX.write` (first start, the device in use, the level, the value's type and range, the writer answering, pairing; atomic or a batch that names what it couldn't change), `PSX.simulate` (what a transaction does to every project, deletions included), `PSX.confirm` (each yes-point in Regular and YOLO), and the command list with each command's Plans owner or named gap |
 | `layer/feed.js` | adopts every inventory row; feeds each project's resolved values into `PM_SETTINGS_PROJECT_SNAPSHOTS` and switches project with `PM_ACTIVE_PROJECT_ID` + `PM12_KIMI.reloadProject()`; pushes single values with `PM12_KIMI.setSettingFromHost`; the router that routes a person's change to its level; the note's words; the hold on the engine's own Saved toast |
@@ -152,7 +152,11 @@ the same redraw is then checked on bare PMConcept7. `head` measures the header's
 `where` builds Where it applies for every adopted row and opens one panel of each kind. `detail` measures every
 detail-card value against its widest word (round A-r4). `copy` covers Copy settings.
 `always` keeps its own copy of the rule model's tables (above) and walks every 11.18 step × answer × run mode × same
-run, new run and mode switch, reading what each row shows.
+run, new run and mode switch, reading what each row shows. Since the Sol max fixes, `always` also types the seven
+host-dependent spellings the review found, tries the save guard with each, keeps portable controls offering Everywhere,
+checks that a place the pattern no longer allows is cleared with a reason, and reads the one path reader through broad
+detection, folder matching and the home read; `copy` walks Keep them fixed, an unticked row and kind, then the
+computer's values, through the ticks, the counts, the preview and the write, and the other order.
 
 ## Jared's review fixes (2026-11-10)
 
@@ -204,7 +208,8 @@ items 3, 4, 8 and 11) and the guided-flows check named what this concept must ch
 - **Copy settings (guided flows 3.02-3.07, 3.12, 3.17).** The kind reads **Notifications & limits** (NEW CANON:
   Settings_System's P12 label). Keep them fixed adds only rows of the kinds you selected and never a row you unticked;
   a deselected kind stays deselected when Keep them fixed is turned off and on (NEW CANON: “freezes only eligible
-  selected values”). Advanced lists the fixed rows under their kind, one tick each. A device-bound account gets the
+  selected values”). Advanced lists the fixed rows under their kind, one tick each. Since the Sol max fixes, Copy what
+  it gets from its computer obeys the same ticks: one selection by setting id covers all three lists. A device-bound account gets the
   real `cannot_move` result, “Can’t be used on Home NAS”, with Split v2's reason, and stays the intended choice (NEW
   CANON: MA-074 and Settings_System's outcome list); in the New Project moment tastebook also uses a Copilot seat tied
   to This computer, which shows it. The account
@@ -285,13 +290,33 @@ path, and that suggestion is meant to cover the folder it names.
 | Rule | This project | This computer | Everywhere | Rests on |
 |---|---|---|---|---|
 | command rule that isn't host-dependent (`npm test *`, `git *`) | offered | offered | offered | PS-144 "Always requires a person to choose the exact pattern and `This project`, `This computer` or `Everywhere`; nothing is preselected." |
-| host-dependent command rule: its pattern names a path or a script | offered | offered | **never** | PS-144 "Rules about a file, directory, executable location, root or other host-dependent target never offer Everywhere." |
+| host-dependent command rule: its pattern names a path anywhere in it, runs a program by its location, or names a script file (the path reader below) | offered | offered | **never** | PS-144 "Rules about a file, directory, executable location, root or other host-dependent target never offer Everywhere." |
 | …and, as a **concept choice**, a pattern whose program is a file command (`read *`, `rm -rf *`) or a wildcard (`*`, `./scripts/*`) | offered | offered | **never** | Canon names targets, not commands. A file command acts on files of one computer, and a wildcard program can match a program by its path on one computer, so these are treated as about a location. |
 | folder rule | offered | offered | **never** | §6.1 "paths never offer Everywhere". |
 | (no project open) | hidden | | | §6.1 "no-project hides This project". |
 
 Host-dependence comes from the pattern, which is what the rule is about (PS-144), never from the step it is typed on
 (round A-r4, N2): `git push origin *` typed on the release step offers Everywhere.
+
+**The path reader** (`PSX.paths` in `layer/world.js`, Sol max F1). One reader answers "is this a path?" for the whole
+layer: the editor's places, its line saying why, the line saying a chosen place was cleared, the save guard, broad
+detection (F), folder-rule matching (D) and the home read (B). It splits the pattern as a shell does (quotes keep a word
+together and come off) and reads every word, wherever it sits. A word is a path when it
+
+- starts at a root: `/` and `//host`, `\\host`, `~` or `~user`, a drive (`C:\` or `C:/`), a variable then a separator
+  (`$HOME/`, `${HOME}/`, `%USERPROFILE%\`, `$env:USERPROFILE\`), or `file:`;
+- is relative by its dots: `.`, `..`, `./`, `../`, `.\`, `..\`;
+- has a backslash between two names (`tools\runner`: read as a Windows path, the careful reading);
+- names a script or program file by its extension (`.sh`, `.ps1`, `.bat`, `.cmd`, `.exe`, `.py`, `.js` and the like).
+
+The value of `--opt=value` or `NAME=value` (each part of a `,` `;` or `:` list) and a value written against a
+one-letter flag (`-I/usr/include`) are read the same way. The program word (the first, after `sudo`, `env` and
+`NAME=value`) is a path whenever it holds a `/` or a `\`: a shell runs such a command by its location, not from `PATH`.
+A web address (`https://bun.sh/install`) is never a path. So `npm --prefix=/opt/release test`, `"../tools/runner" test`,
+`C:/Tools/runner test`, `.\tools\runner test` and `\\nas\share\runner test` never offer Everywhere, and the line under
+the places names what it found ("it names /opt/release, a path on one computer"). Folder rules and the paths they are
+matched against are each written one way first (quotes off, `\` as `/`, one separator at a time, none at the end), so
+`/mnt/team-share/release-notes/` covers the folder it names.
 
 **F. What counts as broad** (the preview warns "This one is broad"; the rule can still be made). **The whole table is
 a concept choice:** canon names no list. It is the lead's r3 definition ("A bare `*`, a shell, interpreter or package
@@ -313,6 +338,37 @@ runner, `sudo`, or `rm -rf` followed by `*` is broad. A specific script path fol
 home read (§3.3, §4.2, PS-026, PS-145), a deletion on the remote (PS-146), and a looser rule from a repository, which
 stays held (PS-144). Nothing YOLO runs without asking becomes an Always rule (PS-144 "YOLO ordinary auto-allow creates
 neither an Always rule nor a FileSafe approved-command entry").
+
+## Sol max fixes (2026-11-12)
+
+The blind max review (`REVIEW-concept-A-max-sol.md`) found two defects; each was reproduced on `b5e34f24a5` by a new
+check before it was fixed, and the same checks pass now. `CONCEPT-FIX-REPORT-A.md` has the numbers and pictures.
+
+- **F1, host-dependent patterns could be saved Everywhere.** 11.18's `hostText` saw a path only at the start of a
+  word and only as `/`, `~`, `./`, `../` or `C:\`, so `npm --prefix=/opt/release test`, `npm --prefix=../other test`,
+  `"/opt/tools/runner" test`, `"../tools/runner" test`, `C:/Tools/runner test`, `.\tools\runner test` and
+  `\\nas\share\runner test` offered Everywhere, and Add the rule kept one there. Now one path reader (`PSX.paths`,
+  described under table E) decides, through one classifier, `hostOf()`: the editor's places, its line saying why (which
+  now names the path it found), and the save guard. The guard reads the exact pattern it is about to keep; a place that
+  pattern doesn't allow is never kept, the place is cleared and a note says why. When a change of pattern takes away
+  the place you chose, the editor clears it and says so ("Your choice, Everywhere, was cleared"); choosing a place again
+  takes the line away. The same weakness elsewhere, each now on the same reader: broad detection (a program named past
+  `NAME=value` or `env`, so `NODE_ENV=production npm *` is broad), folder-rule matching (a trailing separator, quotes or
+  a doubled separator still name the same folder), the home read (PS-145's exception needs a home-folder path), and
+  Settings rows whose value is an absolute path (`feed.js`: Rule Storage Location, `~/.config/puppet-master/permissions.toml`,
+  was a text row offered as an everywhere value; it is now each computer's own, "a path names a place on one computer",
+  as the Projects folder already was. The reference gives it global and project scope; the reviewed classification
+  stays a Plans task).
+- **F2, Copy what it gets from its computer restored a setting you had unticked.** The plan added the computer's values
+  after the source's own values and before Keep them fixed's filter, so they skipped every kind and row exclusion:
+  Profile in use, unticked and showing "Stays as usual", came back in the plan and the preview. Now the copy has one
+  list of every setting it can bring, one row per setting id (its own values, then the computer's, then Keep them
+  fixed's), and one tick per id: yours if you gave one, otherwise its kind's. Advanced lists the computer's values under
+  their kind with that tick; the counts, What comes along, the button, the preview, the commit and the receipt read the
+  same list; the opt-in says "(1 of 3)" and names what stays as usual, and the preview says "Stays as usual, as you
+  chose". Ticking one row in a deselected kind now brings only that row (it used to re-select the kind's fixed rows).
+  Found while proving the write: Keep them fixed counted two settings that have no value (`code.terminal.sixtyfour-*`),
+  which a write can't keep; they are no longer counted, previewed or written.
 
 ## Fix round A-r4 (2026-11-11)
 
