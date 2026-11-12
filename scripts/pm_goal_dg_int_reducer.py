@@ -372,8 +372,13 @@ def acquire_legacy(world):
     else:
         retained=SR.retained_native(sw,where='legacy/retained_start')
         event_id=retained['commit']['record']['event_id']
-        info=world.storage.events.get(event_id)
-        retired=info is not None and any(s['generation']==info['segment_generation'] and s['retired'] for s in world.storage.segments)
+        sequence=retained['commit']['record']['first_append_receipt']['sequence_id']
+        # Rebuilding the index removes retired Events. Use the retained
+        # original receipt and the actual segment disposition; absence from
+        # the live Event index alone never proves lawful expiry.
+        retired=any(g['first_sequence']<=sequence<=g['last_sequence'] and
+            any(s['generation']==g['segment_generation'] and s['retired'] for s in world.storage.segments)
+            for g in world.storage.gaps)
         if retired:
             started=[]
             retained_start=[retained]
