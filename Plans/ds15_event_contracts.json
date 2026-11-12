@@ -13,7 +13,7 @@
     "checkpoint_key": "projector.checkpoint.ds15.doctor_custom_headless_checked:{project_id}",
     "idempotency_recipe": "sha256(canonical MessagePack array [\"doctor.custom_headless.checked\", \"1.0.0\", actual project_id, doctor_invocation_id])",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/doctor_custom_headless_checked-search.json",
     "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
     "identity_fields": [
@@ -36,7 +36,7 @@
     "checkpoint_key": "projector.checkpoint.ds15.live_session_started:{project_id}",
     "idempotency_recipe": "sha256(canonical MessagePack array [\"live.session.started\", \"1.0.0\", actual project_id, live_session_id])",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/live_session_started-search.json",
     "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
     "identity_fields": [
@@ -59,7 +59,7 @@
     "checkpoint_key": "projector.checkpoint.ds15.live_step_updated:{project_id}",
     "idempotency_recipe": "sha256(canonical MessagePack array [\"live.step.updated\", \"1.0.0\", actual project_id, live_session_id,step_id,step_revision])",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/live_step_updated-search.json",
     "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
     "identity_fields": [
@@ -84,7 +84,7 @@
     "checkpoint_key": "projector.checkpoint.ds15.live_artifact_created:{project_id}",
     "idempotency_recipe": "sha256(canonical MessagePack array [\"live.artifact.created\", \"1.0.0\", actual project_id, live_session_id,artifact_id])",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/live_artifact_created-search.json",
     "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
     "identity_fields": [
@@ -108,7 +108,7 @@
     "checkpoint_key": "projector.checkpoint.ds15.live_session_completed:{project_id}",
     "idempotency_recipe": "sha256(canonical MessagePack array [\"live.session.completed\", \"1.0.0\", actual project_id, live_session_id])",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/live_session_completed-search.json",
     "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
     "identity_fields": [
@@ -131,7 +131,7 @@
     "checkpoint_key": "projector.checkpoint.ds15.live_session_degraded:{project_id}",
     "idempotency_recipe": "sha256(canonical MessagePack array [\"live.session.degraded\", \"1.0.0\", actual project_id, live_session_id,degradation_revision])",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/live_session_degraded-search.json",
     "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
     "identity_fields": [
@@ -160,7 +160,7 @@
     ],
     "scope_policy": "project_or_app_actual_browser_namespace",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/browser_context_captured-search.json",
     "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
     "reused_current_sources": [
@@ -196,7 +196,7 @@
     ],
     "scope_policy": "project_only",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_started-search.json",
     "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
     "reused_current_sources": [
@@ -226,7 +226,7 @@
     ],
     "scope_policy": "project_only",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_stopping-search.json",
     "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
     "reused_current_sources": [
@@ -256,7 +256,7 @@
     ],
     "scope_policy": "project_only",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_stopped-search.json",
     "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
     "reused_current_sources": [
@@ -286,7 +286,7 @@
     ],
     "scope_policy": "project_only",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_restarting-search.json",
     "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
     "reused_current_sources": [
@@ -317,7 +317,7 @@
     ],
     "scope_policy": "project_only",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_started-search.json",
     "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
     "reused_current_sources": [
@@ -349,7 +349,7 @@
     ],
     "scope_policy": "project_only",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_refreshed-search.json",
     "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
     "reused_current_sources": [
@@ -381,7 +381,7 @@
     ],
     "scope_policy": "project_only",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_stopped-search.json",
     "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
     "reused_current_sources": [
@@ -407,7 +407,7 @@
     "checkpoint_key": "projector.checkpoint.ds15.catalog_install_started:{scope_key}",
     "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"catalog.install.started\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_started-search.json",
     "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
     "identity_fields": [
@@ -430,7 +430,7 @@
     "checkpoint_key": "projector.checkpoint.ds15.catalog_install_completed:{scope_key}",
     "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"catalog.install.completed\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
     "retention_policy_ref": "PENDING_RETENTION_DECISION",
-    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
     "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_completed-search.json",
     "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
     "identity_fields": [

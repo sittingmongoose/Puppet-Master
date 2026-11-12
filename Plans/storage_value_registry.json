@@ -28786,8 +28786,8 @@
         "data_loss_if_unavailable": true,
         "user_disclosure_required": true
       },
-      "retention_compaction": "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-506 (retention deck 4 Q7 option A): RP-DEBUG-30D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-DEBUG-30D",
       "redaction_no_secret_rule": "Store canonical IDs, hashes, decisions, and non-secret refs only. Reject raw credentials, tokens, auth values, provider-visible bytes, local absolute paths, and protected AuthBrowserSession content.",
       "legacy_canonical_crosswalk_status": "First exact materialization of the accepted owner schema. Any grouped inventory mention remains source lineage only and cannot substitute for this family.",
       "value_schema": {
@@ -124959,8 +124959,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; Case L-3 receipt/audit/source-lineage versus Chat content. No deletion policy is chosen.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-508 (retention deck 4 Q9 option A): RP-CHAT-THREAD-LIFETIME@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Identifiers and authorized refs only; no body text, raw secret, credentials or local paths. Resolve original access and deletion on every read.",
       "legacy_canonical_crosswalk_status": "materialized_current_source_legacy_read_only",
       "recovery_disposition": {
@@ -125682,8 +125682,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; Case L-3 receipt/audit/source-lineage versus Chat content. No deletion policy is chosen.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-508 (retention deck 4 Q9 option A): RP-CHAT-THREAD-LIFETIME@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Identifiers and authorized refs only; no body text, raw secret, credentials or local paths. Resolve original access and deletion on every read.",
       "legacy_canonical_crosswalk_status": "materialized_current_source_legacy_read_only",
       "recovery_disposition": {
@@ -126364,8 +126364,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; Case L-3 receipt/audit/source-lineage versus Chat content. No deletion policy is chosen.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-508 (retention deck 4 Q9 option A): RP-CHAT-THREAD-LIFETIME@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
       "redaction_no_secret_rule": "Identifiers and authorized refs only; no body text, raw secret, credentials or local paths. Resolve original access and deletion on every read.",
       "legacy_canonical_crosswalk_status": "materialized_current_source_legacy_read_only",
       "recovery_disposition": {
@@ -130379,8 +130379,8 @@
           "Plans/storage-plan.md#SP-660"
         ]
       },
-      "retention_compaction": "SP-660: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "SP-660: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-660; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -130982,8 +130982,8 @@
           "Plans/storage-plan.md#SP-660"
         ]
       },
-      "retention_compaction": "SP-660: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "SP-660: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-660; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -131255,8 +131255,8 @@
           "Plans/storage-plan.md#SP-661"
         ]
       },
-      "retention_compaction": "SP-661: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "SP-661: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-661; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -131862,8 +131862,8 @@
           "Plans/storage-plan.md#SP-661"
         ]
       },
-      "retention_compaction": "SP-661: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "SP-661: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-661; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -132135,8 +132135,8 @@
           "Plans/storage-plan.md#SP-662"
         ]
       },
-      "retention_compaction": "SP-662: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "SP-662: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-662; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -132748,8 +132748,8 @@
           "Plans/storage-plan.md#SP-662"
         ]
       },
-      "retention_compaction": "SP-662: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "SP-662: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-662; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -133021,8 +133021,8 @@
           "Plans/storage-plan.md#SP-663"
         ]
       },
-      "retention_compaction": "SP-663: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "SP-663: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-663; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -133636,8 +133636,8 @@
           "Plans/storage-plan.md#SP-663"
         ]
       },
-      "retention_compaction": "SP-663: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "SP-663: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-663; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -133899,8 +133899,8 @@
           "Plans/storage-plan.md#SP-660"
         ]
       },
-      "retention_compaction": "SP-660: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-505 (retention deck 4 Q6 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "SP-660: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored closed representation of F3-453 shared owner state; per-family adoption in SP-660..663, not an event-family admission.",
       "recovery_disposition": {
@@ -134035,8 +134035,8 @@
           "Plans/storage-plan.md#SP-660"
         ]
       },
-      "retention_compaction": "SP-660: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-505 (retention deck 4 Q6 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "SP-660: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored closed representation of F3-453 shared owner state; per-family adoption in SP-660..663, not an event-family admission.",
       "recovery_disposition": {
@@ -134182,8 +134182,8 @@
           "Plans/storage-plan.md#SP-664"
         ]
       },
-      "retention_compaction": "SP-664: PENDING_RETENTION_DECISION; audit/telemetry/checkpoint candidates only; no prune while pending.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "SP-664: bounded ids/enums/refs and original host observations only, no chat text/geometry/secrets/paths; current access/deletion checks at disclosure.",
       "legacy_canonical_crosswalk_status": "Newly authored SP-664 technical contract under DL-045; prepared without admission.",
       "recovery_disposition": {
@@ -134795,8 +134795,8 @@
           "Plans/storage-plan.md#SP-664"
         ]
       },
-      "retention_compaction": "SP-664: PENDING_RETENTION_DECISION; audit/telemetry/checkpoint candidates only; no prune while pending.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "SP-664: bounded ids/enums/refs and original host observations only, no chat text/geometry/secrets/paths; current access/deletion checks at disclosure.",
       "legacy_canonical_crosswalk_status": "Newly authored SP-664 technical contract under DL-045; prepared without admission.",
       "recovery_disposition": {
@@ -135085,8 +135085,8 @@
           "Plans/storage-plan.md#SP-665"
         ]
       },
-      "retention_compaction": "SP-665: PENDING_RETENTION_DECISION; audit/telemetry/checkpoint candidates only; no prune while pending.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "SP-665: bounded ids/enums/refs and original host observations only, no chat text/geometry/secrets/paths; current access/deletion checks at disclosure.",
       "legacy_canonical_crosswalk_status": "Newly authored SP-665 technical contract under DL-045; prepared without admission.",
       "recovery_disposition": {
@@ -135698,8 +135698,8 @@
           "Plans/storage-plan.md#SP-665"
         ]
       },
-      "retention_compaction": "SP-665: PENDING_RETENTION_DECISION; audit/telemetry/checkpoint candidates only; no prune while pending.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "SP-665: bounded ids/enums/refs and original host observations only, no chat text/geometry/secrets/paths; current access/deletion checks at disclosure.",
       "legacy_canonical_crosswalk_status": "Newly authored SP-665 technical contract under DL-045; prepared without admission.",
       "recovery_disposition": {
@@ -135986,8 +135986,8 @@
           "Plans/storage-plan.md#SP-666"
         ]
       },
-      "retention_compaction": "SP-666: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "SP-666: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-666; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -136972,8 +136972,8 @@
           "Plans/storage-plan.md#SP-666"
         ]
       },
-      "retention_compaction": "SP-666: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "SP-666: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-666; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -137251,8 +137251,8 @@
           "Plans/FinalGUISpec.md#F3-706"
         ]
       },
-      "retention_compaction": "F3-706: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "F3-706: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-706; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -138240,8 +138240,8 @@
           "Plans/FinalGUISpec.md#F3-706"
         ]
       },
-      "retention_compaction": "F3-706: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-706: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-706; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -138519,8 +138519,8 @@
           "Plans/FinalGUISpec.md#F3-707"
         ]
       },
-      "retention_compaction": "F3-707: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "F3-707: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-707; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -139501,8 +139501,8 @@
           "Plans/FinalGUISpec.md#F3-707"
         ]
       },
-      "retention_compaction": "F3-707: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-707: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-707; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -139771,8 +139771,8 @@
           "Plans/FinalGUISpec.md#F3-708"
         ]
       },
-      "retention_compaction": "F3-708: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-708: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-708; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -140050,8 +140050,8 @@
           "Plans/FinalGUISpec.md#F3-709"
         ]
       },
-      "retention_compaction": "F3-709: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "F3-709: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-709; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -141058,8 +141058,8 @@
           "Plans/FinalGUISpec.md#F3-709"
         ]
       },
-      "retention_compaction": "F3-709: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-709: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-709; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -141337,8 +141337,8 @@
           "Plans/FinalGUISpec.md#F3-710"
         ]
       },
-      "retention_compaction": "F3-710: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "F3-710: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-710; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -142345,8 +142345,8 @@
           "Plans/FinalGUISpec.md#F3-710"
         ]
       },
-      "retention_compaction": "F3-710: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-710: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-710; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -142624,8 +142624,8 @@
           "Plans/FinalGUISpec.md#F3-711"
         ]
       },
-      "retention_compaction": "F3-711: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "F3-711: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-711; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -143632,8 +143632,8 @@
           "Plans/FinalGUISpec.md#F3-711"
         ]
       },
-      "retention_compaction": "F3-711: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-711: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-711; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -143911,8 +143911,8 @@
           "Plans/FinalGUISpec.md#F3-712"
         ]
       },
-      "retention_compaction": "F3-712: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "F3-712: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-712; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -144919,8 +144919,8 @@
           "Plans/FinalGUISpec.md#F3-712"
         ]
       },
-      "retention_compaction": "F3-712: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-712: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-712; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -145198,8 +145198,8 @@
           "Plans/FinalGUISpec.md#F3-713"
         ]
       },
-      "retention_compaction": "F3-713: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "F3-713: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-713; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -146206,8 +146206,8 @@
           "Plans/FinalGUISpec.md#F3-713"
         ]
       },
-      "retention_compaction": "F3-713: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-713: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-713; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -146485,8 +146485,8 @@
           "Plans/FinalGUISpec.md#F3-714"
         ]
       },
-      "retention_compaction": "F3-714: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-501 (retention deck 4 Q2 option A): RP-OPERATIONAL-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "F3-714: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-714; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -147493,8 +147493,8 @@
           "Plans/FinalGUISpec.md#F3-714"
         ]
       },
-      "retention_compaction": "F3-714: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "F3-714: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; F3-714; prepared only, not a native installation or event admission.",
       "recovery_disposition": {
@@ -147738,7 +147738,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact family doctor.custom_headless.checked adopts SP-278 and DL-076 under N2-217. Complete prior checkpoint CAS and final owner guard; no side effects or persisted redb_snapshot_id.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and nine-field durable read token only, no secrets or raw bodies. Read authorization and deletion checked under N2-217.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -147774,7 +147774,7 @@
           "Plans/storage-plan.md#SP-640"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -147983,7 +147983,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact family live.session.started adopts SP-278 and DL-076 under N2-219. Complete prior checkpoint CAS and final owner guard; no side effects or persisted redb_snapshot_id.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and nine-field durable read token only, no secrets or raw bodies. Read authorization and deletion checked under N2-219.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -148019,7 +148019,7 @@
           "Plans/storage-plan.md#SP-642"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -148228,7 +148228,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact family live.step.updated adopts SP-278 and DL-076 under N2-220. Complete prior checkpoint CAS and final owner guard; no side effects or persisted redb_snapshot_id.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and nine-field durable read token only, no secrets or raw bodies. Read authorization and deletion checked under N2-220.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -148264,7 +148264,7 @@
           "Plans/storage-plan.md#SP-643"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -148473,7 +148473,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact family live.artifact.created adopts SP-278 and DL-076 under N2-221. Complete prior checkpoint CAS and final owner guard; no side effects or persisted redb_snapshot_id.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and nine-field durable read token only, no secrets or raw bodies. Read authorization and deletion checked under N2-221.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -148509,7 +148509,7 @@
           "Plans/storage-plan.md#SP-644"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -148718,7 +148718,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact family live.session.completed adopts SP-278 and DL-076 under N2-222. Complete prior checkpoint CAS and final owner guard; no side effects or persisted redb_snapshot_id.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and nine-field durable read token only, no secrets or raw bodies. Read authorization and deletion checked under N2-222.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -148754,7 +148754,7 @@
           "Plans/storage-plan.md#SP-645"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -148963,7 +148963,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact family live.session.degraded adopts SP-278 and DL-076 under N2-223. Complete prior checkpoint CAS and final owner guard; no side effects or persisted redb_snapshot_id.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and nine-field durable read token only, no secrets or raw bodies. Read authorization and deletion checked under N2-223.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -148999,7 +148999,7 @@
           "Plans/storage-plan.md#SP-646"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -149208,7 +149208,7 @@
       "nullable_fields": [],
       "replay_behavior": "browser.context_captured adopts SP-278/DL-076 with complete prior-value CAS and current scope guards.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and durable token only; no content or protected auth; current access and deletion checked.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -149244,7 +149244,7 @@
           "Plans/storage-plan.md#SP-647"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -149525,7 +149525,7 @@
       "nullable_fields": [],
       "replay_behavior": "dev.session.started adopts SP-278/DL-076 with complete prior-value CAS and current scope guards.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and durable token only; no content or protected auth; current access and deletion checked.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -149561,7 +149561,7 @@
           "Plans/storage-plan.md#SP-648"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -149770,7 +149770,7 @@
       "nullable_fields": [],
       "replay_behavior": "dev.session.stopping adopts SP-278/DL-076 with complete prior-value CAS and current scope guards.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and durable token only; no content or protected auth; current access and deletion checked.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -149806,7 +149806,7 @@
           "Plans/storage-plan.md#SP-649"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -150015,7 +150015,7 @@
       "nullable_fields": [],
       "replay_behavior": "dev.session.stopped adopts SP-278/DL-076 with complete prior-value CAS and current scope guards.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and durable token only; no content or protected auth; current access and deletion checked.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -150051,7 +150051,7 @@
           "Plans/storage-plan.md#SP-650"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -150260,7 +150260,7 @@
       "nullable_fields": [],
       "replay_behavior": "dev.session.restarting adopts SP-278/DL-076 with complete prior-value CAS and current scope guards.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and durable token only; no content or protected auth; current access and deletion checked.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -150296,7 +150296,7 @@
           "Plans/storage-plan.md#SP-651"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -150505,7 +150505,7 @@
       "nullable_fields": [],
       "replay_behavior": "preview.session.started adopts SP-278/DL-076 with complete prior-value CAS and current scope guards.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and durable token only; no content or protected auth; current access and deletion checked.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -150541,7 +150541,7 @@
           "Plans/storage-plan.md#SP-652"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -150750,7 +150750,7 @@
       "nullable_fields": [],
       "replay_behavior": "preview.session.refreshed adopts SP-278/DL-076 with complete prior-value CAS and current scope guards.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and durable token only; no content or protected auth; current access and deletion checked.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -150786,7 +150786,7 @@
           "Plans/storage-plan.md#SP-653"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -150995,7 +150995,7 @@
       "nullable_fields": [],
       "replay_behavior": "preview.session.stopped adopts SP-278/DL-076 with complete prior-value CAS and current scope guards.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and durable token only; no content or protected auth; current access and deletion checked.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -151031,7 +151031,7 @@
           "Plans/storage-plan.md#SP-654"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -151292,8 +151292,8 @@
         "data_loss_if_unavailable": true,
         "user_disclosure_required": true
       },
-      "retention_compaction": "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-505 (retention deck 4 Q6 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "Store canonical IDs, hashes, decisions, and non-secret refs only. Reject raw credentials, tokens, auth values, provider-visible bytes, local absolute paths, and protected AuthBrowserSession content.",
       "legacy_canonical_crosswalk_status": "First exact materialization of the accepted owner schema. Any grouped inventory mention remains source lineage only and cannot substitute for this family.",
       "value_schema": {
@@ -151459,7 +151459,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact family catalog.install.started adopts SP-278 and DL-076 under SMPFS-318. Complete prior checkpoint CAS and final owner guard; no side effects or persisted redb_snapshot_id.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and nine-field durable read token only, no secrets or raw bodies. Read authorization and deletion checked under SMPFS-318.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -151495,7 +151495,7 @@
           "Plans/storage-plan.md#SP-657"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -151776,7 +151776,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact family catalog.install.completed adopts SP-278 and DL-076 under SMPFS-319. Complete prior checkpoint CAS and final owner guard; no side effects or persisted redb_snapshot_id.",
       "migration": "Rebuild only under exact supported owner/codec and complete retained source; otherwise unavailable.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; event and checkpoint assignments held for RT. No expiry or count eviction authorized.",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
       "redaction_no_secret_rule": "IDs and nine-field durable read token only, no secrets or raw bodies. Read authorization and deletion checked under SMPFS-319.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission.",
       "compatibility_key_shapes": [],
@@ -151812,7 +151812,7 @@
           "Plans/storage-plan.md#SP-658"
         ]
       },
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -152135,8 +152135,8 @@
           "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
         ]
       },
-      "retention_compaction": "Pending RT assignment and owner deletion policy; unknown policy is materially incomplete, no destructive inference or native activation.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-509 (retention deck 4 Q10 option A): RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
       "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
       "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
       "recovery_disposition": {
@@ -152487,8 +152487,8 @@
           "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
         ]
       },
-      "retention_compaction": "Pending RT assignment and owner deletion policy; unknown policy is materially incomplete, no destructive inference or native activation.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-509 (retention deck 4 Q10 option A): RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
       "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
       "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
       "recovery_disposition": {
@@ -153329,8 +153329,8 @@
           "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
         ]
       },
-      "retention_compaction": "Pending RT assignment and owner deletion policy; unknown policy is materially incomplete, no destructive inference or native activation.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-509 (retention deck 4 Q10 option A): RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
       "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
       "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
       "recovery_disposition": {
@@ -154324,8 +154324,8 @@
           "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
         ]
       },
-      "retention_compaction": "Pending RT assignment and owner deletion policy; unknown policy is materially incomplete, no destructive inference or native activation.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-509 (retention deck 4 Q10 option A): RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
       "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
       "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
       "recovery_disposition": {
@@ -154655,8 +154655,8 @@
           "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no selector/target collection or canonical gist deletion is authorized.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
       "legacy_canonical_crosswalk_status": "Newly authored derived selection custody under DL-045 for the exact rebuild event pair; not admission.",
       "recovery_disposition": {
@@ -154846,8 +154846,8 @@
           "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no selector/target collection or canonical gist deletion is authorized.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-500 (retention deck 4 Q1 option A): RP-PROJECTION-3GEN@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
       "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
       "legacy_canonical_crosswalk_status": "Newly authored derived selection custody under DL-045 for the exact rebuild event pair; not admission.",
       "recovery_disposition": {
@@ -155091,8 +155091,8 @@
           "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for canonical operation/result custody; DL-401/G04 event history is separately seven years. No memory-original retention or deletion is selected.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-509 (retention deck 4 Q10 option A): RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
       "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
       "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
       "recovery_disposition": {
@@ -155466,8 +155466,8 @@
           "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for canonical operation/result custody; DL-401/G04 event history is separately seven years. No memory-original retention or deletion is selected.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-509 (retention deck 4 Q10 option A): RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
       "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
       "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
       "recovery_disposition": {
@@ -175191,8 +175191,8 @@
       ],
       "replay_behavior": "Immutable prepared/completed stages; resolve original owner outcome, never repeat effects or reconstruct from current configuration.",
       "migration": "Newly authored owner contract under DL-045; install via StorageMigrationCoordinator before use, never implicit native enrollment.",
-      "retention_compaction": "Runtime-linked history keeps RP-RUNTIME-365D minima. Runless facet remains PENDING_RETENTION_DECISION: Which class and expiry anchor govern this report request where a run-completion anchor is inapplicable? Do not assume that a ref-only report request is chat content. Runtime-linked cases should reuse existing runtime minima. No expiration, eviction or admission follows.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-507 (retention deck 4 Q8 option A): RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-QUESTION-BUDGET-APPLICATION-2555D",
       "redaction_no_secret_rule": "Bounded redacted source metadata and opaque owner refs only; no raw config, tool input/output or credentials. Current owner authorization/tombstones gate every read.",
       "legacy_canonical_crosswalk_status": "prepared without admission",
       "value_schema": {
@@ -184548,8 +184548,8 @@
       ],
       "replay_behavior": "Immutable prepared/completed stages; resolve original owner outcome, never repeat effects or reconstruct from current configuration.",
       "migration": "Newly authored owner contract under DL-045; install via StorageMigrationCoordinator before use, never implicit native enrollment.",
-      "retention_compaction": "Exact event binding: {\"status\":\"decided_policy_technical_adapter_pending\",\"owner_refs\":[\"Plans/storage-plan.md#SP-341\",\"Plans/usage-feature.md#UF-108\",\"Plans/storage-plan.md#SP-349\"],\"setting_key\":\"ai.usage.usage-retention\",\"default_days\":90,\"allowed_values\":[\"30 days\",\"90 days\",\"180 days\",\"1 year\",\"unlimited\"],\"detail_scope\":[\"seglog\",\"Parquet archive\"],\"daily_totals\":\"canonical, backed up, permanent, committed before detail retirement; never rebuilt from expired events\",\"application_bucket\":\"one Server-wide counterpart bucket; same setting/holds, no per-chat reset\",\"missing_dependency\":\"RT structured setting-driven policy object/expiry-anchor adapter; no new duration choice\",\"deletion_enabled\":false,\"admission_enabled\":false}. Source stages, owner results, bodies and receipt custody stay co-retained through all holds; incomplete adapter fences deletion/admission.",
-      "retention_policy_ref": "PENDING_RETENTION_BINDING",
+      "retention_compaction": "DL-507 (retention deck 4 Q8 option A): RP-TELEMETRY-90D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-TELEMETRY-90D",
       "redaction_no_secret_rule": "Bounded redacted source metadata and opaque owner refs only; no raw config, tool input/output or credentials. Current owner authorization/tombstones gate every read.",
       "legacy_canonical_crosswalk_status": "prepared without admission",
       "value_schema": {
@@ -186690,8 +186690,8 @@
       ],
       "replay_behavior": "Immutable prepared/completed stages; resolve original owner outcome, never repeat effects or reconstruct from current configuration.",
       "migration": "Newly authored owner contract under DL-045; install via StorageMigrationCoordinator before use, never implicit native enrollment.",
-      "retention_compaction": "Runtime-linked history keeps RP-RUNTIME-365D minima. Runless facet remains PENDING_RETENTION_DECISION: Resolve the runless event's class/anchor and required lineage dependencies; the projection policy does not automatically register this event's retention. No expiration, eviction or admission follows.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-507 (retention deck 4 Q8 option A): RP-RUNTIME-365D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
       "redaction_no_secret_rule": "Bounded redacted source metadata and opaque owner refs only; no raw config, tool input/output or credentials. Current owner authorization/tombstones gate every read.",
       "legacy_canonical_crosswalk_status": "prepared without admission",
       "value_schema": {
@@ -187327,8 +187327,8 @@
       ],
       "replay_behavior": "Immutable prepared/completed stages; resolve original owner outcome, never repeat effects or reconstruct from current configuration.",
       "migration": "Newly authored owner contract under DL-045; install via StorageMigrationCoordinator before use, never implicit native enrollment.",
-      "retention_compaction": "Runtime-linked history keeps RP-RUNTIME-365D minima. Runless facet remains PENDING_RETENTION_DECISION: Is this exact event deletion-tombstone authority, or runless lifecycle history, and what is its applicable anchor? Separate runtime history and the distinct worktree_lane_thread_families projection; its RP-WORKTREE-TOMBSTONE-365D policy does not automatically register this event. No expiration, eviction or admission follows.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-507 (retention deck 4 Q8 option A): RP-WORKTREE-TOMBSTONE-365D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-WORKTREE-TOMBSTONE-365D",
       "redaction_no_secret_rule": "Bounded redacted source metadata and opaque owner refs only; no raw config, tool input/output or credentials. Current owner authorization/tombstones gate every read.",
       "legacy_canonical_crosswalk_status": "prepared without admission",
       "value_schema": {
@@ -198208,8 +198208,8 @@
       ],
       "replay_behavior": "Immutable prepared/completed stages; resolve original owner outcome, never repeat effects or reconstruct from current configuration.",
       "migration": "Newly authored owner contract under DL-045; install via StorageMigrationCoordinator before use, never implicit native enrollment.",
-      "retention_compaction": "Exact event binding: {\"status\":\"decided_policy_technical_adapter_pending\",\"owner_refs\":[\"Plans/storage-plan.md#SP-341\",\"Plans/usage-feature.md#UF-108\",\"Plans/storage-plan.md#SP-349\"],\"setting_key\":\"ai.usage.usage-retention\",\"default_days\":90,\"allowed_values\":[\"30 days\",\"90 days\",\"180 days\",\"1 year\",\"unlimited\"],\"detail_scope\":[\"seglog\",\"Parquet archive\"],\"daily_totals\":\"canonical, backed up, permanent, committed before detail retirement; never rebuilt from expired events\",\"application_bucket\":\"one Server-wide counterpart bucket; same setting/holds, no per-chat reset\",\"missing_dependency\":\"RT structured setting-driven policy object/expiry-anchor adapter; no new duration choice\",\"deletion_enabled\":false,\"admission_enabled\":false}. Source stages, owner results, bodies and receipt custody stay co-retained through all holds; incomplete adapter fences deletion/admission.",
-      "retention_policy_ref": "PENDING_RETENTION_BINDING",
+      "retention_compaction": "DL-507 (retention deck 4 Q8 option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "Bounded redacted source metadata and opaque owner refs only; no raw config, tool input/output or credentials. Current owner authorization/tombstones gate every read.",
       "legacy_canonical_crosswalk_status": "prepared without admission",
       "value_schema": {
@@ -216611,8 +216611,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-502 (retention deck 4 Q3 option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -216931,8 +216931,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-502 (retention deck 4 Q3 option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -217251,8 +217251,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-502 (retention deck 4 Q3 option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -217567,8 +217567,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-502 (retention deck 4 Q3 option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -217888,8 +217888,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-502 (retention deck 4 Q3 option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -218215,8 +218215,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-503 (retention deck 4 Q4 option A): RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -218548,8 +218548,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-503 (retention deck 4 Q4 option A): RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -218906,8 +218906,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-503 (retention deck 4 Q4 option A): RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -219256,8 +219256,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-503 (retention deck 4 Q4 option A): RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -219588,8 +219588,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-503 (retention deck 4 Q4 option A): RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -219912,8 +219912,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-503 (retention deck 4 Q4 option A): RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -220244,8 +220244,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-503 (retention deck 4 Q4 option A): RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -220575,8 +220575,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-503 (retention deck 4 Q4 option A): RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
       "redaction_no_secret_rule": "refs_only; no tokens, device_code, hook output or raw credential values.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -220901,8 +220901,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-504 (retention deck 4 Q5 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -221525,8 +221525,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-504 (retention deck 4 Q5 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -222143,8 +222143,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-504 (retention deck 4 Q5 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -222767,8 +222767,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-504 (retention deck 4 Q5 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -223391,8 +223391,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-504 (retention deck 4 Q5 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
@@ -224186,8 +224186,8 @@
       ],
       "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
-      "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-504 (retention deck 4 Q5 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
       "redaction_no_secret_rule": "refs_only; no PERSONA.md body, prompt, credentials, raw export/import or snapshot content.",
       "legacy_canonical_crosswalk_status": "Newly authored DL-045 contract; prepared without event admission.",
       "value_schema": {
