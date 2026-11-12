@@ -199,6 +199,7 @@ signal; `bad` is 0.
 | Issued and retained (SP-1101 dispatch) | 10/10 of 11 | 20 | 19 | 155 | 156 | 2,345 | 155/228/0 |
 | Protocol oracle | 34/34 of 36 | 51 | 49 | 114 | 130 | 1,312 | 114/54/0 |
 
+(Corrected in fix round 1: the OS01 and MK03 rows of the table below are reachable and now witnessed; see "Fix round 1 after the Opus recheck".)
 49 rows in 30 tables have no negative and earn no credit. Each sits in a table
 with no proved row; the reason (every input it would refuse is refused first, or
 the two sides are computed identically) is:
@@ -389,6 +390,8 @@ No coordination or legacy-normalization profile is used. The SP-1101 frozen veri
 
 ### Rows with no negative
 
+**Corrected in fix round 1:** the OS01 and MK03 proofs below are false. Both rows are reachable and now have single-defect witnesses; every other proof was rebuilt as an attempted negative. See "Fix round 1 after the Opus recheck".
+
 The 49 rows with no negative are the same set as part 2A (the four retired date-time rows were proved, and both new rows are proved). They earn no credit. Proof that no input refuses them first:
 
 | Rows | Proof |
@@ -410,3 +413,192 @@ The 49 rows with no negative are the same set as part 2A (the four retired date-
 ### Readiness
 
 Timestamps are no longer an open review for the fields in the table above. `datetime_validator` and the inventory gate run at batch-2 integration; their lane-tree failure is the stale inventory, recorded above and not edited. C12 stays PARTIAL for the single structural schema row and for that gate. C7 stays PARTIAL for the five application-scope families held with Jared. Membership stays ABSENT. Native execution stays NOT_RUN. Family PASS counts are unchanged (9, 9, 10, 9, 9, 9, 10, 10, 10). No READY or admission claim. Sol/Astra part-2 review is pending. Nothing in this pass was stopped for a Jared decision.
+
+## Fix round 1 after the Opus recheck
+
+Recheck: `reviews/GROK-RECHECK/DF-DCO.md` (Opus 5.5, NOT_READY: DF-1 blocking; notes DF-N1..N5). Brief: `lanes/GROK-FIX-DF-DCO.md`. Worked on Nas1 in a trimmed worktree (plan-migration runs 001, 002 and the current run only). Old head `90eec9ea128c0d5711c6f5ba5066b20442f00fed`. No NUMRULE or guard-tool file was edited: `git diff 90eec9ea12 HEAD --` the five guard-tool files and the NUMRULE files is empty.
+
+| Commit | What |
+|---|---|
+| `f3b5b0f104` | DF-1 and DF-N1..N5: OS01 and MK03 witnesses, MK04-MK06 follower table, the fix-round fixture builder and its cases, the attempts and pair-proof script, `instant_key` |
+| `1533229134` | `format_case_failures` records an order case whose instant cannot be keyed (found by M8); attempts-script proof text; 36 self-grade pins relocated |
+| this commit | report |
+
+### Findings and fixes
+
+| Finding | Fix | Where | Evidence |
+|---|---|---|---|
+| **DF-1** (blocking) `OS01_kind` is reachable; the report's "derived scope kind" proof was false | New contract negative `filesafe.destructive_override_granted.p2bfix1.override-scope-kind`: the granted Project positive with the application positive's `authorized_scope`, nothing else changed (semantic layer). Then every other "no negative" proof was rebuilt as an attempted negative (next section). That found a second false proof: **MK03 is reachable**. New p2a witness `safe_point_created.p2a.MK03_worktree_id.absent` (payload and native Project record both omit `worktree_id`; path, branch and HEAD stay). MK04-MK06 move to the follower table `mat_capture_worktree_rest`, evaluated right after `mat_capture_worktree` from the same observation, so MK03's table keeps its credit, as part 2A did for PJ03, DJ03, FV02 and CS02. | `Plans/filesafe_event_contract_fixtures.json:6327`; `scripts/pm-filesafe-fix1-cases.py:67`; `scripts/pm_filesafe_p2a_specs.py:342`; `Plans/filesafe_event_p2a_cases.json` (1,082 cases); `scripts/pm-filesafe-table-generate.py:376`; `scripts/pm_filesafe_tables.py:34` | OS01 negative: closed schema 0 errors, `payload_failures(…, 'semantic')` is `['payload_semantics']`, the only refusing table is `override_scope_kind` with `OS01_kind` (`pm-filesafe-fix1-cases.py --check`). MK03 witness: the complete materialization refuses only `MK03_worktree_id` (`pm-filesafe-p2a-cases.py --check`, 0 rejected). Guard tool: both tables now PASS (below). |
+| **DF-N5** (note) MG01, MO03, BD02 are duplicates; MT11, IR08 duplicate the receipt schema const | Pair proofs in `scripts/pm-filesafe-unproved-attempts.py`: each site is cut per predicate (a row swapped to always-pass, a schema keyword removed from exactly the node that refused). The same machinery proves RB02, MJ02, MK05, MK06, JC03, OQ17, SP03, SP04 and MD01. | `scripts/pm-filesafe-unproved-attempts.py:402` (cuts), `:505` (pairs) | 14 of 14 proved: with every site present the negative is refused, with any one site cut it is still refused by the other site for the same defect, with all sites cut it is accepted (table below). The gated tool cannot credit these: its `Duplicate` sites must be rows of one suite, and these sites sit in different tables or in a schema. They stay uncredited in the tool totals and are proved here. |
+| **DF-N1** (should-fix) the 27 year-0000 negatives were removed, not converted | The 9 contract inputs return as positives (`positive_payloads[1]` with `ts` `0000-02-01T10:00:00Z`). The 18 authority inputs (one materialization and one `.issued` negative per family, identical edits) return as 9 positives `<family>.p2bfix1.format.year_zero` (`observed_at_utc` `0000-02-01T10:00:00Z`, copies and commitments rebuilt). Every authority positive is checked on materialization, the issued copy and the retained boundary, so each covers both former routes. | `scripts/pm-filesafe-fix1-cases.py:67`, `:134` | `pm-filesafe-fix1-cases.py --check`: 0 failures. Contract and authority CLIs pass (below). Mutation M11 caught by these positives. |
+| **DF-N2** (should-fix) no full-route positive with an offset or lowercase timestamp at a family field | Per family `<family>.p2bfix1.format.offset_ts` (Project seed, `2026-11-04T13:00:00+01:00`) and `<family>.p2bfix1.format.lowercase_ts` (application seed, `2026-11-04t12:00:00z`): payload `ts`, `occurred_at_utc`, the source `ts` and every other copy of that instant (`issued_at`, `created_at_utc`, `updated_at_utc`, native and application records) take the same spelling; bodies, commitments, digests and the issued and retained copies are rebuilt. Storage-assigned `observed_at_utc` and `persisted_at_utc` keep their uppercase-Z values. | `scripts/pm-filesafe-fix1-cases.py:106`, `:134` | All 18 accepted on all three routes. Mutation M7 (`occurred_at_utc` given `storage_utc_z`) is now caught by the authority checker. |
+| **DF-N3** (note) only a guard-suite witness tested `persisted_at_utc` | Per family `<family>.p2bfix1.format.persisted_offset` (materialization, `+00:00`) and `<family>.p2bfix1.format.persisted_lowercase.issued` (issued layer, lowercase `t` and `z`), `expected_error` `date_time_storage`. | `scripts/pm-filesafe-fix1-cases.py:134`, `:169` | Each is refused by `DT02_storage` alone. Mutations M3 and M9 are now caught by the authority checker, not only by the guard-suite witnesses. |
+| **DF-N4** (hypothetical) `instant_key` gave every instant inside a leap second one key | The leap key is `(posix microseconds of second 59 + 999999, 1, micros, *extra digits)`: still after second 59 and before the next second, and ordered inside the leap second. | `scripts/pm_filesafe_schema_graph.py:118`; order cases `Plans/filesafe_event_format_fixtures.json` checked at `scripts/pm_filesafe_schema_graph.py:228` | 8 order cases (60.1 before 60.9; 60.0000001 before 60.000001 and before 60.9; 60 before 60.000001; 59.999999999 before 60; 60.999999999 before the next second; `+01:00` and `Z` spellings of 60.5 equal; six-digit microseconds unchanged). The part 2B key fails the first four (mutation M12). No fixture has a leap second in a grant or retention field, so no window outcome changes. |
+
+### Every "no negative" proof rebuilt as an attempted negative (DF-1)
+
+`python3 scripts/pm-filesafe-unproved-attempts.py --out DIR` builds each attempt from a named valid seed with the p2a builder (one fact changes; bodies, commitments, digests and the issued and retained copies move with it), runs it through the complete boundary under the observation recorder, and checks its first refusing table and rows against the cited proof. It exits 1 if an attempt reaches its own row first and alone (REACHABLE) or refuses somewhere other than the cited place. Result: **69 attempts over all 47 remaining rows, 69 confirmed, 0 reachable, 0 mismatched.** Before OS01 and MK03 were witnessed, the same procedure is what found them reachable. "Masked" below means the target row does refuse first in its own table, but a second, unrelated row refuses the same coupled value in the same run, so the row never refuses alone and no single-defect witness exists.
+
+| Row | Attempted negative (built, run through the complete boundary) | First refusal | Status | Proof |
+|---|---|---|---|---|
+| SU01_kind | granted scope kind changed (authorized_scope from the application positive) | override_scope_kind: OS01_kind | confirmed | scripts/pm_filesafe_event_contracts.py:128 (semantic, on authorized_scope) and scripts/pm_filesafe_event_authority.py:610 (override_scope_semantic on the requested scope) tie both scope kinds to the payload scope kind before override_subset (scripts/pm_filesafe_event_contracts.py:65) |
+|  | requested scope kind changed | override_scope_kind: OS01_kind | confirmed | as above |
+| SU02_project | granted project_id changed | override_scope_root: OS02_project | confirmed | OS02 ties both project_ids to the payload scope project_id first |
+|  | requested project_id changed | override_scope_root: OS02_project | confirmed | as above |
+| SU06_server | granted server_id changed | override_scope_application: OS05_server | confirmed | OS05_server ties the granted and the requested server_id to the same execution value first |
+|  | requested server_id changed | override_scope_application: OS05_server | confirmed | OS05_server ties the granted and the requested server_id to the same execution value first |
+| SU07_computer | granted computer_id changed | override_scope_application: OS06_computer | confirmed | OS06_computer ties the granted and the requested computer_id to the same execution value first |
+|  | requested computer_id changed | override_scope_application: OS06_computer | confirmed | OS06_computer ties the granted and the requested computer_id to the same execution value first |
+| SU08_thread | granted thread_id changed | override_scope_application: OS07_thread | confirmed | OS07_thread ties the granted and the requested thread_id to the same execution value first |
+|  | requested thread_id changed | override_scope_application: OS07_thread | confirmed | OS07_thread ties the granted and the requested thread_id to the same execution value first |
+| SU09_run | granted run_id changed | override_scope_application: OS08_run | confirmed | OS08_run ties the granted and the requested run_id to the same execution value first |
+|  | requested run_id changed | override_scope_application: OS08_run | confirmed | OS08_run ties the granted and the requested run_id to the same execution value first |
+| SU10_host | granted host_id changed | override_scope_application: OS09_host | confirmed | OS09_host ties the granted and the requested host_id to the same execution value first |
+|  | requested host_id changed | override_scope_application: OS09_host | confirmed | OS09_host ties the granted and the requested host_id to the same execution value first |
+| SU11_environment | granted environment_id changed | override_scope_application: OS10_environment | confirmed | OS10_environment ties the granted and the requested environment_id to the same execution value first |
+|  | requested environment_id changed | override_scope_application: OS10_environment | confirmed | OS10_environment ties the granted and the requested environment_id to the same execution value first |
+| ME01_scope_kind | event scope_kind changed alone | mat_schema: MS01_schema | confirmed | Plans/event_record.schema.json couples scope_kind with project_id nullness |
+|  | event scope_kind and its schema-coupled project_id changed | mat_envelope_kind: ME01_scope_kind | confirmed | masked: ME02_project (mat_envelope_subject) refuses the same coupled project_id; ME01 never refuses alone |
+| MX02_run | execution-context run_id empty in every copy | mat_schema: MS01_schema | confirmed | schema minLength on every run_id copy |
+|  | execution-context run_id null in request and result contexts only | payload_scope: PS03_run_copy | confirmed | PS03 joins the payload run_id copy to the context run_id first |
+| MK04_worktree_path | payload worktree_path absent (the native record requires it) | payload_worktree: PW01_path | confirmed | PW01 (scripts/pm_filesafe_event_contracts.py:141) refuses an absent path first; the native project record schema requires worktree_path, so MJ04 also refuses the join |
+| MK05_branch | branch_name absent from payload and native record | payload_worktree: PW02_branch | confirmed | duplicate of PW02 (pair proof below) |
+| MK06_head | HEAD_sha absent from payload and native record | payload_worktree: PW03_head | confirmed | duplicate of PW03 (pair proof below) |
+| MD01_enforcement | authoritative_enforcement_intact false | mat_schema: MS01_schema | confirmed | schema const true on the result (pair proof below) |
+| MJ02_body_present | native Project body missing from the bank | mat_body_member: MB02_present | confirmed | duplicate of MB02 for the same member (pair proof below) |
+|  | native Project body stored as an integer | mat_body_member: MB02_present | confirmed | as above |
+| MO03_commitment | accepted_source_sha256 wrong in the candidate and the selected bank copy | selected_source_commitment: SS03_commitment | confirmed | duplicate of SS03 through the exact join SS04 (pair proof below) |
+|  | accepted_source_sha256 wrong in the candidate only | selected_source_join: SS04_join | confirmed | SS04 refuses a candidate that differs from the selected source |
+| MG01_issued_before_expiry | issued_at equal to expires_at | payload_grant_window: PG01_window | confirmed | duplicate of PG01 (pair proof below) |
+| MT11_durability_state | first receipt durability_state pending | mat_schema: MS01_schema | confirmed | duplicate of the receipt schema const (pair proof below) |
+| IR08_durability_state | issued first receipt durability_state pending | issued_schema: IS05_schema | confirmed | duplicate of the receipt schema const (pair proof below) |
+| AB01_role | snapshot_blobs member dropped | mat_schema: MS01_schema | confirmed | body_members minItems, then MB01 (role set equals the required roles) refuse first |
+| AB03_schema | snapshot_blobs body schema-invalid, record unchanged | app_body_schema: AB03_schema | confirmed | masked: AB04 refuses the body that differs from its record; a coherent record and body are refused first by mat_schema on the same schema fragment |
+|  | snapshot_blobs record and body both schema-invalid | mat_schema: MS01_schema | confirmed | as above |
+| AF08_entry_address | entry payload_id changed | app_entry_blob_match: AF01_one_blob | confirmed | the blob is selected by payload_id equality (scripts/pm_filesafe_event_authority.py:370), so AF08 sees only equal ids |
+| SP03_node_id | safe-point record node_id set | mat_schema: MS01_schema | confirmed | schema type null on the record field (pair proof below) |
+| SP04_attempt_id | safe-point record attempt_id set | mat_schema: MS01_schema | confirmed | schema type null on the record field (pair proof below) |
+| CS02_no_worktree_id | SCM-absent capture that keeps worktree_id | payload_worktree: PW01_path, PW02_branch, PW03_head | confirmed | PW01-PW03 refuse a worktree_id without path, branch and HEAD first |
+| TR04_node_id | restore transaction node_id set | mat_schema: MS01_schema | confirmed | schema type null on restore_transaction.node_id |
+|  | result node_id set | mat_request_subject: MQ01_subject | confirmed | MQ01, ME05 and MA01 refuse an application result node_id first |
+| TR05_attempt_id | restore transaction attempt_id set | mat_schema: MS01_schema | confirmed | schema type null on restore_transaction.attempt_id |
+| OK02_before_presence | create operation relabelled replace | mat_schema: MS01_schema | confirmed | the operation schema ties operation_kind to expected_before_type nullness |
+|  | create operation relabelled replace with a before type and digest | app_operation_subject: OP03_before_sha256, OP05_before_type | confirmed | OP03/OP05 tie the before fields to the absent pre-restore entry first |
+| OK03_target_presence | delete operation relabelled replace | mat_schema: MS01_schema | confirmed | the operation schema ties operation_kind to target_type nullness |
+| JC03_lease | mutation_lease_ref empty | mat_schema: MS01_schema | confirmed | schema minLength (pair proof below) |
+| OQ02_post_is_target | restored_clean post manifest equal to the pre manifest | payload_restore: PR01_clean_target | confirmed | PR01 joins the result post digest to the target first; TM and the result joins carry it |
+| OQ03_scm_target | restored_clean scm_equal_target false | app_equality_scm: EQ06_scm_target | confirmed | EQ06 ties the flag to the recomputed SCM equality first |
+| OQ06_post_is_pre | restore_failed post manifest equal to the target | payload_restore: PR02_unchanged | confirmed | PR02 first |
+| OQ07_scm_pre | restore_failed scm_equal_pre_restore false | app_equality_scm: EQ07_scm_pre | confirmed | EQ07 first |
+| OQ09_target_is_pre | restore_skipped target digest differs from pre | payload_restore: PR03_skipped_target | confirmed | PR03 first |
+| OQ10_pre_is_post | restore_skipped post manifest differs from pre | payload_restore: PR04_skipped_after | confirmed | PR04 first |
+| OQ13_post_is_pre | restore_refused post manifest equal to the target | payload_restore: PR02_unchanged | confirmed | PR02 first |
+| OQ17_holds | restore_recovery_required hold_refs empty in every copy | mat_schema: MS01_schema | confirmed | schema minItems (pair proof below) |
+| DJ03_other | descriptor byte_size NaN | payload_ref_descriptor: EP04_schema, EP03a_slot_type | confirmed | the descriptor schema (EP04/EP03a) refuses every non-finite, key and string-domain form first |
+|  | descriptor byte_size Infinity | payload_ref_descriptor: EP04_schema, EP03a_slot_type | confirmed | the descriptor schema (EP04/EP03a) refuses every non-finite, key and string-domain form first |
+|  | descriptor media_type lone surrogate | payload_ref_descriptor: EP04_schema | confirmed | the descriptor schema (EP04/EP03a) refuses every non-finite, key and string-domain form first |
+|  | descriptor extra lone-surrogate key | payload_ref_descriptor: EP04_schema | confirmed | the descriptor schema (EP04/EP03a) refuses every non-finite, key and string-domain form first |
+|  | descriptor payload_id lone surrogate | payload_ref_descriptor: EP04_schema | confirmed | the descriptor schema (EP04/EP03a) refuses every non-finite, key and string-domain form first |
+| AJ01_binary64 | manifest record entry length 2**53+1, body unchanged | app_body_check: AB04_value | confirmed | masked: a record no RFC 8785 body can encode always differs from its body (AB04); the coherent rebuild cannot encode it at all |
+|  | manifest record entry length 2**53+1, coherent rebuild | BUILD_REFUSED:Refusal:jcs_binary64 | confirmed | qualified RFC 8785 cannot encode the manifest body (jcs_binary64) |
+| AJ02_decimal | manifest record entry length 1.5, body unchanged | mat_schema: MS01_schema | confirmed | the manifest schema admits integers only; a body cannot carry another number |
+| AJ03_other | manifest record string with a lone surrogate, coherent rebuild | BUILD_REFUSED:Refusal:unicode_scalar | confirmed | no body and no source commitment can encode a lone surrogate |
+|  | manifest record string with a lone surrogate, bodies and commitment unchanged | selected_source_join: SS04_join | confirmed | the caller source differs from the selected source first; AB04 and AJ03 follow |
+| CI02_retry_stable | identity self-check on every contract positive of every family | 103 observations, 0 refused | confirmed | declared UNPROVABLE (scripts/pm_filesafe_guard_suites.py:51): a pure function recomputed on the same input |
+| CI03_family_distinct | identity self-check on every contract positive of every family | 103 observations, 0 refused | confirmed | declared UNPROVABLE (scripts/pm_filesafe_guard_suites.py:51): a pure function recomputed on the same input |
+| CI04_operation_distinct | identity self-check on every contract positive of every family | 103 observations, 0 refused | confirmed | declared UNPROVABLE (scripts/pm_filesafe_guard_suites.py:51): a pure function recomputed on the same input |
+| BD02_commitment | read_body after the source commitment is wrong in both copies | selected_source_commitment: SS03_commitment | confirmed | duplicate of SS03 through the exact join SS04 (pair proof below) |
+| RB02_pending | rebuild after owner_commit, writer and reader withdrawal | proto_rebuild_gate: RB01_reader_fence | confirmed | WR02 refuses the reader withdrawal while pending, so rebuild meets RB01 first (pair proof below) |
+|  | owner_commit again after a terminal original and both withdrawals | proto_commit_fence: PC01_writer | confirmed | PC01 refuses a new owner commit once the writer is fenced, so pending stays false |
+
+The three CI rows stay declared `UNPROVABLE` by the lane (`scripts/pm_filesafe_guard_suites.py:51`): a pure identity function recomputed on the same input; the attempt runs the self-check on all 103 contract positives and nothing refuses.
+
+### Pair proofs for duplicates (DF-N5, MT11, IR08 and the other duplicate sets)
+
+A duplicate set is one invariant (same field, same predicate) at two or more sites. Each site is cut per predicate: a guard row is swapped to always-pass in the recorder's row table, exactly as the suite builder's complete-boundary flip does; a schema keyword is removed from exactly the schema node that refused (found by identity in the cached registry document, and removed from every fresh load of that document for the issued route). Nothing is edited on disk.
+
+| Duplicate set | Sites | Every site present | Each site cut alone | All sites cut | Result |
+|---|---|---|---|---|---|
+| MG01_issued_before_expiry | payload_grant_window:PG01_window; mat_grant_order:MG01_issued_before_expiry | refused (PG01_window) | refused (MG01_issued_before_expiry); refused (PG01_window) | accepted | proved |
+| MO03_commitment | selected_source_commitment:SS03_commitment; mat_source_commitment:MO03_commitment | refused (SS03_commitment) | refused (MO03_commitment); refused (SS03_commitment) | accepted | proved |
+| BD02_commitment | selected_source_commitment:SS03_commitment; proto_body_commitment:BD02_commitment | refused (SS03_commitment) | refused (BD02_commitment); refused (SS03_commitment) | accepted | proved |
+| MT11_durability_state | Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durability_state:const; mat_receipt_state:MT11_durability_state | refused (MS01_schema) | refused (MT11_durability_state); refused (MS01_schema) | accepted | proved |
+| IR08_durability_state | Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durability_state:const; issued_receipt_state:IR08_durability_state | refused (IS05_schema) | refused (IR08_durability_state); refused (IS05_schema) | accepted | proved |
+| RB02_pending | proto_withdraw_reader:WR02_pending; proto_rebuild_pending:RB02_pending | refused (RB01_reader_fence) | refused (RB02_pending); refused (RB01_reader_fence) | accepted | proved |
+| MJ02_body_present | mat_body_member:MB02_present; mat_project_body_present:MJ02_body_present | refused (MB02_present) | refused (MJ02_body_present); refused (MB02_present) | accepted | proved |
+| MK05_branch | payload_worktree:PW02_branch; mat_capture_worktree_rest:MK05_branch | refused (PW02_branch) | refused (MK05_branch); refused (PW02_branch) | accepted | proved |
+| MK06_head | payload_worktree:PW03_head; mat_capture_worktree_rest:MK06_head | refused (PW03_head) | refused (MK06_head); refused (PW03_head) | accepted | proved |
+| JC03_lease | Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_restore_transaction/properties/mutation_lease_ref:minLength; app_journal_lease:JC03_lease | refused (MS01_schema) | refused (JC03_lease); refused (MS01_schema) | accepted | proved |
+| OQ17_holds | Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_safe_point_record/properties/hold_refs:minItems; Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_restore_transaction/properties/hold_refs:minItems; app_outcome_recovery_holds:OQ17_holds | refused (MS01_schema) | refused (MS01_schema); refused (MS01_schema); refused (MS01_schema) | accepted | proved |
+| SP03_node_id | Plans/filesafe_event_sources/safe_point_created.schema.json#/$defs/application_safe_point_record/properties/node_id:type; app_safe_point_ids:SP03_node_id | refused (MS01_schema) | refused (SP03_node_id); refused (MS01_schema) | accepted | proved |
+| SP04_attempt_id | Plans/filesafe_event_sources/safe_point_created.schema.json#/$defs/application_safe_point_record/properties/attempt_id:type; app_safe_point_ids:SP04_attempt_id | refused (MS01_schema) | refused (SP04_attempt_id); refused (MS01_schema) | accepted | proved |
+| MD01_enforcement | Plans/event_payloads/filesafe_policy_degraded_v2.schema.json#/properties/authoritative_enforcement_intact:const; mat_policy_degraded:MD01_enforcement | refused (MS01_schema) | refused (MD01_enforcement); refused (MS01_schema) | accepted | proved |
+
+Notes: in RB02 the negative is a protocol trace (`owner_commit`, `withdraw_writer`, `withdraw_reader`, `rebuild`); with WR02 cut, `withdraw_reader` passes and `rebuild` meets RB02, and with both cut `rebuild` returns `retained_survivors_verified`. OQ17's empty hold list must be the same in the safe-point record, the transaction and the equality result (HJ01/HJ02 join them), so its set holds the `minItems` of both record copies and the row. MD01's `const` is one node: the source result, the inline event payload and the Result root all `$ref` it.
+
+### Guard tool (gated `004bdedd63`, tool SHA-256 `e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8`)
+
+`python3 scripts/pm-filesafe-guard-tables.py --out DIR --max-rss 2048 --pause-when-low 6 --resume-at 7`, all nine families (every family gained witnesses). Run at `1533229134`: collection 470 s, total 1,592 s. The "Part 2B" column is the recheck's own run at `90eec9ea12` (`reviews/GROK-RECHECK/DF-DCO-evidence/df-guard-summary.json`).
+
+| | Part 2B | Fix round 1 |
+|---|---:|---:|
+| Tables / rows | 204 / 403 | **205 / 403** (`mat_capture_worktree_rest` split out) |
+| Tables run, PASS, FAIL | 174, 174, 0 | **176, 176, 0** |
+| Rows proved | 354 | **356** (+`OS01_kind`, +`MK03_worktree_id`) |
+| Tables / rows with no negative | 30 / 49 | **29 / 47** (3 declared unprovable: CI02-CI04) |
+| Lane matrix problems, masked, failure kinds, `bad` | 0, 0, none, 0 | 0, 0, none, 0 |
+| Collection findings | 7 two-row observations | the same 7 (SM03/SM04, HJ01/HJ02 ×5, OO01/OO02), each row also proved by its single-row p2a witness |
+| Distinct negatives (aliases), evaluations | 1,192 (4,680), 23,346 | 1,194 (4,698), 23,750 |
+| Complete-boundary flips: accepted / refused later | 1,620 / 2,075 | 1,639 / 2,076 |
+
+Exit 1 is the expected signal for the 47 rows without a negative and the 7 two-row observations. Every one of the 47 has the path:line proof above and a built attempt that confirms it; 14 of them are also duplicates proved by pair.
+
+**OS01, stated plainly.** Its witness is refused by `OS01_kind` alone at the boundary: payload semantics stop at the first refusing table, and the gated tool proves the row. Its complete-boundary flip is "refused later" by `OS02_project`: the granted scope's kind and `project_id` are coupled by the `authorized_scope` `oneOf` (a Project grant carries a string `project_id`, an application grant a null one), so a grant whose kind differs from the payload scope's always differs in `project_id` too. No grant can violate OS01 without that coupled `project_id`. This is the "refused later by an independent row watching the same source fact" pattern the lane's other 2,075 refused-later flips record, and it is the negative the recheck asked for. ME01 has the same coupling (event `scope_kind` with event `project_id`), but materialization accumulates refusals, so its attempt is refused by ME01 and ME02 in the same run and is not counted as a witness. MK03's flip is accepted: when MK03 is cut its witness passes the whole boundary.
+
+### Checks (Nas1, at `1533229134`)
+
+| Command | Exit | Result |
+|---|---:|---|
+| `python3 scripts/pm-filesafe-fix1-cases.py --check` | 0 | stale none, 0 failures |
+| `python3 scripts/pm_filesafe_event_contracts.py` | 0 | pass, **103 positive / 352 negative / 18 identity** (was 94 / 351 / 18) |
+| `python3 scripts/pm_filesafe_event_authority.py` | 0 | pass, **244 positive / 2,386 negative / 1,323 protocol steps**, failures `[]` (was 217 / 2,368 / 1,323); 328 s |
+| `python3 scripts/pm-filesafe-table-generate.py --check` | 0 | 205 tables, 403 rows; stale 0, extra 0 |
+| `python3 scripts/pm-filesafe-p2a-cases.py --check` | 0 | **1,082 kept**, 0 rejected; stale none (was 1,081) |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | pass, **580/580**, failures `[]` |
+| `python3 scripts/pm-filesafe-number-corpus.py` | 0 | pass: 2,148 route runs, 518 accepted, 1,630 refused, 0 untracked |
+| `python3 scripts/pm-filesafe-unproved-attempts.py --out DIR` | 0 | 69/69 attempts confirmed, 14/14 pair proofs |
+| `python3 scripts/pm-filesafe-guard-tables.py --out DIR …` | 1 | as above |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `NOT_RUN_ADMISSION_REFUSED` before any case; only check `datetime_inventory_complete_and_classified` |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | `inventory_node_missing` 233, `scan_exclusions_invalid` 1; the gate stops at `scan_exclusions_invalid` (`exclusion_purpose_citation_unreadable: Plans/.plan_migration/pds-20260906-017-current-planunit-snapshot/span_map.jsonl`): this trimmed worktree leaves out the snapshot run that exclusion cites, so the rows are not comparable with part 2B's full-tree 202 |
+
+`datetime_validator` and the inventory gate run at batch-2 integration (addendum 2). No `Plans/*.md` document was edited, so shards and the index were not regenerated; `pm-shard-plans.py --check` passes (99 documents, 3,100 shards). Nas1 lacked `blake3` and `rfc8785`; every command ran in a scratch venv with `--system-site-packages` plus `blake3 1.0.11`, `rfc8785 0.1.4`, `msgpack 1.2.4`.
+
+### Recheck mutations (in memory; format pack, the four guard-suite Storage witnesses, `check(families=('filesafe.command_denied',))`)
+
+The recheck's harness `df_mut.py` re-pointed at this worktree (`df_mut_fix1.py`); M12 is new and restores the part 2B leap-second key. Run at the final code (`1533229134`). At `f3b5b0f104` M8 crashed the harness: under that mutation an order case's `instant_key` raised `Refusal` inside `format_case_failures`, which `1533229134` now records as a failure (`instant_order_refused`) instead of stopping.
+
+| # | Mutation | At `90eec9ea12` (recheck) | Now | Caught by |
+|---|---|---|---|---|
+| — | none | clean | clean | — |
+| M1 | Storage fields checked with event_record | caught | **caught** | authority: p2bfix1.format.persisted_lowercase.issued, p2bfix1.format.persisted_offset, sweep1.format.lowercase, sweep1.format.offset; guard-suite witnesses: storage_offset, storage_lower_z |
+| M2 | Storage profile accepts a lowercase z | caught | **caught** | authority: p2bfix1.format.persisted_lowercase.issued, sweep1.format.lowercase; guard-suite witnesses: storage_lower_z |
+| M3 | persisted_at_utc dropped from the Storage check | guard-suite witness only | **caught** | authority: p2bfix1.format.persisted_lowercase.issued, p2bfix1.format.persisted_offset; guard-suite witnesses: storage_lower_z |
+| M4 | hour 24 accepted | caught | **caught** | format pack: date_time.hour_24; authority: sweep1.format.hour_24, sweep1.format.hour_24.issued |
+| M5 | trailing LF accepted | caught | **caught** | format pack: date_time.trailing_lf; authority: sweep1.format.trailing_lf, sweep1.format.trailing_lf.issued |
+| M6 | str subclass accepted | caught | **caught** | format pack: date_time.str_subclass |
+| M7 | occurred_at_utc given storage_utc_z | **survived** | **caught** | authority: p2bfix1.format.lowercase_ts, p2bfix1.format.offset_ts |
+| M8 | every second 60 refused | caught | **caught** | format pack: date_time.invalid_minute, date_time.invalid_offset_minute, date_time.real_leap_second …; guard-suite witnesses: storage_leap |
+| M9 | Storage profile accepts +00:00 | guard-suite witness only | **caught** | authority: p2bfix1.format.persisted_offset; guard-suite witnesses: storage_offset |
+| M10 | Storage check dropped on the issued/retained path | caught | **caught** | authority: p2bfix1.format.persisted_lowercase.issued, sweep1.format.lowercase, sweep1.format.offset |
+| M11 | year 0000 refused | caught | **caught** | format pack: date_time.year_zero; authority: p2bfix1.format.year_zero; guard-suite witnesses: storage_year0 |
+| M12 | part 2B leap-second key restored (DF-N4 defect) | not run (new) | **caught** | format pack: order.leap_fraction, order.leap_extra_digits, order.leap_extra_before_tenth … |
+
+**12 of 12 caught.**
+
+### Grades and self-grade
+
+No cell moves: family PASS counts stay 9, 9, 10, 9, 9, 9, 10, 10, 10; C12 and C7 stay PARTIAL for the reasons above; membership ABSENT. DF-1 was a guard-table proof row, not a grade cell, and is now witnessed. Self-grade: 672 of 672 quotes exact at their lines with current file hashes; 36 pins that the appended fixture cases and the `instant_key` docstring moved were relocated through the git diff hunks (quotes and `excerpt_sha256` unchanged).
+
+### Readiness
+
+Prepared for re-review. Not READY. Batch-2 items unchanged: inventory refresh, `datetime_validator`, the combined self-test. Native NOT_RUN, membership ABSENT. No new ids, no Decision Log entry, no registry append, no `Plans/*.md` edit. **Stopped for Jared:** none.
