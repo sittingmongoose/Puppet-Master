@@ -575,15 +575,28 @@
          (305.4 to 388, the offset from about -105 to -183) and the frame never descends.
          Keep the offset already solved so painted y descends with the length. A box on the
          pane floor stays there. A fit that actually moves the prop, such as the corridor
-         lift, is kept and still eases. */
-      if (!onWire && pr.restFit && pr.restFit.box && fit.box && tg.len > pr.restFit.len + .5) {
-        const oldC = (pr.restFit.box[1] + pr.restFit.box[3]) / 2, newC = (fit.box[1] + fit.box[3]) / 2;
-        const v = this.vis, onFloor = v && fit.box[3] >= v.y1 - 9;
+         lift, is kept and still eases. Only for a new slot (its anchor moved, as pair to side
+         there): a preview that becomes the choice hangs 26 units longer on the same slot, and
+         keeping its offset moved its destination down 25.7 units within the line, so the
+         bubble re-placed (Basic r-source, 175 px), its suspension's height changed (QA-6,
+         Friendly away) and its destination refitted (QA-4b, Retro away). That lengthening
+         folds into the offset, as before. */
+      /* Once kept, the offset stays kept for that slot: a later refit of the same slot and length (a new line,
+         a claim let go) solved the folded height again and lifted the house back the 25.7 units it had just
+         descended, within one scene (Retro and Friendly away: QA-6 suspension height, QA-4b destination). It
+         stays while the slot, its length and the height the fit solves for it are unchanged. */
+      const newSlot = pr.restFit && pr.restFit.slotAx != null && Math.abs(tg.ax - pr.restFit.slotAx) > .5;
+      const keptHere = pr.restFit && pr.restFit.keptDy != null && Math.abs(tg.ax - pr.restFit.slotAx) <= .5 && Math.abs(tg.len - pr.restFit.len) <= .5;
+      let keptDy = null, foldC = null;
+      if (!onWire && pr.restFit && pr.restFit.box && fit.box && ((newSlot && tg.len > pr.restFit.len + .5) || keptHere)) {
+        const oldC = keptHere ? pr.restFit.foldC : (pr.restFit.box[1] + pr.restFit.box[3]) / 2, newC = (fit.box[1] + fit.box[3]) / 2;
+        const v = this.vis, onFloor = v && fit.box[3] >= v.y1 - 9, keep = keptHere ? pr.restFit.keptDy : pr.restFit.dy;
         if (!onFloor && Math.abs(newC - oldC) < 1) {
-          const add = pr.restFit.dy - fit.dy;
-          fit.dy = pr.restFit.dy;
+          const add = keep - fit.dy;
+          fit.dy = keep;
           fit.box = [fit.box[0], fit.box[1] + add, fit.box[2], fit.box[3] + add];
           if (pr.restOff) pr.restOff.dy = fit.dy;
+          keptDy = keep; foldC = keptHere ? pr.restFit.foldC : newC;
         }
       }
       const sc = tg.sc * fit.f, spaceBox = fit.box, bb = pr.bb;
@@ -600,7 +613,7 @@
       }
       const reach = this.speechSway(pr, tg.sc * fit.f, tm, tg.len), b = fit.box;
       const speechBox = b && [b[0] - reach[0], b[1] - reach[1], b[2] + reach[0], b[3] + reach[1]];
-      return (pr.restFit = Object.assign({ key, geometry, wireKey, len: tg.len, held: !!onWire, speechBox, spaceBox, ax: tg.ax + fit.dx, sc }, fit, {box: actual}));
+      return (pr.restFit = Object.assign({ key, geometry, wireKey, len: tg.len, slotAx: tg.ax, keptDy, foldC, held: !!onWire, speechBox, spaceBox, ax: tg.ax + fit.dx, sc }, fit, {box: actual}));
     }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
