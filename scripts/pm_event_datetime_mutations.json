@@ -1851,6 +1851,33 @@
    },
    "data:table_entry:datetime_inventory:<module>:drop_entry SOURCE_FIELDS 'EventRecord'#1": {
     "witness": "check:datetime_node_dc560a51379d"
+   },
+   "site:datetime_inventory:bind_nested_resource:DatetimeAdmissionError:datetime_resource_pointer_mismatch#1": {
+    "witness": "check:datetime_nested_wrong_pointer_refused"
+   },
+   "site:datetime_inventory:bind_nested_resource:DatetimeAdmissionError:datetime_resource_binding_changed#1": {
+    "witness": "check:datetime_nested_changed_resource_sha256_refused"
+   },
+   "predicate:site:datetime_inventory:bind_nested_resource:DatetimeAdmissionError:datetime_resource_binding_changed#1:false digest(resource) != row['resource_sha256']#1": {
+    "witness": "check:datetime_nested_changed_resource_sha256_refused"
+   },
+   "predicate:site:datetime_inventory:bind_nested_resource:DatetimeAdmissionError:datetime_resource_binding_changed#1:false digest(node) != row['node_sha256']#1": {
+    "witness": "check:datetime_nested_changed_node_sha256_refused"
+   },
+   "predicate:site:datetime_inventory:bind_nested_resource:DatetimeAdmissionError:datetime_resource_binding_changed#1:false resource.get('$id') != row['resource_id']#1": {
+    "witness": "check:datetime_nested_changed_resource_id_refused"
+   },
+   "boundary:datetime_inventory:nested_resource_pointer:len(parts) >= 5:0#1": {
+    "witness": "check:datetime_nested_resource_pointer_boundaries"
+   },
+   "data:value_arithmetic:datetime_inventory:nested_resource_pointer:plus_one nested_resource_pointer: 4 in :4#1": {
+    "witness": "check:datetime_nested_resource_pointer_boundaries"
+   },
+   "data:value_arithmetic:datetime_inventory:nested_resource_pointer:plus_one nested_resource_pointer: 5 in len(parts) >= 5#1": {
+    "witness": "check:datetime_nested_resource_pointer_boundaries"
+   },
+   "data:value_arithmetic:datetime_inventory:nested_resource_pointer:plus_one nested_resource_pointer: 5 in :5#1": {
+    "witness": "check:datetime_nested_resource_pointer_boundaries"
    }
   }
  },
