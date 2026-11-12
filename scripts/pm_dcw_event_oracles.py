@@ -21,6 +21,7 @@ from referencing.jsonschema import DRAFT202012
 from contextvars import ContextVar
 from contextlib import contextmanager
 from functools import wraps
+import pm_event_datetime as event_datetime
 import pm_event_numbers as numbers
 import pm_dcw_number_custody as number_custody
 import pm_dcw_guard_rows as guard_rows
@@ -109,6 +110,12 @@ def check_schema(path, value, definition=None):
         schema = {'$ref': schema['$id'] + '#/$defs/' + definition}
     try:
         (FrozenValidator if historical else CurrentValidator)(schema, registry=resources, format_checker=FORMAT).validate(value)
+        if path == 'Plans/event_record.schema.json' and definition is None:
+            require_storage_timestamps(value)
+    except numbers.Refusal as exc:
+        if not str(exc).startswith('date_time'):
+            raise
+        guard_rows.enforce('OE001', {'site': 'OE001', 'code': 'schema', 'v0': 'refused'})
     except (ValidationError, ValueError) as exc:
         if isinstance(exc, ValueError) and (not isinstance(exc, ValidationError)) and ('integer string conversion' not in str(exc)):
             raise
@@ -835,26 +842,26 @@ def opened_source_custody(row, scenario, opened, payload):
     opened_row = dict(row, source_family='wizard_open_evidence', source_schema='Plans/dcw/wizard_open_evidence.schema.json')
     verify(opened_row, predecessor, 'read', None)
 
-def valid_date_time(value):
-    """RFC3339 shape and calendar checks, independent of optional packages.
+def require_storage_timestamps(value):
+    """CV-253: observed_at_utc and persisted_at_utc use storage_utc_z, not the broad profile."""
+    if type(value) is not dict:
+        return
+    for field in ('observed_at_utc', 'persisted_at_utc'):
+        item = value.get(field)
+        if isinstance(item, str):
+            event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)
 
-    Fractions have one or more decimal digits; numeric zones and t/z follow
-    RFC3339. Family UTC-Z constraints remain in their schemas. Seconds are
-    00..59, matching the existing Python calendar validator (no leap seconds).
-    These prepared families have no admitted older timestamp recipe.
+@FORMAT.checks('date-time', raises=event_datetime.Refusal)
+def valid_date_time(value):
+    """CV-1101: shared date_time with the EventRecord profile at every format: date-time.
+
+    A non-string is left to type. A str subclass reaches the predicate and refuses
+    date_time_type. The original string is never rewritten. Storage-assigned
+    observed_at_utc and persisted_at_utc take storage_utc_z in require_storage_timestamps.
     """
-    from datetime import datetime
     if not isinstance(value, str):
         return True
-    match = re.fullmatch('([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\\.[0-9]+)?(?:[Zz]|([+-])([0-9]{2}):([0-9]{2}))', value)
-    if match is None:
-        return False
-    try:
-        datetime(*(int(match[i]) for i in range(1, 7)))
-        return match[8] is None or (int(match[8]) <= 23 and int(match[9]) <= 59)
-    except ValueError:
-        return False
-FORMAT.checks('date-time')(valid_date_time)
+    return event_datetime.date_time(value, profile=event_datetime.EVENT_RECORD) == value
 
 def index_binding(value):
     try:
@@ -910,6 +917,13 @@ def index_content(index, reader, authority=None, event_validator=None):
     anchor = generation['anchor']
     frames = source['frames']
     rows = index['datasets'][generation['index_dataset_name']]
+    for row_value in rows.values():
+        try:
+            require_storage_timestamps(row_value)
+        except numbers.Refusal as exc:
+            if not str(exc).startswith('date_time'):
+                raise
+            guard_rows.enforce('OE001', {'site': 'OE001', 'code': 'schema', 'v0': 'refused'})
     canonical_msgpack(cp)
     prepared = {r['event_type']: r for r in load('Plans/dcw_event_contract_fixtures.json')['families']}
     registered = {r['event_type']: r for r in load('Plans/event_family_registry.json')['families']}

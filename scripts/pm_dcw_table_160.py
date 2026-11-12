@@ -9,7 +9,7 @@ def LE001(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('LE001', g.Invariant('/v0', 'validate: intrinsic parser/schema status'), 'refused', LE001),
+        g.Guard('LE001', g.Invariant('/v0', "date_time(payload['ts'], profile=EVENT_RECORD) is the payload timestamp parser"), 'refused', LE001),
     ])
 
     def check(value):

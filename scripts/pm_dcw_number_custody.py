@@ -27,6 +27,23 @@ def binding(event, storage_instance, operation_ref):
         hashlib.sha256(raw).hexdigest())
 
 
+def retained_timestamps(event):
+    """CV-1101 profiles bound to this recipe. No current-then-legacy probe.
+
+    Both the pre-sweep number edition and the current number edition use these
+    profiles. CV-1101 says a skipped format check is not an owner-valid legacy
+    grammar, so retained Storage times stay storage_utc_z.
+    """
+    import pm_event_datetime as dt
+    dt.date_time(event['occurred_at_utc'], profile=dt.EVENT_RECORD)
+    for field in ('observed_at_utc', 'persisted_at_utc'):
+        if type(event.get(field)) is str:
+            dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)
+    payload = event.get('payload')
+    if type(payload) is dict and type(payload.get('ts')) is str:
+        dt.date_time(payload['ts'], profile=dt.EVENT_RECORD)
+
+
 def install(event, receipt, storage_instance, operation_ref, resource_manifest, *, legacy=False):
     """Called by a fixture's original issuer, before its negative mutation."""
     raw=n.storage_value_bytes(event, profile=n.EVENT_VALUE)
@@ -35,7 +52,7 @@ def install(event, receipt, storage_instance, operation_ref, resource_manifest, 
     receipt_bytes=n.storage_value_bytes(receipt,profile=n.EVENT_VALUE)
     recipe=n.RecipeTuple(event['schema_id'],event['schema_version'],event['payload_schema_id'],
         event['payload'].get('schema_version','1.0.0'), 'dcw-owner-original',
-        'dcw-original-v1' if legacy else 'dcw-number-cv1100-v1', 'dcw-prepared-without-admission',
+        'dcw-original-v1+CV-1101' if legacy else 'dcw-number-cv1100-v1+CV-1101', 'dcw-prepared-without-admission',
         'dcw-compact-identity-v1', 'dcw-sorted-integer-json-v1' if legacy else 'CV-317/CV-1100',
         n.EVENT_VALUE, n.EVENT_VALUE, 'dcw-source-v1', 'SP-337-original-msgpack',resource_manifest)
     original=n.OriginalCustody(binding(event,storage_instance,operation_ref),recipe,raw,result,receipt_bytes)
@@ -45,11 +62,17 @@ def install(event, receipt, storage_instance, operation_ref, resource_manifest, 
     def verify_issued(candidate):
         ref=candidate.binding.event_id+'@'+hashlib.sha256(candidate.record_bytes).hexdigest()+'@'+hashlib.sha256(candidate.receipt_bytes).hexdigest()
         authentic=_ISSUED.get(ref)
-        return authentic is not None and candidate==authentic and (
+        if not (authentic is not None and candidate==authentic and (
             n.storage_value_bytes(n.decode_storage_value(candidate.record_bytes,profile=n.EVENT_VALUE),
                                   profile=n.EVENT_VALUE)==candidate.record_bytes) and (
             n.decode_storage_value(candidate.result_bytes,profile=n.EVENT_VALUE)['producer_semantic_digest']==
-            semantic_for_recipe(n.decode_storage_value(candidate.record_bytes,profile=n.EVENT_VALUE),legacy))
+            semantic_for_recipe(n.decode_storage_value(candidate.record_bytes,profile=n.EVENT_VALUE),legacy))):
+            return False
+        try:
+            retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))
+        except n.Refusal:
+            return False
+        return True
     _RECIPES[recipe]=n.FrozenRecipe(verify_issued)
 
 

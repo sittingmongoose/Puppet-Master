@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """DCW number-scope integration: complete current/retry/history/index paths.
 
-Shared helper credit and lane credit are reported separately. Timestamp checking
-is interim only. This file imports no pm_event_datetime code.
+Shared helper credit and lane credit are reported separately. The timestamp
+label names date_time event_record and storage_utc_z. This file does not call pm_event_datetime.
 """
 import argparse
 import copy
@@ -166,7 +166,8 @@ def run(family=None):
         current=copy.deepcopy(original);current['retry_request']=copy.deepcopy(current['event']);current['retry_request']['producer_sequence_id']=1.0
         record(name,'current-integral-float',complete(row,current,'retry'),'integer_type')
     return dict(status='pass' if all(r['passed'] for r in results) else 'fail',cases=len(results),results=results,
-                shared_corpus_raw_inputs=len(raw_cases),shared_corpus_scalar_inputs=len(scalar_cases),timestamp='interim only',native='NOT_RUN',membership='ABSENT')
+                shared_corpus_raw_inputs=len(raw_cases),shared_corpus_scalar_inputs=len(scalar_cases),
+                timestamp='date_time event_record and storage_utc_z',native='NOT_RUN',membership='ABSENT')
 
 
 if __name__=='__main__':

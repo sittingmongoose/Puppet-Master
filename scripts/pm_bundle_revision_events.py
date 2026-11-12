@@ -1,11 +1,10 @@
 """Static contract oracles for unadmitted Deep Plan bundle revision events. No native proof."""
 import pm_dcw_event_oracles as m
+import pm_event_datetime as event_datetime
 import copy
 import hashlib
 import json
 from pathlib import Path
-from datetime import datetime, timezone
-from jsonschema import Draft202012Validator, FormatChecker
 ROOT = Path(__file__).resolve().parents[1]
 
 def identity(payload):
@@ -15,12 +14,11 @@ def identity(payload):
     return ('evt_bundle_revision_' + digest, payload['event_type'] + ':' + digest)
 
 def validate(row, payload, envelope, previous):
-    from pm_dcw_event_oracles import FORMAT
     m.check_schema(row['schema'], payload)
     m.guard_rows.enforce('L001', {'site': 'L001', 'code': 'UTC timestamp', 'v0': payload['ts'].endswith('Z')})
     try:
-        datetime.fromisoformat(payload['ts'].replace('Z', '+00:00'))
-    except ValueError as exc:
+        event_datetime.date_time(payload['ts'], profile=event_datetime.EVENT_RECORD)
+    except event_datetime.Refusal:
         m.guard_rows.enforce('LE001', {'site': 'LE001', 'code': 'invalid timestamp', 'v0': 'refused'})
     else:
         m.guard_rows.enforce('LE001', {'site': 'LE001', 'code': 'invalid timestamp', 'v0': None})

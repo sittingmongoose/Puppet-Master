@@ -448,6 +448,16 @@ def cases(row):
     add('index_predecessor_CAS', positive, 'read', lambda s: s['reader'].update(expected_predecessor='b' * 64), 'index_CAS')
     add('persisted_snapshot_forbidden', positive, 'read', lambda s: s['reader']['durable_token'].update(redb_snapshot_id='forged'), 'durable_snapshot_forbidden')
     add('original_time', positive, mutate=edit_event('occurred_at_utc', '2026-11-05T06:01:00Z'), expected='original_time', coherent=True)
+    add('occurred_offset', positive, mutate=edit_event('occurred_at_utc', '2026-11-05T06:00:00+00:00'), expected='original_time', coherent=True)
+    add('storage_offset', positive, mutate=edit_event('observed_at_utc', '2026-11-05T06:00:00+00:00'), expected='schema', coherent=True)
+    add('storage_lowercase_z', positive, mutate=edit_event('persisted_at_utc', '2026-11-05t06:00:00z'), expected='schema', coherent=True)
+    def set_clock(s, ts):
+        s['source']['observation']['ts'] = ts
+        s['event']['payload']['ts'] = ts
+        sync_payload(s)
+    add('announced_leap_second', positive, mutate=lambda s: set_clock(s, '2016-12-31T23:59:60Z'), expected='accept')
+    add('timestamp_lowercase_t', positive, mutate=lambda s: set_clock(s, '2026-11-05t06:00:00Z'), expected='accept')
+    add('timestamp_trailing_lf', positive, mutate=lambda s: set_clock(s, '2026-11-05T06:00:00Z\n'), expected='schema')
     add('source_storage_instance', positive, mutate=lambda s: s['source'].update(storage_instance_id='foreign'), expected='source_storage_instance')
     add('source_ref', positive, mutate=lambda s: s['source'].update(source_ref='foreign'), expected='source_ref')
     add('prepared_original', positive, mutate=lambda s: s['source']['prepared_event'].update(actor_ref='actor:other'), expected='prepared_original')

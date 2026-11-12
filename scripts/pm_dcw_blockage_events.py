@@ -297,7 +297,7 @@ def main(family):
             assert outcome(copy.deepcopy(case['repair']), case['operation']) == 'accept', (family, case['id'], 'repair')
             counts['repair_controls'] += 1
         results.append(dict(case_id=case['id'], operation=case['operation'], outcome=actual))
-    print(json.dumps(dict(status='PASS', family=family, counts=counts, results=results, membership='ABSENT', retention='PARTIAL', guard_isolation='PARTIAL_PHASE_TABLES', timestamp='interim only', number_domain='NUMBER_SCOPE_ADOPTED', native='NOT_RUN'), indent=2))
+    print(json.dumps(dict(status='PASS', family=family, counts=counts, results=results, membership='ABSENT', retention='PARTIAL', guard_isolation='PARTIAL_PHASE_TABLES', timestamp='date_time event_record and storage_utc_z', number_domain='NUMBER_SCOPE_ADOPTED', native='NOT_RUN'), indent=2))
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--family', choices=NAMES, required=True)

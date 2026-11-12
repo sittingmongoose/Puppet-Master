@@ -25187,8 +25187,10 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 a
   stays within the same existing inline limit. Both packs and indexes must be durable before reference commit, append
   or publication. Body/source references are not interchangeable, truncated or inline base64 encodings. Missing/unreadable/undurable/wrong
   bytes refuse on every applicable path without checkpoint advance. No new number ceiling, serializer or date-time
-  grammar is defined: CV-253 and original Storage byte/number owners apply; CV-1100/SP-1100/SP-1101 and CV-1101
-  adoption remains the shared number/format sweep. Exact typed original comparisons never use language equality
+  grammar is defined: CV-253 and original Storage byte/number owners apply, with CV-1100/SP-1100/SP-1101 and CV-1101.
+  Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,
+  Storage observed_at_utc and persisted_at_utc use its storage_utc_z profile, and SP-1101 selects these profiles
+  for a retained original. Exact typed original comparisons never use language equality
   across types or normalize physical signed zero.
 
 
@@ -25236,7 +25238,8 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 a
   source and event sizes, current retry versus retained history, complete mixed-source index/CAS, access, restore
   and withdrawal. New negatives preserve observational copies and have valid single-fact repair controls. Shared-tool
   predicate-isolation proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made.
-  B2 timestamp-format adoption remains pending; timestamp review is interim only. The number-only bindings below do not change timestamp admission or retained timestamp strings. Native planning adapters, original
+  These oracles check ts and occurred_at_utc with the CV-1101 EventRecord profile and Storage observed_at_utc and
+  persisted_at_utc with storage_utc_z, including retained originals. The number-only bindings below do not change timestamp admission or retained timestamp strings. Native planning adapters, original
   authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore, retention-boundary
   and access/deletion campaigns are authored obligations with execution NOT_RUN; static success never supplies native
   authority or admission.
@@ -25409,8 +25412,10 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045
   also stays within the same existing inline limit. Both packs and indexes must be durable before reference commit,
   append or publication. Body/source references are not interchangeable, truncated or inline base64 encodings. Missing/unreadable/undurable/wrong
   bytes refuse on every applicable path without checkpoint advance. No new number ceiling, serializer or date-time
-  grammar is defined: CV-253 and original Storage byte/number owners apply; CV-1100/SP-1100/SP-1101 and CV-1101
-  adoption remains the shared number/format sweep. Exact typed original comparisons never use language equality
+  grammar is defined: CV-253 and original Storage byte/number owners apply, with CV-1100/SP-1100/SP-1101 and CV-1101.
+  Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,
+  Storage observed_at_utc and persisted_at_utc use its storage_utc_z profile, and SP-1101 selects these profiles
+  for a retained original. Exact typed original comparisons never use language equality
   across types or normalize physical signed zero.
 
 
@@ -25458,7 +25463,8 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045
   source and event sizes, current retry versus retained history, complete mixed-source index/CAS, access, restore
   and withdrawal. New negatives preserve observational copies and have valid single-fact repair controls. Shared-tool
   predicate-isolation proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made.
-  B2 timestamp-format adoption remains pending; timestamp review is interim only. The number-only bindings below do not change timestamp admission or retained timestamp strings. Native planning adapters, original
+  These oracles check ts and occurred_at_utc with the CV-1101 EventRecord profile and Storage observed_at_utc and
+  persisted_at_utc with storage_utc_z, including retained originals. The number-only bindings below do not change timestamp admission or retained timestamp strings. Native planning adapters, original
   authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore, retention-boundary
   and access/deletion campaigns are authored obligations with execution NOT_RUN; static success never supplies native
   authority or admission.

@@ -143,13 +143,22 @@ def cases(row):
     s = copy.deepcopy(base); s['index']['committed_transactions'][0]['generation_id'] = 'eig_' + 'f' * 64
     add('foreign_transaction_generation', s, 'index_atomicity', extra_guards=('index_read:362',))
 
-    # Authentic malformed Storage timestamps reproduce all 24 Astra cases.
+    # Storage observed/persisted use storage_utc_z. Year 0000 and an announced
+    # leap second are valid under that profile; offsets and lowercase z are not.
+    # The former Storage positives +23:59 and t...z (lowercase zone) are now negatives.
     malformed = [('word', 'yesterday'), ('impossible', '2026-13-99T25:61:61Z'),
         ('missing_zone', '2026-11-04T12:00:00'), ('LF', '2026-11-04T12:00:00Z\n'),
         ('separator', '2026-11-04 12:00:00Z'), ('calendar', '2026-02-30T12:00:00Z'),
-        ('nonleap', '2025-02-29T12:00:00Z'), ('year_zero', '0000-01-01T00:00:00Z'),
+        ('nonleap', '2025-02-29T12:00:00Z'), ('hour_24', '2026-11-04T24:00:00Z'),
         ('leap_second', '2026-12-31T23:59:60Z'), ('empty_fraction', '2026-11-04T12:00:00.Z'),
-        ('offset_hour', '2026-11-04T12:00:00+24:00'), ('offset_minute', '2026-11-04T12:00:00+00:60')]
+        ('offset_hour', '2026-11-04T12:00:00+24:00'), ('offset_minute', '2026-11-04T12:00:00+00:60'),
+        ('nonzero_offset', '2026-11-04T12:00:00+23:59'),
+        ('plus_zero', '2026-11-04T12:00:00+00:00'), ('minus_zero', '2026-11-04T12:00:00-00:00'),
+        ('lowercase_z', '2026-11-04t12:00:00z')]
+    storage_valid = [('fraction', '2000-02-29T23:59:59.123456789Z'),
+                     ('lowercase_t', '2026-11-04t12:00:00Z'),
+                     ('announced_leap', '2016-12-31T23:59:60Z'),
+                     ('year_zero', '0000-01-01T00:00:00Z')]
     for field in ('observed_at_utc', 'persisted_at_utc'):
         for label, invalid in malformed:
             s = copy.deepcopy(base)
@@ -163,8 +172,7 @@ def cases(row):
             rules += schema_rules(row['source_schema'], s['source']) + schema_rules(row['source_schema'], s['source'], 'inline')
             add('datetime_' + field + '_' + label, s, 'schema', rules=rules,
                 operations=('append', 'publish', 'retry', 'read', 'rebuild', 'compatibility_read'))
-        for label, valid in [('fraction', '2000-02-29T23:59:59.123456789Z'),
-                             ('offset', '2026-11-04T12:00:00+23:59'), ('lowercase', '2026-11-04t12:00:00z')]:
+        for label, valid in storage_valid:
             s = copy.deepcopy(base)
             for slot in event_slots(s):
                 if slot['prepared_event']['event_id'] == s['event']['event_id']: slot['prepared_event'][field] = valid
@@ -172,6 +180,17 @@ def cases(row):
             if 'stored_source' in s: source_reference(row, s)
             opened_source_reference(s); refresh_restore(s); issue(s)
             add('datetime_valid_' + field + '_' + label, s, 'accept')
+    s = copy.deepcopy(base)
+    offset = '2026-11-04T12:00:00+00:00'
+    for slot in event_slots(s):
+        if slot['prepared_event']['event_id'] == s['event']['event_id']:
+            slot['prepared_event']['occurred_at_utc'] = offset
+    s['event']['occurred_at_utc'] = offset
+    seal_originals(s)
+    if 'stored_source' in s: source_reference(row, s)
+    opened_source_reference(s); refresh_restore(s); issue(s)
+    add('datetime_occurred_offset', s, 'original_time',
+        operations=('append', 'publish', 'retry', 'read', 'rebuild', 'compatibility_read'))
     # Exercise payload/source formats as well as the shared envelope fields.
     for label, invalid in malformed:
         s = copy.deepcopy(base)
@@ -203,5 +222,21 @@ def cases(row):
             rules += schema_rules(owners[original['event_type']]['schema'], original['payload'])
         legacy_guards = ['legacy:3', 'legacy:datetime_parse'] if row['event_type'].startswith('bundle.') else []
         add('datetime_payload_' + label, s, 'schema', rules=rules, extra_guards=legacy_guards,
+            operations=('append', 'publish', 'retry', 'read', 'rebuild', 'compatibility_read'))
+    for label, valid in [('announced_leap', '2016-12-31T23:59:60Z'),
+                         ('year_zero', '0000-01-01T00:00:00Z'),
+                         ('lowercase_t', '2026-11-04t12:00:00Z'),
+                         ('fraction', '2000-02-29T23:59:59.123456789Z')]:
+        s = copy.deepcopy(base)
+        current = next(slot for slot in event_slots(s) if slot['prepared_event']['event_id'] == s['event']['event_id'])
+        current['prepared_event']['payload']['ts'] = valid
+        current['prepared_event']['occurred_at_utc'] = valid
+        current['result']['occurred_at_utc'] = valid
+        s['authority']['results'][current['result']['result_ref']]['occurred_at_utc'] = valid
+        s['event'] = copy.deepcopy(current['prepared_event'])
+        seal_originals(s)
+        if 'stored_source' in s: source_reference(row, s)
+        opened_source_reference(s); refresh_restore(s); issue(s)
+        add('datetime_payload_valid_' + label, s, 'accept',
             operations=('append', 'publish', 'retry', 'read', 'rebuild', 'compatibility_read'))
     return result
