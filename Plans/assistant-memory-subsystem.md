@@ -27,7 +27,9 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.storage, ContractName:Plan
 ---
 
 <a id="1-capability-boundary"></a>
-## 1. Capability boundary (owner writes, authorized reads)
+## 1. Capability boundary (Assistant-only)
+
+Compatibility heading only: Assistant-only is the historical section/shard identifier, retained for frozen references. Current access is owner-managed writes and authorized read-only helpers under AMS-026; it is not an exclusive-reader rule.
 
 ### 1.1 Memory provider contract
 
