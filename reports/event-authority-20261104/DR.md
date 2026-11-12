@@ -1,4 +1,211 @@
-# DR — Sweep part 2A: guard tables on the gated guard tool
+# DR — Sweep part 2B: shared date-time check and shared number rules
+
+Branch `plans/ea-w2-runtime-artifacts-20261104`; part 2A head `78bc525d65`; gated NUMRULE merge `2d13c3718e` (exact `58c2816ff3`); fix round DR-P2B-FIX1 commits `7788f9ba35`, `32a2a9dde5` and `b430830f44`; delivery head in the external sweep `HEAD.txt`. No rebase this round.
+
+**All 19 families keep 10 PASS / 1 PARTIAL / 1 ABSENT.** Part 2B closes N2 (shared number and recipe rules) and S1 (date-time formats): every timestamp field DR owns is now checked by the shared CV-1101/CV-253 check, and the lane's number surrogates are replaced by the shared CV-1100/SP-1100/SP-1101 calls. The timestamp review is **no longer interim**: the table below names the shared check covering each field. `positive_negative_oracles` stays PARTIAL for one reason only: the shared date-time inventory gate refuses admission on this tree (T199), so the shared suite `pm_event_numbers.py --self-test` does not pass here until batch-2 integration reviews the inventory. Membership stays ABSENT; native execution is NOT_RUN. Sol max and Astra max review the lane in batch 2.
+
+## Sweep part 2B: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Step 1 — merge the gated head** | Merged exactly `58c2816ff33365384d4039553f5efdb5370930e6` with `--no-ff` as `2d13c3718e`. 163 conflicts, all in `Plans/_shards/**` and `Plans/.plan_index/**`, resolved by regenerating (shard generate, index generate with the 15 hash-verified currentness files, shard check `pass`). **No non-derived conflict**; neither addendum resolution was needed (DR held no early NUMRULE copy and no shared owner unit). The 22 NUMRULE non-Markdown files are byte-identical to `58c2816ff3`; `Contracts_V0.md` and `storage-plan.md` carry exactly NUMRULE's 75 and 80 changed lines. Regeneration changed only those two documents' shards and units (4 units added: CV-1100, CV-1101, SP-1100, SP-1101). | merge commit `2d13c3718e` | `git diff --name-only fb441b27fd 58c2816ff3` minus derived paths equals the merge's non-derived paths; `git rev-parse 2d13c3718e:<path>` equals `58c2816ff3:<path>` for the 22 files; `merge-proof.json`. |
+| **S1 — shared date-time check** (fixed, `4e0696376a`) | New row **S08_date_time** runs `pm_event_datetime.datetime_validator` on every adopted schema occurrence (EventRecord, receipt, custody, result, checkpoint, every payload schema, toy schemas), current and historical, over a closed preloaded registry (event record, receipt contracts, checkpoint, shared integration runtime; nothing retrieved). S07 keeps every other format (`stock_format_checker` drops only `date-time`), so a date-time defect is S08's alone. | `scripts/pm-runtime-artifact-event-drafts.py:416` (`DATETIME_RESOURCES`), `:426`, `:439` (`shared_datetime_validator`), `:492`; `scripts/pm_runtime_artifact_table_schema.py:20` (`S08_date_time`) | Witnesses below; route checks `S08_route_*` and `S08_history_*` in every family. |
+| **S1 — lane leaks other lanes found** | Each now refuses through S08 with a test in every family: `24:00:00Z` (`*_hour_24` at occurred/observed/persisted, receipt and route), trailing LF (`*_trailing_lf`), missing zone, space separator, Feb 30, false leap second, `+24:00` offset, empty fraction; on Storage fields `+00:00`, `-00:00`, lowercase `z`, nonzero offsets. Lowercase `t`/`z`, offsets, long fractions and real leap seconds are kept with their exact spelling on `occurred_at_utc` (CV-1101 broad profile). DR had no date-time support before (stock `FormatChecker()` skipped `date-time`: part 2A report). | `scripts/pm_runtime_artifact_round10_cases.py:16-48` (value sets), `:77-110`; `scripts/pm-runtime-artifact-event-drafts.py:1568` (`part2b_oracles`) | Full checker `S08_route_*` checks; guard-tool S08 rows. |
+| **N2 — integer slots** (fixed, `4e0696376a`) | **N01_integer_slots** replaces the blanket `canonical_numbers` walk: a second Draft 2020-12 validator whose only change is the `integer` type, defined by the shared `current_integer`, runs after the stock pass on current-writer occurrences; field bounds stay the schema's. Untyped values and number slots are not walked (CV-1100 / guide: no blanket walk). | `:296` (`integer_refusal`), `:305` (`current_integer_slot`), `:411` (`INTEGER_SLOT_VALIDATOR`), `:495`; `pm_runtime_artifact_table_schema.py:32` | Round-6 N01 witnesses at EventRecord, receipt, custody, result and checkpoint integer slots still refuse, now at N01_integer_slots. |
+| **N2 — physical bytes** (fixed) | `value_bytes` is the shared `storage_value_bytes(..., profile=EVENT_VALUE)`; codec rows read its refusal reason: I02 non-finite, I03 type/key type, **I04 integer outside −2^63..2^64−1**, **I05 lone surrogate**. The CV-339 commitment uses the shared `full_value_commitment`. The lane MessagePack surrogate (`packed_value`, `codec_observation`) is removed; every positive's bytes, digest and commitment are unchanged (`shared_full_value_commitment_agrees`, `shared_producer_digest_agrees`, known answers). | `:594` (`physical_bytes`), `:602`, `:621`; `pm_runtime_artifact_table_codec_value.py:16-28` | Shared checks plus `I04`/`I05` witnesses. |
+| **N2 — JCS routes** (fixed) | Pack bodies (`storage_form`, row **J01s**), inline sizes (`canonical_size`, rows **D04q**/**V05q**, split from D04/V05 so size and qualification are separate predicates), pack canonical bytes (D10b) and the producer digest (`semantic_digest` = shared `producer_semantic_digest`, rows **A08** in append and **F14** in full value; F09/A04/A05 now read only a present digest) use `qualified_jcs`: 2^53+1 refuses `jcs_binary64`, 2^60 `jcs_decimal`, a lone surrogate `unicode_scalar`, before any effect. Pack bodies parse integers exactly (`JsonNumber(...).exact()`). | `:582`, `:624-639`, `:667`; tables `codec_storage:16`, `decode_envelope:36`, `stored:36`, `append_dedupe:16`, `full_value_ids_b:32` | Witnesses `J01`, `D04`/`V05` (lone surrogate in every family; 2^60 in screenshot/browser/cost payload slots), `A08`, `F14`. |
+| **N2 — authenticated historical recipe selection** (fixed) | Retained history and the restore-point predecessor resolve through the shared `RetainedDispatcher`. `SourceOwner` returns the binding (Storage, scope, Server, Project, family, event identity, owner operation, value commitment) and the `RecipeTuple` recorded by the authenticated source adapter (`recorded_decoder`), with a resource manifest over the frozen schema bytes; the map from tuple to `frozen_verifier` is installed from this head's resources for the editions each route supports (history: historical v1; predecessor: current writer and historical v1). The verifier decodes the custody bytes with `decode_storage_value` and re-derives dispatch, joins, identity, commitment and digest; the request never selects a recipe. Rows: **H05c** caller override, **H05b**/**O14** foreign binding, **H05**/**O12** unknown or absent recorded edition. `resolve_history` no longer takes a `decoder` argument. Modelling assumption, stated: the static model has one Server and no native owner-operation id, so a request names two fixed constants, while the sealed source adapter reports the Server and owner operation holding its authenticated original (FIX1, below); it records this head's schema bytes as each edition's frozen resources. | `:828-967` (`STATIC_SERVER_ID` `:859`, `original_binding` `:867`, `SourceOwner` `:888`, `dispatch_original` `:928`, `resolve_history` `:944`), `:1712`; tables `history:16-24`, `observation_recipe:16-20` | History checks `S10_older_original_*` (now with `None`, `caller_recipe`, `foreign_binding`, `foreign_server`, `foreign_owner_operation`) and `S10_original_custody_*`, witnesses H05/O14. |
+| **N2 — Python-equality joins over numbers** | Kept: they compare values both already admitted by the integer-slot row and the physical codec, and the observation ordinal (O08) is computed only from an admitted integer. No change needed. | `:1734` (`expected_ordinal`) | Unchanged O08 witnesses. |
+| **N2 — excluded two-row number witnesses** (fixed, `1084c90c18`) | The 144 O03 `0.0`/`1.0` owner-snapshot witnesses are now single-row S07 witnesses (N01 no longer reads boolean slots) and leave the exclusion list; S07 boolean-type witnesses add `0.0`/`1.0`. | `scripts/pm_runtime_artifact_guard_suites.py` (`EXCLUDED_PATTERNS`), `pm_runtime_artifact_round6_cases.py` | Guard tool O03/S07 suites. |
+| **4,400-digit integer crash** (fixed, `4e0696376a`) | **Found at the part 2A head** (probe `long-integer-probe-2a.txt`): a schema-valid `sequence_id` ≥ 2^64 and a receipt offset past uint64 crashed with msgpack `OverflowError`; a 4,400-digit producer ordinal or restore revision crashed with Python's 4,300-digit `ValueError`; a 2^60 producer ordinal crashed append with rfc8785 `IntegerDomainError`; a 4,400-digit payload width was refused under the wrong row (D04 "oversized inline"). Now each refuses through a row (`long-integer-probe-2b.txt`): append `invalid` (I04 or A08), payload D04q, identity rendered exactly under a scoped, restored `int_max_str_digits(0)`. Joins and the append model turn a codec refusal into a refusal, never an escaping exception. | `:282` (`exact_digits`), `:567`, `:756` (`codec_refusal_is_false`), `:1005` | `N2_4400_digit_*` checks in every family; corpus runner 0 untracked. |
+| **Shared corpus through the complete checker** (`4485e4583f`) | `scripts/pm-runtime-artifact-number-corpus.py` places every number of the shared corpus's number scope (45 values, 5 of them refused at parse) plus three 4,400-digit integers at the Storage sequence, the producer ordinal (the restore revision, with its identity rebound), the receipt byte offset and screenshot `width`, and runs fresh append plus exact retry; the expectation is composed from `current_integer` (owner bounds), `qualified_jcs` and `storage_value_bytes` alone. | `scripts/pm-runtime-artifact-number-corpus.py` | `pass` at the FIX1 head: 45 values (5 parse refusals), 2,320 route runs, 517 accepted / 1,803 refused, 0 disagreements, 0 untracked; byte-identical to the run before FIX1. |
+| **Number self-test** | `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | — | Exit 0, `"status": "pass"`, 580/580 cases (276 positives, 304 negatives). Credited exactly as reported. |
+| **Date-time self-test and inventory gate** | `python3 scripts/pm_event_datetime.py --self-test` (the brief's command) exits 0 but runs nothing: the module has no CLI (T200). The date-time suite, `python3 scripts/pm_event_numbers.py --self-test`, exits 1 with `NOT_RUN_ADMISSION_REFUSED`, because `python3 scripts/pm_event_datetime_inventory.py` fails on this tree: exit 1, `fail`, 341 failures (172 unclassified_mentioning_container, 121 unreadable_mentioning_container, 48 stale_scan_exclusion). The merge-head run had 340; ATS-260's edit (`2b68e18d66`) changed its fence and shard hashes and added one regenerated `plan_units` row. FIX1 changed none: same set as the run before it. Classification of the merge-head run is in `inventory-classification.json` (DR's own fixtures and owner-unit fences, main-age drift, regenerated derived files, the ignored currentness copy). Credited exactly as reported; no NUMRULE file edited (T199). | `selftest-all-final.stdout`, `inventory-final.stdout`, `inventory-classification.json` | — |
+| **Fixture expectation changes** (`1084c90c18`) | No fixture JSON changed. Witness-pair expectations that the shared rule changes: 76 `N01/<family>/<form>_open_map` and 152 `N01/<family>/<form>_storage_form_{inline,packed}` pairs (forms `1.0`, `1e0`, `0.0`, `-0.0`) expected refusal (rows `N01_canonical_numbers`, `N01s_storage_numbers`) and are now **accepted**: an untyped value and a storage_form input have no integer slot, CV-1100 forbids a blanket walk, and their JCS/physical encodings are exact. They are now the 12 shared checks `numrule_float_*_accepted`. 144 O03 witnesses keep refusal with one row instead of two (above). | `scripts/pm-runtime-artifact-event-drafts.py:1768` | `numrule-flips.json`. |
+| **ATS-260** (fixed, `2b68e18d66`) | The numeric paragraph now states the shared number, recipe and date-time rules and the corpus runner; `depends_on` and `source_lineage` cite CV-1100, CV-1101, SP-1100, SP-1101; validation surfaces add the corpus runner and the number self-test. | `Plans/Automated_Testing_System.md:7250` | Shards and index regenerated; only Automated_Testing_System outputs changed; shard check `pass`. |
+| **Pinned environment** (`80e206f44e`) | `scripts/requirements-runtime-artifact-drafts.txt` now pins what the runs used: jsonschema 4.23.0, referencing 0.36.2, attrs 25.4.0, rfc8785 0.1.4, blake3 1.0.11, msgpack 1.1.2, markdown-it-py 3.0.0. | requirements file | — |
+| **SP-1101 deferred items (step 4)** | None assigned to DR (DCH, DMEM, DS15, DFM, DF only). DR's own retained dispatch is the N2 item above. | — | — |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** zero new; ATS-260 changes in place.
+
+## Fix round DR-P2B-FIX1: the S10a stop and its fix
+
+**The stop (2026-11-11, before this fix, at `d947359b1b`).** Every check passed except one standing trial. `S10a_ignore_authenticated_binding` cuts `H05b_original_binding` (SP-1101: the authenticated original's binding equals the requested original). With that row cut, the complete checker still passed over the four standing families (`standing.before-fix1.json`: 6 of 7 trials caught, `status: fail`). No negative in the checker corpus was refused by H05b alone. The guard tool proved H05b at its own table (`history`), so the gap was in complete-checker coverage only.
+
+**Why.** `resolve_history` sends the requested original through the shared `RetainedDispatcher`. When the dispatch row is cut, it goes on to `full_value_matches(requested event, authenticated original, requested result, requested custody)`. That function compares the requested event and custody with the authenticated original byte for byte (`F02_candidate_bytes`, `F13_custody_bytes`). Seven of the nine binding fields (Storage instance, scope, Project, event type, event id, idempotency key, value commitment) live in those bytes. The other two, Server and original owner operation, were fixed constants on the request and the authenticated side alike. So every H05b negative also changed bytes that F02 compares. The existing `foreign_binding` negative (another event id) was refused later by `F02_candidate_bytes` once H05b was cut.
+
+**The fix (`7788f9ba35`).** SP-1101 binds the selection to "the Storage instance, exact scope/Server/Project, event type and original event/idempotency identity, original owner operation and original value/source commitment" (`Plans/storage-plan.md:22489`). The Server and the owner operation are the binding facts that no stored byte carries. The sealed source adapter now reports the Server and owner operation that hold its authenticated original (`history_source_for`, `scripts/pm-runtime-artifact-event-drafts.py:1654`). `SourceOwner` builds the authenticated binding from them (`:888`). A request still names the static model's single Server and owner operation (`STATIC_SERVER_ID`, `:859`; `dispatch_original`, `:928`). An absent or empty adapter fact makes no binding, so the dispatcher refuses it as `original_binding` (`original_binding`, `:867`). No row, table module, fixture JSON, NUMRULE file or guard-tool file changed; the history table still reads only `dispatch_refusal`.
+
+**New single-defect negatives.** Each starts from a valid retained original. The only change is the adapter's Server (`dr-other-server`) or owner operation (`dr-other-owner-operation`); the bytes equal the requested original. Each is refused first by `H05b_original_binding` with `unavailable`, and no earlier row refuses it. With H05b cut, the complete route accepts it.
+
+| Family | H05b negatives | Where |
+|---|---:|---|
+| `cost_usage`, `tool_llm_trace` | 12 each | first original (2); historical originals `inline`, `packed`, `numeric_inline`, `numeric_packed` (2 each, 8); round-10 witnesses `S11_H05_foreign_server`, `S11_H05_foreign_owner_operation` (2) |
+| the other 17 families, including `document`, `restore_point` and `screenshot` | 8 each | first original (2); historical originals `numeric_inline`, `numeric_packed` (4); round-10 witnesses (2) |
+
+That is 160 H05b negatives over all 19 families: every family reaches H05b through `resolve_history`. The checker adds `S10_original_custody_foreign_{server,owner_operation}_refused` (`:1421`) and `S10_older_original_<route>_foreign_{server,owner_operation}_refused` (`:1450`). The witnesses are in `scripts/pm_runtime_artifact_round10_cases.py:173`. `restore_point` also gets two O14 negatives of the same kind for the observation predecessor (`predecessor_foreign_server`, `predecessor_foreign_owner_operation`, `:215`), refused first by `O14_predecessor_binding` and accepted with O14 cut. The full checker gains 202 assertions: 160 H05b negatives, 2 O14 negatives and 40 witness positives.
+
+**Trial targets (`32a2a9dde5`).** Both SP-1101 trials now target every family. The provider-hash exclusion was written before `efbeecc654` gave `cost_usage` and `tool_llm_trace` their own H05b/H05c witnesses, so `S10a_ignore_authenticated_binding` and `S10a_caller_selects_retained_recipe` now need a caught negative in `cost_usage` too. **Standing-check memory gate (`b430830f44`).** The first rerun aborted after four trials when other work on the machine dropped available memory to 7 GB; the script's gate raised instead of pausing (`aborted-fix1/`). It now pauses below 10 GB and resumes at 11 GB. The trials are unchanged.
+
+**Standing trials before and after** (7 trials over `cost_usage`, `document`, `restore_point`, `screenshot`; failing negatives per family):
+
+| Trial | Before (`d947359b1b`, checker `2155d01e`) | After (`b430830f44`, checker `fb6b914b`) |
+|---|---|---|
+| `S11_remove_historical_decoder_selection` | caught (13 / 7 / 7 / 7) | caught (13 / 7 / 7 / 7) |
+| `S12_remove_shared_datetime_check` | caught (105 / 102 / 106 / 102) | caught (105 / 102 / 106 / 102) |
+| `S12_stock_format_checker_skips_date_time` | caught (36 / 33 / 37 / 33) | caught (36 / 33 / 37 / 33) |
+| `S10_remove_integer_slot_rule` | caught (22 / 22 / 26 / 22) | caught (22 / 22 / 26 / 22) |
+| `S10_remove_producer_jcs_qualification` | caught (1 / 1 / 1 / 1) | caught (1 / 1 / 1 / 1) |
+| `S10a_caller_selects_retained_recipe` | caught (5 / 3 / 3 / 3) | caught (5 / 3 / 3 / 3), now targeting every family |
+| `S10a_ignore_authenticated_binding` | **SURVIVED** (0 failures) | **caught (12 / 8 / 8 / 8)**: exactly the new `foreign_server` and `foreign_owner_operation` negatives |
+| **Result** | 6/7, `status: fail` | **7/7, `status: pass`** |
+
+Order in each cell: cost_usage / document / restore_point / screenshot.
+
+**Reruns at the fix head.**
+- **Full checker:** `pass`, 26,165 assertions, 0 failures (before: 25,963). The new assertions break down as +10 per family and +14 for cost_usage, tool_llm_trace and restore_point.
+- **Corpus runner:** `pass`, byte-identical to the pre-fix result: 45 values (5 parse refusals), 2,320 route runs, 517 accepted / 1,803 refused, 0 disagreements, 0 untracked.
+- **Number self-test:** exit 0, `"status": "pass"`, 580/580 cases (276 positives, 304 negatives), unchanged.
+- **Guard tool:** all 19 families and `--family shared` rerun at checker `fb6b914b`: **785 suites, 3,042/3,042 row cells proved**, 0 failed suites, 0 unproved rows, 0 masked negatives, 0 lane-matrix problems, 0 open findings. Before the fix the counts were the same at checker `2155d01e`. The new witnesses reach their first refusal with the same observation as the existing H05b negative (`{"dispatch_refusal": "original_binding"}`), so the tool keeps them as aliases of that negative. The only differences are aliases +2 per family (+4 in restore_point, with O14) and complete-boundary flips accepted +2 per family (+4): from 7,474 to 7,514 accepted, with 1,742 refused later before and after. In every family's `history` suite the H05b negative now flips to accepted. The two refused-later flips there are the pre-existing `foreign_authenticated_binding` witness (another event id, refused later by `F02_candidate_bytes`) and the H05 decoder witness (refused later by `S06_validation_profile`, the fallback edition, which `S11_remove_historical_decoder_selection` pairs with its source cut). In restore_point's `observation_recipe` suite, accepted flips went from 0 to 2 (`tool-before-after.json`, `fix1-facts.json`).
+- **Memory gates for the reruns.** Each heavy step started only at 13.5 GB available, one at a time. One exception, under the lead's stream E rule of 2026-11-11 23:22Z: a run whose own gate caps each step's RSS at 2 GB or less and pauses below 10 GB may start or resume at 11 GB. The first five guard-tool families (api_web_call, artifact_version, before_after_snapshot, browser_recording, code_diff) ran under the wrapper's 13.5 GB start, with the driver's default `--max-rss 4096`. The rest ran with `--max-rss 2048 --pause-when-low 10 --resume-at 11` and the wrapper's wait between families lowered to 11 GB. The job was idle in that wait when it was stopped and restarted, and the per-family markers kept the five finished families. Measured peak RSS per family is about 280 MiB. The cap is a gate only and does not change what the tool computes. Reason: about ten workers keep the VM at 10-11 GB available, so a 13.5 GB gate starves.
+
+## Timestamp fields and the shared check covering each
+
+| Field (owner schema) | Profile | Shared check |
+|---|---|---|
+| `occurred_at_utc` (`Plans/event_record.schema.json` `$defs/date_time_string`) | CV-1101 `event_record` (broad RFC 3339) | S08: `datetime_validator` registered checker, current and historical validators |
+| `observed_at_utc`, `persisted_at_utc` (EventRecord) | CV-253 `storage_utc_z` | S08: inventory-selected Storage composition (node `Plans/event_record.schema.json` root, `storage_utc_z`), current and historical |
+| `acknowledged_at_utc` (`event_append_receipt_contracts` `AppendReceipt`; also inside custody and result `first_append_receipt`) | CV-1101 broad (schema `format: date-time`) | S08 on RECEIPT, CUSTODY and RESULT validators |
+| `first_prepared_at_utc`, `activated_at_utc`, `retired_at_utc`, `frontier.indexed_at_utc` (`event_record_index_checkpoint` generation/frontier) | CV-1101 broad (schema `format: date-time`) | S08 on the checkpoint validator |
+| `created_at_utc`, `type_payload.retention.expires_at_utc` (`runtime_artifact_restore_point` `$defs/date_time`) | CV-1101 broad (schema `format: date-time`) | S08 on the restore-point payload validator |
+| event_record_index row `persisted_at_utc` (checkpoint dataset) | CV-253 `storage_utc_z` (inventory node family 8) | Built from the event's S08-checked `persisted_at_utc` and compared byte for byte (C12) |
+| Unformatted payload timestamp strings: `created_at_utc` in the other 18 payload schemas, `captured_at_utc`, `decided_at_utc`, hitl `expires_at_utc`, `started/ended/completed_at_utc`, `failed_at_utc`, `generated_at_utc`, WebOperationJob times, trace lifecycle times, browser `PageRepresentation.observed_at_utc` and cost_usage `authorityFields.observed/settled/adjusted_at_utc` | owner schema (`type: string`; the two `observed_at_utc` nodes are inventory `other_owner_observation`, `profile: owner_schema`) | No timestamp predicate, by CV-1101/NUMRULE ("unformatted source fields retain their original types"). Every payload `created_at_utc` equals the S08-checked `occurred_at_utc` through the D15 join on every decode route. |
+
+Integration note (not decided here): SP-347's commit frame says `acknowledged_at_utc` is "RFC 3339 UTC with milliseconds"; the receipt schema says only `format: date-time`, and NUMRULE has no such profile. DR applies the receipt schema's owner profile and adds no local regex (CV-1101).
+
+## Guard-table result
+
+The gated tool `004bdedd63` (unchanged) ran **785 suites** (one per phase table per family, plus the shared-only phases): **3042/3042 row cells proved**, 0 failed suites, 5670 single-row negatives (sum over suites), lane matrix problems 0, masked negatives 0, open collection findings 0. 230 distinct rows in 63 tables. Unproved rows: 0. Credit is the tool's own `rows[].proved`.
+
+All suites were rerun, not only the affected ones: the date-time and integer-slot rows sit in the schema phase every family reaches. They ran again at the FIX1 head, because the checker file changed (see the fix-round section for what moved: only aliases and complete-boundary flips in `history` and `observation_recipe`).
+
+| Family | Suites | Row cells proved | Negatives | Failed suites | Rows without negative |
+|---|---:|---:|---:|---|---|
+| `runtime_artifact.api_web_call` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.artifact_version` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.before_after_snapshot` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.browser_recording` | 41 | 163/163 | 304 | none | none |
+| `runtime_artifact.code_diff` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.context_snapshot` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.cost_usage` | 47 | 181/181 | 317 | none | none |
+| `runtime_artifact.document` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.evidence` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.failed_attempts` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.hitl_approval` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.implementation_plan` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.reasoning_summary` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.restore_point` | 49 | 181/181 | 354 | none | none |
+| `runtime_artifact.screenshot` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.subagent_lineage` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.suggested_next_steps` | 40 | 156/156 | 292 | none | none |
+| `runtime_artifact.tool_llm_trace` | 46 | 175/175 | 312 | none | none |
+| `runtime_artifact.validation_test` | 40 | 156/156 | 292 | none | none |
+| `shared` | 2 | 2/2 | 3 | none | none |
+
+Rows added or changed in part 2B, and where the tool proved them:
+
+| Row | Phase | Families where proved |
+|---|---|---|
+| `S08_date_time` | `schema.case` | 19: all 19 |
+| `N01_integer_slots` | `schema.case` | 19: all 19 |
+| `I01a_revision_integer` | `codec_identity` | 1: restore_point |
+| `I01b_revision_nonnegative` | `codec_identity` | 1: restore_point |
+| `I02_finite_float` | `codec_value` | 19: all 19 |
+| `I03_supported_type` | `codec_value` | 19: all 19 |
+| `I04_integer_range` | `codec_value` | 19: all 19 |
+| `I05_unicode_scalar` | `codec_value` | 19: all 19 |
+| `J01s_storage_jcs` | `codec_storage` | 1: shared |
+| `D04q_inline_jcs` | `decode_envelope` | 19: all 19 |
+| `D04_inline_size` | `decode_envelope` | 19: all 19 |
+| `V05q_inline_jcs` | `stored` | 19: all 19 |
+| `V05_inline_size` | `stored` | 19: all 19 |
+| `A08_producer_jcs` | `append_dedupe` | 19: all 19 |
+| `A04_global_conflict` | `append_dedupe` | 19: all 19 |
+| `A05_scoped_conflict` | `append_dedupe` | 19: all 19 |
+| `F14_producer_jcs` | `full_value_ids_b` | 19: all 19 |
+| `F09_semantic_digest` | `full_value_ids_b` | 19: all 19 |
+| `H05c_no_caller_recipe` | `history` | 19: all 19 |
+| `H05b_original_binding` | `history` | 19: all 19 |
+| `H05_decoder` | `history` | 19: all 19 |
+| `O12_recorded_recipe` | `observation_recipe` | 1: restore_point |
+| `O14_predecessor_binding` | `observation_recipe` | 1: restore_point |
+
+Witness pairs excluded from the table proof (kept in the full checker): 90 distinct pairs (part 2A: 234). The per-run sum is 180, because the `--family shared` run collects every family's witness pairs and lists the same pairs again. The 144 O03 0.0/1.0 witnesses left the list (they are single-row S07 witnesses now), so 234 - 144 = 90; the C04, H07, cost_usage refs and restore_point forged-receipt exclusions are unchanged, with the reasons in `scripts/pm_runtime_artifact_guard_suites.py`.
+
+## What Astra keeps finding, probed for part 2B
+
+(1) Identities, digests and commitments are recomputed with the shared helpers and compared by rows; forged copies stay the negatives. (2) Storage-assigned fields stay outside the producer digest; Storage timestamps take CV-253's strict profile. (3) Historical routes: the authenticated recorded edition selects the frozen verifier; current-writer rules (integer slots, provider overlay) never run on a historical original; older originals keep owner-valid offset/lowercase source times (`S08_history_*`), and a sealed Storage offset or invalid date never reads. (4) One field read two ways: integers are admitted by `current_integer` and encoded by the shared codec everywhere they are read; pack bodies parse integers exactly. (5) S01 and the preflight still walk every `$ref`; the date-time registry is closed. (6) Inline size is the qualified JCS length on decode and stored copies. (7) Every append, retry, history and observation path still runs the full-value phases; history first runs SP-1101 dispatch. (8) Masked negatives: see the guard-table result; the standing trial found one H05b gap in the complete checker, closed in FIX1 with binding-only negatives. (9) Oracle cells stay PARTIAL (inventory admission). (10, 10a) Numbers: shared rule, history keeps the recorded recipe (38 frozen integral-float originals still read and still refuse current writes). (11) Type rows unchanged. (12) Formats: the shared registered date-time checker replaces the skipped stock format.
+
+## Part 2B items closed; remaining
+
+- **Closed:** N2 (all four sub-items), S1, the excluded O03 number witnesses, the 4,400-digit crash.
+- **Remaining (integration, not lane-fixable):** T199 inventory admission on lane trees; T200 the brief's no-op `pm_event_datetime.py --self-test` command.
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the part 2A self-grade at `78bc525d65`. After is this part 2B self-grade at the FIX1 code head `b430830f44`.
+
+| Exact family | Before → after | Oracle cell |
+|---|---|---|
+| `runtime_artifact.api_web_call` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.artifact_version` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.before_after_snapshot` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.browser_recording` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.code_diff` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.context_snapshot` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.cost_usage` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.document` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.evidence` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.failed_attempts` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.hitl_approval` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.implementation_plan` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.reasoning_summary` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.restore_point` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.screenshot` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.subagent_lineage` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.suggested_next_steps` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.tool_llm_trace` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+| `runtime_artifact.validation_test` | 10P / 1Q / 1A → 10P / 1Q / 1A | PARTIAL → PARTIAL; reason now only the refused inventory admission (N2 and S1 closed) |
+
+190 PASS / 19 PARTIAL / 19 ABSENT / 0 CONFLICT → the same totals. Timestamps were one of the two reasons each oracle cell was PARTIAL; the shared check now covers every timestamp field (table above), and the shared number rules cover N2. The remaining reason is the shared inventory gate, which DR cannot clear on its own tree (T199). Every cited quote was re-verified at its line in this tree (regrade at `b430830f44`: of the 743 earlier quotes, 334 were at their line, 370 moved inside their own unit and 39 were re-pointed from removed number code to the shared-rule code making the same claim; 0 missing. 133 part 2B oracle quotes were added. All 876 quotes were re-checked at their lines, 0 off. The oracle findings and `static_verification.fix_round_dr_p2b_fix1` record the FIX1 stop, fix and standing results).
+
+## Readiness
+
+**NOT_READY_REVIEW_PENDING for all 19 families** (190 PASS / 19 PARTIAL / 19 ABSENT). Part 2B, including fix round DR-P2B-FIX1, is complete in the lane: the shared date-time and number rules are adopted, the full checker passes, the guard tool proves every row, and all 7 standing trials are caught. Two things remain, both outside the lane: the date-time inventory admission at batch-2 integration (T199; `datetime_validator` and the inventory gate run there), and the batch-2 Sol max and Astra max reviews. Membership ABSENT; native execution NOT_RUN.
+
+## Commands and evidence
+
+Heavy runs went one at a time. Each started at 13.5 GB available, except the guard-tool families after code_diff, which started at 11 GB under the lead's 23:22Z rule (fix-round section). PM7 work was not waited on or touched. Commits: `2d13c3718e` (merge), `4e0696376a`, `1084c90c18`, `4485e4583f`, `2b68e18d66`, `80e206f44e`, `931fbba625`, `28114fc7d8`, `efbeecc654`, `d947359b1b`, then FIX1 `7788f9ba35`, `32a2a9dde5`, `b430830f44`, then the report commit. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/sweep-p2b/` (SHA-256 of every file in `SHA256SUMS`).
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6` | 1, then committed | 163 conflicts, all derived; regenerated; `2d13c3718e`; `merge-proof.json` |
+| `python3 scripts/pm-shard-plans.py --generate`, `pm-plan-index.py generate`, `pm-shard-plans.py --check` (merge, then ATS-260) | 0 | `pass`, 3,104 shards; only NUMRULE's two documents, then only Automated_Testing_System outputs, changed. FIX1 edited no `Plans/*.md`. |
+| `python3 scripts/pm-runtime-artifact-event-drafts.py` (full checker) before FIX1 | 0 | `pass`, 25,963 assertions, 0 failures (`full-checker.before-fix1.stdout`) |
+| the same at the FIX1 head (checker `fb6b914b`) | 0 | **`pass`, 26,165 assertions, 0 failures**, 25 min 07 s, peak RSS 293 MB (`full-checker.stdout`) |
+| `python3 scripts/pm-runtime-artifact-standing-checks.py --family <4 families> --case S11_remove_historical --case S12_ --case S10_remove_integer --case S10_remove_producer --case S10a_` before FIX1 | 1 | `fail`: 6/7 caught, `S10a_ignore_authenticated_binding` SURVIVED (`standing-checks.before-fix1.json`) |
+| the same at the FIX1 head | 0 | **`pass`: 7/7 caught**, 66 min, peak RSS 430 MB (`standing-checks.json`); the first FIX1 attempt stopped on its own memory raise after four trials (`aborted-fix1/`) |
+| `python3 scripts/pm-runtime-artifact-number-corpus.py` | 0 | `pass`: 45 values, 2,320 route runs, 0 disagreements, 0 untracked (`corpus.stdout`) |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 (`selftest-numbers.stdout`) |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `NOT_RUN_ADMISSION_REFUSED`: the inventory gate refuses on this tree (T199) (`selftest-all.stdout`) |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | 341 failures, classified above (`inventory.stdout.gz`) |
+| `python3 scripts/pm_event_datetime.py --self-test` | 0 | runs nothing: no CLI (T200); not counted |
+| `python3 scripts/pm-runtime-artifact-guard-tables.py --family <f> --out tool/<f>` ×19, then `--family shared` (tool `004bdedd63`, unchanged) | 0 ×20 | 785 suites `PASS`, 3,042/3,042 row cells proved (`tool/<family>/summary.json`, `tool-aggregate.json`, `tool-before-after.json`) |
+| long-integer probes at the part 2A head and at part 2B | — | crashes at 2A, refusals through rows at 2B (`long-integer-probe-2a.txt`, `long-integer-probe-2b.txt`) |
+
+---
+
+# DR — Sweep part 2A (earlier report, unchanged): guard tables on the gated guard tool
 
 Branch `plans/ea-w2-runtime-artifacts-20261104`; delivery head in the external sweep `HEAD.txt`. Part 2A start `5ea37cbd70`; gated tool merge `da7ef0f27d` (tool `004bdedd63`, eleven files, unchanged). No rebase onto main this round.
 
