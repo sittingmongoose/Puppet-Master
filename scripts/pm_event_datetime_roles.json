@@ -5,7 +5,7 @@
       "json",
       "/$defs/browser_program_result_validation/properties/result_schema_resources"
     ],
-    "value_schema_sha256": "576e670da07b7e67716bedb1fe93ba80cc5106f56bca2cb30f635be57ae05746",
+    "value_schema_sha256": "54ee3e3c961e3ca96880c2fa46c00d8de296718e7bb0a7cbecd1359e7dd00ee8",
     "role": "schema_resource_string",
     "reason": "result_schema_resources maps resource identifiers to nonempty original schema-resource strings. The cited value schema accepts all 653 battery timestamps and 15 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
     "classification": "other_owner_observation",
