@@ -2791,7 +2791,7 @@ Runtime records:
 | `LoopBreakerRegistry` | `registry_id`, `schema_version`, families `identical_tool_failure`, `empty_assistant`, `no_tool_progress`, `repeated_edit_miss`, `compaction_no_gain`, `context_overflow_replay`, `MCP_resource_missing`, `first_event_timeout`, `transport_idle`, `reasoning_no_action`, `subagent_same_read`, and `spend_anomaly`; each family has `fingerprint_fields[]`, `max_count`, `observation_window`, `terminal_action`, and `user_facing_reason`. |
 | `AgentControlEnvelope` | `envelope_id`, `schema_version`, `autonomy_mode`, `write_surface`, provider/model/effort policy refs, tool/MCP permission ceiling, context/token budgets, loop budgets, wall-clock budgets, terminal/browser/device authority, child-spawn policy, cancellation/steering policy, progress heartbeat policy, and receipt refs. |
 | `CertificationReceipt` | `receipt_id`, `schema_version`, `goal_id`, `goal_run_id?`, `certification_tier`, acceptance-criteria disposition, changed artifact refs, validator outputs, child/worknode receipt refs, authority checks, unresolved risks, certifier identity, and final decision. |
-| `ChildAgentLease` | `lease_id`, `schema_version`, `parent_goal_id`, `child_goal_id?`, `agent_id`, `allowed_phase`, `read_write_mode`, `max_depth`, `delegation_depth`, `cannot_resume_parent_goal`, `terminal_return_channel`, budget ceiling, and settlement requirement. |
+| `ChildAgentLease` | `lease_id`, `schema_version`, `parent_goal_id` (the one independent Goal whose work the subagent serves; never a Goal-to-Goal parent/child edge, GRS-052, DL-478), `agent_id`, `allowed_phase`, `read_write_mode`, `max_depth`, `delegation_depth`, `cannot_resume_parent_goal`, `terminal_return_channel`, budget ceiling, and settlement requirement. |
 | `WorkNodeRequests` | `request_set_id`, `schema_version`, active required request refs, optional request refs, accepted/deferred/excluded disposition, readiness snapshot, activation transaction ref, and reason for any mixed result. |
 | `AuditCycle` | `audit_cycle_id`, `schema_version`, `goal_id`, `target_ref`, `cycle_index`, auditor refs, scope refs, finding refs, closure refs, validator outputs, status, and next action. |
 | `AuditFinding` | `finding_id`, `schema_version`, `audit_cycle_id`, `finding_family`, severity, target refs, evidence refs, root_cause_key?, repeated_signature_count?, proposed repair refs, status, and owner refs. |
@@ -5025,7 +5025,7 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Every subagent receives a ChildAgentLease with parent_goal_id, allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
+- Every subagent working for a Goal receives a ChildAgentLease whose parent_goal_id names that initiating Goal (never another Goal: no parent/child Goal edge, GRS-052), with allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
 - A child/subagent cannot spawn further agents unless its lease explicitly grants delegation_depth > 0.
 - Parent sees child terminal errors as typed failed outcomes, never empty successful completion.
 - Subagent cache/context lineage is separate from parent stable-prefix/cache lineage unless explicitly linked by a receipt.
@@ -5033,7 +5033,7 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Every subagent receives a ChildAgentLease with parent_goal_id, allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
+- Every subagent working for a Goal receives a ChildAgentLease whose parent_goal_id names that initiating Goal (never another Goal: no parent/child Goal edge, GRS-052), with allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
 - A child/subagent cannot spawn further agents unless its lease explicitly grants delegation_depth > 0.
 - Parent sees child terminal errors as typed failed outcomes, never empty successful completion.
 - Subagent cache/context lineage is separate from parent stable-prefix/cache lineage unless explicitly linked by a receipt.
