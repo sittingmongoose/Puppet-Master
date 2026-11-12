@@ -42,9 +42,13 @@ async function go(t, f, domain, ws) {
 async function axRead(cdp, selector) {
 	const obj = await cdp.send('Runtime.evaluate', { expression: `document.querySelector(${JSON.stringify(selector)})`, objectGroup: 'fo134' });
 	if (!obj.result || !obj.result.objectId) return null;
-	const nodes = (await cdp.send('Accessibility.getPartialAXTree', { objectId: obj.result.objectId, fetchRelatives: false })).nodes;
-	const node = nodes && nodes[0];
-	return node ? { name: String((node.name && node.name.value) || ''), role: String((node.role && node.role.value) || ''), ignored: !!node.ignored } : null;
+	/* the element's backend node id, the way the round-3 review's focused script read this stack */
+	const node = (await cdp.send('DOM.describeNode', { objectId: obj.result.objectId })).node;
+	await cdp.send('Runtime.releaseObject', { objectId: obj.result.objectId }).catch(() => {});
+	if (!node || !node.backendNodeId) return null;
+	const nodes = (await cdp.send('Accessibility.getPartialAXTree', { backendNodeId: node.backendNodeId, fetchRelatives: false })).nodes;
+	const ax = nodes && nodes[0];
+	return ax ? { name: String((ax.name && ax.name.value) || ''), role: String((ax.role && ax.role.value) || ''), ignored: !!ax.ignored } : null;
 }
 
 export const tests = {};
@@ -256,7 +260,8 @@ for (const surface of ['normal', 'sandbox']) {
 		   observed on this build (a diagnostic: it does not press anything unclassified). */
 		const OPENER_DOC = JSON.parse(fs.readFileSync(new URL('./settings-panel-openers.json', import.meta.url), 'utf8'));
 		const OPENS = new Set(OPENER_DOC.opens || []);
-		const OTHER = new Set(Object.keys(OPENER_DOC.other || {}));
+		/* `other` maps each action to what it does instead; a plain list also reads, for actions with nothing to say */
+		const OTHER = new Set(Array.isArray(OPENER_DOC.other) ? OPENER_DOC.other : Object.keys(OPENER_DOC.other || {}));
 		const unclassified = new Set();
 		const pressedOpeners = new Set();
 		const observedActions = {};
@@ -299,10 +304,13 @@ for (const surface of ['normal', 'sandbox']) {
 				}
 				const press = PROBE ? actions.filter((a) => !PROBE_SKIP.test(a)) : actions.filter((a) => OPENS.has(a));
 				for (const action of press) {
+					/* the probe asks each action once, in the first state it shows in: what is wanted is whether pressing it
+					   opens an editor at all, not every place it appears */
+					if (PROBE && probeResult[action]) continue;
 					const pressed = await f.evaluate(([sel, a]) => { const e = [...document.querySelectorAll(sel)].find((x) => x.dataset.action === a && x.getClientRects().length); if (!e) return false; e.click(); return true; }, [body('[data-action]'), action]).catch(() => false);
 					if (!pressed) continue;
-					pressedOpeners.add(action);
-					const showed = await f.waitForFunction(() => [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay .dialog[role="dialog"]')].some((e) => e.getClientRects().length), null, { timeout: 2500 }).then(() => true).catch(() => false);
+					if (!PROBE) pressedOpeners.add(action);
+					const showed = await f.waitForFunction(() => [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay .dialog[role="dialog"]')].some((e) => e.getClientRects().length), null, { timeout: PROBE ? 900 : 2500 }).then(() => true).catch(() => false);
 					if (showed) panelsOpened++;
 					if (PROBE) probeResult[action] = { opened: (probeResult[action] && probeResult[action].opened) || showed, where: where0 };
 					await t.settle().catch(() => {});
