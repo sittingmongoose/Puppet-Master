@@ -15,14 +15,18 @@ function h(spec,attrs,...kids) {
  classList:{add(...cs){classes.push(...cs);}},matches(sel){return sel===tag;}};
 }
 const common={h,PMR:{hover(){},actionAttrs:()=>({})},cx:(...xs)=>xs.flat().filter(Boolean).join(' '),plain:String,asList:x=>Array.isArray(x)?x:x?[x]:[]};
+const glyphSrc=read('../../../leftrail-redesign/src/js/10-glyphs.js');
+const statuses=vm.createContext({PMR:{h},glyph:()=>null});
+vm.runInContext(fn(glyphSrc,'statusEl')+'\n'+fn(glyphSrc,'letterEl'),statuses);
+const statusEl=statuses.statusEl,letterEl=statuses.letterEl;
 const a=vm.createContext({...common,inst:{open:new Map()},item:{id:'fixture',name:'Fixture',actions:[]}});
 vm.runInContext(['row','hasDetail','primaryOf','nameEl','diffEl'].map(n=>fn(src('a'),n)).join('\n'),a);
 const ar=vm.runInContext('row(inst,item,{flat:true,l2:()=>[]})',a);
-const b=vm.createContext({...common,PMR:{...common.PMR,letterEl:()=>null}});vm.runInContext(fn(src('b'),'row')+'\n'+fn(src('b'),'subLine'),b);
-const br=vm.runInContext('row({key:"fixture",name:"Fixture",meta:["One fact"],selected:true,extra:subLine({letter:"M",status:{word:"Modified",state:"changed"}})})',b);
-const cs=read('../../../leftrail-redesign/src/concepts/c/08-panel.js');const c=vm.createContext({...common,P:{sel:'fixture',viewId:'fixture',reg(){}},panel:{id:'fixture'}});
+const b=vm.createContext({...common,statusEl,PMR:{...common.PMR,letterEl:()=>null}});vm.runInContext(fn(src('b'),'row')+'\n'+fn(src('b'),'subLine'),b);
+const br=vm.runInContext('row({key:"fixture",name:"Fixture",meta:["One fact"],selected:true,extra:[subLine({letter:"M",status:{word:"Modified",state:"changed"}}),statusEl({word:"Modified",state:"changed"})]})',b);
+const cs=read('../../../leftrail-redesign/src/concepts/c/08-panel.js');const c=vm.createContext({...common,statusEl,letterEl,P:{sel:'fixture',viewId:'fixture',reg(){}},panel:{id:'fixture'}});
 vm.runInContext(cs.match(/  P\.row = o => {[^]*?\n  };/)[0],c);
-const cr=vm.runInContext('P.row({key:"fixture",name:"Fixture"})',c);
+const cr=vm.runInContext('P.row({key:"fixture",name:"Fixture",lead:letterEl("M"),end:statusEl({word:"Modified",state:"changed"})})',c);
 const menuSrc=read('../../../leftrail-redesign/src/js/20-menu.js');
 const menu=vm.createContext({...common,PMR:{...common.PMR,h},selectable:m=>m.value!=null});
 vm.runInContext(menuSrc.match(/const CHECK_SVG = [^]*?;/)[0]+'\n'+fn(menuSrc,'menuItemEl'),menu);
