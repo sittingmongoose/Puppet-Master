@@ -597,7 +597,7 @@ class BsdLifecycleRecordClosureTests(unittest.TestCase):
             self.assertIn(transform_id, registered)
         # The disposition adds no physical family (SP-251/SP-318 negative constraint).
         # SP-322 adds one Release-owned schedule family after the 294-family Event Authority pin.
-        self.assertEqual(len(REGISTRY["families"]), 342)
+        self.assertEqual(len(REGISTRY["families"]), 360)
 
     def test_lifecycle_not_folded_into_summary(self) -> None:
         self.assertNotIn("bsd_runtime_record", BSD_RECORDS["$defs"])

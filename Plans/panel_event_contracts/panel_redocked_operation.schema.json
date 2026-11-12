@@ -1,0 +1,539 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.storage_value.panel_redocked_operation.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "storage_instance_id",
+    "server_id",
+    "scope_partition",
+    "app_session_id",
+    "operation_digest",
+    "event_id",
+    "idempotency_key",
+    "request_digest",
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "state",
+    "payload",
+    "prior_host_snapshot",
+    "candidate_host_snapshot",
+    "owner_commit_ref",
+    "result_ref",
+    "dispatch_receipt_ref",
+    "original_append_result_ref",
+    "original_command"
+  ],
+  "properties": {
+    "storage_instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "server_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope_partition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "app_session_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation_digest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+      "description": "Lowercase SHA-256 of canonical MessagePack of the exact closed object {original_command: this.original_command, candidate_payload: this.payload}; no field is omitted, normalized or regenerated on retry.",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "schema_id": {
+      "const": "pm.storage_value.panel_redocked_operation.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "state": {
+      "enum": [
+        "prepared",
+        "committed",
+        "settled",
+        "abandoned_uncommitted"
+      ]
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "app_session_id",
+        "interaction_transaction_id",
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "window_id",
+        "owner_commit_ref",
+        "command_result_ref",
+        "dispatch_receipt_ref",
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "workspace_tab_id",
+        "panel_id",
+        "command_id",
+        "origin",
+        "source_host",
+        "target_host",
+        "prior_host_revision",
+        "new_host_revision",
+        "settled_at_utc",
+        "settled_only",
+        "preview_state_included",
+        "persisted",
+        "host_state_persisted",
+        "workspace_layout_changed_coemitted",
+        "workspace_layout_event_ref"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "app_session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "interaction_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "window_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_commit_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_result_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dispatch_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.event.panel_redocked.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "workspace_tab_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "panel_id": {
+          "const": "chat"
+        },
+        "command_id": {
+          "const": "cmd.panel.redock"
+        },
+        "origin": {
+          "enum": [
+            "home_workspace",
+            "global_shell"
+          ]
+        },
+        "source_host": {
+          "const": "detached_window"
+        },
+        "target_host": {
+          "const": "chat_column"
+        },
+        "prior_host_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "new_host_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "settled_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "settled_only": {
+          "const": true
+        },
+        "preview_state_included": {
+          "const": false
+        },
+        "persisted": {
+          "const": true
+        },
+        "host_state_persisted": {
+          "const": false
+        },
+        "workspace_layout_changed_coemitted": {
+          "const": false
+        },
+        "workspace_layout_event_ref": {
+          "const": null
+        }
+      }
+    },
+    "prior_host_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app_session_id",
+        "host_revision",
+        "host",
+        "window_id"
+      ],
+      "properties": {
+        "app_session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "host": {
+          "enum": [
+            "chat_column",
+            "detached_window"
+          ]
+        },
+        "window_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      }
+    },
+    "candidate_host_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app_session_id",
+        "host_revision",
+        "host",
+        "window_id"
+      ],
+      "properties": {
+        "app_session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "host": {
+          "enum": [
+            "chat_column",
+            "detached_window"
+          ]
+        },
+        "window_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      }
+    },
+    "owner_commit_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "result_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "dispatch_receipt_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "original_append_result_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "original_command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "server_id",
+        "project_id",
+        "workspace_tab_id",
+        "scope_partition",
+        "app_session_id",
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "origin",
+        "command_id",
+        "panel_id",
+        "prior_host_revision",
+        "expected_layout_revision",
+        "window_id",
+        "target_host"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "workspace_tab_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "app_session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin": {
+          "enum": [
+            "home_workspace",
+            "global_shell"
+          ]
+        },
+        "command_id": {
+          "const": "cmd.panel.redock"
+        },
+        "panel_id": {
+          "const": "chat"
+        },
+        "prior_host_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_layout_revision": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "window_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_host": {
+          "const": "chat_column"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "prepared"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "const": null
+          },
+          "result_ref": {
+            "const": null
+          },
+          "dispatch_receipt_ref": {
+            "const": null
+          },
+          "original_append_result_ref": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "abandoned_uncommitted"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "const": null
+          },
+          "result_ref": {
+            "const": null
+          },
+          "dispatch_receipt_ref": {
+            "const": null
+          },
+          "original_append_result_ref": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "committed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dispatch_receipt_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "original_append_result_ref": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "settled"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dispatch_receipt_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "original_append_result_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ]
+}
