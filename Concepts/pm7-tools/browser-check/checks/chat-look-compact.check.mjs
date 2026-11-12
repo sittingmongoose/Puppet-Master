@@ -1,5 +1,6 @@
 // FO-156: keep the 400px width fixed while look and motion change, in both directions.
 export default async function(t) {
+ t.log("Chrome " + t.page.context().browser().version());
  for (const [from,to] of [['basic-light','friendly-dark'],['glass-dark','nier-light'],['friendly-light','basic-dark']]) for(const reduced of [true,false]) {
   await t.viewport(1920,1080); const f=await t.app.open();
   await t.emulate({reducedMotion:reduced?'reduce':'no-preference'}); await t.app.look(from);
