@@ -22,5 +22,9 @@ export async function refreshRate(frame) {
 	return 1000 / gaps[gaps.length >> 1];
 }
 
-// Parks the pointer where it hovers nothing: the window's right edge, mid height.
-export async function parkPointer(page, W, H) { await page.mouse.move(W - 6, Math.round(H / 2)); }
+// Parks the pointer where it hovers nothing: the window's right edge, mid height. Each park is a real move (it steps one
+// pixel up or down from the last), because a park also stands for a person at the page: after 20 s without input the
+// page goes still and holds its endless loops (PERF-3, src/js/14-shell-still.js), and a move to where the pointer
+// already is may send no pointermove at all.
+let parkStep = 0;
+export async function parkPointer(page, W, H) { parkStep ^= 1; await page.mouse.move(W - 6, Math.round(H / 2) + parkStep); }
