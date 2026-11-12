@@ -33413,3 +33413,695 @@ preserved_exact_tokens:
 negative_constraints:
 - No creator expansion, worker direct creation, admission, sibling action grants, retention decision or native proof.
 ```
+
+
+### CV-780 - browser.session.created identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-780
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.created@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_created; Project pm.browser.session.created.payload.v1
+  and application pm.browser.session.created.payload.application.v1, version 1.0.0, must match actual scope. Envelope
+  Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt null
+  together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.created
+  current inputs enter only as exact integer tokens (a -0 token is refused at parsing), and every EventRecord and
+  payload integer slot admits only an exact current integer, so an integral float such as 1.0, 1e0 or -0.0 is
+  refused at the slot. The retry comparison is the shared qualified producer projection (producer_semantic_bytes /
+  producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
+  2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
+  assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
+  key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;
+  SP-1101): every timestamp field uses the shared CV-1101 date_time predicate with its owner''s profile, never a
+  lane grammar. occurred_at_utc and payload ts take the broad event_record profile (T or t, Z, z or an hh:mm
+  offset, legitimate leap seconds, any fraction length); Storage-assigned observed_at_utc and persisted_at_utc also
+  take CV-253''s storage_utc_z profile (terminal uppercase Z only), on the current record, the retry original and
+  retained history alike. A retry original and a retained history read are first resolved once through the shared
+  SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in
+  Plans/card2_original_custody.json, never a request field): a Store outside that custody refuses as
+  original_unavailable and a sealed recipe without an installed frozen verifier as recipe_unknown, with no
+  fallback, current-then-legacy probing or caller override. The only write-time recipe is card2@1, whose tuple pins
+  the EventRecord and family payload schema bytes and these field profiles. Owner-valid lowercase, offset,
+  leap-second and long-fraction history stays readable with its exact spelling; an offset or lowercase-z Storage
+  timestamp never becomes valid history.
+'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-780
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.created
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-781 - browser.session.state_changed identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-781
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.state_changed@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_state_changed; Project pm.browser.session.state_changed.payload.v1
+  and application pm.browser.session.state_changed.payload.application.v1, version 1.0.0, must match actual scope.
+  Envelope Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt
+  null together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes):
+  browser.session.state_changed current inputs enter only as exact integer tokens (a -0 token is refused at
+  parsing), and every EventRecord and payload integer slot admits only an exact current integer, so an integral
+  float such as 1.0, 1e0 or -0.0 is refused at the slot. The retry comparison is the shared qualified producer
+  projection (producer_semantic_bytes / producer_semantic_digest); a projection that RFC 8785 cannot carry
+  exactly, for example producer_sequence_id 2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect,
+  while 2^53 encodes exactly. Storage-assigned sequence_id follows SP-1100 and stays outside producer semantics.
+  The idempotency, event_id and CV-366 key recipes are unchanged. Timestamps and retained originals, sweep
+  2026-11-11 (CV-1101 beside CV-253 and CV-317; SP-1101): every timestamp field uses the shared CV-1101 date_time
+  predicate with its owner''s profile, never a lane grammar. occurred_at_utc and payload ts take the broad
+  event_record profile (T or t, Z, z or an hh:mm offset, legitimate leap seconds, any fraction length);
+  Storage-assigned observed_at_utc and persisted_at_utc also take CV-253''s storage_utc_z profile (terminal
+  uppercase Z only), on the current record, the retry original and retained history alike. A retry original and a
+  retained history read are first resolved once through the shared SP-1101 RetainedDispatcher from Storage''s
+  sealed write custody (static stand-in Plans/card2_original_custody.json, never a request field): a Store outside
+  that custody refuses as original_unavailable and a sealed recipe without an installed frozen verifier as
+  recipe_unknown, with no fallback, current-then-legacy probing or caller override. The only write-time recipe is
+  card2@1, whose tuple pins the EventRecord and family payload schema bytes and these field profiles. Owner-valid
+  lowercase, offset, leap-second and long-fraction history stays readable with its exact spelling; an offset or
+  lowercase-z Storage timestamp never becomes valid history.
+'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-781
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-782 - browser.session.closed identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-782
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.closed@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_closed; Project pm.browser.session.closed.payload.v1
+  and application pm.browser.session.closed.payload.application.v1, version 1.0.0, must match actual scope. Envelope
+  Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt null
+  together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.closed
+  current inputs enter only as exact integer tokens (a -0 token is refused at parsing), and every EventRecord and
+  payload integer slot admits only an exact current integer, so an integral float such as 1.0, 1e0 or -0.0 is
+  refused at the slot. The retry comparison is the shared qualified producer projection (producer_semantic_bytes /
+  producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
+  2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
+  assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
+  key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;
+  SP-1101): every timestamp field uses the shared CV-1101 date_time predicate with its owner''s profile, never a
+  lane grammar. occurred_at_utc and payload ts take the broad event_record profile (T or t, Z, z or an hh:mm
+  offset, legitimate leap seconds, any fraction length); Storage-assigned observed_at_utc and persisted_at_utc also
+  take CV-253''s storage_utc_z profile (terminal uppercase Z only), on the current record, the retry original and
+  retained history alike. A retry original and a retained history read are first resolved once through the shared
+  SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in
+  Plans/card2_original_custody.json, never a request field): a Store outside that custody refuses as
+  original_unavailable and a sealed recipe without an installed frozen verifier as recipe_unknown, with no
+  fallback, current-then-legacy probing or caller override. The only write-time recipe is card2@1, whose tuple pins
+  the EventRecord and family payload schema bytes and these field profiles. Owner-valid lowercase, offset,
+  leap-second and long-fraction history stays readable with its exact spelling; an offset or lowercase-z Storage
+  timestamp never becomes valid history.
+'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-782
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.closed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-783 - browser.session.promoted identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-783
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.promoted@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_promoted; Project pm.browser.session.promoted.payload.v1
+  and application pm.browser.session.promoted.payload.application.v1, version 1.0.0, must match actual scope. Envelope
+  Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt null
+  together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.promoted
+  current inputs enter only as exact integer tokens (a -0 token is refused at parsing), and every EventRecord and
+  payload integer slot admits only an exact current integer, so an integral float such as 1.0, 1e0 or -0.0 is
+  refused at the slot. The retry comparison is the shared qualified producer projection (producer_semantic_bytes /
+  producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
+  2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
+  assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
+  key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;
+  SP-1101): every timestamp field uses the shared CV-1101 date_time predicate with its owner''s profile, never a
+  lane grammar. occurred_at_utc and payload ts take the broad event_record profile (T or t, Z, z or an hh:mm
+  offset, legitimate leap seconds, any fraction length); Storage-assigned observed_at_utc and persisted_at_utc also
+  take CV-253''s storage_utc_z profile (terminal uppercase Z only), on the current record, the retry original and
+  retained history alike. A retry original and a retained history read are first resolved once through the shared
+  SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in
+  Plans/card2_original_custody.json, never a request field): a Store outside that custody refuses as
+  original_unavailable and a sealed recipe without an installed frozen verifier as recipe_unknown, with no
+  fallback, current-then-legacy probing or caller override. The only write-time recipe is card2@1, whose tuple pins
+  the EventRecord and family payload schema bytes and these field profiles. Owner-valid lowercase, offset,
+  leap-second and long-fraction history stays readable with its exact spelling; an offset or lowercase-z Storage
+  timestamp never becomes valid history.
+'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-783
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.promoted
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-784 - browser.session.takeover_state_changed identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-784
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly browser.session.takeover_state_changed@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/browser_session_takeover_state_changed; Project pm.browser.session.takeover_state_changed.payload.v1
+  and application pm.browser.session.takeover_state_changed.payload.application.v1, version 1.0.0, must match actual
+  scope. Envelope Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have
+  Run/Attempt null together and no invented node. The existing owner first reserves one original operation ID with
+  its immutable source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives
+  restart/recovery/backup. Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application
+  idempotency is exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes):
+  browser.session.takeover_state_changed current inputs enter only as exact integer tokens (a -0 token is refused
+  at parsing), and every EventRecord and payload integer slot admits only an exact current integer, so an integral
+  float such as 1.0, 1e0 or -0.0 is refused at the slot. The retry comparison is the shared qualified producer
+  projection (producer_semantic_bytes / producer_semantic_digest); a projection that RFC 8785 cannot carry
+  exactly, for example producer_sequence_id 2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect,
+  while 2^53 encodes exactly. Storage-assigned sequence_id follows SP-1100 and stays outside producer semantics.
+  The idempotency, event_id and CV-366 key recipes are unchanged. Timestamps and retained originals, sweep
+  2026-11-11 (CV-1101 beside CV-253 and CV-317; SP-1101): every timestamp field uses the shared CV-1101 date_time
+  predicate with its owner''s profile, never a lane grammar. occurred_at_utc and payload ts take the broad
+  event_record profile (T or t, Z, z or an hh:mm offset, legitimate leap seconds, any fraction length);
+  Storage-assigned observed_at_utc and persisted_at_utc also take CV-253''s storage_utc_z profile (terminal
+  uppercase Z only), on the current record, the retry original and retained history alike. A retry original and a
+  retained history read are first resolved once through the shared SP-1101 RetainedDispatcher from Storage''s
+  sealed write custody (static stand-in Plans/card2_original_custody.json, never a request field): a Store outside
+  that custody refuses as original_unavailable and a sealed recipe without an installed frozen verifier as
+  recipe_unknown, with no fallback, current-then-legacy probing or caller override. The only write-time recipe is
+  card2@1, whose tuple pins the EventRecord and family payload schema bytes and these field profiles. Owner-valid
+  lowercase, offset, leap-second and long-fraction history stays readable with its exact spelling; an offset or
+  lowercase-z Storage timestamp never becomes valid history.
+'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-784
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- browser.session.takeover_state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+
+### CV-785 - memory.gist_state_changed identity replay and withdrawal
+
+```yaml
+plan_unit_id: CV-785
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract, exactly memory.gist_state_changed@1.0.0. Adopt Contracts_V0#EventRecord
+  2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339
+  strict full-value v2 first-AppendReceipt custody. No local envelope or digest is created. Exact family payload/schema
+  routing is Plans/card2_event_payloads.schema.json#/$defs/memory_gist_state_changed; Project pm.memory.gist_state_changed.payload.v1
+  and application pm.memory.gist_state_changed.payload.application.v1, version 1.0.0, must match actual scope. Envelope
+  Project/thread/Run/Attempt joins match the genuine source; non-execution manual operations have Run/Attempt null
+  together and no invented node. The existing owner first reserves one original operation ID with its immutable
+  source and event obligation; that ID is unique for the lifetime of its actual Home Server and survives restart/recovery/backup.
+  Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is
+  exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}
+  within the unchanged (scope_partition,event_type,idempotency_key) lifetime. Project partition is project~ plus
+  unpadded base64url of exact UTF-8 project_id; application is app. Global event_id is ''card2:'' followed by colon-separated
+  lowercase UTF-8 hex of storage_instance_id, server_id, original operation ID and exact event_type. It is reserved
+  once, never regenerated from observation/retry time, and cannot be reused for another semantic event. Lost original
+  identity never authorizes a new one.
+
+  The producer-owned semantic comparison is precisely the central EventRecord recipe: caller-supplied semantics
+  only; exclude Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. Same identity/same semantic
+  digest returns the original event/result with zero new effects; a different semantic digest is idempotency_conflict;
+  authoritative dedupe unavailable is dedupe_unavailable with zero append/effects. Never select or accept projector_replay_only
+  on current append or retry: reject replay_only_not_appendable. Compatibility reading it grants no write/effect
+  permission. No-op, failed, refused or unknown owner outcome cannot claim a successful event. After actual family
+  admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event
+  obligation, ordinary Storage append/commit-frame issuance under SP-286, exact first receipt custody, then dependent
+  terminal result publication. Pending event obligations retain their original source and retry only append resolution;
+  no crash reruns a browser effect or memory edit. An unavailable family refuses execution before a history-dependent
+  change; these drafts grant no native writer.
+
+  Compatibility dispatch is exact family/version/schema ID; unrecognized successors quarantine instead of guessing
+  or translating a retired spelling. Preserve retained original records and their original source custody; migration
+  is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before
+  stopping the old producer, drains or fences original pending obligations through SP-286, removes that version
+  from live acceptance and reader publication, invalidates reader caches, and rebuilds only generic derived metadata
+  from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
+  historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
+  and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): memory.gist_state_changed
+  current inputs enter only as exact integer tokens (a -0 token is refused at parsing), and every EventRecord and
+  payload integer slot admits only an exact current integer, so an integral float such as 1.0, 1e0 or -0.0 is
+  refused at the slot. The retry comparison is the shared qualified producer projection (producer_semantic_bytes /
+  producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
+  2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
+  assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
+  key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;
+  SP-1101): every timestamp field uses the shared CV-1101 date_time predicate with its owner''s profile, never a
+  lane grammar. occurred_at_utc and payload ts take the broad event_record profile (T or t, Z, z or an hh:mm
+  offset, legitimate leap seconds, any fraction length); Storage-assigned observed_at_utc and persisted_at_utc also
+  take CV-253''s storage_utc_z profile (terminal uppercase Z only), on the current record, the retry original and
+  retained history alike. A retry original and a retained history read are first resolved once through the shared
+  SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in
+  Plans/card2_original_custody.json, never a request field): a Store outside that custody refuses as
+  original_unavailable and a sealed recipe without an installed frozen verifier as recipe_unknown, with no
+  fallback, current-then-legacy probing or caller override. The only write-time recipe is card2@1, whose tuple pins
+  the EventRecord and family payload schema bytes and these field profiles. Owner-valid lowercase, offset,
+  leap-second and long-fraction history stays readable with its exact spelling; an offset or lowercase-z Storage
+  timestamp never becomes valid history. The memory record times (created_at, updated_at, last_access_at and
+  each claim created_at) name no stricter owner profile, so the shared predicate checks them with the same broad
+  event_record profile.
+'
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- CV-317
+- CV-339
+- CV-366
+unblocks: []
+acceptance_criteria:
+- owner_change_id is the authenticated canonical change identity shared across overlapping owner routes, never an after-record reference. Same operation and owner_change_id cannot record the same fact in both vocabularies; distinct real changes retain distinct identities.
+- Canonical semantic digest and CV-366 app key remain exact.
+- Current append and retry reject projector_replay_only; all family identity/receipt/withdrawal negatives reject.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_cv-785
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens:
+- memory.gist_state_changed
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
