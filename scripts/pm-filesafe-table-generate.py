@@ -61,7 +61,7 @@ SPEC = [
         R('PS04_node_id', '/node_id', 'a Project payload that names node_id gives a nonempty node_id', 'payload_orchestrator_ids', "value['scope_kind'] == 'project' and value['node_present'] is True and not value['node_id']"),
         R('PS05_attempt_id', '/attempt_id', 'a Project payload that names node_id gives a nonempty attempt_id', 'payload_orchestrator_ids', "value['scope_kind'] == 'project' and value['node_present'] is True and not value['attempt_id']"),
     ]),
-    P('override_scope_kind', 'Override grant scope: kind (behind the grant schema)', [
+    P('override_scope_kind', 'Override grant scope: kind (schema plus OS02 entailment; uncredited)', [
         R('OS01_kind', '/grant_scope_kind', 'equals the payload scope kind', 'override_scope', "value['grant_scope_kind'] != value['scope_kind']"),
     ]),
     P('override_scope_root', 'Override grant scope: kind and Project', [

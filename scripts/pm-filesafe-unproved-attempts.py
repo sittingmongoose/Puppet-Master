@@ -602,7 +602,11 @@ def main():
     parser.add_argument('--out', type=Path)
     parser.add_argument('--only', action='append')
     args = parser.parse_args()
-    report = dict(schema_id='pm.filesafe.unproved_attempts.v1', attempts=[], pairs=[])
+    fix_spec = importlib.util.spec_from_file_location('df_fix_cases', ROOT / 'scripts/pm-filesafe-fix1-cases.py')
+    fix = importlib.util.module_from_spec(fix_spec)
+    fix_spec.loader.exec_module(fix)
+    report = dict(schema_id='pm.filesafe.unproved_attempts.v1', attempts=[], pairs=[],
+                  entailments=[fix.os01_pair_proof()])
     for item in attempts():
         if args.only and item['row'] not in args.only:
             continue

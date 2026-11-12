@@ -10,7 +10,7 @@ custody digests, issued and retained-boundary copies).
 
 Plans/filesafe_event_contract_fixtures.json
   DF-1   filesafe.destructive_override_granted: the Project positive with the
-         application positive's authorized_scope (semantic layer, refused by OS01 alone).
+         application positive's authorized_scope (semantic layer, regression only; OS01 is entailed by schema plus OS02).
   DF-N1  per family: positive_payloads[1] with ts 0000-02-01T10:00:00Z, accepted
          (the nine former *.sweep1.format.year_zero schema negatives).
 Plans/filesafe_event_authority_fixtures.json (appended, so existing indices hold)
@@ -98,8 +98,39 @@ def contract_failures(pack):
                 tables.RECORDER = previous
             refused = [(r[0], [n for n, _ in r[2]]) for r in records if r[2]]
             if outcome != ['payload_semantics'] or refused != [('override_scope_kind', ['OS01_kind'])]:
-                failures.append(f'{case["case_id"]}:not_OS01_alone:{outcome}:{refused}')
+                failures.append(f'{case["case_id"]}:unexpected_first_refusal:{outcome}:{refused}')
     return failures
+
+
+def os01_pair_proof():
+    """Schema entailment evidence; distinct predicates, no isolated-row credit."""
+    family = 'filesafe.destructive_override_granted'
+    row = next(r for r in contract_cases(json.loads(CONTRACT.read_text()))['families'] if r['event_type'] == family)
+    payload = next(c['payload'] for c in row['negative_payloads'] if c['case_id'] == OS01_CASE)
+    schema_errors = [str(e) for e in C.payload_validator(family).iter_errors(payload)]
+    sites = [('override_scope_kind', 'OS01_kind'), ('override_scope_root', 'OS02_project')]
+    vectors = []
+    for label, cuts, expected in [('none', [], 'OS01_kind'), ('OS01', sites[:1], 'OS02_project'),
+                                  ('OS02', sites[1:], 'OS01_kind'), ('both', sites, None)]:
+        saved = {phase: tables.rows(phase) for phase, _ in sites}
+        previous = tables.RECORDER
+        try:
+            for phase, row_id in cuts:
+                tables._ROWS[phase] = [(n, (lambda v, c: None) if n == row_id else pred, ctx)
+                                       for n, pred, ctx in saved[phase]]
+            tables.RECORDER = records = []
+            outcome = C.payload_failures(family, payload, 'semantic')
+            refused = [(r[0], [n for n, _ in r[2]]) for r in records if r[2]]
+        finally:
+            tables._ROWS.update(saved)
+            tables.RECORDER = previous
+        assert outcome == ([] if expected is None else ['payload_semantics']), (label, outcome)
+        assert refused == ([] if expected is None else [(sites[1][0] if label == 'OS01' else sites[0][0], [expected])]), (label, refused)
+        vectors.append(dict(cut=label, outcome=outcome, refusals=refused, accepted=not outcome))
+    assert not schema_errors, schema_errors
+    return dict(row='OS01_kind', status='entailed_uncredited', case_id=OS01_CASE,
+                schema_errors=schema_errors, vectors=vectors,
+                qualification='OS01 and OS02 compare different fields. This joint cut demonstrates schema coupling; it is not duplicate-predicate isolation credit.')
 
 
 # ----------------------------------------------------------------- authority fixture
@@ -216,6 +247,7 @@ def main():
             if args.write:
                 path.write_text(dump(value))
     failures += contract_failures(contract) + authority_failures(authority)
+    print(json.dumps({'OS01_entailment': os01_pair_proof()}, indent=1))
     for failure in failures:
         print('FAIL', failure)
     counts = {row['event_type']: {'contract_positive': len(row['positive_payloads'])} for row in contract['families']}

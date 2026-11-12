@@ -1,4 +1,4 @@
-"""DF guard table override_scope_kind: Override grant scope: kind (behind the grant schema).
+"""DF guard table override_scope_kind: Override grant scope: kind (schema plus OS02 entailment; uncredited).
 
 Method B guard rows for the DF FileSafe checkers. Each predicate reads one
 observation record that the lane checker derives from the complete boundary

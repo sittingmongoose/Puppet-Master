@@ -48,7 +48,8 @@ CONTROL_CAP = 40
 # Tables whose rows no input can refuse: the identity recipe self-checks
 # recompute a pure function on the same input. They stay as checks and earn
 # no credit (see the report's unproved-by-construction table).
-UNPROVABLE = {'contract_identity_selfcheck': 'identity recipe self-checks of a pure function: a deep-copied retry, '
+UNPROVABLE = {'override_scope_kind': 'OS01_kind is entailed by the grant and WorkflowScopeV2 schemas plus OS02_project; distinct fields, no isolation credit. See DF fix round 2 and pm-filesafe-fix1-cases.py:os01_pair_proof.',
+              'contract_identity_selfcheck': 'identity recipe self-checks of a pure function: a deep-copied retry, '
               'another family name and another operation_id are recomputed from the same positive; no input can '
               'make a deterministic function disagree with itself or collide on these distinct preimages'}
 
@@ -324,6 +325,10 @@ def collect(families=None, flips=True):
                 findings.append(dict(kind='two_row_observation', witness=wid, phase=phase, rows=[r for r, _ in refusal]))
                 continue
             row, code = refusal[0]
+            # Execute OS01 regressions above, but never offer their truncated
+            # observations as independent negatives to the shared tool.
+            if phase == 'override_scope_kind':
+                continue
             control_id = next((c['id'] for c in slot(phase)['controls'].values() if c['family'] == family), None)
             flip = complete_boundary_flip(action, phase, row) if flips and kind == 'negative' else None
             add_negative(phase, observed, row, code, wid, family, control_id, flip)
