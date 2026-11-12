@@ -248,11 +248,11 @@ def check_positive(obs, label):
     A.require('cf01/custody_partition', receipt['scope_partition'] == obs['identity']['input']['scope']['scope_partition'])
     A.require('cf01/key_bytes', stored['idempotency_key'].encode() == stored['payload']['idempotency_key'].encode())
     A.require('cf01/unicode_not_normalized', stored['run_id'] != unicodedata.normalize('NFC', stored['run_id']))
-    generation = w.storage.manifest_generation
+    generation = w.storage.commit_generation
     events_, _, outcome = w.appender.append_original('TEST_ONLY:operation:certified', obs['append_request'],
                                                      [copy.deepcopy(event)])
     A.require('cf01/lost_ack_status', outcome['status'] == 'already_appended')
-    A.require('cf01/lost_ack_no_change', w.storage.manifest_generation == generation)
+    A.require('cf01/lost_ack_no_change', w.storage.commit_generation == generation)
     A.require('cf01/lost_ack_same_receipt', w.appender.first_receipt(events_[0]) == receipt)
     count = len(w.storage.events)
     events_, _, outcome = w.appender.append_original('TEST_ONLY:operation:certified-retry', obs['append_request'],

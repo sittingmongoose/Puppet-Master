@@ -38,6 +38,7 @@ import blake3
 
 import pm_goal_test_numrule as NR
 import pm_goal_test_storage as S
+import pm_goal_test_reopen as RO
 import pm_goal_test_owner_adapters as A
 from pm_goal_test_source import SourceRefusal
 import pm_goal_dg_cf3_world as W
@@ -883,6 +884,7 @@ def group_cf11_p5_p6(cpu):
         scope = sc['r1']
         g1 = stage(c, scope)
         seed = c.checkpoint(scope)['generations'][g1]['seed_hex']
+        RO.run_protocol(st, RO.probe_spec('p5-n15'))
         c.projector.project_prefix(scope, 'stage', request_edit=lambda r: dict(r, seed_hex=seed))
     cpu.negative('P5-N15', 'P5', 'stage/seed_reused', seed_reused, 'seed reused from an existing generation')
 
@@ -1259,11 +1261,11 @@ def group_cf12_p8(cpu):
         d, st, c, sc = cpu.clone('main', 'p8-passive')
         scope = sc['r1']
         c.rebuild(scope)
-        state = (st.manifest_generation, copy.deepcopy(st.cells), len(st.events), len(st.custody))
+        state = (st.commit_generation, copy.deepcopy(st.cells), len(st.events), len(st.custody))
         for _ in range(2):
             c.reader.read(scope)
             c.lower.read_sources(scope)
-        check((st.manifest_generation, st.cells, len(st.events), len(st.custody)) == state,
+        check((st.commit_generation, st.cells, len(st.events), len(st.custody)) == state,
               'passive reads append, release, repair and advance nothing')
         return {}
     cpu.positive('P8-P03', 'P8', passive)
@@ -1707,7 +1709,7 @@ def child(spec):
                                                                          for g, v in cp['generations'].items()}),
                    rows={t: sorted(k) for t, k in st.cells.items() if t.startswith(P.ROW_PREFIX)},
                    packs=sorted(d for d, v in st.packs.items() if v['durable']),
-                   manifest_generation=st.manifest_generation, events=len(st.events), custody=len(st.custody))
+                   manifest_generation=st.manifest_generation, commit_generation=st.commit_generation, events=len(st.events), custody=len(st.custody))
         print(json.dumps(out))
         return 0
     request = spec.get('request')
@@ -1777,6 +1779,8 @@ def matrix(cpu):
                     ok = ok and re1[1]['replay'] is True and back1['checkpoint'] == back['checkpoint']
                 ok = ok and back2['checkpoint'] == back1['checkpoint'] and back2['rows'] == back1['rows']
                 ok = ok and back2['events'] == back['events'] and back2['custody'] == back['custody']
+                ok = ok and back2['manifest_generation'] == back1['manifest_generation']
+                ok = ok and back2['commit_generation'] == back1['commit_generation']
             else:
                 ok = ok and re1[0] == 0
             cpu.matrix.append(dict(op=row['op'], cut=row['cut'], expect=row['expect'], exit=code, readback=back,

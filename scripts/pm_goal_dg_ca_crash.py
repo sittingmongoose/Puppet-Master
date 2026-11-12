@@ -85,7 +85,7 @@ def child_read(directory):
                                producer_match=S.producer25(storage.read_event(e)) == producer) for e in ids},
                all_events=len(storage.events), custody={e: storage.first_custody(e) for e in ids if storage.first_custody(e)},
                terminal=storage.cell(*info['terminal']), progress_phase=progress['phase'],
-               manifest_generation=storage.manifest_generation)
+               manifest_generation=storage.manifest_generation, commit_generation=storage.commit_generation)
     print(json.dumps(out, sort_keys=True, default=str))
     return 0
 
@@ -150,6 +150,7 @@ def matrix(work=None):
                 if read['terminal'] is not None:
                     assert first['terminal'] == read['terminal']
                 assert second['manifest_generation'] == first['manifest_generation'], 'second re-entry changed state'
+                assert second['commit_generation'] == first['commit_generation'], 'second re-entry changed state'
                 assert second['events'] == first['events'] and second['custody'] == first['custody']
                 row['status'] = 'pass'
             except (AssertionError, json.JSONDecodeError, KeyError) as error:

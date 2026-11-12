@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.goal.updated.original_source_selection.v4",
+  "status": "NEWLY_AUTHORED_TEST_ONLY_PREPARED_WITHOUT_ADMISSION",
+  "event_type": "goal.updated",
+  "edition": "pm.goal.updated.dg_u.composition.v4",
+  "edition_version": "4.0.0",
+  "native_execution": "NOT_RUN",
+  "native_line": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+  "built_on": "shared TEST_ONLY owner adapters, batch 2 at a3696a6e69, including registry quarantine e556403d12",
+  "physical_edition": "pm.goal.updated.physical.v3@3.0.0 (C3-W12a part 2, unchanged)",
+  "semantic_recipes": "GRS-064 semantic hashes; SP-287/SP-299 lowercase-hex keys; SP-421 event identity; outer commitments over canonical MessagePack outer bytes (DL-270); CV-333 RFC 8785 result hash",
+  "predecessor_selections": [
+    "Plans/goal_own_c_contracts/w12a-successor-v3/selection.json",
+    "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json"
+  ],
+  "predecessor_rule": "Predecessor packages, corpora, banks, URIs, hashes and JSON custody stay byte-exact history; no class, function or private map of a predecessor is imported, patched or relabelled.",
+  "selection_rule": "The DG-U runner verifies every member and support pin below before it runs any case; every DG-U method selects this edition explicitly; fresh births only.",
+  "members": [
+    {
+      "path": "scripts/pm_goal_dg_u_owners.py",
+      "sha256": "72683af61117fb4e662fa1330ed6d72da7b299bf5022d338abc451a001d38f2e"
+    },
+    {
+      "path": "scripts/pm_goal_dg_u_oracles.py",
+      "sha256": "b2c95d1bd6c7f3a8f21030334116629357c2ecaa4c463a6d798011e818fa4c17"
+    },
+    {
+      "path": "scripts/pm_goal_test_numrule.py",
+      "sha256": "14909c75db33e23137e76abd24893fa80ca247184a150ffa81907f483df06368"
+    },
+    {
+      "path": "scripts/pm_goal_test_storage.py",
+      "sha256": "b5b90ebb4af5d443134a9b3340f7978f924dff64609e3e5097f79371a086ec2b"
+    },
+    {
+      "path": "scripts/pm_goal_test_owner_adapters.py",
+      "sha256": "f8f5b342be1629e14b21aef2f8818752ee358fea51e506e33c578eb74895fb40"
+    },
+    {
+      "path": "scripts/pm_goal_test_source.py",
+      "sha256": "7fa4b81a87853724310ac0a27290b97bbf0cd894262245384a29b4f7f3211b4e"
+    },
+    {
+      "path": "scripts/pm_goal_test_reopen.py",
+      "sha256": "43cf15b9fc61b614440568fb528379671f079bc395d07c4646e4ab0e92f0d4c0"
+    }
+  ],
+  "repository_support": [
+    {
+      "path": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "sha256": "506add0794a1ae50d85fa3c45eb45d63a93eb2736e67005e83e4738c19d394a7"
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/contracts.schema.json",
+      "sha256": "6cfc3868f485286d9fadbbab293b0407583b30e88a02f6f5e1334f77fa0ad84a"
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/whole-root-banks.json",
+      "sha256": "6935391c8c757e5be91f30874e87e0ff92bfce12282e35064f3f1cd01a8b6b18"
+    },
+    {
+      "path": "Plans/goal_update_schema_resources.json",
+      "sha256": "95d58ceea10662dbc5b0b4aff0e1eb28c4913bf62fbd0bf0a866fcea8bb7b5db"
+    },
+    {
+      "path": "Plans/goal_updated_consumer_resources.json",
+      "sha256": "5d3838be2868a7b6740de7565a2274d0bd97fb6ebe4aefaff4ee621a31e60139"
+    }
+  ],
+  "numrule": {
+    "commit": "58c2816ff33365384d4039553f5efdb5370930e6",
+    "loader": "scripts/pm_goal_test_numrule.py"
+  },
+  "compatibility_selection": "pm.goal.updated.dg_u.adapter_b2_compat.v1",
+  "predecessor_selection": {
+    "path": "Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json",
+    "sha256": "fe6141886a06facb6300313b14c053b6b27bdbfdf7b7c95ae1f003e9e398215a",
+    "source_commit": "bc03430ed246c5f7b028a7af7b9cf6c79033e87d"
+  },
+  "compatibility_rule": "Fresh TEST_ONLY births select these exact support and oracle bytes; the v4 manifest and its original Git-pinned member bytes remain historical. No native admission or original restamping."
+}

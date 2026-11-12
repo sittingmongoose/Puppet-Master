@@ -763,9 +763,9 @@ class StartedReaders(W.DGOwner):
     def _hook(self, hooks, name):
         if hooks and name in hooks:
             storage = self.world.ctx.storage
-            before = (storage.manifest_generation, storage.cell_generation)
+            before = (storage.commit_generation, storage.cell_generation)
             hooks[name](self.world)
-            self._delta[0] += storage.manifest_generation - before[0]
+            self._delta[0] += storage.commit_generation - before[0]
             self._delta[1] += storage.cell_generation - before[1]
 
     def _unavailable(self, code):
@@ -780,7 +780,7 @@ class StartedReaders(W.DGOwner):
     def _passive(self, method, where, body, request, hooks):
         storage = self.world.ctx.storage
         with self.recorder.call(self.owner_id, method, request) as slot:
-            generation = storage.manifest_generation
+            generation = storage.commit_generation
             cells = storage.cell_generation
             self._delta = [0, 0]
             try:
@@ -789,7 +789,7 @@ class StartedReaders(W.DGOwner):
                 result = body(hooks)
                 require(where + '/reader_withdrawn_final', method not in self.withdrawn_readers)
             finally:
-                require(where + '/passive_effect', storage.manifest_generation - generation == self._delta[0] and
+                require(where + '/passive_effect', storage.commit_generation - generation == self._delta[0] and
                         storage.cell_generation - cells == self._delta[1])
             slot.set(result)
             return result

@@ -1339,7 +1339,7 @@ class StartOwner(W.DGOwner):
         """Classifies the authentic outcome only; never writes."""
         storage = self.ctx.storage
         with self.recorder.call(self.owner_id, 'recover_start', dict(operation_id=operation_id)) as slot:
-            generation = storage.manifest_generation
+            generation = storage.commit_generation
             prepared = storage.cell('workflow_start_prepared_submission',
                                     self.ctx.run_key('workflow_start_prepared_submission', operation_id))
             r = storage.reservation_state(operation_id)
@@ -1357,7 +1357,7 @@ class StartOwner(W.DGOwner):
                 result = 'receipted_unpublished'
             else:
                 result = 'committed'
-            require('recover/no_write', storage.manifest_generation == generation)
+            require('recover/no_write', storage.commit_generation == generation)
             out = dict(qualification=QUALIFICATION, operation_id=operation_id, classification=result, events=events,
                        first_custody=custody, prepared=prepared is not None)
             slot.set(out)

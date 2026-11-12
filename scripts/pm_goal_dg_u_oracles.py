@@ -218,11 +218,11 @@ def u1_direct_inline(d):
                           O.T_PROGRESS, O.T_TERMINAL))
     check('u1/all_inline', all(not s['referenced'] for s in sizes))
     check('u1/every_row_bounded', all(s['stored_bytes'] <= O.CAP for s in sizes))
-    gen = w.storage.manifest_generation
+    gen = w.storage.commit_generation
     w.command.run(req)  # equal retry after terminal: replay, no write
-    check('u1/equal_retry_no_write', w.storage.manifest_generation == gen)
+    check('u1/equal_retry_no_write', w.storage.commit_generation == gen)
     again = w.producer.publish(g['scope'], out['op'])  # lost acknowledgement: original publication
-    check('u1/lost_ack_replay', again['replay'] is True and w.storage.manifest_generation == gen)
+    check('u1/lost_ack_replay', again['replay'] is True and w.storage.commit_generation == gen)
     return dict(out, rows=len(sizes), max_row=max(s['stored_bytes'] for s in sizes))
 
 
@@ -765,9 +765,9 @@ def u4_inspect(d):
     g = O.birth_goal(w)
     req, adm, ag = run_agent(w, g)
     ev = event_of(w, g, adm)
-    gen = w.storage.manifest_generation
+    gen = w.storage.commit_generation
     out = w.inspector.inspect(w.inspector.request_for(g['scope'], ev), g['user'], g['user_permission'])
-    check('u4/no_checkpoint_or_write', w.storage.manifest_generation == gen)
+    check('u4/no_checkpoint_or_write', w.storage.commit_generation == gen)
     obs, wit = out['observation'], out['witness']
     stored = w.storage.read_event(ev)
     check('u4/observation_payload', A.same(obs['payload'], stored['payload']) and obs['sequence_id'] == stored['sequence_id'])
@@ -907,7 +907,8 @@ def u4n_family(d):
 def u4n_checkpoint(d):
     w, g, adm, r = _inspect_setup(d)
     holder = {}
-    inject(w, 'inspect', 'before_release', lambda w_, ctx: w_.storage.new_seed(), holder)
+    inject(w, 'inspect', 'before_release',
+           lambda w_, ctx: RO.run_protocol(w_.storage, RO.probe_spec('dgu-stale')), holder)
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission']), holder
 
 
@@ -1020,9 +1021,9 @@ def u5_retry(d):
     w = world(d)
     g = O.birth_goal(w)
     req, adm = run_direct(w, g, 'same text')
-    gen = w.storage.manifest_generation
+    gen = w.storage.commit_generation
     adm_b = w.command.run(copy.deepcopy(req))
-    check('u5/equal_retry_same_op', op_of(adm_b) == op_of(adm) and w.storage.manifest_generation == gen)
+    check('u5/equal_retry_same_op', op_of(adm_b) == op_of(adm) and w.storage.commit_generation == gen)
     req2 = O.direct_request(w, g, 'same text')
     adm2 = w.command.run(req2)
     check('u5/new_identity', event_of(w, g, adm2) != event_of(w, g, adm) and op_of(adm2) != op_of(adm))
@@ -2310,7 +2311,7 @@ def _m_source_row(w, g, ag, ctx):
 
 
 def _m_checkpoint(w, g, ag, ctx):
-    w.storage.new_seed()
+    RO.run_protocol(w.storage, RO.probe_spec('dgu-fence-stale'))
 
 
 def _m_candidate(path):
@@ -2527,7 +2528,7 @@ def summary(w, spec):
     sc, req = spec['scope'], spec['request']
     out = dict(qualification=QUALIFICATION, storage_instance_id=w.storage.storage_instance_id,
                recovered=[n['kind'] for n in getattr(w.storage, 'recovered', [])],
-               manifest_generation=w.storage.manifest_generation)
+               manifest_generation=w.storage.manifest_generation, commit_generation=w.storage.commit_generation)
     cur = w.body.read_private(sc, 'summary')
     out['body_revision'] = cur['body']['revision']
     out['history'] = [r['revision'] for r in cur['revisions']]
@@ -2693,6 +2694,7 @@ def _converged(name, before, after, again, *, kind='terminal_succeeded', rev=2):
     if before.get('terminal'):
         check(name + ': terminal unchanged', after['terminal'] == before['terminal'])
     check(name + ': second re-entry no change', again['manifest_generation'] == after['manifest_generation'] and
+          again['commit_generation'] == after['commit_generation'] and
           again['terminal'] == after['terminal'] and again['custody'] == after['custody'])
 
 
@@ -2880,7 +2882,7 @@ def guard_inventory(results):
                 adapter_codes={c: v for c, v in sorted(codes.items()) if not c.startswith('dgu/')})
 
 
-SELECTION = NR.ROOT / 'Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json'
+SELECTION = NR.ROOT / 'Plans/goal_own_c_contracts/dg-u-adapter-b2-compat-v1/selection.json'
 
 
 def verify_selection():
@@ -2933,7 +2935,7 @@ def main():
         gsum['matrix_rows'] = len(matrix)
         gsum['failures'] += sum(m['status'] != 'pass' for m in matrix)
     out = dict(qualification=QUALIFICATION, native=NR.NATIVE_LINE, edition=O.EDITION, family='goal.updated',
-               selection='Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json',
+               selection='Plans/goal_own_c_contracts/dg-u-adapter-b2-compat-v1/selection.json',
                selection_members={r['path']: r['sha256'] for r in sel['members']},
                groups=groups, positives=sum(r['kind'] == 'positive' for r in results),
                negatives=sum(r['kind'] == 'negative' for r in results), matrix_rows=len(matrix),

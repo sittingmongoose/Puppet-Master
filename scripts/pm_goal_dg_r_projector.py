@@ -66,19 +66,8 @@ LOG_SELECTION = ('storage_instance_id', 'current_ref', 'selected_segment_generat
 
 
 def log_token(token):
-    """Log-derived members of the nine-field durable token.
-
-    TOOL ISSUE (recorded for the adapter batch): the shared test Storage keeps
-    cells and the log behind ONE manifest, so every cell write (a seed, a pack,
-    this projector's own row) changes current_bytes_sha256,
-    manifest_bytes_sha256, manifest_generation and the adapter's
-    manifest-numbered checkpoint_ref. Native redb cells do not
-    change the seglog CURRENT/manifest. CAS and cutover therefore compare every
-    other token member exactly, plus the frame-derived coverage.
-    """
-    out = {k: copy.deepcopy(v) for k, v in token.items() if k not in ('source_selection', 'checkpoint_ref')}
-    out['source_selection'] = {k: token['source_selection'][k] for k in LOG_SELECTION}
-    return out
+    """The complete stable durable token issued by adapter batch 2."""
+    return copy.deepcopy(token)
 
 
 def row_key(scope):

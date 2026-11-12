@@ -180,12 +180,12 @@ def s1(suite):
                 W.require('s1/goal_unchanged', world.storage.cell(table, key)['version'] == 1)
         W.require('s1/barrier', result['original_append']['first_append_receipt']['durability_class'] == 'barrier')
         # lost acknowledgement: same held operation, no durable change, first receipt/transition
-        generation = world.storage.manifest_generation
+        generation = world.storage.commit_generation
         replay = world.start.commit_start(request(world), handles)
         W.require('s1/dedupe_kind', replay['kind'] == 'dedupe')
         W.require('s1/dedupe_receipt', A.same(replay['first_append_receipt'],
                                               result['original_append']['first_append_receipt']))
-        W.require('s1/dedupe_no_write', world.storage.manifest_generation == generation and len(world.storage.events) == 1)
+        W.require('s1/dedupe_no_write', world.storage.commit_generation == generation and len(world.storage.events) == 1)
         W.require('s1/dedupe_transition', replay['transition_refs'] == world.owners['native'].inventory('transition'))
         return dict(observations=dict(relations=len(rel), event_id=result['original_append']['event']['event_id'],
                                       sequence=result['original_append']['event']['sequence_id'], calls=len(order),
@@ -392,10 +392,10 @@ def s1(suite):
 
     def recover_never_writes():
         world, handles = new_world(suite)
-        generation = world.storage.manifest_generation
+        generation = world.storage.commit_generation
         r = world.start.recover_start(OP)
         W.require('s1/recover_no_effect', r['classification'] == 'no_effect' and
-                  world.storage.manifest_generation == generation)
+                  world.storage.commit_generation == generation)
         return dict(observations=r)
     suite.positive('S1', 'recover_start_classifies_without_effect', recover_never_writes)
 
@@ -424,14 +424,14 @@ def child(argv):
         if a.cut == 'after_prepare':
             world.fault = 'after_prepare'
         os.environ['PM_DG_S_CHILD'] = '1'
-        generation = world.storage.manifest_generation
+        generation = world.storage.commit_generation
         try:
             result = world.start.commit_start(request(world), dict(world.handles))
             out = dict(outcome=result.get('kind', 'published'))
         except W.REFUSALS as error:
             out = dict(outcome='refused', code=W.code_of(error))
         world.save()
-        out['manifest_unchanged'] = world.storage.manifest_generation == generation
+        out['commit_unchanged'] = world.storage.commit_generation == generation
     elif a.child == 'read':
         world = ST.StartWorld.reopen(work, ed)
         r = world.start.recover_start(OP)
@@ -508,9 +508,9 @@ def start_matrix(suite, name='v3'):
             rc, first = spawn(work, 'reenter', edition=name)
             W.require('matrix/reenter/%s' % first.get('outcome'), rc == 0 and first['outcome'] == reentry)
             if reentry == 'refused':
-                W.require('matrix/fenced_code', first['code'] == 'start/pending_fenced' and first['manifest_unchanged'])
+                W.require('matrix/fenced_code', first['code'] == 'start/pending_fenced' and first['commit_unchanged'])
             rc, second = spawn(work, 'reenter', edition=name)
-            W.require('matrix/second_reentry', rc == 0 and second['manifest_unchanged'] and
+            W.require('matrix/second_reentry', rc == 0 and second['commit_unchanged'] and
                       second['outcome'] == ('refused' if reentry == 'refused' else 'dedupe'))
             rc, final = spawn(work, 'read', edition=name)
             expected_final = classification if reentry == 'refused' else 'committed'
@@ -811,10 +811,10 @@ def s4(suite):
     def positives():
         world, handles, _ = started(suite)
         projector, readers, gid = projected(world)
-        generation = world.storage.manifest_generation
+        generation = world.storage.commit_generation
         for m in ('read_retained_native', 'inspect_original', 'read_historical', 'read_current'):
             getattr(readers, m)(sreq(world))
-        W.require('s4/no_effect', world.storage.manifest_generation == generation)
+        W.require('s4/no_effect', world.storage.commit_generation == generation)
         world.owners['native'].advance()
         readers.read_retained_native(sreq(world))
         readers.read_historical(sreq(world))

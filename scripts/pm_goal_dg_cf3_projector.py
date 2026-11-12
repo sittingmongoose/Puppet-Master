@@ -64,7 +64,6 @@ SUPPORTED = ('goal_run.started', 'goal_run.cancelled', 'goal_run.certified')
 REGISTERED = {'goal_run.started': W.STARTED_PAYLOAD, 'goal_run.cancelled': W.CANCELLED_PAYLOAD,
               'goal_run.certified': W.CERTIFIED_PAYLOAD, 'goal_test.note': W.NOTE_PAYLOAD,
               'goal_test.cause': W.CAUSE_PAYLOAD, **W.OTHER_GOAL_RUN}
-SEGLOG_FENCE_EXCLUDED = ('current_bytes_sha256', 'manifest_bytes_sha256', 'manifest_generation')
 
 
 class Halt(Exception):
@@ -219,14 +218,8 @@ def checkpoint_key(scope):
 
 
 def seglog_fence(token):
-    """Token fields the seglog alone determines.  The adapter Storage co-persists
-    redb cells in its manifest, so CURRENT/manifest bytes, manifest generation and
-    checkpoint_ref move with any cell transaction (adapter note, same as DG-CF2)."""
-    token = copy.deepcopy(token)
-    token.pop('checkpoint_ref')
-    for key in SEGLOG_FENCE_EXCLUDED:
-        token['source_selection'].pop(key)
-    return token
+    """Every durable field of the stable adapter-issued token."""
+    return copy.deepcopy(token)
 
 
 # ----------------------------------------------------------------- controls

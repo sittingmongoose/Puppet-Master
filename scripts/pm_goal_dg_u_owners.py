@@ -390,7 +390,7 @@ class World:
 
     def transact(self, writes, **kwargs):
         tx = self.storage.transact(writes, **kwargs)
-        self.tx_log.append(dict(tx_id=tx['tx_id'], generation=self.storage.manifest_generation,
+        self.tx_log.append(dict(tx_id=tx['tx_id'], generation=self.storage.commit_generation,
                                 keys=[[x['table'], x['key']] for x in writes]))
         return tx
 
@@ -658,7 +658,7 @@ class PhysicalMixin:
         if len(msgpack(row, 'dgu/physical/row')) > CAP:
             ref = w.storage.put_pack(raw, MEDIA)            # durable before any reference is returned
             w.storage.read_pack(ref, expected_media_type=MEDIA)  # verified before the referencing row publishes
-            w.pack_log.append(dict(blake3=ref['blake3'], generation=w.storage.manifest_generation, family=family, key=key))
+            w.pack_log.append(dict(blake3=ref['blake3'], generation=w.storage.commit_generation, family=family, key=key))
             row = dict(row, record=None, payload_ref=dict(id=ref['blake3'], size=ref['byte_size'], media_type=MEDIA))
             require('dgu/physical/compact_row_oversize', len(msgpack(row, 'dgu/physical/row')) <= CAP)
         w.update_bank.validate(PHYS_URI, row, 'dgu/physical/row')
@@ -706,7 +706,7 @@ class SirOwner(PhysicalMixin, DurableOwner):
     def admit(self, request):
         """Admit the complete GoalUpdateRequestV2: equal retry returns the
         original admission; altered bytes under that command instance conflict."""
-        with self.recorder.call(self.owner_id, 'sir.admit', _safe_args(request)) as slot:
+        with self.recorder.call(self.owner_id, 'sir.admit', request) as slot:
             require('dgu/sir/request_type', type(request) is dict)
             for field in ('command_instance_id', 'project_id', 'thread_id', 'goal_id', 'actor_ref',
                           'permission_snapshot_ref', 'idempotency_key', 'return_route_ref', 'source_surface'):
@@ -759,7 +759,7 @@ class SirOwner(PhysicalMixin, DurableOwner):
 
     def admit_proposal(self, proposal):
         """cmd.chat.goal.propose_update dispatch: read-only w.r.t. Goal; returns the original dispatch."""
-        with self.recorder.call(self.owner_id, 'sir.admit_proposal', _safe_args(proposal)) as slot:
+        with self.recorder.call(self.owner_id, 'sir.admit_proposal', proposal) as slot:
             self.bank.validate(CONTRACTS_URI + '#/$defs/GoalUpdateProposalRequest', proposal, 'dgu/sir/proposal')
             key = 'proposal:' + hexk(proposal['command_instance_id'])
             existing = self.state(key)
@@ -913,11 +913,6 @@ class SirOwner(PhysicalMixin, DurableOwner):
             response = dict(copy.deepcopy(terminal['record']['response']), replayed=True,
                             original_dispatch_id=adm['dispatch_id'])
             return slot.set(dict(response=response, terminal=terminal['record']))
-
-
-def _safe_args(value):
-    """Recorder argument digest that cannot fail on hostile input (lone surrogates)."""
-    return dict(args_repr_sha256=sha(repr(value).encode('utf-8', 'backslashreplace')))
 
 
 def _uuid_ok(value):

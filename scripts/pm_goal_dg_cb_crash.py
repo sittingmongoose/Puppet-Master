@@ -101,7 +101,7 @@ def observe(w, info):
     return dict(result=result, result_sha256=None if result is None else B.row_sha(result), destinations=destinations,
                 parts=len(parts), exclusion=w.coordinator.exclusion(scope) is not None, withdrawal=withdrawal,
                 cutoff=bool(w.storage.cells.get(B.CUTOFF)), head=w.cell(w.binding.HEAD, w.binding.head_key()) is not None,
-                goal_control=w.goal.control(scope)['value']['record']['schema_id'], manifest_generation=w.storage.manifest_generation,
+                goal_control=w.goal.control(scope)['value']['record']['schema_id'], manifest_generation=w.storage.manifest_generation, commit_generation=w.storage.commit_generation,
                 stop=w.host_stop.record(scope))
 
 
@@ -194,6 +194,7 @@ def matrix(work=None, variant='pending'):
                     assert first['notes'] == ['recovered:enrolled', 'replayed'], first['notes']
                 assert first['stop'] == read['stop'], 'Stop never rolled back or relatched'
                 assert second['manifest_generation'] == first['manifest_generation'], 'second re-entry changed state'
+                assert second['commit_generation'] == first['commit_generation'], 'second re-entry changed state'
                 assert second['result_sha256'] == first['result_sha256'] and second['withdrawal'] == first['withdrawal']
                 row['status'] = 'pass'
             except (AssertionError, json.JSONDecodeError, KeyError, TypeError) as error:

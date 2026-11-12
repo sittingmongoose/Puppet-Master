@@ -80,16 +80,8 @@ def unavailable_if(code, reason, condition):
 
 
 def seglog_frontier(token):
-    """The token's seglog-derived frontier fields.
-
-    The adapter Storage co-persists redb cells inside its seglog manifest, so the
-    manifest bytes/generation and checkpoint_ref move on any redb transaction
-    (a TEST_ONLY adapter artifact, listed for the tool batch). Every field
-    derived from the seglog itself is compared exactly.
-    """
-    sel = {k: v for k, v in token['source_selection'].items()
-           if k not in ('current_bytes_sha256', 'manifest_bytes_sha256', 'manifest_generation')}
-    return dict({k: v for k, v in token.items() if k not in ('checkpoint_ref', 'source_selection')}, source_selection=sel)
+    """The complete stable durable token issued by adapter batch 2."""
+    return copy.deepcopy(token)
 
 
 def selector6(storage, family_id, key, schema_id, value):
