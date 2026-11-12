@@ -17,9 +17,13 @@
 // which sits between what main does and what the change does (counts, not milliseconds). A cell that could not be
 // judged fails: ALL n intended changes must have finite, nonnegative element counts. Missing marks/counts are logged;
 // the same complete-coverage rule applies to presses.
+// Attribution only: --set traceDir=<folder> retains gzip traces; --set track=1 adds invalidation tracking + state.
 // Both surfaces.   --set looks=<a,b>  --set scen=<a,b>  --set n=<triggers>  --set report=1 (no bounds: numbers only)
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
+import { join, dirname } from 'node:path';
 
 // Ten looks x both surfaces, Windows 120 Hz, medians of 4, origin/main's page (main5) -> this branch (j-6):
 //   Usage card to card   main 216-297 in every cell -> 62-160                         bound 190 (bites in all 20)
@@ -33,8 +37,8 @@ const BOUND = { usage: 190, files: 160, rail: 180, titlebar: 180, tab: 400, noti
 
 const CATS = ['devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink.user_timing'].join(',');
 
-async function trace(cdp, during) {
-	await cdp.send('Tracing.start', { categories: CATS, transferMode: 'ReturnAsStream' });
+async function trace(cdp, during, opts = {}) {
+	await cdp.send('Tracing.start', { categories: CATS + (opts.track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream' });
 	try { await during(); } finally { /* always end the trace */ }
 	const done = new Promise((r) => cdp.once('Tracing.tracingComplete', r));
 	await cdp.send('Tracing.end');
@@ -42,9 +46,26 @@ async function trace(cdp, during) {
 	const parts = [];
 	for (;;) { const r = await cdp.send('IO.read', { handle: stream, size: 1 << 22 }); parts.push(r.base64Encoded ? Buffer.from(r.data, 'base64').toString('utf8') : r.data); if (r.eof) break; }
 	await cdp.send('IO.close', { handle: stream });
-	const t = JSON.parse(parts.join(''));
+	const raw = parts.join('');
+	if (opts.keep) { mkdirSync(dirname(opts.keep), { recursive: true }); writeFileSync(opts.keep, gzipSync(raw)); }
+	const t = JSON.parse(raw);
 	return Array.isArray(t) ? t : t.traceEvents || [];
 }
+
+// Diagnostic flags leave the default categories and assertions unchanged; raw evidence stays in the caller's folder.
+const traceOptions = (t, tag) => ({ track: String(t.args.track || '0') === '1', keep: t.args.traceDir ? join(String(t.args.traceDir), tag + '.json.gz') : null });
+const DEBUG_STATE = () => {
+ const loops = new Map();
+ for (const a of document.getAnimations()) {
+  try {
+   if (a.playState !== 'running' || a.effect.getTiming().iterations !== Infinity) continue;
+   const e = a.effect.target, cls = typeof e?.className === 'string' ? e.className : e?.className?.baseVal || '';
+   const key = `${a.animationName || '?'} on ${e?.tagName || '?'}#${e?.id || ''}.${cls}`;
+   loops.set(key, (loops.get(key) || 0) + 1);
+  } catch (_) { /* an animation removed during inspection */ }
+ }
+ return { loops: [...loops], tabs: [...document.querySelectorAll('[role="tab"]')].filter((e) => e.getClientRects().length).map((e) => ({ text: e.textContent?.trim().slice(0, 80), id: e.id, selected: e.getAttribute('aria-selected'), cls: e.className })) };
+};
 
 // per mark named prefix*: the elements the change restyled
 function restyled(events, prefix) {
@@ -143,6 +164,7 @@ async function runScenario(t, f, cdp, name, n, S) {
 	if (P.length) { await t.page.mouse.move(P[1].x, P[1].y); await t.page.waitForTimeout(700); }
 	await f.evaluate(ARM);
 	const tag = name + '-' + Date.now();
+	const traceOpts = traceOptions(t, tag);
 	await f.evaluate(([tg, ty]) => { window.__jArm.tag = tg; window.__jArm.type = ty; window.__jArm.i = 0; }, [tag, sc.type]);
 	const ev = await trace(cdp, async () => {
 		for (let i = 0; i < n; i++) {
@@ -155,12 +177,12 @@ async function runScenario(t, f, cdp, name, n, S) {
 				const p = P[i % 2]; await t.page.mouse.move(p.x, p.y); await t.page.waitForTimeout(450);
 			}
 		}
-	});
+	}, traceOpts);
 	await f.evaluate(() => { window.__jArm.tag = null; });
 	if (sc.teardown) await f.evaluate(sc.teardown).catch(() => {});
 	const counts = restyled(ev, 'jr:' + tag + ':');
 	const med = median(counts, n);
-	return { name, judged: med != null, counts, med, why: measurementDetail(counts, n) };
+	return { name, judged: med != null, counts, med, why: measurementDetail(counts, n), traceFile: traceOpts.keep || undefined, debugState: traceOpts.track ? await f.evaluate(DEBUG_STATE) : undefined };
 }
 
 export default async function (t) {
@@ -209,6 +231,7 @@ export default async function (t) {
 					await t.page.mouse.move(p.x, p.y); await t.page.waitForTimeout(500);
 					await f.evaluate(ARM);
 					const tag = 'press-' + Date.now();
+					const traceOpts = traceOptions(t, tag);
 					await f.evaluate((tg) => { window.__jArm.tag = tg; window.__jArm.type = 'pointerdown'; window.__jArm.i = 0; }, tag);
 					const ev = await trace(cdp, async () => {
 						for (let i = 0; i < n; i++) {
@@ -217,11 +240,11 @@ export default async function (t) {
 							// released off the button: a press with no click (no screen change)
 							await t.page.mouse.move(p.x, p.y + 240); await t.page.mouse.up(); await t.page.waitForTimeout(350);
 						}
-					});
+					}, traceOpts);
 					await f.evaluate(() => { window.__jArm.tag = null; });
 					const counts = restyled(ev, 'jr:' + tag + ':');
 					const med = median(counts, n);
-					r = { name: 'press', judged: med != null, counts, med, why: measurementDetail(counts, n) };
+					r = { name: 'press', judged: med != null, counts, med, why: measurementDetail(counts, n), traceFile: traceOpts.keep || undefined, debugState: traceOpts.track ? await f.evaluate(DEBUG_STATE) : undefined };
 				}
 				rows.push({ surface, look, ...r });
 				if (report) { t.log(`${S}${look} press: median ${r.med} (${r.why})`); continue; }
