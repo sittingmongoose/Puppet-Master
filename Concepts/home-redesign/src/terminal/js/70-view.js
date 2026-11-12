@@ -229,7 +229,8 @@
     this.root.style.setProperty('--pmt-glow-color', roles.glow || C.toHex(ap.theme.fg));
     this.root.style.setProperty('--pmt-pad-x', (ap.padding ? ap.padding.x : 8) + 'px');
     this.root.style.setProperty('--pmt-pad-y', (ap.padding ? ap.padding.y : 6) + 'px');
-    this.root.setAttribute('data-pmt-scheme', ap.theme.appearance || '');
+    var scheme = ap.theme.appearance || '';
+    if (this.root.getAttribute('data-pmt-scheme') !== scheme) this.root.setAttribute('data-pmt-scheme', scheme);
     /* the background, and its worst pixel for the text's contrast floor (24-renderer.js; none over the scheme's own
        surface) */
     this.contrastGround = this._applyBackground(ap.background || { kind: 'theme' });
