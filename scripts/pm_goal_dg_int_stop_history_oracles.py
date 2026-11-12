@@ -18,7 +18,8 @@ from pm_goal_dg_int_v7_oracles import Run,BASE
 
 def setup(directory):
     world=O.World(directory,storage_cls=V.Storage)
-    route=C1.NoAssociationCancel(world,prior_stop=True)
+    route=C1.NoAssociationCancel(world,prior_stop=False)
+    world.host_stop.manual(route.scope,'stop')
     # The retained-source adapter needs only this actual Goal's host authority,
     # Storage and enrolled custody; it makes no Workflow or native-run claim.
     view=C.CancelWorld.__new__(C.CancelWorld)
