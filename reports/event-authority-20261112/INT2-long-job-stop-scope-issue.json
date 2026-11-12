@@ -1,0 +1,585 @@
+{
+  "finding": "long-job parent stop did not prevent later writes from its nested DT scope",
+  "basis": "post-stop artifact timestamps after 2026-11-12T20:16:38Z; newly requested replay used a separate output directory",
+  "parent_stop_reported": "stopped, exit0 from stop command",
+  "source_worktree_unchanged": true,
+  "current_dt_processes": 0,
+  "source_guard_obligations_must_still_match_baseline": true,
+  "original_raw_reports_superseded": 70,
+  "original_console_preserved": {
+    "label": "DT-guards",
+    "mode": "capped2G",
+    "exit": 1,
+    "seconds": 1052,
+    "max_rss_kb": 623792,
+    "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DT-guards.log",
+    "log_sha256": "65e7c742cf138d3f3662f3505ecdd3b1b0ccc86e7ef3b6b2314e16de1f50f82e"
+  },
+  "original_comparison_record_preserved": {
+    "path": "/home/sittingmongoose/pm-scratch/ea-int2/retention4/dt-guard-comparison.json",
+    "sha256": "aa02ed400151d7ffd75aaf1a765e59483b8759af81c02f2975ae669023117fe3"
+  },
+  "raw_reports": [
+    {
+      "phase": "src_envelope",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_envelope.json.gz",
+      "original_sha256": "44f7be5ed9da092b62750fae9e0d4367c58cecd8202834dfa28421ee55889fc8",
+      "current_sha256": "a8351ed3e003032f552451de3986c02304bf323897efccf88fa4ec560985d3ad",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:17:56.729054+00:00"
+    },
+    {
+      "phase": "src_replay",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_replay.json.gz",
+      "original_sha256": "e50ccd7ba5ab07691ee511f583d3bd2c54e231a7bd760a10dacfbfc8226cee90",
+      "current_sha256": "56e4b3b6a3458b03b31e9ea9942981e3ee8094d9d13229e5498490066505768c",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:17:59.372895+00:00"
+    },
+    {
+      "phase": "src_inline",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_inline.json.gz",
+      "original_sha256": "4f415281bd59e7a3aa58afe756f3502ad2beb438a422c4faede2b5e8ba014968",
+      "current_sha256": "c0097de4d1edea855228c9af3e3da6a24813462b803d63b386906a2cd29e1fd1",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:01.202072+00:00"
+    },
+    {
+      "phase": "src_definition",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_definition.json.gz",
+      "original_sha256": "e750c2345557b74210e571a8122fa02fbc92fa375e1df3330033feb6e704daf1",
+      "current_sha256": "2b058fb2b911a9e5c059a8dc61009936497221ed68e4dd1d3b09058500b1c4f8",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:01.405775+00:00"
+    },
+    {
+      "phase": "src_schema",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_schema.json.gz",
+      "original_sha256": "1968e0ffa7b7fd243199457156f9891762315fb56d24c37da86bec5d40c6c9a7",
+      "current_sha256": "2a6573aeb788258457f4d3752a895f9f4bd3475cedecec82f68466d2cd90cfa3",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:02.248370+00:00"
+    },
+    {
+      "phase": "src_size",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_size.json.gz",
+      "original_sha256": "f62329c70f5a1d2d989a7f7e3d43c1dcc8877b0ee53d1d354ce6ae8a52b8251a",
+      "current_sha256": "4e340060858f41823a2a00ae0709f5e8b8b18f0d5b1c61a02c0af4d76a1dbb66",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:03.964502+00:00"
+    },
+    {
+      "phase": "src_stage",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_stage.json.gz",
+      "original_sha256": "e4f2761e4981727930f994862d6997323139ab47b7e061dc4cc571a93885a60e",
+      "current_sha256": "4543085be18dcf85fbe947548fedd2a15abc97b14907225ced7976b643eb545f",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:04.164233+00:00"
+    },
+    {
+      "phase": "src_original",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_original.json.gz",
+      "original_sha256": "12438bc6f48289fb7ffeb14ce59430e9fbd8ef45641685922084abfd2a800121",
+      "current_sha256": "8216ed48675ae080dd78c4003b3e9ab99deaf41ced1941bb4374c5386a32023b",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:10.218916+00:00"
+    },
+    {
+      "phase": "src_scope",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_scope.json.gz",
+      "original_sha256": "94c5dee89f4d72a4044205e003b92ff74c0299afcfd0b18fb5c4728032de7b93",
+      "current_sha256": "1dc5599c5b9e9e482c3bb04a4a70543793b8b66fb5ea3d078d74ff95bcf6136a",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:10.914969+00:00"
+    },
+    {
+      "phase": "src_project_only",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_project_only.json.gz",
+      "original_sha256": "18239ed7da12e4bf900971e355e2c5664e017358e46d9b7c298381e1ec291bcc",
+      "current_sha256": "8d5840545c03b8b0a5d95abea731bf801242b1c04249ca61b267c6d108891407",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:11.121577+00:00"
+    },
+    {
+      "phase": "src_payload",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_payload.json.gz",
+      "original_sha256": "b3460ed308fba9f714515e077fe0caf1688c293f3cc5e317858a7fd26faebb5c",
+      "current_sha256": "c4c523fb6fd7116df15c0f772d979c421c0829e8266a2319a2ac945e36355efa",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:17.737893+00:00"
+    },
+    {
+      "phase": "src_join",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_join.json.gz",
+      "original_sha256": "aa2fecb3b1d305b3bb9022e4c6ee0c2b822122e10893be0e942efb236d95dd34",
+      "current_sha256": "6d742009c3d7061c59b7a4e30aa044a938dd6bd24f5c8ac2df17f580fc45c580",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:29.346438+00:00"
+    },
+    {
+      "phase": "src_identity",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_identity.json.gz",
+      "original_sha256": "03d9568a060aafc272e74dcb596dc03872766c64790153ca8ec635ab4eefdd2b",
+      "current_sha256": "6efa45242395e967b635f801ec5154f8332a9a0fc8c008ec28e219b7f8f25a1d",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:39.818631+00:00"
+    },
+    {
+      "phase": "src_context",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/src_context.json.gz",
+      "original_sha256": "8f4f9bf14cfec47d7fbcd1691f0ea143e4a4f07d6136c5147222ba6a4ca2ae85",
+      "current_sha256": "65065e85341c26747081eac6bbbdc4fcbf661d4da38acc3d3ef220dc80a8881f",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:55.215670+00:00"
+    },
+    {
+      "phase": "id_inputs",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/id_inputs.json.gz",
+      "original_sha256": "f267e919695fca9800ff9d923d4232e8b6d33d95a787815351576cc317f0f536",
+      "current_sha256": "e7fe8d7169010917ba240dd9fae216303ee10682b72cb0a691c1e1e20dcc22cb",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:18:59.685617+00:00"
+    },
+    {
+      "phase": "append_types",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/append_types.json.gz",
+      "original_sha256": "95899897d8dee67dd86d8e8c7113a47e8b2c42b448cbc9a7878f458daf4301fe",
+      "current_sha256": "e8c1a68b2c8366774d7df6fe2cdc54ab66a45014f8f9595a4ea20f80132dad56",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:01.526942+00:00"
+    },
+    {
+      "phase": "append_retry",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/append_retry.json.gz",
+      "original_sha256": "0f998732c3f266c9ee4a830d8333f32484d7c9abd89eefe490d2aa6bba6b7cdc",
+      "current_sha256": "90be1fae81b5b9e17d39666313b952834c7f4dbac563ac818d5d129b2a935374",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:02.273051+00:00"
+    },
+    {
+      "phase": "rec_gate",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/rec_gate.json.gz",
+      "original_sha256": "d7cb60712e101775025fdec5ba0ab360aeee66d5246ad0515576fa68cf5243cf",
+      "current_sha256": "1de2557dbadf0b93041e6fb826d42ab2b349397ba90ebb398a583cace73c2585",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:04.048450+00:00"
+    },
+    {
+      "phase": "rec_custody",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/rec_custody.json.gz",
+      "original_sha256": "181accf0874572ad980fad66196a544e31dc0d2eebd6af913b6e1d76459464c3",
+      "current_sha256": "9b3aa0d35193165ffddcc3eaafe8e0842365e0e85d53582cacc27967e2cf9696",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:13.628643+00:00"
+    },
+    {
+      "phase": "rec_commit",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/rec_commit.json.gz",
+      "original_sha256": "3bd34fc7c107dbf9b278f78855bc24ebc467b81a49a0a33aae89a2efcad06cdb",
+      "current_sha256": "ac0607d2d4a94e920327a96518c3c0a1314c25a210e56803b8d0f7a803b01260",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:17.059699+00:00"
+    },
+    {
+      "phase": "rec_original",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/rec_original.json.gz",
+      "original_sha256": "cd89e6e14cc206d42c281505cfad7e0fbacb976898fd098b005d31da12407ca2",
+      "current_sha256": "afdf60f5ee1d2c3fa0284894cb9136111d7faecd09cf8cedc39e4d5d25499fc2",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:30.053674+00:00"
+    },
+    {
+      "phase": "rec_receipt",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/rec_receipt.json.gz",
+      "original_sha256": "5d76ef2535fd88aca693b82b22deedd7d7bdb423bde02c8552a5ba3326ebcc74",
+      "current_sha256": "aa9dc40342a3cd7f71a2b7cbdbf45fc212e18d823771f8b316085479603e7a5e",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:32.105718+00:00"
+    },
+    {
+      "phase": "rec_receipt_join",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/rec_receipt_join.json.gz",
+      "original_sha256": "6c79171d97600b2ee01e05cc035d9ae4405a8c1f2cc31d973eace00c7b2ddcab",
+      "current_sha256": "8168d75686d05cfd6f6843f4aa8f9f1fb8ec8918a6a865d2662382f6e5338749",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:37.866656+00:00"
+    },
+    {
+      "phase": "cp_schema",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_schema.json.gz",
+      "original_sha256": "caedb30abad4ee1b1607827fecd1773ace7bb2a96fb052e1789af6cb4a51c2d4",
+      "current_sha256": "af569cdfe39def211575b20fbcc666e4f4c37e73f2fc6c4e5d51f1bf3977acdc",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:40.667691+00:00"
+    },
+    {
+      "phase": "cp_lifecycle",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_lifecycle.json.gz",
+      "original_sha256": "7fcc88c63fec5650d09b8ec7e5c408adf9c6a5b5ddd5869ae086967f03cd23d5",
+      "current_sha256": "28b2978cd19fa73ec11217a6be14bcd1bdf5cedef6d6925fd5f1627dcc141015",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:48.607479+00:00"
+    },
+    {
+      "phase": "cp_cas",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_cas.json.gz",
+      "original_sha256": "81691e87b91de120f6c7e3044793069a688eb1f946f5f9785a4934754d7d4f31",
+      "current_sha256": "a42ed7ef38580b8c277854dd357f605d36ab73e00e2c8d50a8491abce508357e",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:19:53.641567+00:00"
+    },
+    {
+      "phase": "cp_token",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_token.json.gz",
+      "original_sha256": "6acf469a5020eb26c1a42cf6d4d096e32f41313878645c34b9e433d8fcf3bd4e",
+      "current_sha256": "b8490e25507a0ab5d63e799a0d251d1ebbe716b05145f2ef78aeba67c2da1efc",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:08.342365+00:00"
+    },
+    {
+      "phase": "cp_source",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_source.json.gz",
+      "original_sha256": "1c3d881f49aeba713d5ec1d06e18a74b86f4cdbb9a96e49c01a0dbfa9bf65877",
+      "current_sha256": "8d679cd476e8fcc02fd15ace7d0884ee6b6fa9b76e4c042e0f062f25e3ec5829",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:15.494793+00:00"
+    },
+    {
+      "phase": "cp_rows",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_rows.json.gz",
+      "original_sha256": "447e29182caf7e7f6cbedeb943ed90e64db0b087c184ca2ce4706e85685f6b3c",
+      "current_sha256": "9b19b888a533686d2d8cebbc823d59235d4726531d1d2c09c0ebc93875c04017",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:17.548077+00:00"
+    },
+    {
+      "phase": "cp_prefix",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_prefix.json.gz",
+      "original_sha256": "1560ecaca6007f8fbf4f738386dd9d69e53df197ac87ed797c7809bd7cb303e2",
+      "current_sha256": "b2cde604b26792dbf068404ad0e8ce180d4ac62e80c1f759cea23e9866c33187",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:18.051419+00:00"
+    },
+    {
+      "phase": "cp_coverage",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_coverage.json.gz",
+      "original_sha256": "af6708e9b35dbf8b45221f0e9b0157d4fb603a06708bb2cfb5a32e8a905ed66e",
+      "current_sha256": "907cf2a3c3f15b25a06e73cdc8c999e93d18798aeec27284381af776fc7dbe55",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:23.189623+00:00"
+    },
+    {
+      "phase": "cp_state",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/cp_state.json.gz",
+      "original_sha256": "e8182a90854447b25b9d603a2a4c2d78a37676a29bfaa2f98ea7c1686cdb0036",
+      "current_sha256": "bd6f79c32bcb1a5d9f909e770914ad8394a6f59acf1ae2b2f0a14358b41fcdaa",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:41.735719+00:00"
+    },
+    {
+      "phase": "hr_flags_a",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/hr_flags_a.json.gz",
+      "original_sha256": "fc688a372c2918fbc6331faca91ad840ee1c6ccb07aa14d978756cc3cc1bf05d",
+      "current_sha256": "8a31cac8dfcc43ed03b5148e96362a8481e7b5f24d4c11eb148a3afabeced661",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:46.895903+00:00"
+    },
+    {
+      "phase": "hr_flags_b",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/hr_flags_b.json.gz",
+      "original_sha256": "5336daba5c5f6caad9ca48f1a3c9fc54d6a3c1212d93e2b5bc0231b42d09724c",
+      "current_sha256": "26eb3167340ef992e2af08d4235316987f0e2c8ee4653ed75a1d0f0d1f7f50f1",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:49.120462+00:00"
+    },
+    {
+      "phase": "hr_original",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/hr_original.json.gz",
+      "original_sha256": "cfb1816ff0b4e28d7fd34446aaf7128d2ac4bcc98a253a35a0fccd4f1c7b48e0",
+      "current_sha256": "6b0b2e5eb19c02f934cd3e5c9680fd71dade83ecbadab5e4c936c3c7e8d5df5f",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:20:59.370015+00:00"
+    },
+    {
+      "phase": "tool_request",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tool_request.json.gz",
+      "original_sha256": "7cb0757d67a7a0aaaadde4f62b5595c8ef243f922e7a9eae493a296758b746a5",
+      "current_sha256": "0bd7c1abace5c6ffb42391e4ed3b733c6887c81d56ffe168b71605d10e10b619",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:21:05.348757+00:00"
+    },
+    {
+      "phase": "tr_approval_requested",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_approval_requested.json.gz",
+      "original_sha256": "e984eca9969d34c4fa2bbe2e061fd2869f404771601997afd6a320bf005ca485",
+      "current_sha256": "9bc74e3e94e519aea4cf65c220b5f8068ec7dca84b9a427c32bce68dd351cf5d",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:21:08.814713+00:00"
+    },
+    {
+      "phase": "tr_approval_granted",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_approval_granted.json.gz",
+      "original_sha256": "14faef97c6d0732032d2062d81a985892c23019058b004e0ded62174b7651fdd",
+      "current_sha256": "0f9485fee3094a3ceaf90424c63001866f664affdcaf5aaba818cf09003e1497",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:21:14.380711+00:00"
+    },
+    {
+      "phase": "tr_approval_denied",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_approval_denied.json.gz",
+      "original_sha256": "5849cad2f0d343589b0809f7b44713c650b2178ee41e561044b26580e02452e8",
+      "current_sha256": "039682a35e42a332f3c6f4123ac9985fa53fda6c69c5eb6297ad0cd27ea7d9f1",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:21:14.729630+00:00"
+    },
+    {
+      "phase": "tr_approval_timeout",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_approval_timeout.json.gz",
+      "original_sha256": "d84a75f8782aa577b2b453b9e8df4459ae3588b9ec4880fc589481c1c2de061e",
+      "current_sha256": "f2731847be2cd2f7d821c5e3fa9241727bc2cca2b28306adce0e9178d7fbf518",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:21:22.657945+00:00"
+    },
+    {
+      "phase": "tr_config_migrated",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_config_migrated.json.gz",
+      "original_sha256": "9f4dfa46a0318e7ed2130a629e6b411a28000863a450a3266622f80ebd0d8835",
+      "current_sha256": "6f7f31e1d4d3e611bb0e49c9e25d67d69dfb9e72660a2e11c7b5a6af04134fbb",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:21:56.944733+00:00"
+    },
+    {
+      "phase": "gate_score",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/gate_score.json.gz",
+      "original_sha256": "8a38631c3bc1eae8821bf7258e83df4d5c85ef20a012e85b6c4d629faed4e130",
+      "current_sha256": "5847b8ca8705418d73d0f81b38db9d87c1a52462c2bfda4a7d8a80ac34528945",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:22:51.622627+00:00"
+    },
+    {
+      "phase": "tr_gate_started",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_gate_started.json.gz",
+      "original_sha256": "aa02160c2b799711596b95446e882d432bc6f0642b2d087daed5955fd68886e7",
+      "current_sha256": "db092364f60960e70dc68f7b309e893656bfcb3afa7df24653e60a04b3c7e1e1",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:22:53.573707+00:00"
+    },
+    {
+      "phase": "tr_gate_failed_a",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_gate_failed_a.json.gz",
+      "original_sha256": "54282c583a33e3ed15e960b1d36555efa2efd58cfffe72e914c8bc166b01ecf6",
+      "current_sha256": "4ffee3eb78a061a3eececbe0223a9424246cf241f9d38fa875a628a25f0752b6",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:03.976130+00:00"
+    },
+    {
+      "phase": "tr_gate_failed_b",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_gate_failed_b.json.gz",
+      "original_sha256": "2da30fa36fde4a6f7cfdcd311f6fc442c736dd2a4dee16bfa475aae642e7b34f",
+      "current_sha256": "c501f2cf079b353c600a8ca9461cef0ad101dd0f5dc7b7283520638ee22d6f49",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:10.769535+00:00"
+    },
+    {
+      "phase": "tr_gate_passed_a",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_gate_passed_a.json.gz",
+      "original_sha256": "d9fdf3a9ce754feff18ba32281c1d4cf571b89846e69935444b2839bb262c5cd",
+      "current_sha256": "15700c0bb3f06359efa798c08d4355c46c514404264c5711ec4eccdfc11ec438",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:20.264355+00:00"
+    },
+    {
+      "phase": "tr_gate_passed_b",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_gate_passed_b.json.gz",
+      "original_sha256": "3679233381833c353555858ae23c4b1cdca557547cd8814c0adec52b7cd538cd",
+      "current_sha256": "35217d4ddc42b936f980034cc8b73b65b7a481764899fe9214858eb6fb1ca620",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:24.625936+00:00"
+    },
+    {
+      "phase": "tr_requirements",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_requirements.json.gz",
+      "original_sha256": "0baadf4ac2d90cd482ab5af90ba3466a2fd5644d317df8c361fe1b1e93d4a532",
+      "current_sha256": "6c3e7d555a8f02e037724aad43c00a30132a44cee3704f2e61999de0eb72ad61",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:27.304448+00:00"
+    },
+    {
+      "phase": "tr_background",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_background.json.gz",
+      "original_sha256": "1d533df3b61c32c7491d2d2c2c1309d5b947542d2c8872758d174cca4b3534f7",
+      "current_sha256": "dfc1500b11347c780cb38a4b588c7d8fb185e518c7ecd4b1ce5834c3962d3c3c",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:28.636331+00:00"
+    },
+    {
+      "phase": "denial",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/denial.json.gz",
+      "original_sha256": "bc9b0d295f57df3f2cf74f05a1bfd423308cb1eefe1075b3c5fd3189c920df60",
+      "current_sha256": "8d6ff342441722d367fea8f7d2f1d544d0a8d06ad8e751a39c716b1e0ce17306",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:33.597609+00:00"
+    },
+    {
+      "phase": "tr_tool_denied",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_tool_denied.json.gz",
+      "original_sha256": "0a5f8cc4198ea370be12ce1fe5393dac73e95e54642baf5985a100e907be6f80",
+      "current_sha256": "571f09343445c7bee755019d2914e0793dbe9dbf1e37cf65da4e2f72bc224109",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:41.078247+00:00"
+    },
+    {
+      "phase": "tr_tool_completed",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_tool_completed.json.gz",
+      "original_sha256": "7c3e0024ca9d6ad9cdad3843171b18dab40a2b1e701b853bdf1975658603e1fb",
+      "current_sha256": "e9458b059cc1db67b96564041a7de17a9518cfd759631425f351847487265eff",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:42.196137+00:00"
+    },
+    {
+      "phase": "tr_tool_started",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_tool_started.json.gz",
+      "original_sha256": "6eda1763ca4ed126a45d3c6bad8f20121ae1512a0c806f12d53efdbc1fab99a0",
+      "current_sha256": "650fd70750926ee2afa14e06094f60b97a091d4b55deba66db1e7ad13d15edd5",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:23:47.549399+00:00"
+    },
+    {
+      "phase": "tr_tool_invoked",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_tool_invoked.json.gz",
+      "original_sha256": "4ad45e5fc8c216765ee205002d298a5a043fa10c49c338497fa2312c4e1e365b",
+      "current_sha256": "bbff065f8014dc4b46821dcebf15140796e61411d421d99769a857890dbac750",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:25:17.144710+00:00"
+    },
+    {
+      "phase": "tr_usage_a",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_usage_a.json.gz",
+      "original_sha256": "776c31bc0b9c774706e9dfb69e8ffdf17a34edad9eaeb3c5893110cf135d8871",
+      "current_sha256": "b4c2f6f2e25ed402ebdbef1a39c6199f9ef42037f10520d7db812d707be26e94",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:25:32.634196+00:00"
+    },
+    {
+      "phase": "tr_usage_b",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_usage_b.json.gz",
+      "original_sha256": "f2d4505bde7b412cb3fcb589764dc14e27748bd347a9fc3c0185c2168f3b6d34",
+      "current_sha256": "118e02df96b9f8303779e5f412a45ecd72fefc3378cf7394bd9b814f11823fd8",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:25:44.877624+00:00"
+    },
+    {
+      "phase": "usage_values_a",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/usage_values_a.json.gz",
+      "original_sha256": "27698ce82a474168a77a888ae03f37a506e9eed016bded335bde2e4f48c07849",
+      "current_sha256": "ce46a750c7614b27a488e17cb5901e1150350bdc724ee9b3be91f4ba8030e19d",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:25:54.998654+00:00"
+    },
+    {
+      "phase": "usage_values_b",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/usage_values_b.json.gz",
+      "original_sha256": "d4f3de075202bb86addae045eedb038e525eb4253f4cd55febeffe3139939e2e",
+      "current_sha256": "e03eadf6e3304953f4f3f634307f4028f5e9cf85ef300237d9b0d47c272cdb2d",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:26:06.584336+00:00"
+    },
+    {
+      "phase": "tr_worktree_created",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_worktree_created.json.gz",
+      "original_sha256": "2058313d3fa04618df2e293f3c4f632d6deef1533e9592498a2c4db0fb4435ec",
+      "current_sha256": "aec206bbb2bded03e65f0432e09e9addbb36ee68072e1c2181f939eba0b921a3",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:26:11.552855+00:00"
+    },
+    {
+      "phase": "tr_worktree_deleted_a",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_worktree_deleted_a.json.gz",
+      "original_sha256": "3ca773640f4c96326ef162d7f487f002c0595fd53a655f55fa37f1f7dfd6a141",
+      "current_sha256": "d246e1bf94d14d2eda8c6fa49af4773f9f943d76188862e3888e7cd92d90ef2d",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:26:25.236085+00:00"
+    },
+    {
+      "phase": "tr_worktree_deleted_b",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/tr_worktree_deleted_b.json.gz",
+      "original_sha256": "fcac47dffca0c8f0ae367a05b8f8eef411564b95d6167d1d52f7bc239f44e599",
+      "current_sha256": "c3300be085403f0c988556cbf0dcd2988a25471238c4df8310c81a1ed1afce38",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:26:37.655026+00:00"
+    },
+    {
+      "phase": "batch_parent",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/batch_parent.json.gz",
+      "original_sha256": "14f79b5cb9c0a2008b14a05d5a6df985dee4f73627fca9f3c30cd1e9a4eb69fc",
+      "current_sha256": "f09aab56673b783d6b4bce53e730d1b4d49aecc4a9f3b616ce1ad09604430cf6",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:26:42.598119+00:00"
+    },
+    {
+      "phase": "batch_child",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/batch_child.json.gz",
+      "original_sha256": "f3d6b622db4000967dbd7d1df76c4c24441cc49ec00b83efd1093af5f98d3047",
+      "current_sha256": "22bcce704e2183640b9e505ffe77f229920e964c147b042ce99302d2652fce15",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:26:54.033623+00:00"
+    },
+    {
+      "phase": "batch_success",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/batch_success.json.gz",
+      "original_sha256": "372fcb0a28f6c452f654b822f09f3341ba49c85e551c58a8959d852311fd76d7",
+      "current_sha256": "dcc54522abd6710e4fa8ec05151afacd561bfefd773d811d38ad51f1fcc0662c",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:26:54.290679+00:00"
+    },
+    {
+      "phase": "source_codec",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/source_codec.json.gz",
+      "original_sha256": "74a373cb6eaae67114b4d8de02a2de65af686772b9e7da7ea2fd0b8c7c18e312",
+      "current_sha256": "a76b8fc2b09d706b3654db049f5d92b663dc4966bbac2be1ef3bfdc0747569bf",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:27:18.378041+00:00"
+    },
+    {
+      "phase": "accounting",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/accounting.json.gz",
+      "original_sha256": "43d9805dd4d6552d4fc687d157208d0c3cda54e6718908e19f0a7fdd509f5435",
+      "current_sha256": "27fe3d6c8c5429ea0bace3aeba9dfbd0db16ec33d3572c9d711c2f6da154553d",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:27:19.542072+00:00"
+    },
+    {
+      "phase": "schema_verdict",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/schema_verdict.json.gz",
+      "original_sha256": "fb6f54eb1f2f4e338baedcfd4af51d68bebebfefb6fc32249dc9f44ab3797f47",
+      "current_sha256": "a5272c7d41d58cd1d0c21a0a7c0d2b2c1abbb6d8cb6d8b5373259c19c0aead01",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:27:19.770307+00:00"
+    },
+    {
+      "phase": "references",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/references.json.gz",
+      "original_sha256": "afbab4486f883ca07f4e15cb8ecddd1c892d2f23f66ef212d120159589343cfe",
+      "current_sha256": "b6260a49e69aa752690b6897cebb456ca858bfef97e5d3b47c09002d573bc1bf",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:27:19.956289+00:00"
+    },
+    {
+      "phase": "retention",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/retention.json.gz",
+      "original_sha256": "b81d2dadecb0fdc29de78bc1ac2d70c9e2c85c5d57e56c56baf9791a473d6c8e",
+      "current_sha256": "14370bcb8d1947395418a2b2df87b8cd5b775d03f58ad8c7962640b6b19839ea",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:28:07.203555+00:00"
+    },
+    {
+      "phase": "projection_retention",
+      "path": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards/projection_retention.json.gz",
+      "original_sha256": "f9f59fee5476a80a057006f57aaa6e97ba98300fe352149cb0a190cbaa3d3188",
+      "current_sha256": "7f4b53e40065d3fc635b93eb369fde427a5d721576cf031613b38e02d46c934c",
+      "original_available": false,
+      "current_modified_utc": "2026-11-12T20:28:07.370351+00:00"
+    }
+  ],
+  "followup": "Report to lead for shared long-job tool batch; use natural job completion for remaining checks."
+}
