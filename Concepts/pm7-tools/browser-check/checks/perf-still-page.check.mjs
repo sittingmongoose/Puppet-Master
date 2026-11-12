@@ -48,6 +48,7 @@ import { gzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 import { toggleCost } from '../helpers/still-toggle-cost.mjs';
 import { installUsageLiveWatch, usageWritesBeforeRecalc } from '../helpers/still-usage-live.mjs';
+import { installToggleFiniteWatch } from '../helpers/still-finite.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
 
@@ -139,6 +140,7 @@ const MARKER = () => {
 		try {
 			const on = document.documentElement.hasAttribute('data-pm-still');
 			performance.mark(on ? 'pm-still:on' : 'pm-still:off');
+			window.__stillToggleFinite = null;
 			if (on) {
 				window.__stillTogglePopulation = null;
 				// DOM attributes and the pre-toggle animation catalog only: no style/geometry read in the measured task.
@@ -150,6 +152,7 @@ const MARKER = () => {
 				});
 				window.__stillTogglePopulation = { marks: marked.length, marked, held: marked.reduce((n, e) => n + e.parts.reduce((m, p) => m + p.animations.length, 0), 0) };
 			}
+			window.__stillToggleFinite = window.__stillFiniteAtMark ? window.__stillFiniteAtMark() : null;
 		} catch (e) { /* a missing population makes the cost unjudgeable */ }
 	});
 	window.__stillMarker.observe(document.documentElement, { attributes: true, attributeFilter: ['data-pm-still'] });
@@ -178,10 +181,10 @@ export default async function (t) {
 	const recordToggle = (look, view, phase, recalc, state) => {
 		const animations = {};
 		for (const item of state.marked) for (const p of item.parts) for (const a of p.animations) animations[a.name] = (animations[a.name] || 0) + 1;
-		const row = { look, view, phase, restyled: recalc?.found ? recalc.first : null, markedElements: state.marks, heldAnimations: state.held, animations, marked: state.marked, traceFile: recalc?.traceFile, markTs: recalc?.markTs, recalcTs: recalc?.recalcTs, liveWrites: recalc?.liveWrites, liveWatchKnown: recalc?.liveWatchKnown };
+		const row = { look, view, phase, restyled: recalc?.found ? recalc.first : null, markedElements: state.marks, heldAnimations: state.held, animations, marked: state.marked, traceFile: recalc?.traceFile, markTs: recalc?.markTs, recalcTs: recalc?.recalcTs, liveWrites: recalc?.liveWrites, liveWatchKnown: recalc?.liveWatchKnown, finiteSnapshot: recalc?.finiteSnapshot };
 		row.cost = toggleCost(row.restyled, row.markedElements, toggleMax);
 		toggleRows.push(row);
-		t.log(`${look} ${view} TOGGLE ${phase}: ${JSON.stringify({ restyled: row.restyled, markedElements: row.markedElements, heldAnimations: row.heldAnimations, animations, cost: row.cost, liveWrites: row.liveWrites, liveWatchKnown: row.liveWatchKnown, traceFile: row.traceFile, markTs: row.markTs, recalcTs: row.recalcTs })}`);
+		t.log(`${look} ${view} TOGGLE ${phase}: ${JSON.stringify({ restyled: row.restyled, markedElements: row.markedElements, heldAnimations: row.heldAnimations, animations, cost: row.cost, liveWrites: row.liveWrites, liveWatchKnown: row.liveWatchKnown, finiteSnapshot: row.finiteSnapshot, traceFile: row.traceFile, markTs: row.markTs, recalcTs: row.recalcTs })}`);
 		return row.cost;
 	};
 	let px = 0; // the waking moves go to a new point each time, so each is a real move
@@ -205,6 +208,8 @@ export default async function (t) {
 
 	const f = await t.app.open({ query: `pm-warm=0&pm-still=${after}` });
 	await f.evaluate(() => document.fonts.ready.then(() => true));
+	const watchFinite = String(t.args.toggleWatchFinite || '0') === '1';
+	if (watchFinite) await f.evaluate(installToggleFiniteWatch);
 	await f.evaluate(MARKER);
 	const watchUsage = String(t.args.toggleWatchLive || '0') === '1';
 	if (watchUsage) await f.evaluate(installUsageLiveWatch);
@@ -229,14 +234,16 @@ export default async function (t) {
 	const traceToggle = async (options, view) => {
 		const watching = watchUsage && view === 'usage';
 		if (watching) await f.evaluate(() => { const s = window.__stillUsageLive; s.observer.takeRecords(); s.records = []; s.error = null; s.active = true; });
-		let result, snapshot;
+		let result, snapshot, finiteSnapshot;
 		try { result = await trace(cdp, options); }
 		finally { if (watching) snapshot = await f.evaluate(() => { const s = window.__stillUsageLive; s.active = false; return { records: s.records, error: s.error }; }); }
+		if (watchFinite) finiteSnapshot = await f.evaluate(() => window.__stillToggleFinite);
 		const after = result.after;
 		result.after = (...args) => {
 			const x = after(...args); if (!x) return x;
 			x.liveWatchKnown = view !== 'usage' || (watching && !snapshot.error);
 			x.liveWrites = watching ? usageWritesBeforeRecalc(x.markTs, x.recalcTs, result.marks, snapshot.records) : [];
+			x.finiteSnapshot = finiteSnapshot;
 			return x;
 		};
 		return result;
