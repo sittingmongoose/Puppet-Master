@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L5721-L6050
+Source lines: L5751-L6082
 
-Source SHA256: `2896b4e4980fd55255a59c9aa16ca36480fe9be538138f3a4c0a6ac5bd010ede`
+Source SHA256: `c4989e6b7fe9049b7a7f890296422a27be887e3426b45b43202eefa2b83c367b`
 
 ---
 
@@ -247,9 +247,9 @@ gui_classification_reason: Shaping policy is pipeline/tool-boundary behavior, no
 depends_on: [PP-084]
 unblocks: []
 acceptance_criteria:
-  - Replayed history shows the same effective shaping with visible policy provenance.
-  - Original canonical tool history remains intact behind shaped model-visible output.
-  - Source class, identity, derivation, and visibility are inspectable for notebook/history material.
+  - "Replay/recovery retains the same effective shaping policy and internal diagnostic provenance."
+  - "Original canonical tool history remains intact behind shaped model-visible output."
+  - "Source class, identity, derivation and visibility remain inspectable internally for notebook/history material, with no ordinary user source-inspection view."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: replay_drift
@@ -261,10 +261,12 @@ source_lineage:
 - source_packet:PM-WNC-2026-09-05-v1:WNC-C13
 - source_packet:PM-WNC-2026-09-05-v1:WNC-H06
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens: ["policy snapshot", "original artifact refs", "explicit context source classes"]
 negative_constraints:
   - Do not overwrite canonical tool history with shaped summaries.
   - Do not let huge results bypass context caps.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints: [Plans/Prompt_Pipeline.md, Plans/Tools.md]
 ```
 
