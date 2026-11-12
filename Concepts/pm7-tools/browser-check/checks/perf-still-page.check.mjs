@@ -25,11 +25,12 @@
 //       move, its currentTime ahead of where it was held by the time since the wake less that start (not reset, no
 //       jump);
 //   the toggle's own cost: the frame that holds the loops and the first frame after the waking move each restyle at
-//   most min(2H + 19, (150/50) * max(1,H)) elements, H the unique elements actually marked for this toggle.
-//   The 2H+19 envelope comes from 18 measured toggles with H=21/24/36/38; 150/50 retains the original nominal
-//   population's ratio cap (--set toggle= changes that legacy anchor, not an absolute allowance). Every toggle logs
-//   its exact marked population and animation names. The old selector generator's 650–730 still fails;
-//   controlled 17-product-loader validation adds 68 marked groups (H=92, R=187–192), versus H=24/R=51–58.
+//   most 3H + 19 elements, H the unique elements actually marked for this toggle. Across 42+60 measured toggles,
+//   H=21–92 and R/H=2.033–2.792, with max(R-2H)=19: about two per held element plus nineteen independent of H.
+//   The lead's bound allows three per held element so a few unrelated elements in the frame do not fail it.
+//   Every toggle logs its exact marked population and animation names. The old selector generator's 650–730
+//   elements at about fifty loops still exceeds its limit169 widely, and Usage118/H21 still exceeds82.
+//   Controlled 17-product-loader validation adds68 marked groups (H=92,R=187–192), versus H=24/R=51–58.
 //   the frame's length and the next frames' recalcs are logged.
 // Key, window resize and a real hidden/visible tab round trip each wake from a separately asserted still state.
 // Then (d) with Reduced Motion on the page never goes still, marks nothing and its running loops stay as they were;
@@ -173,7 +174,7 @@ export default async function (t) {
 	const looks = String(t.args.looks || 'all') === 'all' ? ALL : String(t.args.looks).split(',').filter(Boolean);
 	const views = String(t.args.views || 'settings,dashboard,usage').split(',').filter(Boolean);
 	const after = Number(t.args.after || 3000), ms = Number(t.args.ms || 2000);
-	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10), toggleMax = Number(t.args.toggle || 150);
+	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10);
 	const W = 1920, H = 1080;
 	const toggleRows = [];
 	let toggleTraceSeq = 0;
@@ -182,7 +183,7 @@ export default async function (t) {
 		const animations = {};
 		for (const item of state.marked) for (const p of item.parts) for (const a of p.animations) animations[a.name] = (animations[a.name] || 0) + 1;
 		const row = { look, view, phase, restyled: recalc?.found ? recalc.first : null, markedElements: state.marks, heldAnimations: state.held, animations, marked: state.marked, traceFile: recalc?.traceFile, markTs: recalc?.markTs, recalcTs: recalc?.recalcTs, liveWrites: recalc?.liveWrites, liveWatchKnown: recalc?.liveWatchKnown, finiteSnapshot: recalc?.finiteSnapshot };
-		row.cost = toggleCost(row.restyled, row.markedElements, toggleMax);
+		row.cost = toggleCost(row.restyled, row.markedElements);
 		toggleRows.push(row);
 		t.log(`${look} ${view} TOGGLE ${phase}: ${JSON.stringify({ restyled: row.restyled, markedElements: row.markedElements, heldAnimations: row.heldAnimations, animations, cost: row.cost, liveWrites: row.liveWrites, liveWatchKnown: row.liveWatchKnown, finiteSnapshot: row.finiteSnapshot, traceFile: row.traceFile, markTs: row.markTs, recalcTs: row.recalcTs })}`);
 		return row.cost;

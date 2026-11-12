@@ -21,5 +21,6 @@ assert.equal(judge(189, 24 + 68).pass, true);
 for (const count of [null, undefined, NaN, -1, Infinity]) assert.equal(judge(count, 24).pass, false);
 for (const held of [null, undefined, NaN, -1, 1.5]) assert.equal(judge(10, held).pass, false);
 assert.equal(judge(0, 0).pass, true);
-assert.equal(judge(4, 0).pass, false, 'an empty population cannot excuse a broad recalc');
-console.log('PASS calibrated populations, old 650–730 design, missing measurements and normalized ratio cap');
+assert.equal(judge(19, 0).pass, true, 'the independent allowance remains when no loop is held');
+assert.equal(judge(20, 0).pass, false, 'an empty population cannot excuse more than the independent allowance');
+console.log('PASS calibrated populations, old 650–730 design, missing measurements and 3H+19 mechanism allowance');
