@@ -283,9 +283,16 @@ export default async function (t) {
 		await t.check(`${name}: page is still before the wake`, state.still, JSON.stringify(state));
 		return state.still;
 	};
+	// The opaque app can be hovered while keyboard focus stays in its wrapper. Put focus in the app before the wait.
+	await f.locator('#themeSelect').focus();
 	await stillBefore('key');
+	await f.evaluate(() => {
+		window.__stillKey = null;
+		window.addEventListener('keydown', (e) => { window.__stillKey = { key: e.key, trusted: e.isTrusted }; }, { capture: true, once: true });
+	});
 	await t.page.keyboard.press('Shift');
-	await t.check('one key wakes the still page', !(await f.evaluate(() => document.documentElement.hasAttribute('data-pm-still'))));
+	const keyed = await f.evaluate(() => ({ still: document.documentElement.hasAttribute('data-pm-still'), event: window.__stillKey, focused: document.activeElement?.id }));
+	await t.check('one key wakes the still page', keyed.event?.trusted && keyed.event.key === 'Shift' && !keyed.still, JSON.stringify(keyed));
 	await stillBefore('resize');
 	await t.viewport(1900, 1060);
 	await t.page.waitForTimeout(150);
