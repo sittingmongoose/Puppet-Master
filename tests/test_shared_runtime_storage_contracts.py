@@ -222,17 +222,41 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         # deferred_not_build_blocking families; the projects/settings refresh (SP-337..SP-353, DL-280..DL-300)
         # adds 41 materialized families and the 2026-11-04 full-review fix (finding 14) two more. None was removed.
         # 275 + 2 + 43 = 320 materialized, 19 + 4 = 23 deferred, 1 alias: 344.
-        self.assertEqual(len(self.registry["families"]), 344)
+        # Re-pinned on plans/ea-w2-orchestrator-20261104: SP-723/CV-740 adds crew_board_message_application_v2,
+        # one materialized family, to main's 344. 321 materialized, 23 deferred, 1 alias: 345.
+        self.assertEqual(len(self.registry["families"]), 345)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 320,
+                    "materialized": 321,
                     "deferred_not_build_blocking": 23,
                     "compatibility_alias": 1,
                 }
             ),
         )
+
+    def test_board_member_with_stored_schema_id_is_refused(self) -> None:
+        # SP-320 (Plans/storage-plan.md section 2.3.1): an EventRecord payload member carries schema_version and
+        # no schema_id, because the envelope's payload_schema_id names it. One negative per SP-720..722 family:
+        # the stored header is the only defect, so the row's field list names it too.
+        spec = importlib.util.spec_from_file_location(
+            "storage_readiness_board_members", ROOT / "scripts/pm-implementation-readiness.py"
+        )
+        readiness = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(readiness)
+        row = next(row for row in self.registry["families"] if row["family_id"] == "coordination_event_records")
+        self.assertEqual(readiness.storage_value_keyed_composition_failures(row, row_path="live"), [])
+        for member in ("crew_board_message_posted", "crew_board_message_read", "crew_board_messages_archived"):
+            with self.subTest(member=member):
+                bad = copy.deepcopy(row)
+                bad["value_schema"]["$defs"][member]["properties"]["schema_id"] = {"const": f"pm.event_payload.{member}.v1"}
+                bad["optional_fields"] = bad["optional_fields"] + ["schema_id"]
+                failures = readiness.storage_value_keyed_composition_failures(bad, row_path="negative")
+                self.assertEqual(
+                    [(failure["error"], failure["member"]) for failure in failures],
+                    [("storage_value_registry_keyed_composition_payload_member_has_stored_header", member)],
+                )
 
     def test_live_registry_satisfies_readiness_census_and_value_contracts(self) -> None:
         spec = importlib.util.spec_from_file_location(
