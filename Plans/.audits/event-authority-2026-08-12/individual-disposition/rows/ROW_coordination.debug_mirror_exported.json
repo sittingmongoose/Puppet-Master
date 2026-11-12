@@ -2,8 +2,8 @@
   "event_type": "coordination.debug_mirror_exported",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.debug_mirror_exported. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "RECLASSIFY_TO_EXCLUDED: current owner retires coordination.debug_mirror_exported; DL-270. See reports/event-authority-20261104/DCN-exclusion-application.json. Legacy bucket/cohort pins and denominator preserved. Previous rationale: Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.debug_mirror_exported. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -96,6 +96,11 @@
       "citation": "Plans/orchestrator-subagent-integration.md:3775-3809",
       "status": "ok",
       "notes": "Names the exact canonical record and the PM-only compatibility mirror exporter and authority boundary."
+    },
+    {
+      "citation": "Plans/storage-plan.md:553",
+      "status": "ok",
+      "notes": "the live mirror files it described are retired, so no new mirror export attempt is recorded"
     }
   ],
   "owner_veto": null,
