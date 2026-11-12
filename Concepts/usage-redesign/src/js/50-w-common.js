@@ -743,7 +743,8 @@
     if (line) {
       if (!line.hasAttribute('data-pm-hover-foldbase')) line.setAttribute('data-pm-hover-foldbase', line.getAttribute('data-pm-hover-detail') || '');
       var base = line.getAttribute('data-pm-hover-foldbase');
-      line.setAttribute('data-pm-hover-label', line.getAttribute('data-pm-hover-label') && base ? line.getAttribute('data-pm-hover-label') : C.FOLD_LABEL);
+      var label = line.getAttribute('data-pm-hover-label') && base ? line.getAttribute('data-pm-hover-label') : C.FOLD_LABEL;
+      if (line.getAttribute('data-pm-hover-label') !== label) line.setAttribute('data-pm-hover-label', label);
       line.setAttribute('data-pm-hover-detail', rows.concat(base ? [base] : [], notes).join('; '));
       return;
     }
