@@ -342,6 +342,99 @@ def r2_cases():
     return out
 
 
+def swap(path, pick):
+    """Knob: set one member to another GENUINE original of the same world."""
+    def edit(wrapper):
+        W.put(wrapper, path, copy.deepcopy(pick(W.World.CURRENT)))
+    return edit
+
+
+def bump(path, delta=1):
+    def edit(wrapper):
+        W.put(wrapper, path, W.get(wrapper, path) + delta)
+    return edit
+
+
+def r2_join_cases():
+    """Coherent one-defect negatives for the remaining R2 join predicates."""
+    S0, N0 = {'start': 'started'}, {'start': 'no_start'}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    cov = lambda w: w.sched['coverage'].selector()  # noqa: E731
+    inv = lambda w: w.sched['inventory'].selector()  # noqa: E731
+    out = []
+    rows = [
+        ('intent_inventory_other_genuine', knob(S0, intent=swap('/record/inventory_cut', cov)), 'join/inventory/intent'),
+        ('result_inventory_other_genuine', knob(S0, result=swap('/record/inventory_cut', cov)), 'join/inventory/result'),
+        ('aggregate_inventory_other_genuine', knob(S0, d05_aggregate=swap('/value/inventory_cut', cov)), 'join/inventory/aggregate'),
+        ('scheduler_inventory_other_genuine', knob(S0, scheduler_stop=swap('/record/inventory_cut', lambda w: next(
+            st for (f, k, h), st in w.issued.items() if f == 'executor_workflow_coverage_birth').selector())),
+         'join/inventory/scheduler'),
+        ('inventory_coverage_other_genuine', knob(S0, inventory_head=swap('/record/coverage_birth', lambda w: w.head.selector())),
+         'join/inventory/coverage'),
+        ('intent_scheduler_other_genuine', knob(S0, intent=swap('/record/scheduler_stop', inv)), 'join/scheduler/intent'),
+        ('result_scheduler_other_genuine', knob(S0, result=swap('/record/scheduler_stop', inv)), 'join/scheduler/result'),
+        ('aggregate_scheduler_other_genuine', knob(S0, d05_aggregate=swap('/value/scheduler_stop', inv)), 'join/scheduler/aggregate'),
+        ('intent_association_other_genuine', knob(S0, intent=swap('/record/association_selection',
+                                                                  lambda w: w.goal_cause['original_binding_revision'].selector())),
+         'join/association/intent'),
+        ('result_association_other_genuine', knob(S0, result=swap('/record/association_selection',
+                                                                  lambda w: w.goal_cause['original_binding_revision'].selector())),
+         'join/association/result'),
+        ('intent_safe_stop_other_genuine', knob(S0, intent=swap('/record/safe_stop_source', inv)), 'join/safe_stop/intent'),
+        ('result_safe_stop_other_genuine', knob(S0, result=swap('/record/safe_stop_source', inv)), 'join/safe_stop/result'),
+        ('domain_cut_stop_other_genuine', knob(S0, domain_cut=swap('/value/original_stop',
+                                                                   lambda w: __import__('pm_goal_dg_r_oracles').other_stop_receipt(w))),
+         'join/goal_stop/domain_cut'),
+        ('control_intent_other_genuine', knob(S0, committed_control=swap('/record/intent',
+                                                                         lambda w: w.d06_prepared['candidate'].selector())),
+         'd06/control_intent'),
+        ('control_result_other_genuine', knob(S0, committed_control=swap('/record/result',
+                                                                         lambda w: w.d06_prepared['intent'].selector())),
+         'd06/control_result'),
+        ('prepare_origin_operation_substituted', knob(S0, prepare_origin=lambda wr: W.put(wr, '/record/operation_id', 'TEST_ONLY:op:other')),
+         'd06/prepare_operation'),
+        ('publish_origin_control_prepared_version', knob(S0, publish_origin=swap('/record/afterimages/control',
+                                                                                 lambda w: w.d06_prepared['control'].selector())),
+         'd06/publish_control'),
+        ('d01_update_owner_result_intent', knob(S0, **{'d01_update:d06_cancel_nonterminal': swap(
+            '/record/original_owner_result', lambda w: w.d06_prepared['intent'].selector())}), 'd01/owner_result'),
+        ('d01_head_last_update_start', knob(S0, **{'d01_head:2': swap('/record/last_update',
+                                                                       lambda w: w.start_cause['original_d01_update'].selector())}),
+         'd01/head_update'),
+        ('d01_head_current_before_body', knob(S0, **{'d01_head:2': swap('/record/current_body', lambda w: w.body1.selector())}),
+         'd01/head_current'),
+        ('event_goal_mismatched', knob(S0, event_payload=lambda p: p.update(goal_id=p['goal_id'] + '-other')), 'event/goal'),
+        ('event_goal_run_mismatched', knob(S0, event_payload=lambda p: p['payload'].update(
+            goal_run_id=p['payload']['goal_run_id'] + '-other')), 'event/goal_run'),
+        ('goal_receipt_intent_substituted', knob(S0, goal_stop_receipt=lambda wr: W.put(wr, '/record/stop_intent_sha256', '6' * 64)),
+         'goal/stop_receipt_intent'),
+        ('goal_publication_audit_substituted', knob(S0, goal_control_publication=lambda wr: W.put(
+            wr, '/record/source_audit_sha256', '7' * 64)), 'goal/publication_audit'),
+        ('goal_publication_receipt_sha_substituted', knob(S0, goal_control_publication=lambda wr: W.put(
+            wr, '/record/cancellation_receipt_sha256', '8' * 64)), 'goal/publication_receipt'),
+        ('goal_binding_selection_revision_substituted', knob(S0, goal_binding_selection=lambda wr: W.put(
+            wr, '/record/binding_revision/complete_value_sha256', '9' * 64)), 'goal/binding_revision_selection'),
+        ('native_origin_record_substituted', knob(S0, native_cancel_origin=lambda wr: W.put(
+            wr, '/record/issued_record_sha256', 'a' * 64)), 'scheduler/native_origin_record'),
+        ('flush_aggregate_operation_substituted', knob(S0, final_flush=lambda wr: W.put(
+            wr, '/value/aggregate_operation_id', 'TEST_ONLY:op:other-aggregate')), 'd05/flush_aggregate'),
+        ('aggregate_final_flush_other_genuine', knob(S0, d05_aggregate=swap('/value/original_final_flush',
+                                                                            lambda w: w.d05_cut_ref)), 'd05/final_flush'),
+        ('prepared_control_commitment_substituted', knob(S0, intent=lambda wr: W.put(wr, '/record/prepared_control_sha256', 'b' * 64)),
+         'native/prepared_control'),
+        ('native_control_body_substituted', knob(S0, native_after_control=lambda wr: W.put(
+            wr, '/record/body_record_sha256', 'c' * 64)), 'native/control_body'),
+        ('native_control_revision_skips', knob(S0, native_after_control=bump('/record/revision')), 'native/control_once'),
+        ('start_update_owner_result_candidate', knob(S0, **{'d01_update:original_workflow_start': swap(
+            '/record/original_owner_result', lambda w: w.start_cause_candidate.selector())}), 'start/commit'),
+        ('no_start_birth_body_other', knob(N0, no_start_birth=swap('/record/activation_body',
+                                                                   lambda w: w.control0.selector())), 'start/birth_body'),
+    ]
+    for name, cfg, expected in rows:
+        run_case(out, 'R2/' + name, 'R2', 'negative', world_case(cfg), expected)
+    return out
+
+
 def r3_cases():
     M = {'start': 'started', 'effects': 'mutation', 'filesafe': ['rollback', 'commit']}
     knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
@@ -701,6 +794,128 @@ def r6_cases():
     return out
 
 
+def r56_lower_cases():
+    """Direct invocations of the projector's lower helpers with one substituted argument."""
+    S0, N0 = {'start': 'started'}, {'start': 'no_start'}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    out = []
+
+    def stored(w, p):
+        must_publish(w, p)
+        p.cutover()
+        return p.stored_projection()
+
+    def row_edit(edit):
+        def step(w, p):
+            ck, logical, gen, row = stored(w, p)
+            bad = copy.deepcopy(row)
+            edit(w, bad)
+            return p.decode(bad, w.scope, gen['generation_id'])
+        return step
+
+    def both_commitments(w, row, sha):
+        row['original_event_value_commitment']['sha256'] = sha
+        row['content']['record']['original_event_value_commitment']['sha256'] = sha
+
+    def coherent_event(w, row):
+        event = row['content']['record']['original_event']
+        event['correlation_id'] = event['correlation_id'] + ':substituted'
+        both_commitments(w, row, NR.full_value_commitment(event))
+
+    def ck_edit(edit):
+        def step(w, p):
+            ck, logical, gen, row = stored(w, p)
+            bad = copy.deepcopy(ck)
+            edit(w, bad)
+            return p.read_checkpoint(bad)
+        return step
+
+    def unpack_edit(edit):
+        def step(w, p):
+            ck, logical, gen, row = stored(w, p)
+            ref = copy.deepcopy(row['content']['event_ref'])
+            edit(ref)
+            return p.unpack(ref)
+        return step
+
+    def metadata_with_event(w, p):
+        ck, logical, gen, row = stored(w, p)
+        record = p.decode(row, w.scope, gen['generation_id'])
+        bad = copy.deepcopy(row)
+        bad['content']['metadata_ref'] = p.pack(record)
+        return p.decode(bad, w.scope, gen['generation_id'])
+
+    def reducer_edit(kind, edit):
+        def step(w, p):
+            source, snapshot, starts, cancellations, goal, effects = p.acquire()
+            reducer = P.CombinedReducer(p, w.scope, starts, cancellations)
+            rows = [r for r in snapshot.rows if P.same_run(r.event, w.scope)]
+            state = reducer.initial()
+            for r in rows:
+                event, custody = copy.deepcopy(r.event), copy.deepcopy(r.custody)
+                if event['event_type'] == kind:
+                    edit(starts, cancellations, event, custody)
+                state = reducer.step(state, event, custody)
+            return state
+        return step
+
+    def cutover_row_changed(w, p):
+        must_publish(w, p)
+        cell, logical = p.current_checkpoint()
+        gen = next(iter(logical['generations'].values()))
+        table = P.dataset(gen['generation_id'])
+        row = w.storage.cell(table, P.row_key(w.scope))
+        bad = copy.deepcopy(row['value'])
+        bad['content']['record']['producer_semantic_digest'] = 'd' * 64
+        w.storage.transact([dict(table=table, key=P.row_key(w.scope), expected=row['version'], value=bad)])
+        return p.cutover()
+
+    LA = knob(S0, event_payload=LONG_ACTOR(5000))
+    RR = dict(S0, id_pad=222, knobs=dict(event_payload=LONG_ACTOR(3000)))
+    rows = [
+        ('decode_storage_other', S0, [row_edit(lambda w, r: r.update(storage_instance_id=str(__import__('uuid').uuid4())))],
+         'decode/storage'),
+        ('decode_dataset_other_generation', S0, [row_edit(lambda w, r: r.update(dataset_name=P.dataset('grscg_' + 'e' * 64)))],
+         'decode/dataset'),
+        ('decode_identity_sequence', S0, [row_edit(lambda w, r: r['event_identity'].update(
+            sequence_id=r['event_identity']['sequence_id'] + 1))], 'decode/identity'),
+        ('decode_wrapper_commitment', S0, [row_edit(lambda w, r: r['original_event_value_commitment'].update(sha256='f' * 64))],
+         'decode/commitment'),
+        ('decode_full_value', S0, [row_edit(lambda w, r: both_commitments(w, r, '1' * 64))], 'decode/full_value'),
+        ('decode_custody_commitment', S0, [row_edit(coherent_event)], 'decode/custody_commitment'),
+        ('decode_metadata_carries_event', RR, [metadata_with_event], 'decode/metadata_has_no_event'),
+        ('checkpoint_key_other', S0, [ck_edit(lambda w, c: c.update(physical_key=c['physical_key'] + 'A'))], 'checkpoint/key'),
+        ('checkpoint_storage_other', S0, [ck_edit(lambda w, c: c.update(storage_instance_id=str(__import__('uuid').uuid4())))],
+         'checkpoint/storage'),
+        ('checkpoint_logical_key_other', S0, [ck_edit(lambda w, c: c['content']['checkpoint'].update(
+            physical_key=c['content']['checkpoint']['physical_key'] + 'A'))], 'checkpoint/logical_key'),
+        ('checkpoint_logical_scope_other', S0, [ck_edit(lambda w, c: c['content']['checkpoint']['scope'].update(
+            goal_id=c['content']['checkpoint']['scope']['goal_id'] + '-other'))], 'checkpoint/scope'),
+        ('pack_reference_extra_member', LA, [unpack_edit(lambda r: r.update(extra=1))], 'pack/reference_type'),
+        ('pack_reference_media_type', LA, [unpack_edit(lambda r: r.update(media_type='application/json'))], 'pack/media_type'),
+        ('reducer_cancel_receipt_substituted', S0, [reducer_edit('goal_run.cancelled', lambda st, ca, e, c: c[
+            'first_append_receipt'].update(byte_offset=c['first_append_receipt']['byte_offset'] + 1))], 'reducer/cancel_receipt'),
+        ('reducer_cancel_commitment_substituted', S0, [reducer_edit('goal_run.cancelled', lambda st, ca, e, c: c[
+            'original_event_value_commitment'].update(sha256='2' * 64))], 'reducer/cancel_commitment'),
+        ('reducer_cancel_producer_substituted', S0, [reducer_edit('goal_run.cancelled', lambda st, ca, e, c: e.update(
+            correlation_id=e['correlation_id'] + ':x'))], 'reducer/cancel_producer'),
+        ('reducer_start_commitment_substituted', S0, [reducer_edit('goal_run.started', lambda st, ca, e, c: c[
+            'original_event_value_commitment'].update(sha256='3' * 64))], 'reducer/start_commitment'),
+        ('reducer_start_not_barrier', S0, [reducer_edit('goal_run.started', lambda st, ca, e, c: (
+            c['first_append_receipt'].update(durability_class='ordinary'),
+            st[0]['commit']['record']['first_append_receipt'].update(durability_class='ordinary')))], 'reducer/start_barrier'),
+        ('cutover_without_checkpoint', S0, [lambda w, p: p.cutover()], 'cutover/no_checkpoint'),
+        ('cutover_without_staged', S0, [publish, cutover, lambda w, p: p.cutover()], 'cutover/no_staged'),
+        ('cutover_staged_row_changed', S0, [cutover_row_changed], 'cutover/row'),
+        ('read_before_publication', S0, [lambda w, p: p.read_historical()], 'read/no_checkpoint'),
+        ('no_relevant_event_yet', dict(N0, stop_after='prepare'), [lambda w, p: p.project()], 'projector/no_relevant_event'),
+    ]
+    for name, cfg, steps, expected in rows:
+        group = 'R5' if name.startswith(('reducer_', 'no_relevant')) else 'R6'
+        run_case(out, group + '/' + name, group, 'negative', projector_case(cfg, steps), expected)
+    return out
+
+
 def r4_cases():
     S0 = {'start': 'started'}
     out = []
@@ -775,7 +990,8 @@ def r4_cases():
     return out
 
 
-GROUPS = dict(R1=r1_cases, R2=r2_cases, R3=r3_cases, R4=r4_cases, R5=r5_cases, R6=r6_cases)
+GROUPS = dict(R1=r1_cases, R2=lambda: r2_cases() + r2_join_cases(), R3=r3_cases, R4=r4_cases,
+              R5=r5_cases, R6=lambda: r6_cases() + r56_lower_cases())
 
 
 def main():

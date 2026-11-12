@@ -547,6 +547,7 @@ class World:
     def __init__(self, cfg=None, base=None):
         self.cfg = dict(cfg or {})
         self.knobs = self.cfg.get('knobs', {})
+        World.CURRENT = self  # lets a one-defect knob draw on genuine originals of this world
         self.tmp = Path(tempfile.mkdtemp(prefix='dgr-world-', dir=base))
         self.storage = S.TestOwnerStorage.create(self.tmp / 'storage', segment_target_bytes=int(
             self.cfg.get('segment_target_bytes', 65536)))
@@ -799,6 +800,7 @@ class CancelWorld(World):
                                           mutable=True)
         candidate = w.start.issue_physical('workflow_start_candidate', 'native_consumer', WS + 'StorageCandidate',
                                            w.start.key('workflow_start_candidate', op), [])
+        w.start_cause_candidate = candidate
         w.body1 = w.native.body(2, 'running', 'active')
         w.control1 = w.native.control(2, w.body1)
         # The original Start publishes goal_run.started v3 through Storage as a
@@ -853,7 +855,8 @@ class CancelWorld(World):
                                       ('/record/activation_body', w.body0.selector()),
                                       ('/record/activation_control', w.control0.selector()),
                                       ('/record/activation_origin', origin0.selector()),
-                                      ('/record/birth_issuance', body_commitment(w, w.body0, w.control0))])
+                                      ('/record/birth_issuance', body_commitment(w, w.body0, w.control0))],
+                                     knob=w.knob('no_start_birth'))
         head = w.d01.issue_physical('executor_workflow_workflow_head', 'native_consumer', WO + 'StorageWorkflowHead',
                                     w.d01.key('executor_workflow_workflow_head'),
                                     [('/record/revision', 1), ('/record/activation_body', w.body0.selector()),
@@ -1164,6 +1167,7 @@ class CancelWorld(World):
                                                          ('/value/scheduler_stop', sched['scheduler_stop'].selector()),
                                                          ('/value/inventory_cut', sched['inventory'].selector())],
                      knob=w.knob('domain_cut'))
+        w.d05_cut_ref = cut.d05()
         pre_attempt = []
         if w.knob('pre_attempt_effect'):
             pre_attempt.append(w._d05('PreAttemptEffectAdmissionPhysical', 'pre-attempt',
