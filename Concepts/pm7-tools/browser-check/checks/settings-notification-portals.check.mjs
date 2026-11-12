@@ -23,7 +23,7 @@ async function checkLook(t,look){
   const menuItem=label=>f.locator('.pm51-popout.is-open .pm51-menu-item').filter({hasText:new RegExp('^'+label)}).first();
   for(const [w,h] of [[1280,900],[1390,900],[1920,1080]]){
    await t.viewport(w,h);
-   for(const [section,name] of [['Quiet hours','diagnostics'],['Quiet hours','reset'],['Events','export-events'],['Events','import-events'],['History','history'],['Sounds','export-pack']]){
+   for(const [section,name] of [['Quiet hours','diagnostics'],['Quiet hours','reset'],['Events','export-events'],['Events','import-events'],['Events','add-agent'],['History','history'],['Sounds','export-pack']]){
     await tab(section);await press(t,action(name));await box(t,f,`${look} ${w} ${name}`,w,h);
    }
    // The Add alert sheet hands off to the custom-alert setup dialog without committing an alert.
