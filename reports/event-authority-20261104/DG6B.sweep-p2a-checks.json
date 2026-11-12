@@ -1,0 +1,275 @@
+{
+ "implementation_head": "4cc3643606ec666a7503b0015c7c50a1a99c7410",
+ "tool_merge": "4842b41e5a986aa96b59df731c08cfa2d1ef1d23",
+ "tool": "004bdedd632d9463f3535190a6ed5772338cdce1",
+ "native_execution": "NOT_RUN",
+ "ready_families": 0,
+ "part2b_required": true,
+ "status_counts": {
+  "ABSENT": 19,
+  "PASS": 171,
+  "PARTIAL": 38,
+  "CONFLICT": 0
+ },
+ "guard_tables": {
+  "tables": 76,
+  "rows": 173,
+  "borrowed": 35,
+  "cells": 1640,
+  "failed": 0,
+  "negatives": 2575,
+  "proved": 1640,
+  "suites": 763,
+  "masked": 0,
+  "unrelated_changes": 0,
+  "lane_matrix_problems": 0,
+  "collection_findings": 0
+ },
+ "families": [
+  {
+   "family": "auth.github.authenticated",
+   "suites": 36,
+   "cells": 74,
+   "proved": 74,
+   "negatives": 115,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "auth.github.device_code.issued",
+   "suites": 36,
+   "cells": 74,
+   "proved": 74,
+   "negatives": 110,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "auth.github.disconnected",
+   "suites": 36,
+   "cells": 74,
+   "proved": 74,
+   "negatives": 110,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "auth.github.failed",
+   "suites": 36,
+   "cells": 74,
+   "proved": 74,
+   "negatives": 110,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "auth.github.token.polling",
+   "suites": 37,
+   "cells": 75,
+   "proved": 75,
+   "negatives": 111,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.created",
+   "suites": 49,
+   "cells": 113,
+   "proved": 113,
+   "negatives": 168,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.deleted",
+   "suites": 51,
+   "cells": 109,
+   "proved": 109,
+   "negatives": 165,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.exported",
+   "suites": 46,
+   "cells": 102,
+   "proved": 102,
+   "negatives": 149,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.imported",
+   "suites": 51,
+   "cells": 111,
+   "proved": 111,
+   "negatives": 165,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.selected",
+   "suites": 58,
+   "cells": 132,
+   "proved": 132,
+   "negatives": 209,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.updated",
+   "suites": 50,
+   "cells": 113,
+   "proved": 113,
+   "negatives": 167,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.hook.blocked",
+   "suites": 35,
+   "cells": 73,
+   "proved": 73,
+   "negatives": 122,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.hook.error",
+   "suites": 34,
+   "cells": 72,
+   "proved": 72,
+   "negatives": 136,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.hook.invoked",
+   "suites": 34,
+   "cells": 72,
+   "proved": 72,
+   "negatives": 136,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.load_failed",
+   "suites": 34,
+   "cells": 72,
+   "proved": 72,
+   "negatives": 118,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.loaded",
+   "suites": 34,
+   "cells": 72,
+   "proved": 72,
+   "negatives": 118,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.permission.override",
+   "suites": 34,
+   "cells": 72,
+   "proved": 72,
+   "negatives": 118,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.tool.collision",
+   "suites": 34,
+   "cells": 72,
+   "proved": 72,
+   "negatives": 118,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.tool.registered",
+   "suites": 34,
+   "cells": 72,
+   "proved": 72,
+   "negatives": 118,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "shared",
+   "suites": 4,
+   "cells": 12,
+   "proved": 12,
+   "negatives": 12,
+   "borrowed": 0,
+   "failed_suites": []
+  }
+ ],
+ "checker_cli": {
+  "runs": 19,
+  "exits": "0 \u00d719",
+  "passes": 19,
+  "seconds_min": 11.2,
+  "seconds_max": 20.6,
+  "rss_max_mb": 150
+ },
+ "counterexample_cli": [
+  {
+   "family": "plugin.hook.error",
+   "exit": 1,
+   "expected_refusal": "payload_schema",
+   "pass": true
+  },
+  {
+   "family": "plugin.hook.invoked",
+   "exit": 1,
+   "expected_refusal": "payload_schema",
+   "pass": true
+  },
+  {
+   "family": "persona.selected",
+   "exit": 1,
+   "expected_refusal": "payload_schema",
+   "pass": true
+  },
+  {
+   "family": "persona.created",
+   "exit": 1,
+   "expected_refusal": "protected_identity",
+   "pass": true
+  },
+  {
+   "family": "persona.deleted",
+   "exit": 1,
+   "expected_refusal": "protected_identity",
+   "pass": true
+  },
+  {
+   "family": "persona.imported",
+   "exit": 1,
+   "expected_refusal": "protected_identity",
+   "pass": true
+  },
+  {
+   "family": "persona.updated",
+   "exit": 1,
+   "expected_refusal": "protected_identity",
+   "pass": true
+  }
+ ],
+ "complete_boundary_flips": {
+  "accepted": 6320,
+  "refused_later": 4042
+ },
+ "shard_check": {
+  "exit": 0,
+  "outcome": "`pass`, 3139 shards, 0 failures"
+ },
+ "index_validate": {
+  "exit": 1,
+  "origin_main": "5cbb92a5aa340ba89baf51fcd3e2ef524652df6f",
+  "outcome": "top-level `fail`, 30 failures: 21 `plan_unit_removal_ledger_invalid` in existing ledgers (carried from part 1) and 9 `plan_unit_removed_without_ledger_decision` for DL-333, DL-335..340, DL-349 and UCC-230, which main added after this branch's base; none names a DG6B file. Integration rebase owns them."
+ }
+}
