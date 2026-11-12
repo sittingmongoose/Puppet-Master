@@ -138,12 +138,16 @@ class WorkflowLeasedStorage(AS.LeasedStorage):
 def seglog_view(sources):
     """The seglog selection a held fence freezes: generation, segments, watermarks, ranges and sequence authority.
 
-    ``selection_id`` hashes the CURRENT bytes, which also commit the redb cell manifest, so cell-only
-    transactions change it while the selected seglog generation stays fixed; it is excluded here.
+    ``selection_id`` hashes the TEST_ONLY commit CURRENT bytes, and the lane's
+    ``source_generation_ref`` names that commit file. Batch 2 advances both on
+    cell-only transactions while the selected seglog generation stays fixed.
+    Exclude those publication locators here; keep every seglog generation,
+    inventory, watermark, range, prefix and sequence-authority field.
     """
     manifest = copy.deepcopy(sources['manifest'])
     for entry in manifest['selection_entries']:
         entry.pop('selection_id', None)
+        entry.pop('source_generation_ref', None)
     current = {k: v for k, v in sources['current'].items() if k != 'selection_id'}
     return S.canonical([current, manifest, sources['sequence_allocator']['current_lease']], 'C3/seglog_view')
 
