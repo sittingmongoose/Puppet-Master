@@ -6,6 +6,7 @@ import sys
 import unittest
 from collections import Counter
 from pathlib import Path
+from unittest import mock
 
 from jsonschema import Draft202012Validator
 
@@ -363,6 +364,48 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
             "dev_session_record.v1:{project_id}:{dev_session_id}",
         )
 
+    def test_dev_workflow_value_does_not_require_a_fabricated_dap_identity(self) -> None:
+        fixtures = load_json(PLANS / "ds15_value_contract_fixtures.json")
+        workflow = fixtures[0]["positive"]
+        self.assertIsNone(workflow["dap"])
+        self.assertEqual(workflow["workflow"]["state"], "running")
+        Draft202012Validator(self.inline_schemas["dev_session_record"]).validate(workflow)
+        self.assert_rejected("dev_session_record", {**workflow, "dap_session_id": "fabricated"})
+        self.assert_rejected("dev_session_record", {**workflow, "workflow": None})
+
+    def test_dev_value_version_and_legacy_dap_definition_are_preserved(self) -> None:
+        row = self.rows_by_id["dev_session_record"]
+        self.assertEqual(row["schema_version"], "2.0.0")
+        self.assertEqual(row["value_schema"]["properties"]["schema_version"]["const"], "2.0.0")
+        self.assertEqual(row["value_schema"]["$defs"]["dap_record_v1"], self.shared["$defs"]["dev_session_record"])
+        self.assertTrue(row["recovery_disposition"]["backup_required"])
+
+    def test_ds15_census_still_rejects_a_missing_physical_family(self) -> None:
+        spec = importlib.util.spec_from_file_location(
+            "ds15_census_negative", ROOT / "scripts/pm-implementation-readiness.py"
+        )
+        readiness = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(readiness)
+        mutated = copy.deepcopy(self.registry)
+        mutated["families"] = [row for row in mutated["families"]
+                               if row["family_id"] != "ds15_preview_session_refreshed_checkpoint"]
+        errors = readiness.storage_value_registry_data_failures(mutated, path_label="DS15:negative")
+        self.assertTrue(any(e["error"] == "storage_value_registry_family_count_mismatch" for e in errors))
+
+    def test_ds15_full_semantic_and_migration_oracles(self) -> None:
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "scripts/pm-ds15-event-contracts.py")],
+            cwd=ROOT, capture_output=True, text=True, check=False,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        report = json.loads(proc.stdout)
+        self.assertEqual(report["families"], 16)
+        self.assertGreaterEqual(report["semantic_oracles"], 11776)
+        self.assertGreaterEqual(report["value_oracles"], 49)
+        self.assertGreaterEqual(report["guard_proof_oracles"], 247)
+        self.assertGreaterEqual(report["numeric_oracles"], 3488)
+        self.assertEqual(report["native_execution"], "NOT_RUN")
+
     def test_materializer_check_is_current(self) -> None:
         proc = subprocess.run(
             [
@@ -378,6 +421,23 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         self.assertIn("shared_runtime_storage_materialization_current", proc.stdout)
+
+    def test_registry_bytes_match_materializer_render_behind_pending_retention(self) -> None:
+        # `check` refuses PENDING_RETENTION_DECISION before it compares bytes, so pending rows hide a stale
+        # registry: DS15's first commit escaped two non-ASCII strings and no check could see it. Compare the
+        # bytes without that one refusal; the retention rows stay refused by test_materializer_check_is_current.
+        spec = importlib.util.spec_from_file_location(
+            "storage_materializer_render", ROOT / "scripts/pm-shared-runtime-storage-materialize.py"
+        )
+        materializer = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = materializer
+        self.addCleanup(sys.modules.pop, spec.name, None)
+        spec.loader.exec_module(materializer)
+        current = (ROOT / "Plans/storage_value_registry.json").read_text(encoding="utf-8")
+        with mock.patch.object(materializer, "validate_registry_semantics", lambda registry: None):
+            expected = materializer.expected_registry(json.loads(current))
+        rendered = json.dumps(expected, indent=2, ensure_ascii=False) + "\n"
+        self.assertTrue(rendered == current, "registry bytes differ from the materializer's rendering")
 
     def test_shared_runtime_semantic_validator_self_test_passes(self) -> None:
         proc = subprocess.run(
