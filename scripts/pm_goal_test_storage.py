@@ -86,6 +86,37 @@ _CUSTODY_V2 = _receipt_validator('custody_v2')
 _GROUP = _receipt_validator('active_durable_group')
 _FULL_VALUE = _receipt_validator('full_value_result')
 
+# Canonical SP-295 seglog control images and SP-278 index custody (batch 2).
+_NATIVE_SCHEMA = json.loads((ROOT / 'Plans/storage_compaction_native_contracts.schema.json').read_text())
+_INDEX_SCHEMA = json.loads((ROOT / 'Plans/event_record_index_checkpoint.schema.json').read_text())
+_CONSUMER_SCHEMA = json.loads((ROOT / 'Plans/goal_run_started_consumer_contracts/consumer.schema.json').read_text())
+
+
+def _defs_validator(document, name):
+    return jsonschema.Draft202012Validator({'$ref': '#/$defs/' + name, '$defs': document['$defs']})
+
+
+_NATIVE_CURRENT = _defs_validator(_NATIVE_SCHEMA, 'current')
+_NATIVE_MANIFEST = _defs_validator(_NATIVE_SCHEMA, 'manifest')
+_NATIVE_LEASE = _defs_validator(_NATIVE_SCHEMA, 'sequence_lease_control')
+_INDEX_CHECKPOINT = _defs_validator(_INDEX_SCHEMA, 'checkpoint')
+_INDEX_TOKEN = _defs_validator(_INDEX_SCHEMA, 'read_token')
+# GenericIndexRow is the entire registry family 8 value_schema (SP-278 consumer binding).
+_INDEX_ROW = _defs_validator(_CONSUMER_SCHEMA, 'GenericIndexRow')
+
+LEASE_SIZE = 4096
+SELECTED_GENERATION = 1
+FRAME_PROFILE = 'pm.seglog_frame_v2.first_profile.v1'
+CURRENT_REF = 'storage/seglog/CURRENT'
+MANIFEST_REF = 'storage/seglog/manifest.v1.msgpack'
+LEASE_TABLE = 'seglog_sequence_allocator.v1'
+CHECKPOINT_TABLE = 'checkpoints'
+INDEX_BINDING_DOMAIN = 'pm.event_index.binding.msgpack_sha256.v1'
+INDEX_ROW_SCHEMA = ('pm.storage_value.event_record_index.v2', '2.0.0')
+PROJECTOR = ('projector.storage.event_record_index', '1.0.0')
+INDEX_RETENTION_SECONDS = 604800
+INDEX_MAX_GENERATIONS = 3
+
 
 class StorageRefusal(Exception):
     """A TEST_ONLY Storage refusal; ``code`` is the guard that refused."""
@@ -180,6 +211,199 @@ def decode_canonical(raw, where='canonical'):
 
 def binding(value, where='binding'):
     return _num(where, NR.binding_value_bytes, value, where)
+
+
+def index_digest(value, where='index/binding'):
+    """SP-278 ``pm.event_index.binding.msgpack_sha256.v1``: SHA-256 of the canonical
+    MessagePack of ``{"domain": ..., "value": V}`` (equals pm_event_index_binding.binding_digest)."""
+    return sha256(binding({'domain': INDEX_BINDING_DOMAIN, 'value': value}, where))
+
+
+def hmp(value, where='hmp'):
+    """SP-295 ``HMP(x) = H(MP(x))`` over the unchanged Case L-2 canonical MessagePack."""
+    return sha256(canonical(value, where))
+
+
+def segment_ref(storage_instance_id, generation):
+    """The segment reference first custody already records (``original_segment_ref``)."""
+    return 'TEST_ONLY:segment-ref:' + sha256(binding(['pm.goal_test.segment_ref.v1', storage_instance_id, generation,
+                                                      'segment-%d' % generation]))
+
+
+def physical_segment_id(storage_instance_id, birth_operation_ref, creation_ordinal, generation):
+    return 'pm.storage.segment_object.v1:' + hmp(['pm.storage.segment_object.v1', '1.0.0', storage_instance_id,
+                                                  birth_operation_ref, creation_ordinal, generation])
+
+
+def active_segment_name(generation, first_sequence):
+    return 'seg-%06d-%020d.active' % (generation, first_sequence)
+
+
+def sealed_segment_name(generation, first_sequence, last_sequence):
+    return 'seg-%06d-%020d-%020d.seglog' % (generation, first_sequence, last_sequence)
+
+
+def index_checkpoint_key(storage_instance_id):
+    return 'event_record_index_checkpoint.v1:' + storage_instance_id
+
+
+def index_row_key(row):
+    return 'event_record_index.v2:%s:%020d:%s' % (row['scope_partition'], row['sequence_id'], row['event_id'])
+
+
+def durable_group_value(storage_instance_id, group):
+    """CV-339 ``active_durable_group`` for one issued group (shared by Storage and the source adapter)."""
+    commit = group['commit']
+    return dict(schema_version='2.0.0', storage_instance_id=storage_instance_id,
+                commit_group_id=commit['commit_group_id'], durability_class=commit['durability_class'],
+                segment_generation=commit['segment_generation'], segment_name=commit['segment_name'],
+                durable_start_offset=group['durable_start_offset'], durable_end_offset=group['durable_end_offset'],
+                manifest_generation=commit['manifest_generation'],
+                members=[dict(event_id=m[0], sequence_id=m[1], byte_offset=m[2], frame_length=m[3],
+                              frame_sha256=m[4]) for m in group['members']],
+                group_digest=group['digest'], restore_admission=None)
+
+
+def retained_prefix_digest(entries):
+    """SP-278 retained-prefix digest; entries ordered by source sequence."""
+    return index_digest({'domain': 'pm.event_index.retained_prefix.v1', 'entries': entries}, 'index/prefix')
+
+
+def row_set_digest(rows):
+    """SP-278 row-set digest over ``{key, value}`` entries ordered by sequence then event ID."""
+    ordered = sorted(rows.items(), key=lambda kv: (kv[1]['sequence_id'], kv[1]['event_id']))
+    return index_digest({'domain': 'pm.event_index.row_set.v1',
+                         'entries': [{'key': k, 'value': v} for k, v in ordered]}, 'index/row_set')
+
+
+def generation_id_of(storage_instance_id, birth_selection, seed_sha256):
+    return 'eig_' + index_digest({'domain': 'pm.event_index.generation.v1', 'storage_instance_id': storage_instance_id,
+                                  'projector_version': PROJECTOR[1], 'birth_source_selection': birth_selection,
+                                  'generation_seed_sha256': seed_sha256}, 'index/generation')
+
+
+def build_seglog_images(state, seg_stats, prefix_entries, last_group):
+    """Canonical ``pm.storage.seglog_current.v1`` and ``pm.storage.seglog_manifest.v1`` values.
+
+    Pure function of the committed seglog state and verified segment facts, so
+    Storage and the generic source adapter derive the same bytes. ``seg_stats``
+    maps a live segment generation to ``sha256``/``count``/``first``/``last`` of
+    its durable bytes; ``prefix_entries`` are the retained events in sequence
+    order; ``last_group`` is the active segment's latest issued group or None.
+    The manifest value is returned without ``manifest_generation``; Storage adds
+    it and moves it only when this body changes.
+    """
+    sid = state['storage_instance_id']
+    birth = state['birth_operation_ref']
+    selection_id = 'pm.storage.selection.v1:' + hmp(['pm.storage.selection.v1', '1.0.0', sid, 'initial', birth,
+                                                     SELECTED_GENERATION], 'images/selection')
+    current = dict(schema_id='pm.storage.seglog_current.v1', schema_version='1.0.0', storage_instance_id=sid,
+                   selection_id=selection_id, selected_segment_generation=SELECTED_GENERATION,
+                   birth_operation_ref=birth)
+    inventory, bindings, watermarks, retired = [], [], [], []
+    proofs = {g['segment_generation']: g for g in state['gaps']}
+    for seg in state['segments']:
+        ref = segment_ref(sid, seg['generation'])
+        if seg['retired']:
+            gap = proofs.get(seg['generation'])
+            retired.append(dict(physical_segment_id=seg['physical_segment_id'], original_segment_ref=ref,
+                                retirement_effect_ref='TEST_ONLY:retention-gap:' + (
+                                    gap['proof_sha256'] if gap is not None else 'unproved')))
+            continue
+        stats = seg_stats[seg['generation']]
+        renamed = seg['canonical_name'] != seg['original_canonical_name']
+        inventory.append(dict(physical_segment_id=seg['physical_segment_id'], segment_ref=ref,
+                              segment_generation=seg['generation'], segment_name=seg['canonical_name'],
+                              namespace_revision=1 if renamed else 0,
+                              state='closed' if seg['sealed'] else 'active', selection_role='original_selected',
+                              origin_operation_ref=seg['origin_operation_ref'], frame_profile=FRAME_PROFILE,
+                              source_durable_end_offset=seg['watermark'], source_durable_bytes_sha256=stats['sha256'],
+                              retained_event_count=stats['count'], first_sequence_id=stats['first'],
+                              last_sequence_id=stats['last']))
+        if renamed:
+            bindings.append(dict(physical_segment_id=seg['physical_segment_id'], original_segment_ref=ref,
+                                 original_segment_generation=seg['generation'],
+                                 original_segment_name=seg['original_canonical_name'],
+                                 current_segment_generation=seg['generation'],
+                                 current_segment_name=seg['canonical_name'], namespace_revision=1,
+                                 original_namespace_effect_ref='TEST_ONLY:segment-seal:%s:%d' % (sid, seg['generation'])))
+        watermarks.append(dict(physical_segment_id=seg['physical_segment_id'], durable_end_offset=seg['watermark']))
+    excluded = [dict(first_sequence_id=g['first_sequence'], last_sequence_id=g['last_sequence'],
+                     reason='retention_compaction', manifest_evidence_ref='TEST_ONLY:retention-gap:%d' % g['segment_generation'],
+                     manifest_evidence_sha256=g['proof_sha256']) for g in state['gaps']]
+    excluded += [dict(first_sequence_id=a['first_sequence_id'], last_sequence_id=a['last_sequence_id'],
+                      reason='allocator_lease_abandoned', manifest_evidence_ref='TEST_ONLY:append-fence:' + a['operation_id'],
+                      manifest_evidence_sha256=a['evidence_sha256']) for a in state['abandoned']]
+    excluded.sort(key=lambda g: (g['first_sequence_id'], g['last_sequence_id'], g['reason']))
+    lease = state['sequence_lease']
+    issued = [e['sequence_id'] for e in prefix_entries]
+    allocated = issued + [a['last_sequence_id'] for a in state['abandoned']] + [
+        r['reserved_sequence_id'] for r in state['append_reservations'].values() if r['state'] == 'reserved'] + [
+        g['last_sequence'] for g in state['gaps']]
+    live = [s for s in state['segments'] if not s['retired']]
+    entry = dict(selection_id=selection_id, selected_segment_generation=SELECTED_GENERATION,
+                 source_generation_ref='TEST_ONLY:seglog-selection:%s:%d' % (sid, SELECTED_GENERATION),
+                 birth_operation_ref=birth, entry_kind='live',
+                 active_segment_ref=live[-1]['physical_segment_id'] if live else None,
+                 retained_inventory=inventory, namespace_bindings=bindings, durable_watermarks=watermarks,
+                 excluded_ranges=excluded, retired_inputs=retired,
+                 survivor_prefix_sha256=retained_prefix_digest(prefix_entries),
+                 active_durable_group=None if last_group is None else durable_group_value(sid, last_group),
+                 sequence_authority=dict(
+                     lease_id=lease['current_lease']['lease_id'],
+                     lease_first_sequence_id=lease['current_lease']['first_sequence_id'],
+                     lease_last_sequence_id=lease['current_lease']['last_sequence_id'],
+                     # With nothing allocated the schema still requires an integer: the lease's first ID.
+                     highest_allocated_sequence_id=max(allocated) if allocated else lease['current_lease']['first_sequence_id'],
+                     last_issued_sequence_id=max(issued) if issued else None,
+                     allocator_control_ref=LEASE_TABLE + ':' + sid,
+                     allocator_control_sha256=hmp(lease, 'images/lease')))
+    body = dict(schema_id='pm.storage.seglog_manifest.v1', schema_version='1.0.0', storage_instance_id=sid,
+                recovery_epoch=state['recovery_epoch'], selection_entries=[entry])
+    return current, body
+
+
+def source_selection_of(current_raw, manifest_raw):
+    """SP-278 ``source_selection`` computed from the exact canonical CURRENT and manifest bytes."""
+    current = decode_canonical(current_raw, 'selection/current')
+    manifest = decode_canonical(manifest_raw, 'selection/manifest')
+    entry = manifest['selection_entries'][0]
+    return dict(storage_instance_id=manifest['storage_instance_id'], current_ref=CURRENT_REF,
+                current_bytes_sha256=sha256(current_raw),
+                selected_segment_generation=current['selected_segment_generation'], manifest_ref=MANIFEST_REF,
+                manifest_bytes_sha256=sha256(manifest_raw), manifest_generation=manifest['manifest_generation'],
+                recovery_epoch=manifest['recovery_epoch'],
+                manifest_survivor_prefix_sha256=entry['survivor_prefix_sha256'],
+                retained_inventory_sha256=index_digest(entry['retained_inventory']),
+                durable_watermarks_sha256=index_digest(entry['durable_watermarks']),
+                excluded_ranges_sha256=index_digest(entry['excluded_ranges']),
+                retired_inputs_sha256=index_digest(entry['retired_inputs']))
+
+
+def index_row_base(event, *, segment_generation, segment_name, byte_offset):
+    """Every GenericIndexRow field except ``publication_locator`` (which binds the generation anchor)."""
+    return dict(schema_id=INDEX_ROW_SCHEMA[0], schema_version=INDEX_ROW_SCHEMA[1], scope_kind=event['scope_kind'],
+                project_id=event['project_id'], scope_partition=scope_partition(event),
+                sequence_id=event['sequence_id'], event_id=event['event_id'], event_type=event['event_type'],
+                source_locator=dict(segment_generation=segment_generation, segment_name=segment_name,
+                                    byte_offset=byte_offset, sequence_id=event['sequence_id']),
+                payload_sha256=sha256(canonical(event['payload'], 'index/payload')),
+                producer_semantic_digest=_num('index', NR.producer_digest, event, 'index/producer'),
+                idempotency_key=event['idempotency_key'], correlation_id=event['correlation_id'],
+                causation_event_id=event['causation_event_id'], persisted_at_utc=event['persisted_at_utc'],
+                redaction_profile=event['redaction_profile'], source_schema_id=event['schema_id'],
+                source_schema_version=event['schema_version'],
+                projector_replay_only=event['replay_policy'] == 'projector_replay_only')
+
+
+def index_row(base, generation):
+    sel = generation['anchor']['source_selection']
+    row = dict(base, publication_locator=dict(
+        manifest_generation=sel['manifest_generation'], recovery_epoch=sel['recovery_epoch'],
+        survivor_prefix_sha256=sel['manifest_survivor_prefix_sha256'],
+        checkpoint_ref=index_checkpoint_key(sel['storage_instance_id']) + '#/generations/' + generation['generation_id'],
+        compaction_translation_manifest_ref=None))
+    return row
 
 
 # ---------------------------------------------------------------- frame codec
@@ -458,6 +682,33 @@ class _Handle:
         refuse('handle/not_copyable')
 
 
+class Fence:
+    """Nonserializable exclusive append/rotation/selection fence for one boot session.
+
+    Held by the operation that reserved the next sequence (SP-305 reserve_assignment).
+    It is process memory only: a crash or reopen loses it, which invalidates the
+    unconsumed reservation (its sequence becomes an ``allocator_lease_abandoned`` gap).
+    """
+    __slots__ = ('__weakref__', 'identity', 'operation_id', 'boot_session')
+
+    def __init__(self, operation_id, boot_session):
+        self.identity = 'TEST_ONLY:native-append-fence:' + str(uuid.uuid4())
+        self.operation_id = operation_id
+        self.boot_session = boot_session
+
+    def __repr__(self):
+        return '<TEST_ONLY append fence>'
+
+    def __reduce__(self):
+        refuse('fence/not_serializable')
+
+    def __copy__(self):
+        refuse('fence/not_copyable')
+
+    def __deepcopy__(self, memo):
+        refuse('fence/not_copyable')
+
+
 @dataclass
 class FaultPlan:
     cut: str | None = None
@@ -494,8 +745,26 @@ def format_ms(ms):
     return _num('clock', NR.storage_time, text, 'clock/format')
 
 
+def _parse_ms(text):
+    """Inverse of ``format_ms`` for Storage-written times (index retention arithmetic)."""
+    _num('clock', NR.storage_time, text, 'clock/parse')
+    stamp = _dt.datetime.strptime(text[:19], '%Y-%m-%dT%H:%M:%S').replace(tzinfo=_dt.timezone.utc)
+    return int(stamp.timestamp()) * 1000 + int(text[20:23])
+
+
 class TestOwnerStorage:
-    """TEST_ONLY Storage owner with real durable bytes and private custody."""
+    """TEST_ONLY Storage owner with real durable bytes and private custody.
+
+    Batch 2 (2026-11-12): besides its own TEST_ONLY CURRENT and whole-state
+    manifest (the adapter's commit record), Storage persists and exposes the
+    canonical SP-295 ``pm.storage.seglog_current.v1`` / ``pm.storage.seglog_manifest.v1``
+    images, the SP-278 ``event_record_index_checkpoint`` root and its
+    ``GenericIndexRow`` dataset, and the ``pm.storage.seglog_sequence_lease.v1``
+    control. ``manifest_generation`` is the canonical seglog manifest generation:
+    it moves only when the seglog manifest changes, never on a redb-only
+    transaction (cells, custody, reservations, seeds, packs). ``commit_generation``
+    moves on every durable commit.
+    """
 
     qualification = QUALIFICATION
     native = NATIVE_LINE
@@ -507,6 +776,15 @@ class TestOwnerStorage:
         self._handles = weakref.WeakKeyDictionary()
         self._receipt_handles = weakref.WeakKeyDictionary()
         self.calls = []
+        # A subclass may set these before calling us (DG-CA's LeasedStorage does).
+        if getattr(self, 'boot_session', None) is None:
+            self.boot_session = 'TEST_ONLY:native-boot-session:' + str(uuid.uuid4())
+        if not hasattr(self, 'fence'):
+            self.fence = None
+        self._persisted_seglog = None
+        self._segment_sha = {}
+        self._exported = {}
+        self.index_datasets = {}
         if _new:
             self._birth()
         else:
@@ -524,25 +802,44 @@ class TestOwnerStorage:
     def open(cls, root, **kwargs):
         return cls(root, **kwargs)
 
+    def _new_segment(self, generation, first_sequence, origin):
+        ordinal = len(getattr(self, 'segments', []))
+        name = active_segment_name(generation, first_sequence)
+        return dict(generation=generation, name='segment-%d' % generation, watermark=0, sealed=False, retired=False,
+                    first_planned=first_sequence, original_canonical_name=name, canonical_name=name,
+                    origin_operation_ref=origin,
+                    physical_segment_id=physical_segment_id(self.storage_instance_id, self.birth_operation_ref,
+                                                            ordinal, generation))
+
     def _birth(self):
         self.storage_instance_id = str(uuid.uuid4())
+        self.birth_operation_ref = 'TEST_ONLY:storage-birth:' + self.storage_instance_id
         self.manifest_generation = 0
+        self.commit_generation = 0
         self.recovery_epoch = 0
         self.clock_last_ms = u64(time.time_ns() // 1_000_000, 'clock/birth')
         self.group_counter = 0
         self.tx_counter = 0
         self.cell_generation = 0
-        self.segments = [dict(generation=1, name='segment-1', watermark=0, sealed=False, retired=False)]
+        self.segments = []
+        self.segments = [self._new_segment(1, 0, self.birth_operation_ref)]
         self.reservations = {}
         self.custody = {}
         self.cells = {}
         self.seeds = []
         self.gaps = []
         self.packs = {}
-        self.index_seed_hex = secrets.token_hex(32)
+        self.excluded = []
+        self.abandoned = []
+        self.append_reservations = {}
+        self.reservation_tx_counter = 0
+        self.sequence_lease = self._lease_record(0, 0)
+        self.index_seed_hex = None
         self.index_frontier_revision = 0
         self.index_frontier_sha256 = None
-        self.excluded = []
+        self.index_tx_counter = 0
+        self.index_disclosures = []
+        self.canonical = dict(current=None, manifest=None, checkpoint=None)
         (self.root / 'packs').mkdir(exist_ok=True)
         self._segment_path(1).touch()
         self._rebuild_index()
@@ -551,30 +848,81 @@ class TestOwnerStorage:
     def _segment_path(self, generation):
         return self.root / ('segment-%d.seglog' % generation)
 
+    STATE_KEYS = ('storage_instance_id', 'birth_operation_ref', 'manifest_generation', 'commit_generation',
+                  'recovery_epoch', 'clock_last_ms', 'group_counter', 'tx_counter', 'cell_generation', 'segments',
+                  'reservations', 'custody', 'cells', 'seeds', 'gaps', 'packs', 'excluded', 'abandoned',
+                  'append_reservations', 'reservation_tx_counter', 'sequence_lease', 'index_seed_hex',
+                  'index_frontier_revision', 'index_frontier_sha256', 'index_tx_counter', 'index_disclosures',
+                  'canonical')
+
     def _state(self):
-        return dict(qualification=QUALIFICATION, schema='pm.goal_test.storage_manifest.v1',
-                    storage_instance_id=self.storage_instance_id, manifest_generation=self.manifest_generation,
-                    recovery_epoch=self.recovery_epoch, clock_last_ms=self.clock_last_ms,
-                    group_counter=self.group_counter, tx_counter=self.tx_counter,
-                    cell_generation=self.cell_generation, segments=self.segments,
-                    reservations=self.reservations, custody=self.custody, cells=self.cells,
-                    seeds=self.seeds, gaps=self.gaps, packs=self.packs, excluded=self.excluded,
-                    index_seed_hex=self.index_seed_hex,
-                    index_frontier_revision=self.index_frontier_revision,
-                    index_frontier_sha256=self.index_frontier_sha256)
+        return dict({k: getattr(self, k) for k in self.STATE_KEYS}, qualification=QUALIFICATION,
+                    schema='pm.goal_test.storage_manifest.v1')
+
+    def _segment_sha256(self, segment):
+        key = (segment['generation'], segment['watermark'])
+        if key not in self._segment_sha:
+            self._segment_sha[key] = sha256(self._segment_path(segment['generation']).read_bytes()[:segment['watermark']])
+        return self._segment_sha[key]
+
+    def _seglog_facts(self):
+        live = [s for s in self.segments if not s['retired']]
+        by_segment = {}
+        for info in self.events.values():
+            by_segment.setdefault(info['segment_generation'], []).append(info['sequence_id'])
+        stats = {}
+        for s in live:
+            seqs = sorted(by_segment.get(s['generation'], []))
+            stats[s['generation']] = dict(sha256=self._segment_sha256(s), count=len(seqs),
+                                          first=seqs[0] if seqs else None, last=seqs[-1] if seqs else None)
+        ordered = sorted(self.events.items(), key=lambda kv: kv[1]['sequence_id'])
+        prefix = [dict(sequence_id=i['sequence_id'], event_id=eid, scope_partition=i['identity'][0],
+                       source_value_bytes_sha256=i['value_sha256']) for eid, i in ordered]
+        active = live[-1]['generation'] if live else None
+        groups = [g for g in self.groups if g['segment_generation'] == active]
+        return stats, prefix, (groups[-1] if groups else None)
 
     def _commit_state(self):
-        self.manifest_generation = u64(self.manifest_generation + 1, 'manifest/generation')
+        """Commit the whole TEST_ONLY state (the adapter's commit record).
+
+        The canonical seglog manifest generation moves only when the canonical
+        seglog manifest body changes; a redb-only transaction leaves CURRENT,
+        manifest bytes, generation and the index checkpoint untouched. The
+        generation is taken from the persisted manifest, never from the
+        in-memory attribute, so a subclass that adjusts it (DG-CA's
+        LeasedStorage) cannot move it.
+        """
+        stats, prefix, last_group = self._seglog_facts()
+        current, body = build_seglog_images(self._state(), stats, prefix, last_group)
+        body_raw = canonical(body, 'manifest/body')
+        persisted = self._persisted_seglog
+        if persisted is not None and persisted[1] == body_raw:
+            generation, changed = persisted[0], False
+        else:
+            generation = u64((persisted[0] if persisted is not None else 0) + 1, 'manifest/generation')
+            changed = True
+        self.manifest_generation = generation
+        if changed:
+            manifest = dict(body, manifest_generation=generation)
+            require('images/current_schema', not list(_NATIVE_CURRENT.iter_errors(current)))
+            require('images/manifest_schema', not list(_NATIVE_MANIFEST.iter_errors(manifest)))
+            require('images/lease_schema', not list(_NATIVE_LEASE.iter_errors(self.sequence_lease)))
+            self.canonical = dict(current=current, manifest=manifest, checkpoint=self.canonical['checkpoint'])
+            self._publish_index(prefix)
+        self.commit_generation = u64(self.commit_generation + 1, 'commit/generation')
         raw = canonical(self._state(), 'manifest/bytes')
-        name = 'manifest.%d.msgpack' % self.manifest_generation
+        name = 'manifest.%d.msgpack' % self.commit_generation
         _atomic_write(self.root / name, raw)
-        current = dict(qualification=QUALIFICATION, schema='pm.goal_test.storage_current.v1',
-                       storage_instance_id=self.storage_instance_id, manifest_ref=name,
-                       manifest_generation=self.manifest_generation, manifest_sha256=sha256(raw))
-        _atomic_write(self.root / 'CURRENT', canonical(current, 'current/bytes'))
-        old = self.root / ('manifest.%d.msgpack' % (self.manifest_generation - 2))
+        record = dict(qualification=QUALIFICATION, schema='pm.goal_test.storage_current.v1',
+                      storage_instance_id=self.storage_instance_id, manifest_ref=name,
+                      manifest_generation=self.manifest_generation, commit_generation=self.commit_generation,
+                      manifest_sha256=sha256(raw))
+        _atomic_write(self.root / 'CURRENT', canonical(record, 'current/bytes'))
+        old = self.root / ('manifest.%d.msgpack' % (self.commit_generation - 2))
         if old.exists():
             old.unlink()
+        self._persisted_seglog = (generation, body_raw)
+        self._export_images()
 
     def _open(self):
         current_raw = (self.root / 'CURRENT').read_bytes()
@@ -584,16 +932,43 @@ class TestOwnerStorage:
         require('open/manifest_hash', sha256(raw) == current['manifest_sha256'])
         state = decode_canonical(raw, 'open/manifest')
         require('open/manifest_generation', state['manifest_generation'] == current['manifest_generation'])
+        require('open/commit_generation', state['commit_generation'] == current.get('commit_generation'))
         require('open/instance', state['storage_instance_id'] == current['storage_instance_id'])
-        for key in ('storage_instance_id', 'manifest_generation', 'recovery_epoch', 'clock_last_ms',
-                    'group_counter', 'tx_counter', 'cell_generation', 'segments', 'reservations', 'custody',
-                    'cells', 'seeds', 'gaps', 'packs', 'excluded', 'index_seed_hex',
-                    'index_frontier_revision', 'index_frontier_sha256'):
+        for key in self.STATE_KEYS:
             setattr(self, key, state[key])
+        manifest = self.canonical['manifest']
+        require('open/canonical_generation', manifest is not None and
+                manifest['manifest_generation'] == self.manifest_generation)
+        self._persisted_seglog = (self.manifest_generation, canonical(
+            {k: v for k, v in manifest.items() if k != 'manifest_generation'}, 'open/body'))
         self.recovered = self._recover()
 
+    def _verify_committed_index(self):
+        """Reopen check: canonical images and the current index dataset re-derive from source."""
+        stats, prefix, last_group = self._seglog_facts()
+        current, body = build_seglog_images(self._state(), stats, prefix, last_group)
+        require('open/canonical_current', canonical(current) == canonical(self.canonical['current']))
+        require('open/canonical_manifest', canonical(body) == self._persisted_seglog[1])
+        checkpoint = self.canonical['checkpoint']
+        require('open/index_checkpoint', checkpoint is not None and not list(_INDEX_CHECKPOINT.iter_errors(checkpoint)))
+        self.index_datasets = {}
+        for gid, node in checkpoint['generations'].items():
+            rows = self._derive_dataset(node)
+            if gid == checkpoint['current_generation_id']:
+                require('open/index_row_set', row_set_digest(rows) == node['frontier']['index_row_set_sha256'] and
+                        len(rows) == node['frontier']['index_row_count'])
+                self.index_datasets[gid] = rows
+            elif row_set_digest(rows) == node['frontier']['index_row_set_sha256']:
+                self.index_datasets[gid] = rows
+            else:
+                # A retired dataset whose source is no longer retained cannot be rebuilt:
+                # Q-DERIVED quarantine removes the node and its dataset together.
+                del checkpoint['generations'][gid]
+                self.index_disclosures.append(dict(kind='retired_dataset_quarantined', generation_id=gid,
+                                                   at_utc=format_ms(self.clock_last_ms)))
+
     def _recover(self):
-        """SP-347 convergence: issue complete tail groups, truncate the rest."""
+        """SP-347 convergence: issue complete tail groups, truncate the rest; abandon lost fences."""
         notes = []
         changed = False
         prior = None
@@ -629,11 +1004,25 @@ class TestOwnerStorage:
                 changed = True
             if scan['groups']:
                 prior = scan['groups'][-1]['frames'][-1].sequence_id
-        self._rebuild_index()
+        if changed:
+            committed = self.canonical['checkpoint']
+            self._rebuild_index()
+            # The committed frontier covers only the committed prefix; re-derive its datasets on that prefix.
+            self.index_datasets = {gid: self._derive_dataset(node) for gid, node in committed['generations'].items()}
+        else:
+            self._rebuild_index()
+            self._verify_committed_index()
+        lost = [op for op, r in self.append_reservations.items()
+                if r['state'] == 'reserved' and r['boot_session'] != self.boot_session]
+        for op in lost:
+            self._abandon_record(op, 'fence_lost_on_restart')
+            notes.append(dict(kind='fence_lost_abandoned', operation_id=op))
         if changed:
             self.recovery_epoch = u64(self.recovery_epoch + 1, 'recover/epoch')
-            self._advance_frontier()
+        if changed or lost:
             self._commit_state()
+        else:
+            self._export_images()
         return notes
 
     # ---------------------------------------------------------- index
@@ -666,22 +1055,186 @@ class TestOwnerStorage:
             identity = (scope_partition(event), event['event_type'], event['idempotency_key'])
             require('index/duplicate_event_id', event['event_id'] not in self.events)
             require('index/duplicate_scoped_identity', identity not in self.scoped)
-            self.events[event['event_id']] = dict(segment_generation=segment['generation'], offset=frame.offset,
-                                                 length=frame.length, sequence_id=frame.sequence_id,
-                                                 frame_sha256=sha256(frame.raw), identity=identity,
-                                                 producer25=sha256(canonical(producer25(event))),
-                                                 receipt=receipt, group_digest=group['digest'],
-                                                 commit_group_id=group['commit']['commit_group_id'])
+            header_len = int.from_bytes(frame.raw[9:11], 'little')
+            self.events[event['event_id']] = dict(
+                segment_generation=segment['generation'], offset=frame.offset, length=frame.length,
+                sequence_id=frame.sequence_id, frame_sha256=sha256(frame.raw), identity=identity,
+                producer25=sha256(canonical(producer25(event))), receipt=receipt, group_digest=group['digest'],
+                commit_group_id=group['commit']['commit_group_id'],
+                value_sha256=sha256(frame.raw[PREFIX + header_len:]),
+                row_base=index_row_base(event, segment_generation=segment['generation'],
+                                        segment_name=segment['original_canonical_name'], byte_offset=frame.offset))
             self.scoped[identity] = event['event_id']
             self.last_sequence = frame.sequence_id
 
-    def _advance_frontier(self):
-        prior = self.index_frontier_sha256
-        self.index_frontier_revision = u64(self.index_frontier_revision + 1, 'frontier/revision')
-        self.index_frontier_sha256 = sha256(binding([
-            'pm.goal_test.event_index_frontier.v1', self.index_anchor_sha256(), self.index_frontier_revision,
-            prior or '', self.last_sequence if self.last_sequence is not None else 0,
-            self.durable_watermarks_sha256()], 'frontier/hash'))
+    def _derive_dataset(self, node):
+        """Re-derive one generation's GenericIndexRows from retained source (up to its frontier)."""
+        frontier = node.get('frontier')
+        through = None if frontier is None else frontier['coverage']['through_sequence_id']
+        rows = {}
+        for info in self.events.values():
+            if frontier is not None and (through is None or info['sequence_id'] > through):
+                continue
+            row = index_row(info['row_base'], node)
+            rows[index_row_key(row)] = row
+        return rows
+
+    def _coverage(self, prefix):
+        live = [s for s in self.segments if not s['retired']]
+        manifest = self.canonical['manifest']
+        entry = manifest['selection_entries'][0]
+        segments = []
+        for item, s in zip(entry['retained_inventory'], live):
+            segments.append(dict(segment_generation=item['segment_generation'], segment_name=item['segment_name'],
+                                 state=item['state'], scan_start_offset=0, scanned_through_offset=s['watermark'],
+                                 source_durable_end_offset=item['source_durable_end_offset'],
+                                 source_durable_bytes_sha256=item['source_durable_bytes_sha256'],
+                                 retained_event_count=item['retained_event_count'],
+                                 first_sequence_id=item['first_sequence_id'], last_sequence_id=item['last_sequence_id']))
+        last = None
+        if prefix:
+            info = self.events[prefix[-1]['event_id']]
+            seg = next(s for s in live if s['generation'] == info['segment_generation'])
+            last = dict(segment_generation=info['segment_generation'], segment_name=seg['canonical_name'],
+                        byte_offset=info['offset'], frame_end_offset=info['offset'] + info['length'],
+                        last_sequence_id=info['sequence_id'], last_event_id=prefix[-1]['event_id'])
+        return dict(scope='all_application_and_project_partitions', complete_to_captured_boundary=True,
+                    empty_retained_source=not prefix,
+                    first_retained_sequence_id=prefix[0]['sequence_id'] if prefix else None,
+                    through_sequence_id=prefix[-1]['sequence_id'] if prefix else None, last_frame=last,
+                    retained_event_count=len(prefix), retained_event_prefix_sha256=retained_prefix_digest(prefix),
+                    segments=segments, sequence_gaps=copy.deepcopy(entry['excluded_ranges']), health='healthy')
+
+    def _anchor_survives(self, node, selection, prefix):
+        anchor = node['anchor']
+        birth = anchor['source_selection']
+        if (birth['current_bytes_sha256'] != selection['current_bytes_sha256'] or
+                birth['selected_segment_generation'] != selection['selected_segment_generation'] or
+                birth['recovery_epoch'] != selection['recovery_epoch']):
+            return False
+        through = anchor['through_sequence_id']
+        anchored = [] if through is None else [e for e in prefix if e['sequence_id'] <= through]
+        return len(anchored) == anchor['retained_event_count'] and \
+            retained_prefix_digest(anchored) == anchor['retained_event_prefix_sha256']
+
+    def _slot_available(self, checkpoint):
+        if len(checkpoint['generations']) < INDEX_MAX_GENERATIONS:
+            return True
+        now_ms = self.clock_last_ms
+        for gid, node in sorted(checkpoint['generations'].items()):
+            if node['state'] != 'retired' or node['hold_refs']:
+                continue
+            retired_ms = _parse_ms(node['retired_at_utc'])
+            if now_ms - retired_ms >= INDEX_RETENTION_SECONDS * 1000:
+                del checkpoint['generations'][gid]
+                self.index_datasets.pop(gid, None)
+                return True
+        return False
+
+    def _publish_index(self, prefix):
+        """SP-278 publication in the same commit as the seglog change it covers.
+
+        Same CURRENT, selected generation and recovery epoch with the anchored
+        prefix intact: add only the new rows and advance the frontier under the
+        predecessor-frontier hash. Otherwise mint a fresh generation (fresh
+        256-bit seed) and retire the old node. With all three slots protected,
+        publication stays on the current node and the rebuild requirement is
+        disclosed instead of exceeding three or evicting protected state.
+        """
+        cur_raw = canonical(self.canonical['current'], 'index/current')
+        man_raw = canonical(self.canonical['manifest'], 'index/manifest')
+        selection = source_selection_of(cur_raw, man_raw)
+        now = format_ms(self.clock_last_ms)
+        checkpoint = copy.deepcopy(self.canonical['checkpoint'])
+        node = None if checkpoint is None else checkpoint['generations'][checkpoint['current_generation_id']]
+        self.index_tx_counter = u64(self.index_tx_counter + 1, 'index/tx')
+        tx_id = 'TEST_ONLY:index-tx:%s:%d' % (self.storage_instance_id, self.index_tx_counter)
+        coverage = self._coverage(prefix)
+        fresh = node is None or not self._anchor_survives(node, selection, prefix)
+        if fresh and node is not None and not self._slot_available(checkpoint):
+            fresh = False
+            self.index_disclosures.append(dict(kind='rebuild_required', reason='generation_slots_protected',
+                                               generation_id=node['generation_id'], at_utc=now))
+        if fresh:
+            seed = secrets.token_hex(32)
+            seed_sha = sha256(bytes.fromhex(seed))
+            origin = 'initial_rebuild' if node is None else (
+                'recovery_rebuild' if node['anchor']['source_selection']['recovery_epoch'] != selection['recovery_epoch']
+                else 'same_source_rebuild')
+            gid = generation_id_of(self.storage_instance_id, selection, seed_sha)
+            anchor = dict(source_selection=selection, first_retained_sequence_id=coverage['first_retained_sequence_id'],
+                          through_sequence_id=coverage['through_sequence_id'],
+                          retained_event_count=coverage['retained_event_count'],
+                          retained_event_prefix_sha256=coverage['retained_event_prefix_sha256'],
+                          sequence_gaps_sha256=index_digest(coverage['sequence_gaps']),
+                          generation_seed_sha256=seed_sha)
+            new = dict(generation_id=gid, projector_id=PROJECTOR[0], projector_version=PROJECTOR[1],
+                       index_value_schema_id=INDEX_ROW_SCHEMA[0], index_value_schema_version=INDEX_ROW_SCHEMA[1],
+                       index_dataset_name='event_record_index.v2@' + gid, state='current', origin=origin,
+                       anchor=anchor, frontier=None, translation=None, first_prepared_at_utc=now,
+                       activated_at_utc=now, retired_at_utc=None, successor_generation_id=None, hold_refs=[])
+            rows = self._derive_dataset(new)
+            for row in rows.values():
+                require('index/row_schema', not list(_INDEX_ROW.iter_errors(row)))
+            new['frontier'] = dict(publication_revision=0, source_selection=selection, coverage=coverage,
+                                   index_row_count=len(rows), index_row_set_sha256=row_set_digest(rows),
+                                   redb_transaction_id=tx_id, indexed_at_utc=now, predecessor_frontier_sha256=None)
+            if checkpoint is None:
+                checkpoint = dict(schema_id='pm.storage_value.event_record_index_checkpoint.v1', schema_version='1.0.0',
+                                  storage_instance_id=self.storage_instance_id, current_generation_id=gid,
+                                  generations={}, redaction_profile='no_secrets')
+            else:
+                old = checkpoint['generations'][checkpoint['current_generation_id']]
+                old.update(state='retired', retired_at_utc=now, successor_generation_id=gid)
+            checkpoint['generations'][gid] = new
+            checkpoint['current_generation_id'] = gid
+            self.index_datasets[gid] = rows
+            self.index_seed_hex = seed
+            node = new
+        else:
+            rows = self.index_datasets.setdefault(node['generation_id'], {})
+            known = {r['event_id'] for r in rows.values()}
+            for entry in prefix:
+                if entry['event_id'] not in known:
+                    row = index_row(self.events[entry['event_id']]['row_base'], node)
+                    require('index/row_schema', not list(_INDEX_ROW.iter_errors(row)))
+                    rows[index_row_key(row)] = row
+            retained = {e['event_id'] for e in prefix}
+            for key in [k for k, r in rows.items() if r['event_id'] not in retained]:
+                del rows[key]  # removed source has no current row (retention)
+            prior = node['frontier']
+            node['frontier'] = dict(publication_revision=u64(prior['publication_revision'] + 1, 'index/revision'),
+                                    source_selection=selection, coverage=coverage, index_row_count=len(rows),
+                                    index_row_set_sha256=row_set_digest(rows), redb_transaction_id=tx_id,
+                                    indexed_at_utc=now, predecessor_frontier_sha256=index_digest(prior))
+        require('index/checkpoint_schema', not list(_INDEX_CHECKPOINT.iter_errors(checkpoint)))
+        self.canonical['checkpoint'] = checkpoint
+        self.index_frontier_revision = node['frontier']['publication_revision']
+        self.index_frontier_sha256 = index_digest(node['frontier'])
+
+    def _export_images(self):
+        """Write the canonical images as Storage-held files beside the commit record.
+
+        The committed values in the commit record are the authority (hash-joined
+        through CURRENT); these files are their exact bytes for consumers that
+        read files. A missing or differing file is rewritten from the committed
+        value (e.g. a backup unit restored without them).
+        """
+        cp = self.canonical['checkpoint']
+        gid = cp['current_generation_id']
+        files = {('storage', 'seglog', 'CURRENT'): canonical(self.canonical['current']),
+                 ('storage', 'seglog', 'manifest.v1.msgpack'): canonical(self.canonical['manifest']),
+                 ('storage', 'redb', 'checkpoints', index_checkpoint_key(self.storage_instance_id)): canonical(cp),
+                 ('storage', 'redb', 'event_record_index.v2@' + gid): canonical(self.index_datasets[gid]),
+                 ('storage', 'redb', LEASE_TABLE, LEASE_TABLE + ':' + self.storage_instance_id): canonical(self.sequence_lease)}
+        for parts, raw in files.items():
+            if self._exported.get(parts) == sha256(raw):
+                continue
+            path = self.root.joinpath(*parts)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            if not path.exists() or path.read_bytes() != raw:
+                _atomic_write(path, raw)
+            self._exported[parts] = sha256(raw)
 
     # ---------------------------------------------------------- faults
     def _cut(self, point):
@@ -739,6 +1292,10 @@ class TestOwnerStorage:
         require('release/state', r['state'] in ('reserved', 'released'))
         if r['state'] == 'reserved':
             r['state'] = 'released'
+            fenced = self.append_reservations.get(op)
+            if fenced is not None and fenced['state'] == 'reserved':
+                # Releasing the fence invalidates the unconsumed reservation (SP-305).
+                self._abandon_record(op, 'released')
             self._commit_state()
         return dict(operation_id=op, outcome='confirmed_no_effect', qualification=QUALIFICATION)
 
@@ -746,14 +1303,116 @@ class TestOwnerStorage:
         r = self.reservations.get(operation_id)
         return None if r is None else copy.deepcopy(r)
 
-    # ---------------------------------------------------------- append
-    def _active_segment(self, need):
+    # ---------------------------------------------------------- sequence lease and append fence
+    def _lease_record(self, revision, first):
+        last = u64(first + LEASE_SIZE - 1, 'lease/last')
+        sid = self.storage_instance_id
+        return dict(schema_id='pm.storage.seglog_sequence_lease.v1', schema_version='1.0.0', storage_instance_id=sid,
+                    lease_revision=u64(revision, 'lease/revision'), leased_through_sequence_id=last,
+                    current_lease=dict(lease_id='TEST_ONLY:sequence-lease:%s:%d' % (sid, revision),
+                                       first_sequence_id=u64(first, 'lease/first'), last_sequence_id=last,
+                                       original_lease_transaction_id='TEST_ONLY:lease-tx:%s:%d' % (sid, revision),
+                                       native_boot_session_ref=self.boot_session))
+
+    def _ensure_lease_covers(self, sequence):
+        """Grant a fresh 4096-ID lease (revision CAS) when ``sequence`` lies past the current one."""
+        lease = self.sequence_lease['current_lease']
+        if sequence <= lease['last_sequence_id']:
+            return False
+        self.sequence_lease = self._lease_record(self.sequence_lease['lease_revision'] + 1, sequence)
+        return True
+
+    def lease_key(self):
+        return LEASE_TABLE + ':' + self.storage_instance_id
+
+    def lease(self):
+        """The stored ``sequence_lease_control`` and its abandoned IDs (DG-CA ``LeasedStorage`` shape)."""
+        return dict(record=copy.deepcopy(self.sequence_lease),
+                    abandoned=[dict(first_sequence_id=a['first_sequence_id'], last_sequence_id=a['last_sequence_id'],
+                                    operation_id=a['operation_id']) for a in self.abandoned])
+
+    def ensure_lease(self, sequence):
+        """Public lease grant (DG-CA API): returns the lease after granting one covering ``sequence``."""
+        sequence = u64(sequence, 'lease/sequence')
+        if self._ensure_lease_covers(sequence):
+            self._commit_state()
+        return self.lease()
+
+    def next_sequence(self):
+        """The never-reused next sequence: past every issued, retained-gap and abandoned ID."""
+        floor = -1 if self.last_sequence is None else self.last_sequence
+        for a in self.abandoned:
+            floor = max(floor, a['last_sequence_id'])
+        return u64(floor + 1, 'lease/next')
+
+    def reserve_assignment(self, operation_id, request):
+        """Reserve the next sequence and selected sink position under an exclusive append fence.
+
+        Same API and refusal codes as DG-CA's ``LeasedStorage.reserve_assignment``:
+        returns ``(reservation handle, Fence, reservation record)``. The record fixes
+        ``reserved_sequence_id``, segment generation/name, byte offset and the
+        selected manifest generation; the fence is process memory only.
+        """
+        require('assignment/fence_held', self.fence is None)
+        handle = self.reserve(operation_id, request)
+        r = self.reservations[operation_id]
+        require('assignment/operation_state', r['state'] == 'reserved' and operation_id not in self.append_reservations)
         segment = self.segments[-1]
-        if segment['watermark'] > 0 and segment['watermark'] + need > self.segment_target_bytes:
+        require('assignment/active_segment', not segment['sealed'] and not segment['retired'])
+        sequence = self.next_sequence()
+        self._ensure_lease_covers(sequence)
+        fence = Fence(operation_id, self.boot_session)
+        self.reservation_tx_counter = u64(self.reservation_tx_counter + 1, 'assignment/tx')
+        record = dict(operation_id=operation_id, state='reserved', reserved_sequence_id=sequence,
+                      segment_generation=segment['generation'], segment_name=segment['name'],
+                      byte_offset=segment['watermark'], manifest_generation=None, fence_identity=fence.identity,
+                      boot_session=self.boot_session,
+                      reservation_transaction_id='TEST_ONLY:reservation-tx:%s:%d' % (self.storage_instance_id,
+                                                                                     self.reservation_tx_counter))
+        self.append_reservations[operation_id] = record
+        # The allocated ID and any lease grant are seglog facts; commit them first, then fix the
+        # selected manifest generation in the record with a redb-only commit (no generation move).
+        self._commit_state()
+        record['manifest_generation'] = self.manifest_generation
+        self._commit_state()
+        self.fence = fence
+        return handle, fence, copy.deepcopy(record)
+
+    def reservation_record(self, operation_id):
+        record = self.append_reservations.get(operation_id)
+        return None if record is None else copy.deepcopy(record)
+
+    def _abandon_record(self, operation_id, reason):
+        record = self.append_reservations[operation_id]
+        record['state'] = 'abandoned'
+        record['abandon_reason'] = reason
+        seq = record['reserved_sequence_id']
+        self.abandoned.append(dict(first_sequence_id=seq, last_sequence_id=seq, operation_id=operation_id,
+                                   evidence_sha256=sha256(canonical(record, 'assignment/evidence'))))
+        if self.fence is not None and self.fence.operation_id == operation_id:
+            self.fence = None
+
+    def abandon(self, operation_id):
+        """Fence release or loss: the unconsumed reservation's sequence becomes an
+        ``allocator_lease_abandoned`` gap that no later append reuses."""
+        record = self.append_reservations.get(operation_id)
+        require('assignment/reservation_absent', record is not None)
+        if record['state'] != 'reserved':
+            return record['state']
+        self._abandon_record(operation_id, 'abandoned')
+        self._commit_state()
+        return 'abandoned'
+
+    # ---------------------------------------------------------- append
+    def _active_segment(self, need, *, allow_rotation=True):
+        segment = self.segments[-1]
+        if allow_rotation and segment['watermark'] > 0 and segment['watermark'] + need > self.segment_target_bytes:
             segment['sealed'] = True
+            seqs = sorted(i['sequence_id'] for i in self.events.values() if i['segment_generation'] == segment['generation'])
+            segment['canonical_name'] = sealed_segment_name(segment['generation'], segment['first_planned'], seqs[-1])
             generation = u64(segment['generation'] + 1, 'segment/generation')
-            segment = dict(generation=generation, name='segment-%d' % generation, watermark=0,
-                           sealed=False, retired=False)
+            segment = self._new_segment(generation, self.next_sequence(),
+                                        'TEST_ONLY:segment-rotation:%s:%d' % (self.storage_instance_id, generation))
             self.segments.append(segment)
             self._segment_path(generation).touch()
             _fsync_dir(self.root)
@@ -774,6 +1433,20 @@ class TestOwnerStorage:
         require('append/released', r['state'] != 'released')
         if r['state'] != 'reserved':
             return dict(status='already_appended', event_ids=list(r['event_ids']))
+        fenced = self.append_reservations.get(op)
+        if fenced is None:
+            # Every other writer honors a held fence.
+            require('assignment/fence_held', self.fence is None or self.fence.operation_id == op)
+        else:
+            require('assignment/reservation_abandoned', fenced['state'] == 'reserved')
+            require('assignment/fence_lost', self.fence is not None and self.fence.operation_id == op and
+                    self.fence.identity == fenced['fence_identity'] and self.fence.boot_session == fenced['boot_session'])
+            segment = self.segments[-1]
+            require('assignment/selected_segment', segment['generation'] == fenced['segment_generation'] and
+                    not segment['sealed'])
+            require('assignment/selected_offset', segment['watermark'] == fenced['byte_offset'])
+            require('assignment/selected_manifest', self.manifest_generation == fenced['manifest_generation'])
+            require('assignment/sequence_reused', self.next_sequence() == fenced['reserved_sequence_id'])
         require('append/durability_class', durability_class in ('ordinary', 'barrier'))
         require('append/nonempty', type(candidates) is list and len(candidates) > 0)
         hits, fresh = [], []
@@ -795,6 +1468,9 @@ class TestOwnerStorage:
             r['state'] = 'appended'
             r['event_ids'] = hits
             r['dedupe'] = True
+            if fenced is not None:
+                # No ID was assigned: the reserved sequence becomes an abandoned-lease gap.
+                self._abandon_record(op, 'dedupe')
             self._commit_state()
             return dict(status='dedupe', event_ids=list(hits))
         ids = [c['event_id'] for c in fresh]
@@ -802,7 +1478,7 @@ class TestOwnerStorage:
         self._cut('before_append')
         observed = self._tick()
         persisted = self._tick()
-        sequence = -1 if self.last_sequence is None else self.last_sequence
+        sequence = self.next_sequence() - 1
         events = []
         for c in fresh:
             sequence = u64(sequence + 1, 'append/sequence')
@@ -810,9 +1486,11 @@ class TestOwnerStorage:
             validate_event_record(event, 'append/event')
             require('append/stored_part_cap', len(canonical(event)) <= STORED_PART_CAP)
             events.append(event)
+        self._ensure_lease_covers(events[-1]['sequence_id'])
         frames_raw = []
         estimate = sum(len(encode_event_frame(e, 0)) for e in events) + 1024
-        segment = self._active_segment(estimate)
+        # A fenced append writes into its selected sink; rotation never moves it.
+        segment = self._active_segment(estimate, allow_rotation=fenced is None)
         offset = segment['watermark']
         members = []
         for event in events:
@@ -855,7 +1533,9 @@ class TestOwnerStorage:
                             prior_sequence=None, stop=segment['watermark'])
         require('append/readback', scan['tail'] is None and scan['groups'][-1]['commit'] == commit)
         self._index_group(segment, scan['groups'][-1])
-        self._advance_frontier()
+        if fenced is not None:
+            fenced['state'] = 'consumed'
+            self.fence = None
         self._commit_state()
         self._cut('after_append')
         return dict(status='appended', event_ids=list(ids))
@@ -934,16 +1614,7 @@ class TestOwnerStorage:
     def active_durable_group(self, event_id):
         info = self.events[event_id]
         group = next(g for g in self.groups if g['commit']['commit_group_id'] == info['commit_group_id'])
-        commit = group['commit']
-        value = dict(schema_version='2.0.0', storage_instance_id=self.storage_instance_id,
-                     commit_group_id=commit['commit_group_id'], durability_class=commit['durability_class'],
-                     segment_generation=commit['segment_generation'], segment_name=commit['segment_name'],
-                     durable_start_offset=group['durable_start_offset'],
-                     durable_end_offset=group['durable_end_offset'],
-                     manifest_generation=commit['manifest_generation'],
-                     members=[dict(event_id=m[0], sequence_id=m[1], byte_offset=m[2], frame_length=m[3],
-                                   frame_sha256=m[4]) for m in group['members']],
-                     group_digest=group['digest'], restore_admission=None)
+        value = durable_group_value(self.storage_instance_id, group)
         require('group/schema', not list(_GROUP.iter_errors(value)))
         return value
 
@@ -1073,6 +1744,8 @@ class TestOwnerStorage:
     def retire_segment(self, generation, retention_owner):
         """Retire a sealed segment through the registered retention owner."""
         segment = next((s for s in self.segments if s['generation'] == generation), None)
+        # Maintenance writers honor a held append fence (SP-305).
+        require('assignment/fence_held', self.fence is None)
         require('retire/segment', segment is not None)
         require('retire/sealed', segment['sealed'] is True and segment['retired'] is False)
         require('retire/owner', isinstance(retention_owner, RetentionOwner) and retention_owner.storage is self)
@@ -1088,52 +1761,60 @@ class TestOwnerStorage:
         segment['retired'] = True
         self._segment_path(generation).unlink()
         self._rebuild_index()
-        self._advance_frontier()
         self._commit_state()
         return copy.deepcopy(disposition)
 
-    # ---------------------------------------------------------- token/source
+    # ---------------------------------------------------------- canonical images, index and token
     def index_anchor_sha256(self):
-        return sha256(binding(['pm.goal_test.event_index_anchor.v1', self.storage_instance_id,
-                               self.index_seed_hex], 'anchor'))
+        """SP-278 binding digest of the current generation's immutable anchor."""
+        checkpoint = self.canonical['checkpoint']
+        return index_digest(checkpoint['generations'][checkpoint['current_generation_id']]['anchor'])
 
     def durable_watermarks_sha256(self):
-        return sha256(binding([[s['generation'], s['name'], s['watermark']] for s in self.segments
-                               if not s['retired']], 'watermarks'))
+        return index_digest(self.canonical['manifest']['selection_entries'][0]['durable_watermarks'])
+
+    def canonical_images(self):
+        """Storage-held canonical bytes: SP-295 CURRENT/manifest, SP-278 checkpoint root,
+        the current GenericIndexRow dataset and the sequence lease control."""
+        checkpoint = self.canonical['checkpoint']
+        gid = checkpoint['current_generation_id']
+        rows = self.index_datasets[gid]
+        return dict(qualification=QUALIFICATION, storage_instance_id=self.storage_instance_id,
+                    current_raw=canonical(self.canonical['current']), manifest_raw=canonical(self.canonical['manifest']),
+                    checkpoint_key=index_checkpoint_key(self.storage_instance_id), checkpoint_raw=canonical(checkpoint),
+                    index_dataset_name='event_record_index.v2@' + gid,
+                    index_rows=[[k, copy.deepcopy(rows[k])] for k, _ in
+                                sorted(rows.items(), key=lambda kv: (kv[1]['sequence_id'], kv[1]['event_id']))],
+                    sequence_lease_key=self.lease_key(), sequence_lease_raw=canonical(self.sequence_lease))
+
+    def index_checkpoint(self):
+        return copy.deepcopy(self.canonical['checkpoint'])
+
+    def index_rows(self, generation_id=None):
+        checkpoint = self.canonical['checkpoint']
+        gid = generation_id or checkpoint['current_generation_id']
+        rows = self.index_datasets.get(gid)
+        require('index/dataset_unavailable', rows is not None)
+        return copy.deepcopy(rows)
 
     def read_token(self):
-        """Nine durable generic token fields (consumer DurableGenericToken shape)."""
-        current_raw = (self.root / 'CURRENT').read_bytes()
-        current = decode_canonical(current_raw)
-        manifest_raw = (self.root / current['manifest_ref']).read_bytes()
-        live = [s for s in self.segments if not s['retired']]
-        inventory = [[s['generation'], s['name'], s['watermark'], sha256(
-            self._segment_path(s['generation']).read_bytes()[:s['watermark']])] for s in live]
-        anchor = self.index_anchor_sha256()
-        token = dict(
-            storage_instance_id=self.storage_instance_id,
-            checkpoint_key='TEST_ONLY:event_index_checkpoint:' + k_component(self.storage_instance_id),
-            checkpoint_ref='TEST_ONLY:checkpoint-ref:%d' % self.manifest_generation,
-            generation_id='eig_' + anchor, generation_anchor_sha256=anchor,
-            frontier_revision=self.index_frontier_revision,
-            frontier_sha256=self.index_frontier_sha256 or sha256(binding(['pm.goal_test.empty_frontier.v1', anchor])),
-            index_dataset_name='TEST_ONLY:event_record_index@eig_' + anchor,
-            source_selection=dict(
-                storage_instance_id=self.storage_instance_id, current_ref='storage/seglog/CURRENT',
-                current_bytes_sha256=sha256(current_raw),
-                selected_segment_generation=live[-1]['generation'] if live else 0,
-                manifest_ref='storage/seglog/manifest.v1.msgpack', manifest_bytes_sha256=sha256(manifest_raw),
-                manifest_generation=self.manifest_generation, recovery_epoch=self.recovery_epoch,
-                manifest_survivor_prefix_sha256=sha256(binding(
-                    [[g['segment_generation'], g['commit']['commit_group_id'], g['digest']] for g in self.groups])),
-                retained_inventory_sha256=sha256(binding(inventory)),
-                durable_watermarks_sha256=self.durable_watermarks_sha256(),
-                excluded_ranges_sha256=sha256(binding(
-                    [[e['segment_generation'], e['start'], e['end'], e['reason']] for e in self.excluded])),
-                retired_inputs_sha256=sha256(binding(
-                    [[g['segment_generation'], g['first_sequence'], g['last_sequence'], g['proof_sha256']]
-                     for g in self.gaps]))))
-        return token
+        """Nine durable generic token fields (``DurableGenericToken``), from the canonical images.
+
+        ``source_selection`` is computed from the exact canonical CURRENT and manifest
+        bytes, so every seglog-derived field moves only on a seglog change. The token
+        names the actual SP-278 checkpoint root key and generation node.
+        """
+        checkpoint = self.canonical['checkpoint']
+        gid = checkpoint['current_generation_id']
+        node = checkpoint['generations'][gid]
+        key = index_checkpoint_key(self.storage_instance_id)
+        return dict(storage_instance_id=self.storage_instance_id, checkpoint_key=key,
+                    checkpoint_ref=key + '#/generations/' + gid, generation_id=gid,
+                    generation_anchor_sha256=index_digest(node['anchor']),
+                    frontier_revision=node['frontier']['publication_revision'],
+                    frontier_sha256=index_digest(node['frontier']), index_dataset_name=node['index_dataset_name'],
+                    source_selection=source_selection_of(canonical(self.canonical['current']),
+                                                         canonical(self.canonical['manifest'])))
 
     def snapshot(self):
         """Read snapshot: committed cells, durable token, transient snapshot id."""
@@ -1141,7 +1822,12 @@ class TestOwnerStorage:
                     cell_generation=self.cell_generation, cells=copy.deepcopy(self.cells), token=self.read_token())
 
     def acquire_source(self):
-        """Whole generic source bytes, as Storage holds them, for the source adapter."""
+        """Whole generic source bytes, as Storage holds them, for the source adapter.
+
+        ``current_raw``/``manifest_raw`` are the adapter's TEST_ONLY CURRENT and
+        whole-state commit record (unchanged keys); ``canonical`` carries the
+        canonical images, checkpoint and GenericIndexRows (see ``canonical_images``).
+        """
         current_raw = (self.root / 'CURRENT').read_bytes()
         current = decode_canonical(current_raw)
         manifest_raw = (self.root / current['manifest_ref']).read_bytes()
@@ -1149,16 +1835,24 @@ class TestOwnerStorage:
         for s in self.segments:
             if s['retired']:
                 continue
-            segments.append(dict(generation=s['generation'], name=s['name'], watermark=s['watermark'],
-                                 raw=self._segment_path(s['generation']).read_bytes()[:s['watermark']]))
+            raw = self._segment_path(s['generation']).read_bytes()[:s['watermark']]
+            # raw_sha256 records the bytes Storage itself read at acquisition.
+            segments.append(dict(generation=s['generation'], name=s['name'], watermark=s['watermark'], raw=raw,
+                                 raw_sha256=sha256(raw)))
         return dict(qualification=QUALIFICATION, storage_instance_id=self.storage_instance_id,
                     current_raw=current_raw, manifest_raw=manifest_raw, segments=segments,
                     gaps=copy.deepcopy(self.gaps), custody=copy.deepcopy(self.custody), token=self.read_token(),
+                    canonical=self.canonical_images(),
                     snapshot_id='TEST_ONLY:snapshot:' + secrets.token_hex(8))
 
     def observe(self):
-        """Content-free observation for the method-call recorder."""
-        return dict(manifest_generation=self.manifest_generation, last_sequence=self.last_sequence,
+        """Content-free observation for the method-call recorder.
+
+        ``commit_generation`` moves on every durable commit (what ``manifest_generation``
+        observed before batch 2); ``manifest_generation`` is the seglog generation.
+        """
+        return dict(manifest_generation=self.manifest_generation, commit_generation=self.commit_generation,
+                    last_sequence=self.last_sequence,
                     events=len(self.events), custody=len(self.custody), cell_generation=self.cell_generation,
                     reservations={k: v['state'] for k, v in self.reservations.items()},
                     watermarks=[[s['generation'], s['watermark']] for s in self.segments])

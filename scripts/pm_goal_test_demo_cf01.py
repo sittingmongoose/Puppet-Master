@@ -470,10 +470,10 @@ def check_positive(obs):
     A.require('positive/standard_before_identity', w.storage.cell('TEST_ONLY:standard_receipt',
               'TEST_ONLY:standard:' + S.k_component(obs['identity']['input']['scope']['goal_run_id'])) is not None)
     # Lost acknowledgement: same operation, no durable change at all.
-    generation = w.storage.manifest_generation
+    generation = (w.storage.manifest_generation, w.storage.commit_generation)
     events_, _, outcome = w.appender.append_original('TEST_ONLY:operation:certified', obs['request'], [copy.deepcopy(event)])
     A.require('retry/lost_ack_status', outcome['status'] == 'already_appended')
-    A.require('retry/lost_ack_no_durable_change', w.storage.manifest_generation == generation)
+    A.require('retry/lost_ack_no_durable_change', (w.storage.manifest_generation, w.storage.commit_generation) == generation)
     A.require('retry/lost_ack_same_receipt', w.appender.first_receipt(events_[0]) == receipt)
     # Equal retry under a new operation: dedupe, same first receipt, no second Event.
     count = len(w.storage.events)
@@ -567,6 +567,8 @@ def negatives():
         'producer/required_present/node_id')
     add('envelope_extra_member', dict(candidate_edit=edit_path('extension', 1)), 'producer/envelope_members')
     add('payload_extra_member', dict(candidate_edit=edit_path('payload.extension', 1)), 'producer/payload/schema/')
+    # batch 2: the payload carrier must be an object before any field is read (FIX-ROUND check 11)
+    add('payload_not_object', dict(candidate_edit=lambda e: dict(e, payload=[e['payload']])), 'producer/payload_type')
     add('inner_key_alternate', dict(candidate_edit=edit_path('payload.idempotency_key', 'goal_run.certified.v3:x')),
         'producer/field/payload.idempotency_key')
     add('replay_only_policy', dict(candidate_edit=edit_path('replay_policy', 'projector_replay_only')),

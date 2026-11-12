@@ -89,14 +89,87 @@ def same(a, b):
     return a == b
 
 
+def _observation_walk(value, out, active):
+    """Deterministic, injective structural encoding for values JSON cannot carry
+    (non-string keys, cycles). Strings use UTF-8 with ``surrogatepass``."""
+    marker = id(value)
+    if type(value) in (dict, list, tuple) and marker in active:
+        out.append(b'c')
+        return
+    if value is None or type(value) is bool:
+        out.append(b'n' if value is None else (b't' if value else b'f'))
+    elif type(value) is int:
+        text = str(value).encode()
+        out.append(b'i%d:' % len(text) + text)
+    elif type(value) is float:
+        text = value.hex().encode()
+        out.append(b'd%d:' % len(text) + text)
+    elif type(value) is str:
+        raw = value.encode('utf-8', 'surrogatepass')
+        out.append(b's%d:' % len(raw) + raw)
+    elif type(value) is bytes:
+        out.append(b'b%d:' % len(value) + value)
+    elif type(value) in (list, tuple):
+        active.add(marker)
+        out.append(b'l%d:' % len(value))
+        for item in value:
+            _observation_walk(item, out, active)
+        active.discard(marker)
+    elif type(value) is dict:
+        active.add(marker)
+        items = []
+        for k, v in value.items():
+            key = []
+            _observation_walk(k, key, active)
+            items.append((b''.join(key), v))
+        out.append(b'm%d:' % len(items))
+        for key, v in sorted(items, key=lambda kv: kv[0]):
+            out.append(key)
+            _observation_walk(v, out, active)
+        active.discard(marker)
+    else:
+        text = repr(value).encode('utf-8', 'surrogatepass')
+        out.append(b'r%d:' % len(text) + text)
+
+
+def _cyclic(value, active):
+    """True when a list/dict contains itself (the physical codec would not terminate)."""
+    if type(value) not in (dict, list, tuple):
+        return False
+    if id(value) in active:
+        return True
+    active.add(id(value))
+    items = value.values() if type(value) is dict else value
+    found = any(_cyclic(item, active) for item in items)
+    active.discard(id(value))
+    return found
+
+
 def observation_digest(value):
-    """Recorder digest. It observes and never refuses: values the physical
-    profile cannot hold (an arbitrary-precision revision, a float under test)
-    fall back to tagged exact JSON so the recorder adds no numeric domain."""
+    """Recorder digest. It observes and never refuses (DG-U tool issue, batch 2).
+
+    Values the physical profile cannot hold (an arbitrary-precision revision, a
+    float under test, hostile text with a lone surrogate) fall back to tagged
+    exact JSON, encoded UTF-8 with ``surrogatepass``: identical bytes for every
+    valid string, and a lone surrogate gives bytes (ED A0..BF xx) that valid
+    UTF-8 never contains, so the digest stays deterministic and distinct. Values
+    JSON cannot serialize at all (non-string keys, cycles) use a tagged
+    structural walk."""
+    if _cyclic(value, set()):
+        out = []
+        _observation_walk(value, out, set())
+        return sha256(b'walk\0' + b''.join(out))
     try:
         return sha256(canonical(value))
     except AdapterRefusal:
-        return sha256(b'json\0' + json.dumps(value, sort_keys=True, ensure_ascii=False, default=repr).encode())
+        pass
+    try:
+        text = json.dumps(value, sort_keys=True, ensure_ascii=False, default=repr)
+    except (TypeError, ValueError, RecursionError):
+        out = []
+        _observation_walk(value, out, set())
+        return sha256(b'walk\0' + b''.join(out))
+    return sha256(b'json\0' + text.encode('utf-8', 'surrogatepass'))
 
 
 # ------------------------------------------------------------------ roots

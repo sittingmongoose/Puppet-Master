@@ -28,6 +28,7 @@ import pm_goal_test_storage as S
 import pm_goal_test_reopen as R
 import pm_goal_test_owner_adapters as A
 import pm_goal_test_source as G
+import pm_goal_test_selftest_b2 as B2
 
 ROOT = NR.ROOT
 QUALIFICATION = 'TEST_ONLY'
@@ -607,11 +608,10 @@ def test_source(s, work):
         if mutate_current:
             mutate_current(current)
         raw_src['current_raw'] = S.canonical(current)
-        sel = raw_src['token']['source_selection']
-        sel['current_bytes_sha256'] = S.sha256(raw_src['current_raw'])
-        sel['manifest_bytes_sha256'] = S.sha256(raw_src['manifest_raw'])
-        sel['retired_inputs_sha256'] = S.sha256(S.binding(
-            [[g['segment_generation'], g['first_sequence'], g['last_sequence'], g['proof_sha256']] for g in state['gaps']]))
+        # Rebuild the canonical images and the token selection coherently from the mutated state.
+        cur_raw, man_raw, sel = G.canonical_from_source(raw_src, state)
+        raw_src['canonical'] = dict(raw_src['canonical'], current_raw=cur_raw, manifest_raw=man_raw)
+        raw_src['token']['source_selection'] = sel
         raw_src['gaps'] = state['gaps']
         if mutate_token:
             mutate_token(raw_src['token'])
@@ -631,7 +631,6 @@ def test_source(s, work):
         state = S.decode_canonical(raw_src['manifest_raw'])
         state['clock_last_ms'] += 1
         raw_src['manifest_raw'] = S.canonical(state)
-        raw_src['token']['source_selection']['manifest_bytes_sha256'] = S.sha256(raw_src['manifest_raw'])
         src.acquire(raw_src)
     s.negative('source', 'manifest_without_current_join', stale_join, 'source/current_manifest_join')
     s.negative('source', 'manifest_instance_substituted', lambda: coherent(mutate_state=lambda x: x.update(
@@ -711,15 +710,18 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--output')
     p.add_argument('--skip-matrix', action='store_true')
+    p.add_argument('--only-b2', action='store_true', help='run only the batch-2 cases (development)')
     a = p.parse_args()
     s = Suite()
     work = Path(tempfile.mkdtemp(prefix='pm-goal-test-selftest-'))
     try:
-        test_numrule(s)
-        test_codec(s)
-        test_storage(s, work)
-        test_owners(s, work)
-        test_source(s, work)
+        if not a.only_b2:
+            test_numrule(s)
+            test_codec(s)
+            test_storage(s, work)
+            test_owners(s, work)
+            test_source(s, work)
+        B2.run(s, work)
         matrix = None
         if not a.skip_matrix:
             matrix = R.run_matrix(work / 'matrix')
