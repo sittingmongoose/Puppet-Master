@@ -19,8 +19,11 @@
 //   notify 8  a destination just added reads "Saved, not tested yet"; agents are called agents; Import events names no workspace;
 //   memory 1  "Pause between rounds" is under Chat Room;
 //   memory 2/3 the plan question limits point at Group work, and no help ends in a stray default "(20)" or "(25)";
-//   memory 5  a rule pack that could not load is never hidden by Show and can be fixed or removed;
-//   memory 7  the fade-time editor names each kind of note, never CurrentThread / Blocker / Constraint;
+//   memory 5  (FO-167, 2026-11-12: the quiet Memory page has no rule pack list) the rule documents moved to Personas &
+//             Crews > Defaults > Standing instructions, where each opens its editor;
+//   memory 7  the fade-time editor names each kind of note, never CurrentThread / Blocker / Constraint (while the row is
+//             drawn: FO-167 parks it in Advanced Settings until Plans retires it, then it is drawn nowhere);
+//   memory 10 (FO-167) "Tidy up memories" says what upkeep does on its own, and Escape closes it;
 //   memory 9  "Pick up where it left off" steps aside while Save progress is Never.
 // Each test runs on the surfaces asked for (normal and T3's sandbox unless --set sandbox= picks one).
 
@@ -224,39 +227,17 @@ for (const surface of ['normal', 'sandbox']) {
 		await menuItem(t, f, 'Edit');
 		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 		await grab('Debug › Edit');
-		// Context & Memory: help, export, delete all, sources
+		// Memory (FO-167: one quiet page): the page itself and its Add memory dialog, which says where a note applies
 		await go(t, f, 'memory', 'context-memory');
 		const MB = f.locator(BODY('context-memory'));
-		await MB.locator('[data-action="pm51-memory-help"]').first().click();
-		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
-		await grab('How memory works');
-		const memText = async (tabName) => { await tab(t, f, 'context-memory', tabName); return (await MB.innerText()).replace(/\s+/g, ' '); };
 		const dialogText = async () => (await f.locator('.overlay .dialog').last().innerText().catch(() => '')).replace(/\s+/g, ' ');
 		const menuText = async () => (await f.locator('.pm51-popout').last().innerText().catch(() => '')).replace(/\s+/g, ' ');
 		const shut = async () => { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(350); await closeDrawers(t, f); };
-		const KEEP_FOR = 'Project memories stay with this project.';
-		// Memories: Add memory (a dialog) and Move memory (the detail's More actions › Move / Keep it longer)
-		await tab(t, f, 'context-memory', 'Memories');
+		seen.push(['Memory', (await MB.innerText()).replace(/\s+/g, ' ')]);
 		await MB.locator('[data-action="pm51-memory-add"]').first().click();
 		await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
 		const addText = await dialogText(); seen.push(['Add memory', addText]); await shut();
-		await MB.locator('.pm51-detail-actions [aria-label="More actions"]').first().click();
-		await menuItem(t, f, '(Move|Keep it longer)');
-		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
-		const moveText = await drawerText(f); seen.push(['Move memory', moveText]); await closeDrawers(t, f);
-		await t.check('Add memory and Move memory say "Project memories stay with this project."', addText.includes(KEEP_FOR) && moveText.includes(KEEP_FOR), `add "${addText.slice(0, 160)}" | move "${moveText.slice(0, 160)}"`);
-		seen.push(['Context & Memory › Sources', await memText('Sources')]);
-		seen.push(['Context & Memory › Keeping & privacy', await memText('Keeping & privacy')]);
-		// the folded "Export and delete" section, read open, then its Export panel and Delete all question (answered No)
-		const fold = MB.locator('details.pm51-advanced', { has: f.locator('[data-action="pm51-memory-delete-all"]') }).first();
-		if (!(await fold.evaluate((d) => d.open))) { await fold.locator('summary').first().scrollIntoViewIfNeeded(); await fold.locator('summary').first().click(); await t.page.waitForTimeout(400); }
-		seen.push(['Keeping & privacy › Export and delete (open)', (await fold.innerText()).replace(/\s+/g, ' ')]);
-		await fold.locator('[data-action="pm51-memory-export"]').first().click();
-		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
-		await grab('Export memories');
-		await fold.locator('[data-action="pm51-memory-delete-all"]').first().click();
-		await f.locator('.overlay .dialog, .drawer-wrap').last().waitFor({ state: 'visible', timeout: 8000 });
-		seen.push(['Delete all memories?', (await dialogText()) || (await drawerText(f))]); await shut();
+		await t.check('Add memory says where a note applies: "Only chats in … use it."', /Where it’s available/.test(addText) && /Only chats in .+ use it\./.test(addText), `add "${addText.slice(0, 200)}"`);
 		// Goals › Templates › More actions (Export's line), and Personas' Add a persona menu (Import's line)
 		await go(t, f, 'memory', 'goals');
 		await tab(t, f, 'goals', 'Templates');
@@ -481,30 +462,31 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check('the drawn row shows that help', !/\(\d+\)\.?$/.test(shown) && shown.length > 0, `"${shown}"`);
 	});
 
-	T('memory 5 a failed rule pack shows and can be fixed', async (t) => {
+	T('memory 5 the rule documents have their own home', async (t) => {
+		// FO-167 (2026-11-12): the quiet Memory page lists no rule packs (PACKET: the loaded-pack view leaves Memory); the
+		// two rule documents are Personas & Crews > Defaults > Standing instructions, each with its editor
 		const f = await settings(t, surface);
 		await go(t, f, 'memory', 'context-memory');
-		const MB = f.locator(BODY('context-memory'));
-		await tab(t, f, 'context-memory', 'Instructions');
-		const show = await f.evaluate(() => String(PM51.value('memory.assembly.rule-pack-display') || 'active'));
-		const failed = MB.locator('.pm51-row', { hasText: /Old lint rules/ });
-		await t.check(`with Show "${show}": "Old lint rules" (could not load) is on the page`, (await failed.count()) > 0, '');
-		const fix = failed.first().locator('button', { hasText: /^\s*Fix\s*$/ });
-		await t.check('it has a Fix action', (await fix.count()) === 1, '');
-		if (await fix.count()) {
-			await fix.click();
-			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
-			await drawer(f).locator('.pm51-memory-pack-path').fill('docs/lint-rules.md');
-			await drawer(f).locator('.pm51-panel-foot .btn.primary').click();
-			await t.settle();
-			await t.page.waitForTimeout(600);
-			const now = (await MB.locator('.pm51-row', { hasText: /Old lint rules/ }).first().innerText().catch(() => '')).replace(/\s+/g, ' ');
-			await t.check('pointed at the moved file, it loads', /docs\/lint-rules\.md/.test(now) && /Loaded/.test(now), now);
+		const memText = (await f.locator(BODY('context-memory')).innerText()).replace(/\s+/g, ' ');
+		await t.check('the Memory page lists no rule packs and no standing instructions', !/rule packs?|standing instructions|Old lint rules/i.test(memText), memText.slice(0, 200));
+		for (const id of ['memory.assembly.app-rules', 'memory.assembly.project-rules']) {
+			const where = await f.evaluate((i) => { const e = PM51.placement.byId[i]; return e ? `${e.workspace}/${e.tab}/${e.section}` : 'none'; }, id);
+			await t.check(`${id} is in Personas & Crews › Defaults › Standing instructions`, where === 'personas/defaults/personas-instructions', where);
+			const row = await reveal(t, f, id);
+			const btn = row.locator('button', { hasText: /Edit|Write/ }).first();
+			if (await btn.count()) { await btn.scrollIntoViewIfNeeded(); await btn.click(); }
+			await drawer(f).waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
+			const ed = await drawer(f).locator('textarea.o55-mem-editor').count().catch(() => 0);
+			await t.check(`${id}: its row opens the rule editor`, ed === 1, `${ed} editor(s)`);
+			await closeDrawers(t, f);
 		}
 	});
 
 	T('memory 7 fade times name each kind', async (t) => {
 		const f = await settings(t, surface);
+		// FO-167: the row waits in Advanced Settings until Plans retires it; once retired it is drawn nowhere
+		const placed = await f.evaluate(() => !!(PM51.placement.byId && PM51.placement.byId['memory.retention.half-life-by-kind']));
+		if (!placed) { await t.check('the fade-time row is retired (drawn nowhere, as the quiet Memory design asks)', true); return; }
 		const row = await reveal(t, f, 'memory.retention.half-life-by-kind');
 		const btn = row.locator('.o55-struct, button').first();
 		await btn.scrollIntoViewIfNeeded();
@@ -518,24 +500,24 @@ for (const surface of ['normal', 'sandbox']) {
 		await closeDrawers(t, f);
 	});
 
-	T('memory 10 Escape closes Tidy up memories after a chore', async (t) => {
+	T('memory 10 Tidy up memories says what happens on its own', async (t) => {
+		// FO-167 (2026-11-12): upkeep runs on its own (PACKET: no rebuild, merge, recheck or prune workbench), so the
+		// memory.retention.maintenance row's button, drawn in Advanced Settings until Plans retires it, explains that
 		const f = await settings(t, surface);
-		// "Tidy up memories" is the memory.retention.maintenance row's own button
+		const placed = await f.evaluate(() => !!(PM51.placement.byId && PM51.placement.byId['memory.retention.maintenance']));
+		if (!placed) { await t.check('the Tidy up row is retired (drawn nowhere, as the quiet Memory design asks)', true); return; }
 		const row = await reveal(t, f, 'memory.retention.maintenance');
 		const open = row.locator('button', { hasText: /Tidy up memories/ }).first();
 		await open.scrollIntoViewIfNeeded();
 		await open.click();
 		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 		await t.page.waitForTimeout(400);
-		const chore = drawer(f).locator('[data-action="pm51-memory-chore"]').first();
-		await chore.click();
-		await t.page.waitForTimeout(500);
-		const where = await f.evaluate(() => { const a = document.activeElement; return a ? (a.closest('.drawer-wrap') ? 'in the panel' : a.tagName.toLowerCase()) : 'none'; });
+		const text = await drawerText(f);
+		await t.check('it says upkeep happens on its own and only you delete a note, with no chores to run', /on its own/.test(text) && /Only you delete a note/.test(text) && !(await drawer(f).locator('[data-action="pm51-memory-chore"]').count()), text.slice(0, 220));
 		await t.page.keyboard.press('Escape');
 		await t.page.waitForTimeout(700);
 		const still = await f.locator('.drawer-wrap:not([data-closing])').count();
-		await t.check('after a chore the focus stays in the panel', where === 'in the panel', `focus ${where}`);
-		await t.check('Escape then closes the panel', still === 0, `${still} panel(s) open`);
+		await t.check('Escape closes the panel', still === 0, `${still} panel(s) open`);
 		await closeDrawers(t, f);
 	});
 

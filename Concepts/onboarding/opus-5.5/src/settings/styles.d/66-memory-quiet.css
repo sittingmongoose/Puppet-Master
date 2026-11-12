@@ -13,7 +13,9 @@
 #panel-settings .mm-intro .pm51-section-body { display: flex; flex-direction: column; }
 #panel-settings .mm-intro .setting-list { border: 0; }
 #panel-settings .mm-intro .setting-row { border-bottom: 0; min-height: 0; padding-top: 2px; padding-bottom: 8px; }
-#panel-settings .mm-intro .setting-row .setting-description { max-width: 62ch; }
+#panel-settings .mm-intro .setting-row .setting-description { max-width: 62ch; display: grid; }
+#panel-settings .mm-intro .setting-description > .mm-help { grid-area: 1 / 1; }
+#panel-settings .mm-intro:not(.is-off) .mm-help[data-when="off"], #panel-settings .mm-intro.is-off .mm-help[data-when="on"] { visibility: hidden; }
 #panel-settings .mm-share-line { display: flex; align-items: flex-start; gap: 8px; margin: 2px 0 0; padding: 10px 0 0; border-top: 1px solid var(--k3-line);
   color: var(--k3-text-3); font-size: 12px; line-height: 1.45; }
 #panel-settings .mm-share-line .icon { flex: 0 0 auto; width: 14px; height: 14px; margin-top: 2px; }

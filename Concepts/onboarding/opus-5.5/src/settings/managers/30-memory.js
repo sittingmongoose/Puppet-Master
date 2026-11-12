@@ -77,48 +77,73 @@
       + PM51.iconBtn({ action: 'pm51-memory-delete', data: { id: n.id, place }, icon: 'trash', label: 'Delete memory', cls: 'mm-del' })
       + `</div></div>`;
   }
-  function bodyHtml(place) {
+  function listHtml(place) {
     const u = UI[place], list = visible(place), onNow = memoryOn();
     const cur = list.filter(n => !n.archived), arch = list.filter(n => n.archived);
-    const total = notes().filter(n => !n.archived).length;
     const searching = !!u.q.trim(), openArch = u.arch || (searching && arch.length > 0);
     const archAll = notes().filter(n => n.archived && (u.level === 'all' || n.level === u.level)).length;
-    const intro = `<section class="panel-card pm51-section mm-intro" id="${place === 'page' ? 'mm-notes' : 'mm-sheet-notes'}"><div class="pm51-section-body">`
-      + `<div class="setting-list o55-bound-rows">${PM51.bound.row(S.on, { help: onNow ? HELP_ON : HELP_OFF })}</div>`
-      + `<p class="mm-share-line">${icon('users')}<span>${h(SHARE)}</span></p></div></section>`;
-    const toolbar = `<div class="mm-toolbar">`
-      + `<label class="mm-search">${icon('search')}<input type="search" data-action="pm51-memory-search" data-place="${a(place)}" placeholder="Search memories" aria-label="Search memories" value="${a(u.q)}"/></label>`
-      + `<span class="mm-level">${PM51.dropdown(u.level, [{ value: 'all', label: 'All' }, { value: 'project', label: 'This project' }, { value: 'every', label: 'Every project' }], { action: 'pm51-memory-level', data: { place }, label: 'Show' })}</span>`
-      + `<span class="mm-spacer"></span>`
-      + (place === 'page' ? `<span class="o55-quiet-line mm-count">${total} ${total === 1 ? 'note' : 'notes'}</span>` : '')
-      + PM51.btn({ label: 'Add memory', icon: 'plus', primary: true, action: 'pm51-memory-add', data: { place }, cls: 'mm-add' })
-      + `</div>`;
-    let listHtml = `<div class="mm-list${onNow ? '' : ' is-paused'}">`;
-    if (!cur.length && !arch.length) listHtml += `<div class="mm-empty">${searching ? `No saved notes match “${h(u.q.trim())}”.` : 'Nothing saved at this level yet.'}</div>`;
-    listHtml += cur.map(n => rowHtml(n, place)).join('');
+    let out = `<div class="mm-list${onNow ? '' : ' is-paused'}">`;
+    if (!cur.length && !arch.length) out += `<div class="mm-empty">${searching ? `No saved notes match “${h(u.q.trim())}”.` : 'Nothing saved at this level yet.'}</div>`;
+    out += cur.map(n => rowHtml(n, place)).join('');
     if (archAll || arch.length) {
-      listHtml += `<div class="mm-archived${openArch ? ' is-open' : ''}">`
+      out += `<div class="mm-archived${openArch ? ' is-open' : ''}">`
         + `<button type="button" class="mm-archived-toggle" data-action="pm51-memory-archived" data-place="${a(place)}" aria-expanded="${openArch}">${icon('chevron', 'mm-chev')}`
         + `<span class="mm-archived-title">Archived</span><span class="mm-archived-count">${searching ? `${arch.length} of ${archAll}` : archAll}</span>`
         + `<span class="mm-archived-hint">${searching ? (arch.length ? 'Archived notes that match' : 'No archived notes match') : 'Not used in a while. Still searchable.'}</span></button>`
         + (openArch ? `<div class="mm-archived-body">${arch.map(n => rowHtml(n, place)).join('')}</div>` : '')
         + `</div>`;
     }
-    listHtml += `</div>`;
-    return intro + toolbar + listHtml;
+    return out + `</div>`;
+  }
+  const countText = () => { const n = notes().filter(x => !x.archived).length; return `${n} ${n === 1 ? 'note' : 'notes'}`; };
+  /* the switch's line: both sentences are laid in the same cell and the one that does not apply is hidden, so turning
+     memory off or on changes the words without moving anything (FO-130: a switch never shakes its page) */
+  const helpHtml = () => `<span class="mm-help" data-when="on">${h(HELP_ON)}</span><span class="mm-help" data-when="off">${h(HELP_OFF)}</span>`;
+  function bodyHtml(place) {
+    const u = UI[place], onNow = memoryOn();
+    const intro = `<section class="panel-card pm51-section mm-intro${onNow ? '' : ' is-off'}" id="${place === 'page' ? 'mm-notes' : 'mm-sheet-notes'}"><div class="pm51-section-body">`
+      + `<div class="setting-list o55-bound-rows">${PM51.bound.row(S.on, { help: HELP_ON }).replace(/(<div class="setting-description">)[^<]*(<\/div>)/, (m, open, close) => open + helpHtml() + close)}</div>`
+      + `<p class="mm-share-line">${icon('users')}<span>${h(SHARE)}</span></p></div></section>`;
+    const toolbar = `<div class="mm-toolbar">`
+      + `<label class="mm-search">${icon('search')}<input type="search" data-action="pm51-memory-search" data-place="${a(place)}" placeholder="Search memories" aria-label="Search memories" value="${a(u.q)}"/></label>`
+      + `<span class="mm-level">${PM51.dropdown(u.level, [{ value: 'all', label: 'All' }, { value: 'project', label: 'This project' }, { value: 'every', label: 'Every project' }], { action: 'pm51-memory-level', data: { place }, label: 'Show' })}</span>`
+      + `<span class="mm-spacer"></span>`
+      + (place === 'page' ? `<span class="o55-quiet-line mm-count">${countText()}</span>` : '')
+      + PM51.btn({ label: 'Add memory', icon: 'plus', primary: true, action: 'pm51-memory-add', data: { place }, cls: 'mm-add' })
+      + `</div>`;
+    return intro + toolbar + listHtml(place);
   }
   const mountHtml = place => `<div class="mm-mount" data-mm-place="${place}">${bodyHtml(place)}</div>`;
-  /* redraw a place in place, keeping the caret in the search box or the focus on the control that had it */
-  function redraw(place) {
-    const mount = place === 'sheet' ? (sheet && sheet.mount) : root.querySelector('.mm-mount[data-mm-place="page"]');
-    if (!mount || !mount.isConnected) return;
-    const act = document.activeElement, inside = act && mount.contains(act);
-    const key = inside ? (act.matches('input[type="search"]') ? 'input[type="search"]' : act.dataset.id ? `[data-action="${cssEscape(act.dataset.action || '')}"][data-id="${cssEscape(act.dataset.id)}"]` : act.dataset.action ? `[data-action="${cssEscape(act.dataset.action)}"]` : act.dataset.setting ? `[data-setting="${cssEscape(act.dataset.setting)}"]` : '') : '';
-    const caret = inside && act.matches('input[type="search"]') ? act.selectionStart : null;
-    mount.innerHTML = bodyHtml(place);
-    if (place === 'sheet') mount.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
-    if (key) { const t = mount.querySelector(key); if (t) { try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } if (caret != null) try { t.setSelectionRange(caret, caret); } catch (e) { /* not a text box */ } } }
+  const mountOf = place => { const m = place === 'sheet' ? (sheet && sheet.mount) : root.querySelector('.mm-mount[data-mm-place="page"]'); return m && m.isConnected ? m : null; };
+  /* the switch's words follow it; the page's own row is redrawn by the engine, the sheet's copy is kept here */
+  function decorate(mount) {
+    const onNow = memoryOn();
+    const intro = mount.querySelector('.mm-intro'); if (intro) intro.classList.toggle('is-off', !onNow);
+    const d = mount.querySelector('.mm-intro .setting-description'); if (d && !d.querySelector('.mm-help')) d.innerHTML = helpHtml();
+    const sw = mount.querySelector('.mm-intro .toggle[role="switch"]'); if (sw) { sw.classList.toggle('on', onNow); sw.setAttribute('aria-checked', onNow ? 'true' : 'false'); }
+    const l = mount.querySelector('.mm-list'); if (l) l.classList.toggle('is-paused', !onNow);
+    if (mount === (sheet && sheet.mount)) mount.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
   }
+  /* redraw a place: the whole of it (a sheet that opens), or only its list and count, so the search box, the filter and
+     the switch stay the same elements and keep the focus and caret */
+  function redraw(place, whole = false) {
+    const mount = mountOf(place); if (!mount) return;
+    if (whole || !mount.querySelector('.mm-list')) {
+      const act = document.activeElement, keep = act && mount.contains(act) && act.dataset && act.dataset.action ? `[data-action="${cssEscape(act.dataset.action)}"]${act.dataset.id ? `[data-id="${cssEscape(act.dataset.id)}"]` : ''}` : '';
+      mount.innerHTML = bodyHtml(place);
+      decorate(mount);
+      if (keep) { const t = mount.querySelector(keep); if (t) try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } }
+      return;
+    }
+    const act = document.activeElement, list = mount.querySelector('.mm-list');
+    const key = act && list.contains(act) && act.dataset ? (act.dataset.id ? `[data-action="${cssEscape(act.dataset.action || '')}"][data-id="${cssEscape(act.dataset.id)}"]` : act.dataset.action ? `[data-action="${cssEscape(act.dataset.action)}"]` : '') : '';
+    const tpl = document.createElement('template'); tpl.innerHTML = listHtml(place);
+    list.replaceWith(tpl.content.firstElementChild);
+    const c = mount.querySelector('.mm-count'); if (c) c.textContent = countText();
+    decorate(mount);
+    if (key) { const t = mount.querySelector(`.mm-list ${key}`); if (t) try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } }
+  }
+  const syncSwitch = () => { ['page', 'sheet'].forEach(p => { const m = mountOf(p); if (m) decorate(m); }); };
   const redrawAll = () => { redraw('page'); redraw('sheet'); };
   function lightUp(id) {
     flash = id || ''; clearTimeout(flashTimer);
@@ -132,9 +157,9 @@
     return PM51.page({ id: ID, key: KEY, tabs: [], active: '', cls: 'mm-page', body: mountHtml('page') });
   }
   PM51.manager('memory', { render });
-  PM51.watch(S.on, () => redrawAll());
+  PM51.watch(S.on, () => syncSwitch());
   const mmRefreshRow = refreshSettingRow;
-  refreshSettingRow = function (id) { const out = mmRefreshRow.apply(this, arguments); if (id === S.on) redrawAll(); return out; };
+  refreshSettingRow = function (id) { const out = mmRefreshRow.apply(this, arguments); if (id === S.on) syncSwitch(); return out; };
 
   /* ---------- actions (the page through the engine's own dispatch, the sheet through the same tables) ---------- */
   PM51.onInput('memory-search', el => { const place = placeOf(el); UI[place].q = el.value; redraw(place); });
@@ -284,7 +309,7 @@
     UI.sheet = { q: '', level: 'all', arch: false };
     const n = id ? noteById(id) : null;
     if (n) { lightUp(n.id); if (n.archived) UI.sheet.arch = true; }
-    redraw('sheet');
+    redraw('sheet', true);
     if (!portalWas) { portalWas = window.PM7_SETTINGS_TOME.portal; window.PM7_SETTINGS_TOME.portal = () => (sheet && !sheet.layer.hidden ? sheet.portal : portalWas()); }
     s.layer.hidden = false;
     s.layer.classList.toggle('is-narrow', narrow());
@@ -341,6 +366,15 @@
       }
     });
   });
+
+  /* ---------- "Tidy up memories" (memory.retention.maintenance, drawn in Advanced Settings until Plans retires it):
+     upkeep runs on its own (PACKET: no rebuild, merge, recheck or prune workbench), so its button says what happens */
+  PM51.on('memory-tidy', () => PM51.panel({
+    title: 'Tidy up memories', eyebrow: 'Memory and chat context', icon: 'wand',
+    summary: 'Puppet Master keeps its notes tidy on its own.',
+    body: PM51.panelSection('What happens on its own', PM51.kv([['Duplicates', 'Two notes that say the same thing become one, and both originals are kept.'], ['Search', 'Rebuilt whenever a note changes.'], ['Old notes', 'Notes it hasn’t used in a while move to Archived, where search still finds them.'], ['Deleting', 'Only you delete a note, on the Memory page.']]))
+      + PM51.panelSection('Your notes', PM51.btn({ label: 'Open Memory', icon: 'arrowRight', small: true, action: 'pm51-go', data: { domain: 'memory', workspace: ID } }))
+  }));
 
   /* ---------- how the working space is split (drawn in Advanced Settings until Plans retires the row) ---------- */
   const PARTS_SPLIT = [

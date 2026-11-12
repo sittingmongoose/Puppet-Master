@@ -106,7 +106,8 @@
     ['wonderer', [['crew', 'wg-demo-start'], ['room', 'wg-demo-start'], ['brainstorm', 'wg-demo-start'], ['deepplan', 'wg-demo-start'], ['leads', 'b13-start'], ['dissent', 'b13-start']]],
     ['lens', [['shape', 'b13-start'], ['stale', 'b13-start']]],
     ['teach', [['capture', 'teach-demo-start'], ['correct', 'teach-demo-start'], ['missed', 'teach-demo-start']]],
-    ['memory', [['verified', 'memory-demo-start'], ['locked', 'memory-demo-start']]],
+    /* the quiet memory (FO-167): a reply that saved something, and "Remember that ..." (80-quiet-memory.js) */
+    ['memory', [['saved', 'pm7-memory-demo'], ['remember', 'pm7-memory-demo']]],
     ['eli5', [['override', 'eli5-demo-start'], ['inherit', 'eli5-demo-start']]],
     /* Thought Stream (DL-234): the same question shown While it thinks and Always open (thought-demo.js) */
     ['thinking', [['auto', 'thought-demo-start'], ['expanded', 'thought-demo-start']]],
