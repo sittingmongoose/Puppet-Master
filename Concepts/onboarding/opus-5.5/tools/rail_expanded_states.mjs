@@ -103,16 +103,17 @@ export function installOriginalSelectorProbe(){
    else if(',>()+~'.includes(ch)){optional();parts.push(ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));optional();}
    else parts.push(ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
   }
-  const pattern=new RegExp(parts.join('')+'\\s+:where\\([^()]*\\)(?=\\s*(?:,|$))','g'),swaps=[];let arms=0;
+  const pattern=new RegExp(parts.join('')+'\\s+:where\\([^()]*\\)(?=\\s*(?:,|$))','g'),swaps=[];let arms=0,originalArms=0;
+  const split=text=>{const out=[];let start=0,paren=0,bracket=0,quote='';for(let i=0;i<text.length;i++){const c=text[i];if(quote){if(c==='\\')i++;else if(c===quote)quote='';continue;}if(c==='"'||c==="'")quote=c;else if(c==='(')paren++;else if(c===')')paren--;else if(c==='[')bracket++;else if(c===']')bracket--;else if(c===','&&!paren&&!bracket){out.push(text.slice(start,i).trim());start=i+1;}}out.push(text.slice(start).trim());return out;};
   const walk=rules=>{for(const rule of rules){
-   if(rule.selectorText){const previous=rule.selectorText;let found=0;const next=previous.replace(pattern,()=>{found++;return variant.original;});
-    if(found){rule.selectorText=next;swaps.push([rule,previous]);arms+=found;}
+   if(rule.selectorText){const previous=rule.selectorText;let found=0;const restored=new Set();const next=split(previous).flatMap(arm=>{let count=0;const original=arm.replace(pattern,()=>{count++;return variant.original;});if(!count)return[arm];found+=count;if(restored.has(original))return[];restored.add(original);return[original];}).join(', ');
+    if(found){rule.selectorText=next;swaps.push([rule,previous]);arms+=found;originalArms+=restored.size;}
    }
    if(rule.cssRules)walk(rule.cssRules);
   }};
   try{for(const sheet of [...document.styleSheets,...document.adoptedStyleSheets]){let rules;try{rules=sheet.cssRules;}catch{continue;}walk(rules);}}
   catch(e){for(const[rule,previous]of swaps)rule.selectorText=previous;throw e;}
   if(!swaps.length)throw Error('No compiled selector arms found for '+prefix);
-  return {rules:swaps.length,arms,restore(){for(const[rule,previous]of swaps)rule.selectorText=previous;}};
+  return {rules:swaps.length,arms,originalArms,restore(){for(const[rule,previous]of swaps)rule.selectorText=previous;}};
  };
 }

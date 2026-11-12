@@ -48,7 +48,7 @@ export default async function(t){
     const feature=e=>e.matches('.pmr-btn')?'pmr-btn':e.matches('.pmr-btn-label')?'pmr-btn-label':e.classList.length?[...e.classList].sort().join('.'):'unmarked:'+e.tagName.toLowerCase();
     const groups={};for(const e of real){const k=feature(e);const g=groups[k]||={n:0,samples:[]};g.n++;if(g.samples.length<3&&!g.samples.includes(describe(e)))g.samples.push(describe(e));}
     const rawChanges=[];let rawRestore=null;
-    if(forced&&inherited.length){const props=decls[r.rule].includes('-webkit-text-fill-color')?['color','-webkit-text-fill-color']:['color'];const values=()=>inherited.map(e=>props.map(p=>getComputedStyle(e).getPropertyValue(p)).join('|'));const before=values(),restored=window.__pmrOriginalSelectorProbe(v);rawRestore={rules:restored.rules,arms:restored.arms};let after;try{after=values();}finally{restored.restore();}for(let i=0;i<inherited.length;i++)if(before[i]!==after[i])rawChanges.push({el:describe(inherited[i]),before:before[i],original:after[i]});}
+    if(forced&&inherited.length){const props=decls[r.rule].includes('-webkit-text-fill-color')?['color','-webkit-text-fill-color']:['color'];const values=()=>inherited.map(e=>props.map(p=>getComputedStyle(e).getPropertyValue(p)).join('|'));const before=values(),restored=window.__pmrOriginalSelectorProbe(v);rawRestore={rules:restored.rules,arms:restored.arms,originalArms:restored.originalArms};let after;try{after=values();}finally{restored.restore();}for(let i=0;i<inherited.length;i++)if(before[i]!==after[i])rawChanges.push({el:describe(inherited[i]),before:before[i],original:after[i]});}
     const raw={};for(const e of inherited){const k=e.tagName.toLowerCase();raw[k]=(raw[k]||0)+1;}
     return {rule:r.rule,variant:vi,forced,original:a.length,replacement:b.length,groups,raw,rawChanges,rawRestore,extra:extra.map(describe),omitted:!!r.omit};
    }));
@@ -63,7 +63,7 @@ export default async function(t){
   const state={...meta,rules:rows.map(({rule,variant,forced,original,replacement})=>({rule,variant,forced,original,replacement}))};result.states.push(state);
   for(const row of rows){const r=row.rule;result.maxMatches[r]=Math.max(result.maxMatches[r]||0,row.original);result.totalMatches[r]=(result.totalMatches[r]||0)+row.original;
    for(const[k,n]of Object.entries(row.raw)){const raw=result.rawInherited[r]||={};raw[k]=(raw[k]||0)+n;}
-   if(row.rawRestore)result.rawRestoreMax[r]={rules:Math.max(result.rawRestoreMax[r]?.rules||0,row.rawRestore.rules),arms:Math.max(result.rawRestoreMax[r]?.arms||0,row.rawRestore.arms)};
+   if(row.rawRestore)result.rawRestoreMax[r]={rules:Math.max(result.rawRestoreMax[r]?.rules||0,row.rawRestore.rules),arms:Math.max(result.rawRestoreMax[r]?.arms||0,row.rawRestore.arms),originalArms:Math.max(result.rawRestoreMax[r]?.originalArms||0,row.rawRestore.originalArms)};
    if(row.rawChanges.length)result.rawStyleDifferences.push({state:result.states.length-1,rule:r,changes:row.rawChanges});
    for(const[k,g]of Object.entries(row.groups)){const group=(result.features[r]||={})[k]||={elements:0,states:0,samples:g.samples,first:meta};group.elements+=g.n;group.states++;}
    if(Object.keys(row.groups).length||row.extra.length||row.omitted&&row.original)result.mismatches.push({state:result.states.length-1,...row});
