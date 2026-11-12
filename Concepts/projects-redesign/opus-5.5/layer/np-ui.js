@@ -759,10 +759,12 @@
     put(box, group(w('np.restore.pick'), choices('restore:pick', l.result.projects.map((p) => ({ id: p, glyph: 'box', title: p, sub: w('np.restore.pickRow', { when: src.latest || 'Oct 28', inList: PJX.get(p) ? w('np.restore.inList') : w('np.restore.notInList') }) })), r.pick, (v) => NPx.set(s, 'restore.pick', v), { label: w('np.restore.pick') })));
     if (!r.pick) return box;
     const pts = NPx.restorePoints(s);
-    put(box, group(w('np.restore.pointQ'), choices('restore:point', pts.map((x) => ({ id: x.id, glyph: 'history', title: x.when, sub: x.cover, tag: x.tag || null })), r.point, (v) => { r.point = v; s.changed(); }, { label: w('np.restore.pointQ') })));
-    if (!r.point) return box;
+    put(box, group(w('np.restore.pointQ'), choices('restore:point', pts.map((x) => ({ id: x.id, glyph: 'history', title: x.when, sub: x.cover, tag: x.tag || null })), r.point, (v) => NPx.set(s, 'restore.point', v), { label: w('np.restore.pointQ') })));
+    const pt = NPx.restorePoint(s);
+    if (!pt) return box;
     const lin = NPx.lineage(s), rh = NPx.restoredHist(s);
-    put(box, group(w('np.restore.comes'), lines(line('complete', rh && rh.backend ? w('np.restore.filesKind', { kind: NPx.kindWord(rh.backend), ref: rh.branch ? (rh.backend === 'jujutsu' ? 'bookmark ' : 'branch ') + rh.branch : '' }) : w('np.restore.filesOnly')), line('complete', w('np.restore.pm')), line('info', w('np.restore.never')),
+    // (Sol max S2) what comes back starts with the copy chosen and what it covers
+    put(box, group(w('np.restore.comes'), lines(line('complete', w('np.restore.fromPoint', { when: pt.when, cover: pt.cover.charAt(0).toLowerCase() + pt.cover.slice(1) })), line('complete', rh && rh.backend ? w('np.restore.filesKind', { kind: NPx.kindWord(rh.backend), ref: rh.branch ? (rh.backend === 'jujutsu' ? 'bookmark ' : 'branch ') + rh.branch : '' }) : w('np.restore.filesOnly')), line('complete', w('np.restore.pm')), line('info', w('np.restore.never')),
       line(null, w('np.restore.lookAfter', { computer: NPx.comp(d.runsOn).name }), { icon: 'search' }),
       PJX.get(r.pick) ? line('info', w('np.restore.both', { project: r.pick })) : null, lin ? line('info', w('np.restore.lineage', { service: lin[0], project: lin[1] })) : null)));
     return box;
@@ -935,21 +937,34 @@
       sw('like:onlydiff', w('np.like.onlyDiff'), w('np.like.onlyDiffSub'), L.onlyDiff, (v) => { L.onlyDiff = v; s.changed(); })));
     // settings by kind: the ten selectors (5.3.1), each with its count and its rows
     const kinds = h('div.pjx-np-kinds', { role: 'group', 'aria-label': w('np.like.kindsHead') }, h('div.pjx-np-kindshead', null, cap(w('np.like.kindsHead')), h('span.pjx-grow'),
-      link(w('np.like.kindsAll'), () => { L.ids = null; L.kinds = null; s.changed(); }, { key: 'like:all' }), h('span.pjx-np-dot', { text: ' · ', 'aria-hidden': 'true' }),
-      link(w('np.like.kindsNone'), () => { L.ids = {}; L.kinds = {}; S.own.forEach((r) => { L.ids[r[1]] = false; }); ENV.kinds.forEach(([kid]) => { L.kinds[kid] = false; }); s.changed(); }, { key: 'like:none' })));
+      link(w('np.like.kindsAll'), () => { L.ids = null; L.kinds = null; L.sameIds = null; s.changed(); }, { key: 'like:all' }), h('span.pjx-np-dot', { text: ' · ', 'aria-hidden': 'true' }),
+      link(w('np.like.kindsNone'), () => { L.ids = {}; L.kinds = {}; L.sameIds = {}; S.own.forEach((r) => { L.ids[r[1]] = false; }); S.same.forEach((r) => { L.sameIds[r[1]] = false; }); ENV.kinds.forEach(([kid]) => { L.kinds[kid] = false; }); s.changed(); }, { key: 'like:none' })));
     ENV.kinds.forEach(([kid, label]) => {
       const own = S.own.filter((r) => r[0] === kid), same = S.same.filter((r) => r[0] === kid);
       const hit = (r) => !q || lc(r[2]).indexOf(q) >= 0;
       const ownShown = own.filter(hit), sameShown = L.onlyDiff ? [] : same.filter(hit);
       if (q && !ownShown.length && !sameShown.length) return;
+      // what of this kind is in the copy: its own settings picked, and (with Keep them fixed) its fixed values picked. The
+      // kind's checkbox, its count and the total all read these, so they agree with every row shown (Sol max S4)
       const kOn = NPx.picked(L.kinds, kid), on = kOn ? own.filter((r) => NPx.picked(L.ids, r[1])).length : 0;
+      const fixedOn = kOn && L.fixed ? same.filter((r) => NPx.picked(L.sameIds, r[1])).length : 0, fixedAll = L.fixed ? same.length : 0;
       const k = h('div.pjx-np-kind', { 'data-kind': kid });
-      // a kind is a selection of its own: clearing it also keeps its values out of Keep them fixed (3.07)
-      put(k, check('like:kind:' + kid, label, own.length ? kOn && on === own.length : kOn && L.fixed && same.length > 0, (v) => { L.kinds = L.kinds || {}; L.kinds[kid] = v; L.ids = L.ids || {}; own.forEach((r) => { L.ids[r[1]] = v; }); s.changed(); },
-        { disabled: own.length || (L.fixed && same.length) ? null : w('np.like.kindNone'), mixed: own.length > 0 && on > 0 && on < own.length, sub: own.length ? w('np.like.kindCount', { k: on, n: own.length }) : same.length && L.fixed ? w('np.like.kindFixed', { n: same.length }) : w('np.like.kindNone') }));
+      // a kind is a selection of its own: clearing it clears its settings and keeps its values out of Keep them fixed (3.07);
+      // ticking it again brings all of them back
+      const allIn = on + fixedOn, allN = own.length + fixedAll;
+      put(k, check('like:kind:' + kid, label, allN > 0 && kOn && allIn === allN, (v) => { L.kinds = L.kinds || {}; L.kinds[kid] = v; L.ids = L.ids || {}; own.forEach((r) => { L.ids[r[1]] = v; }); L.sameIds = L.sameIds || {}; same.forEach((r) => { L.sameIds[r[1]] = v; }); s.changed(); },
+        { disabled: allN ? null : w('np.like.kindNone'), mixed: allIn > 0 && allIn < allN,
+          sub: own.length ? w('np.like.kindCount', { k: on, n: own.length }) + (fixedAll ? ' · ' + w('np.like.kindFixedOf', { k: fixedOn, n: fixedAll }) : '') : fixedAll ? w('np.like.kindFixedOf', { k: fixedOn, n: fixedAll }) : w('np.like.kindNone') }));
+      // (Sol max S4, 2026-11-12) one setting ticked again under a kind you cleared is copied: the kind comes back in for that
+      // setting alone (its others stay cleared, and so do its fixed values), so the box, the count and the copy agree
+      const back = (keep) => {
+        if (NPx.picked(L.kinds, kid)) return;
+        L.kinds = Object.assign({}, L.kinds, { [kid]: true }); L.ids = L.ids || {}; L.sameIds = L.sameIds || {};
+        own.forEach((r) => { if (r[1] !== keep) L.ids[r[1]] = false; }); same.forEach((r) => { if (r[1] !== keep) L.sameIds[r[1]] = false; });
+      };
       if (ownShown.length || sameShown.length) put(k, h('div.pjx-np-kindrows', null,
-        ...ownShown.map((r) => check('like:id:' + r[1], w('np.like.singleRow', { label: r[2], value: r[4], usual: r[3] }), NPx.picked(L.ids, r[1]), (v) => { L.ids = L.ids || {}; L.ids[r[1]] = v; s.changed(); })),
-        ...sameShown.map((r) => check('like:same:' + r[1], w('np.like.sameRow', { label: r[2], value: r[3] }), L.fixed && kOn && NPx.picked(L.sameIds, r[1]), (v) => { L.sameIds = L.sameIds || {}; L.sameIds[r[1]] = v; s.changed(); }, { disabled: L.fixed ? null : w('np.like.sameOff'), sub: L.fixed ? w('np.like.sameOn') : null }))));
+        ...ownShown.map((r) => check('like:id:' + r[1], w('np.like.singleRow', { label: r[2], value: r[4], usual: r[3] }), kOn && NPx.picked(L.ids, r[1]), (v) => { L.ids = L.ids || {}; L.ids[r[1]] = v; if (v) back(r[1]); s.changed(); })),
+        ...sameShown.map((r) => check('like:same:' + r[1], w('np.like.sameRow', { label: r[2], value: r[3] }), L.fixed && kOn && NPx.picked(L.sameIds, r[1]), (v) => { L.sameIds = L.sameIds || {}; L.sameIds[r[1]] = v; if (v) back(r[1]); s.changed(); }, { disabled: L.fixed ? null : w('np.like.sameOff'), sub: L.fixed ? w('np.like.sameOn') : null }))));
       put(kinds, k);
     });
     put(kinds, hint(w('np.like.computerOnly', { computer: NPx.comp(p.runsOn || 'here').name })));
@@ -1167,7 +1182,7 @@
     const out0 = Object.keys(b.leaveOut || {}).filter((k) => b.leaveOut[k]);
     put(box, lines(line(null, w('np.bk.what.safe', { computer: cn }), { icon: 'lock' }),
       line('complete', b.include === 'all' ? w('np.bk.what.all') : b.include === 'pm' ? w('np.bk.what.pm') : w('np.bk.what.some') + (out0.length ? ': ' + NPx.andList(out0) + ' left out' : '')),
-      line('complete', b.mode === 'manual' ? w('np.bk.when.manual') : w('np.bk.when.daily', { time: b.time, computer: cn }))));
+      line('complete', b.mode === 'manual' ? w('np.bk.when.manual') : w('np.bk.when.daily', { time: NPx.bkTimeWord(s), computer: cn }))));
     put(box, yoloLine(w('np.yolo.backup', { where: bkLabelFor(s) })));
     put(box, disc(s, 'bk-adv', w('np.sec.advanced'), () => backupAdvanced(s)));
     return box;
@@ -1199,7 +1214,7 @@
       const i = NPx.lookDone(s) || {}, tops = Array.from(new Set(['assets', 'build', 'node_modules'].concat(i.submodules || []).concat(i.lfs ? ['large files (Git LFS)'] : [])));
       out.push(group(w('np.bk.what.someLabel'), ...tops.map((f) => check('bk:out:' + f, f, !!b.leaveOut[f], (v) => { b.leaveOut[f] = v; s.changed(); }))), line('warning', w('np.bk.what.someWarn')));
     }
-    out.push(group(w('np.bk.when'), choices('bk:mode', [{ id: 'daily', glyph: 'calendar', title: w('np.bk.when.daily', { time: b.time, computer: NPx.comp(d.runsOn).name }) }, { id: 'manual', glyph: 'upload', title: w('np.bk.when.manual') }], b.mode, (v) => { b.mode = v; s.changed(); }, { label: w('np.bk.when') })));
+    out.push(group(w('np.bk.when'), choices('bk:mode', [{ id: 'daily', glyph: 'calendar', title: w('np.bk.when.daily', { time: NPx.bkTimeWord(s), computer: NPx.comp(d.runsOn).name }) }, { id: 'manual', glyph: 'upload', title: w('np.bk.when.manual') }], b.mode, (v) => { b.mode = v; s.changed(); }, { label: w('np.bk.when') })));
     if (b.mode === 'daily') {
       const sel = h('select.pjx-input.pjx-np-select', { 'data-pjx-key': 'bk:time', id: 'pjx-np-bktime-' + s.id });
       for (let i = 0; i < 48; i++) { const hh = Math.floor(i / 2), mm = i % 2 ? '30' : '00', t = ((hh % 12) || 12) + ':' + mm + ' ' + (hh < 12 ? 'AM' : 'PM'); const o = h('option', { value: t, text: t }); if (t === b.time) o.selected = true; put(sel, o); }
@@ -1207,7 +1222,7 @@
       out.push(h('div.pjx-field', null, h('label.pjx-field-label', { for: sel.id, text: w('np.bk.when.time') }), sel));
       const tzc = NPx.comp(d.runsOn), tz = h('select.pjx-input.pjx-np-select', { 'data-pjx-key': 'bk:tz', id: 'pjx-np-bktz-' + s.id });
       [['', w('np.bk.tz.computer', { computer: tzc.name, tz: tzc.tz })], ['America/New_York', 'America/New_York'], ['America/Chicago', 'America/Chicago'], ['America/Los_Angeles', 'America/Los_Angeles'], ['Europe/London', 'Europe/London'], ['UTC', 'UTC']].forEach(([v, t]) => { const o = h('option', { value: v, text: t }); if ((b.tz || '') === v) o.selected = true; put(tz, o); });
-      tz.addEventListener('change', () => { b.tz = tz.value || null; s.changed(); });
+      tz.addEventListener('change', () => NPx.set(s, 'backup.tz', tz.value || null));
       out.push(h('div.pjx-field', null, h('label.pjx-field-label', { for: tz.id, text: w('np.bk.tz') }), tz, h('div.pjx-field-hint', { text: w('np.bk.tzHint', { computer: tzc.name }) })));
     }
     // P8 (Jared, 2026-11-03): Standard, or how many to keep, here under Advanced; no More or Fewer presets
@@ -1403,7 +1418,7 @@
     put(box, ol);
     if (!stp.done) put(box, yoloLine(w('np.yolo.protect')));
     // (5.22) on is a policy, not a backup: scheduled stays apart from a completed, checked backup
-    if (stp.done) put(box, lines(line('complete', tgt.mode === 'manual' ? w('np.prot.doneManual') : w('np.prot.done', { time: tgt.time })), line('pending', w('np.prot.notYet'))));
+    if (stp.done) put(box, lines(line('complete', tgt.mode === 'manual' ? w('np.prot.doneManual') : w('np.prot.done', { time: NP().bkTimeOf(tgt) })), line('pending', w('np.prot.notYet'))));
     return box;
   }
 

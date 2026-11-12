@@ -72,6 +72,31 @@ no side padding and no column gap along the widths Split's layout steps are meas
 `pjxcsec`), and no gap an offset in `c.css` or `np.css` is worked out from. So every step of v2's layout falls at the
 same window width in v3. A path that does not fit beside its label goes under it, the plate wide.
 
+### Sol max fixes (2026-11-12)
+
+The Sol max review (`REVIEW-concept-B-max-sol.md` in the share folder) found five should-fix defects. Each has a check in
+this kit, named "(Sol max S1)" to "(Sol max S5)", that fails on `2a42d02f16` and passes after the fix.
+
+- **S1, Auto at Only when I choose it** (SIR-056, SSYS-059; `layer/work.js`). Auto picks only among the allowed Computers
+  it may pick, and the default Computer only breaks ties. When none is left, `PJX.work.autoPick` returns null and new
+  work waits, visibly: the summary says "Auto · waits: no Computer it may pick". The queued row and Why this waits give
+  each Computer's reason. Start a run offers "Run it on Studio Mac, this run only" and "Allow another Computer…", and
+  its button is Queue it. The form warns before Save. Nothing runs, and nothing says it started.
+- **S2, the chosen recovery point** (PWIZ-025, BRS-019; `layer/np.js`). `PJX.np.restorePoint` is the copy chosen, and it
+  reaches every later step: the folded section, the Review (Begins as, and a Copy row with what it covers), the steps,
+  `toPlan().restore_point`, the restored Project (`restored`) and its notice. A change of source clears it, and nothing
+  falls back to the newest copy.
+- **S3, the backup's time zone** (BRS-015). The created policy, its later edits and `toPlan().backup_schedule` keep
+  `backup.tz`. The section, the summary, the Review and the Backup plate say "2:00 AM UTC". Only with the default does
+  the Review name the Computer's own clock ("This computer’s time (America/New_York)").
+- **S4, a setting ticked again under a cleared category** (`layer/np-ui.js`). That setting is copied: the category comes
+  back in for that one setting, and the category's other settings and fixed values stay out. The category's box and
+  count, the total and the copy all read the same selection, fixed values included ("1 of 1 kept fixed").
+- **S5, the library at 1920 × 1080** (R5.4; `concepts/c-v3.css`). In Basic, the base layout fills the library exactly,
+  so v3's room is moved, not added. Groups are 18 px apart with their rule (base 12). Rows are 42 px with 2 px between
+  them (base 44 and 1). The list keeps 8 px under Archived. Every group through Archived shows with no scrolling, and
+  every word, action and type size is kept.
+
 ## Split v2 (pass 2, 2026-11-02): the chosen concept
 
 Jared chose C: "I am leaning towards the Split option. Lets just focus on that for future passes." Split v2 keeps the

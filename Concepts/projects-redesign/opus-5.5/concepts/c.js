@@ -768,7 +768,7 @@
       d.backup.dest = fam === 'local_nas' ? 'nas' : fam === 'google_drive' ? 'gdrive' : fam === 'onedrive' ? 'onedrive' : /aws|b2|s3/.test(fam || '') ? 'bucket' : 'server';
       if (d.backup.dest === 'bucket' || d.backup.dest === 'server') d.backup.sub = fam;
       const lo = {}; (b.leaveOut || []).forEach((k) => { lo[k] = true; });
-      Object.assign(d.backup, { include: b.include || 'all', leaveOut: lo, mode: b.mode || (b.schedule && /click/i.test(b.schedule) ? 'manual' : 'daily'), time: b.time || '2:00 AM', keep: b.keep === 'custom' ? 'custom' : 'standard',
+      Object.assign(d.backup, { include: b.include || 'all', leaveOut: lo, mode: b.mode || (b.schedule && /click/i.test(b.schedule) ? 'manual' : 'daily'), time: b.time || '2:00 AM', tz: b.tz || null, keep: b.keep === 'custom' ? 'custom' : 'standard',
         keepCustom: b.keepCustom ? Object.assign({}, b.keepCustom) : { d: 7, w: 4, m: 6 }, acc: Object.assign({}, b.locator || {}) });
       // a password or key is never brought back into a form: only that one is saved for this place
       Object.keys(d.backup.acc).forEach((k) => { if (/secret|password|session/i.test(k)) delete d.backup.acc[k]; });
@@ -904,12 +904,12 @@
       icon: 'safe', title: 'Backup', sub: b.dest + (b.schedule ? ' · ' + b.schedule.toLowerCase() : ''),
       meta: running ? parts().st('working', op.label) : cornerSays(st0.key) || b.state === 'complete' && false ? parts().st(st0.key, st0.word) : null,
       body: [running ? working(op) : null, offline ? textLine(W_('pg.bk.waitingLine', { device: p.where.device }), 'is-lead') : null, facts([
-        { k: W_('pg.bk.last'), v: b.last ? b.last + (b.state === 'complete' ? ' · checked' : '') : b.state === 'scheduled' ? 'None yet · the first one is tonight at ' + (b.time || '2:00 AM') : 'None yet', tone: b.state === 'warning' ? 'warn' : null },
+        { k: W_('pg.bk.last'), v: b.last ? b.last + (b.state === 'complete' ? ' · checked' : '') : b.state === 'scheduled' ? 'None yet · the first one is tonight at ' + (PJX.np.bkTimeOf(b) || '2:00 AM') : 'None yet', tone: b.state === 'warning' ? 'warn' : null },
         b.note ? { k: b.state === 'warning' ? 'Problem' : 'Note', v: b.note, tone: b.state === 'warning' ? 'warn' : null } : null,
         { k: W_('pg.bk.where'), node: h('span.pjxc-code', { text: b.place || b.dest, 'data-pmh-tag': 'literal' }) },
         { k: W_('pg.bk.what'), v: W_(b.include === 'pm' ? 'np.bk.what.pm' : b.include === 'some' ? 'np.bk.what.some' : 'np.bk.what.all') },
         b.include === 'some' && b.leaveOut && b.leaveOut.length ? { k: W_('pg.bk.leftOut'), v: PJX.np.andList(b.leaveOut) } : null,
-        { k: W_('pg.bk.whenK'), v: b.mode === 'manual' || /click/i.test(b.schedule || '') ? W_('np.bk.when.manual') : (b.schedule || 'Every day') + (b.time && b.state !== 'paused' ? ' at ' + b.time : '') },
+        { k: W_('pg.bk.whenK'), v: b.mode === 'manual' || /click/i.test(b.schedule || '') ? W_('np.bk.when.manual') : (b.schedule || 'Every day') + (b.time && b.state !== 'paused' ? ' at ' + PJX.np.bkTimeOf(b) : '') },
         { k: W_('pg.bk.keeps'), v: b.keep === 'custom' && b.keepCustom ? W_('pg.bk.keepCustom', b.keepCustom) : W_('np.bk.keep.standard') },
         { k: W_('pg.bk.kit'), v: kit, tone: b.kit && b.kit.checked ? null : 'warn' },
         // checking a backup today doesn't make it newer: the loss is counted from the backup that was checked
@@ -1454,7 +1454,9 @@
           stayed: [].concat((ch0.fileList || []).length - fr.files.length > 0 && files === 'move' ? [PJX.np.plural((ch0.fileList || []).length - fr.files.length, 'file') + ' you left out, in ' + ch0.folder] : []).concat(ch0.outside.length ? [PJX.np.plural(ch0.outside.length, 'file') + ' it changed outside its folder'] : []).concat((ch0.grants || []).map((g) => 'Its permission “' + g + '”')),
           held: fr.held, failed: [] } : null;
         if (report) PJX.toast(W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: ch0.title, project: p.name, files: PJX.np.plural(fr.files.length, 'file'), stayed: PJX.np.plural(report.stayed.length, 'thing'), failed: '' }), 'success');
-        C.flash[p.id] = { report, title: chat ? W_('np.done.chat', { name: p.name, chat }) : W_('np.done.title', { name: p.name }), text: (p.backup && p.backup.setup ? W_('np.done.textBk') : W_('np.done.text')) + remote, plan: true, accounts: p.needsSignin, computer: PJX.np.comp(p.runsOn).name, undoCopy: !!p.copied, chat, files,
+        // (Sol max S2) a restore says which copy came back, and from where
+        const back = p.restored ? W_('np.done.restored', { when: p.restored.when, where: p.restored.where }) + ' ' : '';
+        C.flash[p.id] = { report, title: chat ? W_('np.done.chat', { name: p.name, chat }) : W_('np.done.title', { name: p.name }), text: back + (p.backup && p.backup.setup ? W_('np.done.textBk') : W_('np.done.text')) + remote, plan: true, accounts: p.needsSignin, computer: PJX.np.comp(p.runsOn).name, undoCopy: !!p.copied, chat, files,
           agent: agent ? (agent.yolo ? W_('np.yolo.agentDone') : W_('np.yolo.agentAllowed')) + ': ' + PJX.np.andList(agent.labels) + '.' + (p.backup && p.backup.setup ? ' ' + W_('np.yolo.agentWaits', { where: p.backup.dest }) : '') : null };
       }
       // the draft became a Project (or a Project whose setup can be continued): it is no longer a draft
@@ -1856,7 +1858,7 @@
         if (!C) return;
         if (op.done && op.kind === 'protect') {
           const p = PJX.get(op.id), stp = p && p.backup && p.backup.setup;
-          announce(op.failed ? op.label + ' didn’t work. ' + (/test/i.test(op.label) ? W_('np.prot.s2Fail', { where: p.backup.dest, reason: W_('np.prot.s2Full') }) : W_('np.prot.s4Fail')) : op.label + ' · done.' + (stp && stp.done ? ' ' + W_('np.prot.done', { time: p.backup.time || '2:00 AM' }) : ''));
+          announce(op.failed ? op.label + ' didn’t work. ' + (/test/i.test(op.label) ? W_('np.prot.s2Fail', { where: p.backup.dest, reason: W_('np.prot.s2Full') }) : W_('np.prot.s4Fail')) : op.label + ' · done.' + (stp && stp.done ? ' ' + W_('np.prot.done', { time: PJX.np.bkTimeOf(p.backup) || '2:00 AM' }) : ''));
           later(() => { const b = C.root.querySelector('[data-plate="protect"] .pjx-np-pstep.is-now .pjx-btn.is-primary, [data-plate="protect"] .pjx-np-pstep.is-failed .pjx-btn.is-primary') || C.root.querySelector('[data-plate="protect"] [data-c-key="prot:ok"]'); if (b) b.focus({ preventScroll: true }); }, 80);
         }
         if (op.done && !op.failed && /relocate|restore|move/.test(op.kind)) later(() => { if (!D.activeElement || D.activeElement === D.body || !C.root.contains(D.activeElement)) focusTitle(); }, 80);

@@ -647,7 +647,7 @@
       if (op && op.kind === 'backup' && !op.done) backup = { key: 'working', label: 'Backup', word: b.dest, text: 'Backing up to ' + b.dest + ' · ' + (op.phase || ''), short: 'Backing up…' };
       // the last complete backup is what shows; a failed or late newer attempt is said beside it, never instead (BRS §4.2)
       // v2 states: setup (Not on yet), scheduled (on, the first one tonight), ready (manual, waiting for Back up now)
-      else if (/^(setup|scheduled|ready)$/.test(b.state)) backup = { key: { setup: 'waiting', scheduled: 'pending', ready: 'idle' }[b.state], label: 'Backup', word: b.dest, text: b.state === 'setup' ? 'Not on yet · finish setting up ' + b.dest : b.state === 'scheduled' ? b.dest + ' · on · the first one tonight at ' + (b.time || '2:00 AM') : b.dest + ' · ready · when you click Back up now', short: b.dest + (b.state === 'setup' ? ' · not on yet' : ''), last: null };
+      else if (/^(setup|scheduled|ready)$/.test(b.state)) backup = { key: { setup: 'waiting', scheduled: 'pending', ready: 'idle' }[b.state], label: 'Backup', word: b.dest, text: b.state === 'setup' ? 'Not on yet · finish setting up ' + b.dest : b.state === 'scheduled' ? b.dest + ' · on · the first one tonight at ' + ((b.time || '2:00 AM') + (b.tz ? ' ' + b.tz : '')) : b.dest + ' · ready · when you click Back up now', short: b.dest + (b.state === 'setup' ? ' · not on yet' : ''), last: null };
       else backup = { key: b.state || 'complete', label: 'Backup', word: b.dest, text: (b.last ? 'Backed up ' + b.last + ' to ' + b.dest : 'No complete backup yet · ' + b.dest) + (b.state === 'complete' && b.last ? ' · checked' : '') + (b.note ? ' · ' + b.note : b.schedule ? ' · ' + b.schedule.toLowerCase() : ''), short: b.dest + (b.last ? ' · ' + b.last : ''), last: b.last };
     }
     return { history, online, backup };
@@ -1015,8 +1015,11 @@
         });
       }, { cmd: 'cmd.project.execution_policy.set' });
       const waits = (p.workers || []).filter((x) => x.queued && x.mode === 'chosen' && !x.project && x.c && pol.allowed.indexOf(x.c) < 0);
-      toast(p.name + ': ' + (pol.mode === 'auto' ? 'Auto' : 'Chosen: ' + name(pol.def)), (pol.mode === 'auto' ? 'New work goes to the best of ' + pol.allowed.map(name).join(', ') + '; ' + name(pol.def) + ' breaks ties. ' : 'New Project work runs on ' + name(pol.def) + ', the default Computer. ') + 'Running work stays where it is, and no files moved.' +
-        waits.map((x) => ' ' + x.task + ' waits: it is pinned to ' + name(x.c) + ', which ' + p.name + ' no longer allows.').join(''), waits.length ? 'warning' : 'success');
+      // (Sol max S1) Auto only ever picks among the allowed Computers it may pick (never one at Only when I choose it); with
+      // none, new work waits, and the toast says so instead of naming the default Computer as where work goes
+      const WK = PJX.work, cand = WK ? WK.autoCandidates(pol.allowed) : pol.allowed, none = pol.mode === 'auto' && WK ? WK.autoNone(pol.allowed) : null;
+      toast(p.name + ': ' + (pol.mode === 'auto' ? 'Auto' : 'Chosen: ' + name(pol.def)), (pol.mode === 'auto' ? (none ? 'Auto has no Computer it may pick: ' + none + '. New work waits until you allow another Computer, or pin it to one. ' : 'New work goes to the best of ' + cand.map(name).join(', ') + (cand.indexOf(pol.def) >= 0 ? '; ' + name(pol.def) + ' breaks ties. ' : '. ')) : 'New Project work runs on ' + name(pol.def) + ', the default Computer. ') + 'Running work stays where it is, and no files moved.' +
+        waits.map((x) => ' ' + x.task + ' waits: it is pinned to ' + name(x.c) + ', which ' + p.name + ' no longer allows.').join(''), waits.length || none ? 'warning' : 'success');
     },
     moveComputer(id) { const p = get(id); if (p) toast('Move ' + p.name, 'Opens Move to take ' + p.name + ' to another computer. Its files, history and settings go with it.', 'info'); },
     /* cmd.source_control.repository.bind after the check (6.9.2); a folder with no link needs the add-remote Gap */
@@ -1098,7 +1101,7 @@
       const p = get(id); if (!p || !plan) return;
       const add = opts && opts.add;
       await run(id, 'backup', add ? 'Adding another place' : 'Setting up backups', [{ label: 'Saving the backup plan', ms: 500 }], () => {
-        const rec = { dest: plan.dest, place: plan.place, family: plan.family, include: plan.include || 'all', leaveOut: (plan.leaveOut || []).slice(), mode: plan.mode || 'daily', time: plan.time || '2:00 AM', keep: plan.keep || 'standard', keepCustom: plan.keepCustom ? Object.assign({}, plan.keepCustom) : null, locator: plan.locator ? Object.assign({}, plan.locator) : null,
+        const rec = { dest: plan.dest, place: plan.place, family: plan.family, include: plan.include || 'all', leaveOut: (plan.leaveOut || []).slice(), mode: plan.mode || 'daily', time: plan.time || '2:00 AM', tz: plan.tz || null, keep: plan.keep || 'standard', keepCustom: plan.keepCustom ? Object.assign({}, plan.keepCustom) : null, locator: plan.locator ? Object.assign({}, plan.locator) : null,
           schedule: plan.mode === 'manual' ? 'When you click Back up now' : 'Every day', state: 'setup', last: null, versions: 0, kit: null,
           setup: { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: !!plan.testFail, access: plan.access || null, open: true } };
         if (add) { p.backup.more = (p.backup.more || []).concat([rec]); p.backup.setup = Object.assign({}, rec.setup, { target: p.backup.more.length - 1 }); }
@@ -1145,7 +1148,7 @@
       const where = (l) => ['bucket', 'b2host', 'server', 'region', 'address'].map((k) => String((l || {})[k] || '').trim().toLowerCase().replace(/\/+$/, '')).join('|');
       const moved = famOf(plan) !== famOf(b) || where(plan.locator) !== where(b.locator);
       await run(id, 'backup', 'Saving the backup plan', [{ label: moved ? 'Checking ' + plan.dest : 'Saving when it runs and what it keeps', ms: 700 }], () => {
-        Object.assign(b, { include: plan.include, leaveOut: (plan.leaveOut || []).slice(), mode: plan.mode, time: plan.time, keep: plan.keep, keepCustom: plan.keepCustom ? Object.assign({}, plan.keepCustom) : null, schedule: plan.mode === 'manual' ? 'When you click Back up now' : 'Every day' });
+        Object.assign(b, { include: plan.include, leaveOut: (plan.leaveOut || []).slice(), mode: plan.mode, time: plan.time, tz: plan.tz || null, keep: plan.keep, keepCustom: plan.keepCustom ? Object.assign({}, plan.keepCustom) : null, schedule: plan.mode === 'manual' ? 'When you click Back up now' : 'Every day' });
         if (!moved && plan.locator && Object.keys(plan.locator).length) b.locator = Object.assign({}, plan.locator);
         if (moved) {
           // receipts belong to the place that made them: the old place's backups stay there (and expire by its rules); the new
@@ -1156,7 +1159,7 @@
           dropAttention(p, 'backup_overdue');
         }
       }, { cmd: moved ? 'cmd.backup.destination.update' : 'cmd.backup.policy.update' });
-      toast('Backup plan saved for ' + p.name, moved ? 'The new place starts with no backups. Finish its sign-in, test and Recovery Kit on its page.' + (b.previous ? ' The backups on ' + b.previous.dest + ' stay there.' : '') : (plan.mode === 'manual' ? 'Backs up when you click Back up now.' : 'Every day at ' + plan.time + '.'), 'success');
+      toast('Backup plan saved for ' + p.name, moved ? 'The new place starts with no backups. Finish its sign-in, test and Recovery Kit on its page.' + (b.previous ? ' The backups on ' + b.previous.dest + ' stay there.' : '') : (plan.mode === 'manual' ? 'Backs up when you click Back up now.' : 'Every day at ' + plan.time + (plan.tz ? ' ' + plan.tz : '') + '.'), 'success');
     },
     /* cmd.backup.recovery_key.test */
     async checkKit(id, bad) {
