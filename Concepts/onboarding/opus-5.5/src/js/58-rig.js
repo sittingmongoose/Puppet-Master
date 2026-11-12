@@ -199,7 +199,7 @@
          the loop: placeBubble read offsetWidth/Height on every drawn frame, after that frame's writes, a forced layout each
          time; PERF-1. NieR's fixed box is measured at the same moments.) */
       this.bubbleW = this.bubbleH = 0; this.nierBox = null;
-      const sized = () => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (this.famName === 'nier') { const nb = this.boxInScene(b, 6); if (nb) this.nierBox = nb; } if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } };
+      const sized = () => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; this.bubbleSized = true; if (this.famName === 'nier') { const nb = this.boxInScene(b, 6); if (nb) this.nierBox = nb; } if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } };
       this.bubbleMO = new MutationObserver(sized);
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       this.bubbleRO = new ResizeObserver(sized); this.bubbleRO.observe(this.bubble);
@@ -1105,6 +1105,7 @@
     }
     sayNow(text, mood, owner) {
       const b = this.bubble, S = snd();
+      this.bubbleSized = false; /* (new words: the next placement measures them, see placeBubble) */
       if (this.typeT) this.typeT.cancel();
       /* New words get a fresh clearance decision before paint. bubbleAnchor is only a candidate for that decision:
          it preserves a valid tail/bottom across a size change, never the old line's claim or its timed step-aside. */
@@ -1132,6 +1133,7 @@
        not popping in again (SW-23). Its time on screen runs on from when it was said */
     sayKept(text) {
       const b = this.bubble;
+      this.bubbleSized = false;
       clearTimeout(this.sayT); this.sayNext = null;
       if (this.typeT) this.typeT.cancel();
       b.classList.remove('typing'); b.classList.add('on');
@@ -1724,7 +1726,11 @@
       const tall = this.layoutName === 'portrait';
       const head = this.toScreen(this.headXf([32, 34], H, ang, 1, 1));
       const sp = this.toScreen(this.headXf(tall ? [44, 30] : [58, 44], H, ang, 1, 1));
-      const bw = this.bubbleW || this.bubble.offsetWidth || 160, bh = this.bubbleH || this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
+      /* (new words are measured here once, at their first placement: direct() writes the line and draws in the same task,
+         before the observers can measure it, and a placement made at the old size took the new line's own anchor, so the
+         observers' re-placement lost the old tail and moved the line 182 px on Begin (K19, stage-keepoff); PERF-1 step 2) */
+      if (!this.bubbleSized || !this.bubbleW) { this.bubbleW = this.bubble.offsetWidth; this.bubbleH = this.bubble.offsetHeight; this.bubbleSized = true; }
+      const bw = this.bubbleW || 160, bh = this.bubbleH || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube === 'teletype' ? (tall ? 70 : 48) : this.tube ? (tall ? 44 : 34) : 8;
       /* the bubble covers no prop and never Pip's face (FO26: the name's sign on Name; RDA-01: Pip's eyes on Review). Where
          its usual place is taken it moves to the nearest clear place inside the pane, and keeps that side while it stays
