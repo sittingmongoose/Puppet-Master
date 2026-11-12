@@ -31,8 +31,19 @@
 //   - and, in the first look only (--set ends=all for every look), a run that was due to end while the window was open
 //     has not ended under it and ends after the close, at its own end.
 //
+// VISIT (lane C3, the R1 review of 8fc3ff34ce: what the rest above did not reach). A short visit to the window:
+//   - a chain's next run (Multi Orbit: orbitA, then orbitB 1400 ms after it) waits only for the time the window is NOT
+//     open. The demo's Multi-orbit turn is started and orbitA brought to its end (PM56_DEMO.tickOnce); the moment its
+//     successor's delay is armed (the app's setTimeout of that delay, told by the chat's app block) the window is opened
+//     100 ms later and closed (O55.ui.close) 150 ms after that, or, the long visit, 2300 ms after that. The time from
+//     the arming to orbitB's start, less the time the window was open (PM56_HOST.onRest, as the chat hears it), is the
+//     delay, never more than 40 ms short and at most 300 ms over: a timer never fires early, and after the close the page
+//     is busy laying itself out again, which made it fire 90-110 ms late on the 3090 (2026-11-12). The short visit has
+//     to have ended before the delay would have been due (else it is not judged). The branch before lane C3 fails the
+//     short visit: there the successor started on the wall clock, as early as the visit was long.
+//
 // --set looks=<a,b>  default basic-dark,glass-dark,retro-dark,nier-dark; looks=all for all ten
-// --set parts=run,rest   --set settle=<ms> (default 30000)
+// --set parts=run,rest,visit   --set settle=<ms> (default 30000)
 // Both surfaces. A run that never started, or a place missing from the page, fails as "could not judge".
 import { muteSound, refreshRate, parkPointer } from '../helpers/quiet-page.mjs';
 import { CALLBACK_PROBE } from '../helpers/callback-probe.mjs';
@@ -46,14 +57,17 @@ const PLACES = [['card', `${CHAT} :is(.working-card, .orbit-card)`], ['bar', `${
 export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark');
 	const looks = want === 'all' ? ALL : want.split(',').filter(Boolean);
-	const parts = String(t.args.parts || 'run,rest').split(',');
+	const parts = String(t.args.parts || 'run,rest,visit').split(',');
 	const loopsMax = Number(t.args.loops || 80), hold = Number(t.args.hold || 4000);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
 	await t.page.addInitScript(CALLBACK_PROBE);
-	const blocks = blocksOf(await pageSource(t));
+	const src = await pageSource(t);
+	const blocks = blocksOf(src);
 	const chatBlocks = blocks.filter((b) => b.kind === 'script' && /^pm56/.test(b.id));
+	// VISIT: the chat's app block
+	const appBlock = blocks.find((b) => b.id === 'pm56-app-js') || null;
 	await t.check('the built page has the chat\'s script blocks (script#pm56-...)', chatBlocks.length > 0, chatBlocks.map((b) => `${b.id} ${b.from}-${b.to}`).join(', ') || 'none found: the chat\'s code cannot be told apart');
 	if (!chatBlocks.length) return;
 	// a callback is the chat's when the innermost page frame of the stack that asked for it runs in a chat block
@@ -184,6 +198,64 @@ export default async function (t) {
 					}
 				}
 			}
+		}
+		if (parts.includes('visit')) {
+			const thread0 = await f.evaluate(() => window.PM56_DEMO.getState().selectedThread);
+			// 1. a chain's next run: its delay counts only the time the window is not open
+			const delay = await f.evaluate(() => { const r = window.PM56_DATA && PM56_DATA.workRuns && PM56_DATA.workRuns.orbitA; return r && r.next && r.next.run === 'orbitB' ? r.next.delayMs || 1200 : null; });
+			for (const [kind, openAt, closeAt] of [['short', 100, 250], ['long', 100, 2400]]) {
+				if (!delay || !appBlock) { await t.check(`${look} visit: the Multi Orbit chain and the chat's app block are in the page`, false, `orbitA -> orbitB delay ${delay}, app block ${appBlock ? appBlock.from : 'missing'}: could not judge`); break; }
+				const r = await f.evaluate(async ({ delay, openAt, closeAt, app }) => {
+					const D = window.PM56_DEMO, H = window.PM56_HOST, real = window.setTimeout.bind(window);
+					const sleep = (ms) => new Promise((res) => real(res, ms));
+					const works = () => D.snapshot().works || {};
+					// what the chat hears: one listener for the page's life (onRest has no removal)
+					if (!window.__c3rest) { window.__c3rest = []; H.onRest((on) => window.__c3rest.push([on, performance.now()])); }
+					const out = { arm: null, start: null, err: null, rest: null };
+					D.trigger('Multi-orbit turn');
+					for (let i = 0; i < 100 && !(works().orbitA && works().orbitA.running); i++) await sleep(50);
+					if (!(works().orbitA && works().orbitA.running)) { out.err = 'orbitA never started'; return out; }
+					const prev = window.setTimeout;
+					window.setTimeout = function (fn, ms, ...rest) {
+						if (out.arm == null && ms === delay) {
+							const m = /:(\d+):\d+/.exec(String(new Error().stack).split('\n')[2] || '');
+							if (m && +m[1] >= app.from && +m[1] <= app.to) {
+								out.arm = performance.now();
+								real(() => window.O55.ui.open(), openAt);
+								real(() => window.O55.ui.close(), closeAt);
+							}
+						}
+						return prev.call(window, fn, ms, ...rest);
+					};
+					const mark = window.__c3rest.length;
+					try {
+						for (let i = 0; i < 600 && !works().orbitA.completed; i++) D.tickOnce();
+						if (!works().orbitA.completed) { out.err = 'orbitA did not reach its end'; return out; }
+						for (let i = 0; i < 400 && out.arm == null; i++) await sleep(100);
+						if (out.arm == null) { out.err = 'the successor\'s delay was never armed'; return out; }
+						const until = performance.now() + delay + closeAt + 8000;
+						while (!works().orbitB && performance.now() < until) await sleep(4);
+						if (works().orbitB) out.start = performance.now();
+						while (document.documentElement.hasAttribute('data-o55-open') && performance.now() < until + 5000) await sleep(20);
+					} finally { window.setTimeout = prev; }
+					out.rest = window.__c3rest.slice(mark);
+					return out;
+				}, { delay, openAt, closeAt, app: { from: appBlock.from, to: appBlock.to } });
+				if (r.err || r.start == null) { await t.check(`${look} visit ${kind}: a chain's successor is armed and starts`, false, `${r.err || 'orbitB never started'}: could not judge ${JSON.stringify(r)}`); continue; }
+				// the time the window was open between the arming and the start, as the chat heard it
+				let open = 0, on = null, opened = null, closed = null;
+				for (const [o, at] of r.rest) { if (o && on == null) { on = at; if (opened == null) opened = at; } else if (!o && on != null) { open += Math.max(0, Math.min(at, r.start) - Math.max(on, r.arm)); on = null; closed = at; } }
+				if (on != null) open += Math.max(0, r.start - Math.max(on, r.arm));
+				const total = r.start - r.arm, outside = total - open;
+				const visit = opened == null || closed == null ? null : [Math.round(opened - r.arm), Math.round(closed - r.arm)];
+				t.log(`${look} visit ${kind}: delay ${delay} ms armed, window open ${JSON.stringify(visit)} ms after it, orbitB at +${Math.round(total)} ms: ${Math.round(outside)} ms outside the window`);
+				const judged = !!visit && visit[0] > 0 && (kind === 'long' ? visit[1] > delay : visit[1] < delay - 100);
+				if (!judged) { await t.check(`${look} visit ${kind}: the window opened and closed inside the delay as planned`, false, `window ${JSON.stringify(visit)} ms after the arming, delay ${delay}: could not judge`); continue; }
+				await t.check(`${look} visit ${kind}: the chain's next run starts after its delay counted outside the window (${kind === 'short' ? 'the window closed before it was due' : 'the window stayed past it'})`, outside >= delay - 40 && outside <= delay + 300, `${Math.round(outside)} ms outside the window of ${Math.round(total)} ms from the arming to orbitB's start (window ${visit[0]}-${visit[1]} ms); expected ${delay - 40} to ${delay + 300}`);
+			}
+
+			await f.evaluate((id) => window.PM56_DEMO.selectThread(id), thread0);
+			await t.page.waitForTimeout(1000);
 		}
 		first = false;
 	}
