@@ -3,8 +3,16 @@
   "status": "STATIC_CONTRACT_SHAPES_AND_NATIVE_ORACLES_ONLY",
   "native_execution": "NOT_RUN",
   "frozen_joined_subject": {
-    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/manifest.json",
-    "sha256": "60f1c8ad2de3a350ac781a1d24e1f7dad979e61bccda8a36c48f748841ff3df5"
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v5/manifest.json",
+    "sha256": "62823e0a62173cdd99bc41cc676e1aec9f4b5689122a51bc289ffb951aa70877",
+    "refrozen": {
+      "on": "2026-11-04",
+      "previous": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/manifest.json",
+        "sha256": "60f1c8ad2de3a350ac781a1d24e1f7dad979e61bccda8a36c48f748841ff3df5"
+      },
+      "reason": "Re-frozen under DL-076 (SP-273's 2026-09-24 amendment): the v4 suite stored redb_snapshot_id in the reader checkpoint's generic_read_token, its previous generations and history cores. v5 stores the nine-field durable token, joins each read's own live snapshot, and keeps every v4 case, declared validity and count; v4 stays as lineage. Receipt: reports/event-authority-20261104/ds-p2-layout-suite-refreeze.json."
+    }
   },
   "value_shape_cases": [
     {

@@ -1,0 +1,778 @@
+{
+  "schema_id": "pm.ds.fix4.verification.v1",
+  "source_head": "f479a6eaee994bbc34b14395aedf7a56c124b46e",
+  "base": "57c28f706e10dd9f7c6b13ed5e962de74e9a6ea5",
+  "review_head": "25c568598fa3ff1028a95c326c885474ffd7dcd1",
+  "verdict": "NOT_READY_FOR_FULL_DEPTH_OR_SEAL",
+  "native_execution": "NOT_RUN",
+  "family_grades": [
+    {
+      "event_type": "context.compaction.completed",
+      "before": 11,
+      "after": 11
+    },
+    {
+      "event_type": "browser.workspace.created",
+      "before": 11,
+      "after": 11
+    },
+    {
+      "event_type": "browser.workspace.reset",
+      "before": 11,
+      "after": 11
+    },
+    {
+      "event_type": "workspace.layout_changed",
+      "before": 11,
+      "after": 11
+    },
+    {
+      "event_type": "terminal.workgroup_moved",
+      "before": 10,
+      "after": 10
+    }
+  ],
+  "status_counts": {
+    "PASS": 54,
+    "PARTIAL": 6
+  },
+  "current_citation_checks": {
+    "citations": 294,
+    "unchanged_criterion_cells": 60,
+    "preserved_files": {
+      "reports/event-authority-20261104/depth-b1-seal-families.json": "535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035",
+      "reports/event-authority-20261104/ds-step5-august-ledger-application.json": "ff61e665bf197b78fb9ee8715ecce6b6bbb65b15d7b129c3fe31175b8d085613",
+      "reports/event-authority-20261104/ds-step6-compaction-ledger-note.json": "c81340f4f127ee0edc763060570a43ec24c41474886f197f200a1d2cfcde4f6e",
+      "reports/event-authority-20261104/ds-step7-exclusions-application.json": "34c6144baad8960597fceaa0bf46da86c827dc4aaeee452c5d8200c6a6803ee9",
+      "reports/event-authority-20261104/ds-p2-august-regrade-application.json": "aa457a052a594db50fe46d9c1e58cda6800473d5b4e3939c4e3213876a35f7e1",
+      "Plans/event_family_registry.json": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+      "Plans/event_record.schema.json": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "Plans/home_layout_event_contract_fixtures.json": "c6da1130b35e7e959ea5bdade481045c639eca90402dd34d5d894c710ee04edc"
+    },
+    "preserved_admission_records": [
+      {
+        "path": "reports/event-authority-20260911/admission-records/context.compaction.completed.json",
+        "sha256": "d6b52ab03d199814630c215e004ecbcd9963e1b810857fbdbf6948654bcaf636"
+      },
+      {
+        "path": "reports/event-authority-20260911/admission-records/browser.workspace.created.json",
+        "sha256": "c8666d4ead7522459a38983a659ba3539374f6ac3db5592f72bd138bced64f86"
+      },
+      {
+        "path": "reports/event-authority-20260911/admission-records/browser.workspace.reset.json",
+        "sha256": "040f0bb499c66d51006ec50acad92c9a02c91052a0c49687ccbe65c994c90e3f"
+      }
+    ],
+    "frozen_validator_sha256": "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20",
+    "protected_changes_relative_to_base": []
+  },
+  "owner_unit_changes_since_review": [
+    {
+      "unit": "ACD-461",
+      "changed_fields": [
+        "canonical_text",
+        "acceptance_criteria"
+      ]
+    },
+    {
+      "unit": "CV-329",
+      "changed_fields": [
+        "canonical_text"
+      ]
+    }
+  ],
+  "targeted": {
+    "status": "pass",
+    "groups": 33,
+    "positive": 77,
+    "negative": 144,
+    "all_matrix_peers_refused": true
+  },
+  "supplemental_baselines": 686,
+  "formats": {
+    "status": "pass",
+    "full_entry_negatives": 108,
+    "schema_node_negatives": 1371,
+    "grammar_positives": 5
+  },
+  "check11": {
+    "status": "partial",
+    "raw_summary": {
+      "namespace_rows": 881,
+      "witnessed_namespace_rows": 308,
+      "distinct_source_conditions": 570,
+      "distinct_with_observed_witness": 230,
+      "namespace_rows_with_exceptions": 63,
+      "exception_occurrences": 3942,
+      "baseline_negatives": 1191,
+      "baseline_failures": 0,
+      "status": "partial",
+      "complete": false
+    },
+    "review_partition": {
+      "unproved_obligation": 262,
+      "representation_or_dispatch": 68,
+      "outside_DS_live_shared_code": 30,
+      "proved_duplicate": 9,
+      "dead_refusal_arm": 2,
+      "reviewer_witness": 3
+    },
+    "disputed_conditions": [
+      "U046-envelope-arm",
+      "U070",
+      "U088",
+      "U111"
+    ],
+    "shared_tool_adoption": "PENDING cross-lane sweep under FIX-ROUND04:45Z; no local replacement engine adopted.",
+    "review_catalog": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DS-sol/evidence-cycle4/guard-ruling-374.json",
+      "sha256": "08a5f78101e6ded5c371abdca64b1b886686318a22498d8c3b0878f7dac47c85"
+    },
+    "named_duplicate_sets": [
+      {
+        "review_id": "U001",
+        "set": [
+          "Home4 schema stored_value_ref/value_ref/byte_size >=16385",
+          "PayloadStore.resolve:463 exact resolved byte length",
+          "Checker.reference_invariants:764 canonical stored bytes == resolved bytes",
+          "value_limit_check:521"
+        ]
+      },
+      {
+        "review_id": "U011",
+        "set": [
+          "Plans/home_layout_v2_slot_receipt.schema.json#/$defs/layout_source_bytes/oneOf/1/properties/byte_size minimum=16385",
+          "source_bytes_check:575"
+        ]
+      },
+      {
+        "review_id": "U034",
+        "set": [
+          "PayloadStore.resolve:452",
+          "PayloadStore.resolve:460",
+          "Home4 blake3_id schema exact lowerhex64"
+        ]
+      },
+      {
+        "review_id": "U053",
+        "set": [
+          "pm_browser_workspace_created.py:275",
+          "pm-browser-event-admission.py:518"
+        ]
+      },
+      {
+        "review_id": "U157",
+        "set": [
+          "decode_canonical_msgpack:264 trailing bytes",
+          "decode_canonical_msgpack:266 complete canonical byte equality"
+        ]
+      },
+      {
+        "review_id": "U158",
+        "set": [
+          "home.decode_canonical_msgpack:266",
+          "pm_event_payload_route.decode_canonical_msgpack (same function)"
+        ]
+      },
+      {
+        "review_id": "U171",
+        "set": [
+          "decode_canonical_msgpack:256 string-key guard",
+          "decode_canonical_msgpack:266 canonical re-encoding equality"
+        ]
+      },
+      {
+        "review_id": "U172",
+        "set": [
+          "decode_canonical_msgpack:258 duplicate-key guard",
+          "decode_canonical_msgpack:266 canonical re-encoding equality"
+        ]
+      },
+      {
+        "review_id": "U186",
+        "set": [
+          "home._exact_numeric_type:353",
+          "Home4Validator.VALIDATORS[type] (same captured function)",
+          "route.StrictValidator (same validator class)"
+        ]
+      }
+    ],
+    "outside_DS_rows": [
+      {
+        "review_id": "U286",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U289",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U290",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U291",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U292",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U293",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U294",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U295",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U296",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U297",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U299",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U300",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U301",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U302",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U303",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U304",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U305",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U306",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U307",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U308",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U309",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U310",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U311",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U312",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U313",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U314",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U315",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U316",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U317",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      },
+      {
+        "review_id": "U318",
+        "basis": "Selects non-workspace Browser event/fact shapes absent from the two closed DS payloads. This code is live for other Browser families, not globally dead.",
+        "rule": null
+      }
+    ]
+  },
+  "frozen": [
+    {
+      "label": "before",
+      "exit": 1,
+      "flags": {
+        "pass": false,
+        "complete_denominator_known": false,
+        "contract_depth_complete": false,
+        "seal_prerequisites_met": false
+      },
+      "failure_categories": [
+        "post_august_admission_incomplete",
+        "unexpected_august_set",
+        "fresh_census_denominator_not_closed",
+        "individual_dispositions_evidence_gap_blocking",
+        "registered_contract_depth_incomplete"
+      ],
+      "receipt_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/frozen-before-receipt.json",
+      "receipt_sha256": "c5db8c2228dd0bf7a76ac41cc4ad35176a54426ff9a5379f32d1eccc478e41d7"
+    },
+    {
+      "label": "after",
+      "exit": 1,
+      "flags": {
+        "pass": false,
+        "complete_denominator_known": false,
+        "contract_depth_complete": false,
+        "seal_prerequisites_met": false
+      },
+      "failure_categories": [
+        "post_august_admission_incomplete",
+        "unexpected_august_set",
+        "fresh_census_denominator_not_closed",
+        "individual_dispositions_evidence_gap_blocking",
+        "registered_contract_depth_incomplete"
+      ],
+      "receipt_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/frozen-after-receipt.json",
+      "receipt_sha256": "7c62a0d327a7ca41fb27949186be550b0044b8775f64f156970927d13681432c"
+    }
+  ],
+  "commands": [
+    {
+      "name": "round2",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_event_authority_ds_round2.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-round2.json"
+      ],
+      "exit": 0,
+      "seconds": 152.85
+    },
+    {
+      "name": "round2-self",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_event_authority_ds_round2.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "seconds": 135.6
+    },
+    {
+      "name": "round3",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_event_authority_ds_round3.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-round3.json"
+      ],
+      "exit": 0,
+      "seconds": 145.0
+    },
+    {
+      "name": "round4",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_event_authority_ds_round4.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-round4.json"
+      ],
+      "exit": 0,
+      "seconds": 26.4
+    },
+    {
+      "name": "targeted",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_ds_targeted_guard_matrix.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-targeted.json"
+      ],
+      "exit": 0,
+      "seconds": 109.02
+    },
+    {
+      "name": "audit-self",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_ds_guard_removal.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "seconds": 0.37
+    },
+    {
+      "name": "home4",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_home_layout_v2_slot_receipt.py"
+      ],
+      "exit": 0,
+      "seconds": 11.9
+    },
+    {
+      "name": "home4-self",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_home_layout_v2_slot_receipt.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "seconds": 19.78
+    },
+    {
+      "name": "created",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_browser_workspace_created.py"
+      ],
+      "exit": 0,
+      "seconds": 4.49
+    },
+    {
+      "name": "created-v2",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_browser_workspace_created_v2.py"
+      ],
+      "exit": 0,
+      "seconds": 3.88
+    },
+    {
+      "name": "reset",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm_browser_workspace_reset.py"
+      ],
+      "exit": 0,
+      "seconds": 12.96
+    },
+    {
+      "name": "shared",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-browser-event-admission.py"
+      ],
+      "exit": 0,
+      "seconds": 20.48
+    },
+    {
+      "name": "pm7",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-validate-pm7-gui-fixtures.py"
+      ],
+      "exit": 0,
+      "seconds": 3.86
+    },
+    {
+      "name": "shared-runtime",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-shared-runtime-contracts.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "seconds": 0.85
+    },
+    {
+      "name": "projects",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-projects-refresh-contracts.py"
+      ],
+      "exit": 0,
+      "seconds": 43.38
+    },
+    {
+      "name": "created-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_browser_workspace_created.py"
+      ],
+      "exit": 0,
+      "seconds": 11.43
+    },
+    {
+      "name": "reset-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_browser_workspace_reset.py"
+      ],
+      "exit": 0,
+      "seconds": 69.74
+    },
+    {
+      "name": "admission-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_browser_event_admission.py"
+      ],
+      "exit": 0,
+      "seconds": 184.22
+    },
+    {
+      "name": "pm7-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_validate_pm7_gui_fixtures.py"
+      ],
+      "exit": 0,
+      "seconds": 5.78
+    },
+    {
+      "name": "shards",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "seconds": 21.93
+    },
+    {
+      "name": "index",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 0,
+      "seconds": 45.21
+    }
+  ],
+  "detached_audit": {
+    "audit_exit": 0,
+    "audit_seconds": 1737.12,
+    "frozen_driver_exit": 0
+  },
+  "artifact_pins": {
+    "final-round2.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-round2.json",
+      "sha256": "b3cf5a73a3c7a13681de6568425a28175c0137cfb42166016346714c0b6a7cd3"
+    },
+    "final-round3.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-round3.json",
+      "sha256": "f65a0b7dc92de9c84a1a67695c8b400252e1ee36e32cf886dea94fee4bec81e5"
+    },
+    "final-round4.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-round4.json",
+      "sha256": "689b5db372c557e661862365153ea7c4c5d52a93ba6c6f3aa850e45a144c0bf1"
+    },
+    "final-targeted.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-targeted.json",
+      "sha256": "4ab1d9d118b48ad2289c379c30b0095e7951117e8281deb25f0d1805eac3a447"
+    },
+    "final-fixture-cohorts.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-fixture-cohorts.json",
+      "sha256": "60dd806a5b685ebee7b054d9007206abcc91b058e91d21483895e494c22b1281"
+    },
+    "supplemental-baselines.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/supplemental-baselines.json",
+      "sha256": "4940ce47dafdc24d574bc1f7b27a79d29604f27149c31f23bc2d18c7cc95ecd5"
+    },
+    "final-whole-guard-removal.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-whole-guard-removal.json",
+      "sha256": "72a8d4bc01a05b85c1837294cbdfd5b84c9f72bc2fe94ab83a7f31b1edde6bc3"
+    },
+    "final-duplicate4.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-duplicate4.stdout",
+      "sha256": "40f9de4643c40b8862becfc212c9b9e852400d87d3b0104cea0cc4c462f3d26d"
+    },
+    "final-ruling-proofs4.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-ruling-proofs4.stdout",
+      "sha256": "59fe9158f4850dcef387dc3b306a9a90b09310f9eea1e4404b0d510ce535a09c"
+    },
+    "final-codec4.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-codec4.stdout",
+      "sha256": "a6862dd4b64f20c5828ecd74c5fc1e60c7ae1aa30bea8e6413f0b0a903514845"
+    },
+    "preservation-final.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/preservation-final.json",
+      "sha256": "f1256ec0d614945752f508c9cf35832be7311b2fac6226c344fcc682efa5309a"
+    },
+    "owner-unit-continuity.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/owner-unit-continuity.json",
+      "sha256": "4a865839c13968b790e51e5b82e73ce37a29485428afff4b8ebb1824b08a22ea"
+    },
+    "reanchor-changes.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/reanchor-changes.json",
+      "sha256": "68537160b19f2f07f69799f5023c8db615bcb8c54e54e5b5bab87954f159ec38"
+    },
+    "frozen-before-receipt.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/frozen-before-receipt.json",
+      "sha256": "c5db8c2228dd0bf7a76ac41cc4ad35176a54426ff9a5379f32d1eccc478e41d7"
+    },
+    "frozen-after-receipt.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/frozen-after-receipt.json",
+      "sha256": "7c62a0d327a7ca41fb27949186be550b0044b8775f64f156970927d13681432c"
+    },
+    "final-commands.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-commands.json",
+      "sha256": "c8cb7cc2674c85a610e69d4130f931130502ee2526249c59c46125d7dbef523b"
+    },
+    "interrupted-whole-status.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/interrupted-whole-status.json",
+      "sha256": "cd39f1115e9263d216c932794b673ab87a244d09ceda67de9e39171a8906ce4d"
+    },
+    "duplicate-fixture-alias-correction.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/duplicate-fixture-alias-correction.json",
+      "sha256": "d21707414324ddfc65b2d0e7a595466951a510a06fb3302d32364b1b92200811"
+    },
+    "pm_ds_capacity_implication.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/pm_ds_capacity_implication.json",
+      "sha256": "d7482fa3d26ad73a5979b4746f6ab6e667b0ca667018ac6acf1c7df1f77dafd5"
+    },
+    "pm_ds_created_field_duplicates.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/pm_ds_created_field_duplicates.json",
+      "sha256": "ffd85ed18a22a9823f89644c9b0d593f00f282e50f62e44534e1b1f8e9c3246d"
+    },
+    "pm_ds_family_implication.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/pm_ds_family_implication.json",
+      "sha256": "1a4116e7cc31cba33b7aebf484ab7370a5088c104c14713c62a4ad68695418a6"
+    },
+    "pm_ds_layout_schema_duplicate.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/pm_ds_layout_schema_duplicate.json",
+      "sha256": "b64776e2591a3dd27cad89a3a0cacb693232b2ea49abc6a1076586413eed240b"
+    },
+    "binding-duplicate-fields.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/binding-duplicate-fields.json",
+      "sha256": "0e29dbf1fc781a8b9c0f14c8ed3655155e96e6c396bcbeb624fbddcf49bfd8d5"
+    },
+    "experiment-programs-sha256.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/experiment-programs-sha256.json",
+      "sha256": "455192bda27d6b151042bce9d44f38f83df5ff208912c8874fe4f1b3a711f991"
+    },
+    "final-rebase-continuity.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-rebase-continuity.json",
+      "sha256": "1c93fc34b45466786b57b1fdfaf8b1e63852d510e476729f5a8d92a56d5c9cd0"
+    },
+    "pre-final-rebase-source-sha256.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/pre-final-rebase-source-sha256.json",
+      "sha256": "d9295c3cfd10f4ed3f6f1668f69875f35a526bafeeaa124942146d6b4e05572d"
+    },
+    "final-currentness-inputs.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/final-currentness-inputs.json",
+      "sha256": "0e6023804a32d9bbf78bf98fef449bc7875b04cbd6e947c713678dde19b5cc4b"
+    },
+    "resource-pause.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/resource-pause.json",
+      "sha256": "65afc61afd451152e65e8b69db9bf18f8194f1ef05f8748709cc84a967a67b66"
+    },
+    "frozen-commands.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/frozen-commands.json",
+      "sha256": "5ad58f89952c888653e258fdd1fe91ca4981e20be17a0f020fe9de37af0f06da"
+    },
+    "detached-audit-status.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/detached-audit-status.json",
+      "sha256": "9b71efe2cdc56dc41e96fc4f4828c23a919a5c1d14f162335f8ff92a5bea91b7"
+    },
+    "setup-command-attempts.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/setup-command-attempts.json",
+      "sha256": "5eedea96fabe84a6e349be861af29539738b4c4e9335548de99ecf3dfb344608"
+    },
+    "duplicate-replay-attempts.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/duplicate-replay-attempts.json",
+      "sha256": "e5cbc23a0e3af408fe462bf775ea8e49fa23e0d3c9e0272a259187d70480c1c0"
+    },
+    "diagnostic-snapshot-stopped.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/diagnostic-snapshot-stopped.json",
+      "sha256": "e61f388cc997b4fc706bf6894775b571b4610925487091b401bee2ef98f7a228"
+    }
+  },
+  "ids": {
+    "minted_this_round": [],
+    "retained_branch_unit": [
+      "SP-400"
+    ]
+  },
+  "terminal_question": "Unchanged; Jared second-deck8.a.",
+  "source_graph_regeneration_command": [
+    "python3",
+    "scripts/pm-regenerate-application-source-graph.py",
+    "--resource",
+    "Plans/browser_event_payloads.schema.json",
+    "53bd77453d0a4d2d941bad5f36f6ac1b0beef16b769a00f31870a1085688a534",
+    "--write"
+  ]
+}

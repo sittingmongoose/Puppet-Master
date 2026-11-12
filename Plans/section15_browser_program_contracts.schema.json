@@ -78,7 +78,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 192,
-      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])",
       "not": {
         "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
       }
@@ -87,14 +87,14 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 512,
-      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*(?![\\s\\S])",
       "not": {
         "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
       }
     },
     "sha256": {
       "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
     },
     "timestamp": {
       "type": "string",
@@ -418,7 +418,7 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 160,
-          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}$"
+          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}(?![\\s\\S])"
         },
         "arguments": {
           "type": "object",
@@ -620,7 +620,7 @@
         },
         "compiler_version": {
           "type": "string",
-          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?![\\s\\S])"
         },
         "compiler_hash": {
           "$ref": "#/$defs/sha256"
@@ -1587,7 +1587,7 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 160,
-          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}$"
+          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}(?![\\s\\S])"
         },
         "idempotency_key": {
           "$ref": "#/$defs/id"
@@ -2261,7 +2261,7 @@
           "maxItems": 64,
           "items": {
             "type": "string",
-            "pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+            "pattern": "^[A-Z][A-Z0-9_]{0,63}(?![\\s\\S])"
           }
         },
         "scoped_credential_refs": {
@@ -3547,7 +3547,7 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 160,
-          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}$"
+          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}(?![\\s\\S])"
         },
         "arguments": {
           "type": "object",
@@ -4512,7 +4512,7 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 160,
-          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}$"
+          "pattern": "^[^\\n\\r\\t`$<>\\\\]{1,160}(?![\\s\\S])"
         },
         "idempotency_key": {
           "$ref": "#/$defs/idApplicationV1"
@@ -4698,7 +4698,7 @@
         },
         "compiler_version": {
           "type": "string",
-          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?![\\s\\S])"
         },
         "compiler_hash": {
           "$ref": "#/$defs/sha256ApplicationV1"
@@ -4751,7 +4751,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 192,
-      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])",
       "not": {
         "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
       }
@@ -4920,7 +4920,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 512,
-      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*(?![\\s\\S])",
       "not": {
         "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
       }
@@ -5064,7 +5064,7 @@
     },
     "sha256ApplicationV1": {
       "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
     },
     "source_spanApplicationV1": {
       "type": "object",
