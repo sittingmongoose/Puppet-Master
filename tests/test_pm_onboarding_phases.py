@@ -386,7 +386,9 @@ class OnboardingStorageTests(unittest.TestCase):
         # plans/ea-storage-retention-20261104): RP-CHAT-THREAD-LIFETIME@1.0.0 materializes the Chat content
         # class. DL-401 and DL-415..DL-421 materialize telemetry plus six no-project policies
         # on 2026-11-05, bringing the total to 35. The family rows pinned above are unchanged.
-        self.assertEqual(len(self.registry["retention_policies"]), 35)
+        # DL-454, DL-455, DL-457, DL-460, DL-463 and DL-464 add six further application policies
+        # the same day, bringing the total to 41.
+        self.assertEqual(len(self.registry["retention_policies"]), 41)
         self.assertEqual(self.storage.validate(self.registry), [])
         failures, counts = GATE.validate_onboarding_storage_contract()
         self.assertEqual(failures, [])
