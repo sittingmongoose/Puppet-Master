@@ -29883,3 +29883,63 @@ negative_constraints:
 - Do not silently reinterpret historical source tiers, old backup values or old Computer model preferences.
 owner_hints: *id001
 ```
+
+### DL-477 - Lost June Rules: Agents Reliability, Dashboard Summary Widgets And Goal Risk Retirement
+
+```yaml
+plan_unit_id: DL-477
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-12, at about 10:25 AM EST, Jared ruled on three June rules from pldg-20260616-002-orchestrator-goal-runtime-flow that the closure re-audit found lost. pm7-build relayed the rulings verbatim (1112155957-694d):
+  1. Agents-page per-agent reliability metric (atom-0069): "Restore it".
+  2. Dashboard summary (atom-0068): "I believe those would be widgets on the dashboards that the user can put on there. Maybe those ones default to on there and the user can remove them."
+  3. GoalRun risk classification at run start (atom-0040, its risk element): "Retire it. Also I wasn't aware of any of this. The goal system was simplified about 2 months ago and replaced a lot of what was there... The goal runs on the model the user had chosen, there shouldn't be checks or anything. That's not how other platforms handle it."
+  Where each lands. Item 1: Plans/FinalGUISpec.md#F3-395 restores the reliability metrics. The Agents page, which is the Agents panel of F3-452 and F3-477, shows for each agent how many of its recorded operations completed, how many failed, crashed or were aborted, how many were retried, and the share that completed, from the OSI-432 coordination records beside its per-agent economics; nothing recorded shows n/a, and the metrics never route, rank, admit, block or choose a model. Only the reliability metric is restored: atom-0069's capability lanes, active assignments, low-end versus high-end role usage and subagent wave participation are not restored by this decision.
+  Item 2: the five June items, active goals, stuck/blocked goals, verification/repair status, certification state and cost/budget warnings, become widgets of the existing board model (DL-186, WS-030). Plans/Widget_System.md#WS-032 adds a Goals source with Active goals and Stuck or blocked goals and a Workflows source with Verification and repair status and Certification state, uses Usage's own widget.alert_thresholds as Cost and budget warnings, and puts all five in the Home board's default set, where the user removes any of them like any other widget; FinalGUISpec Appendix C (C.2, C.4) and F3-395 point to it. Under the current Goal system Goals have no verification, repair or certification, so those two widgets show the status of workflow-owned reviews and certifications (GRS-049, GRS-065), never a Goal's; the Goals widgets read Goal state (GRS-048, GRS-050, GRS-051). Home is the board because it is the default, pinned dashboard where the June rule's project-level summary belongs; Metrics, Monitoring, custom dashboards and Agents are unchanged, and a Home board already saved is not rewritten.
+  Item 3: the pre-run classification of a GoalRun's risk by a high-end Goal Controller is retired on purpose, not lost. No risk tier, risk rating, risk register or pre-run classification is restored for Goals: a Goal runs on the model of the chat that started it, with no Goal-owned checks (GRS-049, DL-475), and the closure re-audit's not_supported rows for atom-0040's risk element close as retired by this decision. The atom's GoalRun owner, GRS-026, is retired with the Goal-leftover sweep (DL-478); this decision edits no GRS unit.
+  This decision adds no widget model, board, engine, layout key, command or event, does not reseal governance and claims no native implementation.
+gui_related: true
+gui_classification_reason: Records the restored Agents reliability metric, the default-on removable Dashboard summary widgets, and the retirement of Goal risk classification.
+depends_on: [GRS-048, GRS-049, WS-030]
+unblocks: [F3-395, WS-032]
+acceptance_criteria:
+  - "The three rulings are preserved verbatim as relayed, with the ellipsis of ruling 3 as relayed."
+  - "F3-395 shows per-agent reliability metrics on the Agents page as display only, and restores no other atom-0069 element."
+  - "WS-032 places the five widgets in the existing catalogue and the Home board's default set, removable, with verification/repair status and certification state shown as workflow-owned, never a Goal's."
+  - "No risk tier, rating, register or pre-run risk classification exists for Goals, and atom-0040's risk element is recorded as retired on purpose."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: lost_rule_restoration_and_goal_check_drift
+reasoning_tier: high
+context_scope: lost_rules_dl477_20261112
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Widget_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/lost-rules/BRIEF.md
+  - "pm7-build 1112155957-694d (Jared, 2026-11-12, about 10:25 AM EST)"
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0040
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0068
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0069
+preserved_exact_tokens:
+  - "Restore it"
+  - "I believe those would be widgets on the dashboards that the user can put on there. Maybe those ones default to on there and the user can remove them."
+  - "Retire it."
+  - "The goal runs on the model the user had chosen, there shouldn't be checks or anything. That's not how other platforms handle it."
+  - "reliability metrics"
+  - "active goals"
+  - "certification state"
+negative_constraints:
+  - Do not restore a Goal risk tier, risk rating, risk register or pre-run classification.
+  - Do not show verification, repair or certification state as a Goal's.
+  - Do not add a widget model, board, engine, layout key, command or event for the Dashboard summary.
+  - Do not let reliability metrics route, rank, admit, block or choose a model.
+owner_hints: [Plans/FinalGUISpec.md, Plans/Widget_System.md, Plans/Goal_Runtime_System.md]
+```
