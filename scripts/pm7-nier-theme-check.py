@@ -51,11 +51,11 @@ def check():
     inventory_document = read("settings_inventory.json")
     inventory = inventory_document["settings"]
     settings = {row["id"]: row for row in inventory}
-    require(len(inventory) == len(settings) == 1024, "Q22 plus reviewed refresh and placement Settings identities differ")
+    require(len(inventory) == len(settings) == 981, "Q22 plus reviewed refresh and placement Settings identities differ")
     require(settings["general.visual.theme"]["options"] == labels, "Theme is not the ten ordered variants")
     require(settings["general.visual.theme"]["default"] == "Basic Dark", "Q22 changed the factory seed")
     require("general.visual.nier-mode" not in settings, "Retired override remains an active row")
-    require(inventory_document.get("retired_input_ids") == ["general.visual.nier-mode"],
+    require("general.visual.nier-mode" in inventory_document.get("retired_input_ids", []),
             "Q22 retired migration input catalog differs")
     require(not set(inventory_document.get("retired_input_ids", [])) & set(settings),
             "Retired migration metadata revives an active row")

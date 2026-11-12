@@ -33,6 +33,18 @@
     },
     {
       "$ref": "#/$defs/ArtifactExportResult"
+    },
+    {
+      "$ref": "#/$defs/MemoryNoteAddRequestV1"
+    },
+    {
+      "$ref": "#/$defs/MemoryNoteEditRequestV1"
+    },
+    {
+      "$ref": "#/$defs/MemoryNoteDeleteRequestV1"
+    },
+    {
+      "$ref": "#/$defs/MemoryNoteMutationResultV1"
     }
   ],
   "$defs": {
@@ -1941,6 +1953,264 @@
         "Unverified",
         "Verified",
         "Discarded"
+      ]
+    },
+    "MemoryNoteScopeV1": {
+      "description": "Explicit logical note availability in the existing local memory architecture; app_thread stays private and is not an Every project alias. Actual actor/source authority is rechecked by the owner.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "scope_kind": {
+              "const": "project"
+            },
+            "project_id": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          },
+          "required": [
+            "scope_kind",
+            "project_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "scope_kind": {
+              "const": "user"
+            },
+            "user_id": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          },
+          "required": [
+            "scope_kind",
+            "user_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "scope_kind": {
+              "const": "app_thread"
+            },
+            "user_id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "thread_id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "execution_host_id": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          },
+          "required": [
+            "scope_kind",
+            "user_id",
+            "thread_id",
+            "execution_host_id"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "MemoryNoteAddRequestV1": {
+      "type": "object",
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.note_add_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.add"
+        },
+        "memory_scope": {
+          "$ref": "#/$defs/MemoryNoteScopeV1"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "memory_scope",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "MemoryNoteEditRequestV1": {
+      "type": "object",
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.note_edit_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.edit"
+        },
+        "memory_scope": {
+          "$ref": "#/$defs/MemoryNoteScopeV1"
+        },
+        "gist_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "title": {
+          "type": "string"
+        },
+        "destination_scope": {
+          "$ref": "#/$defs/MemoryNoteScopeV1"
+        }
+      },
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "memory_scope",
+        "gist_id",
+        "expected_revision",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "MemoryNoteDeleteRequestV1": {
+      "type": "object",
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.note_delete_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.delete"
+        },
+        "memory_scope": {
+          "$ref": "#/$defs/MemoryNoteScopeV1"
+        },
+        "gist_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "memory_scope",
+        "gist_id",
+        "expected_revision"
+      ],
+      "additionalProperties": false
+    },
+    "MemoryNoteMutationResultV1": {
+      "type": "object",
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.note_mutation_result.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.chat.memory.add",
+            "cmd.chat.memory.edit",
+            "cmd.chat.memory.delete"
+          ]
+        },
+        "committed": {
+          "type": "boolean"
+        },
+        "memory_scope": {
+          "$ref": "#/$defs/MemoryNoteScopeV1"
+        },
+        "gist_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "error_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "committed",
+        "memory_scope",
+        "gist_id",
+        "revision",
+        "receipt_ref",
+        "error_reason"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "receipt_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "error_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "receipt_ref": {
+                "type": "null"
+              },
+              "error_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
       ]
     }
   }

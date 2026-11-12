@@ -20047,7 +20047,7 @@
     },
     "catalog.chat_memory_edit": {
       "ui_element_id": "catalog.chat_memory_edit",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
+      "ui_location": "Memory page in Settings and the same page as a sheet over the initiating chat",
       "ui_command_id": "cmd.chat.memory.edit",
       "handler_location": "handlers::chat::memory_edit",
       "expected_event_types": [],
@@ -20061,15 +20061,16 @@
         "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
         "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
         "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475: Owner-checked canonical MemoryGist edit commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "Remain handler_unavailable until native dispatcher, owner source, permission and durable write evidence exists."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.memory.edit; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_memory_edit.availability",
       "disabled_reason_projection": "state.commands.chat_memory_edit.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Projects refresh: cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Owner-checked canonical MemoryGist edit commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
         "receipt_or_event_refs": [
           "cmd.chat.memory.edit.dispatch_receipt"
         ]
@@ -20094,7 +20095,7 @@
         {
           "test_id": "wiring.catalog.chat_memory_edit.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Owner-checked canonical MemoryGist edit commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
         },
         {
           "test_id": "wiring.catalog.chat_memory_edit.accessibility",
@@ -20114,14 +20115,14 @@
         {
           "test_id": "fb.catalog.chat_memory_edit.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "Owner-checked canonical MemoryGist edit commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.memory.edit records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert exact owner durable mutation receipt, refusal before stale/denied/helper write, no premature success and no unregistered EventRecord."
       ],
-      "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
+      "request_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteEditRequestV1",
+      "result_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1"
     },
     "catalog.chat_memory_pin": {
       "ui_element_id": "catalog.chat_memory_pin",
@@ -91447,6 +91448,164 @@
       "event_test_requirements": [
         "Assert cmd.teacher.guide.do_it records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
+    },
+    "catalog.chat_memory_add": {
+      "ui_element_id": "catalog.chat_memory_add",
+      "ui_location": "Memory page in Settings and the same page as a sheet over the initiating chat",
+      "ui_command_id": "cmd.chat.memory.add",
+      "handler_location": "handlers::chat::memory_add",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.memory.add must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.memory.add must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.memory.add dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.memory.add must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.memory.add must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
+        "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
+        "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
+        "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475: Owner-checked canonical MemoryGist add commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "Remain handler_unavailable until native dispatcher, owner source, permission and durable write evidence exists."
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.memory.add; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_memory_add.availability",
+      "disabled_reason_projection": "state.commands.chat_memory_add.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner-checked canonical MemoryGist add commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "receipt_or_event_refs": [
+          "cmd.chat.memory.add.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_memory_add exposes a stable role/name/description matching cmd.chat.memory.add.",
+        "keyboard_access": "catalog.chat_memory_add is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_memory_add preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_memory_add surfaces state.commands.chat_memory_add.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_memory_add.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.memory.add reaches handlers::chat::memory_add with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_add.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_memory_add.availability and disabled copy reads state.commands.chat_memory_add.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_add.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Owner-checked canonical MemoryGist add commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_add.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_add.scope_target",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Positive real app/Project target and original exact Project replay; negative wrong scope/Computer/root/owner target; no native proof from fixtures."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_add.currentness",
+          "evidence_kind": "state_projection",
+          "requirement": "Changed preview/source/target/permission/Stop/pause or stale caller return refuses before effect, and repeated original key/digest cannot repeat effects."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_add.owner_return",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Owner-checked canonical MemoryGist add commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert exact owner durable mutation receipt, refusal before stale/denied/helper write, no premature success and no unregistered EventRecord."
+      ],
+      "request_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteAddRequestV1",
+      "result_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1"
+    },
+    "catalog.chat_memory_delete": {
+      "ui_element_id": "catalog.chat_memory_delete",
+      "ui_location": "Memory page in Settings and the same page as a sheet over the initiating chat",
+      "ui_command_id": "cmd.chat.memory.delete",
+      "handler_location": "handlers::chat::memory_delete",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.memory.delete must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.memory.delete must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.memory.delete dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.memory.delete must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.memory.delete must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
+        "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
+        "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
+        "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
+        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable.",
+        "DL-475: Owner-checked canonical MemoryGist delete commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "Remain handler_unavailable until native dispatcher, owner source, permission and durable write evidence exists."
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.memory.delete; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_memory_delete.availability",
+      "disabled_reason_projection": "state.commands.chat_memory_delete.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner-checked canonical MemoryGist delete commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success.",
+        "receipt_or_event_refs": [
+          "cmd.chat.memory.delete.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_memory_delete exposes a stable role/name/description matching cmd.chat.memory.delete.",
+        "keyboard_access": "catalog.chat_memory_delete is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_memory_delete preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_memory_delete surfaces state.commands.chat_memory_delete.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_memory_delete.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.memory.delete reaches handlers::chat::memory_delete with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_delete.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_memory_delete.availability and disabled copy reads state.commands.chat_memory_delete.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_delete.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Owner-checked canonical MemoryGist delete commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
+        },
+        {
+          "test_id": "wiring.catalog.chat_memory_delete.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_delete.scope_target",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Positive real app/Project target and original exact Project replay; negative wrong scope/Computer/root/owner target; no native proof from fixtures."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_delete.currentness",
+          "evidence_kind": "state_projection",
+          "requirement": "Changed preview/source/target/permission/Stop/pause or stale caller return refuses before effect, and repeated original key/digest cannot repeat effects."
+        },
+        {
+          "test_id": "fb.catalog.chat_memory_delete.owner_return",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Owner-checked canonical MemoryGist delete commit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here. Delete persists anti-resurrection suppression before success."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert exact owner durable mutation receipt, refusal before stale/denied/helper write, no premature success and no unregistered EventRecord."
+      ],
+      "request_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteDeleteRequestV1",
+      "result_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1"
     }
   }
 }

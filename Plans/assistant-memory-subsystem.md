@@ -1,4 +1,4 @@
-# Assistant-Only Memory Subsystem (Canonical SSOT)
+# Memory Subsystem (Canonical SSOT)
 
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
@@ -14,11 +14,11 @@
 
 ## 0. Scope and boundary
 
-This document is the canonical SSOT for **Assistant-only** memory continuity in Puppet Master.
+This document is the canonical SSOT for Memory in Puppet Master. DL-475 supersedes the earlier Assistant-only read prohibition; the Assistant remains writer/manager. The two visible levels are This project and Every project. This project binds the actual Project; Every project holds explicitly personal reusable notes for the same user. Availability selection is explicit; no relabeling, automatic promotion of private Project/app-thread content, or implied cross-Project sharing is allowed. Screen secrets and preserve source restrictions before broadening; if safe separation cannot be established, refuse the broader save. Private app-thread notes remain in their existing thread-only scope and never enter Every project by migration.
 It defines the data model, verification gates, triggers, indexing, and GUI interactions for Assistant memory.
 It does not replace or redefine system event storage (`seglog` SSOT), system KV/search projections (`redb` + Tantivy), or the shared rules pipeline.
 
-Rule: Assistant memory MUST be implemented as a continuity subsystem for an explicitly bound Project or thread-private app working set (AMS-054) that is separate from rules assembly and separate from non-Assistant agent execution paths.
+Rule: Assistant memory MUST be implemented as a continuity subsystem for an explicitly bound Project or thread-private app working set (AMS-054) that is separate from rules assembly and operational child continuity. Authorized helper read access follows AMS-026; private app-thread working sets remain private.
 ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts
 
 Rule: Assistant memory MUST run fully in-process and local-only; it MUST NOT require external servers and MUST NOT use SQLite.
@@ -27,7 +27,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.storage, ContractName:Plan
 ---
 
 <a id="1-capability-boundary"></a>
-## 1. Capability boundary (Assistant-only)
+## 1. Capability boundary (owner writes, authorized reads)
 
 ### 1.1 Memory provider contract
 
@@ -36,7 +36,7 @@ Canonical interface names:
 - `RealMemoryProvider` (Assistant-enabled implementation)
 - `NullMemoryProvider` (returns empty results; no-op writes)
 
-The scope-aware successor of the logical MemoryProvider contract takes an exact `memory_scope` rather than an implicit focused Project: either a real Project, or application scope with null Project and actual Computer/thread under AMS-054. Original Project callers/codecs remain compatibility inputs to that owner adapter.
+The scope-aware successor of the logical MemoryProvider contract takes an exact `memory_scope` rather than an implicit focused Project: a real Project, explicitly personal Every project notes for the same user, or private application scope with null Project and actual Computer/thread under AMS-054. Original Project callers/codecs remain compatibility inputs to that owner adapter.
 - `build_capsule(memory_scope, now) -> WorkingSetCapsule`
 - `search(memory_scope, query, now, k) -> Vec<MemoryGistHit>`
 - `record_access(memory_scope, gist_id, now) -> Result`
@@ -47,13 +47,13 @@ The scope-aware successor of the logical MemoryProvider contract takes an exact 
 Rule: Compile-time wiring MUST route Assistant prompt assembly to `RealMemoryProvider`.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/assistant-chat-design.md#17-context--truncation
 
-Rule: Orchestrator, Interviewer, requirements builder, and all subagents MUST be wired to `NullMemoryProvider` and MUST receive no Assistant memory payload.
+Rule: The Assistant remains the writer and manager. Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the user's personal notes at Every project, read-only, subject to current source, actor, phase and permission restrictions. This grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/agent-rules-context.md
 
-Rule: Assistant memory MUST NOT be forwarded to subagents through prompts, tools, handoffs, or hidden metadata.
+Rule: Authorized helper reads and their derivatives MUST retain source restrictions across prompts, tools, handoffs and metadata. Private app-thread and denied Project material MUST NOT be forwarded.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, PolicyRule:Decision_Policy.md§2
 
-### 1.2 Assistant-only evidence boundary
+### 1.2 Pointer evidence boundary
 
 Assistant memory uses lightweight **EvidenceRefs** to point at verification evidence stored elsewhere (seglog refs, artifacts, commits). It does not become an evidence store.
 
@@ -96,7 +96,7 @@ Canonical record: `MemoryGist`.
 Required fields (conceptual contract):
 - Identity/scope:
   - `id` (stable ID)
-  - exact scope envelope: a real `project_id` for Project memory, or `project_id=null` with actual Computer/thread identity for AMS-054 app memory; physical separation never substitutes for explicit access identity
+  - exact scope envelope: actual Project identity, explicit same-user personal Every project identity, or `project_id=null` with actual Computer/thread identity for private AMS-054 app memory; physical separation never substitutes for explicit access identity
 - Classification:
   - `kind` (see §9.2)
   - `status` (e.g., `Active` | `Done` | `Archived`)
@@ -107,7 +107,7 @@ Required fields (conceptual contract):
   - `created_at`, `updated_at`
   - `last_access_at`, `access_count`
 - Decay:
-  - `half_life_days` (kind-defaulted; user-adjustable)
+  - `half_life_days` (kind-defaulted; internal behavior, no user editor)
 - Labels:
   - `tags[]`
 - Claims-first content:
@@ -133,7 +133,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memo
 Rule: When `kind`, `tags[]`, or `claims[]` change, any cached derived fields (`summary`, `embed_text_hash`, `text_hash`) MUST be invalidated and re-derived before the next capsule assembly or retrieval injection.
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#4-retrieval-indexes, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract
 
-Rule: GUI memory operations (list/edit/verify/pin/delete/half-life edits) MUST read and write `MemoryGist` records in `assistant_memory.redb` as the canonical source.
+Rule: Memory list/Add/Edit/Delete MUST read and write canonical `MemoryGist` records in `assistant_memory.redb`; no Verify/Pin/half-life controls remain. Add writes a new MemoryGist from plain text with inferred kind and optional title at an explicit allowed level; Edit writes a new version of the targeted note and preserves its prior evidence/history. Delete is a real canonical deletion, distinct from Discard or archival: after one confirmation, commit a durable scoped suppression/tombstone, exclude the note and stale versions from all future read/injection paths, and invalidate derived indexes/caches. Old transcripts, trigger replay, reindex, import and backup merge cannot silently recreate that deleted note; only a new explicit user save can deliberately replace its suppression. Delete all in the list menu names and confirms the exact selected scope and target set, using the same deletion owner. Failed writes never report success. Canonical assistant_memory.redb commits precede asynchronous derived indexes.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/storage-plan.md
 
 ### 3.2 `claims[]` model (atomic statements)
@@ -243,7 +243,7 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection
 #### 5.2.1 AutoRunBoundary (end of each Assistant run)
 
 AutoRunBoundary is invoked exactly once at the end of each Assistant run (after the Assistant produces its final response).
-It builds **one** candidate gist from run artifacts (changed paths, tool results, commits/PR refs when present) so that memory gists can be generated even when no Plans/SSOT files were touched.
+It evaluates useful reusable lessons from run artifacts; zero candidates is valid. Temporary task progress stays in Working Notebook and a finished reply is not itself a reason to save a note.
 
 Rule: AutoRunBoundary MUST run at the end of each Assistant run and MUST create/update at most **one** `MemoryGist` per run with `source = AutoRunBoundary`.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
@@ -254,7 +254,7 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#4-retrieval-indexe
 Rule: AutoRunBoundary MUST evaluate deterministic verification rules (§5.3) before persisting and MUST set `verification_state` to `Verified` when the rules are satisfied; otherwise it persists as `Unverified`.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
 
-Rule: AutoRunBoundary MUST respect `assistant.memory.auto_save_unverified`; when disabled, it MUST drop newly-proposed gists that remain `Unverified` at the end of the run.
+Rule: Useful candidate retention is built in; `assistant.memory.auto_save_unverified` is compatibility lineage, not a user setting. All automatic capture respects memory off and durable deletion suppression.
 ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
 
 #### 5.2.2 AutoMilestone (promotion event; less frequent)
@@ -282,7 +282,7 @@ Rule: Auto-generated gists MUST be saved as `Unverified` unless they satisfy a d
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers
 
 Rule: A gist MUST transition to `Verified` if and only if ALL of the following hold:
-1) Every claim in the gist has per-claim support evaluated per AMS-044: each claim carries `evidence_support` — the subset of `evidence_refs[]` evaluated as supporting that claim — plus a `support_scope` covering what the supporting references actually establish, and a `currentness` value of `current` (see the Claim-Level Verification and Notebook Boundary Addendum, AMS-044/AMS-045).
+1) Explicit user preferences/statements are supported only as what that user said by the actual saved input/version under AMS-044, not as proof of an independent world fact. Other claims have per-claim support evaluated per AMS-044: each claim carries `evidence_support` — the subset of `evidence_refs[]` evaluated as supporting that claim — plus a `support_scope` covering what the supporting references actually establish, and a `currentness` value of `current` (see the Claim-Level Verification and Notebook Boundary Addendum, AMS-044/AMS-045).
 2) Each supporting reference is resolvable and structurally valid: a `Commit { hash, repo_id }` EvidenceRef resolves in `repo_id`; a `TestRun`/`BuildRun` EvidenceRef has `exit_code == 0`; a `PlanRef` EvidenceRef resolves to an accepted Plan record.
 3) The support is semantically scoped to the claim: a commit supports only claims about that commit's existence/content; a successful test or build supports only claims within the tested scope; a valid artifact hash supports only claims about that artifact. Reference existence alone is structural evidence, never semantic proof of the attached claim text; a claim whose support does not cover it remains `Unverified`.
 4) No relevant validity context for the claims is stale: evidence invalidated or superseded per AMS-045 blocks the transition until revalidated.
@@ -292,13 +292,13 @@ ContractRef: SchemaID:pm.evidence.schema.v1, PolicyRule:Decision_Policy.md§2, C
 > Superseded 2026-09-05 (claim-level verification, AMS-044/AMS-045): the earlier sufficient conditions — "Verified if ANY holds: (1) a `Commit { hash, repo_id }` EvidenceRef; (2) a successful `TestRun`/`BuildRun` (`exit_code == 0`) plus a `Diff` or `Artifact` EvidenceRef; (3) a `PlanRef` EvidenceRef with `kind` `Decision`/`Constraint`/`Preference`/`Landmine`" — are retained here as historical lineage only. They are no longer operative on their own: satisfying one of them establishes at most the structural-validity precondition (condition 2 above) and never the per-claim support, scope, or currentness conditions (1, 3, 4). Builders MUST implement this section as amended, not the retired existence-only rule.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#claim-level-verification-and-notebook-boundary-addendum-2026-09-05, PolicyRule:Decision_Policy.md§2
 
-Rule: A gist MUST NOT transition to `Verified` if `evidence_refs[]` is empty.
+Rule: World facts need scoped resolvable EvidenceRefs; explicit user preferences/statements use their actual user input/version as support only for what the user said. No arbitrary fact becomes proven by being typed.
 ContractRef: SchemaID:pm.evidence.schema.v1, PolicyRule:Decision_Policy.md§2
 
-Rule: Legacy gists already labeled `Verified` under the retired existence-only rule are not blindly grandfathered: on their next verification evaluation — injection selection, evidence event, or explicit revalidation — they MUST be reassessed under the amended rule above; unsupported claims stop auto-injecting as current and surface as unverified with their support state, while original history and the state change remain explainable per AMS-045. A gist whose last evaluation was `Verified` but which holds a claim whose `currentness` is now `needs_revalidation` or `source_unavailable` MAY be shown under the display group "Out of date" until it is reassessed; that group is derived at read time from `currentness`, its gists do not auto-inject, and it is never stored, emitted or offered as a fourth `verification_state` (AMS-047).
+Rule: Legacy gists already labeled `Verified` under the retired existence-only rule are not blindly grandfathered: on their next verification evaluation — injection selection, evidence event, or explicit revalidation — they MUST be reassessed under the amended rule above; unsupported claims stop auto-injecting as current and surface as unverified with their support state, while original history and the state change remain explainable per AMS-045. A gist with `needs_revalidation` or `source_unavailable` support stops auto-injecting until reassessed. Its support state is internal; the Out of date user group is retired and never becomes a fourth verification_state.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#claim-level-verification-and-notebook-boundary-addendum-2026-09-05
 
-Rule: Manual “Verify” MUST re-run the amended deterministic validation above — including per-claim support, scope, and currentness checks; if validation fails, the gist MUST remain `Unverified` unless `assistant.memory.allow_manual_verify_without_evidence = true` (default `false`).
+Rule: Verification is internal. The manual Verify feature and allow_manual_verify_without_evidence bypass are retired, including old true values. Internal verification_state remains Unverified, Verified or Discarded. Automatic world-fact use requires current per-claim evidence_support and support_scope under AMS-044/045; unrelated tests, commits and artifacts do not prove arbitrary text. Explicit user-added or edited preferences and personal statements take a user-statement support path tied to the actual input and version: they establish what the user said or prefers, not independent world truth. No user Verify chore or manual/pinned bypass exists. Edits invalidate summaries, hashes, embeddings and eligibility before the next use; recheck automatically, preserving prior versions and evidence.
 ContractRef: ConfigKey:assistant.memory.allow_manual_verify_without_evidence, PolicyRule:Decision_Policy.md§2
 
 Rule: “Discard” MUST set `verification_state = Discarded` and discarded gists MUST be excluded from automatic injection and default search results.
@@ -324,7 +324,7 @@ Inject the tiny **Working Set capsule** for the exact Project, or only the calli
 Rule: Capsule assembly MUST enforce the configured hard token cap before sending any Assistant prompt.
 ContractRef: ConfigKey:assistant.memory.capsule_budget_tokens, ContractName:Plans/assistant-chat-design.md#17-context--truncation
 
-Rule: Capsule assembly MUST exclude `verification_state != Verified` gists by default. `Unverified` gists MAY be included only by explicit user action; pinned Unverified gists MUST NOT be auto-included unless `assistant.memory.allow_pinned_unverified_injection = true`.
+Rule: Automatic use requires current scoped support. Explicit user statements are supported as such through AMS-014/044. No pinned or manual bypass permits unsupported auto-injection.
 ContractRef: ConfigKey:assistant.memory.allow_pinned_unverified_injection, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
 
 ### 6.2 Per-turn retrieval injection (Verified-only)
@@ -338,7 +338,7 @@ Per user turn:
 Rule: Retrieval injection MUST NOT exceed max item count and MUST remain summary-only.
 ContractRef: ConfigKey:assistant.memory.max_injected_items_per_turn, ContractName:Plans/assistant-memory-subsystem.md#3-data-model
 
-Rule: Retrieval injection MUST exclude `verification_state != Verified` gists by default. `Unverified` gists MAY be included only by explicit user action; pinned Unverified gists MUST NOT be auto-included unless `assistant.memory.allow_pinned_unverified_injection = true`.
+Rule: Automatic use requires current scoped support. Explicit user statements are supported as such through AMS-014/044. No pinned or manual bypass permits unsupported auto-injection.
 ContractRef: ConfigKey:assistant.memory.allow_pinned_unverified_injection, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
 
 ### 6.3 Activation scoring (required components)
@@ -364,36 +364,15 @@ ContractRef: ConfigKey:assistant.memory.done_decay_multiplier, ContractName:Plan
 <a id="7-gui-and-maintenance"></a>
 ## 7. GUI + maintenance operations
 
-### 7.1 GUI: Gist Review panel
+### 7.1 GUI: Memory
 
-The GUI must expose a **Gist Review** panel adjacent to (and visually consistent with) Memory + Rules panels.
+Memory is one page shared by Settings and the chat Memory button/wand, which opens that same page as a sheet. It contains one Remember things between chats switch, search, a level filter All / This project / Every project, a saved-note list, Add memory, Edit, Delete and a collapsed Archived group. Search includes archived notes. Each note shows its text, level and updated time; title is optional. A quiet total list count is allowed only on the page. No verification queue, confidence/source fields, ranking, pins, conflicts, memory preview, source controls, maintenance workbench or second Notes it took document appears. Instructions, History/privacy, chat capacity controls and Run limits stay in their owners outside Memory.
 
-Display name (2026-09-27, DL-134): on screen the panel and its document are titled "Notes it took" under Memory; "Gist Review" stays the canonical name in records, command ids, routes and these Plans, and the display name never replaces it there (AMS-049).
+Ordinary replies show no memory-use citations, chips, counts, previews, ribbons, permanent glyphs, named-note hovers, verification/proof badges or Followed/Missed rule receipts. Only after a durable successful save may one brief Saved to memory · View line appear; View opens the same Memory page as a sheet with the saved note highlighted. A requested save/edit may receive one brief success confirmation. Failed or no-op saves earn no successful-save line; ordinary task evidence and links remain available.
 
-Required UI elements:
-- List of gists with filters: kind/status/tags/pinned/verification_state; the list MAY group rows under the display group "Out of date" (§5.3, AMS-047), which is never a `verification_state` filter value
-- Default review filter on panel open: `verification_state = Unverified`
-- Toggle: `assistant.memory.auto_save_unverified` (default `true`)
-- Actions per gist: `Verify`, `Edit`, `Pin/Unpin`, `Discard`; `Edit` is a versioned claim edit through `cmd.chat.memory.edit` that resets the gist to `Unverified` (AMS-048)
-- Half-life controls: per-gist half-life override and per-kind default editor; the per-kind editor is a link to the Settings row `memory.retention.half-life-by-kind` through `cmd.settings.open`, with no memory command of its own (AMS-048)
-- “What’s in capsule now” preview with token estimate and hard-cap indicator; its display label is "See what your next message will include" (AMS-047)
-- Maintenance actions: rebuild lexical index, rebuild semantic index, verification sweep, dedup sweep, monthly summarize/compress, prune/archive low-activation gists, compact and reclaim (a link to storage health, opened through `cmd.settings.open_storage_retention`; memory defines no command of its own)
-- Export: one Export action exports the gists, the taught rules or both through the artifact owner with `cmd.chat.memory.export {scope}` (DL-130, AMS-052)
+Add writes a new MemoryGist from plain text with inferred kind and optional title at an explicit allowed level; Edit writes a new version of the targeted note and preserves its prior evidence/history. Delete is a real canonical deletion, distinct from Discard or archival: after one confirmation, commit a durable scoped suppression/tombstone, exclude the note and stale versions from all future read/injection paths, and invalidate derived indexes/caches. Old transcripts, trigger replay, reindex, import and backup merge cannot silently recreate that deleted note; only a new explicit user save can deliberately replace its suppression. Delete all in the list menu names and confirms the exact selected scope and target set, using the same deletion owner. Failed writes never report success. Canonical assistant_memory.redb commits precede asynchronous derived indexes.
 
-Rule: The Gist Review panel MUST surface verification_state prominently and MUST make “Verify” and “Discard” first-class actions.
-ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, UICommand:cmd.chat.memory.verify, UICommand:cmd.chat.memory.discard
-
-Rule: On panel open, Gist Review MUST default to `verification_state = Unverified`; any non-default filter state MUST be the result of explicit user action.
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, UICommand:cmd.chat.memory.verify, UICommand:cmd.chat.memory.edit, UICommand:cmd.chat.memory.pin, UICommand:cmd.chat.memory.discard, UICommand:cmd.chat.memory.toggle_auto_save_unverified
-
-Rule: Capsule preview MUST report an estimated token count and MUST indicate when truncation occurred due to the configured cap.
-ContractRef: ConfigKey:assistant.memory.capsule_budget_tokens, ContractName:Plans/assistant-chat-design.md#17-context--truncation
-
-Rule: The capsule preview's token count and space meter MUST count memory notes only, against `assistant.memory.capsule_budget_tokens`. Taught rules that ride along with the next message MAY be listed beside the notes, but they come from the rules pipeline and MUST NOT be counted against the memory capsule budget; any figure shown for them names the rules budget it belongs to (Memory is not rules, AMS-018; AMS-047).
-ContractRef: ConfigKey:assistant.memory.capsule_budget_tokens, UICommand:cmd.chat.memory.preview_capsule, ContractName:Plans/assistant-memory-subsystem.md#wand-modules-redesign-addendum-2026-09-27
-
-Rule: In chat, memory is never a card and never a pop-up. A reply that saved a note carries a small "Noted" mark in its meta row that relaxes to the glyph alone after 3 s; a milestone that verifies a note earns one "Verified: …" line, once; a note going out of date makes no chat noise (AMS-047). The one memory event that earns a decision line is a note's proposal to change a rule the user locked, and that rule never changes unless the user changes it (DL-130, AMS-050).
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#wand-modules-redesign-addendum-2026-09-27, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-084, ContractName:Plans/assistant-memory-subsystem.md#AMS-141
 
 ### 7.2 Maintenance operations (deterministic)
 
@@ -403,13 +382,13 @@ Required operations:
 3. Verification sweep: re-evaluate verification_state for all gists
 4. Dedup sweep: merge identical `embed_text_hash` gists (policy-driven; preserve evidence refs)
 5. Monthly summarize/compress: consolidate older low-activation `Note` gists into a monthly `Note` gist (policy-driven; preserve EvidenceRefs)
-6. Prune/archive: archive or delete very low-activation gists (policy-driven; never delete pinned)
+6. Prune/archive: archive-only under DL-402/403/444–447; preserve originals/evidence and exclude pins. Delete is the user's action; all existing holds remain.
 7. Store compaction (amended 2026-10-31, DL-270): follow SP-340's store compaction under the maintenance lease, only while PM is idle and fragmentation passes its threshold: the derived memory redb file is rebuilt, and `assistant_memory.redb` is compacted by copying its live records into a new file swapped in during a brief pause, then the reclaimed bytes are verified. Storage health shows usage, budget, reclaimable bytes and the last compaction (SP-340); the reclaim action is the existing `cmd.storage.compaction.request`, started from there.
 
 Rule: All maintenance operations MUST run in-process and MUST NOT depend on external services.
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/rewrite-tie-in-memo.md
 
-Rule: Maintenance operations MUST be user-invokable in GUI and callable by internal maintenance jobs with explicit success/failure status.
+Rule: Maintenance remains local and in-process, behind the page. Rebuild/recheck recovery uses existing support owners; there is no user cleanup workbench. Monthly summarize/compress and prune/archive are archive-only, preserve originals and EvidenceRefs, and never archive or merge pinned notes. DL-403/444–447 holds remain: approved answers alone do not enable jobs before their application and remaining definition/review/recording approvals. No immediate automatic maintenance is authorized.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
 
 ---
@@ -423,13 +402,13 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestra
 
 ### 8.1 Assistant prompt builder
 
-Assistant uses the real memory subsystem. Assistant memory remains Assistant-only.
+Assistant uses the real memory subsystem as writer/manager. The Assistant remains the writer and manager. Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the user's personal notes at Every project, read-only, subject to current source, actor, phase and permission restrictions. This grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
 ### 8.2 Child-run continuity
 
-Subagents, Interview, Orchestrator, requirements builder, and crew members use `NullMemoryProvider` and receive no Assistant memory payload.
+The Assistant remains the writer and manager. Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the user's personal notes at Every project, read-only, subject to current source, actor, phase and permission restrictions. This grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md
 
@@ -455,7 +434,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 - Physical stores: separate Assistant memory redb + Tantivy + USearch files (per project)
 - Capsule budget: `350` tokens
 - Retrieval injection: max `5` gists/turn, summary-only, Verified-only
-- Subagent access: disabled (always `NullMemoryProvider`)
+- Helpers: read-only current Project and personal Every project notes under AMS-026; denied/disabled reads use `NullMemoryProvider`, private app-thread memory stays private.
 - Auto-save unverified gists: enabled
 
 Rule: These defaults MUST apply without user prompts unless explicitly overridden by a persisted config value.
@@ -505,7 +484,7 @@ ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ConfigKey:assistan
 - `assistant.memory.allow_manual_verify_without_evidence` (default `false`)
 - `assistant.memory.allow_pinned_unverified_injection` (default `false`)
 
-Rule: The ten assistant.memory.* behavior keys resolve deterministically through Settings_System's admitted Everywhere/Computer/optional-Project and narrower levels. Content scope, memory tiers and injection authority remain AMS-054/AMS-046 boundaries; preference inheritance never merges memory.
+Rule: These original owner-key spellings are compatibility lineage. SSYS-040 governs retired-key reads; only memory.retention.enabled remains the live Memory switch. Built-in defaults replace tuning controls and retired bypasses are always false. Preferences never merge memory scopes.
 Gemini CLI provider-native settings set `model.compressionThreshold` default to `0.5`; if PM exposes or stores a `90%` compression threshold for assistant memory behavior, that value is an intentional PM override rather than alignment with provider-native defaults.
 ContractRef: ContractName:Plans/Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout
 
@@ -514,22 +493,14 @@ ContractRef: ContractName:Plans/Decision_Policy.md§2, ContractName:Plans/assist
 <a id="10-acceptance-criteria"></a>
 ## 10. Acceptance criteria (testable)
 
-1. **Assistant-only enforcement:** Assistant calls `RealMemoryProvider`; Orchestrator/Interviewer/requirements/subagents call `NullMemoryProvider`; no memory payload is observable in subagent prompts.
-2. **Verified-only gating:** Capsule and per-turn retrieval inject only `verification_state = Verified` gists by default.
-3. **Unverified save toggle effect:** With `assistant.memory.auto_save_unverified = false`, AutoRunBoundary produces no newly-persisted gists unless they satisfy a `Verified` rule at run end; with it enabled, Unverified gists can be persisted but are not auto-injected.
-4. **Trigger correctness (no plan edits):** AutoRunBoundary runs once per Assistant run and AutoMilestone runs at most once per run; both operate from run artifacts/evidence refs without requiring any edits to Plans/SSOT documents.
-5. **Trigger dedup:** Re-running AutoRunBoundary with identical candidate claim/evidence does not create duplicates (dedup by `embed_text_hash` + normalized EvidenceRefs).
-6. **AutoMilestone idempotence:** AutoMilestone does not reprocess the same `(gist_id, evidence_ref)` more than once.
-7. **GUI Verify enforcement:** Attempting to mark a gist Verified without satisfiable EvidenceRefs is rejected unless `assistant.memory.allow_manual_verify_without_evidence = true`.
-8. **Storage layout:** For a project with memory enabled, the three Assistant-memory paths in §2 are created or loadable (`assistant_memory.redb`, `assistant_memory_index/`, `assistant_memory_vectors.usearch`); no SQLite file is introduced.
-9. **Canonical data model:** Creating/editing/verifying/pinning/discarding a gist updates `assistant_memory.redb` and survives restart.
-10. **Capsule cap enforcement:** Capsule assembly enforces the configured token cap and emits deterministic truncation behavior when over budget; GUI capsule preview shows token estimate and truncation indicator.
-11. **Summary cache coherence:** Editing `claims[]` cannot cause stale cached `summary` text to be injected (cache invalidation required before injection).
-12. **Decay behavior:** Done gists decay faster (`*0.5` half-life) and fall out of activation sooner than equivalent active gists.
-13. **Project isolation:** Switching projects writes handoff to old project and loads capsule for new project without cross-project leakage.
-14. **Index rebuild equivalence:** Full rebuild of Tantivy and USearch indexes from `assistant_memory.redb` yields retrieval results equivalent (within deterministic tie-break rules) to incremental updates under the same data.
-15. **Rules separation:** Rules pipeline output remains unchanged when gists are added/edited; memory appears only in memory injection path.
-16. **Default review filter behavior:** Opening the Gist Review panel defaults to `verification_state = Unverified` until the user explicitly changes filters.
+1. Add writes a new MemoryGist from plain text with inferred kind and optional title at an explicit allowed level; Edit writes a new version of the targeted note and preserves its prior evidence/history. Delete is a real canonical deletion, distinct from Discard or archival: after one confirmation, commit a durable scoped suppression/tombstone, exclude the note and stale versions from all future read/injection paths, and invalidate derived indexes/caches. Old transcripts, trigger replay, reindex, import and backup merge cannot silently recreate that deleted note; only a new explicit user save can deliberately replace its suppression. Delete all in the list menu names and confirms the exact selected scope and target set, using the same deletion owner. Failed writes never report success. Canonical assistant_memory.redb commits precede asynchronous derived indexes.
+2. Internal verification_state remains Unverified, Verified or Discarded. Automatic world-fact use requires current per-claim evidence_support and support_scope under AMS-044/045; unrelated tests, commits and artifacts do not prove arbitrary text. Explicit user-added or edited preferences and personal statements take a user-statement support path tied to the actual input and version: they establish what the user said or prefers, not independent world truth. No user Verify chore or manual/pinned bypass exists. Edits invalidate summaries, hashes, embeddings and eligibility before the next use; recheck automatically, preserving prior versions and evidence.
+3. The Assistant remains the writer and manager. Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the user's personal notes at Every project, read-only, subject to current source, actor, phase and permission restrictions. This grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
+4. Fading reduces a note's influence; archiving retains an old note outside ordinary automatic use; deletion is the user's action. Keep kind half-life defaults and the Done multiplier 0.5 built in, without per-note/per-kind editors or pin controls. Preserve every existing pin protection internally during migration. Archived notes remain searchable and editable; an edit may make one current again only after internal checks. Never treat fade time as deletion permission.
+5. Memory is one page shared by Settings and the chat Memory button/wand, which opens that same page as a sheet. It contains one Remember things between chats switch, search, a level filter All / This project / Every project, a saved-note list, Add memory, Edit, Delete and a collapsed Archived group. Search includes archived notes. Each note shows its text, level and updated time; title is optional. A quiet total list count is allowed only on the page. No verification queue, confidence/source fields, ranking, pins, conflicts, memory preview, source controls, maintenance workbench or second Notes it took document appears. Instructions, History/privacy, chat capacity controls and Run limits stay in their owners outside Memory.
+6. Ordinary replies show no memory-use citations, chips, counts, previews, ribbons, permanent glyphs, named-note hovers, verification/proof badges or Followed/Missed rule receipts. Only after a durable successful save may one brief Saved to memory · View line appear; View opens the same Memory page as a sheet with the saved note highlighted. A requested save/edit may receive one brief success confirmation. Failed or no-op saves earn no successful-save line; ordinary task evidence and links remain available.
+7. Maintenance remains local and in-process, behind the page. Rebuild/recheck recovery uses existing support owners; there is no user cleanup workbench. Monthly summarize/compress and prune/archive are archive-only, preserve originals and EvidenceRefs, and never archive or merge pinned notes. DL-403/444–447 holds remain: approved answers alone do not enable jobs before their application and remaining definition/review/recording approvals. No immediate automatic maintenance is authorized.
+8. Existing local storage, bounded capsule, summary-only injection and rebuild equivalence remain; no stale cached text or deleted note can return after replay/rebuild/restore.
 
 Rule: A change is complete only when all acceptance criteria above are met and verified by deterministic checks.
 ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/assistant-memory-subsystem.md#10-acceptance-criteria
@@ -538,7 +509,7 @@ ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/assista
 
 ## 11. Non-goals
 
-- No memory exposure to non-Assistant agents.
+- No helper writes, helper-owned memory, other-Project access or private app-thread exposure.
 - No replacement of seglog/redb/Tantivy system storage contracts.
 - No external vector DB service.
 - No file-bank style requirement that memory must be markdown-file based.
@@ -549,7 +520,7 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/stora
 ---
 ## 12. Runtime Owner Reference Map
 
-Assistant memory remains Assistant-only, but its design must stay aligned with runtime owner docs through explicit evidence_refs rather than hidden orchestration memory. The memory subsystem reference set includes `Plans/Models_System.md:58-80`, `Plans/Executor_Protocol.md:134-178`, `/Models_System.md:58-80`, `/Executor_Protocol.md:134-178`, `Plans/Crosswalk.md:88-94`, `Plans/storage-plan.md:294`, `Plans/Contracts_V0.md:649`, `Plans/Orchestrator_Page.md:12-13`, `Plans/WorktreeGitImprovement.md:62-66`, `Plans/WorktreeGitImprovement.md:78-80`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31`, `Plans/orchestrator-subagent-integration.md:28-41`, `/Orchestrator_Page.md:12-13`, `/WorktreeGitImprovement.md:62-66`, `/WorktreeGitImprovement.md:78-80`, `/GUI_Rebuild_Requirements_Checklist.md:31`, `/Crosswalk.md:88-94`, `/Contracts_V0.md:649`, `/orchestrator-subagent-integration.md:28-41`, `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Orchestrator_Page.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/orchestrator-subagent-integration.md`, and `Plans/Crosswalk.md`.
+Memory retains owner-controlled writes and authorized helper reads, and its design must stay aligned with runtime owner docs through explicit evidence_refs rather than hidden orchestration memory. The memory subsystem reference set includes `Plans/Models_System.md:58-80`, `Plans/Executor_Protocol.md:134-178`, `/Models_System.md:58-80`, `/Executor_Protocol.md:134-178`, `Plans/Crosswalk.md:88-94`, `Plans/storage-plan.md:294`, `Plans/Contracts_V0.md:649`, `Plans/Orchestrator_Page.md:12-13`, `Plans/WorktreeGitImprovement.md:62-66`, `Plans/WorktreeGitImprovement.md:78-80`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31`, `Plans/orchestrator-subagent-integration.md:28-41`, `/Orchestrator_Page.md:12-13`, `/WorktreeGitImprovement.md:62-66`, `/WorktreeGitImprovement.md:78-80`, `/GUI_Rebuild_Requirements_Checklist.md:31`, `/Crosswalk.md:88-94`, `/Contracts_V0.md:649`, `/orchestrator-subagent-integration.md:28-41`, `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Orchestrator_Page.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/orchestrator-subagent-integration.md`, and `Plans/Crosswalk.md`.
 
 Runtime traceability also depends on `Plans/Tools.md:866-920`, `Plans/Tools.md:1262-1288`, `Plans/Contracts_V0.md:778-806`, `Plans/storage-plan.md:1330-1391`, `Plans/storage-plan.md:1548-1568`, `Plans/Orchestrator_Page.md:1-44`, `Plans/FinalGUISpec.md:2737-2739`, `Plans/human-in-the-loop.md:22-49`, `Plans/UI_Command_Catalog.md:29-90`, `Plans/Executor_Protocol.md:110-175`, `Plans/Orchestrator_Page.md:428-475`, `Plans/UI_Command_Catalog.md:617-622`, `Plans/assistant-chat-design.md:1784`, `Plans/Glossary.md:30-127`, `Plans/FinalGUISpec.md:2092`, `Plans/usage-feature.md:104-127`, `Plans/usage-feature.md:228-242`, `Plans/usage-feature.md:714-720`, `Plans/FinalGUISpec.md`, `Plans/usage-feature.md`, `Plans/human-in-the-loop.md`, `Plans/UI_Command_Catalog.md`, `Plans/GitHub_Integration.md`, and `Plans/assistant-chat-design.md`.
 
@@ -563,7 +534,7 @@ The export/open path and HITL reference set includes `Plans/Contracts_V0.md:55-6
 
 Assistant memory must also preserve post-reconciliation anchors `Plans/FinalGUISpec.md:2924-2928`, `Plans/Orchestrator_Page.md:437-437`, `Plans/assistant-chat-design.md:2233-2240`, `/FinalGUISpec.md:2924-2928`, `/Orchestrator_Page.md:171-171`, `/Orchestrator_Page.md:209-209`, `/Orchestrator_Page.md:230-230`, `/Orchestrator_Page.md:270-270`, `Plans/Glossary.md:30-85`, `Plans/usage-feature.md:694-701`, `Plans/FinalGUISpec.md:728-735`, `/FinalGUISpec.md:728-735`, `/human-in-the-loop.md:22-49`, `Plans/storage-plan.md:322-337`, `Plans/storage-plan.md:941-956`, `/storage-plan.md:322-337`, `/storage-plan.md:941-956`, `/orchestrator-subagent-integration.md:374-391`, `/usage-feature.md:346-389`, `/interview-subagent-integration.md:1686-1698`, `Plans/assistant-chat-design.md:1112-1120`, `/assistant-chat-design.md:1112-1120`, `Plans/Project_Output_Artifacts.md:1-24`, `/Project_Output_Artifacts.md:1-24`, `/Runtime_Artifacts_Panel.md:63-93`, `/interview-subagent-integration.md:1686-1698`, `Plans/orchestrator-subagent-integration.md:379-391`, `/orchestrator-subagent-integration.md:379-391`, `Plans/interview-subagent-integration.md:1692-1698`, `/interview-subagent-integration.md:1692-1698`, `Plans/agent-rules-context.md`, `Plans/LSPSupport.md`, `/LSPSupport.md`, and `/agent-rules-context.md`.
 
-Plan-local obligations in memory are narrow: `plan-local` `/event/command` items belong in canonical state/event/command owners before memory consumes them. `assistant-memory-subsystem`, `assistant-memory-subsystem.md`, `system-prompt`, `newfeatures.md`, and `NullMemoryProvider` remain the durable boundary for memory prohibition versus stateful orchestration. Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in `/checklists/policies` and subsystem plans.
+Plan-local obligations in memory are narrow: `plan-local` `/event/command` items belong in canonical state/event/command owners before memory consumes them. `assistant-memory-subsystem`, `assistant-memory-subsystem.md`, `system-prompt`, `newfeatures.md`, and `NullMemoryProvider` remain historical boundary vocabulary; current authorized reads and denied paths are owned by AMS-026. Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in `/checklists/policies` and subsystem plans.
 
 ## Owner / Consumer Map
 
@@ -631,20 +602,17 @@ plan_unit_id: AMS-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  Assistant Memory remains the canonical Assistant-only memory subsystem SSOT,
-  preserving the document title, compliance posture, status, cross-references,
-  and 2026-02-26 revision packet for Evidence-Backed Gists, MemoryGist plus
-  EvidenceRef, AutoRunBoundary/AutoMilestone, Tantivy/USearch, and the GUI Gist
-  Review panel.
+canonical_text: 'This document owns Memory: reusable facts, preferences, lessons and decisions, learned
+  when useful or saved at the user''s request. MemoryGist, EvidenceRef, AutoRunBoundary/AutoMilestone
+  and existing local Tantivy/USearch storage remain internal contracts. The old Assistant-only title is
+  historical; authorized helper reads follow AMS-026.'
 gui_related: true
 gui_classification_reason: The authority packet names the GUI Gist Review panel and user-visible memory subsystem scope.
 depends_on: []
 unblocks: [AMS-003, AMS-005, AMS-021]
 acceptance_criteria:
-  - The document remains the canonical SSOT for Assistant-only memory behavior.
-  - The 2026-02-26 revision packet is preserved with its named model, trigger, index, and GUI concepts.
-  - Compliance, status, and cross-reference authority remain visible in the source body.
+- Memory is the canonical reusable-note owner, with Assistant writes, authorized helper reads and existing
+  local storage.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -657,8 +625,10 @@ node_compile_hint:
   mode: assistant_memory_ssot_authority
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0001
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0002
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0001
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0002
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant-Only Memory Subsystem (Canonical SSOT)"
   - "Evidence-Backed Gists"
@@ -678,19 +648,25 @@ plan_unit_id: AMS-003
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  Assistant memory is Assistant-only continuity and project state, separate from rules assembly,
-  non-Assistant execution paths, seglog storage, system redb/Tantivy projections, and the shared rules
-  pipeline. AMS-054 adds only a thread-private app working set/capsule; taught public_safe Everywhere
-  rules remain part of the rules pipeline, not shared personal memory.
+canonical_text: Memory remains separate from written Instructions, conversations, Working Notebook task
+  notes, Goal/Plan/ledger state, system seglog/redb and the shared rules pipeline. The two visible levels
+  are This project and Every project. This project binds the actual Project; Every project holds explicitly
+  personal reusable notes for the same user. Availability selection is explicit; no relabeling, automatic
+  promotion of private Project/app-thread content, or implied cross-Project sharing is allowed. Screen
+  secrets and preserve source restrictions before broadening; if safe separation cannot be established,
+  refuse the broader save. Private app-thread notes remain in their existing thread-only scope and never
+  enter Every project by migration. The Assistant remains the writer and manager. Crews, reviews and the
+  chat assistant's other helpers may read the current Project's notes and the user's personal notes at
+  Every project, read-only, subject to current source, actor, phase and permission restrictions. This
+  grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider
+  remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
 gui_related: false
 gui_classification_reason: Scope separation is backend architecture and owner-boundary behavior.
 depends_on: [AMS-002]
 unblocks: [AMS-005, AMS-018, AMS-024]
 acceptance_criteria:
-  - Assistant memory is separate from rules assembly and non-Assistant execution paths.
-  - Assistant memory does not replace or redefine seglog, system redb/Tantivy projections, or the shared rules pipeline.
-  - The storage, DRY, and agent-rules ContractRefs remain preserved.
+- Written rules, conversations, task notes and reusable Memory stay distinct.
+- Project/personal helper reads do not expose private app-thread or other Project memory.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -708,6 +684,8 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16
 - 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant-only"
   - "continuity/project-state subsystem"
@@ -716,7 +694,7 @@ preserved_exact_tokens:
   - "Tantivy"
   - "ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts"
 negative_constraints:
-  - "Assistant memory must not replace or redefine system event storage, system KV/search projections, or the shared rules pipeline."
+- Do not merge private app-thread content into Every project notes.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
   - Plans/storage-plan.md
@@ -773,21 +751,21 @@ plan_unit_id: AMS-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  The memory provider contract defines MemoryProvider, RealMemoryProvider, and
-  NullMemoryProvider, with Assistant prompt assembly routed to real memory and
-  Orchestrator, Interviewer, requirements builder, and subagents routed to null
-  memory with no Assistant memory forwarding.
+canonical_text: MemoryProvider and RealMemoryProvider retain the existing local provider operations with
+  explicit memory scope; Assistant writes stay owner-checked. The Assistant remains the writer and manager.
+  Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the user's
+  personal notes at Every project, read-only, subject to current source, actor, phase and permission restrictions.
+  This grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider
+  remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
 gui_related: false
 gui_classification_reason: Provider routing and no-forwarding rules are runtime wiring behavior.
 depends_on: [AMS-003]
 unblocks: [AMS-018, AMS-024]
 acceptance_criteria:
-  - MemoryProvider, RealMemoryProvider, and NullMemoryProvider remain named interface concepts.
-  - The required logical method surface is preserved.
-  - Assistant prompt assembly routes to RealMemoryProvider.
-  - Orchestrator, Interviewer, requirements builder, and all subagents route to NullMemoryProvider.
-  - Assistant memory is not forwarded through prompts, tools, handoffs, or hidden metadata.
+- Authorized helpers can read current Project notes and the same user's personal notes without mutation
+  authority.
+- Other Project notes and private app-thread memory stay unavailable, including via summaries/handoffs.
+- Original storage, source/currentness, retention and native admission prerequisites remain.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -803,8 +781,9 @@ node_compile_hint:
   mode: memory_provider_capability_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0004
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0005
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0004
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0005
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "MemoryProvider"
   - "RealMemoryProvider"
@@ -813,7 +792,8 @@ preserved_exact_tokens:
   - "search(project_id, query, now, k) -> Vec<MemoryGistHit>"
   - "set_verification_state(project_id, gist_id, verification_state, now) -> Result"
 negative_constraints:
-  - "Assistant memory MUST NOT be forwarded to subagents through prompts, tools, handoffs, or hidden metadata."
+- Do not create helper-owned memory or widen source/phase permissions.
+- Do not expose private app-thread or other Project notes by null scope, known ID or paraphrase.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -874,14 +854,15 @@ plan_unit_id: AMS-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  Project memory retains its separate physical stores assistant_memory.redb, assistant_memory_index
+canonical_text: Project memory retains its separate physical stores assistant_memory.redb, assistant_memory_index
   and assistant_memory_vectors.usearch, with written Project paths resolved through DL-270/SP-015 and
-  atomic Project-switch behavior. AMS-054 adds explicit app custody and thread-keyed access on the
-  work Computer, with separate scope-aware physical keys supplied by storage-plan. Nullable Project
-  never selects another thread or a Project store and creates no JSON/SQLite mirror. system.redb
-  remains the separate Project-state reference, and project switching selects the correct isolated
-  memory view.
+  atomic Project-switch behavior. AMS-054 adds explicit app custody and thread-keyed access on the work
+  Computer, with separate scope-aware physical keys supplied by storage-plan. Nullable Project never selects
+  another thread or a Project store and creates no JSON/SQLite mirror. system.redb remains the separate
+  Project-state reference, and project switching selects the correct isolated memory view. Every project
+  personal notes use an explicit same-user logical partition within the existing local assistant_memory.redb
+  architecture and existing indexes. No new database, service or per-helper store is added; old Project
+  and app-thread codecs remain readable and isolated.
 gui_related: false
 gui_classification_reason: Physical storage paths and project switching are backend storage behavior.
 depends_on: [AMS-004]
@@ -906,6 +887,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0007
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N24/N25
 - 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - ".puppet-master/project/state/assistant_memory.redb"
   - ".puppet-master/project/state/assistant_memory_index/"
@@ -927,10 +909,14 @@ plan_unit_id: AMS-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  MemoryGist is the canonical Assistant memory record, with required identity,
-  classification, verification, time/access, decay, tags, claims,
-  summary/details, evidence, provenance, and embedding/index version fields.
+canonical_text: MemoryGist retains explicit identity/scope, inferred kind, status, legacy pinned protection,
+  internal verification, time/access, built-in half_life_days, claims, summary/details, pointer evidence,
+  provenance and hash/index version fields. The two visible levels are This project and Every project.
+  This project binds the actual Project; Every project holds explicitly personal reusable notes for the
+  same user. Availability selection is explicit; no relabeling, automatic promotion of private Project/app-thread
+  content, or implied cross-Project sharing is allowed. Screen secrets and preserve source restrictions
+  before broadening; if safe separation cannot be established, refuse the broader save. Private app-thread
+  notes remain in their existing thread-only scope and never enter Every project by migration.
 gui_related: false
 gui_classification_reason: MemoryGist field shape is backend data-model behavior.
 depends_on: [AMS-007]
@@ -951,8 +937,9 @@ node_compile_hint:
   mode: memorygist_canonical_record
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0008
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0008
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "MemoryGist"
   - "verification_state"
@@ -978,7 +965,14 @@ plan_unit_id: AMS-009
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Prompt injection uses only Verified gists' derived summary text; details are never auto-injected, and summary/hash caches are deterministic and invalidated when their source fields change.
+canonical_text: 'Prompt injection is bounded and summary-only; details never auto-inject. Internal verification_state
+  remains Unverified, Verified or Discarded. Automatic world-fact use requires current per-claim evidence_support
+  and support_scope under AMS-044/045; unrelated tests, commits and artifacts do not prove arbitrary text.
+  Explicit user-added or edited preferences and personal statements take a user-statement support path
+  tied to the actual input and version: they establish what the user said or prefers, not independent
+  world truth. No user Verify chore or manual/pinned bypass exists. Edits invalidate summaries, hashes,
+  embeddings and eligibility before the next use; recheck automatically, preserving prior versions and
+  evidence.'
 gui_related: false
 gui_classification_reason: Prompt injection and cache invalidation are backend prompt/data behavior.
 depends_on: [AMS-008]
@@ -1000,7 +994,8 @@ node_compile_hint:
   mode: memory_prompt_injection_summary_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Verified"
   - "summary"
@@ -1021,15 +1016,43 @@ plan_unit_id: AMS-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: GUI memory operations for listing, editing, verifying, pinning, deleting, and half-life edits must read and write MemoryGist records in assistant_memory.redb as the canonical source.
+canonical_text: 'Add writes a new MemoryGist from plain text with inferred kind and optional title at
+  an explicit allowed level; Edit writes a new version of the targeted note and preserves its prior evidence/history.
+  Delete is a real canonical deletion, distinct from Discard or archival: after one confirmation, commit
+  a durable scoped suppression/tombstone, exclude the note and stale versions from all future read/injection
+  paths, and invalidate derived indexes/caches. Old transcripts, trigger replay, reindex, import and backup
+  merge cannot silently recreate that deleted note; only a new explicit user save can deliberately replace
+  its suppression. Delete all in the list menu names and confirms the exact selected scope and target
+  set, using the same deletion owner. Failed writes never report success. Canonical assistant_memory.redb
+  commits precede asynchronous derived indexes. Memory is one page shared by Settings and the chat Memory
+  button/wand, which opens that same page as a sheet. It contains one Remember things between chats switch,
+  search, a level filter All / This project / Every project, a saved-note list, Add memory, Edit, Delete
+  and a collapsed Archived group. Search includes archived notes. Each note shows its text, level and
+  updated time; title is optional. A quiet total list count is allowed only on the page. No verification
+  queue, confidence/source fields, ranking, pins, conflicts, memory preview, source controls, maintenance
+  workbench or second Notes it took document appears. Instructions, History/privacy, chat capacity controls
+  and Run limits stay in their owners outside Memory.'
 gui_related: true
 gui_classification_reason: List, edit, verify, pin, delete, and half-life edits are user-visible GUI operations.
 depends_on: [AMS-008]
 unblocks: [AMS-021]
 acceptance_criteria:
-  - GUI memory operations read MemoryGist records from assistant_memory.redb.
-  - GUI memory operations write MemoryGist records back to assistant_memory.redb.
-  - The listed operations include list, edit, verify, pin, delete, and half-life edits.
+- 'Add writes a new MemoryGist from plain text with inferred kind and optional title at an explicit allowed
+  level; Edit writes a new version of the targeted note and preserves its prior evidence/history. Delete
+  is a real canonical deletion, distinct from Discard or archival: after one confirmation, commit a durable
+  scoped suppression/tombstone, exclude the note and stale versions from all future read/injection paths,
+  and invalidate derived indexes/caches. Old transcripts, trigger replay, reindex, import and backup merge
+  cannot silently recreate that deleted note; only a new explicit user save can deliberately replace its
+  suppression. Delete all in the list menu names and confirms the exact selected scope and target set,
+  using the same deletion owner. Failed writes never report success. Canonical assistant_memory.redb commits
+  precede asynchronous derived indexes. Memory is one page shared by Settings and the chat Memory button/wand,
+  which opens that same page as a sheet. It contains one Remember things between chats switch, search,
+  a level filter All / This project / Every project, a saved-note list, Add memory, Edit, Delete and a
+  collapsed Archived group. Search includes archived notes. Each note shows its text, level and updated
+  time; title is optional. A quiet total list count is allowed only on the page. No verification queue,
+  confidence/source fields, ranking, pins, conflicts, memory preview, source controls, maintenance workbench
+  or second Notes it took document appears. Instructions, History/privacy, chat capacity controls and
+  Run limits stay in their owners outside Memory.'
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1043,12 +1066,15 @@ node_compile_hint:
   mode: memorygist_gui_operations_canonical_writes
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "list/edit/verify/pin/delete/half-life edits"
   - "MemoryGist"
   - "assistant_memory.redb"
-negative_constraints: []
+negative_constraints:
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1060,7 +1086,9 @@ plan_unit_id: AMS-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Memory claims are short, single-purpose, independently verifiable and deduplicable statements with stable claim_id, text, and created_at fields.
+canonical_text: Claims remain short single-purpose statements with stable claim_id, text and created_at;
+  infer note kind rather than requiring Rule/Decision/Preference. User statements retain their actual
+  source/version and limited support scope; task progress remains in Working Notebook.
 gui_related: false
 gui_classification_reason: Claims shape is backend data-model behavior.
 depends_on: [AMS-008]
@@ -1081,7 +1109,8 @@ node_compile_hint:
   mode: memory_claims_atomic_model
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0010
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0010
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "claims[]"
   - "claim_id"
@@ -1189,17 +1218,21 @@ plan_unit_id: AMS-014
 unit_type: validation_rule
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Memory injection eligibility is Verified by default; verification_state is Unverified, Verified, or Discarded, and a gist transitions to Verified only when deterministic evidence rules pass.
+canonical_text: 'Internal verification_state remains Unverified, Verified or Discarded. Automatic world-fact
+  use requires current per-claim evidence_support and support_scope under AMS-044/045; unrelated tests,
+  commits and artifacts do not prove arbitrary text. Explicit user-added or edited preferences and personal
+  statements take a user-statement support path tied to the actual input and version: they establish what
+  the user said or prefers, not independent world truth. No user Verify chore or manual/pinned bypass
+  exists. Edits invalidate summaries, hashes, embeddings and eligibility before the next use; recheck
+  automatically, preserving prior versions and evidence.'
 gui_related: false
 gui_classification_reason: Verification rules are backend validation and prompt-eligibility behavior.
 depends_on: [AMS-006, AMS-008, AMS-011]
 unblocks: [AMS-015, AMS-016, AMS-018, AMS-019]
 acceptance_criteria:
-  - Only verification_state = Verified gists are eligible for capsule and retrieval injection by default.
-  - Verification states remain Unverified, Verified, and Discarded.
-  - A gist transitions to Verified only when one of the deterministic evidence rules holds.
-  - A gist never transitions to Verified when evidence_refs is empty.
-  - Discarded gists are excluded from automatic injection and default search results.
+- Only current scoped support permits automatic use; user statements establish user statements, never
+  independent world facts.
+- Edits invalidate derived content and preserve audit history; no manual/pinned verification bypass remains.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1213,9 +1246,10 @@ node_compile_hint:
   mode: memory_verification_rules
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0016
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0017
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0021
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0016
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0017
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0021
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "verification_state"
   - "Unverified"
@@ -1225,13 +1259,12 @@ preserved_exact_tokens:
   - "exit_code == 0"
   - "assistant.memory.allow_manual_verify_without_evidence"
 negative_constraints:
-  - "A gist MUST NOT transition to `Verified` if `evidence_refs[]` is empty."
-  - "Discarded gists MUST be excluded from automatic injection and default search results."
+- Do not treat an unrelated test, commit or artifact as proof of an arbitrary claim.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
 
-Display pointer (2026-09-27): "Out of date" is a display group over these three states for Verified gists whose claim support went stale, never a fourth state; see AMS-047.
+Historical display pointer retired by DL-475: currentness is internal; see AMS-047.
 
 ### AMS-015 - AutoRunBoundary Memory Trigger
 
@@ -1240,16 +1273,21 @@ plan_unit_id: AMS-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: AutoRunBoundary runs exactly once at Assistant run end, creates or updates at most one gist, deduplicates by embed_text_hash plus normalized EvidenceRefs, verifies deterministically, and respects assistant.memory.auto_save_unverified.
+canonical_text: AutoRunBoundary evaluates once at Assistant run end, persists at most one useful reusable
+  candidate, deduplicates by embed_text_hash and normalized evidence, honors deletion suppression and
+  the memory-off switch, and applies internal verification. A reply ending is an evaluation opportunity,
+  never a reason to manufacture a note. Temporary task progress belongs in Working Notebook. auto_save_unverified
+  is built-in candidate handling, not a live toggle.
 gui_related: false
 gui_classification_reason: AutoRunBoundary is an Assistant run-end backend trigger.
 depends_on: [AMS-014]
 unblocks: [AMS-016]
 acceptance_criteria:
-  - AutoRunBoundary runs once at the end of each Assistant run.
-  - AutoRunBoundary creates or updates at most one MemoryGist per run.
-  - Candidate deduplication uses embed_text_hash plus normalized EvidenceRefs.
-  - Unverified persistence respects assistant.memory.auto_save_unverified.
+- AutoRunBoundary evaluates once at Assistant run end, persists at most one useful reusable candidate,
+  deduplicates by embed_text_hash and normalized evidence, honors deletion suppression and the memory-off
+  switch, and applies internal verification. A reply ending is an evaluation opportunity, never a reason
+  to manufacture a note. Temporary task progress belongs in Working Notebook. auto_save_unverified is
+  built-in candidate handling, not a live toggle.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1262,8 +1300,9 @@ node_compile_hint:
   mode: autorunboundary_memory_trigger
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0018
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0019
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0018
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0019
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "AutoRunBoundary"
   - "exactly once"
@@ -1272,7 +1311,7 @@ preserved_exact_tokens:
   - "normalized EvidenceRefs"
   - "assistant.memory.auto_save_unverified"
 negative_constraints:
-  - "AutoRunBoundary must not create multiple gists for a single Assistant run."
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1284,16 +1323,19 @@ plan_unit_id: AMS-016
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: AutoMilestone is an idempotent promotion trigger rate-limited to once per run, deduplicated per gist/evidence pair, able to create or promote one Outcome gist, and ordered before AutoRunBoundary persistence.
+canonical_text: AutoMilestone evaluates commits, PRs, tests/builds/lint, artifacts or GUI done signals
+  for useful reusable content, not automatic milestone summaries. It is idempotent, deduplicated by gist/evidence,
+  at most once per run and before AutoRunBoundary persistence; it may promote/create at most one useful
+  Outcome gist and never resaves deleted material from old chats.
 gui_related: false
 gui_classification_reason: AutoMilestone trigger ordering and idempotence are backend runtime behavior.
 depends_on: [AMS-014, AMS-015]
 unblocks: [AMS-017]
 acceptance_criteria:
-  - AutoMilestone is idempotent per gist_id and evidence_ref pair.
-  - AutoMilestone is rate-limited to at most once per run.
-  - AutoMilestone may create or promote one Outcome gist per run.
-  - AutoMilestone executes before AutoRunBoundary persistence when triggered in a run.
+- AutoMilestone evaluates commits, PRs, tests/builds/lint, artifacts or GUI done signals for useful reusable
+  content, not automatic milestone summaries. It is idempotent, deduplicated by gist/evidence, at most
+  once per run and before AutoRunBoundary persistence; it may promote/create at most one useful Outcome
+  gist and never resaves deleted material from old chats.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1306,7 +1348,8 @@ node_compile_hint:
   mode: automilestone_memory_trigger
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0020
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0020
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "AutoMilestone"
   - "(gist_id, evidence_ref)"
@@ -1314,7 +1357,7 @@ preserved_exact_tokens:
   - "Outcome"
   - "before AutoRunBoundary persistence"
 negative_constraints:
-  - "AutoMilestone must not reprocess the same gist/evidence pair more than once."
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1326,14 +1369,15 @@ plan_unit_id: AMS-017
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: User confirmation of done through a GUI action is a valid AutoMilestone milestone source alongside tests, commits, PRs, and artifacts.
+canonical_text: A GUI done action may trigger AutoMilestone evaluation alongside tests/commits/PRs/artifacts,
+  but is not evidence of every claim and does not by itself justify saving any memory.
 gui_related: true
 gui_classification_reason: User confirms done via GUI action is a user-visible trigger source.
 depends_on: [AMS-016]
 unblocks: []
 acceptance_criteria:
-  - User confirms done via GUI action remains a valid AutoMilestone milestone source.
-  - The GUI source does not replace other milestone sources such as tests, commits, PRs, or artifacts.
+- A GUI done action may trigger AutoMilestone evaluation alongside tests/commits/PRs/artifacts, but is
+  not evidence of every claim and does not by itself justify saving any memory.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1347,10 +1391,12 @@ node_compile_hint:
   mode: automilestone_gui_done_source
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0020
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0020
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "user confirms “done” via GUI action"
-negative_constraints: []
+negative_constraints:
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1362,7 +1408,10 @@ plan_unit_id: AMS-018
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Memory is continuity and project state, not rules; the always-loaded capsule uses a default 350-token hard cap, fixed section order, and Verified-only eligibility by default.
+canonical_text: Memory is not rules. Keep the existing 350-token capsule ceiling and fixed section order
+  as internal limits, with only authorized current eligible summaries, including the same user's explicitly
+  personal Every project notes. Private app-thread capsules stay thread-bound. No capsule preview or rule-count
+  companion is exposed.
 gui_related: false
 gui_classification_reason: Capsule assembly and prompt boundaries are backend prompt behavior.
 depends_on: [AMS-003, AMS-005, AMS-009, AMS-014]
@@ -1387,8 +1436,9 @@ node_compile_hint:
   mode: memory_capsule_injection_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0022
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0023
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0022
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0023
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Memory is continuity and project state. Memory is not rules."
   - "350"
@@ -1404,7 +1454,7 @@ owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
 
-Preview pointer (2026-09-27): the capsule preview counts notes only against this budget; taught rules shown beside them are never counted against it; see AMS-047.
+DL-475 retires the capsule preview. Memory and rules still have separate internal budgets.
 
 ### AMS-019 - Per Turn Memory Retrieval Injection
 
@@ -1413,17 +1463,17 @@ plan_unit_id: AMS-019
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Per-turn retrieval injection runs lexical and semantic search, merges and reranks results, injects up to the default five gists, and remains summary-only and Verified-only unless explicitly allowed by configuration or user action.
+canonical_text: Per-turn retrieval performs lexical and semantic search, internal reranking and at most
+  five eligible derived summaries. Details never auto-inject; no user action or legacy pinned/verification
+  setting bypasses current support or source permissions. Memory off prevents memory save/use.
 gui_related: false
 gui_classification_reason: Retrieval injection is backend prompt assembly behavior.
 depends_on: [AMS-012, AMS-014, AMS-018]
 unblocks: [AMS-020]
 acceptance_criteria:
-  - Per-turn retrieval executes Tantivy lexical search plus USearch semantic search.
-  - Retrieval results are merged and reranked.
-  - Default max injected gists per turn remains five.
-  - Retrieval injection is summary-only.
-  - Retrieval injection excludes non-Verified gists by default.
+- Per-turn retrieval performs lexical and semantic search, internal reranking and at most five eligible
+  derived summaries. Details never auto-inject; no user action or legacy pinned/verification setting bypasses
+  current support or source permissions. Memory off prevents memory save/use.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1436,7 +1486,8 @@ node_compile_hint:
   mode: per_turn_memory_retrieval_injection
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0024
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0024
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Tantivy"
   - "USearch"
@@ -1444,7 +1495,7 @@ preserved_exact_tokens:
   - "summary-only"
   - "Verified-only"
 negative_constraints:
-  - "Retrieval injection MUST NOT exceed max item count and MUST remain summary-only."
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1456,7 +1507,12 @@ plan_unit_id: AMS-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Activation scoring includes pinned boost, kind/status weighting, recency decay, access signals, and BM25 plus ANN retrieval blend; Done status applies a 0.5 half-life multiplier.
+canonical_text: Internal activation keeps BM25/ANN blend, legacy pinned protection/boost, kind/status,
+  recency and access signals. Fading reduces a note's influence; archiving retains an old note outside
+  ordinary automatic use; deletion is the user's action. Keep kind half-life defaults and the Done multiplier
+  0.5 built in, without per-note/per-kind editors or pin controls. Preserve every existing pin protection
+  internally during migration. Archived notes remain searchable and editable; an edit may make one current
+  again only after internal checks. Never treat fade time as deletion permission.
 gui_related: false
 gui_classification_reason: Activation scoring is backend retrieval/ranking behavior.
 depends_on: [AMS-012, AMS-019]
@@ -1477,7 +1533,8 @@ node_compile_hint:
   mode: memory_activation_scoring
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0025
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0025
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "pinned"
   - "kind/status weighting"
@@ -1498,16 +1555,46 @@ plan_unit_id: AMS-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: The GUI exposes a Gist Review panel adjacent to Memory and Rules panels, with filters, default Unverified review filter, auto-save toggle, gist actions, half-life controls, capsule preview, and maintenance actions.
+canonical_text: 'Memory is one page shared by Settings and the chat Memory button/wand, which opens that
+  same page as a sheet. It contains one Remember things between chats switch, search, a level filter All
+  / This project / Every project, a saved-note list, Add memory, Edit, Delete and a collapsed Archived
+  group. Search includes archived notes. Each note shows its text, level and updated time; title is optional.
+  A quiet total list count is allowed only on the page. No verification queue, confidence/source fields,
+  ranking, pins, conflicts, memory preview, source controls, maintenance workbench or second Notes it
+  took document appears. Instructions, History/privacy, chat capacity controls and Run limits stay in
+  their owners outside Memory. Add writes a new MemoryGist from plain text with inferred kind and optional
+  title at an explicit allowed level; Edit writes a new version of the targeted note and preserves its
+  prior evidence/history. Delete is a real canonical deletion, distinct from Discard or archival: after
+  one confirmation, commit a durable scoped suppression/tombstone, exclude the note and stale versions
+  from all future read/injection paths, and invalidate derived indexes/caches. Old transcripts, trigger
+  replay, reindex, import and backup merge cannot silently recreate that deleted note; only a new explicit
+  user save can deliberately replace its suppression. Delete all in the list menu names and confirms the
+  exact selected scope and target set, using the same deletion owner. Failed writes never report success.
+  Canonical assistant_memory.redb commits precede asynchronous derived indexes. One short help sentence
+  explains that saved notes can be browsed, edited or deleted and older notes fade and may be archived.
+  Editing availability uses an explicit owner-checked destination scope under AMS-141; a displayed level
+  never masquerades as a completed move.'
 gui_related: true
-gui_classification_reason: Gist Review panel, filters, actions, toggles, and previews are user-visible GUI requirements.
+gui_classification_reason: Defines the shared Memory page and note actions.
 depends_on: [AMS-010, AMS-014, AMS-018]
 unblocks: [AMS-023]
 acceptance_criteria:
-  - Gist Review appears adjacent to Memory and Rules panels.
-  - Panel filters include kind, status, tags, pinned, and verification_state.
-  - Opening the panel defaults to verification_state = Unverified until explicit user action changes filters.
-  - Verify, Edit, Pin/Unpin, Discard, half-life controls, capsule preview, and maintenance actions are exposed.
+- 'Memory is one page shared by Settings and the chat Memory button/wand, which opens that same page as
+  a sheet. It contains one Remember things between chats switch, search, a level filter All / This project
+  / Every project, a saved-note list, Add memory, Edit, Delete and a collapsed Archived group. Search
+  includes archived notes. Each note shows its text, level and updated time; title is optional. A quiet
+  total list count is allowed only on the page. No verification queue, confidence/source fields, ranking,
+  pins, conflicts, memory preview, source controls, maintenance workbench or second Notes it took document
+  appears. Instructions, History/privacy, chat capacity controls and Run limits stay in their owners outside
+  Memory. Add writes a new MemoryGist from plain text with inferred kind and optional title at an explicit
+  allowed level; Edit writes a new version of the targeted note and preserves its prior evidence/history.
+  Delete is a real canonical deletion, distinct from Discard or archival: after one confirmation, commit
+  a durable scoped suppression/tombstone, exclude the note and stale versions from all future read/injection
+  paths, and invalidate derived indexes/caches. Old transcripts, trigger replay, reindex, import and backup
+  merge cannot silently recreate that deleted note; only a new explicit user save can deliberately replace
+  its suppression. Delete all in the list menu names and confirms the exact selected scope and target
+  set, using the same deletion owner. Failed writes never report success. Canonical assistant_memory.redb
+  commits precede asynchronous derived indexes.'
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1522,9 +1609,11 @@ node_compile_hint:
   mode: gist_review_panel
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0026
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0026
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0027
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Gist Review"
   - "Memory + Rules panels"
@@ -1536,7 +1625,8 @@ preserved_exact_tokens:
   - "Discard"
   - "What's in capsule now"
 negative_constraints:
-  - "Any non-default filter state must be the result of explicit user action."
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1548,15 +1638,29 @@ plan_unit_id: AMS-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Memory maintenance operations include Tantivy rebuild, USearch rebuild, verification sweep, dedup sweep, monthly summarize/compress, and prune/archive, all in-process with no external services and pinned gists protected from deletion.
+canonical_text: 'Maintenance remains local and in-process, behind the page. Rebuild/recheck recovery uses
+  existing support owners; there is no user cleanup workbench. Monthly summarize/compress and prune/archive
+  are archive-only, preserve originals and EvidenceRefs, and never archive or merge pinned notes. DL-403/444–447
+  holds remain: approved answers alone do not enable jobs before their application and remaining definition/review/recording
+  approvals. No immediate automatic maintenance is authorized. Fading reduces a note''s influence; archiving
+  retains an old note outside ordinary automatic use; deletion is the user''s action. Keep kind half-life
+  defaults and the Done multiplier 0.5 built in, without per-note/per-kind editors or pin controls. Preserve
+  every existing pin protection internally during migration. Archived notes remain searchable and editable;
+  an edit may make one current again only after internal checks. Never treat fade time as deletion permission.'
 gui_related: false
 gui_classification_reason: Maintenance operation semantics are backend storage/index behavior.
 depends_on: [AMS-004, AMS-013]
 unblocks: [AMS-023]
 acceptance_criteria:
-  - Required maintenance operations are preserved.
-  - Maintenance operations run in-process and do not depend on external services.
-  - Prune/archive never deletes pinned gists.
+- 'Maintenance remains local and in-process, behind the page. Rebuild/recheck recovery uses existing support
+  owners; there is no user cleanup workbench. Monthly summarize/compress and prune/archive are archive-only,
+  preserve originals and EvidenceRefs, and never archive or merge pinned notes. DL-403/444–447 holds remain:
+  approved answers alone do not enable jobs before their application and remaining definition/review/recording
+  approvals. No immediate automatic maintenance is authorized. Fading reduces a note''s influence; archiving
+  retains an old note outside ordinary automatic use; deletion is the user''s action. Keep kind half-life
+  defaults and the Done multiplier 0.5 built in, without per-note/per-kind editors or pin controls. Preserve
+  every existing pin protection internally during migration. Archived notes remain searchable and editable;
+  an edit may make one current again only after internal checks. Never treat fade time as deletion permission.'
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1570,7 +1674,8 @@ node_compile_hint:
   mode: memory_maintenance_operations
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Rebuild Tantivy index"
   - "Rebuild USearch index"
@@ -1579,8 +1684,7 @@ preserved_exact_tokens:
   - "Monthly summarize/compress"
   - "Prune/archive"
 negative_constraints:
-  - "All maintenance operations MUST run in-process and MUST NOT depend on external services."
-  - "Prune/archive must never delete pinned gists."
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1592,15 +1696,23 @@ plan_unit_id: AMS-023
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Memory maintenance operations are user-invokable in the GUI and callable by internal maintenance jobs with explicit success and failure status.
+canonical_text: 'Maintenance remains local and in-process, behind the page. Rebuild/recheck recovery uses
+  existing support owners; there is no user cleanup workbench. Monthly summarize/compress and prune/archive
+  are archive-only, preserve originals and EvidenceRefs, and never archive or merge pinned notes. DL-403/444–447
+  holds remain: approved answers alone do not enable jobs before their application and remaining definition/review/recording
+  approvals. No immediate automatic maintenance is authorized. Internal operations retain truthful success/failure
+  state; storage health and real-failure recovery stay with their existing owners.'
 gui_related: true
 gui_classification_reason: User-invokable GUI maintenance actions and success/failure status are visible UI behavior.
 depends_on: [AMS-021, AMS-022]
 unblocks: []
 acceptance_criteria:
-  - Maintenance operations are user-invokable in GUI.
-  - Internal maintenance jobs can call maintenance operations.
-  - Both GUI and internal invocations expose explicit success/failure status.
+- 'Maintenance remains local and in-process, behind the page. Rebuild/recheck recovery uses existing support
+  owners; there is no user cleanup workbench. Monthly summarize/compress and prune/archive are archive-only,
+  preserve originals and EvidenceRefs, and never archive or merge pinned notes. DL-403/444–447 holds remain:
+  approved answers alone do not enable jobs before their application and remaining definition/review/recording
+  approvals. No immediate automatic maintenance is authorized. Internal operations retain truthful success/failure
+  state; storage health and real-failure recovery stay with their existing owners.'
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1614,12 +1726,14 @@ node_compile_hint:
   mode: memory_maintenance_gui_invocation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "user-invokable in GUI"
   - "internal maintenance jobs"
   - "explicit success/failure status"
-negative_constraints: []
+negative_constraints:
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1631,7 +1745,12 @@ plan_unit_id: AMS-024
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Assistant memory remains separate from child-run continuity, crew shared state, and context-shaping systems; detailed integration behavior starts in the next batch.
+canonical_text: Memory supplies reusable notes; child-run records and crew shared state supply operational
+  continuity. The Assistant remains the writer and manager. Crews, reviews and the chat assistant's other
+  helpers may read the current Project's notes and the user's personal notes at Every project, read-only,
+  subject to current source, actor, phase and permission restrictions. This grants no other Project access,
+  helper-owned memory or access to private app-thread memory. NullMemoryProvider remains the denied/disabled
+  path; read-only access cannot call upsert, delete or verification mutations.
 gui_related: false
 gui_classification_reason: Integration boundary is backend owner/consumer scope.
 depends_on: [AMS-003, AMS-005]
@@ -1656,7 +1775,8 @@ node_compile_hint:
   mode: memory_integration_boundary_intro
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0029
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0029
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant memory is intentionally separate from child-run continuity, crew shared state, and context-shaping systems."
 negative_constraints:
@@ -1672,15 +1792,21 @@ plan_unit_id: AMS-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Assistant prompt builder uses the real memory subsystem while Assistant memory remains Assistant-only.
+canonical_text: Assistant prompt assembly uses RealMemoryProvider with bounded current summary-only selection;
+  written rules remain in the rules pipeline. The Assistant remains the writer and manager. Crews, reviews
+  and the chat assistant's other helpers may read the current Project's notes and the user's personal
+  notes at Every project, read-only, subject to current source, actor, phase and permission restrictions.
+  This grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider
+  remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
 gui_related: false
 gui_classification_reason: Prompt builder routing is backend prompt assembly behavior.
 depends_on: [AMS-024]
 unblocks: [AMS-026]
 acceptance_criteria:
-  - Assistant uses the real memory subsystem.
-  - Assistant memory remains Assistant-only.
-  - Prompt Pipeline, Assistant Chat, and storage ContractRefs are preserved.
+- Authorized helpers can read current Project notes and the same user's personal notes without mutation
+  authority.
+- Other Project notes and private app-thread memory stay unavailable, including via summaries/handoffs.
+- Original storage, source/currentness, retention and native admission prerequisites remain.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1696,11 +1822,14 @@ node_compile_hint:
   mode: assistant_prompt_builder_memory_routing
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0030
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0030
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant uses the real memory subsystem."
   - "Assistant memory remains Assistant-only."
-negative_constraints: []
+negative_constraints:
+- Do not create helper-owned memory or widen source/phase permissions.
+- Do not expose private app-thread or other Project notes by null scope, known ID or paraphrase.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1712,15 +1841,20 @@ plan_unit_id: AMS-026
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Subagents, Interview, Orchestrator, requirements builder, and crew members use NullMemoryProvider and receive no Assistant memory payload.
+canonical_text: The Assistant remains the writer and manager. Crews, reviews and the chat assistant's
+  other helpers may read the current Project's notes and the user's personal notes at Every project, read-only,
+  subject to current source, actor, phase and permission restrictions. This grants no other Project access,
+  helper-owned memory or access to private app-thread memory. NullMemoryProvider remains the denied/disabled
+  path; read-only access cannot call upsert, delete or verification mutations.
 gui_related: false
 gui_classification_reason: NullMemoryProvider routing is backend runtime wiring behavior.
 depends_on: [AMS-005, AMS-025]
 unblocks: [AMS-027]
 acceptance_criteria:
-  - Subagents use NullMemoryProvider.
-  - Interview, Orchestrator, requirements builder, and crew members receive no Assistant memory payload.
-  - Tools, Personas, and Prompt Pipeline ContractRefs are preserved.
+- Authorized helpers can read current Project notes and the same user's personal notes without mutation
+  authority.
+- Other Project notes and private app-thread memory stay unavailable, including via summaries/handoffs.
+- Original storage, source/currentness, retention and native admission prerequisites remain.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1736,12 +1870,14 @@ node_compile_hint:
   mode: non_assistant_nullmemoryprovider_enforcement
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0031
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0031
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "NullMemoryProvider"
   - "receive no Assistant memory payload"
 negative_constraints:
-  - "Non-Assistant actors must not receive Assistant memory payload."
+- Do not create helper-owned memory or widen source/phase permissions.
+- Do not expose private app-thread or other Project notes by null scope, known ID or paraphrase.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1872,14 +2008,22 @@ plan_unit_id: AMS-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Core memory defaults preserve separate Assistant memory redb, Tantivy, and USearch stores, 350-token capsule budget, max five retrieved gists, summary-only Verified-only injection, disabled subagent access through NullMemoryProvider, and enabled auto-save for unverified gists.
+canonical_text: Retain separate canonical assistant_memory.redb and rebuildable Tantivy/USearch indexes,
+  the internal 350-token capsule and five-note retrieval limits, current supported summary-only injection
+  and useful unverified candidate retention. The Assistant remains the writer and manager. Crews, reviews
+  and the chat assistant's other helpers may read the current Project's notes and the user's personal
+  notes at Every project, read-only, subject to current source, actor, phase and permission restrictions.
+  This grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider
+  remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
 gui_related: false
 gui_classification_reason: Core defaults are backend configuration defaults.
 depends_on: [AMS-029]
 unblocks: [AMS-031, AMS-032, AMS-033]
 acceptance_criteria:
-  - Core defaults apply without user prompts unless overridden by persisted config.
-  - Physical store, capsule budget, retrieval injection, subagent access, and auto-save defaults are preserved.
+- Authorized helpers can read current Project notes and the same user's personal notes without mutation
+  authority.
+- Other Project notes and private app-thread memory stay unavailable, including via summaries/handoffs.
+- Original storage, source/currentness, retention and native admission prerequisites remain.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1892,7 +2036,8 @@ node_compile_hint:
   mode: core_memory_defaults
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0034
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0034
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "350"
   - "max `5` gists/turn"
@@ -1901,7 +2046,8 @@ preserved_exact_tokens:
   - "NullMemoryProvider"
   - "Auto-save unverified gists: enabled"
 negative_constraints:
-  - "Defaults must not prompt the user unless explicitly overridden by persisted config."
+- Do not create helper-owned memory or widen source/phase permissions.
+- Do not expose private app-thread or other Project notes by null scope, known ID or paraphrase.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1913,15 +2059,23 @@ plan_unit_id: AMS-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Half-life defaults by kind preserve the complete kind table, require unset half_life_days to resolve to the kind default, and apply the Done status multiplier of 0.5 for activation scoring.
+canonical_text: Fading reduces a note's influence; archiving retains an old note outside ordinary automatic
+  use; deletion is the user's action. Keep kind half-life defaults and the Done multiplier 0.5 built in,
+  without per-note/per-kind editors or pin controls. Preserve every existing pin protection internally
+  during migration. Archived notes remain searchable and editable; an edit may make one current again
+  only after internal checks. Never treat fade time as deletion permission. Unset half_life_days still
+  resolves to the existing full kind table in section 9.2.
 gui_related: false
 gui_classification_reason: Half-life defaults and decay multipliers are backend scoring configuration.
 depends_on: [AMS-029, AMS-030]
 unblocks: []
 acceptance_criteria:
-  - All kind/default_half_life_days rows remain preserved.
-  - Unset half_life_days resolves to the table default for the kind.
-  - Done status applies multiplier 0.5 to half-life for activation scoring.
+- Fading reduces a note's influence; archiving retains an old note outside ordinary automatic use; deletion
+  is the user's action. Keep kind half-life defaults and the Done multiplier 0.5 built in, without per-note/per-kind
+  editors or pin controls. Preserve every existing pin protection internally during migration. Archived
+  notes remain searchable and editable; an edit may make one current again only after internal checks.
+  Never treat fade time as deletion permission. Unset half_life_days still resolves to the existing full
+  kind table in section 9.2.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1934,7 +2088,8 @@ node_compile_hint:
   mode: kind_half_life_defaults
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0035
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0035
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "CurrentThread"
   - "Blocker"
@@ -1947,7 +2102,8 @@ preserved_exact_tokens:
   - "Landmine"
   - "status = Done"
   - "0.5"
-negative_constraints: []
+negative_constraints:
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -1959,15 +2115,23 @@ plan_unit_id: AMS-032
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Verification defaults set new gists to Unverified, default injection eligibility to Verified-only, pinned-Unverified auto-injection to false, auto-save unverified to true, and manual verify without evidence to false.
+canonical_text: 'Internal verification_state remains Unverified, Verified or Discarded. Automatic world-fact
+  use requires current per-claim evidence_support and support_scope under AMS-044/045; unrelated tests,
+  commits and artifacts do not prove arbitrary text. Explicit user-added or edited preferences and personal
+  statements take a user-statement support path tied to the actual input and version: they establish what
+  the user said or prefers, not independent world truth. No user Verify chore or manual/pinned bypass
+  exists. Edits invalidate summaries, hashes, embeddings and eligibility before the next use; recheck
+  automatically, preserving prior versions and evidence. allow_manual_verify_without_evidence and allow_pinned_unverified_injection
+  are always false, including when old stored values were true; auto_save_unverified remains internal
+  candidate handling.'
 gui_related: false
 gui_classification_reason: Verification defaults are backend configuration and prompt eligibility rules.
 depends_on: [AMS-014, AMS-029, AMS-030]
 unblocks: []
 acceptance_criteria:
-  - New gists default to Unverified.
-  - Verified-only auto-injection remains default even when unverified auto-save is enabled.
-  - Pinned Unverified auto-injection and manual verify without evidence default to false.
+- Only current scoped support permits automatic use; user statements establish user statements, never
+  independent world facts.
+- Edits invalidate derived content and preserve audit history; no manual/pinned verification bypass remains.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1980,7 +2144,8 @@ node_compile_hint:
   mode: verification_default_configuration
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0036
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0036
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Unverified"
   - "Verified-only"
@@ -1988,7 +2153,7 @@ preserved_exact_tokens:
   - "assistant.memory.auto_save_unverified = true"
   - "assistant.memory.allow_manual_verify_without_evidence = false"
 negative_constraints:
-  - "Verified-only auto-injection must remain the default behavior even when unverified auto-save is enabled."
+- Do not treat an unrelated test, commit or artifact as proof of an arbitrary claim.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -2000,19 +2165,23 @@ plan_unit_id: AMS-033
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  Assistant memory preserves all assistant.memory.* behavior keys and resolves them deterministically
-  through the single Settings resolver at admitted Everywhere, Computer, optional Project and existing
-  narrower scopes. Resolving preferences does not merge memory tiers, stores, capsules or private
-  content across threads/Projects.
+canonical_text: Only memory.retention.enabled remains the live Memory switch, resolved by the existing
+  Settings ladder. The other retired memory tuning keys have compatibility reads only under SSYS-040;
+  initial built-in defaults retain capsule 350, maximum five summaries, existing kind half-lives and Done
+  multiplier 0.5. Old assistant.memory.* owner spellings remain migration lineage, not parallel knobs
+  or authority to merge stores. Old source-off/privacy choices migrate to equal or stricter Permissions
+  read restrictions before access, never silently enabling sources.
 gui_related: false
 gui_classification_reason: Memory config keys and project-scoped resolution are backend configuration behavior.
 depends_on: [AMS-029, AMS-030]
 unblocks: [AMS-034]
 acceptance_criteria:
-- All existing assistant.memory config keys and defaults remain.
-- No-project behavior resolves without a Project step; Computer ceilings and narrower-context policy stay explicit.
-- Shared preferences cannot make another chat's gists or a Project ledger available.
+- Only memory.retention.enabled remains the live Memory switch, resolved by the existing Settings ladder.
+  The other retired memory tuning keys have compatibility reads only under SSYS-040; initial built-in
+  defaults retain capsule 350, maximum five summaries, existing kind half-lives and Done multiplier 0.5.
+  Old assistant.memory.* owner spellings remain migration lineage, not parallel knobs or authority to
+  merge stores. Old source-off/privacy choices migrate to equal or stricter Permissions read restrictions
+  before access, never silently enabling sources.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2029,6 +2198,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16
 - 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "assistant.memory.enabled"
   - "assistant.memory.capsule_budget_tokens"
@@ -2040,7 +2210,8 @@ preserved_exact_tokens:
   - "assistant.memory.auto_save_unverified"
   - "assistant.memory.allow_manual_verify_without_evidence"
   - "assistant.memory.allow_pinned_unverified_injection"
-negative_constraints: []
+negative_constraints:
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -2092,16 +2263,22 @@ plan_unit_id: AMS-035
 unit_type: validation_rule
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Backend acceptance criteria cover provider routing, Verified-only gating, unverified-save behavior, trigger correctness and deduplication, storage layout, canonical data model persistence, summary cache coherence, decay, project isolation, index rebuild equivalence, rules separation, and deterministic completion.
+canonical_text: Backend acceptance covers durable Add/Edit/Delete, user-statement support without world-fact
+  promotion, cache invalidation, meaningful-only triggers, deduplication and deletion suppression across
+  old transcripts/replay/rebuild/restore. Check automatic fading, archive preservation, legacy pin protection,
+  maintenance holds, memory-off save/use refusal, correct Project plus personal helper reads, denied mutations,
+  other-Project exclusion and private app-thread separation. Existing local storage/index rebuild equivalence
+  and separate rules budgets remain.
 gui_related: false
 gui_classification_reason: These acceptance criteria validate backend memory behavior and persistence.
 depends_on: [AMS-014, AMS-015, AMS-016, AMS-030, AMS-031, AMS-032, AMS-033]
 unblocks: []
 acceptance_criteria:
-  - Acceptance criteria 1 through 6 are preserved for provider routing, gating, triggers, and deduplication.
-  - Acceptance criteria 8 through 9 are preserved for storage layout and canonical data model persistence.
-  - Acceptance criteria 11 through 15 are preserved for cache coherence, decay, project isolation, rebuild equivalence, and rules separation.
-  - The completion rule requires deterministic verification of all acceptance criteria.
+- Backend acceptance covers durable Add/Edit/Delete, user-statement support without world-fact promotion,
+  cache invalidation, meaningful-only triggers, deduplication and deletion suppression across old transcripts/replay/rebuild/restore.
+  Check automatic fading, archive preservation, legacy pin protection, maintenance holds, memory-off save/use
+  refusal, correct Project plus personal helper reads, denied mutations, other-Project exclusion and private
+  app-thread separation. Existing local storage/index rebuild equivalence and separate rules budgets remain.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2115,7 +2292,8 @@ node_compile_hint:
   mode: backend_memory_acceptance_criteria
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0038
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0038
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant-only enforcement"
   - "Verified-only gating"
@@ -2128,7 +2306,7 @@ preserved_exact_tokens:
   - "Index rebuild equivalence"
   - "Rules separation"
 negative_constraints:
-  - "AutoRunBoundary and AutoMilestone operate from run artifacts/evidence refs without requiring edits to Plans/SSOT documents."
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -2140,15 +2318,21 @@ plan_unit_id: AMS-036
 unit_type: validation_rule
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: GUI acceptance criteria cover Verify enforcement, capsule preview token/truncation display, and default Gist Review Unverified filtering.
+canonical_text: GUI acceptance checks the single Memory page and sheet, exact This project / Every project
+  labels, search including Archived, level filter, Add/Edit/Delete and scoped Delete all, one switch and
+  no hidden retired controls in search or All Settings. Verify durable write/restart behavior and only
+  successful Saved to memory · View acknowledgments. Check absence of memory-use and Followed/Missed decorations,
+  selection previews and cleanup workbench.
 gui_related: true
-gui_classification_reason: Verify enforcement, capsule preview, and Gist Review filtering are user-visible GUI behavior.
+gui_classification_reason: Checks Memory page actions and absence of retired memory decorations.
 depends_on: [AMS-021, AMS-023, AMS-035]
 unblocks: []
 acceptance_criteria:
-  - Attempting to mark a gist Verified without satisfiable EvidenceRefs is rejected unless the manual override config is true.
-  - GUI capsule preview shows token estimate and truncation indicator.
-  - Opening Gist Review defaults to verification_state = Unverified until explicit user filter changes.
+- GUI acceptance checks the single Memory page and sheet, exact This project / Every project labels, search
+  including Archived, level filter, Add/Edit/Delete and scoped Delete all, one switch and no hidden retired
+  controls in search or All Settings. Verify durable write/restart behavior and only successful Saved
+  to memory · View acknowledgments. Check absence of memory-use and Followed/Missed decorations, selection
+  previews and cleanup workbench.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2162,13 +2346,16 @@ node_compile_hint:
   mode: gui_memory_acceptance_criteria
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0038
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0038
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "GUI Verify enforcement"
   - "Capsule cap enforcement"
   - "Default review filter behavior"
   - "verification_state = Unverified"
-negative_constraints: []
+negative_constraints:
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -2180,16 +2367,22 @@ plan_unit_id: AMS-037
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Assistant memory non-goals prohibit memory exposure to non-Assistant agents, replacement of seglog/redb/Tantivy storage contracts, external vector DB services, and markdown-file-bank requirements.
+canonical_text: No new database, external memory service, per-helper store, hidden helper-owned memory,
+  cross-Project read grant or private app-thread sharing is introduced. Existing seglog/redb/Tantivy/USearch
+  storage architecture and bounded context remain. The Assistant remains the writer and manager. Crews,
+  reviews and the chat assistant's other helpers may read the current Project's notes and the user's personal
+  notes at Every project, read-only, subject to current source, actor, phase and permission restrictions.
+  This grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider
+  remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
 gui_related: false
 gui_classification_reason: Non-goals are backend architecture and storage boundaries.
 depends_on: [AMS-003, AMS-004, AMS-026]
 unblocks: []
 acceptance_criteria:
-  - Non-Assistant agents receive no Assistant memory exposure.
-  - Storage contracts are not replaced.
-  - External vector DB service is out of scope.
-  - Memory is not required to be markdown-file based.
+- Authorized helpers can read current Project notes and the same user's personal notes without mutation
+  authority.
+- Other Project notes and private app-thread memory stay unavailable, including via summaries/handoffs.
+- Original storage, source/currentness, retention and native admission prerequisites remain.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2205,14 +2398,16 @@ node_compile_hint:
   mode: assistant_memory_non_goals
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0039
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0039
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "No memory exposure to non-Assistant agents."
   - "No replacement of seglog/redb/Tantivy system storage contracts."
   - "No external vector DB service."
   - "No file-bank style requirement that memory must be markdown-file based."
 negative_constraints:
-  - "Implementations MUST keep these non-goals intact."
+- Do not create helper-owned memory or widen source/phase permissions.
+- Do not expose private app-thread or other Project notes by null scope, known ID or paraphrase.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -2266,15 +2461,19 @@ plan_unit_id: AMS-039
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Plan-local event and command obligations belong in canonical state, event, and command owners before memory consumes them; NullMemoryProvider remains the durable boundary for memory prohibition versus stateful orchestration, and Gemini-only docs may still contain active owner gaps.
+canonical_text: Plan-local events and commands require their canonical owners before consumption. Authorized
+  helper reads follow AMS-026 with NullMemoryProvider for denied/disabled paths; no hidden child store
+  or event reconstruction supplies memory authority. Existing remaining runtime owner gaps are not closed
+  by presentation changes.
 gui_related: false
 gui_classification_reason: Plan-local obligation routing is owner-boundary and governance behavior.
 depends_on: [AMS-038]
 unblocks: []
 acceptance_criteria:
-  - plan-local event and command obligations route to canonical owner docs before memory consumption.
-  - NullMemoryProvider remains the durable memory-prohibition boundary.
-  - Gemini-only docs warning remains preserved as active owner-gap caution.
+- Plan-local events and commands require their canonical owners before consumption. Authorized helper
+  reads follow AMS-026 with NullMemoryProvider for denied/disabled paths; no hidden child store or event
+  reconstruction supplies memory authority. Existing remaining runtime owner gaps are not closed by presentation
+  changes.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2287,14 +2486,15 @@ node_compile_hint:
   mode: plan_local_obligation_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0040
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0040
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "plan-local"
   - "/event/command"
   - "NullMemoryProvider"
   - "Remaining Gemini-only docs are not low-value leftovers"
 negative_constraints:
-  - "Plan-local obligations in memory are narrow and must not bypass canonical state/event/command owners."
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
@@ -2402,19 +2602,16 @@ plan_unit_id: AMS-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  P1-MEMORY-TIERING-CONTRACT (P1) is compiled as canonical Puppet Master intent for Agent memory, goal
-  memory, project memory, conversation history: Add MemoryTierContract: scope, writer authority, TTL,
-  compaction policy, retrieval trigger, injection budget, causality/supersession link, stale/retired
-  status, consolidation timeout, and failure semantics. The preserved PM gap/delta is: PM should
-  explicitly separate memory tiers: transcript/history, operational goal state, project/spec ledger,
-  assistant preference memory, tool/artifact memory, and ephemeral context working set. The observed
-  external-repo signal remains source-lineage evidence: Agent Zero reports chat history bloat and
-  memory-search/consolidation timeouts; Pi documents context persistence and handoff to other models;
-  Codex Goals/skills show durable objective and progressive disclosure; Cline SDK moves task
-  history/session handling into shared runtime. App scope preserves these tier boundaries with a
-  thread-only transcript/gist/capsule working set; a Goal, Plan, Crew, schedule, ledger or notebook is
-  never silently consolidated into personal memory.
+canonical_text: MemoryTierContract retains writer authority, scope, retention/compaction policy, retrieval
+  budget, causality/supersession, stale/retired status and failure semantics across transcript/history,
+  operational Goal state, project/spec ledger, assistant preference memory, tool/artifact and ephemeral
+  working context. The two visible levels are This project and Every project. This project binds the actual
+  Project; Every project holds explicitly personal reusable notes for the same user. Availability selection
+  is explicit; no relabeling, automatic promotion of private Project/app-thread content, or implied cross-Project
+  sharing is allowed. Screen secrets and preserve source restrictions before broadening; if safe separation
+  cannot be established, refuse the broader save. Private app-thread notes remain in their existing thread-only
+  scope and never enter Every project by migration. Goal/Plan/Crew/schedule/ledger/notebook data never
+  silently consolidates into personal memory.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -2456,6 +2653,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:12
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N24/N25
 - 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 source_atom_ids:
 - atom-0070
 external_atom_id: extrepo-20260703-0066
@@ -2501,8 +2699,23 @@ plan_unit_id: AMS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  P1-MEMORY-STORE-CRUD-VERSION-CITATIONS (P1) is compiled as canonical Puppet Master intent for Agent memory store management, version history, and citation surfacing: Imported external-repo finding extrepo-20260703-0083 / P1-MEMORY-STORE-CRUD-VERSION-CITATIONS (P1). The preserved PM gap/delta is: MemoryTierContract covered layers and budgets, but not enough about memory CRUD/versioning/citations as user-visible objects. The observed external-repo signal remains source-lineage evidence: Warp Oz updates add memory store management commands and memory citations. | Codex changelog moved memory state to a dedicated SQLite DB and gated dedicated memory tools in config. | Agent Zero shows memory/history bloat and silent memory consolidation failure risks.
+canonical_text: 'Memory CRUD and versioning retain provenance, redaction, durable failure reporting and
+  history internally. Add writes a new MemoryGist from plain text with inferred kind and optional title
+  at an explicit allowed level; Edit writes a new version of the targeted note and preserves its prior
+  evidence/history. Delete is a real canonical deletion, distinct from Discard or archival: after one
+  confirmation, commit a durable scoped suppression/tombstone, exclude the note and stale versions from
+  all future read/injection paths, and invalidate derived indexes/caches. Old transcripts, trigger replay,
+  reindex, import and backup merge cannot silently recreate that deleted note; only a new explicit user
+  save can deliberately replace its suppression. Delete all in the list menu names and confirms the exact
+  selected scope and target set, using the same deletion owner. Failed writes never report success. Canonical
+  assistant_memory.redb commits precede asynchronous derived indexes. Ordinary replies show no memory-use
+  citations, chips, counts, previews, ribbons, permanent glyphs, named-note hovers, verification/proof
+  badges or Followed/Missed rule receipts. Only after a durable successful save may one brief Saved to
+  memory · View line appear; View opens the same Memory page as a sheet with the saved note highlighted.
+  A requested save/edit may receive one brief success confirmation. Failed or no-op saves earn no successful-save
+  line; ordinary task evidence and links remain available. The external finding extrepo-20260703-0083
+  / P1-MEMORY-STORE-CRUD-VERSION-CITATIONS (P1) is source lineage; its citation-surfacing recommendation
+  is retired, not a mandate for reply memory citations.'
 gui_related: true
 gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
 depends_on:
@@ -2510,10 +2723,23 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- User can list/get/update/delete memory stores and individual memories with version history, provenance, redaction, and rollback.
-- Model responses that use memories can surface citations or evidence receipts.
-- Memory consolidation failures are typed, retryable or surfaced, and never silently drop required memories.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- 'Memory CRUD and versioning retain provenance, redaction, durable failure reporting and history internally.
+  Add writes a new MemoryGist from plain text with inferred kind and optional title at an explicit allowed
+  level; Edit writes a new version of the targeted note and preserves its prior evidence/history. Delete
+  is a real canonical deletion, distinct from Discard or archival: after one confirmation, commit a durable
+  scoped suppression/tombstone, exclude the note and stale versions from all future read/injection paths,
+  and invalidate derived indexes/caches. Old transcripts, trigger replay, reindex, import and backup merge
+  cannot silently recreate that deleted note; only a new explicit user save can deliberately replace its
+  suppression. Delete all in the list menu names and confirms the exact selected scope and target set,
+  using the same deletion owner. Failed writes never report success. Canonical assistant_memory.redb commits
+  precede asynchronous derived indexes. Ordinary replies show no memory-use citations, chips, counts,
+  previews, ribbons, permanent glyphs, named-note hovers, verification/proof badges or Followed/Missed
+  rule receipts. Only after a durable successful save may one brief Saved to memory · View line appear;
+  View opens the same Memory page as a sheet with the saved note highlighted. A requested save/edit may
+  receive one brief success confirmation. Failed or no-op saves earn no successful-save line; ordinary
+  task evidence and links remain available. The external finding extrepo-20260703-0083 / P1-MEMORY-STORE-CRUD-VERSION-CITATIONS
+  (P1) is source lineage; its citation-surfacing recommendation is retired, not a mandate for reply memory
+  citations.'
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -2537,6 +2763,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:10
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 source_atom_ids:
 - atom-0087
 external_atom_id: extrepo-20260703-0083
@@ -2560,7 +2787,9 @@ preserved_exact_tokens:
 - P1-MEMORY-STORE-CRUD-VERSION-CITATIONS
 - P1
 - Agent memory store management, version history, and citation surfacing
-negative_constraints: []
+negative_constraints:
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 observed_signal: Warp Oz updates add memory store management commands and memory citations. | Codex changelog moved memory state to a dedicated SQLite DB and gated dedicated memory tools in config. | Agent Zero shows memory/history bloat and silent memory consolidation failure risks.
 pm_gap_or_delta: MemoryTierContract covered layers and budgets, but not enough about memory CRUD/versioning/citations as user-visible objects.
 relationship_to_prior_reports: Extends memory budget/governance into user-visible store operations.
@@ -2571,22 +2800,29 @@ compile_disposition: create_new_planunit
 
 Packet `PM-WNC-2026-09-05-v1`. This addendum amends §5.3 (amended in place on 2026-09-05; the retired existence-only sufficient conditions there are historical lineage only). A resolvable evidence reference is structural evidence, not universal semantic proof of the attached claim text. Verification therefore records per-claim support: each `claim` gains `evidence_support` — the subset of `evidence_refs[]` evaluated as supporting that claim — plus a `support_scope` (what the references actually cover) and a `currentness` value (`current | needs_revalidation | source_unavailable`). A `Commit { hash, repo_id }` EvidenceRef supports only claims about that commit's existence/content; a successful `TestRun`/`BuildRun` supports only claims within the tested scope; a valid `Artifact` hash supports only claims about that artifact. A commit existing, an unrelated green test, or a valid artifact hash alone cannot verify a broader attached claim; unsupported semantic text stays `Unverified`, and claims without adequate support surface as unverified with their support state rather than being silently treated as proven. Deterministic validators prove structural and scope relationships only; no deterministic proof of arbitrary natural-language entailment is claimed or attempted.
 
-Correction and invalidation: when a claim, its evidence, or its relevant validity context changes (source mutated, revoked, pruned, or staleness re-detected), derived summary/index eligibility is recomputed and stale auto-injection stops; the original history is preserved and the revalidation status is explainable. Migrated or legacy gists marked Verified under the weaker rules are reassessed against the per-claim semantics on their next verification evaluation: unsupported ones stop auto-injecting, keep their original evidence/history, and move to a truthful state — an old Verified label is not blindly grandfathered. Notebook interaction boundaries are unchanged and reinforced: promotion from Working Notebook content runs only through the existing AutoRunBoundary/AutoMilestone trigger contracts and evidence gates (Working Notebook capture never bypasses them, and details never become default memory injection because they were once notes); notebook retrieval and memory injection are deduplicated and separately attributed in prompt assembly; and the Assistant-only boundary holds — notebook sharing, summaries, tool outputs, checkpoints, and handoffs never forward Assistant-only memory payloads into workers or shared surfaces (`NullMemoryProvider` wiring unchanged), and worker notebooks gain no memory access through paraphrase or hidden metadata.
+Correction and invalidation: when a claim, its evidence, or its relevant validity context changes (source mutated, revoked, pruned, or staleness re-detected), derived summary/index eligibility is recomputed and stale auto-injection stops; the original history is preserved and the revalidation status is explainable. Migrated or legacy gists marked Verified under the weaker rules are reassessed against the per-claim semantics on their next verification evaluation: unsupported ones stop auto-injecting, keep their original evidence/history, and move to a truthful state — an old Verified label is not blindly grandfathered. Notebook interaction boundaries are unchanged and reinforced: promotion from Working Notebook content runs only through the existing AutoRunBoundary/AutoMilestone trigger contracts and evidence gates (Working Notebook capture never bypasses them, and details never become default memory injection because they were once notes); notebook retrieval and memory injection are deduplicated and separately attributed in prompt assembly; and source restrictions hold across notebook sharing, summaries, tool outputs, checkpoints and handoffs. DL-475/AMS-026 permits read-only Project and personal note access for helpers, while private app-thread and denied material stay unavailable through all derivative paths.
 
 ```yaml
 plan_unit_id: AMS-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Verification is per claim. Each claim records evidence_support (the evidence_refs evaluated as supporting it), support_scope (what those references actually cover), and currentness (current | needs_revalidation | source_unavailable). A commit existing, a successful unrelated test, or a valid artifact hash cannot verify a broader attached claim; unsupported semantic text stays Unverified with visible support state. Deterministic validators prove structural/scope relationships only; no deterministic natural-language entailment proof exists or is attempted.
+canonical_text: 'Internal verification_state remains Unverified, Verified or Discarded. Automatic world-fact
+  use requires current per-claim evidence_support and support_scope under AMS-044/045; unrelated tests,
+  commits and artifacts do not prove arbitrary text. Explicit user-added or edited preferences and personal
+  statements take a user-statement support path tied to the actual input and version: they establish what
+  the user said or prefers, not independent world truth. No user Verify chore or manual/pinned bypass
+  exists. Edits invalidate summaries, hashes, embeddings and eligibility before the next use; recheck
+  automatically, preserving prior versions and evidence. Reference structural checks do not claim deterministic
+  natural-language entailment. Support state stays internal, without a user verification view.'
 gui_related: false
 gui_classification_reason: Memory verification semantics are runtime behavior, not GUI work.
 depends_on: [AMS-001]
 unblocks: [AMS-045, AMS-046]
 acceptance_criteria:
-  - Per-claim support and currentness are available to consumers.
-  - A claim about more than its evidence covers remains unverified.
-  - No fake deterministic entailment proof is claimed.
+- Only current scoped support permits automatic use; user statements establish user statements, never
+  independent world facts.
+- Edits invalidate derived content and preserve audit history; no manual/pinned verification bypass remains.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - Plans/working_notebook_contract_fixtures.json
@@ -2596,32 +2832,41 @@ context_scope: assistant_memory
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/Working_Notebook.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-M02
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A50
+- source_packet:PM-WNC-2026-09-05-v1:WNC-M02
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A50
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["evidence_support", "support_scope", "currentness", "Unverified", "not universal semantic proof"]
 negative_constraints:
-  - Do not verify a claim solely because a referenced commit, test, or artifact exists.
-  - Do not present deterministic structural checks as semantic proof.
+- Do not treat an unrelated test, commit or artifact as proof of an arbitrary claim.
 owner_hints: [Plans/assistant-memory-subsystem.md]
 ```
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Working_Notebook.md
 
-Display pointer (2026-09-27): a claim's `currentness` drives the "Out of date" display group; see AMS-047.
+DL-475: claim currentness is internal; the Out of date display group is retired.
 
 ```yaml
 plan_unit_id: AMS-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: "When claims, evidence, or relevant validity context change, derived summary and index eligibility are invalidated as required and stale auto-injection stops. Superseded claims and migrated or weakly-Verified gists do not auto-inject as current: on their next verification evaluation they are reassessed against per-claim semantics, unsupported ones stop injecting while original evidence and audit history are preserved and the revalidation status is explainable. An old Verified label is not blindly grandfathered, and a correction never destroys audit history."
+canonical_text: 'Internal verification_state remains Unverified, Verified or Discarded. Automatic world-fact
+  use requires current per-claim evidence_support and support_scope under AMS-044/045; unrelated tests,
+  commits and artifacts do not prove arbitrary text. Explicit user-added or edited preferences and personal
+  statements take a user-statement support path tied to the actual input and version: they establish what
+  the user said or prefers, not independent world truth. No user Verify chore or manual/pinned bypass
+  exists. Edits invalidate summaries, hashes, embeddings and eligibility before the next use; recheck
+  automatically, preserving prior versions and evidence. Legacy Verified labels are not blindly grandfathered.
+  Original evidence, audit history and internal revalidation status remain; needs_revalidation/source_unavailable
+  blocks automatic use without Out of date display groups or reply notices.'
 gui_related: false
 gui_classification_reason: Invalidation semantics are runtime behavior, not GUI work.
 depends_on: [AMS-044]
 unblocks: [AMS-046]
 acceptance_criteria:
-  - Correction removes stale auto-injection without destroying audit history.
-  - Migrated unsupported Verified gists stop auto-injecting and state why.
+- Only current scoped support permits automatic use; user statements establish user statements, never
+  independent world facts.
+- Edits invalidate derived content and preserve audit history; no manual/pinned verification bypass remains.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: stale_injection
@@ -2630,41 +2875,41 @@ context_scope: assistant_memory
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/storage-plan.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-M03
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A51
+- source_packet:PM-WNC-2026-09-05-v1:WNC-M03
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A51
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["not blindly grandfathered", "revalidation status", "audit history"]
 negative_constraints:
-  - Do not grandfather old Verified labels without reassessment.
-  - Do not delete original history when correcting.
+- Do not treat an unrelated test, commit or artifact as proof of an arbitrary claim.
 owner_hints: [Plans/assistant-memory-subsystem.md]
 ```
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md
 
-Display pointer (2026-09-27): until reassessment, a stale Verified gist is shown under "Out of date" and does not auto-inject; see AMS-047.
+DL-475: stale support blocks automatic use internally, without an Out of date user group.
 
 ```yaml
 plan_unit_id: AMS-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  The Assistant-only memory boundary holds against every notebook path: notebook sharing, summaries,
-  tool outputs, checkpoints, and handoffs never forward Assistant-only memory into disallowed agents,
-  directly or through derived notes or paraphrase, and notebook absence is never a reason to wire
-  workers to Assistant memory. Promotion from Working Notebook content runs only through the existing
-  trigger contracts and evidence gates; notebook retrieval and memory injection are deduplicated and
-  separately attributed in prompt assembly, and note-derived detail never becomes default memory
-  injection because it was once a note. The verified-only, summary-first model and configured budgets
-  are retained. App Crew membership and explicit cross-Project read permission do not relax
-  Assistant-only or thread-private memory boundaries, including during conversion.
+canonical_text: The Assistant remains the writer and manager. Crews, reviews and the chat assistant's
+  other helpers may read the current Project's notes and the user's personal notes at Every project, read-only,
+  subject to current source, actor, phase and permission restrictions. This grants no other Project access,
+  helper-owned memory or access to private app-thread memory. NullMemoryProvider remains the denied/disabled
+  path; read-only access cannot call upsert, delete or verification mutations. Summaries, notebooks, handoffs,
+  tool outputs and caches inherit all restrictions; paraphrase cannot launder private or denied content.
+  Promotion from Working Notebook still uses useful-content/evidence gates and deduplicated, separately
+  attributed bounded assembly. Notebook absence grants nothing.
 gui_related: false
 gui_classification_reason: Memory boundaries are runtime behavior, not GUI work.
 depends_on: [AMS-044]
 unblocks: []
 acceptance_criteria:
-  - A worker path never receives restricted memory payload directly or via derivative notes.
-  - Promotion never bypasses evidence gates; note-derived detail stays out of default injection.
+- Authorized helpers can read current Project notes and the same user's personal notes without mutation
+  authority.
+- Other Project notes and private app-thread memory stay unavailable, including via summaries/handoffs.
+- Original storage, source/currentness, retention and native admission prerequisites remain.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: memory_laundering
@@ -2678,10 +2923,11 @@ source_lineage:
 - source_packet:PM-WNC-2026-09-05-v1:WNC-A08
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N25/N26
 - 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["NullMemoryProvider", "Assistant-only", "evidence gates", "separately attributed"]
 negative_constraints:
-  - Do not wire workers to Assistant memory because a notebook is absent.
-  - Do not launder memory through note text, handoffs, or hidden metadata.
+- Do not create helper-owned memory or widen source/phase permissions.
+- Do not expose private app-thread or other Project notes by null scope, known ID or paraphrase.
 owner_hints: [Plans/assistant-memory-subsystem.md, Plans/Working_Notebook.md]
 ```
 
@@ -2698,25 +2944,15 @@ plan_unit_id: AMS-047
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  The capsule preview ("What's in capsule now") is labelled for people as "See what your next message will
-  include". Its token count and space meter count memory notes only, against
-  assistant.memory.capsule_budget_tokens (default 350); taught rules that ride along may be listed beside
-  the notes but come from the rules pipeline and are never counted against the memory capsule budget, and
-  any figure shown for them names the rules budget it belongs to, because Memory is not rules. A gist whose
-  last evaluation was Verified but which holds a claim whose currentness is needs_revalidation or
-  source_unavailable may be shown under the display group "Out of date" until it is reassessed; the group
-  is derived at read time from currentness, its gists do not auto-inject, and it is never stored, emitted
-  or offered as a fourth verification_state, which stays exactly Unverified, Verified or Discarded. In
-  chat, memory is never a card and never a pop-up: a reply that saved a note carries a "Noted" mark in its
-  meta row that relaxes to the glyph alone after 3 s, a milestone that verifies a note earns one "Verified:
-  …" line once, and a note going out of date makes no chat noise. PC3 (2026-10-29): verification_state
-  remains exactly Unverified, Verified or Discarded. Unverified uses thinking Pip with the existing
-  pending/unverified catalog presentation; Verified is happy/complete; Discarded is sleeping/skipped. The
-  derived Out of date group uses worried oops with warning, never a fourth verification state or a
-  failed-memory state. Keep each owner word/accessibility label and precedence. The status-faces part off
-  uses the same catalog key’s shared mark; illustrative expression never changes Memory verification or
-  adds held/completed/failed states.
+canonical_text: Ordinary replies show no memory-use citations, chips, counts, previews, ribbons, permanent
+  glyphs, named-note hovers, verification/proof badges or Followed/Missed rule receipts. Only after a
+  durable successful save may one brief Saved to memory · View line appear; View opens the same Memory
+  page as a sheet with the saved note highlighted. A requested save/edit may receive one brief success
+  confirmation. Failed or no-op saves earn no successful-save line; ordinary task evidence and links remain
+  available. Internal currentness remains current / needs_revalidation / source_unavailable; verification_state
+  remains exactly Unverified, Verified or Discarded. Out of date, state faces and verification groups
+  are retired UI only, never a fourth stored state. Memory is not rules and the 350-token ceiling stays
+  internal.
 gui_related: true
 gui_classification_reason: The capsule preview label, the list grouping and the in-chat memory marks are user-visible
   presentation of memory state.
@@ -2728,13 +2964,14 @@ depends_on:
 - AMS-045
 unblocks: []
 acceptance_criteria:
-- The capsule preview is labelled "See what your next message will include" and its meter counts notes only
-  against assistant.memory.capsule_budget_tokens.
-- No taught rule is counted against the memory capsule budget; a figure shown for rules names the rules budget.
-- A stale Verified gist can appear under "Out of date", does not auto-inject, and no record, event, filter
-  value or export carries "Out of date" as a verification_state.
-- A reply that saved a note shows "Noted" that relaxes to the glyph after 3 s; a verifying milestone prints one "Verified: …"
-    line once; a note going stale prints nothing in chat.
+- Ordinary replies show no memory-use citations, chips, counts, previews, ribbons, permanent glyphs, named-note
+  hovers, verification/proof badges or Followed/Missed rule receipts. Only after a durable successful
+  save may one brief Saved to memory · View line appear; View opens the same Memory page as a sheet with
+  the saved note highlighted. A requested save/edit may receive one brief success confirmation. Failed
+  or no-op saves earn no successful-save line; ordinary task evidence and links remain available. Internal
+  currentness remains current / needs_revalidation / source_unavailable; verification_state remains exactly
+  Unverified, Verified or Discarded. Out of date, state faces and verification groups are retired UI only,
+  never a fourth stored state. Memory is not rules and the 350-token ceiling stays internal.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base
@@ -2755,6 +2992,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-01 (part),
   B-AMS-03, B-AMS-04, B-AMS-05 (part) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
 - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - See what your next message will include
 - What's in capsule now
@@ -2767,9 +3005,8 @@ preserved_exact_tokens:
 - Noted
 - 3 s
 negative_constraints:
-- Do not add "Out of date" or any fourth value to verification_state.
-- Do not count taught rules against the memory capsule budget.
-- Do not render memory as a transcript card or pop-up; a stale note makes no chat noise.
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints:
 - Plans/assistant-memory-subsystem.md
 ```
@@ -2783,16 +3020,21 @@ plan_unit_id: AMS-048
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  Edit on a gist is a versioned claim edit through cmd.chat.memory.edit: it writes a new gist version, keeps the prior version and its evidence history, and resets the gist to Unverified, so an edited claim is re-verified before it can auto-inject again. The per-kind half-life editor is a link to the Settings row memory.retention.half-life-by-kind through cmd.settings.open; no memory command is added for it, and the per-gist half-life override stays a gist field. The 2026-09-27 wand redesign draws no Edit or half-life control, so in that wave cmd.chat.memory.edit has no GUI producer; its production wiring stays incomplete under CDRY-012 until a surface draws the control, and the command is not removed.
+canonical_text: cmd.chat.memory.edit is the Memory page's Edit producer, with versioned plain-text edits
+  and automatic inference/support checks. Prior versions and evidence remain; changed claims become Unverified
+  until internal reevaluation, with explicit user statements supported only as such. No per-gist half-life
+  override or memory.retention.half-life-by-kind editor remains; legacy pin protections survive. Native
+  wiring still needs real evidence under CDRY-012.
 gui_related: true
-gui_classification_reason: Edit and the half-life link are user-visible Gist Review actions.
+gui_classification_reason: Defines the plain-text Memory Edit action.
 depends_on: [AMS-010, AMS-014, AMS-021]
 unblocks: []
 acceptance_criteria:
-  - An edited gist is Unverified and does not auto-inject until it verifies again; its previous version and evidence history remain readable.
-  - The per-kind half-life editor opens memory.retention.half-life-by-kind through cmd.settings.open and no new memory command exists for it.
-  - cmd.chat.memory.edit is reported as lacking a GUI producer in the 2026-09-27 wave rather than as wired.
+- cmd.chat.memory.edit is the Memory page's Edit producer, with versioned plain-text edits and automatic
+  inference/support checks. Prior versions and evidence remain; changed claims become Unverified until
+  internal reevaluation, with explicit user statements supported only as such. No per-gist half-life override
+  or memory.retention.half-life-by-kind editor remains; legacy pin protections survive. Native wiring
+  still needs real evidence under CDRY-012.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -2802,14 +3044,16 @@ context_scope: assistant_memory_gui
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 amendment G-30 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-07 (part) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
-  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 amendment
+  G-30 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-07 (part)
+  (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["cmd.chat.memory.edit", "Unverified", "memory.retention.half-life-by-kind", "cmd.settings.open", "CDRY-012"]
 negative_constraints:
-  - Do not let an edited claim keep a Verified label.
-  - Do not mint a memory command for the per-kind half-life editor.
-  - Do not report cmd.chat.memory.edit as wired to a GUI producer that does not exist.
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints: [Plans/assistant-memory-subsystem.md]
 ```
 
@@ -2822,16 +3066,18 @@ plan_unit_id: AMS-049
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  On screen the Gist Review panel and its document are titled "Notes it took", shown under Memory. "Gist Review" stays the canonical name: records, command ids, routes, document identity and these Plans keep it, and the display name never replaces it there. This compiles the owner's decision DL-134 (card p19, E-38), which keeps official words in the data and shows plain words on screen. The panel's behaviour is unchanged: AMS-021's filters, its default Unverified filter, its actions and its capsule preview hold, and the verification_state words stay the state labels, with plain words only as helpers beside them. Card p19 names only Regenerate Title, Synthesize, Save as Default, Gist Review and frozen target pack, so it does not reach the verification states, and the approved design spec draws each Memory row as "state glyph + canonical word" with the plain helper beside the filter value (DESIGN-SPEC §8.10).
+canonical_text: The user-facing page and chat sheet are named Memory. Gist Review and Notes it took remain
+  historical route/record identifiers only, not another editor or verification workflow. Existing records
+  and verification_state values remain readable without exposing their internal groups. This supersedes
+  the DL-134 display prescription.
 gui_related: true
 gui_classification_reason: The panel's visible title is user-facing copy.
 depends_on: [AMS-021, AMS-047]
 unblocks: []
 acceptance_criteria:
-  - The panel and its document read "Notes it took" on screen, under Memory.
-  - No record, command id, route or Plans reference replaces "Gist Review" with the display name.
-  - AMS-021's behaviour and preserved tokens are unchanged.
+- The user-facing page and chat sheet are named Memory. Gist Review and Notes it took remain historical
+  route/record identifiers only, not another editor or verification workflow. Existing records and verification_state
+  values remain readable without exposing their internal groups. This supersedes the DL-134 display prescription.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -2841,15 +3087,17 @@ context_scope: assistant_memory_gui
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/UI_Command_Catalog.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-01 (WAIT part, card p19 E-38) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
-  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
-  - Plans/Decision_Log.md#DL-134
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-01 (WAIT
+  part, card p19 E-38) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
+- Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- Plans/Decision_Log.md#DL-134
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["Notes it took", "Gist Review", "DL-134", "verification_state"]
 negative_constraints:
-  - Do not rename Gist Review in records, command ids, routes or Plans.
-  - Do not replace the verification_state words as state labels.
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints: [Plans/assistant-memory-subsystem.md]
 ```
 
@@ -2862,17 +3110,21 @@ plan_unit_id: AMS-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  A note that proposes changing a taught rule the user locked never changes that rule. Such a proposal is the one memory event that earns a decision line in chat (the "Verified: …" trace of AMS-047 is a notice, not a decision), a single line and never a card or pop-up: "Puppet Master suggests a change to your rule '…'. It won't change unless you say so." with Review, which opens Memory through cmd.chat.teach.open_memory. In Memory the proposing note carries the decision "It suggests changing your rule. It won't change unless you say so." with two answers. Keep my rule discards the proposing note through cmd.chat.memory.discard and leaves the rule as it is. Edit my rule… opens Teach in correct mode through cmd.chat.teach.capture {mode: correct}, so any change to the rule is the user's own edit. Locking and unlocking a rule is the user's command cmd.chat.teach.set_lock, one of the seven commands the owner registered (DL-130, card p15, E-32); a locked rule keeps the explicit-unlock protection of Plans/assistant-chat-design.md §6, and no memory maintenance, summarization or proposal weakens it.
+canonical_text: Memory never changes or unlocks a user-locked taught rule. Remove the automatic locked-rule-change
+  notice, Review link, Keep my rule / Edit my rule… decision panel and memory-generated change proposal
+  workflow. A real necessary rule change is an ordinary task decision; requested rule edits use Instructions/Teach
+  and explicit user cmd.chat.teach.set_lock protection. No maintenance or summarization weakens a locked
+  rule.
 gui_related: true
 gui_classification_reason: The chat line and the Memory decision are user-visible, and their answers dispatch commands.
 depends_on: [AMS-047, AMS-021]
 unblocks: []
 acceptance_criteria:
-  - A proposal to change a locked rule prints one line in chat with Review, and no card or pop-up.
-  - Keep my rule discards only the proposing note; the locked rule is unchanged.
-  - Edit my rule… opens Teach in correct mode; the rule changes only when the user saves that edit.
-  - Nothing but the user's cmd.chat.teach.set_lock locks or unlocks a rule.
+- Memory never changes or unlocks a user-locked taught rule. Remove the automatic locked-rule-change notice,
+  Review link, Keep my rule / Edit my rule… decision panel and memory-generated change proposal workflow.
+  A real necessary rule change is an ordinary task decision; requested rule edits use Instructions/Teach
+  and explicit user cmd.chat.teach.set_lock protection. No maintenance or summarization weakens a locked
+  rule.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -2882,15 +3134,17 @@ context_scope: assistant_memory_gui
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/assistant-chat-design.md, Plans/UI_Command_Catalog.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-05 (WAIT part, card p15 E-32) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
-  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
-  - Plans/Decision_Log.md#DL-130
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-05 (WAIT
+  part, card p15 E-32) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
+- Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- Plans/Decision_Log.md#DL-130
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["It won't change unless you say so.", "Keep my rule", "Edit my rule…", "cmd.chat.teach.open_memory", "cmd.chat.memory.discard", "cmd.chat.teach.set_lock", "DL-130"]
 negative_constraints:
-  - Do not let a memory note or any automated step change or unlock a locked rule.
-  - Do not render the proposal as a card or pop-up.
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints: [Plans/assistant-memory-subsystem.md, Plans/assistant-chat-design.md]
 ```
 
@@ -2903,15 +3157,17 @@ plan_unit_id: AMS-051
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  When the Assistant prompt builder places taught rules in a reply's context, it records them as included_teaching_ids on that reply's context record (the message's canonical usage/context record), each id at the version that was included; an empty list means no taught rule was included. The record states inclusion only: it proves a rule was given to the model, not that the model obeyed it. By the owner's decision DL-116 (card n07, E-36) the reply note about applied rules uses the word "Followed", not "Used", and the Plans define what counts as following before any reply shows it. Inclusion alone never counts as following, so no reply shows "Followed" on the strength of included_teaching_ids alone. What counts as following, and what a reply shows when a rule's check fails or cannot run, is AMS-053.
+canonical_text: included_teaching_ids records each rule/version actually included in a reply's context,
+  independently of whether it was obeyed. Keep internal records; inclusion proves no compliance. Retire
+  ordinary Followed/Missed/Used reply receipts and named-rule hovers; Instructions remains directly inspectable.
 gui_related: true
 gui_classification_reason: The record backs a user-visible note on replies about applied rules.
 depends_on: [AMS-018, AMS-025]
 unblocks: [AMS-053]
 acceptance_criteria:
-  - Every reply whose context included taught rules carries included_teaching_ids naming each rule at its included version.
-  - No reply shows "Followed" because a rule was included; "Used" is not substituted for it.
+- included_teaching_ids records each rule/version actually included in a reply's context, independently
+  of whether it was obeyed. Keep internal records; inclusion proves no compliance. Retire ordinary Followed/Missed/Used
+  reply receipts and named-rule hovers; Instructions remains directly inspectable.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -2922,15 +3178,17 @@ context_scope: assistant_memory_prompt_record
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/assistant-chat-design.md, Plans/Prompt_Pipeline.md, Plans/assistant_memory_contracts.schema.json]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.11 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-06 (card n07 E-36) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
-  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
-  - Plans/Decision_Log.md#DL-116
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.11 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-06 (card
+  n07 E-36) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
+- Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- Plans/Decision_Log.md#DL-116
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["included_teaching_ids", "Followed", "Used", "DL-116"]
 negative_constraints:
-  - Do not treat inclusion as proof that a rule was followed.
-  - Do not show "Used" in place of the owner's word "Followed".
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints: [Plans/assistant-memory-subsystem.md]
 ```
 
@@ -2943,27 +3201,25 @@ plan_unit_id: AMS-052
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  Export memory is the command cmd.chat.memory.export {scope}, with scope gists | teachings | all,
-  registered by the owner's decision DL-130 (card p15, E-32). One command serves both producers, the
-  Export action of the Memory surface and the Export action of the taught-rules document. It exports
-  the gists, the taught rules, or both that Memory shows for the explicitly bound Project, or the
-  calling app thread with null project_id and actual Computer under AMS-054 through the artifact owner
-  and returns an ArtifactExportResult; it adds no memory store and never changes, verifies, pins or
-  discards what it exports. Each gist goes out with its verification_state as stored, so an Unverified
-  gist is never exported as Verified, and its EvidenceRef entries go out as the pointers they are
-  (AMS-006), never as copies of the referenced content. The command is available when assistant memory
-  and artifact export are both available (assistant_memory_available && artifact_export_available).
-  Its catalog row belongs to Plans/UI_Command_Catalog.md. No-project export cannot enumerate other app
-  threads or all Project memory.
+canonical_text: Keep cmd.chat.memory.export with existing scope gists | teachings | all, artifact owner
+  and ArtifactExportResult, reachable through general data export and the Instructions owner, not an Export
+  workbench on Memory. Exports use the authorized explicit Project, personal or calling private app-thread
+  view only, never other private chats or an all-Project enumeration. Preserve stored verification_state
+  and pointer-only EvidenceRef entries; exporting neither upgrades support nor changes/pins/discards memories.
+  Existing availability/handler/permission gates remain; broader unavailable codecs need explicit adoption
+  before use.
 gui_related: true
 gui_classification_reason: Export is a user-visible action on the Memory surface and the taught-rules document.
 depends_on: [AMS-006, AMS-010, AMS-021]
 unblocks: []
 acceptance_criteria:
-  - Both Export actions dispatch cmd.chat.memory.export with scope gists, teachings or all.
-  - Exporting changes no gist, rule, verification_state or pin.
-  - Exported gists keep their stored verification_state, and evidence is exported as pointers only.
+- Keep cmd.chat.memory.export with existing scope gists | teachings | all, artifact owner and ArtifactExportResult,
+  reachable through general data export and the Instructions owner, not an Export workbench on Memory.
+  Exports use the authorized explicit Project, personal or calling private app-thread view only, never
+  other private chats or an all-Project enumeration. Preserve stored verification_state and pointer-only
+  EvidenceRef entries; exporting neither upgrades support nor changes/pins/discards memories. Existing
+  availability/handler/permission gates remain; broader unavailable codecs need explicit adoption before
+  use.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -2975,17 +3231,17 @@ implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/UI_Command_
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-07 (WAIT part N-7,
-  card p15 E-32) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-07 (WAIT
+  part N-7, card p15 E-32) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
 - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
 - Plans/Decision_Log.md#DL-130
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16/N24
 - 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["Export memory", "cmd.chat.memory.export", "gists | teachings | all", "ArtifactExportResult", "verification_state", "DL-130"]
 negative_constraints:
-  - Do not mutate memory while exporting it.
-  - Do not export an Unverified gist as Verified or inline evidence content.
+- Do not widen privacy, source restrictions or held maintenance authority by migration or hidden controls.
 owner_hints: [Plans/assistant-memory-subsystem.md, Plans/UI_Command_Catalog.md]
 ```
 
@@ -2998,35 +3254,22 @@ plan_unit_id: AMS-053
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  A taught rule counts as followed by a reply only when it was given to the Assistant for that
-  reply in included_teaching_ids at its included version (AMS-051) and the finished reply passed
-  that rule's check. The check compares the rule's testable statement at the included version with
-  the finished reply; it runs once after completion, never on partial text, and changes no reply,
-  rule or memory. For every included rule, rule_check_outcomes on the reply's saved context record
-  stores the IncludedTeachingRef pair memory_id and normalized_fact_sha256, plus one outcome:
-  passed, failed or could_not_run. Reopening
-  the chat reads the saved outcome rather than rerunning the check (DL-138).
-  The note uses the owner's Followed word (DL-116), counts only passed checks as Followed and failed checks as Missed. With both kinds, it
-  shows one line, "Missed 1 of your rules · followed 2", with the Missed count first. A Missed note
-  lets the user see the missed rule. Its ask-for-a-fix link reuses cmd.review.send_findings_to_agent
-  with source_kind taught_rule_check, reply_message_id and missed_teaching_refs; it fills only an
-  empty composer with an editable fix request and never sends or executes it (CWR-031, DL-138).
-  A check that could_not_run earns no tick, counts neither way, and a reply with no passed or failed
-  checks shows no rule note. A rule not included is never checked or counted. "Used" is never shown
-  in place of Followed or Missed.
+canonical_text: Keep included_teaching_ids and saved rule_check_outcomes (passed / failed / could_not_run)
+  internally at the included version. Run checks only after a finished reply; inclusion alone proves nothing,
+  could_not_run never becomes success and reopening reads saved results. Remove the ordinary Followed
+  and Missed reply lines, counts, rule hovers and taught_rule_check fix-link producer from replies. A
+  meaningful rule failure is handled as a task failure through normal task interaction; no automatic resend,
+  rewrite or fix starts.
 gui_related: true
-gui_classification_reason: The Followed and Missed notes on a reply, and the way to see which rule was missed and ask for a fix, are user-visible.
+gui_classification_reason: Retires ordinary rule-check reply receipts while retaining internal records.
 depends_on: [AMS-051, AMS-018]
 unblocks: []
 acceptance_criteria:
-  - The saved reply context records passed, failed or could_not_run for each included teaching ID and version, and reopening does not rerun the check.
-  - A reply with passed and failed checks shows one line with the Missed count first and followed count second.
-  - Asking for a fix fills an empty composer through the taught_rule_check variant and never sends or executes the draft.
-  - A rule counts as followed only when it is in the reply's included_teaching_ids and the finished reply passed that rule's check.
-  - A reply whose included rule failed its check shows "Missed 1 of your rules" (or the number that failed), lets the user see which rule, and offers a way to ask for a fix.
-  - A rule whose check could not run is counted neither as followed nor as missed; with no passed or failed check the reply shows no rule note.
-  - No check runs on partial text, and no check changes the reply, the rule or memory.
+- Keep included_teaching_ids and saved rule_check_outcomes (passed / failed / could_not_run) internally
+  at the included version. Run checks only after a finished reply; inclusion alone proves nothing, could_not_run
+  never becomes success and reopening reads saved results. Remove the ordinary Followed and Missed reply
+  lines, counts, rule hovers and taught_rule_check fix-link producer from replies. A meaningful rule failure
+  is handled as a task failure through normal task interaction; no automatic resend, rewrite or fix starts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -3036,18 +3279,20 @@ context_scope: assistant_memory_prompt_record
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/Prompt_Pipeline.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md (SHA-256 345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c; DL-138, questions 18-19)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.11 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-06 (card n07 E-36) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json (SHA-256 4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f)
-  - Design lead ruling of 2026-09-27 on the DL-116 follow-up (the definition of following), recorded in Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
-  - Plans/Decision_Log.md#DL-116
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md (SHA-256 345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c;
+  DL-138, questions 18-19)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.11 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-06 (card
+  n07 E-36) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json (SHA-256 4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f)
+- Design lead ruling of 2026-09-27 on the DL-116 follow-up (the definition of following), recorded in
+  Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- Plans/Decision_Log.md#DL-116
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["Followed", "Missed 1 of your rules", "included_teaching_ids", "rule_check_outcomes", "could_not_run", "Missed 1 of your rules · followed 2", "cmd.review.send_findings_to_agent", "source_kind", "taught_rule_check", "reply_message_id", "missed_teaching_refs", "Used", "DL-116"]
 negative_constraints:
-  - Do not count a rule as followed because it was included, or because no check could run.
-  - Do not hide a failed check behind a Followed count.
-  - Do not start a fix, re-send or rewrite a reply from the check itself.
-  - Do not show "Used" in place of the owner's word "Followed".
+- Do not resurrect the retired verification, pin, preview, rule-receipt or maintenance UI.
+- Do not claim a write succeeded before durable commit or upgrade unsupported facts.
 owner_hints: [Plans/assistant-memory-subsystem.md, Plans/assistant-chat-design.md]
 ```
 
@@ -3060,27 +3305,23 @@ plan_unit_id: AMS-054
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: 'No-project Assistant memory and its capsule are thread-only: application scope, project_id=null
-  and actual Computer/thread identify one working set, gist corpus and index view. The work Computer owns
-  local in-process custody under storage-plan, outside any Project Vault; another app chat never receives
-  it. Widest explicitly taught public_safe rules still apply through the rules owner, with Everywhere/Computer
-  and thread behavior preferences from Settings; rules and memory remain different tiers. Existing claim
-  verification, evidence pointers, Verified-only summary-first injection, 350-token capsule default, budgets,
-  retention/holds, provider exposure and NullMemoryProvider wiring for non-Assistant agents remain. Cross-Project
-  read grants, Crew membership and known gist IDs confer no memory access. MemoryProvider operations use
-  an explicit versioned Project-or-app-thread scope; no null or app string is interpolated as a Project
-  key. At conversion the destination Project memory is adopted for future work, and gist/capsule carry-over
-  is individually previewed, source-restricted and lineage-bound through its owner. Historical verification
-  and evidence are not upgraded, other chats'' memory is never merged, and a copied capsule grants no
-  authority. cmd.chat.memory.export keeps scope gists|teachings|all but exports only the bound Project
-  or app-thread view with nullable Project and actual thread/Computer metadata; no new command or memory
-  store is created. The selected app view is Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1,
-  logical pm.assistant_memory.view.application.v1 version 1.0.0, with OriginalMemoryMutationSource in
-  Plans/application_workflow_sources.schema.json and complete source-graph adoption under CV-366. SP-349
-  owns assistant_memory.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(memory_id)};
-  this is a separate family, never nullable reinterpretation of a Project key or a shared app corpus.
-  Parent/thread/Computer, source/currentness, verification, canonical retention and Full Server Backup
-  joins must all hold; missing native/source/policy registration remains unavailable.'
+canonical_text: 'Private no-project app working sets remain thread-only: project_id=null with actual Computer/thread
+  and explicit storage identity, SP-349 keys and original application codecs. The two visible levels are
+  This project and Every project. This project binds the actual Project; Every project holds explicitly
+  personal reusable notes for the same user. Availability selection is explicit; no relabeling, automatic
+  promotion of private Project/app-thread content, or implied cross-Project sharing is allowed. Screen
+  secrets and preserve source restrictions before broadening; if safe separation cannot be established,
+  refuse the broader save. Private app-thread notes remain in their existing thread-only scope and never
+  enter Every project by migration. The Assistant remains the writer and manager. Crews, reviews and the
+  chat assistant''s other helpers may read the current Project''s notes and the user''s personal notes
+  at Every project, read-only, subject to current source, actor, phase and permission restrictions. This
+  grants no other Project access, helper-owned memory or access to private app-thread memory. NullMemoryProvider
+  remains the denied/disabled path; read-only access cannot call upsert, delete or verification mutations.
+  Personal availability is an explicit logical user partition in the existing local memory architecture,
+  not a new database/service or per-helper store; it does not imply device sync. Existing private records
+  never migrate to that partition automatically. Conversion adopts destination memory only through source-restricted
+  owner-checked carry-over with lineage; no relabeling or copied capsule grants authority. Existing original
+  codecs remain readable and native source/currentness/retention/backup proofs remain prerequisites.'
 gui_related: false
 gui_classification_reason: Defines runtime scope, data identity and custody without owning visual presentation.
 depends_on:
@@ -3094,11 +3335,10 @@ depends_on:
 - SP-349
 unblocks: []
 acceptance_criteria:
-- Two app chats on one Computer cannot retrieve, inject or export each other's gists by null scope or
-  shared preference.
-- Widest public_safe teachings still apply without forwarding private memory to workers or Crew.
-- Conversion and export retain source restrictions, stored verification_state and evidence pointers; absent
-  authority cannot become Verified or shared.
+- Authorized helpers can read current Project notes and the same user's personal notes without mutation
+  authority.
+- Other Project notes and private app-thread memory stay unavailable, including via summaries/handoffs.
+- Original storage, source/currentness, retention and native admission prerequisites remain.
 validation_surfaces:
 - scripts/pm-projects-refresh-contracts.py
 - future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
@@ -3124,6 +3364,7 @@ source_lineage:
 - projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
 - projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-B01
 - projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - project_id=null
 - MemoryProvider
@@ -3135,11 +3376,8 @@ preserved_exact_tokens:
 - teachings
 - all
 negative_constraints:
-- Do not share an app-wide personal-memory corpus, merge other chats, reconstruct facts from events or
-  wire workers to RealMemoryProvider.
-- Do not carry memory/notes in Saved setups or treat a moved capsule as new destination authority.
-- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
-  or governance clearance from this accepted contract.
+- Do not create helper-owned memory or widen source/phase permissions.
+- Do not expose private app-thread or other Project notes by null scope, known ID or paraphrase.
 owner_hints:
 - Plans/assistant-memory-subsystem.md
 - Plans/Settings_System.md
@@ -3158,39 +3396,53 @@ plan_unit_id: AMS-141
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: >-
-  Typed payload definitions (DL-333) for the twelve cmd.chat.memory.* commands that UI_Command_Catalog
+canonical_text: 'Typed payload definitions (DL-333) for the twelve cmd.chat.memory.* commands that UI_Command_Catalog
   UCC-084 and UCC-085 register and UCC-230 routes to this doc: the Gist Review actions verify, edit, pin,
   discard, toggle_auto_save_unverified and preview_capsule, and the maintenance commands rebuild_lexical_index,
   rebuild_semantic_index, verification_sweep, dedup_sweep, summarize_monthly and prune_archive. The definitions
   block below gives each command its args, owner request and owner result in pm.command_payload_definitions.v1,
-  with error and disabled-reason codes narrowed from the overlay's closed sets. DL-402 binds monthly summary and
-  prune archive to archive-only: a memory is deleted only when the user deletes it, originals keep their evidence
-  references, and neither job archives or merges a pinned memory. DL-403 holds both commands unavailable,
-  automatically and from the Memory panel, until approved cutoffs exist; DL-446 and DL-447 record the returned
-  cutoffs and keep runs waiting for their application and the remaining definition, review and recording approvals;
-  the definitions record that hold as owner state maintenance_cutoffs_pending, which UCC-230 maps to not_configured
-  (DL-341). DL-444 and DL-445 keep dedup_sweep unavailable the same way until their answer is applied and the
-  remaining approvals pass, recorded as owner state dedup_hold_pending, also mapped to not_configured; each of the
-  three definitions ties its owner state to that code in owner_state_codes. The wired owner request
-  ChatOwnerCommandRequestV2 requires a thread_id that the Project-scoped catalog rows do not carry, and the
-  rows require a project_id that AMS-054 app memory leaves null; each definition records both disagreements in
-  its judgments for the chat and memory owners, and chooses no thread_id value. prune_archive's policy can never change DL-447's cutoffs, pin exclusion or DL-402's
-  archive-only rule. gist_id is the canon name UCC-230's identity_aliases records for the overlay identity
-  memory_item_id, and every judgment is in its definition's judgments list (DL-341).
+  with error and disabled-reason codes narrowed from the overlay''s closed sets. DL-402 binds monthly
+  summary and prune archive to archive-only: a memory is deleted only when the user deletes it, originals
+  keep their evidence references, and neither job archives or merges a pinned memory. DL-403 holds both
+  commands unavailable, automatically and from the Memory panel, until approved cutoffs exist; DL-446
+  and DL-447 record the returned cutoffs and keep runs waiting for their application and the remaining
+  definition, review and recording approvals; the definitions record that hold as owner state maintenance_cutoffs_pending,
+  which UCC-230 maps to not_configured (DL-341). DL-444 and DL-445 keep dedup_sweep unavailable the same
+  way until their answer is applied and the remaining approvals pass, recorded as owner state dedup_hold_pending,
+  also mapped to not_configured; each of the three definitions ties its owner state to that code in owner_state_codes.
+  The wired owner request ChatOwnerCommandRequestV2 requires a thread_id that the Project-scoped catalog
+  rows do not carry, and the rows require a project_id that AMS-054 app memory leaves null; each definition
+  records both disagreements in its judgments for the chat and memory owners, and chooses no thread_id
+  value. prune_archive''s policy can never change DL-447''s cutoffs, pin exclusion or DL-402''s archive-only
+  rule. gist_id is the canon name UCC-230''s identity_aliases records for the overlay identity memory_item_id,
+  and every judgment is in its definition''s judgments list (DL-341). DL-475 adds cmd.chat.memory.add
+  and cmd.chat.memory.delete and replaces Edit args with explicit memory_scope, plain text, optional title,
+  gist_id and expected_revision. The new MemoryNoteAddRequestV1/MemoryNoteEditRequestV1/MemoryNoteDeleteRequestV1
+  and MemoryNoteMutationResultV1 in assistant_memory_contracts.schema.json are the concrete owner contracts.
+  The owner authenticates the memory scope and source constraints, checks current revision before Edit/Delete,
+  infers kind, commits canonical records/tombstones before indexes, and returns a durable receipt before
+  acknowledgment. Delete is not Discard; suppression prevents old transcripts/replay/rebuild/restore/import
+  from silently resaving the deleted content. Bulk deletion freezes the confirmed scope and exact note
+  IDs and uses this same owner for each, reporting any incomplete result honestly. Old Verify/Pin/Discard/toggle/preview
+  definitions remain support/compatibility contracts with no ordinary UI producer; user dispatch cannot
+  restore them or bypass support gates. Maintenance definitions retain their holds and source/admission
+  gaps; this change does not enable them. These definitions add no EventRecord writer or native handler
+  proof. Edit may supply destination_scope to explicitly request a supported availability change. memory_scope
+  always identifies the current source; destination_scope never merely relabels it. Recheck both scopes,
+  provenance and privacy, preserve versions and legacy protection, and commit destination plus source
+  disposition through the same owner before claiming a move. A failure leaves the original available under
+  its original scope; unavailable native cross-scope ownership stays handler_unavailable. Private app-thread
+  content never broadens automatically.'
 gui_related: true
-gui_classification_reason: Defines the arguments of user-visible Gist Review panel ("Notes it took") commands.
+gui_classification_reason: Defines the Memory page, actions or reply presentation.
 depends_on: [UCC-230, UCC-084, UCC-085, CV-333, DL-333, DL-402, DL-403, DL-444, DL-445, DL-446, DL-447, DL-341]
 unblocks: []
 acceptance_criteria:
-  - Every command UCC-230 routes to AMS-141 has exactly one definition in the block below.
-  - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
-  - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
-  - summarize_monthly and prune_archive archive only and never delete, and neither archives or merges a pinned memory (DL-402).
-  - summarize_monthly and prune_archive stay unavailable with their reason, owner state maintenance_cutoffs_pending mapped to not_configured (UCC-230, DL-341), until approved cutoffs exist and are applied (DL-403, DL-446, DL-447).
-  - dedup_sweep stays unavailable, automatically and from the Memory panel, with owner state dedup_hold_pending mapped to not_configured (UCC-230, DL-341), until the DL-444 and DL-445 answer is applied and all remaining definition, review and recording approvals pass (DL-444, DL-445).
-  - prune_archive's policy can never change DL-447's eligibility test or pin exclusion or DL-402's archive-only rule, and a supplied policy is refused until the memory owner defines its shape.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- The new Add/Edit/Delete requests and result have exactly one owner definition and concrete strict schema.
+- No successful-save acknowledgment precedes the durable canonical write receipt.
+- Scope/actor/source/read-only helper/stale-revision checks precede mutations; deletion suppression survives
+  replay/rebuild/old chats.
+- Legacy support commands have no ordinary UI producer; all maintenance holds remain.
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py
   - python3 scripts/pm-plan-index.py validate
@@ -3200,9 +3452,26 @@ context_scope: ucc_049_105_typed_definitions
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/UI_Command_Catalog.md]
 node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
-  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
-preserved_exact_tokens: [cmd.chat.memory.verify, cmd.chat.memory.edit, cmd.chat.memory.pin, cmd.chat.memory.discard, cmd.chat.memory.toggle_auto_save_unverified, cmd.chat.memory.preview_capsule, cmd.chat.memory.rebuild_lexical_index, cmd.chat.memory.rebuild_semantic_index, cmd.chat.memory.verification_sweep, cmd.chat.memory.dedup_sweep, cmd.chat.memory.summarize_monthly, cmd.chat.memory.prune_archive]
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared''s answer "approve all"
+  to Q5'
+- /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+preserved_exact_tokens:
+- cmd.chat.memory.verify
+- cmd.chat.memory.edit
+- cmd.chat.memory.pin
+- cmd.chat.memory.discard
+- cmd.chat.memory.toggle_auto_save_unverified
+- cmd.chat.memory.preview_capsule
+- cmd.chat.memory.rebuild_lexical_index
+- cmd.chat.memory.rebuild_semantic_index
+- cmd.chat.memory.verification_sweep
+- cmd.chat.memory.dedup_sweep
+- cmd.chat.memory.summarize_monthly
+- cmd.chat.memory.prune_archive
+- cmd.chat.memory.add
+- cmd.chat.memory.delete
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias or source-lineage token.
@@ -3221,523 +3490,831 @@ command_payload_definitions:
   owner_unit: AMS-141
   overlay: Plans/UI_Command_Catalog.md#UCC-230
   definitions:
-    - command_id: cmd.chat.memory.verify
-      ucc_units: [UCC-084]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1133 row args { project_id, gist_id }; UCC-230 common optional project_id made required by the row."
-        gist_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1133 { project_id, gist_id }; UCC-230 identity_aliases: gist_id stands for the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8857; DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)"
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "The production wiring row names ChatOwnerCommandRequestV2, which requires thread_id (string 1..256, not null; Plans/application_workflow_contracts.schema.json). The 2.8 rows (UI_Command_Catalog.md:1133-1144) are Project-scoped and carry no thread_id, except cmd.chat.memory.preview_capsule's optional thread_id?, and the UCC-084..UCC-088 overlay requires none. Canon does not say who supplies the owner request's thread_id for a Project memory command: not the Memory panel's active thread, not the dispatch envelope, and for a Project-wide maintenance job canon names no thread at all. No value is chosen here: the wired request and the catalog rows disagree, and the chat and memory owners settle whether these commands need a thread or a different owner request."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "The 2.8 rows (UI_Command_Catalog.md:1133-1144) mark project_id required, while the MemoryGist scope envelope allows project_id=null with actual Computer/thread identity for AMS-054 app memory (assistant-memory-subsystem.md §3.1; AMS-054). Choice: the row's side, so these commands act on Project memory only and app memory has no Gist Review or maintenance command until the memory owner decides. The other side, required: true with nullable: true, is not open to this definition: UCC-230 refuses nullable on a restated common optional field, and project_id is one. Canon disagrees here and the memory owner settles it."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1133) states no command_kind. Verify emits memory.gist.verification_requested and memory.gist.verified or verification_failed, a durable change to the gist."
-        - key: owner_result
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no gist-review result payload, so none is defined here."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (assistant-memory-subsystem.md §9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.edit
-      ucc_units: [UCC-084]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1134 row args { project_id, gist_id, patch }; UCC-230 common optional project_id made required by the row"
-        gist_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1134; UCC-230 identity_aliases: gist_id stands for memory_item_id (DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)"
-        patch:
-          type: object
-          required: true
-          default: none
-          fields:
-            claims:
-              type: list
-              required: false
-              default: none
-              item:
-                type: object
-                fields:
-                  claim_id:
-                    type: id
-                    required: false
-                    default: none
-                    provenance: gap
-                    gap_note: "claim_id is canon (§3.2, stable within gist); whether a patch item must carry it is not stated. Choice: optional so a new claim may omit it."
-                  text:
-                    type: string
-                    required: true
-                    default: none
-                    provenance: gap
-                    gap_note: "text is canon (§3.2, single sentence); no length bound is stated, so none is set. Required in each patch item is chosen here."
-              provenance: gap
-              gap_note: "claims[] is the canon gist field (§3.1) and §3.2 fixes the claim shape, but whether Edit replaces the list or edits per claim is not stated. Choice: shape only; replacement semantics assumed."
-            tags:
-              type: list
-              required: false
-              default: none
-              item: {type: string}
-              provenance: gap
-              gap_note: "tags[] is the canon gist field (§3.1); its carriage in an edit patch is not stated anywhere."
-            half_life_days:
-              type: integer
-              required: false
-              default: none
-              constraints: {minimum: 1}
-              provenance: gap
-              gap_note: "the per-gist half-life override stays a gist field (AMS-048, assistant-memory-subsystem.md:2787); minimum 1 day is chosen here (§9.2 gives per-kind defaults, no per-gist bound)."
-          provenance: gap
-          gap_note: >-
-            UI_Command_Catalog.md:1134 gives the key only ({ project_id, gist_id, patch }); no patch shape is
-            stated. AMS-048 (assistant-memory-subsystem.md:2787) makes Edit a versioned claim edit that writes a
-            new gist version, keeps the prior version and its evidence history, and resets the gist to Unverified.
-            Choice: the fields below are the canon-named user-editable gist surfaces of §3.1 (claims[], tags[],
-            half_life_days); whether Edit may set all of them is not stated.
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1134) carries no thread_id. Canon does not say who supplies it; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1134) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1134) states no command_kind. Edit emits memory.gist.updated and writes a new gist version (AMS-048)."
-        - key: owner_result
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no gist-review result payload, so none is defined here."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.pin
-      ucc_units: [UCC-084]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1135 row args { project_id, gist_id, pinned }; UCC-230 common optional project_id made required by the row"
-        gist_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1135; UCC-230 identity_aliases: gist_id stands for memory_item_id (DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)"
-        pinned:
-          type: boolean
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1135 { project_id, gist_id, pinned }; MemoryGist field pinned (bool), assistant-memory-subsystem.md §3.1"
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1135) carries no thread_id. Canon does not say who supplies it; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1135) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1135) states no command_kind. Pin emits memory.gist.pinned or memory.gist.unpinned, a durable change to the gist."
-        - key: owner_result
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no gist-review result payload, so none is defined here."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.discard
-      ucc_units: [UCC-084]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1136 row args { project_id, gist_id }; UCC-230 common optional project_id made required by the row"
-        gist_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1136; UCC-230 identity_aliases: gist_id stands for memory_item_id (DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1). Discard sets verification_state = Discarded and excludes the gist from automatic injection and default search results (§5.3)."
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1136) carries no thread_id. Canon does not say who supplies it; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1136) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1136) states no command_kind. Discard emits memory.gist.discarded and sets verification_state = Discarded (§5.3)."
-        - key: owner_result
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no gist-review result payload, so none is defined here."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.toggle_auto_save_unverified
-      ucc_units: [UCC-084]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1137 row args { project_id, enabled }; UCC-230 common optional project_id made required by the row"
-        enabled:
-          type: boolean
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1137 { project_id, enabled }; sets ConfigKey assistant.memory.auto_save_unverified (default true, §9.4); AutoRunBoundary drops newly-proposed Unverified gists when disabled (§5.2.1); emits settings.updated"
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1137) carries no thread_id. Canon does not say who supplies it; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1137) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1137) states no command_kind. The toggle sets a ConfigKey and emits settings.updated, a durable settings change."
-        - key: owner_result
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
-          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no result payload for the toggle, so none is defined here."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.preview_capsule
-      ucc_units: [UCC-084]
-      command_kind: shell_view
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1138 row args { project_id, thread_id? }; UCC-230 common optional project_id made required by the row"
-        thread_id:
-          type: id
-          required: false
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1138 { project_id, thread_id? }; restated at its UCC-230 canonical type id, optional as the row marks it"
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: local:MemoryCapsulePreviewResultV1
-      error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1138) makes thread_id optional. When the caller supplies thread_id it can fill the owner request's; canon does not say what fills it when the caller leaves it out. No value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1138) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: shell_view
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1138) states no command_kind; it says 'no persisted domain event (preview computation only)', so there is no domain effect to take."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.rebuild_lexical_index
-      ucc_units: [UCC-085]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1139 row args { project_id }; UCC-230 common optional project_id made required by the row. Rebuilds the Tantivy index from assistant_memory.redb (§7.2 item 1); runs in-process (§7.2 rule)."
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: local:MemoryMaintenanceResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1139) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1139) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1139) states no command_kind. The rebuild emits memory.index.lexical.rebuild.started and .completed and rewrites the derived index."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.rebuild_semantic_index
-      ucc_units: [UCC-085]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1140 row args { project_id }; UCC-230 common optional project_id made required by the row. Rebuilds the USearch index from assistant_memory.redb, re-embed and rebuild (§7.2 item 2); runs in-process (§7.2 rule)."
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: local:MemoryMaintenanceResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1140) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1140) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1140) states no command_kind. The rebuild emits memory.index.semantic.rebuild.started and .completed and rewrites the derived index."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.verification_sweep
-      ucc_units: [UCC-085]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1141 row args { project_id }; UCC-230 common optional project_id made required by the row. Re-evaluates verification_state for all gists (§7.2 item 3); pins do not stop verification (DL-402)."
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: local:MemoryMaintenanceResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1141) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1141) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1141) states no command_kind. The sweep emits memory.verification_sweep.started and .completed and re-evaluates every gist's verification_state."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
-    - command_id: cmd.chat.memory.dedup_sweep
-      ucc_units: [UCC-085]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1142 row args { project_id }; UCC-230 common optional project_id made required by the row. Merges identical embed_text_hash gists (§7.2 item 4); survivor and disposition per Plans/Decision_Log.md#DL-444 and #DL-445: the oldest eligible memory keeps its identity, merged originals are archived with their evidence references, never automatically deleted, and a pin-protected merge is skipped."
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: local:MemoryMaintenanceResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      owner_state_codes:
-        - {owner_state: dedup_hold_pending, code: not_configured}
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1142) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1142) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1142) states no command_kind. The sweep emits memory.dedup_sweep.started and .completed and merges gists."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. Plans/Decision_Log.md#DL-444 and #DL-445 (approved scope) keep automatic jobs and panel buttons unavailable until the answer is applied and all remaining definition, review and recording approvals pass. The definition shows that hold as owner state dedup_hold_pending, which UCC-230's owner_state_code_map maps to not_configured (DL-444, DL-445; DL-341). assistant.memory.enabled=false or no memory store (§9.4) is also not_configured."
-    - command_id: cmd.chat.memory.summarize_monthly
-      ucc_units: [UCC-085]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1143 row args { project_id, month? }; UCC-230 common optional project_id made required by the row. Consolidates older low-activation Note gists into a monthly Note gist (§7.2 item 5). Archive-only per Plans/Decision_Log.md#DL-402: originals stay archived with all their evidence references, a pinned memory is never archived or merged, and a memory is deleted only when the user deletes it."
-        month:
-          type: string
-          required: false
-          default: none
-          provenance: gap
-          gap_note: >-
-            UI_Command_Catalog.md:1143 gives the key only ({ project_id, month? }); no format or default is
-            stated. DL-446 keeps "the existing monthly grouping" and fixes the selection cutoffs (Note memories
-            idle at least 90 days AND usefulness score below 0.10, per Project), not a month format. Choice:
-            an unconstrained optional string pending an owner format, candidate YYYY-MM. month only names which
-            monthly group to consolidate; it can never change DL-446's cutoffs, pin exclusion or archive-only rule.
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: local:MemoryMaintenanceResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      owner_state_codes:
-        - {owner_state: maintenance_cutoffs_pending, code: not_configured}
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1143) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1143) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1143) states no command_kind. The job emits memory.monthly_summary.started and .completed and archives originals."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "Owner state maintenance_cutoffs_pending, which UCC-230's owner_state_code_map maps to not_configured (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved cutoffs exist, and the button shows unavailable with that reason. DL-446 returned the cutoffs and keeps runs waiting for their application and the remaining definition, review and recording approvals, so the state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured."
-    - command_id: cmd.chat.memory.prune_archive
-      ucc_units: [UCC-085]
-      command_kind: domain_action
-      response_kind: owner_operation
-      args:
-        project_id:
-          type: id
-          required: true
-          default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1144 row args { project_id, policy? }; UCC-230 common optional project_id made required by the row. Archive-only per Plans/Decision_Log.md#DL-402: deletion stays the user's action, a pinned memory is never archived, and archived originals keep their evidence references and versions (DL-447)."
-        policy:
-          type: string
-          required: false
-          default: none
-          provenance: gap
-          gap_note: >-
-            UI_Command_Catalog.md:1144 gives the key only ({ project_id, policy? }) and no canon defines a
-            policy shape or what a caller-supplied policy may change. DL-402 fixes archive-only and DL-447 fixes
-            the selection (memories of any kind idle at least 180 days AND usefulness score below 0.05, inside
-            each Project, pins excluded before scoring). Choice: the field stays an optional string with no
-            accepted value until the memory owner defines it; until then the handler refuses any supplied
-            policy with invalid_args, and no policy value can ever widen, narrow or replace DL-447's eligibility
-            test, its pin exclusion or DL-402's archive-only rule.
-      owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-      result:
-        response: Plans/ui_command_response.schema.json
-        owner_result: local:MemoryMaintenanceResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]
-      owner_state_codes:
-        - {owner_state: maintenance_cutoffs_pending, code: not_configured}
-      aliases: []
-      judgments:
-        - key: owner_request
-          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
-          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1144) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
-        - key: field:project_id
-          choice: required, not nullable
-          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1144) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
-        - key: command_kind
-          choice: domain_action
-          gap_note: "The 2.8 row (UI_Command_Catalog.md:1144) states no command_kind. The job emits memory.prune_archive.started and .completed and archives memories."
-        - key: disabled_reason_codes
-          choice: [not_configured]
-          gap_note: "Owner state maintenance_cutoffs_pending, which UCC-230's owner_state_code_map maps to not_configured (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved cutoffs exist, and the button shows unavailable with that reason. DL-447 returned the cutoffs and keeps runs waiting for their application and the remaining definition, review and recording approvals, so the state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured."
+  - command_id: cmd.chat.memory.verify
+    ucc_units:
+    - UCC-084
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1133 row args { project_id, gist_id }; UCC-230 common optional project_id
+          made required by the row.
+      gist_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: 'UI_Command_Catalog.md:1133 { project_id, gist_id }; UCC-230 identity_aliases: gist_id stands for
+          the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8857; DL-341 resolution 4);
+          MemoryGist id (assistant-memory-subsystem.md §3.1)'
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'The production wiring row names ChatOwnerCommandRequestV2, which requires thread_id (string 1..256,
+        not null; Plans/application_workflow_contracts.schema.json). The 2.8 rows (UI_Command_Catalog.md:1133-1144)
+        are Project-scoped and carry no thread_id, except cmd.chat.memory.preview_capsule''s optional thread_id?,
+        and the UCC-084..UCC-088 overlay requires none. Canon does not say who supplies the owner request''s thread_id
+        for a Project memory command: not the Memory panel''s active thread, not the dispatch envelope, and for
+        a Project-wide maintenance job canon names no thread at all. No value is chosen here: the wired request
+        and the catalog rows disagree, and the chat and memory owners settle whether these commands need a thread
+        or a different owner request.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'The 2.8 rows (UI_Command_Catalog.md:1133-1144) mark project_id required, while the MemoryGist scope
+        envelope allows project_id=null with actual Computer/thread identity for AMS-054 app memory (assistant-memory-subsystem.md
+        §3.1; AMS-054). Choice: the row''s side, so these commands act on Project memory only and app memory has
+        no Gist Review or maintenance command until the memory owner decides. The other side, required: true with
+        nullable: true, is not open to this definition: UCC-230 refuses nullable on a restated common optional field,
+        and project_id is one. Canon disagrees here and the memory owner settles it.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1133) states no command_kind. Verify emits memory.gist.verification_requested
+        and memory.gist.verified or verification_failed, a durable change to the gist.
+    - key: owner_result
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+      gap_note: The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon
+        types no gist-review result payload, so none is defined here.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or
+        no memory store for the scope (assistant-memory-subsystem.md §9.4) is read as not_configured.
+  - command_id: cmd.chat.memory.pin
+    ucc_units:
+    - UCC-084
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1135 row args { project_id, gist_id, pinned }; UCC-230 common optional project_id
+          made required by the row
+      gist_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: 'UI_Command_Catalog.md:1135; UCC-230 identity_aliases: gist_id stands for memory_item_id (DL-341
+          resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)'
+      pinned:
+        type: boolean
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1135 { project_id, gist_id, pinned }; MemoryGist field pinned (bool), assistant-memory-subsystem.md
+          §3.1
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1135) carries no thread_id. Canon does not say who supplies
+        it; no value is chosen here, and the chat and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1135)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1135) states no command_kind. Pin emits memory.gist.pinned or
+        memory.gist.unpinned, a durable change to the gist.
+    - key: owner_result
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+      gap_note: The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon
+        types no gist-review result payload, so none is defined here.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or
+        no memory store for the scope (§9.4) is read as not_configured.
+  - command_id: cmd.chat.memory.discard
+    ucc_units:
+    - UCC-084
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1136 row args { project_id, gist_id }; UCC-230 common optional project_id
+          made required by the row
+      gist_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: 'UI_Command_Catalog.md:1136; UCC-230 identity_aliases: gist_id stands for memory_item_id (DL-341
+          resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1). Discard sets verification_state = Discarded
+          and excludes the gist from automatic injection and default search results (§5.3).'
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1136) carries no thread_id. Canon does not say who supplies
+        it; no value is chosen here, and the chat and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1136)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1136) states no command_kind. Discard emits memory.gist.discarded
+        and sets verification_state = Discarded (§5.3).
+    - key: owner_result
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+      gap_note: The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon
+        types no gist-review result payload, so none is defined here.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or
+        no memory store for the scope (§9.4) is read as not_configured.
+  - command_id: cmd.chat.memory.toggle_auto_save_unverified
+    ucc_units:
+    - UCC-084
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1137 row args { project_id, enabled }; UCC-230 common optional project_id
+          made required by the row
+      enabled:
+        type: boolean
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1137 { project_id, enabled }; sets ConfigKey assistant.memory.auto_save_unverified
+          (default true, §9.4); AutoRunBoundary drops newly-proposed Unverified gists when disabled (§5.2.1); emits
+          settings.updated
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1137) carries no thread_id. Canon does not say who supplies
+        it; no value is chosen here, and the chat and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1137)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1137) states no command_kind. The toggle sets a ConfigKey and
+        emits settings.updated, a durable settings change.
+    - key: owner_result
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+      gap_note: The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon
+        types no result payload for the toggle, so none is defined here.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or
+        no memory store for the scope (§9.4) is read as not_configured.
+  - command_id: cmd.chat.memory.preview_capsule
+    ucc_units:
+    - UCC-084
+    command_kind: shell_view
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1138 row args { project_id, thread_id? }; UCC-230 common optional project_id
+          made required by the row
+      thread_id:
+        type: id
+        required: false
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1138 { project_id, thread_id? }; restated at its UCC-230 canonical type id,
+          optional as the row marks it
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: local:MemoryCapsulePreviewResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1138) makes thread_id optional. When the caller supplies
+        thread_id it can fill the owner request''s; canon does not say what fills it when the caller leaves it out.
+        No value is chosen here, and the chat and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1138)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: shell_view
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1138) states no command_kind; it says 'no persisted domain event
+        (preview computation only)', so there is no domain effect to take.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or
+        no memory store for the scope (§9.4) is read as not_configured.
+  - command_id: cmd.chat.memory.rebuild_lexical_index
+    ucc_units:
+    - UCC-085
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1139 row args { project_id }; UCC-230 common optional project_id made required
+          by the row. Rebuilds the Tantivy index from assistant_memory.redb (§7.2 item 1); runs in-process (§7.2
+          rule).
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: local:MemoryMaintenanceResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1139) carries no thread_id. Canon does not say who supplies
+        it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat
+        and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1139)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1139) states no command_kind. The rebuild emits memory.index.lexical.rebuild.started
+        and .completed and rewrites the derived index.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or
+        no memory store for the scope (§9.4) is read as not_configured.
+  - command_id: cmd.chat.memory.rebuild_semantic_index
+    ucc_units:
+    - UCC-085
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1140 row args { project_id }; UCC-230 common optional project_id made required
+          by the row. Rebuilds the USearch index from assistant_memory.redb, re-embed and rebuild (§7.2 item 2);
+          runs in-process (§7.2 rule).
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: local:MemoryMaintenanceResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1140) carries no thread_id. Canon does not say who supplies
+        it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat
+        and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1140)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1140) states no command_kind. The rebuild emits memory.index.semantic.rebuild.started
+        and .completed and rewrites the derived index.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or
+        no memory store for the scope (§9.4) is read as not_configured.
+  - command_id: cmd.chat.memory.verification_sweep
+    ucc_units:
+    - UCC-085
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: UI_Command_Catalog.md:1141 row args { project_id }; UCC-230 common optional project_id made required
+          by the row. Re-evaluates verification_state for all gists (§7.2 item 3); pins do not stop verification
+          (DL-402).
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: local:MemoryMaintenanceResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1141) carries no thread_id. Canon does not say who supplies
+        it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat
+        and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1141)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1141) states no command_kind. The sweep emits memory.verification_sweep.started
+        and .completed and re-evaluates every gist's verification_state.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or
+        no memory store for the scope (§9.4) is read as not_configured.
+  - command_id: cmd.chat.memory.dedup_sweep
+    ucc_units:
+    - UCC-085
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: 'UI_Command_Catalog.md:1142 row args { project_id }; UCC-230 common optional project_id made required
+          by the row. Merges identical embed_text_hash gists (§7.2 item 4); survivor and disposition per Plans/Decision_Log.md#DL-444
+          and #DL-445: the oldest eligible memory keeps its identity, merged originals are archived with their evidence
+          references, never automatically deleted, and a pin-protected merge is skipped.'
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: local:MemoryMaintenanceResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    owner_state_codes:
+    - owner_state: dedup_hold_pending
+      code: not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1142) carries no thread_id. Canon does not say who supplies
+        it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat
+        and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1142)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1142) states no command_kind. The sweep emits memory.dedup_sweep.started
+        and .completed and merges gists.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: 'No catalog row states disabled reasons for the memory commands. Plans/Decision_Log.md#DL-444 and
+        #DL-445 (approved scope) keep automatic jobs and panel buttons unavailable until the answer is applied and
+        all remaining definition, review and recording approvals pass. The definition shows that hold as owner state
+        dedup_hold_pending, which UCC-230''s owner_state_code_map maps to not_configured (DL-444, DL-445; DL-341).
+        assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
+  - command_id: cmd.chat.memory.summarize_monthly
+    ucc_units:
+    - UCC-085
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: 'UI_Command_Catalog.md:1143 row args { project_id, month? }; UCC-230 common optional project_id
+          made required by the row. Consolidates older low-activation Note gists into a monthly Note gist (§7.2
+          item 5). Archive-only per Plans/Decision_Log.md#DL-402: originals stay archived with all their evidence
+          references, a pinned memory is never archived or merged, and a memory is deleted only when the user deletes
+          it.'
+      month:
+        type: string
+        required: false
+        default: none
+        provenance: gap
+        gap_note: 'UI_Command_Catalog.md:1143 gives the key only ({ project_id, month? }); no format or default
+          is stated. DL-446 keeps "the existing monthly grouping" and fixes the selection cutoffs (Note memories
+          idle at least 90 days AND usefulness score below 0.10, per Project), not a month format. Choice: an unconstrained
+          optional string pending an owner format, candidate YYYY-MM. month only names which monthly group to consolidate;
+          it can never change DL-446''s cutoffs, pin exclusion or archive-only rule.'
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: local:MemoryMaintenanceResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    owner_state_codes:
+    - owner_state: maintenance_cutoffs_pending
+      code: not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1143) carries no thread_id. Canon does not say who supplies
+        it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat
+        and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1143)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1143) states no command_kind. The job emits memory.monthly_summary.started
+        and .completed and archives originals.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: 'Owner state maintenance_cutoffs_pending, which UCC-230''s owner_state_code_map maps to not_configured
+        (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved
+        cutoffs exist, and the button shows unavailable with that reason. DL-446 returned the cutoffs and keeps
+        runs waiting for their application and the remaining definition, review and recording approvals, so the
+        state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
+  - command_id: cmd.chat.memory.prune_archive
+    ucc_units:
+    - UCC-085
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      project_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: 'UI_Command_Catalog.md:1144 row args { project_id, policy? }; UCC-230 common optional project_id
+          made required by the row. Archive-only per Plans/Decision_Log.md#DL-402: deletion stays the user''s action,
+          a pinned memory is never archived, and archived originals keep their evidence references and versions
+          (DL-447).'
+      policy:
+        type: string
+        required: false
+        default: none
+        provenance: gap
+        gap_note: 'UI_Command_Catalog.md:1144 gives the key only ({ project_id, policy? }) and no canon defines
+          a policy shape or what a caller-supplied policy may change. DL-402 fixes archive-only and DL-447 fixes
+          the selection (memories of any kind idle at least 180 days AND usefulness score below 0.05, inside each
+          Project, pins excluded before scoring). Choice: the field stays an optional string with no accepted value
+          until the memory owner defines it; until then the handler refuses any supplied policy with invalid_args,
+          and no policy value can ever widen, narrow or replace DL-447''s eligibility test, its pin exclusion or
+          DL-402''s archive-only rule.'
+    owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: local:MemoryMaintenanceResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    owner_state_codes:
+    - owner_state: maintenance_cutoffs_pending
+      code: not_configured
+    aliases: []
+    judgments:
+    - key: owner_request
+      choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+      gap_note: 'As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null
+        thread_id, and this row (UI_Command_Catalog.md:1144) carries no thread_id. Canon does not say who supplies
+        it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat
+        and memory owners settle it.'
+    - key: field:project_id
+      choice: required, not nullable
+      gap_note: 'As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1144)
+        while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row''s side is taken,
+        and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement.'
+    - key: command_kind
+      choice: domain_action
+      gap_note: The 2.8 row (UI_Command_Catalog.md:1144) states no command_kind. The job emits memory.prune_archive.started
+        and .completed and archives memories.
+    - key: disabled_reason_codes
+      choice:
+      - not_configured
+      gap_note: 'Owner state maintenance_cutoffs_pending, which UCC-230''s owner_state_code_map maps to not_configured
+        (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved
+        cutoffs exist, and the button shows unavailable with that reason. DL-447 returned the cutoffs and keeps
+        runs waiting for their application and the remaining definition, review and recording approvals, so the
+        state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured.'
+  - command_id: cmd.chat.memory.add
+    ucc_units:
+    - UCC-084
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      memory_scope:
+        type: contract
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+        ref: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteScopeV1
+      text:
+        type: string
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+        constraints:
+          min_length: 1
+      title:
+        type: string
+        required: false
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+    owner_request: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteAddRequestV1
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+  - command_id: cmd.chat.memory.edit
+    ucc_units:
+    - UCC-084
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      memory_scope:
+        type: contract
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+        ref: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteScopeV1
+      gist_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+      expected_revision:
+        type: integer
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+        constraints:
+          minimum: 1
+      text:
+        type: string
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+        constraints:
+          min_length: 1
+      title:
+        type: string
+        required: false
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+      destination_scope:
+        type: contract
+        ref: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteScopeV1
+        required: false
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; explicit availability change under DL-475
+    owner_request: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteEditRequestV1
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
+  - command_id: cmd.chat.memory.delete
+    ucc_units:
+    - UCC-084
+    command_kind: domain_action
+    response_kind: owner_operation
+    args:
+      memory_scope:
+        type: contract
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+        ref: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteScopeV1
+      gist_id:
+        type: id
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+      expected_revision:
+        type: integer
+        required: true
+        default: none
+        provenance: canon
+        source: Plans/assistant-memory-subsystem.md#AMS-141; DL-475
+        constraints:
+          minimum: 1
+    owner_request: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteDeleteRequestV1
+    result:
+      response: Plans/ui_command_response.schema.json
+      owner_result: Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1
+    error_codes:
+    - invalid_args
+    - permission_denied
+    - stale_projection
+    - handler_unavailable
+    - internal_error
+    disabled_reason_codes:
+    - not_configured
+    aliases: []
   results:
     MemoryCapsulePreviewResultV1:
       fields:
-        estimated_tokens: {type: integer, required: true, default: none, constraints: {minimum: 0}, provenance: gap, gap_note: "the estimated token count the capsule preview MUST report (assistant-memory-subsystem.md:389), counting memory notes only against assistant.memory.capsule_budget_tokens (:392); canon names no field, and minimum 0 is chosen here"}
-        truncated: {type: boolean, required: true, default: none, provenance: gap, gap_note: "whether truncation occurred because of the configured cap, which the preview MUST indicate (assistant-memory-subsystem.md:389); canon names no field"}
-        capsule_budget_tokens: {type: integer, required: false, default: none, constraints: {minimum: 0}, provenance: gap, gap_note: "the assistant.memory.capsule_budget_tokens value the count is measured against (assistant-memory-subsystem.md:392); canon does not say the result carries it"}
-        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.chat_memory_preview_capsule); the row persists no domain event"}
+        estimated_tokens:
+          type: integer
+          required: true
+          default: none
+          constraints:
+            minimum: 0
+          provenance: gap
+          gap_note: the estimated token count the capsule preview MUST report (assistant-memory-subsystem.md:389),
+            counting memory notes only against assistant.memory.capsule_budget_tokens (:392); canon names no field,
+            and minimum 0 is chosen here
+        truncated:
+          type: boolean
+          required: true
+          default: none
+          provenance: gap
+          gap_note: whether truncation occurred because of the configured cap, which the preview MUST indicate (assistant-memory-subsystem.md:389);
+            canon names no field
+        capsule_budget_tokens:
+          type: integer
+          required: false
+          default: none
+          constraints:
+            minimum: 0
+          provenance: gap
+          gap_note: the assistant.memory.capsule_budget_tokens value the count is measured against (assistant-memory-subsystem.md:392);
+            canon does not say the result carries it
+        receipt_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: dispatch receipt (catalog.chat_memory_preview_capsule); the row persists no domain event
     MemoryMaintenanceResultV1:
       fields:
-        status: {type: enum, values: [succeeded, failed], required: true, default: none, provenance: gap, gap_note: "maintenance operations report explicit success/failure status (assistant-memory-subsystem.md:412); canon names neither the field nor its values"}
-        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt for the job's started/completed events (UI_Command_Catalog.md:1139-1144)"}
+        status:
+          type: enum
+          values:
+          - succeeded
+          - failed
+          required: true
+          default: none
+          provenance: gap
+          gap_note: maintenance operations report explicit success/failure status (assistant-memory-subsystem.md:412);
+            canon names neither the field nor its values
+        receipt_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: dispatch receipt for the job's started/completed events (UI_Command_Catalog.md:1139-1144)
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-230, ContractName:Plans/UI_Command_Catalog.md#UCC-084, ContractName:Plans/UI_Command_Catalog.md#UCC-085, ContractName:Plans/Decision_Log.md#DL-333, ContractName:Plans/Decision_Log.md#DL-402, ContractName:Plans/Decision_Log.md#DL-403, ContractName:Plans/Decision_Log.md#DL-444, ContractName:Plans/Decision_Log.md#DL-445, ContractName:Plans/Decision_Log.md#DL-446, ContractName:Plans/Decision_Log.md#DL-447, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/application_workflow_contracts.schema.json, ContractName:Plans/Contracts_V0.md#7-uicommand

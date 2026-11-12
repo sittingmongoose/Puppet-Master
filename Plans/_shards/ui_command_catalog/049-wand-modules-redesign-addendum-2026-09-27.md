@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16849-L18108
+Source lines: L16866-L18131
 
-Source SHA256: `3076b04b822023dbbc42190301d7803c7772652b6b3fc3f45d443c7c7683b726`
+Source SHA256: `4a5c534245eb40b9e056c081cd7631289e7b6fb420dfc89be21f42937111e168`
 
 ---
 
@@ -629,7 +629,7 @@ Source surfaces for these rows:
 - `cmd.bsd.catch_up.release`: `bsd_note`.
 - `cmd.chat.teach.revoke`: `teach_document`, `memory_sheet`.
 - `cmd.chat.teach.set_lock`: `teach_document`.
-- `cmd.chat.memory.export`: `memory_sheet`, `teach_document`.
+- `cmd.chat.memory.export`: general data export and `teach_document` (Instructions); no Memory-page Export panel (DL-475).
 
 Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
@@ -644,29 +644,32 @@ plan_unit_id: UCC-171
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'DL-130 adds seven command rows, each a domain_action with one owner, one request and result
-  contract and one sole future target, and each registered after an alias census over live Plans found no collision:
-  cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not cancelled), cmd.brainstorm.research_lead
-  (Collaborative_Workflows; now the DL-218 alias of cmd.collaboration.research_lead), cmd.bsd.finding.dismiss
-  and cmd.bsd.catch_up.release (Back_Seat_Driver), and cmd.chat.teach.revoke, cmd.chat.teach.set_lock and cmd.chat.memory.export
-  (assistant-memory-subsystem). TeachLockRequest carries locked; MemoryExportRequest carries scope gists, teachings
-  or all. Each row starts handler_unavailable and its controls stay disabled with command_not_registered until
-  central registration, Event Authority, storage and production wiring close. cmd.runtime.automation_stop.set,
-  the audit''s draft name for the pause, is never registered; DL-136 registers the pause as cmd.runtime.automation_pause.set
-  in UCC-174.
+canonical_text: 'DL-130 adds seven command rows, each a domain_action with one owner, one request and
+  result contract and one sole future target, and each registered after an alias census over live Plans
+  found no collision: cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not cancelled),
+  cmd.brainstorm.research_lead (Collaborative_Workflows; now the DL-218 alias of cmd.collaboration.research_lead),
+  cmd.bsd.finding.dismiss and cmd.bsd.catch_up.release (Back_Seat_Driver), and cmd.chat.teach.revoke,
+  cmd.chat.teach.set_lock and cmd.chat.memory.export (assistant-memory-subsystem). TeachLockRequest carries
+  locked; MemoryExportRequest carries scope gists, teachings or all. Each row starts handler_unavailable
+  and its controls stay disabled with command_not_registered until central registration, Event Authority,
+  storage and production wiring close. cmd.runtime.automation_stop.set, the audit''s draft name for the
+  pause, is never registered; DL-136 registers the pause as cmd.runtime.automation_pause.set in UCC-174.
 
 
   Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
-  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
-  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
-  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
-  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
-  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
-  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
-  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
-  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
-  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
-  unavailable handlers remain handler_unavailable.'
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning
+  Wizard, PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still
+  require actual targets. Build At atomically commits one frozen schedule/window, creates no run, and
+  never dispatches execution_window.create a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency,
+  frozen text/attachments/target version and fresh authority/Stop checks. App operational pause has independent
+  real Server custody and user-only clear, never a Settings value or missing-as-off. N25 stops/fences
+  source work and explicitly re-admits mapped frozen targets with fresh consent/epochs; no automatic resume,
+  latest-version substitution or duplicate occurrence. The exact consumer contract is UCC-219/WM-105 and
+  Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay resources and all unrelated
+  PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable handlers remain handler_unavailable.
+  DL-475 relocates cmd.chat.memory.export to general data export and Instructions; Memory itself has no
+  Export panel. The existing exporter, ArtifactExportResult, pointer evidence and exact authorization
+  remain. No duplicate exporter or all-Project/private-chat enumeration is admitted.'
 gui_related: true
 gui_classification_reason: Registers the commands behind visible End discussion, Check it, Dismiss, Don't wait,
   Turn off, Lock and Export buttons and their disabled states.
@@ -716,6 +719,7 @@ source_lineage:
 - 'Plans/Decision_Log.md#DL-130, #DL-136'
 - Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat_room.end
 - cmd.brainstorm.research_lead
@@ -754,7 +758,7 @@ This unit adds the surfaces and row revisions that were waiting on the owner's a
 - `TeachConfirmRequest` gains `locked`, the sheet's Locked choice, so a rule can be saved locked. After the save, only `cmd.chat.teach.set_lock` changes the lock.
 
 **Two new surfaces.**
-- `teach_document`, the taught-rules document, produces `cmd.chat.teach.capture` ("Teach a rule", and Edit with mode correct), `cmd.chat.memory.preview_capsule`, `cmd.chat.teach.set_lock`, `cmd.chat.teach.revoke` and `cmd.chat.memory.export`.
+- `teach_document`, the taught-rules document, produces `cmd.chat.teach.capture` ("Teach a rule", and Edit with mode correct), `cmd.chat.teach.set_lock`, `cmd.chat.teach.revoke` and `cmd.chat.memory.export`.
 - `teach_receipt`, the one receipt line that a confirmed change leaves in the chat, produces `cmd.chat.teach.open_memory`.
 
 **Crew Auto (DL-119, DL-120, DL-135).**
@@ -776,31 +780,30 @@ plan_unit_id: UCC-172
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Every Teach entry (slash, natural language, the wand, the message menu and teach_document) dispatches
-  cmd.chat.teach.capture and opens the one Teach sheet, which teach_capture names; there is no in-chat
-  capture card and capture writes no memory (DL-127). TeachConfirmRequest gains locked; afterwards only
-  cmd.chat.teach.set_lock changes the lock (DL-130). teach_document produces cmd.chat.teach.capture,
-  cmd.chat.memory.preview_capsule, cmd.chat.teach.set_lock, cmd.chat.teach.revoke and
-  cmd.chat.memory.export; teach_receipt produces cmd.chat.teach.open_memory.
+canonical_text: 'Every Teach entry (slash, natural language, the wand, the message menu and teach_document)
+  dispatches cmd.chat.teach.capture and opens the one Teach sheet, which teach_capture names; there is
+  no in-chat capture card and capture writes no memory (DL-127). TeachConfirmRequest gains locked; afterwards
+  only cmd.chat.teach.set_lock changes the lock (DL-130). teach_document produces cmd.chat.teach.capture,
+  cmd.chat.teach.set_lock, cmd.chat.teach.revoke and cmd.chat.memory.export; teach_receipt produces cmd.chat.teach.open_memory.
   cmd.chat.crew_auto.open_config is produced by the Crew Auto settings… row in multi_agent_menu and by
-  the Crew sheet's Settings… link in workflow_modal, and by the Change control of the Crew Auto note
-  on crew_auto_receipt, the one line Crew Auto is on for this project that turning Crew Auto on for
-  the project leaves in that chat (DL-135, CWR-038); Manage Defaults… is unchanged, and Review and
-  BrainStorm have no wand producer (DL-119). cmd.chat.crew_auto.set carries scope project or thread:
-  the Crew Auto sheet's primary sends project with the rules and the team in one request, and a chat's
-  Crew Auto check sends thread, setting only that chat's override and never opening the sheet first;
-  Allow Crews in this chat is retired into that check (DL-120, CWR-038).
-  cmd.review.send_findings_to_agent fills the empty composer and never sends, returns
-  ComposerBufferResult and refuses with composer_not_empty (DL-125). eli5_sheet and the inherit value
-  are settled by DL-126 and added in UCC-175.
-  DL-138 reuses cmd.review.send_findings_to_agent for Ask for a fix on message_chrome.
-  ReviewSendFindingsRequest keeps its existing review variant and adds a disjoint taught_rule_check
-  source variant carrying thread_id, reply_message_id and nonempty missed_teaching_refs, whose
-  memory_id and normalized_fact_sha256 identify failed checks on that reply's persisted context record.
-  source_kind is review_findings or taught_rule_check, with no invented review-run or finding IDs. ComposerBufferResult keeps source-specific lineage in metadata. Both
-  variants require the source thread's empty composer, refuse composer_not_empty and never send or
-  execute the fix; only the user sends. CWR-031 and AMS-053 own these source contracts.
+  the Crew sheet''s Settings… link in workflow_modal, and by the Change control of the Crew Auto note
+  on crew_auto_receipt, the one line Crew Auto is on for this project that turning Crew Auto on for the
+  project leaves in that chat (DL-135, CWR-038); Manage Defaults… is unchanged, and Review and BrainStorm
+  have no wand producer (DL-119). cmd.chat.crew_auto.set carries scope project or thread: the Crew Auto
+  sheet''s primary sends project with the rules and the team in one request, and a chat''s Crew Auto check
+  sends thread, setting only that chat''s override and never opening the sheet first; Allow Crews in this
+  chat is retired into that check (DL-120, CWR-038). cmd.review.send_findings_to_agent fills the empty
+  composer and never sends, returns ComposerBufferResult and refuses with composer_not_empty (DL-125).
+  eli5_sheet and the inherit value are settled by DL-126 and added in UCC-175. DL-138 reuses cmd.review.send_findings_to_agent
+  for Ask for a fix on message_chrome. ReviewSendFindingsRequest keeps its existing review variant and
+  adds a disjoint taught_rule_check source variant carrying thread_id, reply_message_id and nonempty missed_teaching_refs,
+  whose memory_id and normalized_fact_sha256 identify failed checks on that reply''s persisted context
+  record. source_kind is review_findings or taught_rule_check, with no invented review-run or finding
+  IDs. ComposerBufferResult keeps source-specific lineage in metadata. Both variants require the source
+  thread''s empty composer, refuse composer_not_empty and never send or execute the fix; only the user
+  sends. CWR-031 and AMS-053 own these source contracts. DL-475 removes the preview_capsule GUI producer
+  and routes the explicit Teach receipt to Instructions rather than the saved-note Memory editor. General
+  data export retains the existing memory exporter.'
 gui_related: true
 gui_classification_reason: "Names the visible Teach sheet entries, taught-rules document, receipt, Crew Auto rows and note, and Send Findings behaviour."
 split_recommended: false
@@ -828,11 +831,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f sections 4.1 (REV-5, REV-10, REV-11, REV-15) and 4.2"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMD-04"
-  - "Plans/Decision_Log.md#DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-135"
-  - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f
+  sections 4.1 (REV-5, REV-10, REV-11, REV-15) and 4.2
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
+  lines B-CMD-03, B-CMD-04
+- 'Plans/Decision_Log.md#DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-135'
+- Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "source_kind"
   - "review_findings"

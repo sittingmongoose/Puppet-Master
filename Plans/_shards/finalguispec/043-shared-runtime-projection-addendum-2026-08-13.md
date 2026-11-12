@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5446-L27013
+Source lines: L5446-L27017
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `685574c4fd2382d159aa4346879f61b32bbcb6f2f85bb8644644bddb4e80d834`
 
 ---
 
@@ -7372,14 +7372,15 @@ plan_unit_id: F3-132
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
-  context detail tabs, curated/raw views, under-message actions, and info-popovers that follow
-  Assistant Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
-  Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and failed
-  command-result states.
-  Amended 2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind (`context:<threadId>`,
-  F3-635), opened and placed by F3-634 in a home panel.
+canonical_text: 'Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
+  context detail tabs, curated/raw views, under-message actions, and info-popovers that follow Assistant
+  Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
+  Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and
+  failed command-result states. Amended 2026-10-09 (DL-180): the thread-scoped context detail tab is the
+  context tab kind (`context:<threadId>`, F3-635), opened and placed by F3-634 in a home panel. DL-475
+  keeps basic on-demand capacity/cost/model facts and Squeeze now, but moves assembled-source charts,
+  raw memory data and memory-selection explanations to internal debugging. Curated/raw source-family inspection
+  is no ordinary user surface.'
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
@@ -7402,9 +7403,10 @@ node_compile_hint:
   mode: thread_context_detail_and_message_info_surfaces
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0084"
-- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance"
-- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0084
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - "More Details"
 - "Compact Now"
@@ -9102,10 +9104,11 @@ plan_unit_id: F3-164
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Context management combines thread context, Investigation Context, editor/file references, and
-  review/document references with stable identity, owner surface, canonical usage/state counters,
-  token summaries, and visible pruning, compaction, and restoration disclosure.
+canonical_text: Context management combines thread context, Investigation Context, editor/file references,
+  and review/document references with stable identity, owner surface, canonical usage/state counters,
+  token summaries, and visible pruning, compaction, and restoration disclosure. DL-475 keeps capacity/cost
+  and useful transition/compaction results on demand; assembled-source breakdowns, raw data and memory-selection
+  explanations are internal debugging only. No source-family chart or used-memory list is shown.
 gui_related: true
 gui_classification_reason: Context disclosure and context surfaces are user-visible GUI behavior despite the source span inference being false.
 split_recommended: false
@@ -9128,7 +9131,8 @@ node_compile_hint:
   mode: context_management_provenance_and_disclosure
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0106"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0106
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - "Investigation Context"
 - "editor/file references"

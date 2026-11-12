@@ -172,7 +172,7 @@ def check(root=ROOT, corpus=None):
     errors = []
     counts = collections.Counter(rows=len(rows), categories=len(inventory['categories']),
                                  managers=len(pack['manager_registry']))
-    if len(rows) != len(inventory['settings']) or len(rows) != 1024 or not (NEW_IDS | PLACEMENT_IDS) <= rows.keys():
+    if len(rows) != len(inventory['settings']) or len(rows) != 981 or not (NEW_IDS | PLACEMENT_IDS) <= rows.keys():
         errors.append('Settings identity census')
     if len(inventory['categories']) != 12 or len(pack['manager_registry']) != 38:
         errors.append('Settings category/manager census')

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3807-L22961
+Source lines: L3807-L22993
 
-Source SHA256: `5be00385fb332d27e9b2e7b29ae5101b4031acc3777b8ed3e23faceb8dcf4b75`
+Source SHA256: `e4f79ff67ddc82d1dff604804a724884f5f52725b2540dd960f732fd9f417970`
 
 ---
 
@@ -1125,15 +1125,23 @@ plan_unit_id: ACD-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach retrieval, disclosure, conflict handling, inspection, narrowing, supersession, revocation, and secret exclusion are auditable safety rules. Taught knowledge enters prompts as explicit memory/context rather than undocumented hidden prompt mutation.
+canonical_text: Teach scope, conflict/supersession, revocation and secret exclusion remain auditable instruction
+  safety rules. Inclusion records are internal and never proof of compliance. Routine replies show no
+  memory-use citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers,
+  verification badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to
+  memory · View line appear; View opens the same Memory page as a sheet and highlights the saved note.
+  Requested save/edit confirmation stays brief. Task evidence and ordinary links remain available.
 gui_related: false
 gui_classification_reason: Teach audit and secret-exclusion behavior are memory governance requirements, not GUI implementation.
 depends_on: [ACD-020, ACD-021]
 unblocks: []
 acceptance_criteria:
-  - Conflicting teachings record supersession or revocation rather than silently overwriting prior knowledge.
-  - Users can inspect, narrow, supersede, or revoke taught knowledge later.
-  - Teach does not persist secrets, tokens, passwords, or other credentials.
+- Teach scope, conflict/supersession, revocation and secret exclusion remain auditable instruction safety
+  rules. Inclusion records are internal and never proof of compliance. Routine replies show no memory-use
+  citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers, verification
+  badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to memory · View
+  line appear; View opens the same Memory page as a sheet and highlights the saved note. Requested save/edit
+  confirmation stays brief. Task evidence and ordinary links remain available.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1148,12 +1156,13 @@ node_compile_hint:
   mode: teach_audit_safety
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "explicit memory/context"
   - "MUST NOT persist secrets, tokens, passwords, or other credentials"
 negative_constraints:
-  - "Teach MUST NOT persist secrets, tokens, passwords, or other credentials."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Decision_Policy.md
@@ -3173,18 +3182,17 @@ plan_unit_id: ACD-066
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Retrieved results enter the Work bundle as a Retrieved Context block with
-  source type, provenance, snippet sizes, and truncation notes. Retrieved
-  Context is not Assistant memory and must respect Context Lens overlays.
+canonical_text: Retrieved Context stays ephemeral Work Bundle data with source provenance, snippet/truncation
+  and Context Lens restrictions, distinct from saved memories, written rules, conversations and task notes.
+  Assembled-source inspection is internal diagnostics; ordinary chat shows basic capacity/cost facts.
 gui_related: false
 gui_classification_reason: Retrieved Context assembly and memory boundaries are prompt/context pipeline behavior.
 depends_on: [ACD-063, ACD-064]
 unblocks: []
 acceptance_criteria:
-  - Retrieved Context carries source type, provenance, byte/token sizes, and truncation notes.
-  - Retrieved Context is not written to Assistant memory unless separately captured as a verified gist.
-  - Context Lens muted, focused, and subcompacted rules affect retrieval injection.
+- Retrieved Context stays ephemeral Work Bundle data with source provenance, snippet/truncation and Context
+  Lens restrictions, distinct from saved memories, written rules, conversations and task notes. Assembled-source
+  inspection is internal diagnostics; ordinary chat shows basic capacity/cost facts.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3199,7 +3207,8 @@ node_compile_hint:
   mode: retrieved_context_memory_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Retrieved Context"
   - "Work bundle"
@@ -3207,7 +3216,7 @@ preserved_exact_tokens:
   - "Plans/assistant-memory-subsystem.md"
   - "Context Lens"
 negative_constraints:
-  - "Retrieved Context is not \"memory\" and must not be written into the Assistant memory store unless separately captured as a verified gist."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -4455,20 +4464,19 @@ plan_unit_id: ACD-092
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The Context Detail Pane is an editor-tab pane with top-level `Curated` and
-  `Raw` views; `Curated` contains `Overview`, `Breakdown`, and `Messages`, and
-  `Raw` exposes message payloads, related `tool-part` payloads, provider
-  metadata blobs, and path/runtime debug data through an accordion.
+canonical_text: Context Detail retains basic on-demand chat capacity/cost, effective model/usage facts
+  and useful compaction/transition feedback. Assembled-source Breakdown, raw message/tool/provider/runtime
+  payloads and memory-selection explanations are internal debugging, not an ordinary user view or alternate
+  Memory editor. No memory raw data or used-note list is exposed.
 gui_related: true
 gui_classification_reason: Context Detail Pane tabs and accordions are visible editor-pane UI.
 depends_on: [ACD-091]
 unblocks: [ACD-093, ACD-100]
 acceptance_criteria:
-  - Context Detail Pane opens as an editor-tab pane.
-  - Top-level Curated and Raw views are available.
-  - Curated includes Overview, Breakdown, and Messages.
-  - Raw exposes payloads, tool-part data, provider metadata, and runtime/path debug data.
+- Context Detail retains basic on-demand chat capacity/cost, effective model/usage facts and useful compaction/transition
+  feedback. Assembled-source Breakdown, raw message/tool/provider/runtime payloads and memory-selection
+  explanations are internal debugging, not an ordinary user view or alternate Memory editor. No memory
+  raw data or used-note list is exposed.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4483,7 +4491,8 @@ node_compile_hint:
   mode: context_detail_pane_ia
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Curated"
   - "Raw"
@@ -4493,7 +4502,8 @@ preserved_exact_tokens:
   - "/model/mode/persona"
   - "/context/cost"
   - "tool-part"
-negative_constraints: []
+negative_constraints:
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -4506,20 +4516,19 @@ plan_unit_id: ACD-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Context Detail Pane breakdowns include system/instruction blocks,
-  user/assistant messages, compiled attachments and forwarded document
-  selections, tool/activity-derived context, canonical `usage.event` and
-  `run.completed.usage` snapshots, and debug-only Investigation Context items
-  for active debug threads.
+canonical_text: Internal context records retain instruction/message/attachment/tool/notebook/workflow
+  source classes, canonical usage snapshots, redaction/truncation and debug provenance for correct enforcement.
+  No assembled-source chart, raw memory detail or selection explanation is a user-facing memory surface;
+  basic capacity/cost information remains on demand.
 gui_related: true
 gui_classification_reason: Breakdown rows and source groups are visible in the Context Detail Pane.
 depends_on: [ACD-092]
 unblocks: [ACD-094, ACD-095]
 acceptance_criteria:
-  - Context breakdowns include all canonical user, assistant, system, attachment, tool, usage, and debug source families.
-  - Investigation Context items appear only for active debug threads.
-  - Canonical usage snapshots remain separate from ordinary chat-local message estimates.
+- Internal context records retain instruction/message/attachment/tool/notebook/workflow source classes,
+  canonical usage snapshots, redaction/truncation and debug provenance for correct enforcement. No assembled-source
+  chart, raw memory detail or selection explanation is a user-facing memory surface; basic capacity/cost
+  information remains on demand.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4534,12 +4543,14 @@ node_compile_hint:
   mode: context_breakdown_source_taxonomy
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "usage.event"
   - "run.completed.usage"
   - "Investigation Context"
-negative_constraints: []
+negative_constraints:
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Prompt_Pipeline.md
@@ -4552,23 +4563,19 @@ plan_unit_id: ACD-094
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The thread surface derives usage from canonical runtime records and must not
-  invent a second chat-local cost model; hidden/background helper usage remains
-  source-class inspectable, and truncation, redaction, and
-  context-serialization state remain visible so omitted context is never
-  presented as serialized.
-  Amended 2026-10-31 (DL-270): thread usage summaries read the redb rollups (UF-108);
-  raw usage.event reads are limited to the per-turn Context Detail drill-down.
+canonical_text: Thread usage derives from canonical runtime records/redb rollups (UF-108), never a second
+  chat-local cost model. Basic on-demand model/capacity/cost facts stay available; source-family charts
+  and raw payload views remain internal diagnostics. Unknown or omitted/truncated/redacted data never
+  masquerades as serialized context; permission enforcement retains internal records.
 gui_related: true
 gui_classification_reason: Runtime usage source and omitted-context state affect user-visible usage/cost display.
 depends_on: [ACD-091, ACD-093]
 unblocks: []
 acceptance_criteria:
-  - Usage derives from canonical runtime records.
-  - Hidden/background helper usage remains inspectable by source class.
-  - Truncation, redaction, and serialization state remain visible.
-  - Omitted context is never presented as serialized.
+- Thread usage derives from canonical runtime records/redb rollups (UF-108), never a second chat-local
+  cost model. Basic on-demand model/capacity/cost facts stay available; source-family charts and raw payload
+  views remain internal diagnostics. Unknown or omitted/truncated/redacted data never masquerades as serialized
+  context; permission enforcement retains internal records.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4584,13 +4591,13 @@ node_compile_hint:
   mode: context_usage_runtime_source_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "MUST NOT invent a second chat-local cost model"
   - "UI MUST NOT silently present omitted context as if it were still serialized"
 negative_constraints:
-  - "MUST NOT invent a second chat-local cost model"
-  - "UI MUST NOT silently present omitted context as if it were still serialized"
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/usage-feature.md
@@ -9123,19 +9130,21 @@ plan_unit_id: ACD-187
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Automatic memory injection applies Assistant-memory SSOT eligibility gating:
-  Verified-only by default, Unverified inclusion only with explicit user
-  action, memory text summary-only, and memory injection separate from the
-  Application/Project rules pipeline.
+canonical_text: Memory injection uses bounded supported summary-only selection separate from written rules,
+  and memory off disables save/use. User-authored preferences/statements are supported as what the user
+  said at that version, without a Verify chore; world claims still require scoped current evidence. Edits
+  invalidate stale summary/index eligibility and are checked internally; no pinned/manual bypass can make
+  unsupported claims proven.
 gui_related: false
 gui_classification_reason: Memory eligibility and summary-only boundaries are prompt/context policy behavior.
 depends_on: [ACD-186]
 unblocks: [ACD-188]
 acceptance_criteria:
-  - Verified-only automatic inclusion remains default.
-  - Unverified memory inclusion requires explicit user action.
-  - Memory text is summary-only and separate from Application/Project rules.
+- Memory injection uses bounded supported summary-only selection separate from written rules, and memory
+  off disables save/use. User-authored preferences/statements are supported as what the user said at that
+  version, without a Verify chore; world claims still require scoped current evidence. Edits invalidate
+  stale summary/index eligibility and are checked internally; no pinned/manual bypass can make unsupported
+  claims proven.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9150,14 +9159,15 @@ node_compile_hint:
   mode: assistant_memory_eligibility_summary_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Verified-only"
   - "Unverified"
   - "summary-only"
   - "Application/Project rules pipeline"
 negative_constraints:
-  - "Any Unverified inclusion requires explicit user action."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -9170,15 +9180,19 @@ plan_unit_id: ACD-188
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat.
+canonical_text: Crews, reviews and the chat assistant's other helpers may read the current Project's notes
+  and the same user's personal Every project notes, read-only under current actor/source/phase permissions.
+  No helper-owned memory, other-Project access or private app-thread access follows. Summaries and handoffs
+  inherit restrictions; paraphrase cannot widen them.
 gui_related: false
 gui_classification_reason: Assistant memory forwarding boundary is execution/context policy behavior.
 depends_on: [ACD-186, ACD-187]
 unblocks: []
 acceptance_criteria:
-  - Assistant memory remains scoped to Assistant chat.
-  - Subagents do not receive Assistant memory from chat.
-  - Non-Assistant execution paths do not receive Assistant memory from chat.
+- Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the same
+  user's personal Every project notes, read-only under current actor/source/phase permissions. No helper-owned
+  memory, other-Project access or private app-thread access follows. Summaries and handoffs inherit restrictions;
+  paraphrase cannot widen them.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9194,11 +9208,12 @@ node_compile_hint:
   mode: assistant_memory_non_forwarding
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant memory MUST NOT be forwarded"
 negative_constraints:
-  - "Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat."
+- Do not widen source restrictions, private app-thread access or helper writes.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -9211,17 +9226,33 @@ plan_unit_id: ACD-189
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Gist Review actions in Assistant chat dispatch canonical
-  `cmd.chat.memory.*` UI command IDs and must not use ad-hoc command
-  identifiers.
+canonical_text: Memory is one saved-note page, opened from Settings and as that same page in the chat
+  Memory button/wand sheet. It has one on/off switch, search including archived notes, a level filter
+  All / This project / Every project, text/level/updated list rows, Add memory, Edit, Delete and collapsed
+  Archived. Title is optional, kind inferred. Delete all names the exact scope; deletion is distinct from
+  Discard/archive and cannot be silently undone from old chats. Verification, sources, pins, conflicts,
+  ranking, preview, upkeep and competing recovery controls stay off the page. Instructions, History/privacy,
+  chat capacity and Run limits remain separate. Add/Edit/Delete use cmd.chat.memory.add, cmd.chat.memory.edit
+  and cmd.chat.memory.delete under AMS-141; never relabel Discard as Delete or use ad-hoc handlers. User-authored
+  preferences/statements are supported as what the user said at that version, without a Verify chore;
+  world claims still require scoped current evidence. Edits invalidate stale summary/index eligibility
+  and are checked internally; no pinned/manual bypass can make unsupported claims proven.
 gui_related: true
 gui_classification_reason: Gist Review actions and UI command IDs are visible chat commands.
 depends_on: [ACD-186]
 unblocks: []
 acceptance_criteria:
-  - Gist Review actions dispatch cmd.chat.memory.* UI command IDs.
-  - Ad-hoc memory command identifiers are prohibited.
+- Memory is one saved-note page, opened from Settings and as that same page in the chat Memory button/wand
+  sheet. It has one on/off switch, search including archived notes, a level filter All / This project
+  / Every project, text/level/updated list rows, Add memory, Edit, Delete and collapsed Archived. Title
+  is optional, kind inferred. Delete all names the exact scope; deletion is distinct from Discard/archive
+  and cannot be silently undone from old chats. Verification, sources, pins, conflicts, ranking, preview,
+  upkeep and competing recovery controls stay off the page. Instructions, History/privacy, chat capacity
+  and Run limits remain separate. Add/Edit/Delete use cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete
+  under AMS-141; never relabel Discard as Delete or use ad-hoc handlers. User-authored preferences/statements
+  are supported as what the user said at that version, without a Verify chore; world claims still require
+  scoped current evidence. Edits invalidate stale summary/index eligibility and are checked internally;
+  no pinned/manual bypass can make unsupported claims proven.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9237,11 +9268,12 @@ node_compile_hint:
   mode: gist_review_memory_command_canon
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "cmd.chat.memory.*"
 negative_constraints:
-  - "Gist Review actions in Assistant chat MUST NOT use ad-hoc command identifiers."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -9254,18 +9286,17 @@ plan_unit_id: ACD-190
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Project retrieval injection may add project-scoped chat/code/log context for
-  the current turn, but it remains separate from Assistant memory injection and
-  is fresh, ephemeral Work Bundle context.
+canonical_text: Project chat/code/log retrieval is fresh ephemeral Work Bundle context, separate from
+  saved Memory, written Instructions, conversation history and Working Notebook. Finding material does
+  not itself save a reusable memory or create proof.
 gui_related: false
 gui_classification_reason: Project retrieval separation is context assembly policy, not GUI behavior.
 depends_on: [ACD-186]
 unblocks: [ACD-191]
 acceptance_criteria:
-  - Project retrieval injection stays separate from Assistant memory injection.
-  - Retrieved context is fresh, ephemeral context for the current turn.
-  - Assistant memory is never implicitly expanded by chat/code/log retrieval.
+- Project chat/code/log retrieval is fresh ephemeral Work Bundle context, separate from saved Memory,
+  written Instructions, conversation history and Working Notebook. Finding material does not itself save
+  a reusable memory or create proof.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9280,14 +9311,15 @@ node_compile_hint:
   mode: project_retrieval_separation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "project-scoped retrieved context"
   - "chat/code/logs"
   - "MUST remain separate"
   - "fresh, ephemeral context"
 negative_constraints:
-  - "Assistant memory injection is never implicitly expanded by chat/code/log retrieval."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md

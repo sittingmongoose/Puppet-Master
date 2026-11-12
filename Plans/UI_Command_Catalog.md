@@ -1125,23 +1125,26 @@ Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
 
-### 2.8 Assistant memory (Gist Review) commands
-These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.
+### 2.8 Memory commands
 
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+Typed owner payloads and results are defined in AMS-141; the catalogue owns IDs and producer disposition.
+
+| Command ID | Owner contract | Effect | Surface |
 |---|---|---|---|
-| `cmd.chat.memory.verify` | `{ project_id, gist_id }` | `memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.edit` | `{ project_id, gist_id, patch }` | `memory.gist.updated` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.pin` | `{ project_id, gist_id, pinned }` | `memory.gist.pinned` or `memory.gist.unpinned` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.discard` | `{ project_id, gist_id }` | `memory.gist.discarded` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.updated` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.preview_capsule` | `{ project_id, thread_id? }` | no persisted domain event (preview computation only) | Assistant chat Gist Review panel |
-| `cmd.chat.memory.rebuild_lexical_index` | `{ project_id }` | `memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.rebuild_semantic_index` | `{ project_id }` | `memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.verification_sweep` | `{ project_id }` | `memory.verification_sweep.started`, `memory.verification_sweep.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.dedup_sweep` | `{ project_id }` | `memory.dedup_sweep.started`, `memory.dedup_sweep.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |
+| `cmd.chat.memory.add` | AMS-141 | Durable new note and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.edit` | AMS-141 | New note version and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.delete` | AMS-141 | Durable deletion suppression and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.verify` | AMS-141 | Internal support validation only | No ordinary UI producer |
+| `cmd.chat.memory.pin` | AMS-141 | Legacy protected-state support only | No ordinary UI producer |
+| `cmd.chat.memory.discard` | AMS-141 | Legacy validity handling, never Delete | No ordinary UI producer |
+| `cmd.chat.memory.toggle_auto_save_unverified` | AMS-141 | Compatibility only; no ordinary write | No ordinary UI producer |
+| `cmd.chat.memory.preview_capsule` | AMS-141 | Internal debugging only | No ordinary UI producer |
+| `cmd.chat.memory.rebuild_lexical_index` | AMS-141 | Existing recovery operation | Internal/support only |
+| `cmd.chat.memory.rebuild_semantic_index` | AMS-141 | Existing recovery operation | Internal/support only |
+| `cmd.chat.memory.verification_sweep` | AMS-141 | Internal validity check | Internal/support only |
+| `cmd.chat.memory.dedup_sweep` | AMS-141 | Held pending DL-444/445 application/approvals | Internal/support only |
+| `cmd.chat.memory.summarize_monthly` | AMS-141 | Held archive-only operation | Internal/support only |
+| `cmd.chat.memory.prune_archive` | AMS-141 | Held archive-only operation | Internal/support only |
 
 Lineage pointer (DL-333): for each command here that UCC-230 routes, the Args schema column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
@@ -6221,7 +6224,12 @@ plan_unit_id: UCC-084
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Assistant memory Gist Review commands verify, edit, pin/unpin, discard, toggle auto-save unverified, and preview capsules with required project/gist/thread payloads, events, and Assistant chat Gist Review panel surface.
+canonical_text: Memory Add/Edit/Delete commands are cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete,
+  with typed scope/text/version and durable mutation result under AMS-141. The same Memory page in Settings
+  and the chat sheet produces them. Legacy Verify/Pin/Discard/toggle_auto_save_unverified/preview_capsule
+  IDs remain support/compatibility only, with no ordinary GUI, search or prompt-preview producer; they
+  cannot restore retired features or verification bypasses. Native handlers remain unavailable until evidence
+  closes wiring.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -6232,9 +6240,8 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UCC-084 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Add/Edit/Delete use the strict AMS-141 schemas and return durable result/receipt before UI success.
+- No retired review, pin, candidate, capsule-preview or verification control remains in ordinary surfaces.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6248,6 +6255,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0045
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat.memory.verify
 - cmd.chat.memory.edit
@@ -6264,6 +6272,8 @@ preserved_exact_tokens:
 - memory.gist.discarded
 - settings.updated
 - Assistant chat Gist Review panel
+- cmd.chat.memory.add
+- cmd.chat.memory.delete
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand'
@@ -6280,7 +6290,11 @@ plan_unit_id: UCC-085
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Assistant memory maintenance commands rebuild lexical and semantic indexes, run verification and dedup sweeps, summarize monthly memory, and prune archives with project/month/policy payloads and lifecycle events.
+canonical_text: Assistant memory maintenance commands rebuild lexical and semantic indexes, run verification
+  and dedup sweeps, summarize monthly memory, and prune archives with project/month/policy payloads and
+  lifecycle events. DL-475 removes all Memory-panel cleanup producers. Existing commands remain internal/support
+  only and do not bypass DL-403/444–447 holds, archive-only preservation or saved pin protections; no
+  immediate automatic job is enabled.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -6307,6 +6321,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0045
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat.memory.rebuild_lexical_index
 - cmd.chat.memory.rebuild_semantic_index
@@ -9803,37 +9818,37 @@ command_payload_definition_map:
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21889, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
   - command_id: cmd.docker.container.stats
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21890, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
   - command_id: cmd.git.worktree.merge
     catalog_unit: UCC-132
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, line: 13084, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
   - command_id: cmd.git.worktree.open_topology
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.git.worktree.repair
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.debug.record_verification
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   - command_id: cmd.debug.run_cleanup
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   unresolved_tokens: []
   non_definition_tokens:
   - token: cmd.docker.remove
@@ -10948,8 +10963,10 @@ command_payload_definition_map:
     canon_name: gist_id
     decision: DL-341
     evidence:
-      doc: Plans/UI_Command_Catalog.md
-      quote: '| `cmd.chat.memory.verify` | `{ project_id, gist_id }` |'
+      doc: Plans/assistant-memory-subsystem.md
+      unit: AMS-141
+      field: canonical_text
+      quote: gist_id and expected_revision
     note: 'DL-341 coordinator resolution 4: the memory item identity is gist_id in the catalog memory rows and in
       Plans/assistant-memory-subsystem.md (MemoryGist).'
   contested: []
@@ -17467,7 +17484,7 @@ Source surfaces for these rows:
 - `cmd.bsd.catch_up.release`: `bsd_note`.
 - `cmd.chat.teach.revoke`: `teach_document`, `memory_sheet`.
 - `cmd.chat.teach.set_lock`: `teach_document`.
-- `cmd.chat.memory.export`: `memory_sheet`, `teach_document`.
+- `cmd.chat.memory.export`: general data export and `teach_document` (Instructions); no Memory-page Export panel (DL-475).
 
 Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
@@ -17482,29 +17499,32 @@ plan_unit_id: UCC-171
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'DL-130 adds seven command rows, each a domain_action with one owner, one request and result
-  contract and one sole future target, and each registered after an alias census over live Plans found no collision:
-  cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not cancelled), cmd.brainstorm.research_lead
-  (Collaborative_Workflows; now the DL-218 alias of cmd.collaboration.research_lead), cmd.bsd.finding.dismiss
-  and cmd.bsd.catch_up.release (Back_Seat_Driver), and cmd.chat.teach.revoke, cmd.chat.teach.set_lock and cmd.chat.memory.export
-  (assistant-memory-subsystem). TeachLockRequest carries locked; MemoryExportRequest carries scope gists, teachings
-  or all. Each row starts handler_unavailable and its controls stay disabled with command_not_registered until
-  central registration, Event Authority, storage and production wiring close. cmd.runtime.automation_stop.set,
-  the audit''s draft name for the pause, is never registered; DL-136 registers the pause as cmd.runtime.automation_pause.set
-  in UCC-174.
+canonical_text: 'DL-130 adds seven command rows, each a domain_action with one owner, one request and
+  result contract and one sole future target, and each registered after an alias census over live Plans
+  found no collision: cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not cancelled),
+  cmd.brainstorm.research_lead (Collaborative_Workflows; now the DL-218 alias of cmd.collaboration.research_lead),
+  cmd.bsd.finding.dismiss and cmd.bsd.catch_up.release (Back_Seat_Driver), and cmd.chat.teach.revoke,
+  cmd.chat.teach.set_lock and cmd.chat.memory.export (assistant-memory-subsystem). TeachLockRequest carries
+  locked; MemoryExportRequest carries scope gists, teachings or all. Each row starts handler_unavailable
+  and its controls stay disabled with command_not_registered until central registration, Event Authority,
+  storage and production wiring close. cmd.runtime.automation_stop.set, the audit''s draft name for the
+  pause, is never registered; DL-136 registers the pause as cmd.runtime.automation_pause.set in UCC-174.
 
 
   Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
-  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
-  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
-  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
-  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
-  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
-  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
-  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
-  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
-  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
-  unavailable handlers remain handler_unavailable.'
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning
+  Wizard, PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still
+  require actual targets. Build At atomically commits one frozen schedule/window, creates no run, and
+  never dispatches execution_window.create a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency,
+  frozen text/attachments/target version and fresh authority/Stop checks. App operational pause has independent
+  real Server custody and user-only clear, never a Settings value or missing-as-off. N25 stops/fences
+  source work and explicitly re-admits mapped frozen targets with fresh consent/epochs; no automatic resume,
+  latest-version substitution or duplicate occurrence. The exact consumer contract is UCC-219/WM-105 and
+  Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay resources and all unrelated
+  PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable handlers remain handler_unavailable.
+  DL-475 relocates cmd.chat.memory.export to general data export and Instructions; Memory itself has no
+  Export panel. The existing exporter, ArtifactExportResult, pointer evidence and exact authorization
+  remain. No duplicate exporter or all-Project/private-chat enumeration is admitted.'
 gui_related: true
 gui_classification_reason: Registers the commands behind visible End discussion, Check it, Dismiss, Don't wait,
   Turn off, Lock and Export buttons and their disabled states.
@@ -17554,6 +17574,7 @@ source_lineage:
 - 'Plans/Decision_Log.md#DL-130, #DL-136'
 - Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat_room.end
 - cmd.brainstorm.research_lead
@@ -17592,7 +17613,7 @@ This unit adds the surfaces and row revisions that were waiting on the owner's a
 - `TeachConfirmRequest` gains `locked`, the sheet's Locked choice, so a rule can be saved locked. After the save, only `cmd.chat.teach.set_lock` changes the lock.
 
 **Two new surfaces.**
-- `teach_document`, the taught-rules document, produces `cmd.chat.teach.capture` ("Teach a rule", and Edit with mode correct), `cmd.chat.memory.preview_capsule`, `cmd.chat.teach.set_lock`, `cmd.chat.teach.revoke` and `cmd.chat.memory.export`.
+- `teach_document`, the taught-rules document, produces `cmd.chat.teach.capture` ("Teach a rule", and Edit with mode correct), `cmd.chat.teach.set_lock`, `cmd.chat.teach.revoke` and `cmd.chat.memory.export`.
 - `teach_receipt`, the one receipt line that a confirmed change leaves in the chat, produces `cmd.chat.teach.open_memory`.
 
 **Crew Auto (DL-119, DL-120, DL-135).**
@@ -17614,31 +17635,30 @@ plan_unit_id: UCC-172
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Every Teach entry (slash, natural language, the wand, the message menu and teach_document) dispatches
-  cmd.chat.teach.capture and opens the one Teach sheet, which teach_capture names; there is no in-chat
-  capture card and capture writes no memory (DL-127). TeachConfirmRequest gains locked; afterwards only
-  cmd.chat.teach.set_lock changes the lock (DL-130). teach_document produces cmd.chat.teach.capture,
-  cmd.chat.memory.preview_capsule, cmd.chat.teach.set_lock, cmd.chat.teach.revoke and
-  cmd.chat.memory.export; teach_receipt produces cmd.chat.teach.open_memory.
+canonical_text: 'Every Teach entry (slash, natural language, the wand, the message menu and teach_document)
+  dispatches cmd.chat.teach.capture and opens the one Teach sheet, which teach_capture names; there is
+  no in-chat capture card and capture writes no memory (DL-127). TeachConfirmRequest gains locked; afterwards
+  only cmd.chat.teach.set_lock changes the lock (DL-130). teach_document produces cmd.chat.teach.capture,
+  cmd.chat.teach.set_lock, cmd.chat.teach.revoke and cmd.chat.memory.export; teach_receipt produces cmd.chat.teach.open_memory.
   cmd.chat.crew_auto.open_config is produced by the Crew Auto settings… row in multi_agent_menu and by
-  the Crew sheet's Settings… link in workflow_modal, and by the Change control of the Crew Auto note
-  on crew_auto_receipt, the one line Crew Auto is on for this project that turning Crew Auto on for
-  the project leaves in that chat (DL-135, CWR-038); Manage Defaults… is unchanged, and Review and
-  BrainStorm have no wand producer (DL-119). cmd.chat.crew_auto.set carries scope project or thread:
-  the Crew Auto sheet's primary sends project with the rules and the team in one request, and a chat's
-  Crew Auto check sends thread, setting only that chat's override and never opening the sheet first;
-  Allow Crews in this chat is retired into that check (DL-120, CWR-038).
-  cmd.review.send_findings_to_agent fills the empty composer and never sends, returns
-  ComposerBufferResult and refuses with composer_not_empty (DL-125). eli5_sheet and the inherit value
-  are settled by DL-126 and added in UCC-175.
-  DL-138 reuses cmd.review.send_findings_to_agent for Ask for a fix on message_chrome.
-  ReviewSendFindingsRequest keeps its existing review variant and adds a disjoint taught_rule_check
-  source variant carrying thread_id, reply_message_id and nonempty missed_teaching_refs, whose
-  memory_id and normalized_fact_sha256 identify failed checks on that reply's persisted context record.
-  source_kind is review_findings or taught_rule_check, with no invented review-run or finding IDs. ComposerBufferResult keeps source-specific lineage in metadata. Both
-  variants require the source thread's empty composer, refuse composer_not_empty and never send or
-  execute the fix; only the user sends. CWR-031 and AMS-053 own these source contracts.
+  the Crew sheet''s Settings… link in workflow_modal, and by the Change control of the Crew Auto note
+  on crew_auto_receipt, the one line Crew Auto is on for this project that turning Crew Auto on for the
+  project leaves in that chat (DL-135, CWR-038); Manage Defaults… is unchanged, and Review and BrainStorm
+  have no wand producer (DL-119). cmd.chat.crew_auto.set carries scope project or thread: the Crew Auto
+  sheet''s primary sends project with the rules and the team in one request, and a chat''s Crew Auto check
+  sends thread, setting only that chat''s override and never opening the sheet first; Allow Crews in this
+  chat is retired into that check (DL-120, CWR-038). cmd.review.send_findings_to_agent fills the empty
+  composer and never sends, returns ComposerBufferResult and refuses with composer_not_empty (DL-125).
+  eli5_sheet and the inherit value are settled by DL-126 and added in UCC-175. DL-138 reuses cmd.review.send_findings_to_agent
+  for Ask for a fix on message_chrome. ReviewSendFindingsRequest keeps its existing review variant and
+  adds a disjoint taught_rule_check source variant carrying thread_id, reply_message_id and nonempty missed_teaching_refs,
+  whose memory_id and normalized_fact_sha256 identify failed checks on that reply''s persisted context
+  record. source_kind is review_findings or taught_rule_check, with no invented review-run or finding
+  IDs. ComposerBufferResult keeps source-specific lineage in metadata. Both variants require the source
+  thread''s empty composer, refuse composer_not_empty and never send or execute the fix; only the user
+  sends. CWR-031 and AMS-053 own these source contracts. DL-475 removes the preview_capsule GUI producer
+  and routes the explicit Teach receipt to Instructions rather than the saved-note Memory editor. General
+  data export retains the existing memory exporter.'
 gui_related: true
 gui_classification_reason: "Names the visible Teach sheet entries, taught-rules document, receipt, Crew Auto rows and note, and Send Findings behaviour."
 split_recommended: false
@@ -17666,11 +17686,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f sections 4.1 (REV-5, REV-10, REV-11, REV-15) and 4.2"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMD-04"
-  - "Plans/Decision_Log.md#DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-135"
-  - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f
+  sections 4.1 (REV-5, REV-10, REV-11, REV-15) and 4.2
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
+  lines B-CMD-03, B-CMD-04
+- 'Plans/Decision_Log.md#DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-135'
+- Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "source_kind"
   - "review_findings"

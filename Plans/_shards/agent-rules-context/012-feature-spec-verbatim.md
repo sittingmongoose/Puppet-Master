@@ -4,7 +4,7 @@ Source: `Plans/agent-rules-context.md`
 
 Source lines: L150-L214
 
-Source SHA256: `239ee9829dfe15dd51e8664b8363b46c63f10b843f88fe43aeedc72ad954280d`
+Source SHA256: `f1fcf46dfb4409ccfc30d507abf111d30631f8dbacfb9a44f5234344db24aa49`
 
 ---
 
@@ -63,7 +63,7 @@ Always includes top-level `AGENTS.md` when present. When scoped `AGENTS.md` is e
 Contains only what is needed to execute the current node/attempt: objective, acceptance criteria, inputs, allowed tools, and explicit constraints.
 
 #### Memory Bundle
-When enabled, inject the most recent node-lineage Attempt Journal and/or the bounded Parent Summary. Assistant-only memory remains Assistant-only and is not injected into unrelated orchestrator/interview/delegated runs.
+When enabled, inject the most recent node-lineage Attempt Journal and/or the bounded Parent Summary. Memory reads for Crews, reviews and helpers follow AMS-026: current Project and personal Every project notes only, with no private app-thread or other-Project exposure and no helper mutations.
 
 ### Visibility Rules
 - coordinating runs/packages see coordinating objectives and summaries, not every child attempt journal by default

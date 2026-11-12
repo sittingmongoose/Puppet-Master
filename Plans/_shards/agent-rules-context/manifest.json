@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-04T18:52:55Z",
+  "generated_at_utc": "2026-11-12T05:03:42Z",
   "index_path": "Plans/_shards/agent-rules-context/00-index.md",
-  "index_sha256": "9b9017737607cea8864b8cb850f5c547fc8ff548b215c01e838752d5c484546b",
+  "index_sha256": "9193b61ec536559026e6f361f22071b3ddcdf746ca12c8a85941c910317bb9df",
   "manifest_path": "Plans/_shards/agent-rules-context/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/agent-rules-context/001-preamble.md",
-      "sha256": "40cf1c2df288246ca6154e443ceaceaa2c52fac86ca1c66bda778fd9cb4a184b",
+      "sha256": "17551af68fbd9519413b3a9d9bcb39697a1c41206cfbe837df6ea642d0de4e43",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Plan Document Status",
       "path": "Plans/_shards/agent-rules-context/002-plan-document-status.md",
-      "sha256": "a38aa590c4d9392f50265fbc24d47db1cbbd5e19e870236a2eb365a790566bbd",
+      "sha256": "12d97b198ee688a0d483212bb746b6b6188270334e2d35d99b91b94e46008e49",
       "shard_id": "002",
       "source_line_end": 14,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "Rewrite alignment (2026-02-21)",
       "path": "Plans/_shards/agent-rules-context/003-rewrite-alignment-2026-02-21.md",
-      "sha256": "7174ad98d0b904aecf956474472220428a06c655586f3d91f70d88b155833e59",
+      "sha256": "dbed832c33132e3579f1b3d22b1066434ecc9aca24c343b7f495a572fcec0a29",
       "shard_id": "003",
       "source_line_end": 26,
       "source_line_start": 16,
@@ -35,7 +35,7 @@
     {
       "heading": "Executive Summary",
       "path": "Plans/_shards/agent-rules-context/004-executive-summary.md",
-      "sha256": "9f2ed5a57095a01b5413b740ddc85b915b772a4e348df87506b39b6856094e05",
+      "sha256": "0a3f297411c1719d0aaa023bc1336736a7d3567b1c9006e036b5d4bf98866f93",
       "shard_id": "004",
       "source_line_end": 37,
       "source_line_start": 28,
@@ -44,7 +44,7 @@
     {
       "heading": "Relationship to Other Plans",
       "path": "Plans/_shards/agent-rules-context/005-relationship-to-other-plans.md",
-      "sha256": "ff866b08fe38a046c6aee926672dd2ec5594ef979693ed3d594baed8dbf3a4b5",
+      "sha256": "8c42114f439069ac1795b8d662bebbb3d159293b857b7aa518b7f98a751b3dcf",
       "shard_id": "005",
       "source_line_end": 51,
       "source_line_start": 39,
@@ -53,7 +53,7 @@
     {
       "heading": "Rule Scope Model",
       "path": "Plans/_shards/agent-rules-context/006-rule-scope-model.md",
-      "sha256": "21669532a447023f24f7bd0eb2a5dc812e2d9e20afc31527d689b75574ee47a5",
+      "sha256": "cf66ff1c9e118f1a588ff5d7291551941f2ee64f9d2d3b0d26dc9359959357ac",
       "shard_id": "006",
       "source_line_end": 73,
       "source_line_start": 52,
@@ -62,7 +62,7 @@
     {
       "heading": "Feeding Rules Into Every Agent",
       "path": "Plans/_shards/agent-rules-context/007-feeding-rules-into-every-agent.md",
-      "sha256": "d103668cbd7ff290a1670320a34b2215d4f1436875834f21f51c8ed0da1a1118",
+      "sha256": "512975554190e3f561f82672c333e573d15579ebb6bffa2288c637fd3bfa922c",
       "shard_id": "007",
       "source_line_end": 93,
       "source_line_start": 75,
@@ -71,7 +71,7 @@
     {
       "heading": "Configuration and GUI (Planning Only)",
       "path": "Plans/_shards/agent-rules-context/008-configuration-and-gui-planning-only.md",
-      "sha256": "3de3d105cdadf3570b50e64e262c797d6700af76eab03a27cc39335fa3869e8c",
+      "sha256": "ea099215667d9a8e6ee798d5089d98b305bcd32eff4eea0a2a78c76d4155c869",
       "shard_id": "008",
       "source_line_end": 110,
       "source_line_start": 95,
@@ -80,7 +80,7 @@
     {
       "heading": "Summary Table",
       "path": "Plans/_shards/agent-rules-context/009-summary-table.md",
-      "sha256": "6c1e67e600690615521d1d784a41cda37b199d64f390261deddcc71ebd4aa036",
+      "sha256": "52799a8bafa9c93a9948e5e884771a58707c701aad317625dbfbe22626630c0c",
       "shard_id": "009",
       "source_line_end": 117,
       "source_line_start": 112,
@@ -89,7 +89,7 @@
     {
       "heading": "Implementation Hooks (Planning Only)",
       "path": "Plans/_shards/agent-rules-context/010-implementation-hooks-planning-only.md",
-      "sha256": "ff88d483dc49567abef7c0975b93bfca357e6c9ce8df784702641f5dcc64f0ae",
+      "sha256": "b37b035eb386bb6c9e27c6300c38fc51b3426f6325b28354bfd5662abba40b66",
       "shard_id": "010",
       "source_line_end": 127,
       "source_line_start": 119,
@@ -98,7 +98,7 @@
     {
       "heading": "Instruction Bundle Integration (Application + Project + Scoped `AGENTS.md`)",
       "path": "Plans/_shards/agent-rules-context/011-instruction-bundle-integration-application-project-scoped-agents.md",
-      "sha256": "2715e63765030c85928f116bbde656ba7636cb879c4421425ca500f3e289be07",
+      "sha256": "634849b36de258a8e0ee5a4b3948c952141c8d52704df50ee6a8068742e7701d",
       "shard_id": "011",
       "source_line_end": 149,
       "source_line_start": 129,
@@ -107,7 +107,7 @@
     {
       "heading": "Feature Spec (Verbatim)",
       "path": "Plans/_shards/agent-rules-context/012-feature-spec-verbatim.md",
-      "sha256": "aa31b2d7d5670a596281c5cca4858740ec7fde00483a4a38a9c1007062750eb5",
+      "sha256": "7bdaa596c11f41ca06f200e23d3c75b14499eceebbf8ef435c48c75e351bbb1e",
       "shard_id": "012",
       "source_line_end": 214,
       "source_line_start": 150,
@@ -116,7 +116,7 @@
     {
       "heading": "Visibility examples (coordinating run \u2192 work package \u2192 node \u2192 attempt)",
       "path": "Plans/_shards/agent-rules-context/013-visibility-examples-coordinating-run-work-package-node-attempt.md",
-      "sha256": "1b6afb2866fbae3cc089ba2799952dd9611b19b16f335ae13c2900c327e5df59",
+      "sha256": "d84771d7577b62d13aa8c58b94fed2e62cf2aef8722a7666cc5213109be0ae00",
       "shard_id": "013",
       "source_line_end": 236,
       "source_line_start": 215,
@@ -125,7 +125,7 @@
     {
       "heading": "Workspace & Storage (User-Project Facing Product Behavior)",
       "path": "Plans/_shards/agent-rules-context/014-workspace-storage-user-project-facing-product-behavior.md",
-      "sha256": "21deb8e30e17e5a41965502c7ea97465b03f2cbaa5f2b867aafeb77dccb8e1ca",
+      "sha256": "9e61904b438b22726170ad352491cb4cc79ddbf8ab4d436eec6702bf773d4401",
       "shard_id": "014",
       "source_line_end": 246,
       "source_line_start": 237,
@@ -134,7 +134,7 @@
     {
       "heading": "GUI Requirements (Product)",
       "path": "Plans/_shards/agent-rules-context/015-gui-requirements-product.md",
-      "sha256": "c67a80a3fcc1c58a07984c65abb67d32c4cc55ddc0a7e5ad2d33e025d8a29cd6",
+      "sha256": "4c74f84a621057813d9bf85ba59237c7ff6c4ec7c7c503f7b3e55f19799ab99f",
       "shard_id": "015",
       "source_line_end": 258,
       "source_line_start": 247,
@@ -143,7 +143,7 @@
     {
       "heading": "AGENTS.md Light Enforcement (Product)",
       "path": "Plans/_shards/agent-rules-context/016-agents.md-light-enforcement-product.md",
-      "sha256": "feb4e5d54fe5c8ea00ad6457d153fea362e7cac1bf14d117da50bfcfe5a18b12",
+      "sha256": "a653a1705986f9342545bb3043bc93a7d64513d3d72953cc5dcfe6aa3ec659fd",
       "shard_id": "016",
       "source_line_end": 280,
       "source_line_start": 259,
@@ -152,7 +152,7 @@
     {
       "heading": "Acceptance Criteria (Testable)",
       "path": "Plans/_shards/agent-rules-context/017-acceptance-criteria-testable.md",
-      "sha256": "66c27d9f699a6df905f3552454df293289a0dcaa627dfbc2afe7da107813b8be",
+      "sha256": "66fa75bb1695d797e8b0a782a8b4d24bbbd193f2e7379b4285d30025576fb06e",
       "shard_id": "017",
       "source_line_end": 294,
       "source_line_start": 281,
@@ -161,7 +161,7 @@
     {
       "heading": "Route Context and Attention Destination Rules",
       "path": "Plans/_shards/agent-rules-context/018-route-context-and-attention-destination-rules.md",
-      "sha256": "328b1a6e8ab9760ee8e9fa41ff8ab13d31c7a413e0d4c53826f6786565959aaf",
+      "sha256": "50d768492374b0d25f88fbad6a7a5721ac22e8b7b2cfdfe9c7625aa521805461",
       "shard_id": "018",
       "source_line_end": 301,
       "source_line_start": 295,
@@ -170,7 +170,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/agent-rules-context/019-owner-consumer-map.md",
-      "sha256": "4cae31c088eb1e9694632d08d8f96183977ff522e55d1c1d495cc46a539498be",
+      "sha256": "25913fdb666f28a6f924d91cb342eba30094f2a1e5109695eaee3a287e1522da",
       "shard_id": "019",
       "source_line_end": 307,
       "source_line_start": 303,
@@ -179,52 +179,52 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/agent-rules-context/020-planunits.md",
-      "sha256": "d9eced82f034cc03d82ef07786e6efc97ab9a831f14ae6d79a9e1bf98783cff4",
+      "sha256": "6cf37fd3068a623279c22d50ab6e9ef519a7ff77514a05bbf5a8dbdc898ec03a",
       "shard_id": "020",
-      "source_line_end": 2306,
+      "source_line_end": 2318,
       "source_line_start": 309,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/agent-rules-context/021-migration-coverage.md",
-      "sha256": "e045a2a115328c1ebfb9353f93bbbe4841cae532ca026b8677ffaa8c8b110d4d",
+      "sha256": "af00ebdfd0d1b0bc00a37e18e7006e4fede4a3f72deb53f4f8c19befb9b28a82",
       "shard_id": "021",
-      "source_line_end": 2319,
-      "source_line_start": 2309,
+      "source_line_end": 2331,
+      "source_line_start": 2321,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/agent-rules-context/022-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "10fa1e8aa51f77135eda6f417f463cd5f699bde9d831da3f540a7d4f5dcc6902",
+      "sha256": "ce541ef1aab53fe84880c1f99a18a9ff41ad612a78364ef5937335d68fce0f31",
       "shard_id": "022",
-      "source_line_end": 2385,
-      "source_line_start": 2321,
+      "source_line_end": 2397,
+      "source_line_start": 2333,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/agent-rules-context/023-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "f87b485d8d1b2836b760c9b1b0c19bf77c306ac3f72b164e83e6252f49f3d3e2",
+      "sha256": "d344e295a9c43a6541fc58676a110905af44c648952dd2def163a67f4352e8d3",
       "shard_id": "023",
-      "source_line_end": 2392,
-      "source_line_start": 2387,
+      "source_line_end": 2404,
+      "source_line_start": 2399,
       "split_rule": "heading-##"
     },
     {
       "heading": "Working Notebook Integration Addendum (2026-09-05)",
       "path": "Plans/_shards/agent-rules-context/024-working-notebook-integration-addendum-2026-09-05.md",
-      "sha256": "8c42206cb276b2de58748eb84194f490b55ae578f3a616f2e28ccf3a4b45fb81",
+      "sha256": "d879092a83d13f4248e65324423ee927c1559f60c14dd8627ccc861bf2678820",
       "shard_id": "024",
-      "source_line_end": 2429,
-      "source_line_start": 2394,
+      "source_line_end": 2441,
+      "source_line_start": 2406,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2429,
+    "line_count": 2441,
     "path": "Plans/agent-rules-context.md",
-    "sha256": "239ee9829dfe15dd51e8664b8363b46c63f10b843f88fe43aeedc72ad954280d"
+    "sha256": "f1fcf46dfb4409ccfc30d507abf111d30631f8dbacfb9a44f5234344db24aa49"
   }
 }

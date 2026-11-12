@@ -202,7 +202,7 @@ Always includes top-level `AGENTS.md` when present. When scoped `AGENTS.md` is e
 Contains only what is needed to execute the current node/attempt: objective, acceptance criteria, inputs, allowed tools, and explicit constraints.
 
 #### Memory Bundle
-When enabled, inject the most recent node-lineage Attempt Journal and/or the bounded Parent Summary. Assistant-only memory remains Assistant-only and is not injected into unrelated orchestrator/interview/delegated runs.
+When enabled, inject the most recent node-lineage Attempt Journal and/or the bounded Parent Summary. Memory reads for Crews, reviews and helpers follow AMS-026: current Project and personal Every project notes only, with no private app-thread or other-Project exposure and no helper mutations.
 
 ### Visibility Rules
 - coordinating runs/packages see coordinating objectives and summaries, not every child attempt journal by default
@@ -1160,10 +1160,14 @@ plan_unit_id: ARC-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Instruction Bundle Integration preserves that durable rules remain user-editable source text while each agent
-  invocation assembles Application rules, Project rules, and scoped AGENTS.md in that order; the rules pipeline emits rules
-  content only, does not inject attempt journals, parent summaries, or assistant-only memory, and must not infer cache behavior
-  from rule text or model-id heuristics.
+canonical_text: 'Instruction Bundle Integration preserves that durable rules remain user-editable source
+  text while each agent invocation assembles Application rules, Project rules, and scoped AGENTS.md in
+  that order; the rules pipeline emits rules content only, does not inject attempt journals, parent summaries,
+  or assistant-only memory, and must not infer cache behavior from rule text or model-id heuristics. DL-475
+  changes memory readers, not the rules pipeline: Crews, reviews and the chat assistant''s other helpers
+  may read the current Project''s notes and the same user''s personal Every project notes, read-only under
+  current actor/source/phase permissions. No helper-owned memory, other-Project access or private app-thread
+  access follows. Summaries and handoffs inherit restrictions; paraphrase cannot widen them.'
 gui_related: false
 gui_classification_reason: This unit covers instruction assembly and provider/cache ownership boundaries, not GUI behavior.
 split_recommended: false
@@ -1189,6 +1193,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0017
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - Instruction Bundle Integration (Application + Project + Scoped `AGENTS.md`)
 - Instruction Bundle order
@@ -1538,11 +1543,17 @@ plan_unit_id: ARC-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Context Assembly Semantics require Puppet Master to construct explicit Instruction Bundle, Work Bundle, and
-  Memory Bundle for each agent run; Instruction Bundle includes top-level and scoped AGENTS.md with closest-scope precedence
-  and deterministic deduplication; Work Bundle contains only current node/attempt objective, acceptance criteria, inputs,
-  allowed tools, and explicit constraints; Memory Bundle injects bounded Attempt Journal and/or Parent Summary only when enabled
-  and keeps Assistant-only memory out of unrelated runs.
+canonical_text: Context Assembly Semantics require Puppet Master to construct explicit Instruction Bundle,
+  Work Bundle, and Memory Bundle for each agent run; Instruction Bundle includes top-level and scoped
+  AGENTS.md with closest-scope precedence and deterministic deduplication; Work Bundle contains only current
+  node/attempt objective, acceptance criteria, inputs, allowed tools, and explicit constraints; Memory
+  Bundle injects bounded Attempt Journal and/or Parent Summary only when enabled and keeps Assistant-only
+  memory out of unrelated runs. DL-475 permits a separate bounded supported Memory contribution to authorized
+  helper runs under AMS-026, without folding it into written Instructions or turning child coordination
+  into helper-owned memory. Crews, reviews and the chat assistant's other helpers may read the current
+  Project's notes and the same user's personal Every project notes, read-only under current actor/source/phase
+  permissions. No helper-owned memory, other-Project access or private app-thread access follows. Summaries
+  and handoffs inherit restrictions; paraphrase cannot widen them.
 gui_related: false
 gui_classification_reason: This unit covers runtime context assembly and bundle semantics, not GUI behavior.
 split_recommended: false
@@ -1571,6 +1582,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0027
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0028
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0029
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - Context Assembly Semantics (Deterministic Cone)
 - Instruction Bundle

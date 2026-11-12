@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1296-L7120
+Source lines: L1299-L7135
 
-Source SHA256: `3076b04b822023dbbc42190301d7803c7772652b6b3fc3f45d443c7c7683b726`
+Source SHA256: `4a5c534245eb40b9e056c081cd7631289e7b6fb420dfc89be21f42937111e168`
 
 ---
 
@@ -4936,7 +4936,12 @@ plan_unit_id: UCC-084
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Assistant memory Gist Review commands verify, edit, pin/unpin, discard, toggle auto-save unverified, and preview capsules with required project/gist/thread payloads, events, and Assistant chat Gist Review panel surface.
+canonical_text: Memory Add/Edit/Delete commands are cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete,
+  with typed scope/text/version and durable mutation result under AMS-141. The same Memory page in Settings
+  and the chat sheet produces them. Legacy Verify/Pin/Discard/toggle_auto_save_unverified/preview_capsule
+  IDs remain support/compatibility only, with no ordinary GUI, search or prompt-preview producer; they
+  cannot restore retired features or verification bypasses. Native handlers remain unavailable until evidence
+  closes wiring.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4947,9 +4952,8 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UCC-084 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Add/Edit/Delete use the strict AMS-141 schemas and return durable result/receipt before UI success.
+- No retired review, pin, candidate, capsule-preview or verification control remains in ordinary surfaces.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -4963,6 +4967,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0045
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat.memory.verify
 - cmd.chat.memory.edit
@@ -4979,6 +4984,8 @@ preserved_exact_tokens:
 - memory.gist.discarded
 - settings.updated
 - Assistant chat Gist Review panel
+- cmd.chat.memory.add
+- cmd.chat.memory.delete
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand'
@@ -4995,7 +5002,11 @@ plan_unit_id: UCC-085
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Assistant memory maintenance commands rebuild lexical and semantic indexes, run verification and dedup sweeps, summarize monthly memory, and prune archives with project/month/policy payloads and lifecycle events.
+canonical_text: Assistant memory maintenance commands rebuild lexical and semantic indexes, run verification
+  and dedup sweeps, summarize monthly memory, and prune archives with project/month/policy payloads and
+  lifecycle events. DL-475 removes all Memory-panel cleanup producers. Existing commands remain internal/support
+  only and do not bypass DL-403/444–447 holds, archive-only preservation or saved pin protections; no
+  immediate automatic job is enabled.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -5022,6 +5033,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0045
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat.memory.rebuild_lexical_index
 - cmd.chat.memory.rebuild_semantic_index
