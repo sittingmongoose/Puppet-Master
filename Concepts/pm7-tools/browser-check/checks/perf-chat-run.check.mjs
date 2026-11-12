@@ -31,7 +31,7 @@
 //   - and, in the first look only (--set ends=all for every look), a run that was due to end while the window was open
 //     has not ended under it and ends after the close, at its own end.
 //
-// VISIT (lane C3, the R1 review of 8fc3ff34ce: what the rest above did not reach). A short visit to the window:
+// VISIT (lane C3, the R1 review of 8fc3ff34ce: two things the rest above did not reach). A short visit to the window:
 //   - a chain's next run (Multi Orbit: orbitA, then orbitB 1400 ms after it) waits only for the time the window is NOT
 //     open. The demo's Multi-orbit turn is started and orbitA brought to its end (PM56_DEMO.tickOnce); the moment its
 //     successor's delay is armed (the app's setTimeout of that delay, told by the chat's app block) the window is opened
@@ -40,7 +40,15 @@
 //     delay, never more than 40 ms short and at most 300 ms over: a timer never fires early, and after the close the page
 //     is busy laying itself out again, which made it fire 90-110 ms late on the 3090 (2026-11-12). The short visit has
 //     to have ended before the delay would have been due (else it is not judged). The branch before lane C3 fails the
-//     short visit: there the successor started on the wall clock, as early as the visit was long.
+//     short visit: there the successor started on the wall clock, as early as the visit was long;
+//   - a send flight under the window rests: the demo's Live reply sends a real message (typed and Send pressed), the
+//     window is opened as the flight's layers appear (the window takes 200-300 ms to come up, which the 440 ms flight
+//     spends, so opened later it lands before the chat hears of the window), the flight has to be still in the air two
+//     frames after the opening (else not judged), and while it is open the flight's own frames (frame(), inside fly() in
+//     turn-stream.js, told by its lines in the built page) ask for at most 2 frame callbacks in --set hold ms, and the
+//     flight's layers stand still (what the reader sees, under the window's scrim). At the close the flight carries on
+//     from there and lands: no .tx-fly layer left, no message still marked data-flight, body not .tx-flying. The
+//     branch before lane C3 asked for a frame on every refresh for the whole visit.
 //
 // --set looks=<a,b>  default basic-dark,glass-dark,retro-dark,nier-dark; looks=all for all ten
 // --set parts=run,rest,visit   --set settle=<ms> (default 30000)
@@ -48,7 +56,7 @@
 import { muteSound, refreshRate, parkPointer } from '../helpers/quiet-page.mjs';
 import { CALLBACK_PROBE } from '../helpers/callback-probe.mjs';
 import { DOM_LISTEN, DOM_READ } from '../helpers/dom-writes.mjs';
-import { pageSource, blocksOf, blocksOfSite } from '../helpers/built-source.mjs';
+import { pageSource, blocksOf, blocksOfSite, linesOfSite } from '../helpers/built-source.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
 const CHAT = ':is(.pm56-host, #pm56-layers, #pmw-chat56)';
@@ -66,7 +74,9 @@ export default async function (t) {
 	const src = await pageSource(t);
 	const blocks = blocksOf(src);
 	const chatBlocks = blocks.filter((b) => b.kind === 'script' && /^pm56/.test(b.id));
-	// VISIT: the chat's app block
+	// VISIT: the lines of turn-stream.js's fly() (its flight's frame() asks for the flight's frames) and the chat's app block
+	const lineOf = (snip) => { const i = src.indexOf(snip); return i < 0 || src.indexOf(snip, i + 1) >= 0 ? null : src.slice(0, i).split('\n').length; };
+	const flyLines = [lineOf('function fly(id) {'), lineOf('function land(id) {')];
 	const appBlock = blocks.find((b) => b.id === 'pm56-app-js') || null;
 	await t.check('the built page has the chat\'s script blocks (script#pm56-...)', chatBlocks.length > 0, chatBlocks.map((b) => `${b.id} ${b.from}-${b.to}`).join(', ') || 'none found: the chat\'s code cannot be told apart');
 	if (!chatBlocks.length) return;
@@ -254,6 +264,46 @@ export default async function (t) {
 				await t.check(`${look} visit ${kind}: the chain's next run starts after its delay counted outside the window (${kind === 'short' ? 'the window closed before it was due' : 'the window stayed past it'})`, outside >= delay - 40 && outside <= delay + 300, `${Math.round(outside)} ms outside the window of ${Math.round(total)} ms from the arming to orbitB's start (window ${visit[0]}-${visit[1]} ms); expected ${delay - 40} to ${delay + 300}`);
 			}
 
+			// 2. a send flight under the window: it rests, and lands after the close
+			if (!flyLines[0] || !flyLines[1] || flyLines[1] <= flyLines[0]) await t.check(`${look} visit flight: fly() in turn-stream.js is found once in the built page`, false, `fly at ${flyLines[0]}, land at ${flyLines[1]}: could not judge`);
+			else {
+				const fl = await f.evaluate(async () => {
+					const real = window.setTimeout.bind(window), sleep = (ms) => new Promise((res) => real(res, ms));
+					for (let i = 0; i < 100 && (window.PM56_STREAM.active().length || document.querySelector('.tx-fly')); i++) await sleep(100);
+					const shape = () => document.querySelector('.tx-fly-shape');
+					// (the host moves the chat's flight layers out of body into its own layer: the whole document is watched)
+					const opened = new Promise((res) => {
+						const mo = new MutationObserver(() => { if (!shape()) return; mo.disconnect(); const t0 = performance.now(); window.O55.ui.open(); res(performance.now() - t0); });
+						mo.observe(document.documentElement, { childList: true, subtree: true });
+						real(() => { mo.disconnect(); res(null); }, 4000);
+					});
+					window.PM56_DEMO.trigger('Live reply');
+					const took = await opened;
+					if (took == null) return { err: 'no send flight began (Live reply)' };
+					await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res)));
+					return { flying: !!shape() && !!document.querySelector('.transcript [data-flight]'), at: Math.round(took) };
+				});
+				if (fl.err || !fl.flying) await t.check(`${look} visit flight: the window opened while a send flight was in the air`, false, `${fl.err || `the flight had landed two frames after the opening`}: could not judge`);
+				else {
+					await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open') && window.PM56_HOST.resting(), null, { timeout: 10000 });
+					await t.page.waitForTimeout(1000);
+					const pose = () => f.evaluate(() => [...document.querySelectorAll('.tx-fly')].map((n) => `${n.className}|${n.style.left}|${n.style.top}|${n.style.transform}|${n.style.opacity}|${n.style.clipPath}`).join(' ; '));
+					const pose0 = await pose();
+					await f.evaluate(() => { window.__cbp.arm(); });
+					await t.page.waitForTimeout(hold);
+					const cb = await f.evaluate(() => window.__cbp.read());
+					const pose1 = await pose();
+					const flight = cb.raf.filter(([, site]) => { const l = linesOfSite(site)[0]; return l >= flyLines[0] && l < flyLines[1]; });
+					const n = flight.reduce((a, [k]) => a + k, 0);
+					t.log(`${look} visit flight: opened at the flight's start (O55.ui.open() returned in ${fl.at} ms); under the window ${cb.secs.toFixed(1)} s: the flight's frame callbacks ${n} (${show(flight, cb.secs)}); its layers ${pose0 === pose1 ? 'stood still' : 'moved'}`);
+					await t.check(`${look} visit flight: under the window the send flight asks for at most 2 frame callbacks`, n <= 2, `${n} in ${cb.secs.toFixed(1)} s (${(n / cb.secs).toFixed(1)}/s): ${show(flight, cb.secs)}`);
+					await t.check(`${look} visit flight: under the window the flight stands where it was (its layers do not move)`, !!pose0 && pose0 === pose1, `${pose0 ? pose0.slice(0, 160) : 'no flight layer under the window'}${pose0 === pose1 ? '' : ` -> ${String(pose1).slice(0, 160)}`}`);
+					await closeWin();
+					await t.page.waitForTimeout(1500);
+					const end = await f.evaluate(() => ({ layers: document.querySelectorAll('.tx-fly').length, marked: document.querySelectorAll('.transcript [data-flight]').length, flying: document.body.classList.contains('tx-flying') }));
+					await t.check(`${look} visit flight: after the close the flight lands (no flight layer, no message marked in flight)`, end.layers === 0 && end.marked === 0 && !end.flying, JSON.stringify(end));
+				}
+			}
 			await f.evaluate((id) => window.PM56_DEMO.selectThread(id), thread0);
 			await t.page.waitForTimeout(1000);
 		}
