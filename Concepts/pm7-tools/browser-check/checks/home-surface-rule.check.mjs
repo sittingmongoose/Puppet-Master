@@ -53,11 +53,12 @@ export const tests = {
 			for (const sheet of document.styleSheets) {
 				const node = sheet.ownerNode;
 				if (!node || !(node.id === 'pm6-css-dashboard' || (node.getAttribute && node.getAttribute('data-pm-split-of') === 'pm6-css-dashboard'))) continue;
-				try { const rule = find(sheet.cssRules); if (rule) { const s = rule.style; return { basis: s.getPropertyValue('--pm-home-basis').trim(), flex: s.getPropertyValue('flex').trim(), border: s.getPropertyValue('border-top-width').trim(), radius: s.getPropertyValue('border-top-left-radius').trim(), background: s.getPropertyValue('background-color').trim(), isolation: s.getPropertyValue('isolation').trim() }; } } catch (e) { /* see RULES */ }
+				try { const rule = find(sheet.cssRules); if (rule) { const s = rule.style; /* the shorthands hold `var()`, so Chrome keeps them as pending-substitution values and the longhands read empty */
+					return { basis: s.getPropertyValue('--pm-home-basis').trim(), flex: s.getPropertyValue('flex').trim(), border: s.getPropertyValue('border').trim(), radius: s.getPropertyValue('border-radius').trim(), background: s.getPropertyValue('background').trim(), isolation: s.getPropertyValue('isolation').trim() }; } } catch (e) { /* see RULES */ }
 			}
 			return null;
 		});
-		await t.check('the rule still carries its placement-level declarations', !!decl && decl.basis === '360px' && /^1 1 /.test(decl.flex) && decl.border === '1px' && decl.isolation === 'isolate', JSON.stringify(decl));
+		await t.check('the rule still carries its placement-level declarations', !!decl && decl.basis === '360px' && /^1 1 /.test(decl.flex) && /^1px solid var\(--border-light\)/.test(decl.border) && decl.radius.includes('var(--radius-sm)') && decl.background.includes('var(--surface)') && decl.isolation === 'isolate', JSON.stringify(decl));
 
 		for (const look of COUNT_LOOKS) {
 			await t.app.look(look);
