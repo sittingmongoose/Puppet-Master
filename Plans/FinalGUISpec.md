@@ -27455,24 +27455,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings must expose Orchestrator Goal Runtime policy controls without becoming the policy owner. The one Default models list offers Planning and supervising, Everyday building, Easy, routine jobs, Design and layout, The hardest jobs and Checking finished work, resolved through Models_System MS-109 with configured providers, accounts and model profiles. A blank job names its inherited source and current model/depth; Easy, routine jobs follows Everyday building and never checks work. The old capability-lane binding editor and helper model/depth rows are retired. Settings also exposes subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory; verification policy controls for verification strictness, validators by WorkNode type, independent review, evidence-span requirements, completion receipt requirements, repair-loop policy, and degraded-mode behavior; write policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults; and Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction. A required job with no usable model after named inheritance, or a missing required policy, surfaces a typed blocked state with recovery actions before dispatch; no arbitrary runtime behavior is selected.
+  Settings must expose shared model defaults without becoming the policy owner. The one Default models list offers Planning and supervising, Everyday building, Easy, routine jobs, Design and layout, The hardest jobs and Checking finished work, resolved through Models_System MS-109 with configured providers, accounts and model profiles. A blank job names its inherited source and current model/depth; Easy, routine jobs follows Everyday building and never checks work. The old capability-lane binding editor and helper model/depth rows are retired. The Goal Runtime and GoalRun subagent-wave, verification, write-policy and replan controls are retired by DL-478; Goals use the initiating chat model and GRS-050 evidence without a Goal-owned checking step. A required job with no usable model after named inheritance surfaces a typed blocked state with recovery actions before dispatch; no arbitrary runtime behavior is selected.
 gui_related: true
-gui_classification_reason: This unit defines visible Settings controls and blocked-state recovery for model/provider lane binding.
+gui_classification_reason: This unit defines visible shared Default models controls and blocked-state recovery.
 depends_on:
 - MS-109
 - PS-115
 - GRS-049
-- OSI-428
 - W-071
 - RAP-027
 unblocks: []
 acceptance_criteria:
   - Settings expose the six MS-109 job defaults, including Easy, routine jobs, with model/depth chosen in the shared overlay picker.
   - Job selectors bind to configured providers, accounts and model profiles; blank rows disclose their named source and effective pair.
-  - Settings expose subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent use.
-  - Settings expose verification strictness, validators by WorkNode type, independent review, evidence-span, completion receipt, repair-loop policy, and degraded-mode controls.
-  - Settings expose write-policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults.
-  - Settings expose Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction.
   - A required job with no usable model after inheritance surfaces a typed blocked state and recovery path.
   - The GUI does not imply provider-specific default models, own runtime policy semantics, or authorize arbitrary fallback selection.
 validation_surfaces:
@@ -27501,43 +27496,8 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0093
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0102
 preserved_exact_tokens:
-  - "capability lanes"
   - "configured providers"
   - "model profiles"
-  - "low_cost_executor"
-  - "standard_reviewer"
-  - "high_reasoning_orchestrator"
-  - "verifier"
-  - "adjudicator"
-  - "certifier"
-  - "unconfigured-lane"
-  - "subagent policy"
-  - "fanout thresholds"
-  - "max parallel subagents"
-  - "max cost per wave"
-  - "bounded input limits"
-  - "retry policy"
-  - "mandatory"
-  - "verification strictness"
-  - "validators by WorkNode type"
-  - "independent review"
-  - "evidence-span"
-  - "completion receipt"
-  - "repair-loop policy"
-  - "degraded-mode"
-  - "parent-only writer"
-  - "patch-only subagents"
-  - "isolated worktree"
-  - "single-writer lease"
-  - "protected/governance unlock"
-  - "approval boundary"
-  - "auto-resume"
-  - "checkpoint cadence"
-  - "replan behavior"
-  - "user interruption handling"
-  - "true-blocker escalation"
-  - "evidence retention"
-  - "redaction"
 negative_constraints:
   - Do not hardcode provider or model defaults.
   - Do not silently select arbitrary models when a required job has no usable model.
