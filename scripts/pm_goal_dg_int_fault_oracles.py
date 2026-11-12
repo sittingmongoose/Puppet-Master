@@ -95,6 +95,22 @@ def append_faults(run):
 
 
 def joint_faults(run):
+    w=world();ctx=C.build_context(w);co=w.coordinator
+    def denied_current():
+        before=snapshot(w)
+        try:return co.read_current(ctx)
+        finally:A.require('visibility/denied_read_effect',snapshot(w)==before)
+    run.case('CF07/current_denied_empty',denied_current,'current/guard_outcome')
+    p=co.prepare(ctx);i,k=co.arm(ctx,p)
+    run.case('CF07/current_denied_armed',denied_current,'current/guard_outcome')
+    a=co.append_held(ctx,i,k)
+    run.case('CF07/current_denied_event_only',denied_current,'current/guard_outcome')
+    m=co.commit_native(ctx,a)
+    run.case('CF07/current_denied_committed_unreleased',denied_current,'current/guard_outcome')
+    rb=co.readback(ctx,m)
+    run.case('CF07/current_denied_readback_without_release',denied_current,'current/guard_outcome')
+    co.release(ctx,m,rb)
+    run.case('CF07/current_disclosed_after_original_release',lambda:co.read_current(ctx)['outcome'])
     names=['workflow_goal_run_body','workflow_goal_run_control','workflow_goal_run_current',V.RESULT,V.ORIGIN,
         'executor_workflow_workflow_update','executor_workflow_workflow_head','executor_workflow_lineage_origin',
         'executor_workflow_current_pointer',W.family_table('commit'),W.family_table('origin'),W.family_table('control')]
