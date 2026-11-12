@@ -70,6 +70,10 @@ const actions = chat.match(/  function headerActionsHtml\([^]*?\n  }/)[0];
 const chatCtx = vm.createContext({SVG:{more:'',layout:'',close:'',duplicate:'',archive:'',popout:''}});
 vm.runInContext(actions,chatCtx);
 for (const mode of ['floating','docked']) samples.push({name:'headerActionsHtml '+mode,html:vm.runInContext('headerActionsHtml({actions:"'+mode+'"})',chatCtx),svgRoots:false});
+// Lens SVG roots have their own explicit ordinary colour, so parent inheritance alone cannot cover them.
+const lensCtx=vm.createContext({});
+vm.runInContext(chat.match(/  var SVG = {[^]*?\n  };/)[0]+'\n'+chat.match(/  function lensHtml\([^]*?\n  }/)[0],lensCtx);
+samples.push({name:'lensHtml',html:vm.runInContext('lensHtml()',lensCtx),svgRoots:true});
 const shell = { name: 'base/shell.html', html: read('../base/shell.html'), svgRoots: false, decorate: true };
 samples.push(shell);
 const railSources = ['10-skin.js','51-search.js','52-run.js'].map(p => read('../../../leftrail-redesign/src/concepts/d/'+p)).join('\n');
