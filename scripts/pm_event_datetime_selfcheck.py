@@ -4067,9 +4067,10 @@ def _node_validator(context, row):
     from referencing.jsonschema import DRAFT202012
     dt, inv, _, _ = _mods()
     cache = context.cache.setdefault("node_validators", {})
-    key = (row["path"], row["origin"], row["resource_pointer"])
+    document = inv._source_document(context.root, row, context.cache.setdefault("node_documents", {}))
+    row = inv.bind_nested_resource(row, document)
+    key = (row["path"], row["origin"], row["resource_pointer"], row["resource_sha256"])
     if key not in cache:
-        document = inv._source_document(context.root, row, context.cache.setdefault("node_documents", {}))
         resource = inv.at(document, row["resource_pointer"])
         uri = resource.get("$id") or "urn:pm:datetime-node:" + inv.digest(resource)
         registry = Registry().with_resource(uri, Resource.from_contents(resource, default_specification=DRAFT202012))
@@ -4922,7 +4923,7 @@ def _real_in_place(context):
     results.append(_use_reason(validator, dict(event, occurred_at_utc="not-a-time")) ==
                    "datetime_schema_changed_after_admission")
     schema, validator, event = _committed_eventrecord(context)
-    node, row = next(entry for entry in validator.storage_selection.nodes.values() if entry[1]["pointer"] == "")
+    node, row = validator.storage_selection.nodes[id(schema)]
     saved = row["profile"]
     try:
         row["profile"] = "owner_schema"
@@ -4934,3 +4935,189 @@ def _real_in_place(context):
     validator.storage_selection.uri_pins.pop(schema["$id"])
     results.append(_use_reason(validator, event) == "datetime_validator_use_selection_pins")
     return all(results)
+
+
+# STOP-T198: independently selected frozen recipes sharing a historical URI.
+NESTED_FIXTURE = "scripts/pm_event_datetime_nested_resources.json"
+NESTED_PATH = "Plans/dch_retained_recipes.json"
+NESTED_SUFFIX = "/schemas/Plans~1event_record.schema.json"
+
+
+@contextlib.contextmanager
+def _nested_fixture(context):
+    """Small scratch container of authentic INT2 schema values, never edited in place.
+
+    The source container is 1.6 MB. Keep only the three EventRecord resources
+    here, retaining each structural fingerprint and both real node controls.
+    The scratch inventory pins this smaller container, with the same reviewed
+    classifications and citations as the source; no committed Plans are written.
+    """
+    _, inv, _, _ = _mods()
+    fixture = json.loads((context.root / NESTED_FIXTURE).read_text())
+    assert all(inv.digest(value) == fingerprint for fingerprint, value in fixture["resources"].items())
+    document = {"recipes": {name: {"schemas": {"Plans/event_record.schema.json":
+                copy.deepcopy(fixture["resources"][fingerprint])}} for name, fingerprint in fixture["recipes"].items()}}
+    rows = copy.deepcopy(fixture["rows"])
+    for row in rows:
+        row["resource_sha256"] = inv.digest(document)
+    # Preserve the current schema's known URI pin as well: on 58c2816ff3 the
+    # strict frozen edition collides with that known URI before any control.
+    current = [r for r in context.inventory()["nodes"] if r["path"] == EVENT_RECORD_PATH]
+    quote = next(c["quote"] for c in rows[0]["citation"] if "quote" in c)
+    root = _gate_root(context, current + rows, files=[(NESTED_PATH, document), ("Plans/Contracts_V0.md", quote)])
+    local = Context(root)
+    local.cache["node_controls"] = (fixture["objects"],
+        {(r["path"], r["origin"], r["pointer"]): r["control"] for r in fixture["controls"]}, fixture["controls"])
+    saved, validate = inv.ROOT, inv.validate_inventory
+    inv.resource_selections.cache_clear()
+    try:
+        inv.ROOT = root
+        # validate_inventory's default root is bound at import, so route the
+        # scratch selection through that same validator with an explicit root.
+        inv.validate_inventory = lambda inventory, root=root: validate(inventory, root)
+        yield local, rows, document, fixture
+    finally:
+        inv.ROOT, inv.validate_inventory = saved, validate
+        inv.resource_selections.cache_clear()
+        local.close()
+
+
+def _nested_recipe(recipe):
+    def run(context):
+        _, inv, _, _ = _mods()
+        with _nested_fixture(context) as (local, rows, document, fixture):
+            pointer = "/recipes/" + recipe + NESTED_SUFFIX
+            selected = [r for r in rows if r["pointer"] == pointer or r["pointer"].startswith(pointer + "/")]
+            original = copy.deepcopy(document)
+            for row in selected:
+                if not _node_check(inv.node_key(row))(local):
+                    return False
+                validator = _node_validator(local, row)
+                resource = inv.at(document, pointer)
+                if validator.storage_selection.uri_pins.get(resource["$id"]) != fixture["recipes"][recipe]:
+                    return False
+            return len(selected) == 2 and document == original
+    return run
+
+
+for _recipe in ("raw-v1", "normalized-v2", "strict-v3"):
+    check("datetime_nested_recipe_" + _recipe.replace("-", "_"))(_nested_recipe(_recipe))
+
+
+@check("datetime_nested_scanner_selection_binding_agree")
+def _nested_agree(context):
+    _, inv, _, _ = _mods()
+    with _nested_fixture(context) as (local, rows, document, fixture):
+        scanned, errors = inv.scan(local.root)
+        actual = {inv.node_key(row): row for row in scanned if row["path"] == NESTED_PATH}
+        selections = inv.resource_selections()
+        for row in rows:
+            pointer = "/".join(row["pointer"].split("/")[:5])
+            bound = actual[inv.node_key(row)]
+            resource = inv.at(document, pointer)
+            relative = row["pointer"][len(pointer):]
+            if (bound["resource_pointer"] != pointer or bound["resource_sha256"] != inv.digest(resource) or
+                    bound["resource_id"] != resource["$id"] or
+                    selections[inv.digest(resource)][relative]["node_sha256"] != row["node_sha256"]):
+                return False
+        return not errors and len(actual) == 6 and inv.check_inventory(local.root)["status"] == "pass"
+
+
+@check("datetime_nested_same_uri_without_binding_refused")
+def _nested_unbound(context):
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    dt, inv, _, _ = _mods()
+    with _nested_fixture(context) as (local, rows, document, fixture):
+        registry = Registry().with_resource("urn:pm:unbound-recipes", Resource(document, DRAFT202012))
+        reason = _admission_reason(dt.datetime_validator, {"$ref": "urn:pm:unbound-recipes"}, registry=registry)
+        return reason in ("datetime_resource_fingerprint_unclassified: " +
+                         fixture["resources"][fixture["recipes"]["strict-v3"]]["$id"],
+                         "datetime_resource_uri_conflict: " +
+                         fixture["resources"][fixture["recipes"]["strict-v3"]]["$id"])
+
+
+@check("datetime_nested_substituted_fingerprint_refused")
+def _nested_substituted(context):
+    dt, inv, _, _ = _mods()
+    with _nested_fixture(context) as (local, rows, document, fixture):
+        schema = copy.deepcopy(fixture["resources"][fixture["recipes"]["raw-v1"]])
+        schema["title"] = "substituted unknown bytes"
+        return _admission_reason(dt.datetime_validator, schema) == \
+            "datetime_resource_fingerprint_unclassified: " + schema["$id"]
+
+
+@check("datetime_nested_wrong_pointer_refused")
+def _nested_wrong_pointer(context):
+    with _nested_fixture(context) as (local, rows, document, fixture):
+        row = next(r for r in rows if r["pointer"] == "/recipes/raw-v1" + NESTED_SUFFIX)
+        # raw-v1 and normalized-v2 have identical bytes. A wrong binding must
+        # still refuse: content equivalence cannot authorize another pointer.
+        wrong = dict(row, resource_pointer="/recipes/normalized-v2" + NESTED_SUFFIX)
+        return _admission_reason(_node_validator, local, wrong) == "datetime_resource_pointer_mismatch"
+
+
+@check("datetime_nested_missing_pointer_refused")
+def _nested_missing_pointer(context):
+    with _nested_fixture(context) as (local, rows, document, fixture):
+        wrong = dict(rows[0], resource_pointer="/recipes/missing" + NESTED_SUFFIX)
+        return _admission_reason(_node_validator, local, wrong) == "datetime_resource_pointer_mismatch"
+
+
+@check("datetime_nested_recipe_replaced_after_cache_refused")
+def _nested_replaced_cached(context):
+    _, inv, _, _ = _mods()
+    with _nested_fixture(context) as (local, rows, document, fixture):
+        row = next(r for r in rows if r["pointer"] == "/recipes/strict-v3" + NESTED_SUFFIX)
+        _node_validator(local, row)
+        loaded = inv._source_document(local.root, row, local.cache["node_documents"])
+        loaded["recipes"]["strict-v3"]["schemas"]["Plans/event_record.schema.json"] = \
+            copy.deepcopy(fixture["resources"][fixture["recipes"]["raw-v1"]])
+        return _admission_reason(_node_validator, local, row) == "datetime_resource_binding_changed"
+
+
+def _nested_bad_pin(field, value):
+    def run(context):
+        with _nested_fixture(context) as (local, rows, document, fixture):
+            row = dict(rows[0], **{field: value})
+            return _admission_reason(_node_validator, local, row) == "datetime_resource_binding_changed"
+    return run
+
+
+for _field, _value in (("resource_sha256", "0" * 64), ("node_sha256", "0" * 64), ("resource_id", "urn:wrong")):
+    check("datetime_nested_changed_" + _field + "_refused")(_nested_bad_pin(_field, _value))
+
+
+@check("datetime_nested_resource_pointer_boundaries")
+def _nested_pointer_boundaries(context):
+    _, inv, _, _ = _mods()
+    prefix = "/recipes/raw-v1" + NESTED_SUFFIX
+    return (inv.nested_resource_pointer(NESTED_PATH, prefix) == prefix and
+            inv.nested_resource_pointer(NESTED_PATH, prefix + "/$defs/child\nname") == prefix and
+            inv.nested_resource_pointer(NESTED_PATH, "/recipes/raw-v1/schemas") == "" and
+            inv.nested_resource_pointer(NESTED_PATH, "/recipes/raw-v1/schemas/") == "" and
+            inv.nested_resource_pointer(NESTED_PATH, "/recipes//schemas/schema") == "" and
+            inv.nested_resource_pointer(NESTED_PATH, "/recipes/raw-v1/metadata/schema") == "" and
+            inv.nested_resource_pointer("Plans/other.json", prefix) == "" and
+            inv.nested_resource_pointer("Plans/storage_value_registry.json", "/families/x/schema/$defs/a") ==
+            "/families/x/schema")
+
+
+@check("datetime_nested_already_bound_resource")
+def _nested_already_bound(context):
+    _, inv, _, _ = _mods()
+    with _nested_fixture(context) as (local, rows, document, fixture):
+        pointer = "/recipes/raw-v1" + NESTED_SUFFIX
+        resource = inv.at(document, pointer)
+        row = dict(rows[0], resource_pointer=pointer, resource_id=resource["$id"], resource_sha256=inv.digest(resource))
+        return inv.bind_nested_resource(row, document) == row
+
+
+@check("datetime_nested_root_mutation_uses_bound_node")
+def _nested_root_mutation(context):
+    """A complete resource may be classified by an identical frozen recipe's
+    row, whose inventory pointer is not empty. Mutate the actual admitted
+    root; all four mutation refusals must still be exercised.
+    """
+    with _nested_fixture(context):
+        return _real_in_place(context)
