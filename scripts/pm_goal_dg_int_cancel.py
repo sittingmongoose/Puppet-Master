@@ -220,7 +220,7 @@ class Consumer(RR.Consumer):
         self._check_start(native, intent, upd)
 
 
-class Projector(RP.Projector):
+class Projector(RP.ProjectorV7):
     def __init__(self,world):
         super().__init__(world)
         self.consumer=Consumer(world)
@@ -243,11 +243,12 @@ class CancelWorld(IW.S1CancelWorld):
 
     def __init__(self,cfg=None,base=None):
         self.cfg=dict(cfg or {})
-        guard('int/cancel/start_kind',self.cfg.get('start','started')=='started' and not self.cfg.get('terminal'))
+        guard('int/cancel/start_kind',self.cfg.get('start','started') in ('started','no_start'))
         self.knobs=self.cfg.get('knobs',{})
         RW.World.CURRENT=self
         self.tmp=Path(tempfile.mkdtemp(prefix='dgint-c3-',dir=base))
-        self.certified_world=V.World(self.tmp/'v7',authentic_goal=True)
+        self.certified_world=V.World(self.tmp/'v7',authentic_goal=True,bootstrap_activation=self.cfg.get('start','started')=='started',
+                                     segment_target_bytes=int(self.cfg.get('segment_target_bytes',65536)))
         v=self.certified_world
         sw=self.start_world=v.sw
         self.storage,self.registry,self.recorder=v.storage,v.registry,v.recorder
@@ -269,6 +270,55 @@ class CancelWorld(IW.S1CancelWorld):
         self.append=A.AppendOwner(self.registry,self.storage)
         self.ancillary=RW.PhysOwner(self,'ancillary_provenance')
         self.permissions=dict(read=True,project=True)
+
+    def build(self):
+        sw=self.start_world
+        self.native=IW.S1NativeOwner(self,sw.owners['native'])
+        self.d01=IW.S1D01Owner(self,sw.owners['d01'],sw.edition)
+        self.start=IW.AdoptedCustody(self,'workflow_start',sw.start.owner_id)
+        self.goal=RW.PhysOwner(self,'goal_cancel')
+        for name,role in [('scheduler','scheduler'),('d05','d05_safe_stop'),('filesafe','filesafe'),('process','process'),('d06','d06_cancel')]:
+            setattr(self,name,RW.PhysOwner(self,role))
+        self.out={}
+        if self.knob('pre_start_events'):self.knob('pre_start_events')(self)
+        self._birth()
+        if self.cfg.get('start','started')=='started':self._start()
+        else:self._no_start()
+        if self.cfg.get('terminal'):self._terminal_before()
+        self._goal_cancel()
+        self._scheduler_stop()
+        self._effects()
+        self._safe_stop()
+        self._d06()
+        return self
+
+    def _no_start(self):
+        sw=self.start_world
+        birth=SR.birth_record(sw)
+        publication=self.certified_world.birth_publication
+        self.body1,self.control1=self.body0,self.control0
+        self.start_cause=dict(kind='original_initialized_no_start',
+            control=self.start.adopt('workflow_start_control',birth['start_control'],'native_consumer',RW.WS+'StorageControl'),
+            initial_control_origin=self.start.adopt('workflow_start_control_origin',birth['initial_control_origin'],'native_consumer',RW.WA+'OwnerIssueOriginPhysical'),
+            original_workflow_birth=self.d01.adopt(publication['birth'],V.BIRTH,RW.WO+'StorageWorkflowBirth',sw.ctx.run_key(V.BIRTH)),
+            original_workflow_birth_origin=self.d01.adopt(publication['origin'],'executor_workflow_lineage_origin',RW.WO+'StorageWorkflowMutationOrigin',
+                sw.ctx.run_key('executor_workflow_lineage_origin',publication['origin']['record']['operation_id'])))
+        families=ST.d01_families(sw.edition)
+        self.head=self.d01.adopt(publication['head'],families['workflow_head'],RW.WO+'StorageWorkflowHead',sw.owners['d01'].head_key(publication['head']['record']['revision']))
+        origin=publication['activation_origin']
+        self.activation_origin=self.start.adopt('workflow_original_source_origin',origin,'native_consumer',RW.WA+'OwnerIssueOriginPhysical')
+        self._adopt_closure([s.wrapper for k,s in self.start_cause.items() if k!='kind']+[self.head.wrapper])
+
+    def current_start_full(self):
+        if self.cfg.get('start','started')=='started':return RW.World.current_start_full(self)
+        sw=self.start_world
+        value=dict(kind='prestart',value=dict(d01_current=sw.owners['d01'].current_source(sw.owners['native'].current()),
+              control=sw.owners['native'].start_control()['value'],initial_control_origin=SR.birth_record(sw)['initial_control_origin']))
+        res=self.roots.lookup('native_consumer',RW.CP+'CurrentSuccessfulReadback')
+        from urllib.parse import urljoin
+        root=urljoin(res.resolver._base_uri,res.contents['properties']['current_start']['$ref'])
+        self.roots.validate('native_consumer',root,value,'int/current/no_start')
+        return value
 
     def _birth(self):
         sw=self.start_world
@@ -323,6 +373,33 @@ class CancelWorld(IW.S1CancelWorld):
             values.append(SW.resolve_selector(self.storage,pointer['value']['record']['workflow_head'],'int/current/head'))
         return {v['schema_id']:copy.deepcopy(v) for v in values}
 
+    def _adopt_closure(self,wrappers):
+        # A historical selector remains lawful when its original CA3 owner has
+        # committed a later control version. Refresh the custody view only from
+        # Storage's actual latest committed bytes, before entering passive reads.
+        todo=list(wrappers);seen=set()
+        while todo:
+            value=todo.pop()
+            for _,ref in RW.walk_refs(value):
+                digest=ref.get('physical_value_sha256',ref.get('physical_sha256'))
+                if digest is None:continue
+                identity=(ref['family_id'],ref['physical_key'],digest)
+                if identity in seen:continue
+                seen.add(identity)
+                retained=self.issued.get(identity)
+                if retained is None:continue
+                cell=SW.read_value(self.storage,ref['family_id'],ref['physical_key'],'int/custody/latest')
+                guard('int/custody/current_absent',cell is not None)
+                current_digest=physical_sha256(cell['value'])
+                owner=self.registry._owners[retained.owner_id]
+                latest=owner.current.get((ref['family_id'],ref['physical_key']))
+                if latest is None or latest[0].sha256!=current_digest:
+                    guard('int/custody/actual_committed_latest',self.storage.committed_version(ref['family_id'],ref['physical_key'],current_digest))
+                    guard('int/custody/actual_retained_version',self.storage.committed_version(ref['family_id'],ref['physical_key'],digest))
+                    IW.adopt_into(owner,ref['family_id'],ref['physical_key'],cell['value'])
+                todo.extend([retained.wrapper,cell['value']])
+        return super()._adopt_closure(wrappers)
+
     def _s1_historical(self,ref,commitment):
         try:return super()._s1_historical(ref,commitment)
         except (A.AdapterRefusal,RW.Refusal):
@@ -370,15 +447,23 @@ class CancelWorld(IW.S1CancelWorld):
 
     def _d06(self):
         super()._d06()
+        if self.cfg.get('stop_after')=='prepare':return
+        consumer=Consumer(self)
+        native,_,_=consumer.assemble(consumer.tuple(RR.Presentation(self)))
+        self._adopt_closure([native])
+        for path,ref in RW.walk_refs(native):
+            try:self.resolve(ref)
+            except RW.Refusal as error:
+                raise RW.Refusal('int/native_preflight'+path+'/'+error.code) from error
         route,w=self.goal_bridge.route,self.goal_bridge.world
         for name in ('settle_owner','freeze_event','reserve_assignment','issue_assignment_audit','append_original','publish_control','terminal_succeeded'):
             getattr(route,name)()
-        GC='https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/'
+        GC='https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/'
         key=route.key('goal_cancel_control_publication')
         value=w.value('goal_cancel_control_publication',key)
         self.goal_cause['original_control_publication']=IW.adopt_into(self.goal,'goal_cancel_control_publication',key,value,
-                                                                    root=GC+'StorageControlPublication',realm='goal_consumer')
-        self._adopt_closure([value])
+                                                                    root=GC+'StorageControlPublication',realm='c3_goal')
+        self._adopt_closure([value,native])
         self.goal_event=w.storage.read_event(route.progress['publication']['event_id'])
 
     def _safe_stop(self):
@@ -537,4 +622,13 @@ class CancelWorld(IW.S1CancelWorld):
         value['d06_readback']['original_event']['custody']=self.storage.first_custody(event['event_id'])
         value['d06_readback']['safe_stop']['whole_original_safe_stop']=self.successful_safe_stop()
         self.roots.validate('native_consumer',RW.CP+'CurrentSuccessfulReadback',value,'int/current/actual_safe_stop')
+        return value
+
+    def current_goal(self):
+        # Read the same live Goal, binding, Stop control and writer head that
+        # C3 itself guards; no schema-filled current-control witness.
+        stop=self.goal_bridge.route.current_stop_argument('integration_read')
+        value=dict(current_stop=stop,current_controls=copy.deepcopy(stop['current_controls']))
+        if self.knob('current_goal_edit'):self.knob('current_goal_edit')(value)
+        self.roots.validate('goal_consumer',RW.GA+'CurrentCancelledGoal',value,'int/current/actual_goal')
         return value

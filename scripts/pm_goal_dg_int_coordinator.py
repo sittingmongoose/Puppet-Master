@@ -35,6 +35,7 @@ def dispatch(world,phase,arguments):
     for name,arg in declared.items():
         world.realm.validate(arg['realm'],arg['schema_ref'],arguments[name],'int/'+phase+'/'+name)
     world.typed_calls.append(dict(phase=phase,method=m['method'],arguments=sorted(arguments)))
+    world.__dict__.setdefault('typed_arguments',{})[phase]=copy.deepcopy(arguments)
     return True
 
 
@@ -180,6 +181,7 @@ class Coordinator(W.Coordinator):
 
     def typed(self,phase,ctx,**extra):
         w=self.world
+        generation=w.storage.cell_generation
         arguments=dict(request=ctx['request'],original_certification_source=ctx['src']['native']['whole'],
             current_goal=ctx['goal']['argument'],durable_standard=ctx['src']['standard']['whole'],
             whole_producer_source=ctx['producer_source'],identity_result=ctx['identity'],
@@ -196,7 +198,9 @@ class Coordinator(W.Coordinator):
         if 'all_member_append_evidence' in declared:arguments['all_member_append_evidence']=ctx['evidence']
         if 'published_native' in declared:arguments['published_native']=self.published(ctx)
         arguments.update(extra)
-        return dispatch(w,phase,arguments)
+        out=dispatch(w,phase,arguments)
+        require('int/typed/read_only/'+phase,w.storage.cell_generation==generation)
+        return out
 
     def derive_intent(self, ctx, tx_id):
         w = self.world
@@ -247,6 +251,10 @@ class Coordinator(W.Coordinator):
             ctx['native_candidate'] = candidate
             self.preappend_source(ctx)
             self.typed('prepare',ctx)
+            w.hook('after_helper:prepare',ctx)
+            self.current_sources(ctx,stage='prepare_final')
+            body2,control2,_=self.native_preimage(ctx,stage='prepare_final')
+            require('prepare/final_native',body2==body and control2==control)
             ctx['guards']['prepare'] = guard
             slot.set(prepared)
             return prepared
@@ -285,6 +293,12 @@ class Coordinator(W.Coordinator):
                 require('arm/control_changed', fresh['version'] == control['version'])
                 ctx['stored_intent'], ctx['stored_control_armed'] = stored_intent, stored_control
                 w.hook('arm_built', ctx)
+                self.current_sources(ctx,stage='arm_after_helpers')
+                b2,c2,h2=self.native_preimage(ctx,stage='arm_after_helpers')
+                require('arm/last_native',intent['native_before_body']==selector(b2['value']['physical_key'],b2['value'])
+                        and intent['native_before_control']==selector(c2['value']['physical_key'],c2['value'])
+                        and intent['native_before_head']==selector(h2['key'],h2['value']))
+                require('arm/last_control',self.compact('control',ctx['scope'])[1]==control)
                 return [dict(table=family_table('intent'), key=intent_key, expected=None, value=stored_intent),
                         dict(table=family_table('control'), key=control_key, expected=control['version'],
                              value=stored_control)]
@@ -351,6 +365,12 @@ class Coordinator(W.Coordinator):
         res = w.storage.reservation_state(ctx['op'])
         require(stage + '/append_attempted', res is None)
         self.typed('append',ctx,intent=intent,control=control)
+        self.current_sources(ctx,stage='f5a_after_typed')
+        b2,c2,h2=self.native_preimage(ctx,stage='f5a_after_typed')
+        require('f5a/last_native',i['native_before_body']==selector(b2['value']['physical_key'],b2['value']) and
+                i['native_before_control']==selector(c2['value']['physical_key'],c2['value']) and
+                i['native_before_head']==selector(h2['key'],h2['value']))
+        require('f5a/last_storage_source',fresh['token']==self.byte_source(ctx)['token'])
         return fresh
 
     def f5b_readback(self, ctx, preappend, candidates):
@@ -567,6 +587,8 @@ class Coordinator(W.Coordinator):
             self.check_evidence(ctx, committed['all_member_append_evidence'], stage=stage)
             self.current_sources(ctx,stage=stage)
             self.typed('readback',ctx)
+            self.current_sources(ctx,stage='readback_after_typed')
+            require('readback/final_members',all(w.storage.cell(*keys[n])==c for n,c in cells.items()))
             readback = dict(union={k: c['value'] for k, c in cells.items()}, transaction_id=tx_id,
                             commit_sha256=sha(mp(committed['commit'])), origin_sha256=sha(mp(committed['origin'])))
             slot.set(readback)
@@ -652,6 +674,10 @@ class Coordinator(W.Coordinator):
             self.typed('current',ctx)
             out=dict(outcome='current_complete',retained=authority,published_native=self.published(ctx),
                      whole_original_event_source=self.original_event(ctx),all_member_append_evidence=ctx['evidence'])
+            self.current_sources(ctx,stage='current_after_helpers')
+            b3,c3,h3=self.native_preimage(ctx,stage='current_after_helpers')
+            require('current/last_native',b3==b2 and c3==c2 and h3==h2)
+            self.check_guard(ctx,guard,('authentic_released',),stage='current_after_helpers')
             slot.set(out)
             return out
 

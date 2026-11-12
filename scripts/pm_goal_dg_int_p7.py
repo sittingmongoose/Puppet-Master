@@ -74,7 +74,10 @@ class _Permission:
 
 def started_world(cfg=None, base=None):
     """S1 Start only (no cancellation): the running run the started branch reads."""
-    w = IW.S1CancelWorld(cfg, base=base)
+    if (cfg or {}).get('edition')=='native_v7':
+        from pm_goal_dg_int_cancel import CancelWorld
+        w=CancelWorld(cfg,base=base)
+    else:w = IW.S1CancelWorld(cfg, base=base)
     sw = w.start_world
     w.native = IW.S1NativeOwner(w, sw.owners['native'])
     w.d01 = IW.S1D01Owner(w, sw.owners['d01'], sw.edition)
@@ -87,6 +90,9 @@ def started_world(cfg=None, base=None):
 
 
 def cancelled_world(cfg=None, base=None):
+    if (cfg or {}).get('edition')=='native_v7':
+        from pm_goal_dg_int_cancel import CancelWorld
+        return CancelWorld(cfg,base=base).build()
     return IW.S1CancelWorld(cfg, base=base).build()
 
 
@@ -99,8 +105,12 @@ class LegacyConsumer(C2.Consumer):
         self.iw, self.branch = world, branch
         self.sw = world.start_world
         self.readers = SR.StartedReaders(self.sw.registry, world=self.sw, projector=None)
-        self.r2 = RR.Consumer(world)
-        self.r2_projector = RP.Projector(world)
+        self.r2 = getattr(world,'consumer_class',RR.Consumer)(world)
+        self.r2_projector = getattr(world,'projector_class',RP.Projector)(world)
+        self.profile='native_v7' if self.sw.edition.name=='native_v7' else 'original_profile'
+        self.method=METHODS[branch].replace('original_profile',self.profile)
+        from pm_goal_dg_int_consumer_sources import Originals
+        self.source_owner=Originals(world)
 
     # -- whole originals, acquired independently ---------------------------------
     def original(self, *, stage):
@@ -170,6 +180,13 @@ class LegacyConsumer(C2.Consumer):
         return self.record_of(retained)
 
     def publish(self):
+        original=self.original(stage='source_enrollment')
+        causes,effects=self.goal_causes(original)
+        self.source_owner.enroll(dict(legacy_sources=self.legacy_sources(original),goal_causes=causes,filesafe_effects=effects),
+                                 self.world.permission.current(self.request()['scope']['goal_run_id']))
+        if hasattr(self.iw,'certified_world'):
+            v=self.iw.certified_world
+            v.disclosure.acquire(v.scope)
         return self.publish_projection(self.request()['scope'], LEGACY_OP)
 
     # -- method arguments, each validated in its realm -----------------------------
@@ -178,8 +195,10 @@ class LegacyConsumer(C2.Consumer):
         cancelled = [original] if self.branch == 'cancelled' else []
         if self.branch == 'cancelled':
             started = [SR.original_started(self.sw, where='legacy_sources/started')]
-        value = dict(originals=[dict(profile='original_started_cancelled', started=started, cancelled=cancelled)],
-                     native_v7_starts=[], native_v7_cancellations=[])
+        value = dict(originals=[dict(profile='all_writers.v7' if self.profile=='native_v7' else 'original_started_cancelled',
+                                    started=started,cancelled=cancelled)],
+                     native_v7_starts=[s['native_start'] for s in started] if self.profile=='native_v7' else [],
+                     native_v7_cancellations=[c['native_cancellation'] for c in cancelled] if self.profile=='native_v7' else [])
         self.validate('LegacyProjectionEvidence', value, 'argument/legacy_sources')
         return value
 
@@ -211,6 +230,50 @@ class LegacyConsumer(C2.Consumer):
         self.iw.roots.validate(GOAL_REALM, RW.GA + 'ProjectGoalCauses', causes, 'argument/goal_causes')
         self.iw.roots.validate(FILESAFE_REALM, RW.FA + 'RetainedFileSafeEffects', effects, 'argument/filesafe_effects')
         return causes, effects
+
+    def complete_arguments(self,opened,private,snapshot,goal,legacy,causes,effects):
+        """Every declared operand, in its selected whole resource realm."""
+        import json
+        from pathlib import Path
+        w=self.iw
+        request=self.request()
+        sources,disclosure=self.source_owner.read(dict(legacy_sources=legacy,goal_causes=causes,filesafe_effects=effects),
+            self.world.permission.current(request['scope']['goal_run_id']),opened['snapshot'])
+        prefix='native_v7_' if self.profile=='native_v7' else 'original_'
+        args=dict(request=request,generic=self.r2_projector.generic_snapshot(snapshot,None),
+            actual_generic_sources=self.r2_projector.actual_sources(snapshot),original_certifications=[],legacy_sources=legacy,
+            goal_causes=causes,filesafe_effects=effects,actual_projection_state=dict(checkpoint=opened['stored'],row=opened['row']),
+            whole_original_custody_source=sources,whole_current_disclosure_source=disclosure)
+        args.update({prefix+'0':private,prefix+'1':goal,prefix+'2':causes,prefix+'3':effects})
+        if self.profile=='native_v7':
+            import pm_goal_dg_cf2_world as C2W
+            v=w.certified_world
+            scope=v.coord_scope(v.scope)
+            req=C2W.guard_request(v,scope,LEGACY_OP,'current_source','TEST_ONLY:p7-current-guard')
+            result=v.guard.read_guard(req)
+            v.coordinator.check_guard(dict(scope=scope,op=LEGACY_OP),result,
+                ('authentic_no_coordinator_operation',),stage='p7_legacy_current')
+            args.update(actual_guard_source=result['source'],actual_guard_result=result)
+        methods=json.loads((Path(__file__).resolve().parents[1]/'Plans/goal_run_projection_reference_contracts/certified.methods.json').read_text())
+        method=next(m for m in methods['methods'] if m['method']==self.method)
+        require('p7/complete_arguments',set(args)=={a['name'] for a in method['arguments']})
+        for arg in method['arguments']:
+            realm,ref=arg['realm'],arg['schema_ref'];value=args[arg['name']]
+            if realm=='consumer':
+                errors=self.rep.scoped.errors(realm,ref,value)
+                if errors:
+                    first=sorted(errors,key=lambda e:list(e.absolute_path))[0]
+                    raise A.AdapterRefusal('p7/argument/'+arg['name']+'/schema/'+'/'.join(map(str,first.absolute_path)))
+            elif realm in ('coordinator','producer'):
+                if realm=='coordinator':w.certified_world.realm.validate(realm,ref,value,'p7/'+arg['name'])
+                else:
+                    import pm_goal_dg_cf1_world as CF1
+                    CF1.rvalidate('OriginalStructuredValue',value,'p7/'+arg['name'])
+            else:
+                hint={'cancelled_goal_consumer':GOAL_REALM,'cancelled_filesafe_consumer':FILESAFE_REALM}.get(realm,CONSUMER_REALM)
+                w.roots.validate(hint,ref,value,'p7/'+arg['name'])
+        self.last_arguments=copy.deepcopy(args)
+        return args
 
     # -- current native sources ----------------------------------------------------
     def current_started(self, original, *, stage):
@@ -264,7 +327,7 @@ class LegacyConsumer(C2.Consumer):
         scope = self.request()['scope']
         stage = 'legacy_current_' + self.branch
         before = self.iw.storage.snapshot()['cell_generation']
-        with self.recorder.call(self.owner_id, METHODS[self.branch], dict(scope=scope)) as slot:
+        with self.recorder.call(self.owner_id, self.method, dict(scope=scope)) as slot:
             self.validate('ScopeRequest', self.request(), stage + '/request')
             self.disclosure(scope, stage=stage)
             opened = self.reopen(scope)
@@ -278,6 +341,7 @@ class LegacyConsumer(C2.Consumer):
                 private, snapshot = self.private_argument(None, readback, current_read)
             causes, effects = self.goal_causes(original)
             legacy = self.legacy_sources(original)
+            self.complete_arguments(opened,private,snapshot,goal,legacy,causes,effects)
             expected = self.record_of(original)
             try:
                 record = self.rep.decode(opened['row'], expected, opened['generation']['dataset_name'])
@@ -295,6 +359,7 @@ class LegacyConsumer(C2.Consumer):
             self.disclosure(scope, stage=stage + '_final')
             unavailable_if(stage + '/final_original', 'SOURCE_CHANGED', A.same(self.original(stage=stage + '_final'),
                                                                               original))
+            self.complete_arguments(again,private,snapshot,goal,legacy,causes,effects)
             if self.branch == 'started':
                 native2, goal2 = self.current_started(original, stage=stage + '_final')
                 unavailable_if(stage + '/final_current', 'SOURCE_CHANGED', A.same(native2, current_native) and
@@ -302,7 +367,7 @@ class LegacyConsumer(C2.Consumer):
                 out = dict(kind='native_verified_running_as_of_same_snapshot', original=original,
                            projection=opened['row'], checkpoint=opened['stored'], current_native=current_native,
                            action_authority='none')
-                self.validate('CurrentStartedOriginal', out, stage + '/result', original=False)
+                self.validate('CurrentStartedV7' if self.profile=='native_v7' else 'CurrentStartedOriginal', out, stage + '/result', original=False)
             else:
                 readback2, _read2, goal2 = self.current_cancelled(original, stage=stage + '_final')
                 owned = lambda rb, g: (  # noqa: E731  owner-set members only (filler is rebuilt per boundary)
@@ -320,11 +385,9 @@ class LegacyConsumer(C2.Consumer):
                 out = dict(kind='native_verified_cancelled_as_of_same_snapshot', original=original,
                            projection=opened['row'], checkpoint=opened['stored'], current_native=current_native,
                            action_authority='none')
-                self.validate('CurrentCancelledOriginal', out, stage + '/result', original=False)
+                self.validate('CurrentCancelledV7' if self.profile=='native_v7' else 'CurrentCancelledOriginal', out, stage + '/result', original=False)
             require(stage + '/passive', self.iw.storage.snapshot()['cell_generation'] == before)
             slot.set(dict(row=opened['row']['physical_key']))
-            self.last_arguments = dict(request=self.request(), legacy_sources=legacy, goal_causes=causes,
-                                       filesafe_effects=effects, original_0=private, original_1=goal)
             return out
 
     def read_historical(self):

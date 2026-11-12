@@ -102,7 +102,108 @@ class Index(O.WorldOwner):
         return next(x for x in whole['frames'] if x['event']['event_id']==event_id)
 
 
+class Writers(CN.WriterGraphOwner):
+    def enroll(self,scope):
+        super().enroll(scope)
+        # The predecessor used the batch inventory Origin's key with each
+        # individual registration operation id. Issue the individual original
+        # Origins before allocating any run, and select those exact operations.
+        self.registration_origins={}
+        inventory=self.world.value('TEST_ONLY:native_writer_inventory',self.inventory_key)
+        for row in inventory['writers']:
+            kind=row['component_kind'];reg=self.registrations[kind]
+            op=reg['native_original_registration_operation_id']
+            key,_=self.origin(scope,op,'writer_registration',
+                [N.d05_sel(self.world,'TEST_ONLY:native_writer_registration',row['key'])])
+            locator=N.origin_locator(self.world,'executor_safestop_origin',key,op)
+            self.registration_origins[kind]=locator
+            reg['original_registration_origin']=locator
+
+    def inventory(self):
+        out=super().inventory()
+        for kind,reg in out.items():
+            reg['original_registration_origin']=copy.deepcopy(self.registration_origins[kind])
+            self.world.roots.check('native',N.SS+'WriterRegistration',reg)
+        return out
+
+
 class Run(CN.RunOwner):
+    def allocate(self,rs,goal_scope,execution_owner_ref,execution_owner_epoch):
+        """Allocate the original four SafeStop records with resolvable origins.
+
+        Each record and its original Origin are one stamped transaction. The
+        record uses an operation locator, so the Origin can commit its complete
+        issued-record selector without a recursive digest.
+        """
+        w,n=self.world,self.world.native
+        require('run/writers_unenrolled',n.writers.enrolled)
+        compile_run=O.short_id('compile')
+        principal=n.writers.principal(self)
+        alloc_op=O.uid('TEST_ONLY:allocation-op')
+        identity=dict(storage_instance_id=w.storage_id,project_id=rs['project_id'],goal_id=rs['goal_id'],
+            plan_compile_run_id=compile_run,native_allocation_operation_id=alloc_op,
+            native_idempotency_key=O.uid('TEST_ONLY:allocation-key'),native_allocator=principal)
+
+        def publish(table,name,seed,operation,kind):
+            key=table+':'+O.uid('TEST_ONLY:key')
+            okey='executor_safestop_origin:'+O.uid('TEST_ONLY:key')
+            locator=dict(storage_instance_id=w.storage_id,family_id='executor_safestop_origin',
+                schema_id='pm.storage_value.executor_safestop_origin.v2',schema_version='2.0.0',
+                physical_key=okey,operation_id=operation,codec='messagepack_canonical')
+            record=self.make(N.SS+name,dict(seed,origin=locator))
+            whole=self.make(N.SS+name+'Physical',dict(storage_instance_id=w.storage_id,physical_key=key,value=record))
+            selection=dict(storage_instance_id=w.storage_id,family_id=table,schema_id=whole['schema_id'],
+                schema_version=whole['schema_version'],physical_key=key,physical_sha256=O.row_sha(whole),codec='messagepack_canonical')
+            boundary=n.writers.boundary(self,operation)
+            issued=self.clock.now()
+            result={}
+            def build(tx):
+                origin=self.make(N.SS+'Origin',dict(scope=rs,operation_id=operation,transaction_id=tx,
+                    sequence=1,previous_origin=None,native_boundary=boundary,write_kind=kind,
+                    issued_records=[selection],issued_at_utc=issued))
+                ow=self.make(N.SS+'OriginPhysical',dict(storage_instance_id=w.storage_id,physical_key=okey,value=origin))
+                result['origin']=ow
+                return [w.put(table,key,whole),w.put('executor_safestop_origin',okey,ow)]
+            w.storage.transact_stamped(build,writer=dict(owner_id=self.owner_id,owner_epoch=self.owner_epoch))
+            for family,k,value in ((table,key,whole),('executor_safestop_origin',okey,result['origin'])):
+                self._issue(None,value,kind=family,ref=family+'|'+k)
+            return key,record,selection,okey,result['origin']
+
+        with self.recorder.call(self.owner_id,'allocate_run') as slot:
+            akey,alloc,asel,okey,origin=publish('executor_safestop_reservation_allocation','ReservationAllocation',
+                dict(scope=rs,identity=identity,native_boundary=n.writers.boundary(self,alloc_op),
+                    original_goal_control_source=N.src_sel(w,w.goal.CONTROL,w.goal.keys(goal_scope)['control']),
+                    original_stop_source=N.src_sel(w,w.host_stop.FAMILY,w.host_stop.key(goal_scope)),allocated_at_utc=self.clock.now()),
+                alloc_op,'reservation_allocation')
+            bop=O.uid('TEST_ONLY:domain-birth-op');writers=n.writers.inventory()
+            bkey,birth,_,_,_=publish('executor_safestop_domain_birth','DomainBirth',dict(scope=rs,operation_id=bop,
+                native_boundary=n.writers.boundary(self,bop),registered_writers=[writers[k] for k in N.WriterGraphOwner.DOMAIN],
+                reservation_allocation=asel,native_allocation_identity=identity,born_at_utc=self.clock.now()),bop,'domain_enrollment')
+            cop=O.uid('TEST_ONLY:compile-join-op')
+            ckey,cjoin,csel,cokey,corigin=publish('executor_safestop_compile_reservation_join','CompileReservationJoin',
+                dict(scope=rs,allocation=asel,operation_id=cop),cop,'compile_reservation_join')
+            wop=O.uid('TEST_ONLY:workflow-join-op')
+            wkey,wjoin,_,wokey,worigin=publish('executor_safestop_workflow_reservation_join','WorkflowReservationJoin',
+                dict(scope=rs,allocation=asel,compile_join=csel,operation_id=wop),wop,'workflow_reservation_join')
+            lineage=self.make(N.SS+'ReservationLineage',dict(allocation=dict(allocation=alloc,allocation_source=asel,
+                allocation_origin=origin['value'],allocation_origin_source=N.d05_sel(w,'executor_safestop_origin',okey),
+                native_current_allocator=principal,native_original_allocation_operation_ref=alloc_op,
+                current_boundary=n.writers.boundary(self,alloc_op)),compile_join=cjoin,compile_join_source=csel,
+                compile_join_origin=corigin['value'],compile_join_origin_source=N.d05_sel(w,'executor_safestop_origin',cokey),
+                workflow_join=wjoin,workflow_join_source=N.d05_sel(w,'executor_safestop_workflow_reservation_join',wkey),
+                workflow_join_origin=worigin['value'],workflow_join_origin_source=N.d05_sel(w,'executor_safestop_origin',wokey)))
+            pkey='permission_snapshot_record:'+O.uid('TEST_ONLY:permission-snapshot')
+            permission=self.make('https://puppetmaster.local/schemas/storage_value/permission_snapshot_record/1.0.0/permission_snapshot_record.schema.json',
+                dict(project_id=rs['project_id'],run_id=rs['goal_run_id'],snapshot_id=O.uid('TEST_ONLY:permission-snapshot-id'),
+                    captured_at_utc=self.clock.now(),resolved_permissions={'workflow.cancel':None}))
+            self.store('permission_snapshot_record',pkey,permission)
+            run=dict(run_scope=rs,compile_run=compile_run,permission_key=pkey,execution_owner_ref=execution_owner_ref,
+                execution_owner_epoch=execution_owner_epoch,allocation_key=akey,birth_key=bkey,lineage=lineage,
+                revision=0,workgraph_id=O.short_id('workgraph'))
+            self.runs[rs['goal_run_id']]=run
+            slot.set(dict(run=rs['goal_run_id']))
+            return run
+
     def current(self,run):
         sw=self.world.bridge.sw
         native=sw.owners['native'].current()
@@ -153,6 +254,33 @@ class Route(C3.WorkflowCancel):
                                             self.world.native.run.owner_epoch])
         return out
 
+    def start_scope(self,value):
+        if value['kind']=='original_started':return value['value']['commit']['record']['scope']
+        require('int/c3/start_variant',value['kind']=='prestart')
+        return value['value']['d01_current']['scope']
+
+    def before_stop_native(self, method):
+        """BeforeStopNativeEntry: registrations checked against the exhaustive inventory and the domain birth."""
+        w, n = self.world, self.world.native
+        inventory = n.writers.inventory()
+        for kind in ('goal_stop', 'executor_cancel'):
+            require('C3/%s/native_writer_inventory' % method, kind in inventory)
+        src = self.native_sources()
+        birth = src['original_domain_birth']
+        for name, kind in (('registered_goal_terminal_writer', 'goal_stop'), ('registered_workflow_terminal_writer', 'executor_cancel')):
+            reg = src[name]
+            require('C3/%s/native_writer_inventory' % method, kind in inventory and same(inventory[kind], reg))
+            require('C3/%s/native_writer_domain' % method, any(same(r, reg) for r in birth['registered_writers']))
+            require('C3/%s/native_writer_principal' % method, reg['principal']['native_root_ref'] == n.writers.native_root
+                    and reg['principal']['native_host_boot_ref'] == w.storage.boot_session)
+        require('C3/%s/native_domain_allocation' % method, birth['reservation_allocation'] == src['reservation_lineage']['allocation']['allocation_source'])
+        require('C3/%s/native_run_scope' % method, birth['scope'] == self.wf_run['run_scope']
+                and self.start_scope(src['current_start']) == self.wf_run['run_scope'])
+        N.verify_custody(w, birth, 'C3/%s/native_custody' % method)
+        boundary = n.writers.boundary(w.goal, self.operation_id or 'pre-source')
+        entry = self.ncheck(N.NA + 'BeforeStopNativeEntry', dict(src, actual_original_goal_boundary=boundary))
+        return entry
+
     def owners_native(self, method):
         """OriginalOwnersNativeEntry acquired from the native owners now, every selector resolved, every join checked."""
         w, n = self.world, self.world.native
@@ -201,7 +329,7 @@ class Route(C3.WorkflowCancel):
             require('C3/%s/d06_mutation' % method, ev['event']['payload']['payload']['mutation_started'] is bool(settlements))
         else:
             require('C3/%s/d06_preserved' % method, result['preserved_status'] == body['record']['status'] and body['record']['status'] in N.TERMINAL)
-        require('C3/%s/current_start' % method, disposition['current_start']['value']['commit']['record']['scope'] == rs)
+        require('C3/%s/current_start' % method, self.start_scope(disposition['current_start'])==rs)
         return entry
 
     def native_selections(self,entry):
@@ -241,6 +369,7 @@ class Bridge:
         gs=self.route.scope
         sw.ctx.project_id,sw.ctx.goal_id,sw.ctx.thread_id=gs['project_id'],gs['goal_id'],gs['thread_id']
         n=self.world.native
+        n.writers.__class__=Writers
         n.run=Run(self.world)
         n.start=Start(self.world)
         n.d06=Disposition(self.world)

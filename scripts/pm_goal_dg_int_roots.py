@@ -38,6 +38,21 @@ class Roots(W.RootsV7):
         self._validators={}
         selection=json.loads((W.ROOT/SELECTION).read_text())
         self.selection=selection
+        # C3's complete Goal bank is retained as an isolated realm. Its v2
+        # control publication must never be validated in R2's older Goal bank.
+        if selection.get('retained_realms'):
+            from pm_goal_dg_ca_owners import Shared
+            c3=Shared.get().roots
+            for realm,row in selection['retained_realms'].items():
+                W.guard('int/realm/retained_selection',row==c3.selection_rows['goal'])
+                bank=c3.banks['goal']
+                W.guard('int/realm/retained_plain',not hasattr(bank,'imports'))
+                self.documents[realm]=bank.documents
+                self.registries[realm]=bank.registry
+                for uri,doc in bank.documents.items():
+                    whole,pointer=bank.resource_origins[uri]
+                    self._index(realm,whole,doc,pointer)
+                    self.realm_of_uri.setdefault(uri,[]).append(realm)
         remap=selection['uri_map']
         self.uri_map={k:remap.get(v,v) for k,v in base.uri_map.items()}
         self.uri_map.update(remap)
@@ -76,3 +91,9 @@ class Roots(W.RootsV7):
             resolved=roots.registries[to_realm].resolver(to_uri).lookup(to_uri+('#'+fragment if fragment else ''))
             yield from validator.descend(instance,resolved.contents,resolver=resolved.resolver)
         self.validator_class=jsonschema.validators.extend(W.Validator,{'$ref':routed_ref})
+
+    def realm_for(self,root,realm_hint=None):
+        if realm_hint=='c3_goal':
+            W.guard('int/realm/c3_goal_root',urldefrag(root)[0] in self.documents['c3_goal'])
+            return 'c3_goal'
+        return super().realm_for(root,realm_hint)

@@ -61,17 +61,7 @@ PROFILE_OF_DESCRIPTOR = {'workflow_start_original.v2': OLD}
 D05_CODEC = 'messagepack_canonical'
 
 
-def registered_records():
-    """Known records: the canonical event family registry (exact event type -> payload schema id),
-    plus the lane's TEST_ONLY producer types. CF3's own table lacks goal.cancelled and pins v3 ids for
-    goal_run.blocked/stopped/replanned where the registry has v2."""
-    registry = json.loads((W3.ROOT / 'Plans/event_family_registry.json').read_text())
-    out = {f['event_type']: f['payload_schema_id'] for f in registry['families']}
-    out.update({k: v for k, v in P3.REGISTERED.items() if k.startswith('goal_test.')})
-    return out
-
-
-REGISTERED = registered_records()
+REGISTERED, UNKNOWN_DISPOSITION = GS.event_family_registration()
 
 
 def v7_descriptor_profile():
@@ -110,7 +100,8 @@ def d05_selector(cells, value, sid, code):
 
 
 def realm_roots(profile):
-    return RW.RootsV7.get() if profile == V7 else RW.Roots.get()
+    from pm_goal_dg_int_roots import Roots
+    return Roots.get() if profile == V7 else RW.Roots.get()
 
 
 def validate_whole(profile, root, value, code):
@@ -245,6 +236,76 @@ def _cancel_record(state, row, scope, cells, sid, gaps, legacy):
     state['record'] = record
 
 
+def _certified_record(state,row,scope,cells,sid,gaps,originals,legacy):
+    """Reduce the actual whole v7 Release chain acquired in this snapshot."""
+    halt('reducer/second_terminal',state['terminal'] is None)
+    ev=row.event;custody=P3._common_original(row,ev)
+    matches=[o for o in originals if o['original_event']['event']['event_id']==ev['event_id']]
+    halt('certified/whole_original_missing',len(matches)==1)
+    original=matches[0]
+    P3.representation().validate('OriginalCertifiedSet',[original],original=True)
+    n=original['native'];event=original['original_event'];coord=n['coordinator']
+    halt('certified/whole_event',P3.exact(event['event'],ev) and P3.exact(event['exact_custody'],custody) and
+         P3.exact(event['first_append_receipt'],row.receipt))
+    sels={}
+    members=dict(native_result=n['native']['result'],native_origin=n['native']['origin'],
+        d01_update=n['d01']['original_update'],d01_head=n['d01']['original_head'],d01_origin=n['d01']['original_origin'],
+        standard_receipt=n['standard'],standard_capture_origin=n['standard_capture_origin'])
+    for name,value in members.items():
+        family,key,selection=stored(cells,value,sid,'certified/unstored/'+name)
+        sels[name]=selection
+        if name not in ('standard_receipt','standard_capture_origin'):
+            halt('certified/joint_transaction/'+name,cells[family][key]['tx']==coord['commit']['record']['transaction_id'])
+    for family,value in coord.items():
+        _,_,sels['coordinator_'+family]=stored(cells,value,sid,'certified/unstored/coordinator/'+family)
+    c=coord['commit']['record'];intent=coord['intent']['record'];release=coord['release']['record']
+    for name in ('native_result','native_origin','d01_update','d01_head','d01_origin'):
+        halt('certified/commit_selects/'+name,c[name]==dict(key=sels[name]['physical_key'],sha256=sels[name]['physical_value_sha256']))
+    halt('certified/released',coord['control']['record']['phase']=='released' and
+         release['commit']==dict(key=sels['coordinator_commit']['physical_key'],sha256=sels['coordinator_commit']['physical_value_sha256']))
+    upd=members['d01_update']['record'];before,after=upd['transition']['before'],upd['transition']['after']
+    halt('certified/native_transition',upd['cause']=='completion_certification' and
+         upd['transition']['rule']=='original_standard_certification' and before['status'] in ('provisional_success','verifying') and
+         after['status']=='certified' and after['body_revision']==before['body_revision']+1 and
+         after['activation_state']==before['activation_state']=='active' and
+         after['activation_revision']==before['activation_revision'])
+    halt('certified/payload_revisions',ev['payload']['expected_goal_run_revision']==before['body_revision'] and
+         ev['payload']['goal_run_revision']==after['body_revision'])
+    halt('certified/whole_native_origin',members['native_origin']['record']['result']==sels['native_result'] and
+         upd['original_owner_result']==sels['native_result'] and upd['original_owner_origin']==sels['native_origin'])
+    halt('certified/commit_native',before['body']['physical_value_sha256']==intent['native_before_body']['sha256'] and
+         after['body']['physical_value_sha256']==c['native_after_body']['sha256'])
+    if state['start'] is None:
+        survivors=[]
+        for retained in legacy['native_v7_starts']:
+            commit=retained['commit']['record']
+            seq=commit['first_append_receipt']['sequence_id']
+            covered=[g for g in gaps if g['first_sequence']<=seq<=g['last_sequence']]
+            if len(covered)==1 and seq<row.sequence_id:survivors.append((retained,seq))
+        halt('certified/whole_start_survivor_missing',len(survivors)==1)
+        retained,seq=survivors[0]
+        sels0={name:stored(cells,value,sid,'certified/survivor/unstored/'+name)[2] for name,value in retained.items()}
+        sc,so,cc,su,sh=(retained[name]['record'] for name in ('commit','origin','candidate','original_d01_update','original_d01_head'))
+        halt('certified/survivor/control',retained['control']['record']['committed_start']==sels0['commit'])
+        halt('certified/survivor/original_chain',sc['candidate']==so['candidate']==sels0['candidate'] and so['commit']==sels0['commit'] and
+             su['original_owner_result']==sels0['commit'] and su['original_owner_origin']==sels0['origin'])
+        halt('certified/survivor/whole_transition',su['transition']['before']['status']=='ready' and
+             su['transition']['after']['status']=='running' and su['transition']['after']['activation_state']=='active' and
+             su['transition']['after']['body_revision']==su['transition']['before']['body_revision']+1 and
+             cc['candidate_body']==sc['after_body']==sh['current_body']==su['after_body'])
+        state['start']=dict(sequence_id=seq,event_id=sc['event_id'],after=su['transition']['after'],commit=sels0['commit'],profile=V7)
+    halt('certified/causal_order',state['start']['sequence_id']<row.sequence_id and
+         state['start']['after']['body_revision']<=before['body_revision'])
+    record=dict(scope=copy.deepcopy(scope),status_at_original_event='certified',activation_at_original_event='active',
+        original_event=copy.deepcopy(ev),native_before_commitment=copy.deepcopy(before),native_after_commitment=copy.deepcopy(after),
+        original_event_value_commitment=copy.deepcopy(custody['original_event_value_commitment']),
+        producer_semantic_digest=custody['producer_semantic_digest'],first_append_receipt=copy.deepcopy(row.receipt),action_authority=False)
+    for name in ('native_result','native_origin','d01_update','d01_origin','d01_head','standard_receipt','standard_capture_origin',
+                 'coordinator_commit','coordinator_origin','coordinator_release'):record['original_'+name]=sels[name]
+    P3.representation().validate('CertifiedProjection',record,original=True)
+    state.update(terminal='certified',status='certified',record=record)
+
+
 def reduce_prefix(generic, scope, cells, *, limit=None, through=None):
     """CF3's bounded reducer with legacy started/cancelled rows admitted from whole sources."""
     P3.require('reduce/snapshot_type', isinstance(generic, P3.SourceSnapshot))
@@ -263,7 +324,7 @@ def reduce_prefix(generic, scope, cells, *, limit=None, through=None):
         try:
             halt('reducer/pending_custody', row.custody is not None)
             ev = row.event
-            halt('reducer/unregistered_record', REGISTERED.get(ev['event_type']) == ev['payload_schema_id'])
+            halt('reducer/unregistered_record', (ev['event_type'],ev['scope_kind'],ev['payload_schema_id']) in REGISTERED)
             payload = ev.get('payload') or {}
             inner = payload.get('payload') if isinstance(payload.get('payload'), dict) else {}
             run = ev['run_id'] if ev['run_id'] is not None else inner.get('goal_run_id')
@@ -275,7 +336,7 @@ def reduce_prefix(generic, scope, cells, *, limit=None, through=None):
                 elif ev['event_type'] == 'goal_run.cancelled':
                     _cancel_record(state, row, scope, cells, sid, generic.gaps, legacy)
                 else:
-                    P3._certified_record(state, row, scope, cells, sid, generic.gaps)
+                    _certified_record(state,row,scope,cells,sid,generic.gaps,getattr(generic,'certifications',[]),legacy)
         except Halt as error:
             stop = (error.code, row.position, row.event_id)
             break
@@ -303,17 +364,28 @@ def register(world):
 
 def acquire_legacy(world):
     """LegacyProjectionEvidence from the actual source owners (never a caller-supplied value)."""
-    sw = world.start_world
-    profile = V7 if getattr(world, 'edition', 'original_profile') == 'native_v7' else OLD
-    started = [SR.original_started(sw, where='legacy/started')]
+    sw = getattr(world,'start_world',None) or world.sw
+    profile = V7 if sw.edition.name=='native_v7' else OLD
+    no_start=getattr(world,'start_cause',{}).get('kind')=='original_initialized_no_start'
+    retained_start=[]
+    if no_start:started=[]
+    else:
+        retained=SR.retained_native(sw,where='legacy/retained_start')
+        event_id=retained['commit']['record']['event_id']
+        info=world.storage.events.get(event_id)
+        retired=info is not None and any(s['generation']==info['segment_generation'] and s['retired'] for s in world.storage.segments)
+        if retired:
+            started=[]
+            retained_start=[retained]
+        else:started=[SR.original_started(sw,where='legacy/started')]
     cancelled = []
     if getattr(world, 'cancellation', None) is not None:
         request = dict(scope={k: world.scope[k] for k in ('storage_instance_id', 'project_id', 'goal_id', 'goal_run_id')},
                        storage_instance_id=world.sid)
-        cancelled.append(RR.Consumer(world).inspect_original(request, RR.Presentation(world)))
+        cancelled.append(getattr(world,'consumer_class',RR.Consumer)(world).inspect_original(request, RR.Presentation(world)))
     edits = getattr(world, 'legacy_edits', None)
     value = dict(originals=[dict(profile=profile, started=started, cancelled=cancelled)],
-                 native_v7_starts=[copy.deepcopy(s['native_start']) for s in started] if profile == V7 else [],
+                 native_v7_starts=[copy.deepcopy(s['native_start']) for s in started]+retained_start if profile == V7 else [],
                  native_v7_cancellations=[copy.deepcopy(c['native_cancellation']) for c in cancelled]
                  if profile == V7 else [])
     if edits:
@@ -332,6 +404,17 @@ class LegacySources(P3.Sources):
         P3.representation().validate('LegacyProjectionEvidence', legacy, original=True)
         self.legacy = legacy
         self.generic.legacy = legacy
+        self.certifications=[]
+        native=getattr(world,'certified_world',world)
+        op=getattr(native,'certification_operation',None)
+        if op is not None:
+            from pm_goal_dg_int_certified_reader import Consumer
+            scope=native.coord_scope(native.scope)
+            self.certifications=[Consumer(native.registry,native).inspect_original(scope,op)['original_certified']]
+            P3.representation().validate('OriginalCertifiedSet',self.certifications,original=True)
+        self.generic.certifications=self.certifications
+        P3.require('sources/final_coordinated_snapshot',storage.cell_generation==self.cell_generation and
+            storage.read_token()==self.token)
 
 
 def _rebind(fn, **names):
@@ -371,4 +454,5 @@ class IntConsumer(P3.Consumer):
 
 
 def run_scope(world):
-    return {k: world.scope[k] for k in ('storage_instance_id', 'project_id', 'goal_id', 'goal_run_id')}
+    return dict(storage_instance_id=world.storage.storage_instance_id,
+                **{k:world.scope[k] for k in ('project_id','goal_id','goal_run_id')})

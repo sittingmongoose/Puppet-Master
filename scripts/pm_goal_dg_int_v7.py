@@ -508,7 +508,7 @@ class StartWorld(ST.StartWorld):
         og_owner = o['materialization:origins']
         h['original_origins'] = (og_owner.owner_id, og_owner.issue(None, list(self.integrated.source_origins.values()), kind='original_origins'))
         from pm_goal_dg_int_activation import bootstrap
-        bootstrap(self.integrated)
+        if self.integrated.bootstrap_activation:bootstrap(self.integrated)
         # 6. launch chain and D01 current source (after native birth)
         launch = o['launch']
         h['launch'] = (launch.owner_id, launch.issue_whole(
@@ -859,9 +859,10 @@ class World(F.World):
     """Whole native-v7 execution world shared by S2 and CF1/CF2/CF3."""
     def __init__(self, work, *, values=None, profile_kw=None, authentic_goal=True, **kw):
         self.work = Path(work)
+        self.bootstrap_activation=kw.get('bootstrap_activation',True)
         v = values or F.default_values()
         self.sw = StartWorld(self.work/'s2', SW.v7_edition(), project=v['project_id'], goal=v['goal_id'],
-                             run=v['goal_run_id'], thread=v['thread_id'])
+                             run=v['goal_run_id'],thread=v['thread_id'],segment_target_bytes=kw.get('segment_target_bytes',65536))
         sw = self.sw
         sw.storage.__class__ = Storage
         sw.storage._tx_handles = weakref.WeakKeyDictionary()
