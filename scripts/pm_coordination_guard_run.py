@@ -58,6 +58,13 @@ class Witnesses:
             self.found[phase][row] = defect
         return got
 
+    def add_all(self, phase, row, cases):
+        """One row, one single-defect witness per site: the row counts only when every site gives [row]."""
+        results = [(defect, unique(got)) for defect, got in cases]
+        if results and all(got == [row] for _defect, got in results):
+            self.found[phase][row] = "; ".join(defect for defect, _got in results)
+        return results
+
     def attempt(self, phase, defect, got):
         got = unique(got)
         if len(got) == 1 and got[0] not in self.found[phase]:
@@ -202,9 +209,13 @@ class Witnesses:
         core["retired_generations"][0]["checkpoint_core"]["project_id"] = "project_other"
         core["retired_generations"][0]["checkpoint_core"]["publication_id"] = "publication-retired-only"
         self.add("projection_value", "checkpoint_retired_core_other_key", "retired core project", c.projection_value_failures("checkpoint", core))
-        stamped = copy.deepcopy(file_row)
-        stamped["observed_at_utc"] = "2026-09-25T24:00:00Z"
-        self.add("projection_value", "projection_timestamp", "hour 24", c.projection_value_failures("file_projection", stamped))
+        # One hour-24 witness per projection timestamp site, each on its own positive with only that
+        # field changed (DCO-1: agent_terminal and agent_terminalApplicationV1 occurred_at_utc included).
+        cases = []
+        for _document, pointer, field, definition, case_id, path in c.PROJECTION_TIMESTAMP_INSTANCE_PROBES:
+            stamped = c.set_path(self.projections[case_id]["value"], path, "2026-09-25T24:00:00Z")
+            cases.append((f"hour 24 at {pointer.removeprefix('#/$defs/')}/{field}", c.projection_value_failures(definition, stamped)))
+        self.add_all("projection_value", "projection_timestamp", cases)
 
     def ledger(self):
         c = self.c
@@ -271,7 +282,13 @@ class Witnesses:
         check("replay_only_not_appendable", lambda r: r.update(replay_policy="projector_replay_only"))
         check("replay_policy", lambda r: r.update(replay_policy="append_once"))
         check("occurred_at_join", lambda r: r.update(occurred_at_utc="2026-01-02T03:04:05Z"))
-        check("envelope_occurred_at", lambda r: r.update(occurred_at_utc="2026-09-25T24:00:00Z"))
+        def occurred_hour_24(r):
+            # The payload family time carries the same value, so occurred_at_join holds and only the
+            # event_record check refuses (DCO-2: a stale payload copy masked the row).
+            r["occurred_at_utc"] = "2026-09-25T24:00:00Z"
+            r["payload"][c.FAMILY_TIME[r["event_type"]]] = "2026-09-25T24:00:00Z"
+
+        check("envelope_occurred_at", occurred_hour_24)
         check("envelope_storage_time", lambda r: r.update(observed_at_utc="2026-09-25T04:00:00+00:00"))
         check("unknown_event_type", lambda r: r.update(event_type="coordination.not_a_family"))
         check("identity_recipe", lambda r: r.update(event_id="evt_coordination_" + "ab" * 32))

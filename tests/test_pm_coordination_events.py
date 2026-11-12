@@ -121,7 +121,7 @@ class StaticReportTests(unittest.TestCase):
         self.assertEqual(counts, {
             "positive_payload_cases": 45, "negative_payload_cases": 69, "valid_event_cases": 7, "negative_event_cases": 32,
             "identity_vectors": 7, "path_vectors": 9, "transition_sequences": 24, "transition_steps": 91,
-            "positive_projection_cases": 11, "negative_projection_cases": 20, "native_oracles_not_run": 13})
+            "positive_projection_cases": 13, "negative_projection_cases": 24, "native_oracles_not_run": 13})
 
     def test_every_family_has_positive_negative_and_transition_cases(self):
         per_family = CHECK.fixture_report()["per_family"]
@@ -345,6 +345,86 @@ class ProjectionAndCheckpointTests(unittest.TestCase):
         current = PROJECTIONS["checkpoint_current"]["value"]
         token = dict(current["index_read_token"], redb_snapshot_id="snapshot_fixture_1")
         self.assertEqual(CHECK.projection_value_failures("checkpoint", dict(current, index_read_token=token)), ["schema"])
+
+
+class ProjectionTimestampTests(unittest.TestCase):
+    """DCO-1, DCO-2, DCO-N1 and DCO-N3 of the Opus recheck of sweep part 2B."""
+
+    BAD = ("2026-09-25T24:00:00Z", "2026-02-30T04:17:00Z", "2026-09-25T23:59:60Z", "2026-09-25T04:60:00Z", "2026-09-25T04:17:00Z\n")
+
+    def test_field_set_is_derived_from_the_timestamp_refs(self):
+        fields = CHECK.projection_time_fields()
+        self.assertIn("occurred_at_utc", fields)
+        self.assertEqual(fields, {field for _document, _pointer, field in CHECK.projection_timestamp_sites()})
+        self.assertIn((CHECK.PROJECTION_PATH, "#/$defs/agent_terminal", "occurred_at_utc"), CHECK.projection_timestamp_sites())
+        self.assertIn((CHECK.PROJECTION_PATH, "#/$defs/agent_terminalApplicationV1", "occurred_at_utc"), CHECK.projection_timestamp_sites())
+        listed = {probe[:3] for probe in CHECK.PROJECTION_TIMESTAMP_INSTANCE_PROBES} | set(CHECK.PROJECTION_TIMESTAMP_NODE_PROBES)
+        self.assertEqual(set(CHECK.projection_timestamp_sites()), listed)
+
+    def test_a_new_timestamp_ref_joins_the_set_and_fails_the_census(self):
+        with ScratchRoot(*SCHEMA_FILES, CHECK.FIXTURE_PATH, CHECK.APPLICATION_CONTRACTS_PATH) as root:
+            ScratchRoot.edit(root, CHECK.PROJECTION_PATH, lambda schema: schema["$defs"]["agent_terminal"]["properties"].update(
+                noticed_at_utc={"$ref": "#/$defs/timestamp"}))
+            self.assertIn("noticed_at_utc", CHECK.projection_time_fields(root))
+            census = CHECK.projection_timestamp_probe_failures(FIXTURES, ("2016-12-31T23:59:60Z",), self.BAD[:1], str, root)
+            self.assertIn("projection/census", {failure["case_id"] for failure in census})
+
+    def test_terminal_occurred_at_reaches_date_time(self):
+        crashed = PROJECTIONS["projection_agent_crashed"]["value"]
+        terminal = PROJECTIONS["projection_agent_terminal_application"]["value"]
+        self.assertEqual(CHECK.projection_value_failures("agent_projection", crashed), [])
+        self.assertEqual(CHECK.projection_value_failures("agent_terminalApplicationV1", terminal), [])
+        for value in self.BAD:
+            with self.subTest(value=value):
+                changed = copy.deepcopy(crashed)
+                changed["terminal"]["occurred_at_utc"] = value
+                self.assertEqual(CHECK.projection_value_failures("agent_projection", changed), ["projection_timestamp"])
+                self.assertEqual(CHECK.projection_value_failures("agent_terminalApplicationV1", dict(terminal, occurred_at_utc=value)),
+                                 ["projection_timestamp"])
+        changed = copy.deepcopy(crashed)
+        changed["terminal"]["occurred_at_utc"] = "2016-12-31T23:59:60Z"
+        self.assertEqual(CHECK.projection_value_failures("agent_projection", changed), [])
+
+    def test_str_subclass_is_refused_at_a_projection_field(self):
+        class Subclass(str):
+            pass
+
+        row = PROJECTIONS["projection_agent_running"]["value"]
+        self.assertEqual(CHECK.projection_value_failures("agent_projection", dict(row, started_at_utc=Subclass("2026-09-25T24:00:00Z"))),
+                         ["projection_timestamp"])
+        self.assertEqual(CHECK.projection_value_failures("agent_projection", dict(row, started_at_utc=Subclass(row["started_at_utc"]))),
+                         ["projection_timestamp"])
+
+    def test_every_projection_site_witness_flips_when_the_check_is_cut(self):
+        for _document, pointer, field, definition, case_id, path in CHECK.PROJECTION_TIMESTAMP_INSTANCE_PROBES:
+            stamped = CHECK.set_path(PROJECTIONS[case_id]["value"], path, "2026-09-25T24:00:00Z")
+            with self.subTest(site=pointer + "/" + field):
+                self.assertEqual(CHECK.projection_value_failures(definition, stamped), ["projection_timestamp"])
+                with patch.object(CHECK, "coordination_timestamp", lambda value: True):
+                    self.assertEqual(CHECK.projection_value_failures(definition, stamped), [])
+
+    def test_dropping_a_projection_field_is_caught_by_the_probes(self):
+        real = CHECK.projection_time_fields
+        for dropped in ({"updated_at_utc"}, {"first_observed_at_utc", "last_observed_at_utc"}, {"occurred_at_utc"}):
+            with self.subTest(dropped=sorted(dropped)), patch.object(CHECK, "projection_time_fields",
+                                                                      lambda root=CHECK.ROOT: real(root) - dropped):
+                self.assertTrue(CHECK.timestamp_profile_failures())
+
+    def test_envelope_occurred_at_witness_is_single_defect(self):
+        record = next(case["record"] for case in FIXTURES["valid_events"] if case["event_type"] == "coordination.agent_registered")
+        store, epoch = CONTEXT["storage_instance_id"], CONTEXT["recovery_epoch"]
+        hour = "2026-09-25T24:00:00Z"
+        joined = dict(record, occurred_at_utc=hour, payload=dict(record["payload"], started_at_utc=hour))
+        stale = dict(record, occurred_at_utc=hour)
+        self.assertEqual(CHECK.envelope_rejection(joined, store, epoch), "envelope_occurred_at")
+        real = CHECK.timestamp_accepted
+
+        def cut(value, profile):
+            return True if profile == CHECK.EVENT_RECORD else real(value, profile)
+
+        with patch.object(CHECK, "timestamp_accepted", cut):
+            self.assertIsNone(CHECK.envelope_rejection(joined, store, epoch))
+            self.assertEqual(CHECK.envelope_rejection(stale, store, epoch), "occurred_at_join")
 
 
 class LedgerTests(unittest.TestCase):

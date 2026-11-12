@@ -649,26 +649,79 @@ def _gate_projection(items: list[str]) -> list[str]:
     return [item for item in items if item in proved_names or item in entailed_names]
 
 
-# Projection copies of CV-353 timestamps. Null is the withdrawn_at_utc absence, not a timestamp.
-PROJECTION_TIME_FIELDS = TIMESTAMP_FIELDS + (
-    "first_observed_at_utc",
-    "last_observed_at_utc",
-    "updated_at_utc",
-    "withdrawn_at_utc",
-    "published_at_utc",
-)
+# Projection copies of CV-353 timestamps. The field set is derived from the schema, never listed by
+# hand: every property whose schema is a $ref to the projection document's timestamp or
+# timestampApplicationV1 definition, directly or as a oneOf/anyOf/allOf branch, in the projection
+# document and in the application-workflow definitions that its ApplicationV1 entries point to.
+# Null is the withdrawn_at_utc absence, not a timestamp.
+PROJECTION_TIMESTAMP_DEFS = ("timestamp", "timestampApplicationV1")
+APPLICATION_CONTRACTS_PATH = "Plans/application_workflow_contracts.schema.json"
+APPLICATION_CONTRACTS_URI = "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json"
 
 
-def projection_timestamp_bad(value: Any) -> bool:
-    """True when a string at a projection timestamp field misses coordination_utc_z."""
+def _projection_timestamp_node(node: Any, local: bool) -> bool:
+    """True when the property schema resolves to the projection timestamp definitions."""
+    if not isinstance(node, dict):
+        return False
+    ref = node.get("$ref")
+    if type(ref) is str:
+        target, marker, name = ref.partition("#/$defs/")
+        if marker and name in PROJECTION_TIMESTAMP_DEFS and (target == PROJECTION_SCHEMA_URI or (local and target == "")):
+            return True
+    for keyword in ("oneOf", "anyOf", "allOf"):
+        branches = node.get(keyword)
+        if isinstance(branches, list) and any(_projection_timestamp_node(branch, local) for branch in branches):
+            return True
+    return False
+
+
+def projection_timestamp_sites(root: Path = ROOT) -> list[tuple[str, str, str]]:
+    """Every (document, owning schema pointer, field) whose property schema is a projection timestamp."""
+    projection = load(PROJECTION_PATH, root)
+    sites: list[tuple[str, str, str]] = []
+
+    def walk(document: str, node: Any, pointer: str, local: bool) -> None:
+        if isinstance(node, dict):
+            properties = node.get("properties")
+            if isinstance(properties, dict):
+                for field, item in properties.items():
+                    if _projection_timestamp_node(item, local):
+                        sites.append((document, pointer, field))
+            for key, item in node.items():
+                walk(document, item, pointer + "/" + key.replace("~", "~0").replace("/", "~1"), local)
+        elif isinstance(node, list):
+            for index, item in enumerate(node):
+                walk(document, item, f"{pointer}/{index}", local)
+
+    walk(PROJECTION_PATH, projection, "#", True)
+    external = sorted({definition["$ref"].split("#/$defs/", 1)[1] for definition in projection.get("$defs", {}).values()
+                       if isinstance(definition, dict) and type(definition.get("$ref")) is str
+                       and definition["$ref"].startswith(APPLICATION_CONTRACTS_URI + "#/$defs/")})
+    if external:
+        application = load(APPLICATION_CONTRACTS_PATH, root).get("$defs", {})
+        for name in external:
+            walk(APPLICATION_CONTRACTS_PATH, application.get(name), "#/$defs/" + name, False)
+    return sites
+
+
+def projection_time_fields(root: Path = ROOT) -> frozenset[str]:
+    """The projection timestamp field names, derived from projection_timestamp_sites."""
+    return frozenset(field for _document, _pointer, field in projection_timestamp_sites(root))
+
+
+def projection_timestamp_bad(value: Any, fields: frozenset[str] | None = None) -> bool:
+    """True when a string at a projection timestamp field misses coordination_utc_z.
+
+    A str subclass is passed to date_time, which refuses it (date_time_type)."""
+    fields = projection_time_fields() if fields is None else fields
     if isinstance(value, dict):
         for key, item in value.items():
-            if key in PROJECTION_TIME_FIELDS and type(item) is str and not coordination_timestamp(item):
+            if key in fields and isinstance(item, str) and not coordination_timestamp(item):
                 return True
-            if isinstance(item, (dict, list)) and projection_timestamp_bad(item):
+            if isinstance(item, (dict, list)) and projection_timestamp_bad(item, fields):
                 return True
     elif isinstance(value, list):
-        return any(projection_timestamp_bad(item) for item in value)
+        return any(projection_timestamp_bad(item, fields) for item in value)
     return False
 
 
@@ -676,7 +729,7 @@ def projection_value_failures(definition: str, value: Any, root: Path = ROOT) ->
     if not projection_valid(definition, value, root):
         return _gate_projection(["schema"])
     failures: list[str] = []
-    if projection_timestamp_bad(value):
+    if projection_timestamp_bad(value, projection_time_fields(root)):
         failures.append("projection_timestamp")
     if definition == "checkpoint":
         failures.extend(checkpoint_failures(value))
@@ -1607,6 +1660,111 @@ def ats_oracle_failures(fixtures: dict[str, Any] | None = None, *, root: Path = 
     return _gate("ats", [{"error": "ats_native_oracle_not_named", "detail": missing}] if missing else [])
 
 
+# One probe per projection timestamp site (DCO-N3), written out here and checked against the schema
+# walk (projection_timestamp_sites), so a new site or a dropped field fails the census.
+# Instance probes run the whole projection check on a positive fixture with one field changed:
+# (document, owning schema pointer, field, definition, positive case, instance path).
+PROJECTION_TIMESTAMP_INSTANCE_PROBES = (
+    (PROJECTION_PATH, "#/$defs/agent_projection", "started_at_utc", "agent_projection", "projection_agent_running", ("started_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/agent_terminal", "occurred_at_utc", "agent_projection", "projection_agent_crashed", ("terminal", "occurred_at_utc")),
+    (PROJECTION_PATH, "#/$defs/agent_terminalApplicationV1", "occurred_at_utc", "agent_terminalApplicationV1",
+     "projection_agent_terminal_application", ("occurred_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/file_projection", "observed_at_utc", "file_projection", "projection_file_claim", ("observed_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/operation_projection", "first_observed_at_utc", "operation_projection", "projection_operation_latest",
+     ("first_observed_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/operation_projection", "last_observed_at_utc", "operation_projection", "projection_operation_latest",
+     ("last_observed_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint", "updated_at_utc", "checkpoint", "checkpoint_current", ("updated_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint", "published_at_utc", "checkpoint", "checkpoint_current", ("published_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint", "withdrawn_at_utc", "checkpoint", "checkpoint_withdrawn", ("withdrawn_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint/allOf/2/then", "withdrawn_at_utc", "checkpoint", "checkpoint_withdrawn", ("withdrawn_at_utc",)),
+    (PROJECTION_PATH, "#/$defs/checkpoint_core", "updated_at_utc", "checkpoint", "checkpoint_with_retired_generation",
+     ("retired_generations", 0, "checkpoint_core", "updated_at_utc")),
+    (PROJECTION_PATH, "#/$defs/checkpoint_core", "published_at_utc", "checkpoint", "checkpoint_with_retired_generation",
+     ("retired_generations", 0, "checkpoint_core", "published_at_utc")),
+    (PROJECTION_PATH, "#/$defs/checkpoint_core", "withdrawn_at_utc", "checkpoint", "checkpoint_with_retired_generation",
+     ("retired_generations", 0, "checkpoint_core", "withdrawn_at_utc")),
+    (PROJECTION_PATH, "#/$defs/checkpoint_core/allOf/2/then", "withdrawn_at_utc", "checkpoint", "checkpoint_with_retired_generation",
+     ("retired_generations", 0, "checkpoint_core", "withdrawn_at_utc")),
+)
+# These ApplicationV1 sites sit in definitions that need application_context or the
+# application-workflow document, which this offline registry does not resolve, so no instance
+# reaches them here. Each is probed as a node: its field is in the derived set and the string check
+# refuses what the owner pattern admits.
+PROJECTION_TIMESTAMP_NODE_PROBES = (
+    (PROJECTION_PATH, "#/$defs/checkpoint_coreApplicationV1", "updated_at_utc"),
+    (PROJECTION_PATH, "#/$defs/checkpoint_coreApplicationV1", "withdrawn_at_utc"),
+    (PROJECTION_PATH, "#/$defs/checkpoint_coreApplicationV1", "published_at_utc"),
+    (PROJECTION_PATH, "#/$defs/checkpoint_coreApplicationV1/allOf/2/then", "withdrawn_at_utc"),
+    (PROJECTION_PATH, "#/$defs/file_projectionApplicationV1", "observed_at_utc"),
+    (PROJECTION_PATH, "#/$defs/operation_projectionApplicationV1", "first_observed_at_utc"),
+    (PROJECTION_PATH, "#/$defs/operation_projectionApplicationV1", "last_observed_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationCheckpointApplicationV1", "updated_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationCheckpointApplicationV1", "withdrawn_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationCheckpointApplicationV1", "published_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationCheckpointApplicationV1/allOf/2/then", "withdrawn_at_utc"),
+    (APPLICATION_CONTRACTS_PATH, "#/$defs/CoordinationProjectionApplicationV1", "started_at_utc"),
+)
+
+
+def set_path(value: Any, path: tuple[Any, ...], item: Any) -> Any:
+    """A deep copy of value with the one leaf at path replaced."""
+    changed = copy.deepcopy(value)
+    node = changed
+    for step in path[:-1]:
+        node = node[step]
+    node[path[-1]] = item
+    return changed
+
+
+def projection_timestamp_probe_failures(fixtures: dict[str, Any], accepts: tuple[str, ...], refuses: tuple[str, ...],
+                                        subclass: type, root: Path = ROOT) -> list[dict[str, Any]]:
+    """The census and the per-site projection timestamp probes."""
+    failures: list[dict[str, Any]] = []
+
+    def fail(case_id: str, detail: Any) -> None:
+        failures.append({"error": "timestamp_profile", "case_id": case_id, "detail": detail})
+
+    listed = {probe[:3] for probe in PROJECTION_TIMESTAMP_INSTANCE_PROBES} | set(PROJECTION_TIMESTAMP_NODE_PROBES)
+    sites = set(projection_timestamp_sites(root))
+    if sites != listed:
+        fail("projection/census", {"unprobed": sorted(sites - listed), "not_in_schema": sorted(listed - sites)})
+    fields = projection_time_fields(root)
+    projection = load(PROJECTION_PATH, root)
+    for name in PROJECTION_TIMESTAMP_DEFS:
+        checker = Draft202012Validator(projection["$defs"][name])
+        if not all(checker.is_valid(value) for value in refuses):
+            fail(f"projection/{name}/pattern", "the owner pattern now refuses a form only date_time used to refuse")
+    positives = {case["case_id"]: case for case in fixtures["projection_values"]}
+    for document, pointer, field, definition, case_id, path in PROJECTION_TIMESTAMP_INSTANCE_PROBES:
+        site = f"projection/{pointer.removeprefix('#/$defs/')}/{field}"
+        base = positives.get(case_id)
+        if base is None or base["definition"] != definition or projection_value_failures(definition, base["value"], root):
+            fail(site + "/base", case_id)
+            continue
+        for value in refuses:
+            got = projection_value_failures(definition, set_path(base["value"], path, value), root)
+            if got != ["projection_timestamp"]:
+                fail(f"{site}/refuse/{value!r}", got)
+        for value in accepts:
+            got = projection_value_failures(definition, set_path(base["value"], path, value), root)
+            if got:
+                fail(f"{site}/accept/{value}", got)
+        got = projection_value_failures(definition, set_path(base["value"], path, subclass(accepts[0])), root)
+        if got != ["projection_timestamp"]:
+            fail(site + "/subclass", got)
+    for document, pointer, field in PROJECTION_TIMESTAMP_NODE_PROBES:
+        site = f"projection-node/{document}/{pointer.removeprefix('#/$defs/')}/{field}"
+        if field not in fields:
+            fail(site + "/field", sorted(fields))
+            continue
+        if not all(projection_timestamp_bad({field: value}, fields) for value in refuses):
+            fail(site + "/refuse", "the string check admitted a refused form")
+        if any(projection_timestamp_bad({field: value}, fields) for value in accepts):
+            fail(site + "/accept", "the string check refused an owner-valid form")
+    return failures
+
+
 def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     """The 15 payload date-time fields, their projection copies, and the envelope times.
 
@@ -1716,7 +1874,11 @@ def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     record = next(case["record"] for case in fixtures["valid_events"] if case["event_type"] == "coordination.agent_registered")
     context = fixtures["storage_context"]
     store, epoch = context["storage_instance_id"], context["recovery_epoch"]
-    hour = dict(record, occurred_at_utc="2026-09-25T24:00:00Z")
+    # The payload family time carries the same value, so the CV-353 rule 8 join holds and only the
+    # event_record check can refuse it (a stale copy would also fail occurred_at_join).
+    hour_value = "2026-09-25T24:00:00Z"
+    hour = dict(record, occurred_at_utc=hour_value,
+                payload=dict(record["payload"], **{FAMILY_TIME[record["event_type"]]: hour_value}))
     if envelope_rejection(hour, store, epoch) != "envelope_occurred_at":
         fail("envelope/hour-24", envelope_rejection(hour, store, epoch))
     offset = dict(record, observed_at_utc="2026-09-25T04:00:00+00:00")
@@ -1739,6 +1901,7 @@ def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         fail("projection/trailing-lf", "trailing LF was not the projection timestamp row")
     if projection_value_failures("file_projection", dict(file_row, observed_at_utc=leap), root):
         fail("projection/leap", "a legitimate leap second was refused")
+    failures.extend(projection_timestamp_probe_failures(fixtures, accepts, profile_refuses, _Subclass, root))
     retained_good = json.dumps({"started_at_utc": leap, "date_time_profile": "event_record"}).encode()
     retained_bad = json.dumps({"observed_at_utc": "2026-09-25T24:00:00Z", "date_time_profile": "event_record"}).encode()
     if not retained_record_verifies(retained_good) or retained_record_verifies(retained_bad) or not retained_override_refused():
@@ -1747,6 +1910,19 @@ def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
             "bad": retained_record_verifies(retained_bad),
             "override": retained_override_refused(),
         })
+    # The frozen verifier on a full EventRecord also checks the envelope times (DCO-N2).
+    whole = json.dumps(record).encode()
+    envelope_bad = {
+        "observed-offset": dict(record, observed_at_utc="2026-09-25T04:00:00+00:00"),
+        "persisted-hour-24": dict(record, persisted_at_utc="2026-09-25T24:00:00Z"),
+        "occurred-feb-30": dict(record, occurred_at_utc="2026-02-30T04:00:00Z"),
+        "occurred-missing": {key: item for key, item in record.items() if key != "occurred_at_utc"},
+    }
+    if not retained_record_verifies(whole):
+        fail("retained-envelope-good", "the valid fixture record did not verify")
+    for name, changed in envelope_bad.items():
+        if retained_record_verifies(json.dumps(changed).encode()):
+            fail("retained-envelope/" + name, "the frozen verifier accepted a bad envelope time")
     if not retained_retry_matches("coordination-sp320-string-array-v1", "ab" * 32, "ab" * 32):
         fail("retained-retry", "exact digest retry no longer resolves")
     if retained_retry_matches("forged-recipe", "ab" * 32, "ab" * 32):

@@ -11,7 +11,7 @@ import json
 import sys
 from typing import Any
 
-from pm_event_datetime import COORDINATION_UTC_Z, date_time
+from pm_event_datetime import COORDINATION_UTC_Z, EVENT_RECORD, STORAGE_UTC_Z, date_time
 from pm_event_numbers import (
     FrozenRecipe,
     OriginalBinding,
@@ -218,6 +218,13 @@ def timestamps_match_sealed_profile(record_bytes: bytes) -> bool:
         return False
     for field in TIMESTAMP_FIELDS:
         if field in payload and not coordination_timestamp(payload[field]):
+            return False
+    if payload is not value:
+        # A full EventRecord: CV-1101 keeps occurred_at_utc on event_record and the retained
+        # Storage fields on CV-253's storage_utc_z. Each is required on an envelope.
+        if not timestamp_accepted(value.get("occurred_at_utc"), EVENT_RECORD):
+            return False
+        if any(not timestamp_accepted(value.get(field), STORAGE_UTC_Z) for field in ("observed_at_utc", "persisted_at_utc")):
             return False
     return True
 
