@@ -821,11 +821,18 @@ def r5_cases():
          'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/cancel_without_native_cancellation'),
         ('second_start_event_same_run', knob(S0, pre_cancel_events=lambda w: off_run_event(w, 'goal_run.started', True)),
          'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/duplicate_start'),
-        ('pending_first_custody_off_run', knob(S0, pre_cancel_events=lambda w: off_run_event(w, pending=True)),
-         'unavailable/INCOMPLETE_GLOBAL_COVERAGE/project/pending_custody'),
     ]
     for name, cfg, expected in negatives:
         run_case(out, 'R5/' + name, 'R5', 'negative', projector_case(cfg, [must_unavailable(None)]), expected)
+
+    def pending_after_originals(w,p):
+        # C3 itself requires full original index custody. Introduce the
+        # incomplete global row only after its genuine originals are settled.
+        off_run_event(w,pending=True)
+        return must_unavailable(None)(w,p)
+    run_case(out,'R5/pending_first_custody_off_run','R5','negative',
+        projector_case(S0,[pending_after_originals]),
+        'unavailable/INCOMPLETE_GLOBAL_COVERAGE/project/pending_custody')
 
     def second_terminal(w, p):
         off_run_event(w, 'goal_run.cancelled', True)
