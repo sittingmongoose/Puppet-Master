@@ -3123,7 +3123,7 @@
       if (p && typeof p.pct === 'number') {
         D.usagePct = Math.round(p.pct);
         var pctEl = document.getElementById('pm6DashUsagePct');
-        if (pctEl) pctEl.textContent = D.usagePct + '%';
+        if (pctEl && pctEl.textContent !== D.usagePct + '%') pctEl.textContent = D.usagePct + '%';
       }
       if (sub && p && p.suggestion) sub.textContent = String(p.suggestion);
     }
