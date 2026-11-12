@@ -64,8 +64,8 @@ export default async function (t) {
 	}
 	const hz = await refreshRate(f);
 	const steps = [...seen.values()].sort((a, b) => a.t - b.t);
-	const { steady, slow, gpu, watched, unwatched, overSlow, longest, early, needless } = replayWatch(steps, hz);
-	t.log(`${look}: ${hz.toFixed(0)} Hz, steady bar ${steady.toFixed(0)} ms, slow bar ${slow.toFixed(0)} ms; ${steps.length} steps logged, ${gpu} GPU steps (${watched} watched, ${unwatched} not), ${overSlow} rows with an interval over the slow bar, longest certain run of steady watches ${longest}; queue ${JSON.stringify(state)}`);
+	const { steady, slow, gpu, watched, unwatched, overSlow, resets, longest, early, needless } = replayWatch(steps, hz);
+	t.log(`${look}: ${hz.toFixed(0)} Hz, steady bar ${steady.toFixed(0)} ms, slow bar ${slow.toFixed(0)} ms; ${steps.length} steps logged, ${gpu} GPU steps (${watched} watched, ${unwatched} not), ${overSlow} rows with an interval over the slow bar, ${resets} rows saying watchReset, longest certain run of steady watches ${longest}; queue ${JSON.stringify(state)}`);
 	const judged = gpu >= 40;
 	await t.check('the queue ran GPU steps here', judged, `${gpu} GPU steps in ${steps.length} logged steps${judged ? '' : ` (queue ${JSON.stringify(state)}): could not judge`}`);
 	if (!judged) return;

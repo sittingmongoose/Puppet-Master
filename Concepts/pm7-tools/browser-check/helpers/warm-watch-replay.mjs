@@ -8,12 +8,12 @@ export function replayWatch(steps, hz) {
 	const gap = 1000 / hz, steady = Math.max(STEADY_MS, 1.5 * gap), slow = Math.max(40, 3 * gap);
 	// hi and lo: the highest and the lowest value the product's counter can have here (see the header). Logged intervals
 	// are rounded to 1 ms, so a value within 1 ms of a bar counts for whichever side keeps the check from a false failure.
-	let hi = 0, lo = 0, longest = 0, gpu = 0, watched = 0, unwatched = 0, overSlow = 0;
+	let hi = 0, lo = 0, longest = 0, gpu = 0, watched = 0, unwatched = 0, overSlow = 0, resets = 0;
 	const early = [], needless = [];
 	for (const e of steps) {
 		// the product's own word that the counter went back to zero since the row before, by an interval no row shows (an
 		// admission frame, or a step the page's hiding left unjudged): it holds on any row, one without frameMs too
-		if (e.watchReset === true) { hi = 0; lo = 0; }
+		if (e.watchReset === true) { hi = 0; lo = 0; resets++; }
 		const fm = e.frameMs; if (!fm || !fm.length) continue;
 		const worst = Math.max(...fm);
 		if (worst > slow + 1) { hi = 0; lo = 0; overSlow++; if (e.watched === false) { gpu++; unwatched++; } else if (fm.length === 3) { gpu++; watched++; } continue; }
@@ -33,5 +33,5 @@ export function replayWatch(steps, hz) {
 		}
 		longest = Math.max(longest, lo);
 	}
-	return { steady, slow, gpu, watched, unwatched, overSlow, longest, early, needless };
+	return { steady, slow, gpu, watched, unwatched, overSlow, resets, longest, early, needless };
 }
