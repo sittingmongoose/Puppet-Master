@@ -764,7 +764,8 @@ class CancelWorld(IW.S1CancelWorld):
                 ('/d06_readback/safe_stop/scheduler_stop',ss['original_scheduler_stop'].selector()),
                 ('/d06_readback/safe_stop/inventory_cut',ss['original_inventory_cut'].selector()),
                 ('/current_start',self.current_start_full() if start is None else start)]
-            prefer=Prefer({'/d06_readback':RW.kind_choice(self.roots,'native_consumer','terminal_preserved')})
+            prefer=Prefer({'/d06_readback':lambda variants:next(i for i,v in enumerate(variants)
+                if 'ReadbackPreserved' in v.get('$ref',''))})
             value=self.build_current('native_consumer',RW.CP+'CurrentSuccessfulReadback',prefer,overlays,'readback_edit')
         value['d06_readback']['safe_stop']['whole_original_safe_stop']=self.successful_safe_stop()
         sw=self.start_world;families=ST.d01_families(sw.edition)
