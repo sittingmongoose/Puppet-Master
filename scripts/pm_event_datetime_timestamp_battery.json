@@ -1,0 +1,5224 @@
+{
+  "schema_id": "pm.datetime_timestamp_battery.v1",
+  "samples": [
+    {
+      "value": "2026-01-01T00:00:00Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234567Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345678Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456789Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-T",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234567z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345678z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456789z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-T",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234567+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345678+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456789+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-T",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234567-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345678-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456789-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-T",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234567+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345678+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456789+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-T",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234567-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345678-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456789-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-T",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234567+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345678+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456789+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-T",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.1234567-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.12345678-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01T00:00:00.123456789-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-T",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234567Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345678Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456789Z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-t",
+        "zone-Z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234567z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345678z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456789z",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-t",
+        "zone-z"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234567+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345678+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456789+00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-t",
+        "zone-+00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234567-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345678-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456789-00:00",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-t",
+        "zone--00:00"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234567+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345678+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456789+05:30",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-t",
+        "zone-+05:30"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234567-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345678-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456789-07:45",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-t",
+        "zone--07:45"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234567+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345678+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456789+23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-t",
+        "zone-+23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-0",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-1",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-2",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-3",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-4",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-5",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-6",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.1234567-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-7",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.12345678-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-8",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "2026-01-01t00:00:00.123456789-23:59",
+      "features": [
+        "CV-1101",
+        "RFC3339-5.6",
+        "fraction-9",
+        "separator-t",
+        "zone--23:59"
+      ]
+    },
+    {
+      "value": "0000-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-02-29T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0000-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0000"
+      ]
+    },
+    {
+      "value": "0001-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-02-28T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0001-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0001"
+      ]
+    },
+    {
+      "value": "0004-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-02-29T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0004-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0004"
+      ]
+    },
+    {
+      "value": "0099-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-02-28T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0099-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0099"
+      ]
+    },
+    {
+      "value": "0100-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-02-28T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0100-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0100"
+      ]
+    },
+    {
+      "value": "0400-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-02-29T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0400-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0400"
+      ]
+    },
+    {
+      "value": "0999-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-02-28T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "0999-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-0999"
+      ]
+    },
+    {
+      "value": "1600-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-02-29T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1600-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1600"
+      ]
+    },
+    {
+      "value": "1900-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-02-28T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1900-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1900"
+      ]
+    },
+    {
+      "value": "1972-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-02-29T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "1972-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-1972"
+      ]
+    },
+    {
+      "value": "2000-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-02-29T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2000-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2000"
+      ]
+    },
+    {
+      "value": "2024-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-02-29T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "2024-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-2024"
+      ]
+    },
+    {
+      "value": "9996-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-02-29T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9996-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9996"
+      ]
+    },
+    {
+      "value": "9999-01-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-01-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-02-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-02-28T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-04-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-04-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-06-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-06-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-09-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-09-30T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-12-01T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "9999-12-31T23:59:59Z",
+      "features": [
+        "RFC3339-5.7",
+        "calendar-limit",
+        "year-9999"
+      ]
+    },
+    {
+      "value": "0017-01-01T00:00:00Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7936-02-18T01:07:11Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5855-03-04T02:14:22Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3774-04-22T03:21:33Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1693-05-07T04:28:44Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9612-06-26T05:35:55Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7531-07-10T06:42:06Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5450-08-27T07:49:17Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3369-09-17T08:56:28Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1288-10-30T09:03:39Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9207-11-21T10:10:50Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7126-12-02T11:17:01Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5045-01-19T12:24:12Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2964-02-19T13:31:23Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0883-03-22T14:38:34Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8802-04-16T15:45:45Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6721-05-25T16:52:56Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4640-06-20T17:59:07Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2559-07-28T18:06:18Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0478-08-14T19:13:29Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8397-09-11T20:20:40Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6316-10-17T21:27:51Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4235-11-15T22:34:02Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2154-12-20T23:41:13Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0073-01-06T00:48:24Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7992-02-20T01:55:35Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5911-03-09T02:02:46Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3830-04-10T03:09:57Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1749-05-12T04:16:08Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9668-06-14T05:23:19Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7587-07-15T06:30:30Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5506-08-01T07:37:41Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3425-09-05T08:44:52Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1344-10-04T09:51:03Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9263-11-09T10:58:14Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7182-12-07T11:05:25Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5101-01-24T12:12:36Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3020-02-21T13:19:47Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0939-03-27T14:26:58Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8858-04-04T15:33:09Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6777-05-30T16:40:20Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4696-06-08T17:47:31Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2615-07-02T18:54:42Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0534-08-19T19:01:53Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8453-09-29T20:08:04Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6372-10-22T21:15:15Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4291-11-03T22:22:26Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2210-12-25T23:29:37Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0129-01-11T00:36:48Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8048-02-22T01:43:59Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5967-03-14T02:50:10Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3886-04-28T03:57:21Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1805-05-17T04:04:32Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9724-06-02T05:11:43Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7643-07-20T06:18:54Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5562-08-06T07:25:05Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3481-09-23T08:32:16Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1400-10-09T09:39:27Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9319-11-27T10:46:38Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7238-12-12T11:53:49Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5157-01-29T12:00:00Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3076-02-23T13:07:11Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0995-03-01T14:14:22Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8914-04-22T15:21:33Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6833-05-04T16:28:44Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4752-06-26T17:35:55Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2671-07-07T18:42:06Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0590-08-24T19:49:17Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8509-09-17T20:56:28Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6428-10-27T21:03:39Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4347-11-21T22:10:50Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2266-12-30T23:17:01Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0185-01-16T00:24:12Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8104-02-24T01:31:23Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6023-03-19T02:38:34Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3942-04-16T03:45:45Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1861-05-22T04:52:56Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9780-06-20T05:59:07Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7699-07-25T06:06:18Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5618-08-11T07:13:29Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3537-09-11T08:20:40Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1456-10-14T09:27:51Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9375-11-15T10:34:02Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7294-12-17T11:41:13Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5213-01-03T12:48:24Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3132-02-25T13:55:35Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1051-03-06T14:02:46Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8970-04-10T15:09:57Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6889-05-09T16:16:08Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4808-06-14T17:23:19Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2727-07-12T18:30:30Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0646-08-29T19:37:41Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8565-09-05T20:44:52Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6484-10-01T21:51:03Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4403-11-09T22:58:14Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2322-12-04T23:05:25Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0241-01-21T00:12:36Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8160-02-26T01:19:47Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6079-03-24T02:26:58Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3998-04-04T03:33:09Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1917-05-27T04:40:20Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9836-06-08T05:47:31Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7755-07-30T06:54:42Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5674-08-16T07:01:53Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3593-09-29T08:08:04Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1512-10-19T09:15:15Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9431-11-03T10:22:26Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7350-12-22T11:29:37Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5269-01-08T12:36:48Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3188-02-27T13:43:59Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1107-03-11T14:50:10Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9026-04-28T15:57:21Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6945-05-14T16:04:32Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4864-06-02T17:11:43Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2783-07-17T18:18:54Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0702-08-03T19:25:05Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8621-09-23T20:32:16Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6540-10-06T21:39:27Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4459-11-27T22:46:38Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2378-12-09T23:53:49Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0297-01-26T00:00:00Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8216-02-28T01:07:11Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6135-03-29T02:14:22Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4054-04-22T03:21:33Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1973-05-01T04:28:44Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9892-06-26T05:35:55Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7811-07-04T06:42:06Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5730-08-21T07:49:17Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3649-09-17T08:56:28Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1568-10-24T09:03:39Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9487-11-21T10:10:50Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7406-12-27T11:17:01Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5325-01-13T12:24:12Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3244-02-29T13:31:23Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1163-03-16T14:38:34Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9082-04-16T15:45:45Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7001-05-19T16:52:56Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4920-06-20T17:59:07Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2839-07-22T18:06:18Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0758-08-08T19:13:29Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8677-09-11T20:20:40Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6596-10-11T21:27:51Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4515-11-15T22:34:02Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2434-12-14T23:41:13Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0353-01-31T00:48:24Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8272-02-01T01:55:35Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6191-03-03T02:02:46Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4110-04-10T03:09:57Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2029-05-06T04:16:08Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9948-06-14T05:23:19Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7867-07-09T06:30:30Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5786-08-26T07:37:41Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3705-09-05T08:44:52Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1624-10-29T09:51:03Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9543-11-09T10:58:14Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7462-12-01T11:05:25Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5381-01-18T12:12:36Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3300-02-10T13:19:47Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1219-03-21T14:26:58Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9138-04-04T15:33:09Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7057-05-24T16:40:20Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4976-06-08T17:47:31Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2895-07-27T18:54:42Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0814-08-13T19:01:53Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8733-09-29T20:08:04Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6652-10-16T21:15:15Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4571-11-03T22:22:26Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2490-12-19T23:29:37Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0409-01-05T00:36:48Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8328-02-03T01:43:59Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6247-03-08T02:50:10Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4166-04-28T03:57:21Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2085-05-11T04:04:32Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0004-06-02T05:11:43Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7923-07-14T06:18:54Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5842-08-31T07:25:05Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3761-09-23T08:32:16Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1680-10-03T09:39:27Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9599-11-27T10:46:38Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7518-12-06T11:53:49Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5437-01-23T12:00:00Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3356-02-04T13:07:11Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1275-03-26T14:14:22Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9194-04-22T15:21:33Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7113-05-29T16:28:44Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5032-06-26T17:35:55Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2951-07-01T18:42:06Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0870-08-18T19:49:17Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8789-09-17T20:56:28Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6708-10-21T21:03:39Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4627-11-21T22:10:50Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2546-12-24T23:17:01Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0465-01-10T00:24:12Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8384-02-05T01:31:23Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6303-03-13T02:38:34Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4222-04-16T03:45:45Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2141-05-16T04:52:56Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0060-06-20T05:59:07Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7979-07-19T06:06:18Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5898-08-05T07:13:29Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3817-09-11T08:20:40Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1736-10-08T09:27:51Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9655-11-15T10:34:02Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7574-12-11T11:41:13Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5493-01-28T12:48:24Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3412-02-06T13:55:35Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1331-03-31T14:02:46Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9250-04-10T15:09:57Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7169-05-03T16:16:08Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5088-06-14T17:23:19Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3007-07-06T18:30:30Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0926-08-23T19:37:41Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8845-09-05T20:44:52Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6764-10-26T21:51:03Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4683-11-09T22:58:14Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2602-12-29T23:05:25Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0521-01-15T00:12:36Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8440-02-07T01:19:47Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6359-03-18T02:26:58Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4278-04-04T03:33:09Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2197-05-21T04:40:20Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0116-06-08T05:47:31Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8035-07-24T06:54:42Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5954-08-10T07:01:53Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3873-09-29T08:08:04Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1792-10-13T09:15:15Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9711-11-03T10:22:26Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7630-12-16T11:29:37Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5549-01-02T12:36:48Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3468-02-08T13:43:59Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1387-03-05T14:50:10Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9306-04-28T15:57:21Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7225-05-08T16:04:32Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5144-06-02T17:11:43Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3063-07-11T18:18:54Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0982-08-28T19:25:05Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8901-09-23T20:32:16Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6820-10-31T21:39:27Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4739-11-27T22:46:38Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2658-12-03T23:53:49Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0577-01-20T00:00:00Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8496-02-09T01:07:11Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6415-03-23T02:14:22Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4334-04-22T03:21:33Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2253-05-26T04:28:44Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0172-06-26T05:35:55Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8091-07-29T06:42:06Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6010-08-15T07:49:17Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3929-09-17T08:56:28Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1848-10-18T09:03:39Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9767-11-21T10:10:50Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7686-12-21T11:17:01Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5605-01-07T12:24:12Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3524-02-10T13:31:23Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1443-03-10T14:38:34Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9362-04-16T15:45:45Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7281-05-13T16:52:56Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5200-06-20T17:59:07Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3119-07-16T18:06:18Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1038-08-02T19:13:29Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8957-09-11T20:20:40Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6876-10-05T21:27:51Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4795-11-15T22:34:02Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2714-12-08T23:41:13Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0633-01-25T00:48:24Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8552-02-11T01:55:35Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6471-03-28T02:02:46Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4390-04-10T03:09:57Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2309-05-31T04:16:08Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0228-06-14T05:23:19Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8147-07-03T06:30:30Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6066-08-20T07:37:41Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3985-09-05T08:44:52Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1904-10-23T09:51:03Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9823-11-09T10:58:14Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7742-12-26T11:05:25Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5661-01-12T12:12:36Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3580-02-12T13:19:47Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1499-03-15T14:26:58Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9418-04-04T15:33:09Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7337-05-18T16:40:20Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5256-06-08T17:47:31Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3175-07-21T18:54:42Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1094-08-07T19:01:53Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9013-09-29T20:08:04Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6932-10-10T21:15:15Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4851-11-03T22:22:26Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2770-12-13T23:29:37Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0689-01-30T00:36:48Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8608-02-13T01:43:59Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6527-03-02T02:50:10Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4446-04-28T03:57:21Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2365-05-05T04:04:32Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0284-06-02T05:11:43Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8203-07-08T06:18:54Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6122-08-25T07:25:05Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4041-09-23T08:32:16Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1960-10-28T09:39:27Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9879-11-27T10:46:38Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7798-12-31T11:53:49Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5717-01-17T12:00:00Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3636-02-14T13:07:11Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1555-03-20T14:14:22Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9474-04-22T15:21:33Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "7393-05-23T16:28:44Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "5312-06-26T17:35:55Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "3231-07-26T18:42:06Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "1150-08-12T19:49:17Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "9069-09-17T20:56:28Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6988-10-15T21:03:39Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4907-11-21T22:10:50Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2826-12-18T23:17:01Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0745-01-04T00:24:12Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8664-02-15T01:31:23Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6583-03-07T02:38:34Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "4502-04-16T03:45:45Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2421-05-10T04:52:56Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "0340-06-20T05:59:07Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "8259-07-13T06:06:18Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "6178-08-30T07:13:29Z",
+      "features": [
+        "RFC3339-5.6",
+        "date-range-spread"
+      ]
+    },
+    {
+      "value": "2016-12-31T23:59:60Z",
+      "features": [
+        "RFC3339-5.7",
+        "real-leap-second"
+      ]
+    },
+    {
+      "value": "2016-12-31t23:59:60z",
+      "features": [
+        "RFC3339-5.7",
+        "real-leap-second"
+      ]
+    },
+    {
+      "value": "2017-01-01T05:29:60+05:30",
+      "features": [
+        "RFC3339-5.7",
+        "real-leap-second"
+      ]
+    },
+    {
+      "value": "2016-12-31T16:59:60-07:00",
+      "features": [
+        "RFC3339-5.7",
+        "real-leap-second"
+      ]
+    },
+    {
+      "value": "1972-06-30T23:59:60.123456789Z",
+      "features": [
+        "RFC3339-5.7",
+        "real-leap-second"
+      ]
+    }
+  ]
+}
