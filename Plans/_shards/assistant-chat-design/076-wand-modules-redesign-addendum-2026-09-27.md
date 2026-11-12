@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27352-L28040
+Source lines: L27424-L28118
 
-Source SHA256: `b39d1daa693597934798f516954a3d30119aec7651d4624c976f58531d26c7e4`
+Source SHA256: `36ea80200c6dac9bf1e131cf96b14ec8bda8d154a122d7ad9d9fa493cc727c1b`
 
 ---
 
@@ -292,20 +292,26 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Each automatic or explicit naming of a thread is one ThreadTitleAttempt {thread_id, attempt_id,
-  requested_route, effective_route?, outcome, title?, at} with outcome pending | named | policy_off | route_unavailable | awaiting_first_message | user_locked. thread.title_locked is set by a manual
-  rename and cleared only by cmd.chat.thread.regenerate_title (ACD-462); while it is set, automatic
-  naming records user_locked and changes nothing. An unavailable title model records
-  route_unavailable and is never silently replaced by another model. The chat header's title shows
-  the attempt's state without pills: New chat with a naming shimmer while pending, the title once
-  named, a lock glyph while title_locked is set, and a warning glyph when naming is unavailable,
-  each with a hover that says why. A failure never opens a modal. The header is a source surface of
-  cmd.chat.thread.regenerate_title (chat_header) beside the thread menu, where the regenerate
-  action sits directly under Rename and is disabled with its reason when the policy is off or the
-  model is unavailable. The naming outcome reads as a plain sentence per outcome (naming, named,
-  not named because automatic naming is off, could not name because the model is unavailable,
-  waiting for the first message, kept the user's name). The command's visible label, in the thread
-  menu and in the header's hovers, is Name it for me; it replaces the catalog label Regenerate Title
-  (DL-134), and the command id is unchanged.
+  requested_route, effective_route?, outcome, title?, at} with outcome pending | named | policy_off |
+  route_unavailable | awaiting_first_message | user_locked. thread.title_locked is set by a manual rename
+  and cleared only by cmd.chat.thread.regenerate_title (ACD-462); while it is set, automatic naming
+  records user_locked and changes nothing. An unavailable title model records route_unavailable and is
+  never silently replaced by another model. The chat header's title shows the attempt's state without
+  pills: New chat with a naming shimmer while pending, the title once named, a lock glyph while
+  title_locked is set, and a warning glyph when naming is unavailable, each with a hover that says why. A
+  failure never opens a modal. The header is a source surface of cmd.chat.thread.regenerate_title
+  (chat_header) beside the thread menu, where the regenerate action sits directly under Rename and is
+  disabled with its reason when the policy is off or the model is unavailable. The naming outcome reads
+  as a plain sentence per outcome (naming, named, not named because automatic naming is off, could not
+  name because the model is unavailable, waiting for the first message, kept the user's name). The
+  command's visible label, in the thread menu and in the header's hovers, is Name it for me; it replaces
+  the catalog label Regenerate Title (DL-134), and the command id is unchanged. The naming row lives in
+  Settings > Models > Default models. Default resolves the smallest allowed runnable model when a naming
+  attempt is created; None displays Off and produces policy_off. An explicit model and its optional
+  proven depth use the shared picker, including WL4 B validation of typed names before saving. The
+  resolved requested route is then frozen, so an unavailable title model still records route_unavailable
+  and is never silently substituted. Manual title locks, first-message-only naming and no-modal failure
+  remain unchanged.
 gui_related: true
 gui_classification_reason: "Defines the chat title record and the header title states."
 split_recommended: false

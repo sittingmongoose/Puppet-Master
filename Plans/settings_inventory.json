@@ -1,7 +1,7 @@
 {
   "$schema": "Plans/settings_inventory.schema.json",
   "schema_id": "pm.settings_inventory.v1",
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "generated_at_utc": "2026-10-16T00:28:48Z",
   "owner_doc": "Plans/FinalGUISpec.md",
   "owner_plan_unit": "F3-441",
@@ -49,12 +49,30 @@
     "memory.notebook.auto-capture",
     "memory.notebook.resume-capsule",
     "memory.notebook.capsule-budget-tokens",
-    "memory.notebook.injection-budget-tokens"
+    "memory.notebook.injection-budget-tokens",
+    "ai.models.default-variant",
+    "personas.tuning.default-variant",
+    "ai.models.goal-worker-model",
+    "ai.models.goal-verifier-model",
+    "ai.models.lane-bindings",
+    "ai.models.role-policy",
+    "ai.models.per-lane-platform",
+    "ai.models.per-lane-model",
+    "ai.models.execution-role",
+    "ai.models.resolution-policy",
+    "ai.models.reasoning-effort",
+    "ai.models.subagent-model",
+    "ai.models.subagent-effort",
+    "personas.tuning.default-model",
+    "personas.tuning.default-platform",
+    "personas.tuning.reasoning-effort",
+    "extensions.commands.command-model",
+    "media.image.provider"
   ],
   "provenance": {
     "source_path": "Concepts/pm6-build/sidecar/pm_settings_data.json",
     "source_sha256": "9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d",
-    "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. The live census is the unique IDs in settings, including later owner-approved additions; dated admission counts are historical."
+    "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. The live census is the unique IDs in settings, including later owner-approved additions; dated admission counts are historical. Settings batch 3 retires 18 model-related rows and admits five; census is derived from unique live settings IDs. Compatibility inputs are not rows or new writer authority."
   },
   "related_features_vocabulary": [
     "assistant_memory",
@@ -6158,6 +6176,7 @@
       "options": [
         "overseer",
         "worker",
+        "low-effort-worker",
         "gui-worker",
         "high-effort-worker",
         "auditor",
@@ -6190,6 +6209,55 @@
           "device": "set_inside_a_thing",
           "project": "set_inside_a_thing"
         }
+      }
+    },
+    {
+      "id":
+        "ai.accounts.default-model",
+      "label":
+        "This account's default model",
+      "desc":
+        "Model and thinking depth for runs you send to this account yourself, when no earlier choice names a model. Automatic account switching ignores it.",
+      "type": "model_picker",
+      "options": [
+        "inherit"
+      ],
+      "default": "inherit",
+      "scope": [
+        "account"
+      ],
+      "tier": "simple",
+      "search": [
+        "account default model",
+        "account effort",
+        "Use for the next run"
+      ],
+      "related_features": [
+        "models"
+      ],
+      "layering": {
+        "home": "thing",
+        "may_differ_by": [],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "everywhere": "set_inside_a_thing",
+          "computer": "set_inside_a_thing",
+          "device": "set_inside_a_thing",
+          "project": "set_inside_a_thing"
+        }
+      },
+      "option_labels": {
+        "inherit": "Use the normal defaults list"
+      },
+      "model_picker": {
+        "catalog": "account",
+        "inherit_from": "normal_defaults",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
       }
     },
     {
@@ -6505,22 +6573,18 @@
         "Everyday model",
       "desc":
         "For chat, planning and research when nothing more specific is chosen.",
-      "type": "select",
-      "options": [
-        "anthropic/claude-sonnet-4",
-        "anthropic/claude-opus-4",
-        "openai/gpt-5",
-        "gemini/gemini-2.5-pro"
-      ],
-      "default": "anthropic/claude-sonnet-4",
+      "type": "model_picker",
+      "options": [],
+      "default": {
+        "provider_entry_id": "anthropic",
+        "model_id": "anthropic/claude-sonnet-4",
+        "effort": null
+      },
       "scope": [
         "global",
-        "project",
-        "persona",
-        "run"
+        "project"
       ],
       "tier": "simple",
-      "recommended": "anthropic/claude-sonnet-4",
       "curated": true,
       "search": [
         "default model",
@@ -6537,16 +6601,25 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "factory",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -6628,14 +6701,11 @@
         "Planning and supervising",
       "desc":
         "Turns plans into work and supervises runs.",
-      "type": "select",
+      "type": "model_picker",
       "options": [
-        "(Default)",
-        "anthropic/claude-opus-4",
-        "anthropic/claude-sonnet-4",
-        "openai/gpt-5"
+        "inherit"
       ],
-      "default": "(Default)",
+      "default": "inherit",
       "scope": [
         "global",
         "project"
@@ -6647,7 +6717,7 @@
         "prd builder",
         "supervision",
         "seam split merge",
-        "six model controls",
+        "seven model controls",
         "Overseer Model"
       ],
       "related_features": [
@@ -6657,16 +6727,28 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "ai.models.default-model",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "option_labels": {
+        "inherit": "Same as Everyday model"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -6675,14 +6757,11 @@
         "Everyday building",
       "desc":
         "The day-to-day building. A mid-range model keeps costs down.",
-      "type": "select",
+      "type": "model_picker",
       "options": [
-        "(Default)",
-        "anthropic/claude-sonnet-4",
-        "openai/gpt-5",
-        "gemini/gemini-2.5-pro"
+        "inherit"
       ],
-      "default": "(Default)",
+      "default": "inherit",
       "scope": [
         "global",
         "project"
@@ -6692,7 +6771,7 @@
         "worker",
         "worknode",
         "implementation",
-        "six model controls",
+        "seven model controls",
         "Worker Model"
       ],
       "related_features": [
@@ -6702,16 +6781,83 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "ai.models.default-model",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "option_labels": {
+        "inherit": "Same as Everyday model"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
+    },
+    {
+      "id":
+        "ai.models.low-effort-worker-model",
+      "label":
+        "Easy, routine jobs",
+      "desc":
+        "Small, low-risk building work that needs no design or review. Left alone, uses Everyday building and its thinking depth.",
+      "type": "model_picker",
+      "options": [
+        "inherit"
+      ],
+      "default": "inherit",
+      "scope": [
+        "global",
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "easy",
+        "routine",
+        "mechanical",
+        "low effort worker",
+        "low_cost_executor",
+        "Low-Effort Worker Model"
+      ],
+      "related_features": [
+        "models"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen"
+        }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "ai.models.worker-model",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "option_labels": {
+        "inherit": "Same as Everyday building"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -6720,14 +6866,11 @@
         "Design and layout",
       "desc":
         "Screens, layout and look. Pick one with good taste.",
-      "type": "select",
+      "type": "model_picker",
       "options": [
-        "(Default)",
-        "anthropic/claude-sonnet-4",
-        "openai/gpt-5",
-        "gemini/gemini-2.5-pro"
+        "inherit"
       ],
-      "default": "(Default)",
+      "default": "inherit",
       "scope": [
         "global",
         "project"
@@ -6738,7 +6881,7 @@
         "frontend worker",
         "ux",
         "layout",
-        "six model controls",
+        "seven model controls",
         "Design & Layout Model"
       ],
       "related_features": [
@@ -6748,16 +6891,28 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "ai.models.default-model",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "option_labels": {
+        "inherit": "Same as Everyday model"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -6766,13 +6921,11 @@
         "The hardest jobs",
       "desc":
         "Big changes across the project and risky reasoning.",
-      "type": "select",
+      "type": "model_picker",
       "options": [
-        "(Default)",
-        "anthropic/claude-opus-4",
-        "openai/gpt-5"
+        "inherit"
       ],
-      "default": "(Default)",
+      "default": "inherit",
       "scope": [
         "global",
         "project"
@@ -6782,7 +6935,7 @@
         "high-effort worker",
         "repo-wide",
         "high risk",
-        "six model controls",
+        "seven model controls",
         "Heavy-Lifting Model"
       ],
       "related_features": [
@@ -6792,16 +6945,28 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "ai.models.default-model",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "option_labels": {
+        "inherit": "Same as Everyday model"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -6810,20 +6975,16 @@
         "Checking finished work",
       "desc":
         "Checks finished work until it passes or is truly stuck.",
-      "type": "select",
+      "type": "model_picker",
       "options": [
-        "(Default)",
-        "anthropic/claude-opus-4",
-        "anthropic/claude-sonnet-4",
-        "openai/gpt-5"
+        "inherit"
       ],
-      "default": "(Default)",
+      "default": "inherit",
       "scope": [
         "global",
         "project"
       ],
       "tier": "simple",
-      "recommended": "(Default)",
       "search": [
         "auditor",
         "audit repair loop",
@@ -6831,7 +6992,7 @@
         "validation model",
         "certification",
         "quality gates",
-        "six model controls",
+        "seven model controls",
         "Auditor Model"
       ],
       "related_features": [
@@ -6841,117 +7002,28 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
-    },
-    {
-      "id":
-        "ai.models.default-variant",
-      "label":
-        "Speed or power",
-      "desc":
-        "Faster and cheaper, or slower and smarter, without changing the model.",
-      "type": "select",
-      "options": [
-        "default",
-        "fast",
-        "powerful",
-        "custom"
-      ],
-      "default": "default",
-      "scope": [
-        "global",
-        "project",
-        "persona",
-        "run"
-      ],
-      "tier": "simple",
-      "search": [
-        "variant",
-        "balanced",
-        "preset",
-        "cycling",
-        "model variant",
-        "Speed vs Power Preset"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.reasoning-effort",
-      "label":
-        "Thinking depth",
-      "desc":
-        "Deeper is smarter but slower and costs more.",
-      "type": "select",
-      "options": [
-        "auto",
-        "off",
-        "low",
-        "medium",
-        "high"
-      ],
-      "default": "medium",
-      "scope": [
-        "global",
-        "project",
-        "persona",
-        "run"
-      ],
-      "tier": "simple",
-      "recommended": "medium",
-      "search": [
-        "reasoning effort",
-        "thinking",
-        "extended thinking",
-        "auto default alternative",
-        "honored skipped clamped",
-        "off auto on"
-      ],
-      "badges": [
-        "adjudication"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "ai.models.default-model",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "option_labels": {
+        "inherit": "Same as Everyday model"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -6959,14 +7031,12 @@
       "label":
         "Explaining things to you",
       "desc":
-        "Answers \"explain this to me\". A cheaper model is fine.",
-      "type": "select",
+        "Starts on the smallest allowed model available. If no small model is available, keep explaining and disclose the effective fallback and why before it runs; never silently choose a costly or high-effort model.",
+      "type": "model_picker",
       "options": [
-        "(Default)",
-        "anthropic/claude-haiku-4",
-        "gemini/gemini-2.5-flash"
+        "Default"
       ],
-      "default": "anthropic/claude-haiku-4",
+      "default": "Default",
       "scope": [
         "global",
         "project"
@@ -6987,16 +7057,28 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "smallest_available",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "option_labels": {
+        "Default": "Smallest model available"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -7032,395 +7114,6 @@
         "atomic_group": null,
         "not_offered": {
           "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.goal-worker-model",
-      "label":
-        "Goals: doing the work",
-      "desc":
-        "Runs autonomous Goals.",
-      "type": "select",
-      "options": [
-        "(Default)",
-        "anthropic/claude-sonnet-4",
-        "openai/gpt-5"
-      ],
-      "default": "(Default)",
-      "scope": [
-        "global",
-        "project",
-        "run"
-      ],
-      "tier": "advanced",
-      "search": [
-        "goal mode",
-        "goal runtime",
-        "worker",
-        "Goal Mode Worker Model"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.goal-verifier-model",
-      "label":
-        "Goals: checking the work",
-      "desc":
-        "Checks Goal results. Kept apart from the worker.",
-      "type": "select",
-      "options": [
-        "(Default)",
-        "anthropic/claude-opus-4",
-        "openai/gpt-5"
-      ],
-      "default": "(Default)",
-      "scope": [
-        "global",
-        "project",
-        "run"
-      ],
-      "tier": "advanced",
-      "search": [
-        "verifier",
-        "adjudicator",
-        "certification level",
-        "goal mode configuration",
-        "blocks not warns",
-        "Goal Mode Checker Model"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.lane-bindings",
-      "label":
-        "Work lanes",
-      "desc":
-        "Pin each work lane (cheap executor, reviewer, orchestrator, verifier, adjudicator, certifier) to a provider, account, and model.",
-      "type": "select",
-      "options": [
-        "low_cost_executor",
-        "standard_reviewer",
-        "high_reasoning_orchestrator",
-        "verifier",
-        "adjudicator",
-        "certifier"
-      ],
-      "default": "unconfigured",
-      "scope": [
-        "project"
-      ],
-      "tier": "advanced",
-      "search": [
-        "capability lanes",
-        "lane bindings",
-        "unconfigured-lane",
-        "goalrun",
-        "Capability Lane Assignments"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.role-policy",
-      "label":
-        "Role rules",
-      "desc":
-        "Advanced mapping of roles (worker default, planner, evaluator) and provider capability-level defaults, stored apart from the pickers above.",
-      "type": "keyvalue",
-      "default": "",
-      "scope": [
-        "global",
-        "project",
-        "provider"
-      ],
-      "tier": "advanced",
-      "search": [
-        "worker role policy",
-        "role default level",
-        "planner",
-        "evaluator",
-        "deferred",
-        "Role Model Policy"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.subagent-model",
-      "label":
-        "Helper agents",
-      "desc":
-        "Never bigger than the agent that started it.",
-      "type": "select",
-      "options": [
-        "(Inherit)",
-        "anthropic/claude-haiku-4",
-        "anthropic/claude-sonnet-4"
-      ],
-      "default": "(Inherit)",
-      "scope": [
-        "run"
-      ],
-      "tier": "advanced",
-      "search": [
-        "subagent",
-        "child agent",
-        "execution contract",
-        "receipt",
-        "Helper Agent Model"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.subagent-effort",
-      "label":
-        "Helper agents' thinking depth",
-      "desc":
-        "How hard each helper thinks.",
-      "type": "select",
-      "options": [
-        "low",
-        "standard",
-        "high"
-      ],
-      "default": "standard",
-      "scope": [
-        "run"
-      ],
-      "tier": "advanced",
-      "search": [
-        "subagent reasoning effort",
-        "result envelope",
-        "Helper Agent Thinking Depth"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.per-lane-platform",
-      "label":
-        "Service for each lane",
-      "desc":
-        "Choose a different AI platform for each work lane — seams, packages, lanes, and nodes can each run somewhere else.",
-      "type": "select",
-      "options": [
-        "Claude Code",
-        "Cursor",
-        "Gemini Direct",
-        "Antigravity CLI",
-        "OpenCode"
-      ],
-      "option_labels": {
-        "Claude Code": "Claude",
-        "Gemini Direct": "Gemini API",
-        "Antigravity CLI": "Google Antigravity",
-        "OpenCode": "OpenCode on your computer"
-      },
-      "default": "",
-      "scope": [
-        "project"
-      ],
-      "tier": "advanced",
-      "search": [
-        "per-lane platform",
-        "seam package node iteration",
-        "lane",
-        "seam",
-        "package",
-        "node",
-        "Per-Lane AI Platform"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.per-lane-model",
-      "label":
-        "Model for each lane",
-      "desc":
-        "An exact model name for one kind of work, written the way its service writes it. Blank uses the lane's service default.",
-      "type": "text",
-      "default": "",
-      "scope": [
-        "project"
-      ],
-      "tier": "advanced",
-      "search": [
-        "per-lane model",
-        "lane model",
-        "platform-specific format",
-        "Per-Lane Model Names"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.execution-role",
-      "label":
-        "Role for one run",
-      "desc":
-        "Which role a run acts as (assistant, interview, orchestrator...). Recorded into attempt and usage history.",
-      "type": "select",
-      "options": [
-        "assistant",
-        "interview",
-        "orchestrator",
-        "worker",
-        "auditor"
-      ],
-      "default": "",
-      "scope": [
-        "run"
-      ],
-      "tier": "advanced",
-      "search": [
-        "requested execution role",
-        "actor role",
-        "usage records",
-        "Run Execution Role"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
         }
       }
     },
@@ -7484,50 +7177,6 @@
         "auto fallback",
         "unavailable",
         "Fall Back When Provider Is Down"
-      ],
-      "related_features": [
-        "models"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "ai.models.resolution-policy",
-      "label":
-        "How boldly to pick models",
-      "desc":
-        "Careful never guesses; bold chases the cheapest or fastest.",
-      "type": "select",
-      "options": [
-        "conservative",
-        "standard",
-        "aggressive"
-      ],
-      "default": "standard",
-      "scope": [
-        "global",
-        "project"
-      ],
-      "tier": "advanced",
-      "recommended": "standard",
-      "search": [
-        "settings resolution policy",
-        "auto-select",
-        "cheapest fastest",
-        "Auto-Pick Aggressiveness"
       ],
       "related_features": [
         "models"
@@ -26081,7 +25730,7 @@
       "label":
         "Default lineup",
       "desc":
-        "Personas in a new crew, in order.",
+        "Personas in a new crew, in order. Models and depth come from the defaults list and may be changed on each invocation sheet; no per-member default model is stored here.",
       "type": "list",
       "default": [],
       "scope": [
@@ -27042,97 +26691,29 @@
     },
     {
       "id":
-        "media.image.provider",
+        "media.image.model",
       "label":
-        "Service that makes pictures",
+        "Making pictures",
       "desc":
-        "Only services you are signed in to can be chosen.",
-      "type": "select",
+        "One concrete picture model and route. Choose from allowed generated-image routes when pictures are enabled; no text-only model is offered as an image engine.",
+      "type": "model_picker",
       "options": [
-        "None",
-        "OpenAI gpt-image-2",
-        "OpenAI Responses image_generation",
-        "OpenAI/Codex subscription",
-        "MiniMax Image-01",
-        "Gemini Direct",
-        "Antigravity gemini-3.1-flash-image"
+        "None"
       ],
       "option_labels": {
-        "None": "No service",
-        "OpenAI/Codex subscription": "ChatGPT / Codex plan",
-        "OpenAI gpt-image-2": "GPT Image 2 with an OpenAI API key",
-        "OpenAI Responses image_generation": "Pictures inside OpenAI replies",
-        "Gemini Direct": "Gemini API",
-        "Antigravity gemini-3.1-flash-image": "Google Antigravity"
+        "None": "Choose a model"
       },
       "default": "None",
       "scope": [
         "global",
-        "project",
-        "persona"
-      ],
-      "tier": "simple",
-      "recommended": "OpenAI gpt-image-2",
-      "curated": true,
-      "search": [
-        "image engine",
-        "provider",
-        "gpt-image-2",
-        "minimax",
-        "gemini",
-        "antigravity",
-        "route",
-        "capability-gated",
-        "default gpt-image-2 alternative",
-        "Image Generation Service"
-      ],
-      "badges": [
-        "adjudication"
-      ],
-      "related_features": [
-        "media_generation"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "media.image.model",
-      "label":
-        "Model for each ability",
-      "desc":
-        "Each ability's Uses row picks it. The service's default model is the usual choice.",
-      "type": "select",
-      "options": [
-        "Service default",
-        "Per-task override"
-      ],
-      "option_labels": {
-        "Service default": "The service's default model",
-        "Per-task override": "A model I choose per ability"
-      },
-      "default": "Service default",
-      "scope": [
-        "global"
+        "project"
       ],
       "tier": "simple",
       "search": [
         "media model",
         "model registry",
         "per-task model",
-        "Model Per Media Task"
+        "Model Per Media Task", "Model for each ability"
       ],
       "related_features": [
         "media_generation"
@@ -27141,16 +26722,189 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "image",
+        "inherit_from": "none",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": [
+          "media.capabilities.master"
+        ]
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
+    },
+    {
+      "id":
+        "media.capabilities.video-model",
+      "label":
+        "Making videos",
+      "desc":
+        "Choose an allowed video model and its route. No model is selected until you pick one.",
+      "type": "model_picker",
+      "options": [
+        "None"
+      ],
+      "option_labels": {
+        "None": "Choose a model"
+      },
+      "default": "None",
+      "scope": [
+        "global",
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "video model",
+        "Making videos"
+      ],
+      "related_features": [
+        "media_generation"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen"
+        }
+      },
+      "model_picker": {
+        "catalog": "video",
+        "inherit_from": "none",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": [
+          "media.capabilities.master",
+          "media.capabilities.video"
+        ]
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
+    },
+    {
+      "id":
+        "media.capabilities.tts-model",
+      "label":
+        "Reading text aloud",
+      "desc":
+        "Choose an allowed tts model and its route. No model is selected until you pick one.",
+      "type": "model_picker",
+      "options": [
+        "None"
+      ],
+      "option_labels": {
+        "None": "Choose a model"
+      },
+      "default": "None",
+      "scope": [
+        "global",
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "tts model",
+        "Reading text aloud"
+      ],
+      "related_features": [
+        "media_generation"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen"
+        }
+      },
+      "model_picker": {
+        "catalog": "tts",
+        "inherit_from": "none",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": [
+          "media.capabilities.master",
+          "media.capabilities.tts"
+        ]
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
+    },
+    {
+      "id":
+        "media.capabilities.music-model",
+      "label":
+        "Making music and sounds",
+      "desc":
+        "Choose an allowed music model and its route. No model is selected until you pick one.",
+      "type": "model_picker",
+      "options": [
+        "None"
+      ],
+      "option_labels": {
+        "None": "Choose a model"
+      },
+      "default": "None",
+      "scope": [
+        "global",
+        "project"
+      ],
+      "tier": "simple",
+      "search": [
+        "music model",
+        "Making music and sounds"
+      ],
+      "related_features": [
+        "media_generation"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen"
+        }
+      },
+      "model_picker": {
+        "catalog": "music",
+        "inherit_from": "none",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": [
+          "media.capabilities.master",
+          "media.capabilities.music"
+        ]
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -27441,17 +27195,15 @@
       "id":
         "media.io.vision-fallback-model",
       "label":
-        "Backup for looking at pictures",
+        "Reading pictures",
       "desc":
-        "Which model steps in when your usual vision model is down or unavailable. 'Auto' picks the best available one for you.",
-      "type": "select",
+        "First model tried when the working model cannot see. Automatic chooses an eligible vision route. A further fallback is automatic only where policy permits and is always disclosed; no separate backup is saved.",
+      "type": "model_picker",
       "options": [
-        "auto",
-        "choose a specific model"
+        "auto"
       ],
       "option_labels": {
-        "auto": "The best one available",
-        "choose a specific model": "Models I pick"
+        "auto": "Automatic: an allowed model that can see"
       },
       "default": "auto",
       "scope": [
@@ -27464,7 +27216,7 @@
         "vision bridge fallback",
         "non-vision model",
         "failover",
-        "Backup Model for Images"
+        "Backup Model for Images", "Backup for looking at pictures"
       ],
       "related_features": [
         "media_generation"
@@ -27473,16 +27225,25 @@
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "vision",
+        "inherit_from": "automatic_vision",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability. A legacy auto remains Automatic. A former explicit backup model is compatibility-read only with a review notice; never reinterpret it silently as the new first choice."
     },
     {
       "id":
@@ -31239,51 +31000,6 @@
     },
     {
       "id":
-        "personas.tuning.default-model",
-      "label":
-        "Preferred model",
-      "desc":
-        "The AI model this character uses when active. Leave empty to inherit whatever the project or app already picked.",
-      "type": "select",
-      "options": [
-        "inherit",
-        "available models"
-      ],
-      "option_labels": {
-        "inherit": "Same as the project"
-      },
-      "default": "inherit",
-      "scope": [
-        "persona"
-      ],
-      "tier": "simple",
-      "recommended": "inherit",
-      "search": [
-        "per-persona model",
-        "provider_id",
-        "model_id",
-        "precedence chain",
-        "Persona's Preferred Model"
-      ],
-      "related_features": [
-        "personas"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
         "personas.tuning.response-style",
       "label":
         "Answer style",
@@ -31554,98 +31270,6 @@
     },
     {
       "id":
-        "personas.tuning.default-platform",
-      "label":
-        "Preferred AI service",
-      "desc":
-        "Which AI service this character prefers, like Claude, Gemini Direct, or Antigravity CLI. Leave empty to inherit.",
-      "type": "select",
-      "options": [
-        "inherit",
-        "configured providers"
-      ],
-      "option_labels": {
-        "inherit": "Same as the project"
-      },
-      "default": "inherit",
-      "scope": [
-        "persona"
-      ],
-      "tier": "advanced",
-      "search": [
-        "platform",
-        "provider",
-        "Gemini Direct",
-        "Antigravity CLI",
-        "backend",
-        "Persona's Preferred Provider"
-      ],
-      "related_features": [
-        "personas"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
-        "personas.tuning.default-variant",
-      "label":
-        "Faster or smarter edition",
-      "desc":
-        "Prefer the fast or the powerful edition of the chosen model family. Leave empty to inherit.",
-      "type": "select",
-      "options": [
-        "inherit",
-        "fast",
-        "powerful"
-      ],
-      "option_labels": {
-        "inherit": "Same as the project",
-        "fast": "Faster",
-        "powerful": "Smarter"
-      },
-      "default": "inherit",
-      "scope": [
-        "persona"
-      ],
-      "tier": "advanced",
-      "search": [
-        "variant",
-        "fast",
-        "powerful",
-        "model level",
-        "Persona's Speed vs Power"
-      ],
-      "related_features": [
-        "personas"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
         "personas.tuning.temperature",
       "label":
         "Creativity",
@@ -31697,57 +31321,6 @@
         "top-p",
         "top_p",
         "nucleus sampling"
-      ],
-      "related_features": [
-        "personas"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
-        "personas.tuning.reasoning-effort",
-      "label":
-        "Thinking effort",
-      "desc":
-        "How hard this character thinks before answering. More effort means smarter answers but slower and pricier runs.",
-      "type": "select",
-      "options": [
-        "inherit",
-        "minimal",
-        "low",
-        "medium",
-        "high"
-      ],
-      "option_labels": {
-        "inherit": "Same as the project",
-        "minimal": "Minimal",
-        "low": "Low",
-        "medium": "Medium",
-        "high": "High"
-      },
-      "default": "inherit",
-      "scope": [
-        "persona"
-      ],
-      "tier": "advanced",
-      "recommended": "inherit",
-      "search": [
-        "reasoning effort",
-        "extended thinking",
-        "effort",
-        "precedence chain"
       ],
       "related_features": [
         "personas"
@@ -33962,50 +33535,6 @@
         "autonomy",
         "per-command",
         "Command Freedom Level"
-      ],
-      "related_features": [
-        "mcp",
-        "plugins"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
-        "extensions.commands.command-model",
-      "label":
-        "Model",
-      "desc":
-        "Make a specific command always use a particular AI model instead of whatever the current chat is using.",
-      "type": "select",
-      "options": [
-        "Inherit",
-        "Choose model..."
-      ],
-      "option_labels": {
-        "Inherit": "Same as the chat"
-      },
-      "default": "Inherit",
-      "scope": [
-        "global",
-        "project"
-      ],
-      "tier": "advanced",
-      "search": [
-        "model override",
-        "per-command model",
-        "Command Model Override"
       ],
       "related_features": [
         "mcp",
@@ -36486,18 +36015,18 @@
       "id":
         "ai.models.thread-title-model",
       "label":
-        "Name new chats",
+        "Naming new chats",
       "desc":
-        "Choose automatic naming, no automatic name, or a model. A name uses the first message only; renaming the chat yourself keeps your name.",
-      "type": "select",
+        "Use the smallest available model, turn naming Off, or choose a model and depth. Names use only the first message and preserve manual title locks; an unavailable frozen naming model is never replaced silently.",
+      "type": "model_picker",
       "options": [
         "Default",
-        "None",
-        "<available model id>"
+        "None"
       ],
       "default": "Default",
       "scope": [
-        "global"
+        "global",
+        "project"
       ],
       "tier": "simple",
       "recommended": "Default",
@@ -36512,22 +36041,35 @@
         "thread",
         "title",
         "Chat Title Model",
-        "Naming chats"
+        "Naming chats", "Name new chats"
       ],
       "layering": {
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "smallest_available",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "option_labels": {
+        "Default": "Smallest model available",
+        "None": "Off"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -38153,17 +37695,16 @@
       "id":
         "safety.approvals.bsd-model",
       "label":
-        "Model it uses",
+        "Back Seat Driver",
       "desc":
-        "Its usage is shown separately from your main work.",
-      "type": "select",
-      "default": "Default",
+        "Uses Checking finished work and its depth unless chosen here; its chat sheet may override one chat. Usage remains separate.",
+      "type": "model_picker",
+      "default": "inherit",
       "scope": [
         "global",
         "project"
       ],
       "tier": "advanced",
-      "recommended": "Default",
       "related_features": [
         "assistant-redesign",
         "back-seat-driver"
@@ -38173,22 +37714,37 @@
         "assistant.bsd.model",
         "bsd",
         "model",
-        "Adviser Model"
+        "Adviser Model", "Model it uses"
       ],
       "layering": {
         "home": "everywhere",
         "may_differ_by": [
           "everywhere",
-          "computer",
           "project"
         ],
-        "computer_key": "server",
+        "computer_key": null,
         "combine": "most_specific",
         "atomic_group": null,
         "not_offered": {
+          "computer": "same_for_you",
           "device": "not_about_the_screen"
         }
-      }
+      },
+      "model_picker": {
+        "catalog": "live",
+        "inherit_from": "ai.models.auditor-model",
+        "allow_exact_name": true,
+        "validate_before_save": "small_call",
+        "effort": "inside_picker",
+        "requires_enabled": []
+      },
+      "options": [
+        "inherit"
+      ],
+      "option_labels": {
+        "inherit": "Same as Checking finished work"
+      },
+      "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
     },
     {
       "id":
@@ -41190,5 +40746,357 @@
         }
       }
     }
-  ]
+  ],
+  "compatibility_reads": {
+    "ai.models.default-variant": {
+      "replacement_ids": [],
+      "read_rule": "Old preset defaults are inert; choose a preset as an explicit run choice or set the shared model row.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Speed or power",
+      "search": [
+        "variant",
+        "balanced",
+        "preset",
+        "cycling",
+        "model variant",
+        "Speed vs Power Preset"
+      ]
+    },
+    "personas.tuning.default-variant": {
+      "replacement_ids": [],
+      "read_rule": "Read old Persona default_variant as inert source data; no Persona preset selection or shared-default migration.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Faster or smarter edition",
+      "search": [
+        "variant",
+        "fast",
+        "powerful",
+        "model level",
+        "Persona's Speed vs Power"
+      ]
+    },
+    "ai.models.goal-worker-model": {
+      "replacement_ids": [],
+      "read_rule": "Read only for historical inspection; Goal uses its ordinary chat model.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Goals: doing the work",
+      "search": [
+        "goal mode",
+        "goal runtime",
+        "worker",
+        "Goal Mode Worker Model"
+      ]
+    },
+    "ai.models.goal-verifier-model": {
+      "replacement_ids": [
+        "ai.models.auditor-model"
+      ],
+      "read_rule": "Historical value does not seed a new Goal setting; choose checking models in Review or the shared checking row.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Goals: checking the work",
+      "search": [
+        "verifier",
+        "adjudicator",
+        "certification level",
+        "goal mode configuration",
+        "blocks not warns",
+        "Goal Mode Checker Model"
+      ]
+    },
+    "ai.models.lane-bindings": {
+      "replacement_ids": [
+        "ai.models.low-effort-worker-model",
+        "ai.models.auditor-model",
+        "ai.models.overseer-model"
+      ],
+      "read_rule": "Read old lane map with the MS-109 alias map for explanation; do not automatically copy ambiguous per-account/role bindings into job defaults.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Work lanes",
+      "search": [
+        "capability lanes",
+        "lane bindings",
+        "unconfigured-lane",
+        "goalrun",
+        "Capability Lane Assignments"
+      ]
+    },
+    "ai.models.role-policy": {
+      "replacement_ids": [],
+      "read_rule": "Read only as retired Goal-role policy, never dispatch or restore a role cast.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Role rules",
+      "search": [
+        "worker role policy",
+        "role default level",
+        "planner",
+        "evaluator",
+        "deferred",
+        "Role Model Policy"
+      ]
+    },
+    "ai.models.per-lane-platform": {
+      "replacement_ids": [],
+      "read_rule": "Read old values for inspection; an explicit per-piece build route remains build-owned, never reconstructed from this unscoped box.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Service for each lane",
+      "search": [
+        "per-lane platform",
+        "seam package node iteration",
+        "lane",
+        "seam",
+        "package",
+        "node",
+        "Per-Lane AI Platform"
+      ]
+    },
+    "ai.models.per-lane-model": {
+      "replacement_ids": [],
+      "read_rule": "Read old values for inspection; no automatic per-piece model selection from an unscoped box.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Model for each lane",
+      "search": [
+        "per-lane model",
+        "lane model",
+        "platform-specific format",
+        "Per-Lane Model Names"
+      ]
+    },
+    "ai.models.execution-role": {
+      "replacement_ids": [],
+      "read_rule": "Preserve execution_role on historical attempts; do not read this former setting into future run roles.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Role for one run",
+      "search": [
+        "requested execution role",
+        "actor role",
+        "usage records",
+        "Run Execution Role"
+      ]
+    },
+    "ai.models.resolution-policy": {
+      "replacement_ids": [],
+      "read_rule": "Read conservative/standard/aggressive as retired names; always use the fixed source order.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "How boldly to pick models",
+      "search": [
+        "settings resolution policy",
+        "auto-select",
+        "cheapest fastest",
+        "Auto-Pick Aggressiveness"
+      ]
+    },
+    "ai.models.reasoning-effort": {
+      "replacement_ids": [
+        "ai.models.default-model"
+      ],
+      "read_rule": "Fold a supported saved depth into an existing explicit Everyday model at the same scope and revision only; if no explicit model or no proven support exists, keep source inert and ask the person to reselect. Never alter an inherited model or create a Computer model default.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Thinking depth",
+      "search": [
+        "reasoning effort",
+        "thinking",
+        "extended thinking",
+        "auto default alternative",
+        "honored skipped clamped",
+        "off auto on"
+      ]
+    },
+    "ai.models.subagent-model": {
+      "replacement_ids": [],
+      "read_rule": "Read only for historical inspection; parent chooses any allowed runnable child model, otherwise normal job/everyday defaults apply.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Helper agents",
+      "search": [
+        "subagent",
+        "child agent",
+        "execution contract",
+        "receipt",
+        "Helper Agent Model"
+      ]
+    },
+    "ai.models.subagent-effort": {
+      "replacement_ids": [],
+      "read_rule": "Read only for historical inspection; no helper-depth setting or model-size ceiling is restored.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Helper agents' thinking depth",
+      "search": [
+        "subagent reasoning effort",
+        "result envelope",
+        "Helper Agent Thinking Depth"
+      ]
+    },
+    "personas.tuning.default-model": {
+      "replacement_ids": [
+        "ai.models.default-model"
+      ],
+      "read_rule": "Read old PERSONA.md default_model for inspection only; no Persona model or automatic shared-default migration.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Preferred model",
+      "search": [
+        "per-persona model",
+        "provider_id",
+        "model_id",
+        "precedence chain",
+        "Persona's Preferred Model"
+      ]
+    },
+    "personas.tuning.default-platform": {
+      "replacement_ids": [],
+      "read_rule": "Read old PERSONA.md default_platform for inspection only; no preferred Persona service is restored.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Preferred AI service",
+      "search": [
+        "platform",
+        "provider",
+        "Gemini Direct",
+        "Antigravity CLI",
+        "backend",
+        "Persona's Preferred Provider"
+      ]
+    },
+    "personas.tuning.reasoning-effort": {
+      "replacement_ids": [],
+      "read_rule": "Read old PERSONA.md reasoning_effort for inspection only; new depth choices belong with the shared/run model.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Thinking effort",
+      "search": [
+        "reasoning effort",
+        "extended thinking",
+        "effort",
+        "precedence chain"
+      ]
+    },
+    "extensions.commands.command-model": {
+      "replacement_ids": [
+        "ai.models.default-model"
+      ],
+      "read_rule": "Read old model_override and GUI model for inspection only; omit from new command definitions, imports and runtime model selection.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Model",
+      "search": [
+        "model override",
+        "per-command model",
+        "Command Model Override"
+      ]
+    },
+    "media.image.provider": {
+      "replacement_ids": [
+        "media.image.model"
+      ],
+      "read_rule": "Combine an old provider and a concrete valid image model only after same-scope owner preview and route validation. Old None remains no route; Service default or Per-task override does not identify a model and requires a choice. Never infer a model from a provider label.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Service that makes pictures",
+      "search": [
+        "image engine",
+        "provider",
+        "gpt-image-2",
+        "minimax",
+        "gemini",
+        "antigravity",
+        "route",
+        "capability-gated",
+        "default gpt-image-2 alternative",
+        "Image Generation Service"
+      ]
+    }
+  },
+  "model_defaults": {
+    "owner": "Models_System §2 and §7.2; Jared MD1 A, MD2 NEITHER, MD3 A, MD4 A; helper answer; WL4 B",
+    "source_order": [
+      "manual_override",
+      "scope_policy",
+      "surface_default",
+      "manual_account_default",
+      "project_list",
+      "everywhere_factory_list"
+    ],
+    "plain_rule": "What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere.",
+    "list_setting_ids": [
+      "ai.models.default-model",
+      "ai.models.overseer-model",
+      "ai.models.worker-model",
+      "ai.models.low-effort-worker-model",
+      "ai.models.gui-worker-model",
+      "ai.models.high-effort-worker-model",
+      "ai.models.auditor-model",
+      "ai.models.thread-title-model",
+      "ai.models.teach-model",
+      "safety.approvals.bsd-model",
+      "media.image.model",
+      "media.io.vision-fallback-model",
+      "media.capabilities.video-model",
+      "media.capabilities.tts-model",
+      "media.capabilities.music-model"
+    ],
+    "account_setting_id": "ai.accounts.default-model",
+    "removed_precedence_sources": [
+      "persona_preference",
+      "command_saved_model",
+      "computer_default",
+      "last_used",
+      "provider_default"
+    ],
+    "legacy_lane_aliases": {
+      "low_cost_executor": "low_effort_worker",
+      "standard_reviewer": "auditor",
+      "high_reasoning_orchestrator": "overseer",
+      "verifier": "auditor",
+      "adjudicator": "auditor",
+      "certifier": "auditor"
+    }
+  }
 }

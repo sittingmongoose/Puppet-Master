@@ -311,7 +311,6 @@ arguments:
   - { name: "target", hint: "<package or workspace>" }
 persona_override: "rust-engineer"
 mode_override: "regular"
-model_override: "anthropic/claude-sonnet-4"
 subtask: false
 permissions_profile_override: null
 override_builtin: false
@@ -319,7 +318,7 @@ enabled: true
 ---
 ```
 
-File keys are the `*_override` spellings above, never the bare GUI labels `persona`/`mode`/`model`. The GUI override dropdowns map losslessly per §3.2: GUI `persona` → `persona_override`, GUI `mode` → `mode_override`, GUI `model` → `model_override`, GUI `permissionsProfile` → `permissions_profile_override`. An `Inherit`/empty GUI selection omits the file key (or writes `null`); a file key present with a value selects that GUI value.
+File keys are the `*_override` spellings above, never the bare GUI labels `persona`/`mode`. The GUI override dropdowns map losslessly per §3.2: GUI `persona` → `persona_override`, GUI `mode` → `mode_override`, GUI `permissionsProfile` → `permissions_profile_override`. An `Inherit`/empty GUI selection omits the file key (or writes `null`); a file key present with a value selects that GUI value.
 
 ### 3.2 Field definitions
 
@@ -330,15 +329,16 @@ File keys are the `*_override` spellings above, never the bare GUI labels `perso
 | `arguments` | Optional | `array<object>` | Positional argument schema for validation/help. Each item is an object with optional `name` (`string`), `hint` (`string`), and `required` (`boolean`); readers preserve unknown item keys. Binds losslessly to the GUI `argumentsHint` field (see mapping below). |
 | `persona_override` | Optional | `string` | Requested Persona override for the command execution context. GUI label `persona`. |
 | `mode_override` | Optional | `string` | Requested runtime mode override when allowed by the owning surface. GUI label `mode`; file values are `ask`/`plan`/`regular`/`yolo` only (GUI `inherit` omits the key). |
-| `model_override` | Optional | `string` | Requested model override. GUI label `model`. |
 | `permissions_profile_override` | Optional | `string` | Permissions profile override, subject to the central permission system. This is the actual permissions override token; GUI label `permissionsProfile`. |
 | `override_builtin` | Optional | `boolean` | Reserved for future non-chat extension points. It MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes. |
 | `enabled` | Optional | `boolean` | Command availability. Default `true` when absent. `false` hides the command from chat and the palette; the file stays in place. GUI label `Enabled`. |
 | `subtask` | Optional | `boolean` | Canonical child-run boundary (§4.2). Preserved through every file round-trip; default `false` on create. |
 
-GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`model`/`permissionsProfile` map to `persona_override`/`mode_override`/`model_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. GUI `argumentsHint` binds to `arguments[0].hint`: reading a missing array, missing item, or missing `hint` key yields `""`; writing a non-empty hint sets exactly that key (creating array/item as needed) and preserves every other item and key; writing `""` removes the `hint` key, drops the item if it becomes empty, and drops the field if the array becomes empty. Richer `arguments` arrays round-trip byte-stable through edits that do not touch the hint. The file spec never adopts bare GUI key spellings without this mapping.
+GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. GUI `argumentsHint` binds to `arguments[0].hint`: reading a missing array, missing item, or missing `hint` key yields `""`; writing a non-empty hint sets exactly that key (creating array/item as needed) and preserves every other item and key; writing `""` removes the `hint` key, drops the item if it becomes empty, and drops the field if the array becomes empty. Richer `arguments` arrays round-trip byte-stable through edits that do not touch the hint. The file spec never adopts bare GUI key spellings without this mapping.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
+
+MD2 NEITHER: a command definition carries no model or depth of its own. Compatibility readers accept an old `model_override` (or old GUI `model`) only as inert source data, show that it was retired and preserve the source for inspection/export. Create/update/import apply omit it, never silently writing it to a shared default. A run's actual model/depth selection still comes from its picker or the normal Defaults list; explicit model choices passed to a run or existing per-piece build route retain their owners and parent ceilings.
 
 ### 3.3 Template body
 
@@ -436,7 +436,7 @@ Rules:
 - child Persona does not silently copy the parent Persona.
 ### 4.4 Mode and model overrides
 
-Provider, model, account, Persona, and worker-policy overrides, including the `/model/account/worker-policy` family, use the same requested/effective display grammar: command UI shows the requested override, effective result, inheritance source, and policy remap reason instead of deriving it from ad hoc color, disappearance, or current-settings winner state.
+Run-level provider/model choices and account, Persona and worker-policy overrides, including the `/model/account/worker-policy` family, use the same requested/effective display grammar: command UI shows the requested override, effective result, inheritance source, and policy remap reason instead of deriving it from ad hoc color, disappearance, or current-settings winner state.
 
 
 Command overrides are explicit child requests, not bypasses around the runtime model.
@@ -445,7 +445,7 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Run_Modes.m
 
 Rules:
 - command mode overrides are capped by parent mode authority.
-- command model/runtime surface overrides become explicit child requests.
+- a command-saved model field is retired and does not create a child model request; a real run or per-piece build override remains an explicit child request.
 - explicit requests do not silently fallback.
 - requested versus effective runtime/model/effort fields remain visible when remaps occur because of compatibility or policy.
 
@@ -552,7 +552,6 @@ Sorted alphabetically by name; project-local entries sort before global when nam
 - **Description** (text input; required; max 200 chars)
 - **Persona** (dropdown populated from Persona registry, or null)
 - **Mode** (dropdown: inherit / ask / plan / regular / yolo)
-- **Model** (dropdown populated from model discovery, or null/inherit)
 - **Subtask** (toggle; default off)
 - **Permissions profile override** (dropdown populated from permission profiles, or null)
 - **Override built-in** (toggle; default off; visible only in Expert mode; reserved Assistant Chat slash commands fail validation even if this toggle is enabled, because `override_builtin` does not apply to canonical reserved chat commands.)
@@ -570,7 +569,7 @@ Delete button with confirmation modal. Deleting a project-local command that ove
 
 #### 6.1.6 Schema validation on save
 
-On every save, validate the command file against the schema (§3). Display inline errors for: reserved name collision, invalid name format, missing description, invalid mode value, and invalid model format. If `override_builtin: true` is set while the command name matches a reserved Assistant Chat slash command, display a validation error explaining that `override_builtin` does not apply to canonical reserved chat commands. Block save until errors are resolved.
+On every save, validate the command file against the schema (§3). Display inline errors for: reserved name collision, invalid name format, missing description, invalid mode value and retired-field write attempts. If `override_builtin: true` is set while the command name matches a reserved Assistant Chat slash command, display a validation error explaining that `override_builtin` does not apply to canonical reserved chat commands. Block save until errors are resolved.
 
 ### 6.2 Dry-run preview
 
@@ -1499,22 +1498,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  A User Command file consists of YAML frontmatter plus a Markdown template body,
-  with canonical fields for name, description, arguments, persona/model/mode
-  overrides, permissions_profile_override, and override_builtin.
+  A User Command file consists of YAML frontmatter plus a Markdown template body, with canonical fields
+  for name, description, arguments, Persona/mode overrides, permissions_profile_override and
+  override_builtin. MD2 NEITHER removes the saved model_override and GUI model field: compatibility-read
+  old values as inert data, disclose retirement, preserve source for inspection, and omit from
+  create/update/import writes.
 gui_related: false
 gui_classification_reason: Command schema and frontmatter field definitions are file-format semantics.
 split_recommended: false
 depends_on: [CS-013]
 unblocks: [CS-015, CS-018, CS-020]
 acceptance_criteria:
-  - COMMAND-SCHEMA remains the anchor for User Command file structure.
-  - Frontmatter examples preserve description, persona, mode, model, subtask, permissions_profile_override, and override_builtin.
-  - name is required, must pass validation, and MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes.
-  - description is required and remains a short user-facing description.
-  - arguments remains an optional array<object> for positional argument schema.
-  - persona_override, mode_override, model_override, and permissions_profile_override remain requested overrides subject to their owner systems.
-  - override_builtin remains reserved for future non-chat extension points and MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes.
+- COMMAND-SCHEMA remains the file-structure anchor.
+- Frontmatter preserves description, Persona, mode, subtask, permissions_profile_override and override_builtin;
+  no new model_override is written.
+- Name/description/arguments retain their existing validation and reserved-name restrictions.
+- Persona, mode and permissions overrides remain subject to their owner systems.
+- Old model_override values are readable as retired data only and never affect model selection.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1976,23 +1976,22 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  Command provider, model, account, Persona, worker-policy, mode, and runtime
-  surface overrides are explicit child requests capped by parent authority, with
-  UI-visible requested/effective fields and policy remap reasons whenever
-  compatibility, availability, policy, or account binding changes the launched
-  runtime/model/effort result.
+  Commands carry no saved model or effort under MD2 NEITHER. Old model_override or GUI model values are
+  inert compatibility inputs, excluded from new owner writes and transfer apply with an omission notice.
+  Real run-envelope and existing per-piece build model/runtime requests still use Models_System §2,
+  parent ceilings and requested/effective disclosure, as do account, Persona, worker-policy and mode
+  overrides; account changes do not replace an already requested model. /model/account/worker-policy
+  remains a runtime request family, never a command-definition model field.
 gui_related: true
 gui_classification_reason: The requested/effective override grammar is explicitly displayed in command UI.
 split_recommended: false
 depends_on: [CS-020, CS-021]
 unblocks: [CS-023]
 acceptance_criteria:
-  - Command UI shows requested override, effective result, inheritance source, and policy remap reason.
-  - Command overrides are explicit child requests, not bypasses around the runtime model.
-  - Command mode overrides are capped by parent mode authority.
-  - Command model/runtime surface overrides become explicit child requests.
-  - Explicit requests do not silently fallback.
-  - Requested versus effective runtime/model/effort fields remain visible when remaps occur because of compatibility or policy.
+- Command definitions and editors expose no model/depth field.
+- Compatibility reads disclose retired saved model values without selecting a model or writing new defaults.
+- Real run and per-piece requests preserve parent ceilings and requested/effective reasons.
+- Explicit requests do not silently fallback.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2368,10 +2367,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  New Command opens an editor form for name, description, Persona, mode, model,
-  subtask, permissions profile override, override built-in, template body, and
-  project-local or global save scope, using canonical validation and syntax
-  highlighting for command template patterns.
+  New Command opens an editor form for name, description, Persona, mode, subtask, permissions profile
+  override, override built-in, template body and project-local/global save scope, with existing
+  validation and syntax highlighting. There is no saved model or depth field under MD2 NEITHER; old
+  model_override data remains inspection-only through compatibility reads.
 gui_related: true
 gui_classification_reason: The create editor form is a visible command authoring UI.
 split_recommended: true
@@ -2382,7 +2381,7 @@ acceptance_criteria:
   - New Command opens an editor form.
   - Name is validated per section 2.5 and collision-checked per section 2.4.
   - Description is required and has max 200 chars.
-  - Persona, Mode, Model, Subtask, Permissions profile override, and Override built-in controls are present as specified.
+  - Persona, Mode, Subtask, Permissions profile override and Override built-in controls are present; no command model field is offered.
   - Override built-in is visible only in Expert mode.
   - Reserved Assistant Chat slash commands fail validation even if Override built-in is enabled.
   - Template body uses a Markdown editor with syntax highlighting for $ARGUMENTS, $N, @path, and !`cmd` patterns.
@@ -2507,10 +2506,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  Every command save validates the file against the command schema, displays
-  inline errors for reserved names, invalid formats, missing description,
-  invalid mode, invalid model, and invalid override_builtin use, and blocks save
-  until all errors are resolved.
+  Every command save validates the active command schema, displays inline errors for reserved names,
+  invalid formats, missing description, invalid mode, retired model-field write attempts and invalid
+  override_builtin use, and blocks until resolved. Compatibility imports may inspect and disclose old
+  model_override fields, but commit omits them; no retired model field is written or applied as a run
+  request.
 gui_related: true
 gui_classification_reason: Inline save validation errors and blocked saves are visible editor behavior.
 split_recommended: true
@@ -2519,7 +2519,7 @@ depends_on: [CS-013, CS-014, CS-025, CS-030]
 unblocks: [CS-049]
 acceptance_criteria:
   - Every save validates the command file against section 3 schema.
-  - Inline errors are displayed for reserved name collision, invalid name format, missing description, invalid mode value, and invalid model format.
+  - Inline errors are displayed for reserved name collision, invalid name format, missing description, invalid mode value and retired-field write attempts.
   - If override_builtin: true is set while the command name matches a reserved Assistant Chat slash command, inline validation explains that override_builtin does not apply to canonical reserved chat commands.
   - Save is blocked until errors are resolved.
 validation_surfaces:
@@ -7108,7 +7108,7 @@ display/local-handoff data and never appear in results, receipts, or exports.
 
 Every create, update, and import-commit entry validates exactly the CS-033 set before any write:
 `reserved name collision` (§2.4 incl. `override_builtin` limits), `invalid name format` (§2.5),
-`missing description` (required, max 200 chars), `invalid mode value`, `invalid model format`,
+`missing description` (required, max 200 chars), `invalid mode value`, retired-field write attempts,
 and `override_builtin` misuse (`override_builtin: true` against a reserved Assistant Chat slash
 command). F2 validates the single edited field plus the resulting whole file. Inline errors name
 the failing check; the commit stays blocked until all resolve. Validation failure writes nothing
@@ -7227,35 +7227,8 @@ plan_unit_id: CS-081
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: 'The Settings Commands & Shortcuts manager routes eight Commands-owned typed local owner actions
-  over route:settings/commands-shortcuts: commands.create (Create command asserting target absence), commands.update
-  (immediate hero-sheet field mutation asserting exact current content, with atomic cross-root Scope moves),
-  commands.delete (Delete command with danger-modal proof naming the target and §2.3 reveal), commands.preview
-  (side-effect-free dry-run render: sample-argument substitution only, inert file/shell placeholders, no bash/read
-  ask-flow, no read, no execution, no submit, identical in viewer and writer modes), commands.import_preview/commands.import_commit
-  (bound-plan import sharing the file-mutation contract), commands.export (bounded nonsecret manifest collection),
-  and commands.reset_all (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/
-  reset, shortcuts backup, the hints toggle, the clash-handling choice (extensions.commands.conflict-handling),
-  the keyboard layout select (extensions.commands.keyboard-layout), and the palette toggle (extensions.commands.command-palette-visibility)
-  reuse the Settings-owned settings.transaction route against inventory-offered exact level/key rows through
-  SSYS-059; remaining selected controls are view-only. Every file mutation consumes actor plus permission snapshot,
-  binds applicable Project roots or the exact Computer/library root by id, generation, and fingerprint, resolves
-  targets under FileSafe containment with symlink guard, asserts expected content and list generation, fails
-  closed on stale or mismatched state with no automatic retry, replays only on idempotency-key plus identical
-  payload, validates the exact CS-033 set before any write, requires storage writer mode, writes atomically
-  with durable readback, and identifies files by root-bound non-secret refs. The sole native owner handler
-  is handlers::commands::apply_local_action; local actions are not UICommand catalog entries.
-
-
-  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single
-  resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere.
-  Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project
-  versions and sole owner. Computer installations, credentials and protected source trust never travel in copy.
-  Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.*
-  local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact
-  consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay
-  resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable
-  handlers remain handler_unavailable.'
+canonical_text: |-
+  The Settings Commands & Shortcuts manager routes eight Commands-owned typed local owner actions over route:settings/commands-shortcuts: commands.create (Create command asserting target absence), commands.update (immediate hero-sheet field mutation asserting exact current content, with atomic cross-root Scope moves), commands.delete (Delete command with danger-modal proof naming the target and §2.3 reveal), commands.preview (side-effect-free dry-run render: sample-argument substitution only, inert file/shell placeholders, no bash/read ask-flow, no read, no execution, no submit, identical in viewer and writer modes), commands.import_preview/commands.import_commit (bound-plan import sharing the file-mutation contract), commands.export (bounded nonsecret manifest collection), and commands.reset_all (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/ reset, shortcuts backup, the hints toggle, the clash-handling choice (extensions.commands.conflict-handling), the keyboard layout select (extensions.commands.keyboard-layout), and the palette toggle (extensions.commands.command-palette-visibility) reuse the Settings- owned settings.transaction route against inventory-offered exact level/key rows through SSYS-059; remaining selected controls are view-only. Every file mutation consumes actor plus permission snapshot, binds applicable Project roots or the exact Computer/library root by id, generation, and fingerprint, resolves targets under FileSafe containment with symlink guard, asserts expected content and list generation, fails closed on stale or mismatched state with no automatic retry, replays only on idempotency-key plus identical payload, validates the exact CS-033 set before any write, requires storage writer mode, writes atomically with durable readback, and identifies files by root-bound non- secret refs. The sole native owner handler is handlers::commands::apply_local_action; local actions are not UICommand catalog entries.  Current projects-refresh contract: Exactly five Settings primaries consume offered level/key, the single resolver, per-setting CAS, exact owner readback and return. All chats/All editors/All terminals uses Everywhere. Human rows edit their origin; agent edits use SSYS-065. Library things retain their home/reach/whole Project versions and sole owner. Computer installations, credentials and protected source trust never travel in copy. Origin-word/Details/Changed/Varies menus are local. Commands & Shortcuts retains exactly eight commands.* local owner actions through handlers::commands::apply_local_action, not cmd.commands.custom.*. The exact consumer contract is UCC-214/WM-100 and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable handlers remain handler_unavailable. MD2 NEITHER removes model from active command overrides: old model/model_override values are compatibility-read for inspection only and omitted with notice on new/imported writes; the CS-033 validation set now rejects retired-field writes instead of validating a command model format.
 gui_related: true
 gui_classification_reason: The census routes every selected mutating control of the Commands & Shortcuts Settings
   manager, binds Settings-valued controls to their transaction route, and classifies presentation controls
@@ -7288,7 +7261,7 @@ acceptance_criteria:
   target_exists, confirmation_mismatch, plan_mismatch, and idempotency_conflict fail closed with no write and
   no automatic retry.
 - Every create, update, and import entry validates reserved name collision, invalid name format, missing description,
-  invalid mode value, invalid model format, and override_builtin misuse, blocks on any failure, and writes
+  invalid mode value, retired-field write attempts and override_builtin misuse, blocks on any failure, and writes
   nothing.
 - Preview substitutes sample arguments only, renders @file and !shell as inert placeholders with no bash/read
   ask-flow, no file read, no execution, and no agent submission, and renders identically in viewer and writer

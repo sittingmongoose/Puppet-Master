@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27380-L27433
+Source lines: L27389-L27446
 
-Source SHA256: `ed4a2ca21d03be44b0dd07092082ba191161006ce7b8237c7e3a9dd4a5823b93`
+Source SHA256: `30fc010686ea17ae38b61544a99e01519fe3ff49ef9e792d83b1a1f6c18223cd`
 
 ---
 
@@ -18,16 +18,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings must expose a Goal Mode option with two separate model selections: one for the worker model and one for the verifier/adjudicator model. The verifier/adjudicator model is configured separately from ordinary worker execution. Settings may present inheritance as a convenience only when the inherited worker model satisfies the required certification-tier policy; strong-certification goals must block rather than merely warn if verifier/adjudicator requirements cannot be met.
+  The two Goal Mode worker and verifier/adjudicator model selectors are retired with the Goal role cast.
+  Goals use the ordinary Assistant chat choice, and independent checking uses the Review sheet and
+  Checking finished work default. Read old ai.models.goal-worker-model and ai.models.goal-verifier-model
+  as inert compatibility data only, never reconstituting Goal-owned model or certification-tier policy.
+  No Goals model selectors appear in Settings, search, All Settings, reset or new transfer writes.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings GUI controls for Goal Mode model selection.
 depends_on:
-  - GRS-010
+- GRS-049
+- MS-108
 unblocks: []
 acceptance_criteria:
-  - Goal Mode settings include separate worker and verifier/adjudicator model selectors.
-  - The UI does not collapse verifier/adjudicator and worker model choice into one setting.
-  - Any inheritance UI reflects the runtime requirement that certification-tier policy must be satisfied.
+- No separate Goal worker/verifier model selector is exposed.
+- Goals use the ordinary chat model and independent Review selections remain separate work requests.
+- Old saved selectors remain inspectable as retired compatibility data without affecting a run.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Settings GUI review
@@ -56,8 +61,7 @@ preserved_exact_tokens:
   - "verifier/adjudicator model"
   - "must block, not merely warn"
 negative_constraints:
-  - Do not collapse Goal Mode worker and verifier/adjudicator model selection into one setting.
-  - Do not present verifier/adjudicator inheritance as valid when certification-tier policy is not satisfied.
+- Do not recreate retired Goal model-role or certification-tier settings.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Goal_Runtime_System.md

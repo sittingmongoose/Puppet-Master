@@ -111,7 +111,7 @@ class SettingsLayeringRefreshTests(unittest.TestCase):
     def test_complete_reviewed_corpus_and_semantic_expectations(self):
         errors, counts = self.check()
         self.assertEqual(errors, [])
-        self.assertEqual(counts['rows'], 981)
+        self.assertEqual(counts['rows'], len(self.rows))
         self.assertGreater(counts['semantic_cases'], 30)
 
     def test_placement_preset_override_resolves_before_computer_selection(self):
@@ -152,6 +152,104 @@ class SettingsLayeringRefreshTests(unittest.TestCase):
     def test_map_rows_cannot_use_a_scalar_merge(self):
         with self.assertRaises(ValueError):
             self.resolve(self.rows['safety.rules.per-tool-permissions'], {'computer': {'shell': 'ask'}})
+
+
+class ModelDefaultsContractTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from pm_settings_layering import model_defaults_failures, resolve_setting
+        cls.check = staticmethod(model_defaults_failures)
+        cls.resolve = staticmethod(resolve_setting)
+        cls.inventory = json.loads((ROOT / 'Plans/settings_inventory.json').read_text())
+        cls.schema = json.loads((ROOT / 'Plans/settings_inventory.schema.json').read_text())
+
+    def test_removed_row_cannot_return_or_lose_its_compatibility_read(self):
+        self.assertEqual(self.check(self.inventory), [])
+        key = 'ai.models.subagent-model'
+        for mutation in ('reactivate', 'forget_read', 'transfer_write'):
+            doc = copy.deepcopy(self.inventory)
+            if mutation == 'reactivate':
+                row = copy.deepcopy(doc['settings'][0])
+                row['id'] = key
+                doc['settings'].append(row)
+            elif mutation == 'forget_read':
+                del doc['compatibility_reads'][key]
+            else:
+                doc['compatibility_reads'][key]['transfer_policy'] = 'apply'
+            with self.subTest(mutation=mutation):
+                self.assertTrue(self.check(doc))
+
+    def test_census_cannot_hide_a_missing_model_row(self):
+        doc = copy.deepcopy(self.inventory)
+        key = 'ai.models.low-effort-worker-model'
+        doc['settings'] = [row for row in doc['settings'] if row['id'] != key]
+        doc['model_defaults']['list_setting_ids'].remove(key)
+        self.assertTrue(self.check(doc))
+
+    def test_retired_names_and_search_aliases_remain_findable_without_a_row(self):
+        key = 'ai.models.subagent-model'
+        entry = self.inventory['compatibility_reads'][key]
+        self.assertEqual(entry['label'], 'Helper agents')
+        self.assertTrue(entry['search'])
+        for field in ('label', 'search'):
+            doc = copy.deepcopy(self.inventory)
+            del doc['compatibility_reads'][key][field]
+            with self.subTest(field=field):
+                self.assertTrue(self.check(doc))
+
+    def test_legacy_inventory_shards_stay_addressable_by_immutable_evidence(self):
+        config = json.loads((ROOT / 'Plans/sharding_config.json').read_text())
+        for source, boundary, shard in [
+                ('Plans/settings_inventory.json', 39801,
+                 'Plans/_shards/settings_inventory/201-lines-39735-39801.md'),
+                ('Plans/settings_inventory.schema.json', 579,
+                 'Plans/_shards/settings_inventory.schema/005-lines-570-579.md')]:
+            with self.subTest(source=source):
+                self.assertIn(boundary, config['line_chunk_end_pins'][source])
+                self.assertGreaterEqual(len((ROOT / source).read_text().splitlines()), boundary)
+                self.assertTrue((ROOT / shard).is_file())
+
+    def test_model_and_effort_are_one_project_value_without_computer_rung(self):
+        row = next(row for row in self.inventory['settings'] if row['id'] == 'ai.models.worker-model')
+        everywhere = {'provider_entry_id': 'service-a', 'model_id': 'service-a/model', 'effort': 'high'}
+        project = {'provider_entry_id': 'service-b', 'model_id': 'service-b/model', 'effort': None}
+        self.assertEqual(self.resolve(row, {'everywhere': everywhere, 'project': project}), project)
+        self.assertEqual(self.resolve(row, {'everywhere': everywhere}), everywhere)
+        with self.assertRaises(ValueError):
+            self.resolve(row, {'everywhere': everywhere, 'computer': project})
+
+    def test_account_default_is_not_a_shared_settings_layer(self):
+        row = next(row for row in self.inventory['settings'] if row['id'] == 'ai.accounts.default-model')
+        self.assertEqual(row['layering']['home'], 'thing')
+        self.assertEqual(row['model_picker']['catalog'], 'account')
+        with self.assertRaises(ValueError):
+            self.resolve(row, {'project': 'model'})
+
+    def test_picker_cannot_save_untested_typed_names_or_separate_depth(self):
+        for field, value in [('validate_before_save', 'first_run'), ('effort', 'separate_row')]:
+            doc = copy.deepcopy(self.inventory)
+            row = next(row for row in doc['settings'] if row['id'] == 'ai.models.worker-model')
+            row['model_picker'][field] = value
+            with self.subTest(field=field):
+                self.assertTrue(self.check(doc))
+
+    def test_partial_model_choice_and_unproven_capability_fields_are_refused(self):
+        from jsonschema import Draft202012Validator
+        descriptor = {'$defs': self.schema['$defs'], '$ref': '#/$defs/model_selection'}
+        validator = Draft202012Validator(descriptor)
+        selection = {'provider_entry_id': 'service', 'model_id': 'service/exact-name', 'effort': None}
+        self.assertTrue(validator.is_valid(selection))
+        for changed in [dict(selection, effort=99), dict(selection, vision=True),
+                        {'model_id': 'service/exact-name', 'effort': 'high'}]:
+            self.assertFalse(validator.is_valid(changed))
+
+    def test_command_saved_model_is_not_an_active_override(self):
+        from jsonschema import Draft202012Validator
+        schema = json.loads((ROOT / 'Plans/commands_shortcuts_contracts.schema.json').read_text())
+        validator = Draft202012Validator({'$defs': schema['$defs'], '$ref': '#/$defs/gui_overrides'})
+        overrides = {'persona': None, 'mode': None, 'permissionsProfile': None}
+        self.assertTrue(validator.is_valid(overrides))
+        self.assertFalse(validator.is_valid(dict(overrides, model='service/model')))
 
 
 if __name__ == "__main__":

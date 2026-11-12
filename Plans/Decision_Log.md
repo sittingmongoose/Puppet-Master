@@ -29816,3 +29816,70 @@ negative_constraints:
 - No source-off/privacy choice silently restores access.
 - No native implementation or governance seal is inferred.
 ```
+
+### DL-476 - One Model Defaults List And Jared Model Answers
+
+```yaml
+plan_unit_id: DL-476
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered the model-design questions at about 11:55 PM EST on 2026-11-11, relayed by pm7-build in the settings batch 3 brief. The answers, verbatim as relayed, are:
+  MD1: "A".
+  MD2: "NEITHER".
+  MD3: "A".
+  MD4: "A".
+  Helper agents, verbatim: "If a helper is a subagent, then the main agent should be able to choose any model it wants at any effort level that is available. There shouldnt be a separate setting for it, if it needs a default, it can follow the other default settings like a regular agent would."
+  The which-wins line, verbatim: "What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere."
+  The accepted design is one list in Settings > Models, with thinking depth chosen inside each model picker. MD1 A permits the same list for This project with Everywhere fallback. MD2 NEITHER removes Persona model/service/preset/effort and command model fields, not merely their priority: old definitions remain compatibility-read only. MD3 A activates an account's own model/depth only when the person sends the run to that account and no earlier source names a model. MD4 A makes Reading pictures the first bridge choice with no separately saved backup; later automatic fallback still requires policy permission and disclosure. The helper model and helper-depth rows are removed; a parent may choose any allowed runnable model/effort within existing parent and policy ceilings, otherwise normal defaults apply.
+  Behaviour: keep build-internal scoped owner policy and a page's built-in default as technical detail, remove the old Persona, Computer, last-used and provider-default model sources, and retire configurable resolution policy and stored default variants. Preserve all parent/managed/capability/account/currentness/cost gates and requested/effective receipts. Presets stay picker/key shortcuts. Keep the six jobs including Easy, routine jobs, separate checking from cheap implementation, naming on the smallest available model with Off, explaining with its small-model and no-silent-costly-fallback guard, BSD following Checking finished work, and per-kind picture/video/speech/music models. WL4 = B remains accepted: test an exact typed model name with one small call before saving; a refused or unreachable name is never saved, and acceptance proves no capability.
+  Behaviour: retire 18 model-related rows with the compatibility reads in settings_inventory.json; admit Easy, routine jobs, one account model/depth field and three enabled-media model rows. Search, All Settings, transfer, Reset and census derive their active admission from that inventory. Old values remain inspectable, never an extra selection source or new write authority. The PRD Builder, Wizard, building and Scout read the common defaults and allow run overrides; their screen redesign is separate.
+  Wording: this one Decision_Log entry records both P17 and E13; it does not reseal governance or claim native runtime proof.
+gui_related: true
+gui_classification_reason: Owns visible model/depth defaults, compatibility disclosure, Settings search and
+  transfer behavior.
+depends_on:
+- SSYS-077
+- MS-005
+- MS-109
+- F3-396
+unblocks: []
+acceptance_criteria:
+- The exact MD1 A, MD2 NEITHER, MD3 A, MD4 A, helper words and plain order are preserved.
+- Removed settings remain compatible reads without active model precedence or new writes.
+- Every model picker includes its supported depth and WL4 B validation.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-settings-layering
+- python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+- python3 -m unittest discover -s tests -p test_pm_settings_draft_transfer.py
+risk_class: model_default_precedence_and_retirement_drift
+reasoning_tier: high
+context_scope: settings_models_batch3_20261112
+implementation_surfaces: &id001
+- Plans/Models_System.md
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/settings_inventory.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- settings-model-design-20261112:MD1-A/MD2-NEITHER/MD3-A/MD4-A/helpers
+- share/puppet-master/2026-11-11-model-selection-map/PACKET-v2.md
+- share/puppet-master/2026-11-11-work-lanes/PACKET.md
+preserved_exact_tokens:
+- MD1
+- MD2
+- NEITHER
+- MD3
+- MD4
+- There shouldnt be a separate setting for it
+- WL4 = B
+- Easy, routine jobs
+negative_constraints:
+- Do not preserve Persona, command or helper-owned model/depth defaults.
+- Do not silently reinterpret historical source tiers, old backup values or old Computer model preferences.
+owner_hints: *id001
+```

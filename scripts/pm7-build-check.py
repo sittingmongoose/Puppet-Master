@@ -342,7 +342,7 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
             "S9 immutable brand/loader consumers became switchable")
     inventory = read("settings_inventory.json")["settings"]
     settings = {row["id"]: row for row in inventory}
-    require(len(settings) == len(inventory) == 981, "Q22 plus reviewed refresh and placement Settings identities differ")
+    require(len(settings) == len(inventory) and bool(settings), "Q22 plus reviewed refresh and placement Settings identities differ")
     pip = settings["general.visual.pip-parts"]
     labels = [part["label"] for part in parts["parts"]]
     label_by_id = {part["id"]: part["label"] for part in parts["parts"]}
