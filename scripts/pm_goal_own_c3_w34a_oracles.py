@@ -21,6 +21,7 @@ from pm_goal_own_c3_w34_oracles import specimen
 from pm_goal_own_c3_w34_reference_oracles import (
     select_bank, original_codec, commitment, Representation,
 )
+from pm_goal_test_storage import k_component
 
 URI = 'https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json'
 START = 'https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json'
@@ -46,10 +47,6 @@ REMAINING = [
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
-
-
-def h(value):
-    return value.encode('utf-8').hex()
 
 
 def seed(bank, uri, name):
@@ -83,7 +80,7 @@ class TupleWitness:
         self.owner = dict(owner_ref='workflow:owner:1', owner_epoch=3,
                           server_id='server:1', server_claim_epoch=4)
         self.op, self.tx, self.cause = 'start:1', 'start-transaction:1', 'accepted:start:1'
-        self.r = ':'.join(h(self.scope[k]) for k in
+        self.r = ':'.join(k_component(self.scope[k]) for k in
                           ('storage_instance_id', 'project_id', 'goal_id', 'goal_run_id'))
         self.edits = list(edits)
         self.values, self.keys = {}, {}
@@ -120,11 +117,11 @@ class TupleWitness:
                 prefix = {'candidate': 'workflow_start_candidate.v2',
                           'commit': 'workflow_start_commit.v1',
                           'origin': 'workflow_start_origin.v2'}[name]
-                self.keys[name] = prefix + ':' + self.r + ':' + h(self.op)
+                self.keys[name] = prefix + ':' + self.r + ':' + k_component(self.op)
             elif name == 'control':
                 self.keys[name] = 'workflow_start_control.v1:' + self.r
             else:
-                self.keys[name] = value['schema_id'].split('.')[-2] + ':' + self.r + ':' + h(self.op)
+                self.keys[name] = value['schema_id'].split('.')[-2] + ':' + self.r + ':' + k_component(self.op)
             if 'storage_instance_id' in value:
                 value['storage_instance_id'] = STORE
             if 'physical_key' in value:
@@ -498,7 +495,7 @@ class TupleRepresentation(Representation):
         scope = record['scope']
         generation = self.selection['generation_prefix'] + '0'*64
         key = self.selection['projection']['key'].split(':K(')[0] + ':' + ':'.join(
-            h(scope[k]) for k in ('project_id', 'goal_run_id'))
+            k_component(scope[k]) for k in ('project_id', 'goal_run_id'))
         wrapper = dict(schema_id=self.selection['projection']['schema_id'], schema_version='1.0.0',
             storage_instance_id=scope['storage_instance_id'], physical_key=key,
             dataset_name=self.selection['projection']['table'].replace('<generation_id>', generation),
