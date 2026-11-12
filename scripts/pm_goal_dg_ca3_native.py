@@ -521,6 +521,15 @@ class RunOwner(NativeOwner):
                              self.pointer_writes(run, revision, bkey, ckey))
             run['revision'] = revision
 
+    def restart(self, run, goal_scope):
+        """A genuine Workflow execution-owner restart: epoch+1 and the run body re-issued under it."""
+        with self.recorder.call(self.owner_id, 'restart_owner'):
+            self.owner_epoch = NR.uint64(self.owner_epoch + 1, 'run/owner_epoch')
+            run['execution_owner_epoch'] = self.owner_epoch
+            pointer = self.world.value(self.POINTER, 'run:' + k_hex(run['run_scope']['goal_run_id']))
+            status = self.world.value(self.BODY, pointer['body_key'])['record']['status']
+            self.transition(run, status, goal_scope)
+
     def current(self, run):
         """Current native body/control: the pointer's versioned physicals, hash-joined."""
         w = self.world
@@ -576,6 +585,7 @@ class StartOwner(NativeOwner):
                 original_event_value_commitment=custody['original_event_value_commitment'],
                 first_append_receipt=custody['first_append_receipt'])))
             run.update(revision=revision, start=dict(operation_id=op, event_id=event['event_id'], commit_key=ckey2, control_key=skey, origin_key=okey))
+            self.current_start(run)  # the issuing owner builds the current-start provenance skeleton once
             slot.set(dict(event_id=event['event_id'], sequence_id=event['sequence_id']))
             return event
 
@@ -857,7 +867,7 @@ class D05Owner(NativeOwner):
         w, n = self.world, self.world.native
         d = run.get('d05')
         require('d05/not_aggregated', d is not None)
-        require('d05/unresolved', d['resolved'] is True)
+        require(d['codes'][0] if d['codes'] else 'd05/unresolved', d['resolved'] is True)
         result = w.value(self.RESULT, d['result_key'])
         origin = w.value(self.ORIGIN, d['origin_key'])
         require('d05/result_unavailable', result is not None and origin is not None)

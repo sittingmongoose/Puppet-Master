@@ -756,9 +756,13 @@ class WorkflowCancel(AS.AssignedCancel):
         n.scheduler.stop(self.wf_run, self.scope)
         n.effects.drain(self.wf_run, outcome=outcome if outcome is not None else self.effect_plan.get('drain'))
         d05 = n.d05.aggregate(self.wf_run, self.scope)
-        if d05['resolved']:
+        try:
             n.d06.prepare(self.wf_run, self.scope, self.actor_ref)
-            n.d06.publish(self.wf_run, self.scope)
+        except Refusal as error:
+            # The positive D06 refuses an unresolved D05; the genuine Stop/receipt/D05 effects stay in place.
+            d05 = dict(d05, d06_refusal=A.refusal_code(error))
+            return d05
+        n.d06.publish(self.wf_run, self.scope)
         return d05
 
     # ------------------------------------------------------------------ C-owners
@@ -946,6 +950,8 @@ class WorkflowCancel(AS.AssignedCancel):
             handle, fence, reservation = w.storage.reserve_assignment(self.operation_id, self.append_request)
             self.reservation_handle, self.fence, self.reservation_record = handle, fence, reservation
             # The reservation fixes the selected CURRENT/manifest/lease: the late reservation records them as they now stand.
+            # Storage assigns the complete late EventRecord now: the reserved sequence and its own two clock ticks.
+            w.storage.assign_late_times(self.operation_id)
             held = w.assigner.read_sources()
             require('C3/reserve_assignment/selected_manifest', held['manifest']['manifest_generation'] == reservation['manifest_generation'])
             late = self.gcheck(CM + 'LateReservation', w.assigner.reservation_source(self.operation_id, reservation, held, header_len))
@@ -983,7 +989,7 @@ class WorkflowCancel(AS.AssignedCancel):
             return {m['key']: self.late_evaluate(m['value'], slots) for m in template['members']}
         return AS.evaluate(template, slots)
 
-    def issue_assignment_audit(self):
+    def issue_assignment_audit(self, *, entry_edit=None):
         w = self.world
         with self.call('issue_assignment_audit') as slot:
             entry = self.observe_sources()
@@ -994,6 +1000,18 @@ class WorkflowCancel(AS.AssignedCancel):
                     and stored_res['reserved_sequence_id'] == self.late_reservation['reserved_sequence_id']
                     and stored_res['fence_identity'] == self.late_reservation['original_exclusive_fence_id'])
             late = self.late_entry('issue_assignment_audit')
+            if entry_edit is not None:
+                late = self.gcheck(LA + 'LateAssignmentEntry', entry_edit(copy.deepcopy(late)))
+            event = late['actual_storage_assigned_event']
+            # Storage-assigned members are compared with Storage's own custody, never only with each other.
+            require('C3/issue_assignment_audit/assigned_sequence_custody', event['sequence_id'] == stored_res['reserved_sequence_id']
+                    and late['actual_late_reservation']['reserved_sequence_id'] == stored_res['reserved_sequence_id'])
+            assigned = w.storage.reservation_record(self.operation_id)
+            require('C3/issue_assignment_audit/assigned_times_custody', event['observed_at_utc'] == assigned.get('assigned_observed_at_utc')
+                    and event['persisted_at_utc'] == assigned.get('assigned_persisted_at_utc'))
+            require('C3/issue_assignment_audit/reservation_entry', late['actual_late_reservation']['byte_offset'] == stored_res['byte_offset']
+                    and late['actual_late_reservation']['selected_segment_generation'] == stored_res['segment_generation']
+                    and late['actual_late_reservation']['selected_manifest_generation'] == stored_res['manifest_generation'])
             native = self.owners_native('issue_assignment_audit')
             self.at('issue_assignment_audit', 'after_native_read')
             self.recheck('issue_assignment_audit', 'after_native_read', entry)
@@ -1001,7 +1019,6 @@ class WorkflowCancel(AS.AssignedCancel):
             template = self.late_template()
             require('C3/issue_assignment_audit/readiness_template', self.h_arg(template) == readiness['record']['exact_encoding_template_sha256'])
             receipt = w.value('goal_cancel_receipt', self.key('goal_cancel_receipt'))
-            event = late['actual_storage_assigned_event']
             evaluated = self.late_evaluate(template, {'cancellation_receipt_sha256': row_sha(receipt), 'sequence_id': event['sequence_id'],
                                                       'event.observed_at_utc': event['observed_at_utc'], 'event.persisted_at_utc': event['persisted_at_utc']})
             require('C3/issue_assignment_audit/template_event', same(evaluated, event))
@@ -1144,6 +1161,8 @@ class WorkflowCancel(AS.AssignedCancel):
             require('C3/publish_control/writer_cutoff', w.binding.domain_withdrawn is False)
             publication = self.progress['publication']
             w.storage.authenticate_receipt(publication['event_id'], publication['first_append_receipt'])
+            # SP-304: only a complete monotonic still-latched Stop successor is allowed; a resumed Goal refuses here.
+            require('C3/publish_control/stop_latched', w.host_stop.record(self.scope)['latched'] is True)
             post = self.post_owners_entry('publish_control', ('event_issued',))
             readback = self.append_readback(publication['event_id'], 'publish_control')
             require('C3/publish_control/original_publication', same(readback['publication'], publication))
@@ -1155,8 +1174,6 @@ class WorkflowCancel(AS.AssignedCancel):
             require('C3/publish_control/reservation', control['cancellation_pending'] is not None
                     and self.h(control['cancellation_pending']) == self.progress['reservation_sha256'])
             require('C3/publish_control/pending_unresolved', control['pending'] is None)
-            stop = w.host_stop.record(self.scope)
-            require('C3/publish_control/stop_latched', stop['latched'] is True)
             before = copy.deepcopy(control_cell['value'])
             control.update(control_epoch=NR.uint64(control['control_epoch'] + 1, 'C3/control_epoch'),
                            cancellation_receipt_ref=self.key('goal_cancel_receipt'), cancellation_pending=None)
