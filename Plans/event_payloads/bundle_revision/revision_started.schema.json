@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_started.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project_id",
+    "thread_id",
+    "bundle_id",
+    "revision_id",
+    "requested_revision_capability",
+    "permission_snapshot_id",
+    "schema_id",
+    "schema_version",
+    "event_type",
+    "annotation_ids",
+    "effective_revision_capability",
+    "ts",
+    "safe_point_id",
+    "predecessor_event_id",
+    "source_ref",
+    "phase_sequence"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "bundle_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "revision_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "requested_revision_capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "permission_snapshot_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "schema_id": {
+      "const": "pm.event_payload.bundle.revision_started.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "event_type": {
+      "const": "bundle.revision_started"
+    },
+    "annotation_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      }
+    },
+    "effective_revision_capability": {
+      "enum": [
+        "schema_enforced_structured_revision",
+        "validated_structured_revision",
+        "chat_handoff_only"
+      ]
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "safe_point_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "predecessor_event_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "phase_sequence": {
+      "type": "integer",
+      "minimum": 0,
+      "format": "pm-uint"
+    }
+  },
+  "$defs": {
+    "referenced_stub": {
+      "type": "object",
+      "maxProperties": 0,
+      "additionalProperties": false
+    },
+    "payload_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blake3",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "blake3": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 16385,
+          "maximum": 18446744073709551615,
+          "format": "pm-uint"
+        },
+        "media_type": {
+          "const": "application/vnd.puppetmaster.event.bundle-revision-started+msgpack"
+        }
+      }
+    }
+  },
+  "$comment": "DCW integer-only profile: pm-uint format validation is mandatory; integer domains refuse decimal/exponent floats and wrong types. JSON -0 is normalized to 0 before hashing; leading zeros are invalid JSON. Authenticate original values by exact types and canonical bytes."
+}
