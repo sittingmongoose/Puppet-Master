@@ -2781,5 +2781,7 @@
       "handler_proof": "required_separately_before_runtime_enablement"
     }
   ],
-  "maximum_payload_utf8_bytes": 65536
+  "maximum_payload_utf8_bytes": 65536,
+  "inline_payload_canonical_msgpack_bytes": 16384,
+  "governed_body_route_ref": "Plans/Contracts_V0.md#EventRecord"
 }
