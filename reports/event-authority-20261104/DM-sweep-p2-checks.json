@@ -1,0 +1,227 @@
+{
+ "lane": "DM",
+ "round": "sweep-p2a-p2b-numbers",
+ "merges": {
+  "guard_tool": {
+   "commit": "fd8dc29d5d",
+   "gated": "004bdedd632d9463f3535190a6ed5772338cdce1"
+  },
+  "numrule_numbers": {
+   "commit": "3e70a4c92f",
+   "gated": "a16f67c1ef21796758f4209ff12c0f4d12b86ce9",
+   "generated_conflicts_resolved_by_regeneration": 163
+  }
+ },
+ "commits": {
+  "numbers": "e1377c27ee",
+  "guard_tables": "1cace345d9",
+  "owner_text_regen": "01347e4328"
+ },
+ "guard_tool": {
+  "tool_file_sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+  "tables_pass": "17/17",
+  "rows_proved": "171/171",
+  "run2": {
+   "seconds": 2136.2,
+   "collect_seconds": 259.3,
+   "counts": {
+    "accepted": 150376,
+    "records": 173387,
+    "refused": 23011
+   }
+  },
+  "run3_resolve_only": {
+   "seconds": 561.5,
+   "proved": "21/21"
+  },
+  "masked_collected_observations_excluded": 77,
+  "phases": {
+   "checkpoint": {
+    "status": "PASS",
+    "proved": 5,
+    "rows": 5,
+    "flips": 5,
+    "stays": 20,
+    "evaluations": 96
+   },
+   "fullvalue": {
+    "status": "PASS",
+    "proved": 5,
+    "rows": 5,
+    "flips": 5,
+    "stays": 20,
+    "evaluations": 96
+   },
+   "payload": {
+    "status": "PASS",
+    "proved": 16,
+    "rows": 16,
+    "flips": 16,
+    "stays": 240,
+    "evaluations": 833
+   },
+   "publication": {
+    "status": "PASS",
+    "proved": 28,
+    "rows": 28,
+    "flips": 28,
+    "stays": 756,
+    "evaluations": 2465
+   },
+   "reader": {
+    "status": "PASS",
+    "proved": 11,
+    "rows": 11,
+    "flips": 11,
+    "stays": 110,
+    "evaluations": 408
+   },
+   "readfence": {
+    "status": "PASS",
+    "proved": 7,
+    "rows": 7,
+    "flips": 7,
+    "stays": 42,
+    "evaluations": 176
+   },
+   "rebuild": {
+    "status": "PASS",
+    "proved": 15,
+    "rows": 15,
+    "flips": 15,
+    "stays": 210,
+    "evaluations": 736
+   },
+   "receipt": {
+    "status": "PASS",
+    "proved": 2,
+    "rows": 2,
+    "flips": 2,
+    "stays": 2,
+    "evaluations": 21
+   },
+   "replay": {
+    "status": "PASS",
+    "proved": 4,
+    "rows": 4,
+    "flips": 4,
+    "stays": 12,
+    "evaluations": 65
+   },
+   "resolve": {
+    "status": "PASS (run 3)",
+    "proved": 21,
+    "rows": 21,
+    "flips": 21,
+    "stays": 420,
+    "evaluations": 1408
+   },
+   "retained": {
+    "status": "PASS",
+    "proved": 5,
+    "rows": 5,
+    "flips": 5,
+    "stays": 20,
+    "evaluations": 96
+   },
+   "retry": {
+    "status": "PASS",
+    "proved": 9,
+    "rows": 9,
+    "flips": 9,
+    "stays": 72,
+    "evaluations": 280
+   },
+   "semantic": {
+    "status": "PASS",
+    "proved": 4,
+    "rows": 4,
+    "flips": 4,
+    "stays": 12,
+    "evaluations": 65
+   },
+   "settings": {
+    "status": "PASS",
+    "proved": 7,
+    "rows": 7,
+    "flips": 7,
+    "stays": 42,
+    "evaluations": 176
+   },
+   "token": {
+    "status": "PASS",
+    "proved": 6,
+    "rows": 6,
+    "flips": 6,
+    "stays": 30,
+    "evaluations": 133
+   },
+   "witness": {
+    "status": "PASS",
+    "proved": 1,
+    "rows": 1,
+    "flips": 1,
+    "stays": 0,
+    "evaluations": 8
+   },
+   "writer": {
+    "status": "PASS",
+    "proved": 25,
+    "rows": 25,
+    "flips": 25,
+    "stays": 600,
+    "evaluations": 1976
+   }
+  }
+ },
+ "numbers": {
+  "self_test": {
+   "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+   "exit": 0,
+   "status": "pass"
+  },
+  "corpus": {
+   "command": "python3 -B scripts/pm-small-owner-number-corpus.py",
+   "exit": 0,
+   "counts": {
+    "agree": 57,
+    "disagreements": 0,
+    "domain_refusals": 2,
+    "preservation_layer_not_dm_boundary": 30,
+    "total": 59,
+    "untracked": 0
+   },
+   "disagreements": [],
+   "long_integer_routes": {
+    "current_retry": "accepted:identity_conflict_without_effect",
+    "decode_token": "accepted:True",
+    "publication_terminal": "accepted:False",
+    "resolve_full_value": "accepted:None",
+    "retained_digest_computes": "accepted:True",
+    "valid_event": "accepted:False"
+   },
+   "status": "pass"
+  }
+ },
+ "family_suites": {
+  "command": "PM_DM_FAMILY=<family> python3 -B scripts/pm-small-owner-events.py (x8, inside guard collection)",
+  "exit": 0,
+  "assertions_summed": 55420
+ },
+ "derived": {
+  "shard_check": "pass (3100 shards)",
+  "index_validate_at_origin_main": "78a1fd64cd30468f21b450dc9b39583a6a1fbc8f: 53 failures, 0 naming DM units (ledger drift, no-rebase round)"
+ },
+ "grade_pins": {
+  "total": 332,
+  "missing": 0
+ },
+ "native_execution": "NOT_RUN",
+ "timestamp_review": "interim only",
+ "evidence_sha256": {
+  "tool2/summary.json": "0546d8cc703a4e9dbfedf0db937418099a5be4198a127d8f7e418505eed2b0ca",
+  "tool3/summary.json": "b824e2ce42ea037c64a2b0b73c3492622f5f29cfef774686aca44e8b54343f28",
+  "number-corpus-final.json": "8d4a0e3267c83a652ff1f516c1e463965e6684c65db0ec3dddee6f8ddef543e2",
+  "numbers-selftest-final.json": "3e81a92755d356cfe5d3d84cc01c8ed2023ebbe614a4407c93c1789607950754"
+ }
+}
