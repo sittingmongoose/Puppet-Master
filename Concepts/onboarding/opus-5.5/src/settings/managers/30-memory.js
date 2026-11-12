@@ -49,9 +49,9 @@
   /* "meaning" in this preview: a few words that stand for each other */
   const NEAR = { install: ['setup', 'cli', 'clis'], setup: ['install'], tools: ['cli', 'clis'], animation: ['motion'], animations: ['motion'], motion: ['animation', 'animations'], build: ['compile', 'path'], ui: ['interface', 'motion'], order: ['authority'], priority: ['authority', 'order'], test: ['tests', 'pnpm'], tests: ['test', 'pnpm'], commit: ['commits', 'messages'] };
   const SOURCE_HELP = {
-    'Project files': 'Files in this workspace, read when a question needs them.',
+    'Project files': 'Files in this project, read when a question needs them.',
     'Plans': 'Named plans and their acceptance criteria.',
-    'Chat history': 'Earlier chats in this workspace.',
+    'Chat history': 'Earlier chats in this project.',
     'Tool output': 'What tests, terminals, and the browser reported.',
     'Manager records': 'Settings and status from other managers, such as connected services.'
   };
@@ -204,7 +204,7 @@
       title: isNew ? 'Add memory' : 'Edit memory', subtitle: isNew ? 'Something the assistant should keep in mind.' : v.title,
       body: formField('Title', 'title', v.title, { full: true, autofocus: true, placeholder: 'A short name for this memory' })
         + formField('Text', 'text', v.text, { type: 'textarea', full: true, help: 'Write it the way you would tell a colleague.' })
-        + formField('Keep it for', 'store', STORE_CHOICES.some(c => c.value === v.store) ? v.store : 'Project', { type: 'select', choices: STORE_CHOICES, help: 'Project memories stay with this workspace. Memories about you follow you everywhere.' })
+        + formField('Keep it for', 'store', STORE_CHOICES.some(c => c.value === v.store) ? v.store : 'Project', { type: 'select', choices: STORE_CHOICES, help: 'Project memories stay with this project. Memories about you follow you everywhere.' })
         + formField('Type', 'type', TYPES.includes(v.type) ? v.type : 'Rule', { type: 'select', choices: TYPES, help: 'Rules are always followed. Decisions record a choice. Preferences shape style.' }),
       saveLabel: isNew ? 'Add memory' : 'Save changes',
       onSave: data => {
@@ -224,7 +224,7 @@
     PM51.panel({
       title: oneChat ? 'Keep it longer' : 'Move memory', subtitle: x.title,
       body: (oneChat ? PM51.note('Kept for one chat now, so it fades when that chat ends.', 'info') : '')
-        + PM51.panelSection('Who it is for', PM51.field('Keep this memory for', PM51.select(oneChat ? 'Project' : x.store, STORE_CHOICES.map(c => [c.value, c.label]), { label: 'Keep it for' }), 'Project memories stay with this workspace. Memories about you follow you everywhere.')),
+        + PM51.panelSection('Who it is for', PM51.field('Keep this memory for', PM51.select(oneChat ? 'Project' : x.store, STORE_CHOICES.map(c => [c.value, c.label]), { label: 'Keep it for' }), 'Project memories stay with this project. Memories about you follow you everywhere.')),
       primaryLabel: oneChat ? 'Keep it' : 'Move', onPrimary: wrap => { const sel = wrap.querySelector('select'); if (sel) x.store = sel.value; x.updated = 'Now'; saveState(); refresh(); PM51.toast(oneChat ? 'Memory kept' : 'Memory moved', x.store === 'User' ? `${x.title} now follows you everywhere.` : `${x.title} now stays with this project.`); }
     });
   }
@@ -267,16 +267,26 @@
     const lines = text ? text.split('\n').filter(l => l.trim()).length : 0;
     return PM51.home(id, PM51.rows([{ label: PM51.rowLabel(s), help: PM51.rowHelp(s), control: `<span class="o55-mem-doc"><span class="o55-mem-doc-preview${text ? '' : ' is-empty'}">${h(text ? `${first}${lines > 1 ? ` · ${lines} lines` : ''}` : (row.placeholder || 'Nothing yet'))}</span></span>`, action: { label: text ? 'Edit' : 'Write', icon: 'edit', action: 'pm51-memory-rules', data: { setting: id } } }]), 'div');
   }
+  /* A rule pack that could not load can be pointed at its file where it is now, or taken off the list; and the Show
+     filter never hides one without saying so (B11 memory 5: "Old lint rules — Could not load" was hidden by the
+     default "Loaded rule packs" and had no action). */
+  const FAILED = 'Could not load';
+  const packFix = () => (mem().packFix = mem().packFix || {});
+  const packList = () => PACKS.filter(p => !(packFix()[p.id] || {}).removed).map(p => { const f = packFix()[p.id] || {}; return Object.assign({}, p, f.from ? { from: f.from, why: '' } : {}, { now: f.from ? 'Loaded' : p.state() }); });
+  const packFixBtn = p => ({ label: 'Fix', icon: 'edit', action: 'pm51-memory-pack-fix', data: { id: p.id } });
   function instructionsTab() {
     const mode = String(PM51.value(S.packs) || 'active');
-    const packs = PACKS.map(p => Object.assign({}, p, { now: p.state() })).filter(p => mode === 'all' ? true : mode === 'active' ? p.now === 'Loaded' : p.now !== 'Switched off');
-    const tone = st => st === 'Loaded' ? 'ready' : st === 'Could not load' ? 'attention' : 'neutral';
+    const all = packList();
+    const packs = all.filter(p => mode === 'all' ? true : mode === 'active' ? p.now === 'Loaded' : p.now !== 'Switched off');
+    const hiddenFailed = all.filter(p => p.now === FAILED && !packs.includes(p));
+    const tone = st => st === 'Loaded' ? 'ready' : st === FAILED ? 'attention' : 'neutral';
     return PM51.section({ title: 'Standing instructions', help: 'Rules every run reads, in every project and in this one.', body: docRow(S.appRules) + docRow(S.projectRules) + PM51.bound.rows([S.packing, S.reuse]) })
       + PM51.slot()
       + PM51.section({
         title: 'Rule packs', help: 'Every set of standing rules, where it comes from, and whether it loaded.',
-        body: `<div class="o55-toolbar o55-mem-toolbar">${PM51.bound.select(S.packs, { prefix: 'Show', width: 190 })}<span class="o55-toolbar-spacer"></span><span class="o55-quiet-line">${packs.length} of ${PACKS.length}</span></div>`
-          + (packs.length ? PM51.rows(packs.map(p => ({ label: p.name, help: p.why ? `${p.from}. ${p.why}` : p.from, control: PM51.status(p.now, tone(p.now)), action: p.id === 'app' || p.id === 'project' ? { label: 'Open', icon: 'edit', action: 'pm51-memory-rules', data: { setting: p.id === 'app' ? S.appRules : S.projectRules } } : p.id === 'persona' ? { label: 'Personas', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'memory', workspace: 'personas' } } : null }))) : PM51.note('No rule pack matches this view.', 'info'))
+        body: `<div class="o55-toolbar o55-mem-toolbar">${PM51.bound.select(S.packs, { prefix: 'Show', width: 190 })}<span class="o55-toolbar-spacer"></span><span class="o55-quiet-line">${packs.length} of ${all.length}</span></div>`
+          + (hiddenFailed.length ? PM51.rows(hiddenFailed.map(p => ({ label: `${p.name} could not load`, help: `${p.from}. ${p.why || ''} Shown here although this view lists loaded packs only.`.replace(/\s+/g, ' ').trim(), control: PM51.status(FAILED, 'attention'), action: packFixBtn(p) }))) : '')
+          + (packs.length ? PM51.rows(packs.map(p => ({ label: p.name, help: p.why ? `${p.from}. ${p.why}` : p.from, control: PM51.status(p.now, tone(p.now)), action: p.id === 'app' || p.id === 'project' ? { label: 'Open', icon: 'edit', action: 'pm51-memory-rules', data: { setting: p.id === 'app' ? S.appRules : S.projectRules } } : p.id === 'persona' ? { label: 'Personas', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'memory', workspace: 'personas' } } : p.now === FAILED ? packFixBtn(p) : null }))) : hiddenFailed.length ? '' : PM51.note('No rule pack matches this view.', 'info'))
       });
   }
 
@@ -368,7 +378,7 @@
       })
       + PM51.advanced(PM51.section({ title: 'Export and delete', body: PM51.rows([
         { label: 'Export memories', help: 'A plain file of every memory, without secrets.', action: { label: 'Export', action: 'pm51-memory-export', icon: 'download' } },
-        { label: 'Delete all memories', help: 'Removes every memory in this workspace. Cannot be undone.', action: { label: 'Delete all', action: 'pm51-memory-delete-all', icon: 'trash', danger: true } }
+        { label: 'Delete all memories', help: 'Removes every memory, the project\'s and yours. Cannot be undone.', action: { label: 'Delete all', action: 'pm51-memory-delete-all', icon: 'trash', danger: true } }
       ]) }));
   }
 
@@ -376,7 +386,7 @@
   function sourcesTab() {
     const m = mem();
     const rows = m.sources.map(([label, onNow], i) => label === 'Chat history'
-      ? { label, help: 'Earlier chats in this workspace. Off keeps each chat on its own.', control: PM51.bound.select(S.history, { label: 'Chat history', width: 160, choices: String(PM51.value(S.history)) === 'custom' ? ['none', 'recent', 'full', 'custom'] : ['none', 'recent', 'full'] }) }
+      ? { label, help: 'Earlier chats in this project. Off keeps each chat on its own.', control: PM51.bound.select(S.history, { label: 'Chat history', width: 160, choices: String(PM51.value(S.history)) === 'custom' ? ['none', 'recent', 'full', 'custom'] : ['none', 'recent', 'full'] }) }
       : { label, help: SOURCE_HELP[label] || '', control: PM51.toggle(!!onNow, { action: 'pm51-memory-source', data: { index: i }, label }) });
     return PM51.section({ title: 'What can feed context', help: 'Turn off anything the assistant should not read on its own.', body: PM51.rows(rows) })
       + PM51.advanced([
@@ -405,6 +415,24 @@
   });
 
   /* ---------- actions -------------------------------------------------- */
+  PM51.on('memory-pack-fix', el => {
+    const p = packList().find(x => x.id === ds(el, 'id')); if (!p) return;
+    PM51.panel({
+      title: `Fix ${p.name}`, eyebrow: 'Rule pack', icon: 'edit', status: { label: p.now, tone: p.now === FAILED ? 'attention' : 'ready' }, summary: `${p.from}. ${p.why || ''}`.trim(),
+      body: PM51.panelSection('Where the file is now', PM51.field('File', PM51.input(p.from, { cls: 'o55-setup-mono pm51-memory-pack-path', label: 'Where the file is now' }), 'A path in the project, such as docs/lint-rules.md.'))
+        + PM51.panelSection('Or take it off', PM51.btn({ label: 'Remove from the list', small: true, danger: true, icon: 'trash', action: 'pm51-memory-pack-remove', data: { id: p.id } }), 'Runs stop looking for it. The file, if it still exists, is not touched.'),
+      primaryLabel: 'Use this file',
+      onPrimary: w => {
+        const v = String((w.querySelector('.pm51-memory-pack-path') || {}).value || '').trim();
+        if (!v || v === p.from) { PM51.toast('Point it at the file', 'Type where the file is now.', 'info'); return false; }
+        packFix()[p.id] = { from: v }; saveState(); refresh(); PM51.toast('Rule pack loaded', `${p.name} reads ${v} now.`, 'success');
+      }
+    });
+  });
+  PM51.on('memory-pack-remove', el => {
+    const p = packList().find(x => x.id === ds(el, 'id')); if (!p) return;
+    PM51.confirm(`Remove ${p.name}?`, 'Runs stop looking for it. The file, if it still exists, is not touched.', 'Remove', () => { packFix()[p.id] = { removed: true }; saveState(); closeOverlay(false); refresh(); PM51.toast('Rule pack removed', `${p.name} is off the list.`); }, true);
+  });
   PM51.on('memory-add', () => editMemory(null));
   PM51.on('memory-edit', el => { const x = memories().find(o => o.id === ds(el, 'id')); if (x) editMemory(x); });
   PM51.on('memory-confirm', el => { const x = memories().find(o => o.id === ds(el, 'id')); if (!x) return; x.confidence = 'Confirmed'; x.updated = 'Now'; saveState(); if (!SHOW[showValue()](x)) PM51.setSel(ID, (shownList()[0] || {}).id); refresh(); PM51.toast('Memory confirmed', `${x.title} is now used like any other confirmed note.`); });
@@ -487,9 +515,21 @@
     ['prune', 'Prune faded notes', 'Notes past their fade time go to Recently forgotten, where they can still be restored.', 'trash', () => 'Nothing had faded yet.']
   ];
   const tidyBody = () => { const t = mem().tidy; const n = mem().candidates.length; return PM51.panelSection('Chores', PM51.rows(CHORES.map(([k, label, help, ic]) => ({ label, help: t[k] ? `${help} Last run ${t[k]}.` : help, action: { label: t[k] ? 'Run again' : 'Run', icon: ic, action: 'pm51-memory-chore', data: { chore: k } } })).concat([{ label: 'Review candidates to forget', help: n ? `${n} waiting for you to keep or forget.` : 'Nothing waiting.', action: n ? { label: 'Review', icon: 'eye', action: 'pm51-memory-candidates' } : null }]))) + PM51.note('Example only: these chores change nothing outside this preview.', 'info'); };
+  /* A panel that redraws its body after a button in it is pressed keeps the focus on that button (or the panel): the
+     old button left the page, focus fell to the page itself, and Escape, which a panel takes only from inside it, no
+     longer closed it (B11 memory 10: after a chore in "Tidy up memories", Escape did nothing). */
+  function redrawKeepingFocus(wrap, html) {
+    const b = wrap.querySelector('.pm51-panel-body'); if (!b) return;
+    const was = document.activeElement, inside = was && b.contains(was);
+    const key = inside ? [...was.attributes].filter(x => x.name === 'data-action' || /^data-(chore|id|key|index|setting)$/.test(x.name)).map(x => `[${x.name}="${cssEscape(x.value)}"]`).join('') : '';
+    b.innerHTML = html;
+    if (!inside) return;
+    const again = (key && b.querySelector(key)) || wrap.querySelector('.drawer, [role="dialog"]');
+    if (again) { if (!again.matches('button, [href], input, select, textarea, [tabindex]')) again.setAttribute('tabindex', '-1'); try { again.focus({ preventScroll: true }); } catch (e) { again.focus(); } }
+  }
   PM51.on('memory-tidy', () => {
     const wrap = PM51.panel({ title: 'Tidy up memories', eyebrow: 'Keeping & privacy', icon: 'wand', summary: 'Keep memory quick and accurate. None of these delete a note for good.', body: tidyBody() });
-    wrap._pm51Rerender = () => { const b = wrap.querySelector('.pm51-panel-body'); if (b) b.innerHTML = tidyBody(); };
+    wrap._pm51Rerender = () => redrawKeepingFocus(wrap, tidyBody());
   });
   PM51.on('memory-chore', el => {
     const c = CHORES.find(x => x[0] === ds(el, 'chore')); if (!c) return;
@@ -515,7 +555,7 @@
       ? PM51.panelSection('Review each one', PM51.list(c.map(x => ({ title: x.title, meta: `${String(x.meta || '').replace(/^This thread\b/, 'One chat')} · ${x.why}`, end: `<span class="pm51-memory-pair">${PM51.btn({ label: 'Keep', small: true, action: 'pm51-memory-candidate', data: { id: x.id, keep: '1' } })}${PM51.btn({ label: 'Forget', small: true, action: 'pm51-memory-candidate', data: { id: x.id, keep: '0' } })}</span>` }))))
       : PM51.panelSection('Review each one', PM51.note('Nothing left to review.')); };
     const wrap = PM51.panel({ title: 'Candidates to forget', subtitle: 'Keep anything that still matters. Forgotten items stay recoverable for 30 days.', body: body(), primaryLabel: 'Done', onPrimary: () => refresh() });
-    wrap._pm51Rerender = () => { const b = wrap.querySelector('.pm51-panel-body'); if (b) b.innerHTML = body(); };
+    wrap._pm51Rerender = () => redrawKeepingFocus(wrap, body());
   });
   PM51.on('memory-candidate', el => {
     const m = mem(); const id = ds(el, 'id'); const keep = ds(el, 'keep') === '1';
@@ -536,7 +576,7 @@
       ? PM51.panelSection('Recently forgotten', PM51.list(f.map(x => ({ title: x.title, meta: `${storeLabel(x.store)} · ${x.type}`, end: PM51.btn({ label: 'Restore', small: true, icon: 'restore', action: 'pm51-memory-unforget', data: { id: x.id } }) }))))
       : PM51.panelSection('Recently forgotten', PM51.note('Nothing to restore.')); };
     const wrap = PM51.panel({ title: 'Recently forgotten', subtitle: 'Restored memories go back to their store unchanged.', body: body(), primaryLabel: 'Done', onPrimary: () => refresh() });
-    wrap._pm51Rerender = () => { const b = wrap.querySelector('.pm51-panel-body'); if (b) b.innerHTML = body(); };
+    wrap._pm51Rerender = () => redrawKeepingFocus(wrap, body());
   });
   PM51.on('memory-unforget', el => {
     const m = mem(); const i = m.forgotten.findIndex(x => x.id === ds(el, 'id')); if (i < 0) return;
@@ -545,12 +585,12 @@
     refresh(); PM51.toast('Memory restored', x.title);
   });
   PM51.on('memory-export', () => PM51.panel({
-    title: 'Export memories', subtitle: 'A plain file you can read, keep, or bring into another workspace.',
+    title: 'Export memories', subtitle: 'A plain file you can read, keep, or bring into another project.',
     body: PM51.panelSection('What is included', PM51.kv([['Memories', String(memories().filter(x => x.store !== 'Thread').length)], ['Kept for', 'The project and you (notes kept for one chat are left out)'], ['Format', 'Plain text or JSON · no secrets']])) + PM51.note('Saving a file needs the desktop app. Nothing is written in this preview.'),
     primaryLabel: 'Save file', onPrimary: () => PM51.toast('Nothing saved', 'Example data only. Saving a file needs the desktop app.', 'info')
   }));
-  PM51.on('memory-delete-all', () => PM51.confirm('Delete all memories?', 'Every memory in this workspace is removed, including pinned rules. This cannot be undone.', 'Delete all', () => {
-    state.memories = []; const m = mem(); m.candidates = []; m.forgotten = []; m.results = null; PM51.setSel(ID, ''); saveState(); refresh(); PM51.toast('All memories deleted', 'The assistant starts fresh in this workspace.', 'warning');
+  PM51.on('memory-delete-all', () => PM51.confirm('Delete all memories?', 'Every memory is removed, the project\'s and yours, including pinned rules. This cannot be undone.', 'Delete all', () => {
+    state.memories = []; const m = mem(); m.candidates = []; m.forgotten = []; m.results = null; PM51.setSel(ID, ''); saveState(); refresh(); PM51.toast('All memories deleted', 'The assistant starts with no memories.', 'warning');
   }, true));
 
   PM51.on('memory-source', el => { const s = mem().sources[Number(ds(el, 'index'))]; if (s) s[1] = !s[1]; saveState(); refresh(); });
@@ -562,8 +602,8 @@
   }));
   PM51.on('memory-help', () => PM51.panel({
     title: 'How memory works',
-    body: PM51.panelSection('In short', '<p class="pm51-ps-text">The assistant keeps short notes about this workspace and about you. Before it answers, it looks for notes that fit the question and reads them first.</p>')
-      + PM51.panelSection('Who a memory is kept for', PM51.kv([['Project', 'Rules and decisions about this workspace. Crews can read them if you allow it.'], ['You', 'Your preferences. They follow you between projects and stay private.'], ['One chat', 'Working notes from a single chat. They fade when it ends; keep one longer by moving it to the project or to you.']]))
+    body: PM51.panelSection('In short', '<p class="pm51-ps-text">The assistant keeps short notes about this project and about you. Before it answers, it looks for notes that fit the question and reads them first.</p>')
+      + PM51.panelSection('Who a memory is kept for', PM51.kv([['Project', 'Rules and decisions about this project. Crews can read them if you allow it.'], ['You', 'Your preferences. They follow you between projects and stay private.'], ['One chat', 'Working notes from a single chat. They fade when it ends; keep one longer by moving it to the project or to you.']]))
       + PM51.panelSection('Memory and context space', '<p class="pm51-ps-text">Memories are kept between chats. The context space is the room a chat has to work in; when it fills, older parts of the chat are summarized. Each chat shows how full it is, and its own menu can squeeze it at once. This page sets the defaults every chat follows.</p>')
       + PM51.panelSection('You stay in control', '<p class="pm51-ps-text">Confirm what the assistant noticed, pin what matters, edit anything, and forget what no longer applies. Forgotten memories can be restored for 30 days.</p>')
   }));

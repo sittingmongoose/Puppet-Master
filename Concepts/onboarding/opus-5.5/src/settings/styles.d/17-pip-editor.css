@@ -30,6 +30,28 @@
 /* ---------- the top: the preview stage, the meter, the presets, Play ---------- */
 :is(#panel-settings, .pipe-host) .pipe-top { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
 :is(#panel-settings, .pipe-host) .pipe-stage { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 6px; min-height: 150px; padding: 12px 10px; border-radius: 12px; border: 1px solid var(--k3-line); }
+/* B-16: the dock. A zero-height line that sticks to the top of the sheet's scroller (its gap in the grid taken back),
+   with the box hanging from it at the right, so showing it moves nothing else */
+:is(#panel-settings, .pipe-host) .pipe-dock { position: sticky; top: 0; z-index: 3; height: 0; margin-bottom: -16px; }
+:is(#panel-settings, .pipe-host) .pipe-dock[hidden] { display: none; }
+:is(#panel-settings, .pipe-host) .pipe-dock-box { pointer-events: none; transition: opacity 140ms ease-out;
+  position: absolute; top: 6px; right: 0; display: grid; gap: 4px; padding: 6px 8px 8px; border: 1px solid var(--k3-line); border-radius: 12px;
+  background: var(--k3-bg-1, var(--surface, var(--background))); box-shadow: var(--elev-3, 0 14px 36px rgba(0, 0, 0, .25)); }
+:is(#panel-settings, .pipe-host) .pipe-dock.is-aside .pipe-dock-box { opacity: .1; }
+html[data-motion="reduced"] :is(#panel-settings, .pipe-host) .pipe-dock-box { transition: none; }
+@media (prefers-reduced-motion: reduce) { :is(#panel-settings, .pipe-host) .pipe-dock-box { transition: none; } }
+:is(#panel-settings, .pipe-host) .pipe-dock-title { font-size: 11px; font-weight: 600; color: var(--k3-text-2); }
+:is(#panel-settings, .pipe-host) .pipe-dock-stage { min-height: 0; padding: 4px 2px; gap: 2px; border: 0; flex-wrap: nowrap; }
+:is(#panel-settings, .pipe-host) .pipe-dock-stage .pipe-seat { min-width: 44px; gap: 3px; }
+:is(#panel-settings, .pipe-host) .pipe-dock-stage .pipe-seat .pmx-mark[data-size] { --pmx-mark-size: 30px; }
+:is(#panel-settings, .pipe-host) .pipe-dock-stage .pipe-seat figcaption { font-size: 10px; }
+:is(#panel-settings, .pipe-host) .pipe-dock-stage .pipe-seat figcaption small { font-size: 9.5px; }
+/* B-12: the Sound group's sample and Play's line about sound */
+:is(#panel-settings, .pipe-host) .pipe-hear-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 8px; }
+:is(#panel-settings, .pipe-host) .pipe-hear { display: inline-flex; align-items: center; gap: 6px; }
+:is(#panel-settings, .pipe-host) .pipe-hear .icon, :is(#panel-settings, .pipe-host) .pipe-hear svg { width: 14px; height: 14px; }
+:is(#panel-settings, .pipe-host) :is(.pipe-hear-why, .pipe-play-sound) { margin: 0; font-size: 11.5px; color: var(--k3-text-2); }
+:is(#panel-settings, .pipe-host) :is(.pipe-hear-why, .pipe-play-sound):empty { display: none; }
 /* the Settings side sheet is narrower than the dialog: the team takes the whole width above the meter and presets */
 #panel-settings .pipe-top { grid-template-columns: 1fr; }
 :is(#panel-settings, .pipe-host) .pipe-seat { margin: 0; display: grid; justify-items: center; gap: 6px; min-width: 60px; }

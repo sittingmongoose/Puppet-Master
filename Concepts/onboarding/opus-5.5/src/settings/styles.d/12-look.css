@@ -53,6 +53,16 @@ html[data-density="compact"] #panel-settings .settings-section.o55-group + .sett
 html[data-o55-accent] #panel-settings { --k3-accent-2: var(--accent-primary); }
 html[data-o55-accent] #panel-settings .o55g-wrap { --g-accent: var(--accent-primary); --g-on-accent: var(--o55-on-accent, #fff); }
 html[data-o55-accent] #panel-settings .setting-row.is-changed::before { background: var(--k3-accent); }
+/* B-7: and the selections themselves. The switcher's chosen block (Settings' chapter rail, section tabs, page index,
+   manager tabs and segmented choices, the title bar's page tabs, Usage's navigation: css/60-switcher-looks.css) is
+   painted from --pm-switch-fill, which Basic, Friendly and Retro write as a colour of their own (Basic Dark #64B5F6), so a
+   chosen accent changed only its swatch and a few small marks. With an accent chosen it takes the accent, its words black
+   or white, whichever reads better on it (--o55-on-switch, kit.d/17-look.js). Glass's lens is clear glass and NieR's ink
+   is the look itself: they keep their own. */
+html[data-o55-accent]:not([data-theme^="glass"]):not([data-o55-nier="on"]):not(#o55-accent) {
+  --pm-switch-fill: var(--accent-primary); --pm-switch-hover-line: var(--accent-primary); --pm-switch-mark: var(--accent-primary);
+  --pm-switch-ink-on: var(--o55-on-switch, #fff); --pm-switch-mark-on: var(--o55-on-switch, #fff);
+}
 
 /* Theme preview bar: centred at the bottom, above everything, in the current theme's surface colours. */
 .o55-preview-bar { position: fixed; left: 50%; bottom: 44px; transform: translateX(-50%); z-index: 10050; display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px); padding: 10px 12px 10px 16px; border: 1px solid var(--k3-line, var(--border)); border-radius: 12px; background: var(--k3-surface-2, var(--surface-elevated)); color: var(--k3-text-1, var(--text-primary)); box-shadow: 0 14px 40px rgba(0,0,0,.28); font-size: 13px; }
