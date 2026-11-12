@@ -1,0 +1,3227 @@
+{
+  "schema_id": "pm.collaboration_event_admission.v1",
+  "schema_version": "1.0.0",
+  "ledger_id": "COLLABORATION-DL090-PREP-20261104",
+  "description": "Prepared, not admitted: the 18 collaborative workflow families of DL-090 and DL-091 with the final registry row each own Storage admission landing will append. A prepared row is denied by the admission path, absent from Plans/event_family_registry.json and unable to advance a projection checkpoint (DL-046's rule for prepared rows, applied by analogy as the coordination preparation did).",
+  "admission_rule": "A family moves to admitted_static_contract only in its own Storage admission landing, one family per landing, after its own blind form-driven review, with the registry row byte-equal in canonical JSON to registry_row, its registry_row_sha256 recomputed by the DL-077 recipe, its own Decision Log entry and DL-077 admission record, and an authority_contract_ref naming this ledger row.",
+  "authority_refs": [
+    "Plans/Decision_Log.md#DL-090",
+    "Plans/Decision_Log.md#DL-091",
+    "Plans/Decision_Log.md#DL-092",
+    "Plans/Decision_Log.md#DL-292",
+    "Plans/Decision_Log.md#DL-045",
+    "Plans/Decision_Log.md#DL-078"
+  ],
+  "rows": [
+    {
+      "event_type": "collaboration.created",
+      "family_id": "event-family-collaboration-created",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-106",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-461",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-461",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-231",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.admit_run(StartAdmission)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-created",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.created",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-106",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-461",
+        "payload_schema_id": "pm.collaboration_event.collaboration_created.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_created",
+          "schema_id": "pm.collaboration_event.collaboration_created.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/0",
+          "Plans/Collaborative_Workflows.md#CWR-106",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-461",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_created",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_created_application",
+          "Plans/storage-plan.md#SP-461",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-231",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_created.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_created",
+              "schema_id": "pm.collaboration_event.collaboration_created.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-106",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-461",
+            "read_owner_ref": "Plans/storage-plan.md#SP-461",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_created.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_created_application",
+              "schema_id": "pm.collaboration_event.collaboration_created.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-461",
+            "read_owner_ref": "Plans/storage-plan.md#SP-461",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "d9d72c06bbfddd1c42626d7fc3d6bcf79a1a43862249cf55e1b8c6fef1872682",
+      "validation_case_ids": [
+        "created_project",
+        "created_application",
+        "created_crew_auto_dedicated_coordinator",
+        "created_review_application",
+        "created_text_field_refused",
+        "created_missing_definition_revision",
+        "created_project_null_project_id",
+        "created_application_with_project_id",
+        "created_offset_timestamp",
+        "created_key_of_another_subject",
+        "created_currentness_not_a_hash",
+        "created_impossible_date",
+        "created_revision_2",
+        "event_valid_created_project",
+        "event_valid_created_application",
+        "event_created_occurred_at_join",
+        "event_created_sibling_payload_schema_id",
+        "event_created_sibling_event_id",
+        "event_created_application_schema_in_project_record",
+        "event_created_run_id_join",
+        "identity_created_project",
+        "identity_created_application",
+        "identity_created_new_epoch",
+        "crew_lifecycle_to_completed",
+        "pause_resume_cancel_with_fence",
+        "limit_stop_is_cancelled",
+        "run_fails_after_participant_failure",
+        "completion_needs_required_slots",
+        "definition_revisions_and_rerun",
+        "attempt_identity_rules",
+        "brainstorm_proposals_votes_synthesis",
+        "brainstorm_event_on_crew_run",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "review_completion_needs_artifact",
+        "chat_room_end_from_paused",
+        "application_scope_lifecycle",
+        "family_not_admitted_quarantined",
+        "COLLAB-START-01",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.started",
+      "family_id": "event-family-collaboration-started",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-107",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-462",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-462",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-232",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.admit_run(StartAdmission)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-started",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.started",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-107",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-462",
+        "payload_schema_id": "pm.collaboration_event.collaboration_started.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_started",
+          "schema_id": "pm.collaboration_event.collaboration_started.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/1",
+          "Plans/Collaborative_Workflows.md#CWR-107",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-462",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_started",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_started_application",
+          "Plans/storage-plan.md#SP-462",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-232",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_started.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_started",
+              "schema_id": "pm.collaboration_event.collaboration_started.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-107",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-462",
+            "read_owner_ref": "Plans/storage-plan.md#SP-462",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_started.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_started_application",
+              "schema_id": "pm.collaboration_event.collaboration_started.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-462",
+            "read_owner_ref": "Plans/storage-plan.md#SP-462",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "4ad22f2974f6ef35969d07512af53d3280cce86e8649ddee55f1a5e5a071cb2c",
+      "validation_case_ids": [
+        "started_project",
+        "started_application",
+        "started_review_with_pack",
+        "started_crew_auto",
+        "started_build_with_crew",
+        "started_brainstorm_waiting",
+        "started_text_field_refused",
+        "started_missing_lifecycle_seq",
+        "started_project_null_project_id",
+        "started_application_with_project_id",
+        "started_offset_timestamp",
+        "started_key_of_another_subject",
+        "started_currentness_not_a_hash",
+        "started_impossible_date",
+        "started_seq_2",
+        "started_crew_auto_without_revision",
+        "started_revision_without_crew_auto",
+        "started_build_with_crew_without_plan",
+        "started_review_without_pack",
+        "started_state_configuring",
+        "event_valid_started_project",
+        "event_valid_started_application",
+        "event_started_occurred_at_join",
+        "event_started_sibling_payload_schema_id",
+        "event_started_sibling_event_id",
+        "event_started_application_schema_in_project_record",
+        "event_started_run_id_join",
+        "event_shared_project_payload_in_application_record",
+        "event_shared_inline_payload_ref",
+        "event_shared_thread_join",
+        "event_shared_project_join",
+        "event_shared_attempt_on_run_event",
+        "event_shared_key_join",
+        "event_shared_redaction_redacted",
+        "event_shared_replay_append_once",
+        "event_shared_event_id_off_recipe",
+        "event_shared_node_id_set",
+        "identity_started_project",
+        "identity_started_application",
+        "identity_started_new_epoch",
+        "crew_lifecycle_to_completed",
+        "pause_resume_cancel_with_fence",
+        "limit_stop_is_cancelled",
+        "run_fails_after_participant_failure",
+        "completion_needs_required_slots",
+        "definition_revisions_and_rerun",
+        "attempt_identity_rules",
+        "brainstorm_proposals_votes_synthesis",
+        "brainstorm_event_on_crew_run",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "review_completion_needs_artifact",
+        "chat_room_end_from_paused",
+        "application_scope_lifecycle",
+        "family_not_admitted_quarantined",
+        "COLLAB-START-01",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.paused",
+      "family_id": "event-family-collaboration-paused",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-108",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-463",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-463",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-233",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_paused(PauseReached)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-paused",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.paused",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-108",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-463",
+        "payload_schema_id": "pm.collaboration_event.collaboration_paused.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_paused",
+          "schema_id": "pm.collaboration_event.collaboration_paused.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/2",
+          "Plans/Collaborative_Workflows.md#CWR-108",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-463",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_paused",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_paused_application",
+          "Plans/storage-plan.md#SP-463",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-233",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_paused.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_paused",
+              "schema_id": "pm.collaboration_event.collaboration_paused.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-108",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-463",
+            "read_owner_ref": "Plans/storage-plan.md#SP-463",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_paused.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_paused_application",
+              "schema_id": "pm.collaboration_event.collaboration_paused.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-463",
+            "read_owner_ref": "Plans/storage-plan.md#SP-463",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "3f467c0b2a315808e0efca741c92662fcc7f5c4ac4b432a7b698ed95414fffb6",
+      "validation_case_ids": [
+        "paused_project",
+        "paused_application",
+        "paused_from_waiting",
+        "paused_chat_room_application",
+        "paused_text_field_refused",
+        "paused_missing_lifecycle_seq",
+        "paused_project_null_project_id",
+        "paused_application_with_project_id",
+        "paused_offset_timestamp",
+        "paused_key_of_another_subject",
+        "paused_currentness_not_a_hash",
+        "paused_impossible_date",
+        "paused_seq_1",
+        "paused_from_paused",
+        "event_valid_paused_project",
+        "event_valid_paused_application",
+        "event_paused_occurred_at_join",
+        "event_paused_sibling_payload_schema_id",
+        "event_paused_sibling_event_id",
+        "event_paused_application_schema_in_project_record",
+        "event_paused_run_id_join",
+        "identity_paused_project",
+        "identity_paused_application",
+        "identity_paused_new_epoch",
+        "pause_resume_cancel_with_fence",
+        "chat_room_end_from_paused",
+        "application_scope_lifecycle",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-PAUSE-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.resumed",
+      "family_id": "event-family-collaboration-resumed",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-109",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-464",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-464",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-234",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_resumed(ResumeAdmitted)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-resumed",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.resumed",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-109",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-464",
+        "payload_schema_id": "pm.collaboration_event.collaboration_resumed.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_resumed",
+          "schema_id": "pm.collaboration_event.collaboration_resumed.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/3",
+          "Plans/Collaborative_Workflows.md#CWR-109",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-464",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_resumed",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_resumed_application",
+          "Plans/storage-plan.md#SP-464",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-234",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_resumed.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_resumed",
+              "schema_id": "pm.collaboration_event.collaboration_resumed.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-109",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-464",
+            "read_owner_ref": "Plans/storage-plan.md#SP-464",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_resumed.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_resumed_application",
+              "schema_id": "pm.collaboration_event.collaboration_resumed.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-464",
+            "read_owner_ref": "Plans/storage-plan.md#SP-464",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "2b99e2a35729f736fece5e532bb246b5927f163e9e9f798b2e942fc8181a7244",
+      "validation_case_ids": [
+        "resumed_project",
+        "resumed_application",
+        "resumed_to_blocked",
+        "resumed_review_application",
+        "resumed_text_field_refused",
+        "resumed_missing_lifecycle_seq",
+        "resumed_project_null_project_id",
+        "resumed_application_with_project_id",
+        "resumed_offset_timestamp",
+        "resumed_key_of_another_subject",
+        "resumed_currentness_not_a_hash",
+        "resumed_impossible_date",
+        "resumed_state_after_paused",
+        "event_valid_resumed_project",
+        "event_valid_resumed_application",
+        "event_resumed_occurred_at_join",
+        "event_resumed_sibling_payload_schema_id",
+        "event_resumed_sibling_event_id",
+        "event_resumed_application_schema_in_project_record",
+        "event_resumed_run_id_join",
+        "identity_resumed_project",
+        "identity_resumed_application",
+        "identity_resumed_new_epoch",
+        "pause_resume_cancel_with_fence",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-PAUSE-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.cancelled",
+      "family_id": "event-family-collaboration-cancelled",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-110",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-465",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-465",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-235",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_cancelled(CancelSettled)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-cancelled",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.cancelled",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-110",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-465",
+        "payload_schema_id": "pm.collaboration_event.collaboration_cancelled.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_cancelled",
+          "schema_id": "pm.collaboration_event.collaboration_cancelled.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/4",
+          "Plans/Collaborative_Workflows.md#CWR-110",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-465",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_cancelled",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_cancelled_application",
+          "Plans/storage-plan.md#SP-465",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-235",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_cancelled.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_cancelled",
+              "schema_id": "pm.collaboration_event.collaboration_cancelled.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-110",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-465",
+            "read_owner_ref": "Plans/storage-plan.md#SP-465",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_cancelled.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_cancelled_application",
+              "schema_id": "pm.collaboration_event.collaboration_cancelled.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-465",
+            "read_owner_ref": "Plans/storage-plan.md#SP-465",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "a20f2f01589c1e51eeceda7866ab32b211748236e1f5f209600e2bc9199ff152",
+      "validation_case_ids": [
+        "cancelled_project",
+        "cancelled_application",
+        "cancelled_limit_cost",
+        "cancelled_text_field_refused",
+        "cancelled_missing_lifecycle_seq",
+        "cancelled_project_null_project_id",
+        "cancelled_application_with_project_id",
+        "cancelled_offset_timestamp",
+        "cancelled_key_of_another_subject",
+        "cancelled_currentness_not_a_hash",
+        "cancelled_impossible_date",
+        "cancelled_limit_with_command",
+        "cancelled_user_without_command",
+        "cancelled_failure_stop_reason",
+        "event_valid_cancelled_project",
+        "event_valid_cancelled_application",
+        "event_cancelled_occurred_at_join",
+        "event_cancelled_sibling_payload_schema_id",
+        "event_cancelled_sibling_event_id",
+        "event_cancelled_application_schema_in_project_record",
+        "event_cancelled_run_id_join",
+        "identity_cancelled_project",
+        "identity_cancelled_application",
+        "identity_cancelled_new_epoch",
+        "pause_resume_cancel_with_fence",
+        "limit_stop_is_cancelled",
+        "application_scope_lifecycle",
+        "family_not_admitted_quarantined",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-CANCEL-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.completed",
+      "family_id": "event-family-collaboration-completed",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-111",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-466",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-466",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-236",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_completed(CompletionSettled)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-completed",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.completed",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-111",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-466",
+        "payload_schema_id": "pm.collaboration_event.collaboration_completed.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_completed",
+          "schema_id": "pm.collaboration_event.collaboration_completed.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/5",
+          "Plans/Collaborative_Workflows.md#CWR-111",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-466",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_completed",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_completed_application",
+          "Plans/storage-plan.md#SP-466",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-236",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_completed.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_completed",
+              "schema_id": "pm.collaboration_event.collaboration_completed.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-111",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-466",
+            "read_owner_ref": "Plans/storage-plan.md#SP-466",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_completed.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_completed_application",
+              "schema_id": "pm.collaboration_event.collaboration_completed.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-466",
+            "read_owner_ref": "Plans/storage-plan.md#SP-466",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "2cb13a7c5669dfce273179868ba30dc5ed1adf7fad0e392e9007027ecb1247fd",
+      "validation_case_ids": [
+        "completed_project",
+        "completed_application",
+        "completed_chat_room_end_paused",
+        "completed_review_outputs",
+        "completed_text_field_refused",
+        "completed_missing_lifecycle_seq",
+        "completed_project_null_project_id",
+        "completed_application_with_project_id",
+        "completed_offset_timestamp",
+        "completed_key_of_another_subject",
+        "completed_currentness_not_a_hash",
+        "completed_impossible_date",
+        "completed_chat_room_end_on_crew",
+        "completed_predicate_from_paused",
+        "event_valid_completed_project",
+        "event_valid_completed_application",
+        "event_completed_occurred_at_join",
+        "event_completed_sibling_payload_schema_id",
+        "event_completed_sibling_event_id",
+        "event_completed_application_schema_in_project_record",
+        "event_completed_run_id_join",
+        "identity_completed_project",
+        "identity_completed_application",
+        "identity_completed_new_epoch",
+        "crew_lifecycle_to_completed",
+        "completion_needs_required_slots",
+        "definition_revisions_and_rerun",
+        "brainstorm_proposals_votes_synthesis",
+        "review_partial_then_accepted",
+        "review_completion_needs_artifact",
+        "chat_room_end_from_paused",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-COMPLETE-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.failed",
+      "family_id": "event-family-collaboration-failed",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-091",
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-112",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-467",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-467",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-237",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_failed(FailureSettled)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-failed",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.failed",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-112",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-467",
+        "payload_schema_id": "pm.collaboration_event.collaboration_failed.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_failed",
+          "schema_id": "pm.collaboration_event.collaboration_failed.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/6",
+          "Plans/Collaborative_Workflows.md#CWR-112",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-467",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_failed",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_failed_application",
+          "Plans/storage-plan.md#SP-467",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-091",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-237",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_failed.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_failed",
+              "schema_id": "pm.collaboration_event.collaboration_failed.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-112",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-467",
+            "read_owner_ref": "Plans/storage-plan.md#SP-467",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_failed.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_failed_application",
+              "schema_id": "pm.collaboration_event.collaboration_failed.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-467",
+            "read_owner_ref": "Plans/storage-plan.md#SP-467",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "f1189e6e489a564913e4a4bc316149f8fe0605a2a06dbb99a6d6bb4068722d35",
+      "validation_case_ids": [
+        "failed_project",
+        "failed_project_required_only",
+        "failed_application",
+        "failed_model_unavailable_paused",
+        "failed_text_field_refused",
+        "failed_missing_lifecycle_seq",
+        "failed_project_null_project_id",
+        "failed_application_with_project_id",
+        "failed_offset_timestamp",
+        "failed_key_of_another_subject",
+        "failed_currentness_not_a_hash",
+        "failed_impossible_date",
+        "failed_reason_cancelled",
+        "failed_free_text_reason",
+        "event_valid_failed_project",
+        "event_valid_failed_application",
+        "event_failed_occurred_at_join",
+        "event_failed_sibling_payload_schema_id",
+        "event_failed_sibling_event_id",
+        "event_failed_application_schema_in_project_record",
+        "event_failed_run_id_join",
+        "identity_failed_project",
+        "identity_failed_application",
+        "identity_failed_new_epoch",
+        "limit_stop_is_cancelled",
+        "run_fails_after_participant_failure",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-FAIL-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.participant_started",
+      "family_id": "event-family-collaboration-participant-started",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-113",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-468",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-468",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-238",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.admit_attempt(AttemptAdmission)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-participant-started",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.participant_started",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-113",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-468",
+        "payload_schema_id": "pm.collaboration_event.collaboration_participant_started.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_participant_started",
+          "schema_id": "pm.collaboration_event.collaboration_participant_started.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/7",
+          "Plans/Collaborative_Workflows.md#CWR-113",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-468",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_started",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_started_application",
+          "Plans/storage-plan.md#SP-468",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-238",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_participant_started.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_participant_started",
+              "schema_id": "pm.collaboration_event.collaboration_participant_started.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-113",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-468",
+            "read_owner_ref": "Plans/storage-plan.md#SP-468",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_participant_started.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_participant_started_application",
+              "schema_id": "pm.collaboration_event.collaboration_participant_started.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-468",
+            "read_owner_ref": "Plans/storage-plan.md#SP-468",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "73775ca36919e4309e924e9e8b3f9103f462e1e2ecc4708be449ad617902c520",
+      "validation_case_ids": [
+        "participant_started_project",
+        "participant_started_project_required_only",
+        "participant_started_application",
+        "participant_started_wonderer_retry",
+        "participant_started_text_field_refused",
+        "participant_started_missing_participant_slot_id",
+        "participant_started_project_null_project_id",
+        "participant_started_application_with_project_id",
+        "participant_started_offset_timestamp",
+        "participant_started_key_of_another_subject",
+        "participant_started_currentness_not_a_hash",
+        "participant_started_impossible_date",
+        "participant_started_grill_me_role",
+        "participant_started_no_attempt",
+        "event_valid_participant_started_project",
+        "event_valid_participant_started_application",
+        "event_participant_started_occurred_at_join",
+        "event_participant_started_sibling_payload_schema_id",
+        "event_participant_started_sibling_event_id",
+        "event_participant_started_application_schema_in_project_record",
+        "event_participant_started_run_id_join",
+        "identity_participant_started_project",
+        "identity_participant_started_application",
+        "identity_participant_started_new_epoch",
+        "crew_lifecycle_to_completed",
+        "pause_resume_cancel_with_fence",
+        "run_fails_after_participant_failure",
+        "completion_needs_required_slots",
+        "definition_revisions_and_rerun",
+        "attempt_identity_rules",
+        "brainstorm_proposals_votes_synthesis",
+        "brainstorm_event_on_crew_run",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-ATTEMPT-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.participant_completed",
+      "family_id": "event-family-collaboration-participant-completed",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-114",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-469",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-469",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-239",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_outcome(ParticipantOutcome)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-participant-completed",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.participant_completed",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-114",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-469",
+        "payload_schema_id": "pm.collaboration_event.collaboration_participant_completed.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_participant_completed",
+          "schema_id": "pm.collaboration_event.collaboration_participant_completed.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/8",
+          "Plans/Collaborative_Workflows.md#CWR-114",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-469",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_completed",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_completed_application",
+          "Plans/storage-plan.md#SP-469",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-239",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_participant_completed.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_participant_completed",
+              "schema_id": "pm.collaboration_event.collaboration_participant_completed.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-114",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-469",
+            "read_owner_ref": "Plans/storage-plan.md#SP-469",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_participant_completed.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_participant_completed_application",
+              "schema_id": "pm.collaboration_event.collaboration_participant_completed.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-469",
+            "read_owner_ref": "Plans/storage-plan.md#SP-469",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "029c65f7c3dc6b0c5434afde727bead04a5de07009b4b20602f85ff2ed9180e0",
+      "validation_case_ids": [
+        "participant_completed_project",
+        "participant_completed_application",
+        "participant_completed_failed",
+        "participant_completed_unavailable",
+        "participant_completed_waived_no_attempt",
+        "participant_completed_canceled",
+        "participant_completed_text_field_refused",
+        "participant_completed_missing_participant_slot_id",
+        "participant_completed_project_null_project_id",
+        "participant_completed_application_with_project_id",
+        "participant_completed_offset_timestamp",
+        "participant_completed_key_of_another_subject",
+        "participant_completed_currentness_not_a_hash",
+        "participant_completed_impossible_date",
+        "participant_completed_unavailable_with_attempt",
+        "participant_completed_failed_without_reason",
+        "participant_completed_waiver_without_actor",
+        "participant_completed_missing_callback_value",
+        "event_valid_participant_completed_project",
+        "event_valid_participant_completed_application",
+        "event_participant_completed_occurred_at_join",
+        "event_participant_completed_sibling_payload_schema_id",
+        "event_participant_completed_sibling_event_id",
+        "event_participant_completed_application_schema_in_project_record",
+        "event_participant_completed_run_id_join",
+        "identity_participant_completed_project",
+        "identity_participant_completed_application",
+        "identity_participant_completed_new_epoch",
+        "crew_lifecycle_to_completed",
+        "pause_resume_cancel_with_fence",
+        "run_fails_after_participant_failure",
+        "completion_needs_required_slots",
+        "definition_revisions_and_rerun",
+        "attempt_identity_rules",
+        "brainstorm_proposals_votes_synthesis",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-CANCEL-01",
+        "COLLAB-ATTEMPT-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.message_added",
+      "family_id": "event-family-collaboration-message-added",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-115",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-470",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-470",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-240",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.write_message(MessageWrite)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-message-added",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.message_added",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-115",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-470",
+        "payload_schema_id": "pm.collaboration_event.collaboration_message_added.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_message_added",
+          "schema_id": "pm.collaboration_event.collaboration_message_added.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/9",
+          "Plans/Collaborative_Workflows.md#CWR-115",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-470",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_message_added",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_message_added_application",
+          "Plans/storage-plan.md#SP-470",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-240",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_message_added.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_message_added",
+              "schema_id": "pm.collaboration_event.collaboration_message_added.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-115",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-470",
+            "read_owner_ref": "Plans/storage-plan.md#SP-470",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_message_added.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_message_added_application",
+              "schema_id": "pm.collaboration_event.collaboration_message_added.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-470",
+            "read_owner_ref": "Plans/storage-plan.md#SP-470",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "d8986b00c4a377f02663de17a7f8bc073a0cf3918e63eaa8bdd5e22e1dfe79c5",
+      "validation_case_ids": [
+        "message_added_project",
+        "message_added_project_required_only",
+        "message_added_application",
+        "message_added_user_to_two",
+        "message_added_system_reply",
+        "message_added_participant_attempt",
+        "message_added_text_field_refused",
+        "message_added_missing_collaboration_message_id",
+        "message_added_project_null_project_id",
+        "message_added_application_with_project_id",
+        "message_added_offset_timestamp",
+        "message_added_key_of_another_subject",
+        "message_added_currentness_not_a_hash",
+        "message_added_impossible_date",
+        "message_added_sequence_zero",
+        "message_added_user_with_attempt",
+        "message_added_partial_delta_type",
+        "event_valid_message_added_project",
+        "event_valid_message_added_application",
+        "event_message_added_occurred_at_join",
+        "event_message_added_sibling_payload_schema_id",
+        "event_message_added_sibling_event_id",
+        "event_message_added_application_schema_in_project_record",
+        "event_message_added_run_id_join",
+        "identity_message_added_project",
+        "identity_message_added_application",
+        "identity_message_added_new_epoch",
+        "crew_lifecycle_to_completed",
+        "completion_needs_required_slots",
+        "review_partial_then_accepted",
+        "chat_room_end_from_paused",
+        "application_scope_lifecycle",
+        "family_not_admitted_quarantined",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-MESSAGE-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.artifact_added",
+      "family_id": "event-family-collaboration-artifact-added",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-116",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-471",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-471",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-241",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.attach_artifact(ArtifactAttached)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-artifact-added",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.artifact_added",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-116",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-471",
+        "payload_schema_id": "pm.collaboration_event.collaboration_artifact_added.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_artifact_added",
+          "schema_id": "pm.collaboration_event.collaboration_artifact_added.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/10",
+          "Plans/Collaborative_Workflows.md#CWR-116",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-471",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_artifact_added",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_artifact_added_application",
+          "Plans/storage-plan.md#SP-471",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-241",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_artifact_added.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_artifact_added",
+              "schema_id": "pm.collaboration_event.collaboration_artifact_added.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-116",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-471",
+            "read_owner_ref": "Plans/storage-plan.md#SP-471",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_artifact_added.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_artifact_added_application",
+              "schema_id": "pm.collaboration_event.collaboration_artifact_added.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-471",
+            "read_owner_ref": "Plans/storage-plan.md#SP-471",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "83ff7042108bee2be1a4f85377d1c9162e1938e4fd7e8c2bee2e2a2c291d3b33",
+      "validation_case_ids": [
+        "artifact_added_project",
+        "artifact_added_project_required_only",
+        "artifact_added_application",
+        "artifact_added_wonderer_pass",
+        "artifact_added_text_field_refused",
+        "artifact_added_missing_artifact_ref",
+        "artifact_added_project_null_project_id",
+        "artifact_added_application_with_project_id",
+        "artifact_added_offset_timestamp",
+        "artifact_added_key_of_another_subject",
+        "artifact_added_currentness_not_a_hash",
+        "artifact_added_impossible_date",
+        "artifact_added_absolute_path_ref",
+        "event_valid_artifact_added_project",
+        "event_valid_artifact_added_application",
+        "event_artifact_added_occurred_at_join",
+        "event_artifact_added_sibling_payload_schema_id",
+        "event_artifact_added_sibling_event_id",
+        "event_artifact_added_application_schema_in_project_record",
+        "event_artifact_added_run_id_join",
+        "identity_artifact_added_project",
+        "identity_artifact_added_application",
+        "identity_artifact_added_new_epoch",
+        "crew_lifecycle_to_completed",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-ARTIFACT-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "collaboration.configuration_changed",
+      "family_id": "event-family-collaboration-configuration-changed",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-117",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-472",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-472",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-242",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.commit_revision(RevisionCommit)",
+      "registry_row": {
+        "family_id": "event-family-collaboration-configuration-changed",
+        "family_revision": "1.0.0",
+        "event_type": "collaboration.configuration_changed",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-117",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-472",
+        "payload_schema_id": "pm.collaboration_event.collaboration_configuration_changed.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/collaboration_configuration_changed",
+          "schema_id": "pm.collaboration_event.collaboration_configuration_changed.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/11",
+          "Plans/Collaborative_Workflows.md#CWR-117",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-472",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_configuration_changed",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_configuration_changed_application",
+          "Plans/storage-plan.md#SP-472",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-242",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.collaboration_configuration_changed.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_configuration_changed",
+              "schema_id": "pm.collaboration_event.collaboration_configuration_changed.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-117",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-472",
+            "read_owner_ref": "Plans/storage-plan.md#SP-472",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.collaboration_configuration_changed.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/collaboration_configuration_changed_application",
+              "schema_id": "pm.collaboration_event.collaboration_configuration_changed.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-472",
+            "read_owner_ref": "Plans/storage-plan.md#SP-472",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "13681a3632c7e15f69b4fe7e97c0b8a1649e75703ec44c61d1815957a06a8e96",
+      "validation_case_ids": [
+        "configuration_changed_project",
+        "configuration_changed_application",
+        "configuration_changed_start_commit",
+        "configuration_changed_finish_stale",
+        "configuration_changed_waive",
+        "configuration_changed_text_field_refused",
+        "configuration_changed_missing_definition_revision",
+        "configuration_changed_project_null_project_id",
+        "configuration_changed_application_with_project_id",
+        "configuration_changed_offset_timestamp",
+        "configuration_changed_key_of_another_subject",
+        "configuration_changed_currentness_not_a_hash",
+        "configuration_changed_impossible_date",
+        "configuration_changed_revision_1",
+        "configuration_changed_previous_not_minus_one",
+        "configuration_changed_reconfigure_without_change",
+        "configuration_changed_start_commit_with_system_message",
+        "configuration_changed_unknown_change_kind",
+        "event_valid_configuration_changed_project",
+        "event_valid_configuration_changed_application",
+        "event_configuration_changed_occurred_at_join",
+        "event_configuration_changed_sibling_payload_schema_id",
+        "event_configuration_changed_sibling_event_id",
+        "event_configuration_changed_application_schema_in_project_record",
+        "event_configuration_changed_run_id_join",
+        "identity_configuration_changed_project",
+        "identity_configuration_changed_application",
+        "identity_configuration_changed_new_epoch",
+        "completion_needs_required_slots",
+        "definition_revisions_and_rerun",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-RECONFIGURE-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "brainstorm.proposal_added",
+      "family_id": "event-family-brainstorm-proposal-added",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-118",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-473",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-473",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-243",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.release_proposal(ProposalNormalized)",
+      "registry_row": {
+        "family_id": "event-family-brainstorm-proposal-added",
+        "family_revision": "1.0.0",
+        "event_type": "brainstorm.proposal_added",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-118",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-473",
+        "payload_schema_id": "pm.collaboration_event.brainstorm_proposal_added.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/brainstorm_proposal_added",
+          "schema_id": "pm.collaboration_event.brainstorm_proposal_added.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/12",
+          "Plans/Collaborative_Workflows.md#CWR-118",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-473",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_proposal_added",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_proposal_added_application",
+          "Plans/storage-plan.md#SP-473",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-243",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.brainstorm_proposal_added.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/brainstorm_proposal_added",
+              "schema_id": "pm.collaboration_event.brainstorm_proposal_added.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-118",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-473",
+            "read_owner_ref": "Plans/storage-plan.md#SP-473",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.brainstorm_proposal_added.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/brainstorm_proposal_added_application",
+              "schema_id": "pm.collaboration_event.brainstorm_proposal_added.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-473",
+            "read_owner_ref": "Plans/storage-plan.md#SP-473",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "563c4ee6c10133e7e6d7e7801d8744e4495fec8b53525463e6a9a45f78b26ae4",
+      "validation_case_ids": [
+        "proposal_added_project",
+        "proposal_added_application",
+        "proposal_added_hybrid_round_2",
+        "proposal_added_text_field_refused",
+        "proposal_added_missing_proposal_id",
+        "proposal_added_project_null_project_id",
+        "proposal_added_application_with_project_id",
+        "proposal_added_offset_timestamp",
+        "proposal_added_key_of_another_subject",
+        "proposal_added_currentness_not_a_hash",
+        "proposal_added_impossible_date",
+        "proposal_added_on_crew",
+        "proposal_added_round_0",
+        "event_valid_proposal_added_project",
+        "event_valid_proposal_added_application",
+        "event_proposal_added_occurred_at_join",
+        "event_proposal_added_sibling_payload_schema_id",
+        "event_proposal_added_sibling_event_id",
+        "event_proposal_added_application_schema_in_project_record",
+        "event_proposal_added_run_id_join",
+        "identity_proposal_added_project",
+        "identity_proposal_added_application",
+        "identity_proposal_added_new_epoch",
+        "brainstorm_proposals_votes_synthesis",
+        "brainstorm_event_on_crew_run",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-BLIND-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "brainstorm.vote_added",
+      "family_id": "event-family-brainstorm-vote-added",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-119",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-474",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-474",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-244",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_vote(VoteCast)",
+      "registry_row": {
+        "family_id": "event-family-brainstorm-vote-added",
+        "family_revision": "1.0.0",
+        "event_type": "brainstorm.vote_added",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-119",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-474",
+        "payload_schema_id": "pm.collaboration_event.brainstorm_vote_added.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/brainstorm_vote_added",
+          "schema_id": "pm.collaboration_event.brainstorm_vote_added.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/13",
+          "Plans/Collaborative_Workflows.md#CWR-119",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-474",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_vote_added",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_vote_added_application",
+          "Plans/storage-plan.md#SP-474",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-244",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.brainstorm_vote_added.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/brainstorm_vote_added",
+              "schema_id": "pm.collaboration_event.brainstorm_vote_added.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-119",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-474",
+            "read_owner_ref": "Plans/storage-plan.md#SP-474",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.brainstorm_vote_added.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/brainstorm_vote_added_application",
+              "schema_id": "pm.collaboration_event.brainstorm_vote_added.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-474",
+            "read_owner_ref": "Plans/storage-plan.md#SP-474",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "6319e92c8ecb7754eaef52b9b2c938f6b6de99cbee4676dc6ffddc27b408cee3",
+      "validation_case_ids": [
+        "vote_added_project",
+        "vote_added_application",
+        "vote_added_oppose_conflicts",
+        "vote_added_text_field_refused",
+        "vote_added_missing_vote_id",
+        "vote_added_project_null_project_id",
+        "vote_added_application_with_project_id",
+        "vote_added_offset_timestamp",
+        "vote_added_key_of_another_subject",
+        "vote_added_currentness_not_a_hash",
+        "vote_added_impossible_date",
+        "vote_added_confidence_over_1",
+        "vote_added_position_majority",
+        "event_valid_vote_added_project",
+        "event_valid_vote_added_application",
+        "event_vote_added_occurred_at_join",
+        "event_vote_added_sibling_payload_schema_id",
+        "event_vote_added_sibling_event_id",
+        "event_vote_added_application_schema_in_project_record",
+        "event_vote_added_run_id_join",
+        "identity_vote_added_project",
+        "identity_vote_added_application",
+        "identity_vote_added_new_epoch",
+        "brainstorm_proposals_votes_synthesis",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-VOTE-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "brainstorm.plan_synthesized",
+      "family_id": "event-family-brainstorm-plan-synthesized",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-120",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-475",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-475",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-245",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_synthesis(PlanCreated)",
+      "registry_row": {
+        "family_id": "event-family-brainstorm-plan-synthesized",
+        "family_revision": "1.0.0",
+        "event_type": "brainstorm.plan_synthesized",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-120",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-475",
+        "payload_schema_id": "pm.collaboration_event.brainstorm_plan_synthesized.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/brainstorm_plan_synthesized",
+          "schema_id": "pm.collaboration_event.brainstorm_plan_synthesized.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/14",
+          "Plans/Collaborative_Workflows.md#CWR-120",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-475",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_plan_synthesized",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_plan_synthesized_application",
+          "Plans/storage-plan.md#SP-475",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-245",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.brainstorm_plan_synthesized.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/brainstorm_plan_synthesized",
+              "schema_id": "pm.collaboration_event.brainstorm_plan_synthesized.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-120",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-475",
+            "read_owner_ref": "Plans/storage-plan.md#SP-475",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.brainstorm_plan_synthesized.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/brainstorm_plan_synthesized_application",
+              "schema_id": "pm.collaboration_event.brainstorm_plan_synthesized.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-475",
+            "read_owner_ref": "Plans/storage-plan.md#SP-475",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "bc45dbc74a2dfd4a104829c608eb9136b4da167dfc9ef37811b8c4d5d571e0c9",
+      "validation_case_ids": [
+        "plan_synthesized_project",
+        "plan_synthesized_project_required_only",
+        "plan_synthesized_application",
+        "plan_synthesized_tie",
+        "plan_synthesized_text_field_refused",
+        "plan_synthesized_missing_assistant_plan_id",
+        "plan_synthesized_project_null_project_id",
+        "plan_synthesized_application_with_project_id",
+        "plan_synthesized_offset_timestamp",
+        "plan_synthesized_key_of_another_subject",
+        "plan_synthesized_currentness_not_a_hash",
+        "plan_synthesized_impossible_date",
+        "plan_synthesized_on_review",
+        "plan_synthesized_tie_by_order",
+        "event_valid_plan_synthesized_project",
+        "event_valid_plan_synthesized_application",
+        "event_plan_synthesized_occurred_at_join",
+        "event_plan_synthesized_sibling_payload_schema_id",
+        "event_plan_synthesized_sibling_event_id",
+        "event_plan_synthesized_application_schema_in_project_record",
+        "event_plan_synthesized_run_id_join",
+        "identity_plan_synthesized_project",
+        "identity_plan_synthesized_application",
+        "identity_plan_synthesized_new_epoch",
+        "brainstorm_proposals_votes_synthesis",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-SYNTH-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "review.finding_added",
+      "family_id": "event-family-review-finding-added",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-121",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-476",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-476",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-246",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.release_finding(FindingNormalized)",
+      "registry_row": {
+        "family_id": "event-family-review-finding-added",
+        "family_revision": "1.0.0",
+        "event_type": "review.finding_added",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-121",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-476",
+        "payload_schema_id": "pm.collaboration_event.review_finding_added.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/review_finding_added",
+          "schema_id": "pm.collaboration_event.review_finding_added.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/15",
+          "Plans/Collaborative_Workflows.md#CWR-121",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-476",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_added",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_added_application",
+          "Plans/storage-plan.md#SP-476",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-246",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.review_finding_added.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/review_finding_added",
+              "schema_id": "pm.collaboration_event.review_finding_added.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-121",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-476",
+            "read_owner_ref": "Plans/storage-plan.md#SP-476",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.review_finding_added.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/review_finding_added_application",
+              "schema_id": "pm.collaboration_event.review_finding_added.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-476",
+            "read_owner_ref": "Plans/storage-plan.md#SP-476",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "46c92aa969999810d903d4f66ebf33e8d4278cfee500ff4eee9b84e3cb62e278",
+      "validation_case_ids": [
+        "finding_added_project",
+        "finding_added_application",
+        "finding_added_two_reviewers",
+        "finding_added_text_field_refused",
+        "finding_added_missing_finding_id",
+        "finding_added_project_null_project_id",
+        "finding_added_application_with_project_id",
+        "finding_added_offset_timestamp",
+        "finding_added_key_of_another_subject",
+        "finding_added_currentness_not_a_hash",
+        "finding_added_impossible_date",
+        "finding_added_no_reviewers",
+        "finding_added_uppercase_hash",
+        "event_valid_finding_added_project",
+        "event_valid_finding_added_application",
+        "event_finding_added_occurred_at_join",
+        "event_finding_added_sibling_payload_schema_id",
+        "event_finding_added_sibling_event_id",
+        "event_finding_added_application_schema_in_project_record",
+        "event_finding_added_run_id_join",
+        "identity_finding_added_project",
+        "identity_finding_added_application",
+        "identity_finding_added_new_epoch",
+        "brainstorm_event_on_crew_run",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "review_completion_needs_artifact",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-BLIND-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "review.finding_dispositioned",
+      "family_id": "event-family-review-finding-dispositioned",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-122",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-477",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-477",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-247",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.record_adjudication(FindingAdjudicated)",
+      "registry_row": {
+        "family_id": "event-family-review-finding-dispositioned",
+        "family_revision": "1.0.0",
+        "event_type": "review.finding_dispositioned",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-122",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-477",
+        "payload_schema_id": "pm.collaboration_event.review_finding_dispositioned.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/review_finding_dispositioned",
+          "schema_id": "pm.collaboration_event.review_finding_dispositioned.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/16",
+          "Plans/Collaborative_Workflows.md#CWR-122",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-477",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_dispositioned",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_dispositioned_application",
+          "Plans/storage-plan.md#SP-477",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-247",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.review_finding_dispositioned.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/review_finding_dispositioned",
+              "schema_id": "pm.collaboration_event.review_finding_dispositioned.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-122",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-477",
+            "read_owner_ref": "Plans/storage-plan.md#SP-477",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.review_finding_dispositioned.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/review_finding_dispositioned_application",
+              "schema_id": "pm.collaboration_event.review_finding_dispositioned.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-477",
+            "read_owner_ref": "Plans/storage-plan.md#SP-477",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "36d7d261229988f8b096e61e79b23871781197da47d8638e4b3448bbcff5a00e",
+      "validation_case_ids": [
+        "finding_dispositioned_project",
+        "finding_dispositioned_application",
+        "finding_dispositioned_uncertain",
+        "finding_dispositioned_text_field_refused",
+        "finding_dispositioned_missing_finding_id",
+        "finding_dispositioned_project_null_project_id",
+        "finding_dispositioned_application_with_project_id",
+        "finding_dispositioned_offset_timestamp",
+        "finding_dispositioned_key_of_another_subject",
+        "finding_dispositioned_currentness_not_a_hash",
+        "finding_dispositioned_impossible_date",
+        "finding_dispositioned_unknown_disposition",
+        "event_valid_finding_dispositioned_project",
+        "event_valid_finding_dispositioned_application",
+        "event_finding_dispositioned_occurred_at_join",
+        "event_finding_dispositioned_sibling_payload_schema_id",
+        "event_finding_dispositioned_sibling_event_id",
+        "event_finding_dispositioned_application_schema_in_project_record",
+        "event_finding_dispositioned_run_id_join",
+        "identity_finding_dispositioned_project",
+        "identity_finding_dispositioned_application",
+        "identity_finding_dispositioned_new_epoch",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-QUORUM-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    },
+    {
+      "event_type": "review.artifact_finalized",
+      "family_id": "event-family-review-artifact-finalized",
+      "admission_status": "prepared_not_admitted",
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-090",
+        "Plans/Decision_Log.md#DL-092",
+        "Plans/Decision_Log.md#DL-292"
+      ],
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-123",
+      "payload_owner_unit": "Plans/Contracts_V0.md#CV-478",
+      "storage_owner_unit": "Plans/storage-plan.md#SP-478",
+      "oracle_unit": "Plans/Automated_Testing_System.md#ATS-248",
+      "shared_units": [
+        "Plans/Collaborative_Workflows.md#CWR-105",
+        "Plans/Contracts_V0.md#CV-460",
+        "Plans/storage-plan.md#SP-460",
+        "Plans/Automated_Testing_System.md#ATS-230"
+      ],
+      "entry_point": "CollaborationRuntime.finalize_review(ReviewArtifactFinalized)",
+      "registry_row": {
+        "family_id": "event-family-review-artifact-finalized",
+        "family_revision": "1.0.0",
+        "event_type": "review.artifact_finalized",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-123",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-478",
+        "payload_schema_id": "pm.collaboration_event.review_artifact_finalized.v1",
+        "payload_schema_ref": {
+          "path": "Plans/collaboration_event_payloads.schema.json",
+          "json_pointer": "#/$defs/review_artifact_finalized",
+          "schema_id": "pm.collaboration_event.review_artifact_finalized.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/collaboration_run_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/collaboration_event_admission.json#/rows/17",
+          "Plans/Collaborative_Workflows.md#CWR-123",
+          "Plans/Collaborative_Workflows.md#CWR-105",
+          "Plans/Contracts_V0.md#CV-478",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/review_artifact_finalized",
+          "Plans/collaboration_event_payloads.schema.json#/$defs/review_artifact_finalized_application",
+          "Plans/storage-plan.md#SP-478",
+          "Plans/storage-plan.md#SP-460",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Contracts_V0.md#CV-366",
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-092",
+          "Plans/Decision_Log.md#DL-292",
+          "Plans/collaboration_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "Plans/Automated_Testing_System.md#ATS-248",
+          "reports/event-authority-20261104/DC-binding-search.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-CHAT-THREAD-LIFETIME",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.collaboration_event.review_artifact_finalized.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/review_artifact_finalized",
+              "schema_id": "pm.collaboration_event.review_artifact_finalized.v1"
+            },
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-123",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/storage-plan.md#SP-478",
+            "read_owner_ref": "Plans/storage-plan.md#SP-478",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.collaboration_event.review_artifact_finalized.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/collaboration_event_payloads.schema.json",
+              "json_pointer": "#/$defs/review_artifact_finalized_application",
+              "schema_id": "pm.collaboration_event.review_artifact_finalized.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/storage-plan.md#SP-478",
+            "read_owner_ref": "Plans/storage-plan.md#SP-478",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-CHAT-THREAD-LIFETIME",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "registry_row_sha256": "87952be49876fdb54bd56d9d43d48253c05d2a1139e1404bd766d552daa24cc7",
+      "validation_case_ids": [
+        "artifact_finalized_project",
+        "artifact_finalized_application",
+        "artifact_finalized_single_reviewer",
+        "artifact_finalized_partial_stale",
+        "artifact_finalized_text_field_refused",
+        "artifact_finalized_missing_artifact_ref",
+        "artifact_finalized_project_null_project_id",
+        "artifact_finalized_application_with_project_id",
+        "artifact_finalized_offset_timestamp",
+        "artifact_finalized_key_of_another_subject",
+        "artifact_finalized_currentness_not_a_hash",
+        "artifact_finalized_impossible_date",
+        "artifact_finalized_single_with_three",
+        "artifact_finalized_counts_disagree",
+        "event_valid_artifact_finalized_project",
+        "event_valid_artifact_finalized_application",
+        "event_artifact_finalized_occurred_at_join",
+        "event_artifact_finalized_sibling_payload_schema_id",
+        "event_artifact_finalized_sibling_event_id",
+        "event_artifact_finalized_application_schema_in_project_record",
+        "event_artifact_finalized_run_id_join",
+        "identity_artifact_finalized_project",
+        "identity_artifact_finalized_application",
+        "identity_artifact_finalized_new_epoch",
+        "review_partial_then_accepted",
+        "review_finish_stale",
+        "COLLAB-RETRY-01",
+        "COLLAB-UNCERTAIN-01",
+        "COLLAB-RESTART-01",
+        "COLLAB-ARTIFACT-01",
+        "COLLAB-QUORUM-01",
+        "COLLAB-CAS-01",
+        "COLLAB-TOKEN-01",
+        "COLLAB-QUARANTINE-01",
+        "COLLAB-READER-01",
+        "COLLAB-WITHDRAW-01",
+        "COLLAB-DELETE-01",
+        "COLLAB-APP-01"
+      ],
+      "admission_preconditions": [
+        "own_blind_form_driven_review",
+        "own_storage_admission_landing_one_family_per_landing (DL-045, DL-078, DL-090)",
+        "retention_policy_materialized: RP-CHAT-THREAD-LIFETIME@1.0.0 in Plans/storage_value_registry.json (pending origin/plans/ea-storage-retention-20261104)",
+        "decision_entry_scope: DL-093 covers only the seven coordination families; this family's DL-077 decision_ref needs its own ruling",
+        "closed_world_guards_generalized: scripts/pm-browser-event-admission.py and the pinned registry tests accept this ledger's admitted rows"
+      ],
+      "activation_preconditions": [
+        "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
+        "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
+        "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
+      ]
+    }
+  ]
+}

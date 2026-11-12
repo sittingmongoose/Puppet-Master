@@ -2300,6 +2300,41 @@ def storage_value_durable_read_token_schema() -> dict[str, Any] | None:
     return durable
 
 
+def storage_value_collaboration_durable_read_token_schema() -> dict[str, Any] | None:
+    """Exactly SP-460's strengthened nine-field token, never an arbitrary token exemption.
+
+    Its stored language is a subset of the existing SP-278 durable token: only the
+    explicit true-end lexical/length constraints below are added. Every other field,
+    closure, type, enum and constraint remains byte-for-byte in the same schema.
+    """
+    token = storage_value_durable_read_token_schema()
+    if token is None:
+        return None
+    def harden(node: Any, field: str = "") -> Any:
+        if isinstance(node, dict):
+            if "pattern" in node and node["pattern"].endswith("$"):
+                node["pattern"] += r"(?![\s\S])"
+            if field.endswith("sha256"):
+                node.update(minLength=64, maxLength=64)
+            if field == "generation_id":
+                node.update(minLength=68, maxLength=68)
+            if field == "storage_instance_id":
+                node.update(pattern=r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$(?![\s\S])", minLength=36, maxLength=36)
+            if field in ("checkpoint_key", "index_dataset_name", "checkpoint_ref"):
+                node["pattern"] = r"^\S+$(?![\s\S])"
+            for key, value in list(node.items()):
+                if key == "properties":
+                    node[key] = {name: harden(child, name) for name, child in value.items()}
+                elif isinstance(value, (dict, list)):
+                    node[key] = harden(value)
+        elif isinstance(node, list):
+            node = [harden(child) for child in node]
+        return node
+    token = harden(token)
+    token["description"] = "SP-278's nine-field durable read token (DL-076), copied by value from Plans/coordination_projection_contracts.schema.json#/$defs/durable_read_token, which projects Plans/event_record_index_checkpoint.schema.json#/$defs/read_token without redb_snapshot_id; the checker compares the copy."
+    return token
+
+
 def storage_value_read_token_name(name: str) -> bool:
     return name == "read_token" or name.endswith("_read_token")
 
@@ -2327,7 +2362,7 @@ def storage_value_is_canonical_read_token(name: str, schema: Any, root: Any) -> 
             target = resolve_local_schema_ref(root, ref)
         except (KeyError, ValueError):
             return False
-    return target == canonical or target == storage_value_durable_read_token_schema()
+    return target == canonical or target == storage_value_durable_read_token_schema() or target == storage_value_collaboration_durable_read_token_schema()
 
 
 _STORAGE_VALUE_SUBSCHEMA_KEYWORDS = (
