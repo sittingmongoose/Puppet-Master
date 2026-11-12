@@ -1,4 +1,34 @@
 # INT2 — batch-2 Event Authority integration
+
+**Retention deck 4 is applied: 86 value bindings, DL-500..DL-509, registry 0 diagnostics.** Jared’s exact Q0 answer and question are quoted in every decision entry. The existing 41 policy definitions, 496-family census, shared frozen schemas, Spec Lock and event-registry membership are unchanged. No family is admitted and native execution remains NOT_RUN.
+
+The current `origin/main` at `002800123fcf2464ac3d8005538527d283c27b70` is integrated: its three canon corrections were re-read before the merge; owner documents merged without conflict, and 89 derived conflicts took complete sides before regeneration. Shard/index generation and shard checking pass. Full consumer reruns and the full dry landing check are pending; this checkpoint claims no complete DFM, B4 or materializer pass.
+
+## Retention deck 4
+
+| Question | Decision | Stored-value rows | Existing policy |
+|---|---|---:|---|
+| Q1 | DL-500 | 34 | RP-PROJECTION-3GEN@1.0.0 |
+| Q2 | DL-501 | 15 | RP-OPERATIONAL-2555D@1.0.0 |
+| Q3 | DL-502 | 5 | RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 |
+| Q4 | DL-503 | 8 | RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0, RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 |
+| Q5 | DL-504 | 6 | RP-CONFIG-CURRENT@1.0.0 |
+| Q6 | DL-505 | 3 | RP-CONFIG-CURRENT@1.0.0 |
+| Q7 | DL-506 | 1 | RP-DEBUG-30D@1.0.0 |
+| Q8 | DL-507 | 5 | RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0, RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, RP-RUNTIME-365D@1.0.0, RP-TELEMETRY-90D@1.0.0, RP-WORKTREE-TOMBSTONE-365D@1.0.0 |
+| Q9 | DL-508 | 3 | RP-CHAT-THREAD-LIFETIME@1.0.0 |
+| Q10 | DL-509 | 6 | RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 |
+
+`INT2-retention-deck4.json` records every exact row, prior note and selected policy. The registry references use existing policy IDs; their version is recorded as 1.0.0 in the decision prose and compaction notes. This supersedes pending statements for these stored values only; separately governed event/source content, holds and admission conditions remain.
+
+The fresh pre-mint check covered 803 main/origin refs and 91 distinct Decision Log blobs, with zero collisions. All 68 pre-retention consumer results and DCW’s 36 nested phases were inspected. DCW, DCH and DT guard reports match their lane baselines semantically: 167/78/70 phases, 379/393, 271/282 and 244/247 guards proved; their declared FAIL obligations remain.
+
+The nine Card 5 full-family failures selected a canonical selector leaf before composing its preserved private source constraints. The leaf probes now select from the effective schema, retaining their original refusal expectations. The prior materializer invocation used an invalid `--check` option; the rerun uses its actual positional `check` subcommand. These prior failures remain uncredited until the complete reruns pass.
+
+T198 uses the approved refresh/classification helpers. The first classification stopped on 19 exclusions whose old migration-snapshot source was removed by current main. The approved prune helper removes those obsolete exclusions, without touching validator code. The rerun passes: all 254 inventory nodes are classified, all 13,626 scope-all cases and 1,276 owner checks pass, and the actual runtime date-time validator accepts the envelope offset while refusing it for observed_at_utc and persisted_at_utc. Zero new nodes or classification changes were introduced; 659 exclusions remain. All eight phase commands exit 0.
+
+## Earlier integration and restart evidence — historical
+
 **Restart handoff, 2026-11-12 16:0xZ:** 313 technical registry diagnostics are repaired on owning lanes’ behalf; the unchanged checker now reports only 86 pending-retention diagnostics. Source is pushed through `7a60dd72b9`. The full DT checker, DCH’s 44,458 static checks, DCH Stop/tables, the 17-family DCH preservation probe and the DG6A acknowledged regression pass. Current full validation is still running; no new full-gate pass is claimed. `int2-registry-consumers` and the sequential `int2-landing-after-registry` are persistent systemd long-jobs. Exact commands, exits so far, output paths and open items: `INT2-restart-handoff.json`. The 86-row facts table is in `drafts/INT2/RETENTION-86.md`; no policy is chosen. Resume from `drafts/INT2/RESUME.md` after the 17:00Z T3 update. The earlier packet below describes the completed `8d72011611` stage and its historical 399/800 counts; the lead superseded its carry of the 313 technical findings.
 
 
