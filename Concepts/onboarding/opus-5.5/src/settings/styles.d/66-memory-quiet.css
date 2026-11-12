@@ -44,8 +44,8 @@
 #panel-settings .mm-row-main { flex: 1 1 auto; min-width: 0; }
 #panel-settings .mm-row-text { margin: 0; color: var(--k3-text-1); font-size: 13px; line-height: 1.45; overflow-wrap: anywhere; }
 #panel-settings .mm-row-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 2px 7px; margin-top: 4px; color: var(--k3-text-3); font-size: 11.5px; }
-#panel-settings .mm-row-meta .pm51-tag { display: inline-flex; align-items: center; gap: 5px; padding: 0; border: 0; background: none; font-size: 11.5px; font-weight: 600; color: var(--k3-text-3); }
-#panel-settings .mm-row-meta .pm51-tag[data-level="every"] { color: var(--k3-text-2); }
+#panel-settings .mm-row .mm-row-meta .pm51-tag.mm-level { flex: 0 0 auto; width: auto; display: inline-flex; align-items: center; gap: 5px; padding: 0; border: 0; background: none; font-size: 11.5px; font-weight: 600; color: var(--k3-text-3); }
+#panel-settings .mm-row .mm-row-meta .pm51-tag.mm-level[data-level="every"] { color: var(--k3-text-2); }
 #panel-settings .mm-row-meta .icon { display: inline-grid; place-items: center; width: 12px; height: 12px; }
 #panel-settings .mm-row-meta .icon svg { width: 12px; height: 12px; stroke: currentColor; }
 #panel-settings .mm-sep { opacity: .6; }
@@ -85,6 +85,12 @@
   #panel-settings .mm-archived-hint { display: none; }
 }
 
+/* ---- the level pickers' popovers (in <body>): each choice says who uses it on a line of its own (mock 04) --------- */
+.pm51-popout.pm51-dd-list.mm-pop .pm51-popout-item { display: grid; grid-template-columns: minmax(0, 1fr) 14px; column-gap: 10px; row-gap: 2px; align-items: start; }
+.pm51-popout.pm51-dd-list.mm-pop .pm51-popout-label { grid-column: 1; grid-row: 1; white-space: normal; }
+.pm51-popout.pm51-dd-list.mm-pop .pm51-popout-meta { grid-column: 1; grid-row: 2; white-space: normal; text-align: left; }
+.pm51-popout.pm51-dd-list.mm-pop .pm51-popout-check { grid-column: 2; grid-row: 1; margin-top: 2px; }
+
 /* ---- the dialogs: Add, Edit and Delete ------------------------------------------------------------------------- */
 #panel-settings .dialog.mm-dialog { width: min(520px, 100%); }
 #panel-settings .mm-dialog .mm-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
@@ -96,8 +102,8 @@
   background: var(--k3-surface-2); color: var(--k3-text-1); font-size: 13px; line-height: 1.45; }
 #panel-settings .mm-quote-meta { display: block; margin-top: 5px; color: var(--k3-text-3); font-size: 11.5px; }
 #panel-settings .mm-confirm-line { margin: 0; color: var(--k3-text-2); font-size: 12.5px; line-height: 1.5; }
-#panel-settings .dialog-footer .btn.primary.mm-danger { background: var(--k3-red, #cd4e5b); border-color: color-mix(in srgb, var(--k3-red, #cd4e5b) 70%, #000); color: #fff; box-shadow: none; }
-#panel-settings .dialog-footer .btn.primary.mm-danger:hover { background: color-mix(in srgb, var(--k3-red, #cd4e5b) 88%, #fff); }
+html #panel-settings .overlay .dialog-footer .btn.primary.mm-danger { background-image: none; background: var(--k3-red, #cd4e5b); border-color: color-mix(in srgb, var(--k3-red, #cd4e5b) 70%, #000); color: #fff; box-shadow: none; }
+html #panel-settings .overlay .dialog-footer .btn.primary.mm-danger:hover { background-image: none; background: color-mix(in srgb, var(--k3-red, #cd4e5b) 88%, #fff); }
 
 /* ---- the sheet over the chat (mock 10) --------------------------------------------------------------------------- */
 .pm7-mem-layer { position: fixed; z-index: 1200; pointer-events: none; }
@@ -121,6 +127,12 @@
 .pm7-mem-layer .pm7-mem-body .pm-app, .pm7-mem-layer .pm7-mem-body .manager-page, .pm7-mem-layer .pm7-mem-body .manager-body,
 .pm7-mem-layer .pm7-mem-body .manager-scroll { display: block; height: auto; min-height: 0; max-height: none; margin: 0; padding: 0; overflow: visible; border: 0; background: none; box-shadow: none; }
 .pm7-mem-layer .pm7-mem-body .mm-intro { padding: 10px 12px; }
+/* in the sheet the switch sits beside its words (mock 10), and the row's About button, which opens Settings' own Details
+   panel, is left to the page */
+.pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 14px; }
+.pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row > .setting-copy { grid-area: 1 / 1; }
+.pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row > .setting-control { grid-area: 1 / 2; align-self: start; margin-top: 2px; }
+.pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row > .details-btn { display: none; }
 .pm7-mem-layer .pm7-mem-body .mm-row { padding-left: 12px; }
 .pm7-mem-layer .pm7-mem-body .mm-archived-toggle { padding-left: 12px; }
 .pm7-mem-layer .pm7-mem-body .mm-archived-hint { display: none; }

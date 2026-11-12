@@ -211,6 +211,14 @@
     return ov;
   }
 
+  /* the kit's dropdown, opened from a Memory level picker, lays each choice's line under it (styles.d/66 .mm-pop) */
+  const mmDropdownOpen = dropdownOpen;
+  dropdownOpen = function (trigger) {
+    const out = mmDropdownOpen.apply(this, arguments);
+    if (pmActive && pmActive.trigger === trigger && trigger.closest && trigger.closest('.mm-dialog, .mm-level')) pmActive.el.classList.add('mm-pop');
+    return out;
+  };
+
   /* ---------- the sheet over the chat (mock 10): the same page, the chat column's height under its header ---------- */
   let sheet = null, lookReady = false, portalWas = null, opener = null;
   const chatPanel = () => document.getElementById('chatPanel');

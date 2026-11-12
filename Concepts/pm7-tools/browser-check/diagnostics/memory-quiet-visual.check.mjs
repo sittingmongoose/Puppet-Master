@@ -18,9 +18,7 @@ async function toMemory(t, f, w) {
 	await f.evaluate((ws) => PM51.go('memory', ws), WS);
 	await f.waitForSelector(`${BODY}[data-workspace-mounted="true"]`, { timeout: 15000 });
 	await t.settle();
-	await t.page.waitForTimeout(700);
-	await f.evaluate((b) => { const s = document.querySelector(b); if (s) s.scrollIntoView({ block: 'start', behavior: 'instant' }); }, BODY);
-	await t.page.waitForTimeout(400);
+	await t.page.waitForTimeout(900);
 }
 async function toHome(t, f, w) {
 	if (w <= 600) await f.evaluate(() => document.getElementById('tab-dashboard').click());
