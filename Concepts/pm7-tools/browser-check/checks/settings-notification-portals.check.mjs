@@ -5,10 +5,20 @@ async function press(t,b){
  for(let i=0;i<5;i++){const summary=b.locator('xpath=ancestor::details[not(@open)]/summary').last();if(!await summary.count())break;await summary.scrollIntoViewIfNeeded();await summary.click();await t.settle();}
  await b.scrollIntoViewIfNeeded();await b.click();await t.settle();
 }
+async function dropdowns(t,f,scope,label,w,h){
+ const triggers=scope.locator('.pm51-dd-trigger');
+ for(let i=0;i<await triggers.count();i++){
+  const trigger=triggers.nth(i);if(!await trigger.isVisible()||await trigger.isDisabled())continue;
+  await press(t,trigger);const list=f.locator('.pm51-dd-list.is-open').last();await list.waitFor({state:'visible'});
+  const r=await list.boundingBox();await t.check(`${label} dropdown ${i+1}: fully inside viewport`,!!r&&r.x>=0&&r.y>=0&&r.x+r.width<=w&&r.y+r.height<=h,JSON.stringify(r));
+  await t.page.keyboard.press('Escape');await t.settle();await t.check(`${label} dropdown ${i+1}: dismissed`,!await list.isVisible());
+ }
+}
 async function box(t,f,label,w,h,close=true){
  const sheet=f.locator(live).last();await sheet.waitFor({state:'visible'});const r=await sheet.boundingBox();
  await t.check(label+': fully inside viewport',!!r&&r.x>=0&&r.y>=0&&r.x+r.width<=w&&r.y+r.height<=h,JSON.stringify(r));
  const head=sheet.locator('.pm51-panel-head,.dialog-head').first();if(await head.count())await t.visible(head,label+': header exposed');
+ await dropdowns(t,f,sheet,label,w,h);
  const x=sheet.locator('.pm51-panel-close,.dialog-head [data-action="close-overlay"]').first();
  if(await x.count()){await t.visible(x,label+': close exposed');if(close){await x.click();await t.settle();}}
  else if(close){await t.page.keyboard.press('Escape');await t.settle();}
@@ -23,6 +33,12 @@ async function checkLook(t,look){
   const menuItem=label=>f.locator('.pm51-popout.is-open .pm51-menu-item').filter({hasText:label}).first();
   for(const [w,h] of [[1280,900],[1390,900],[1920,1080]]){
    await t.viewport(w,h);
+   for(const section of ['Destinations','Events','Quiet hours','History','Sounds']){
+    await tab(section);await dropdowns(t,f,n,`${look} ${w} ${section} inline`,w,h);
+   }
+   for(const [section,name] of [['Destinations','add-dest'],['Events','event'],['Events','group'],['Events','add-event']]){
+    await tab(section);await press(t,action(name));await box(t,f,`${look} ${w} ${name} fields`,w,h);
+   }
    for(const [section,name] of [['Quiet hours','diagnostics'],['Quiet hours','reset'],['Events','export-events'],['Events','import-events'],['Events','add-agent'],['History','history'],['Sounds','export-pack']]){
     await tab(section);await press(t,action(name));await box(t,f,`${look} ${w} ${name}`,w,h);
    }
