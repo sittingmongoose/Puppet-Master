@@ -250,14 +250,14 @@ Family: 11/12 before and after; no grade is raised by this lane alone.
 | `python3 scripts/pm_goal_own_c3_w5_successor_oracles.py` | 2 | expected: preserved historical stored-root counterexample reports BLOCKED (same as part 2/3) |
 | `python3 scripts/pm_goal_own_c3_w5_oracles.py` | 2 | expected: preserved predecessor bank failure, 22 unresolved (byte-identical to part 2 predecessor-bank.log) |
 | `python3 scripts/pm_goal_test_demo_cf01.py` | 0 | pass |
-| `python3 scripts/pm_goal_current_writer_oracles.py --guard-table <out>` | 0 | ran at >= 13.5 GB available (22.93 s 68056 KB) |
-| `python3 scripts/pm_goal_history_reader_fixtures.py --guard-table <out>` | NOT_RUN | memory gate (13.5 GB available) not reached during the session |
-| `python3 scripts/pm_goal_run_stop_block_oracles.py --guard-table <out>` | NOT_RUN | memory gate (13.5 GB available) not reached during the session |
-| `python3 scripts/pm_goal_lifecycle_successor_oracles.py --guard-table <out>` | NOT_RUN | memory gate (13.5 GB available) not reached during the session |
+| `python3 scripts/pm_goal_current_writer_oracles.py --guard-table <out>` | 0 | 861 negatives, 143 guard rows; 0 baseline failures, 0 unproved guards; ran at >= 13.5 GB available (22.93 s 68056 KB) |
+| `python3 scripts/pm_goal_history_reader_fixtures.py --guard-table <out>` | 0 | 6032 negatives, 650 guard rows; 0 baseline failures, 0 unproved guards; ran at >= 13.5 GB available (1567.95 s 792884 KB) |
+| `python3 scripts/pm_goal_run_stop_block_oracles.py --guard-table <out>` | 0 | 427 negatives, 90 guard rows; 0 baseline failures, 0 unproved guards; ran at >= 13.5 GB available (14.89 s 47492 KB) |
+| `python3 scripts/pm_goal_lifecycle_successor_oracles.py --guard-table <out>` | 0 | 487 negatives, 104 guard rows; 0 baseline failures, 0 unproved guards; ran at >= 13.5 GB available (8.44 s 49244 KB) |
 | `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | pass; only Automated_Testing_System shards changed |
 | `python3 scripts/pm-plan-index.py generate` | 0 | pass; only Automated_Testing_System rows changed; readiness differs only in generated_at_utc |
 | `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass |
 | `python3 scripts/pm-plan-index.py validate` | 1 | fail 126 = base 126 against origin/main 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947; 0 added, 0 removed |
 | `git diff --check` | 0 | clean |
 
-All runs serial and light (each process under 500 MB; adapter self-test, oracles and matrix children about 300 MB). The four long inherited audits ran through a gate that starts each only at >= 13.5 GB available. The live fifteen-file currentness edition was copied byte-exact before index generation (`currentness-sha256sum.log`).
+All runs serial (adapter self-test, oracles and matrix children about 300 MB each; the history audit peaked at 793 MB). The four long inherited audits ran through a gate that starts each only at >= 13.5 GB available. The live fifteen-file currentness edition was copied byte-exact before index generation (`currentness-sha256sum.log`).
