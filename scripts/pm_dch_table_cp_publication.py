@@ -47,7 +47,7 @@ def case(value):
         g.Guard('CP34_projection_refs', g.Invariant('/value/projection_refs', 'equals the publication projection refs'), 'checkpoint_refused', CP34_projection_refs),
         g.Guard('CP35_publication_id', g.Invariant('/value/publication_id', 'equals the publication id'), 'checkpoint_refused', CP35_publication_id),
         g.Guard('CP36_revision', g.Invariant('/value/revision', 'equals the publication revision'), 'checkpoint_refused', CP36_revision),
-        g.Guard('CP37_publication_token', g.Invariant('/source/publication/source_token', 'equals the checkpoint source token'), 'checkpoint_refused', CP37_publication_token),
+        g.Guard('CP37_publication_token', g.Invariant('/source/publication/source_read_token', 'equals the checkpoint source token'), 'checkpoint_refused', CP37_publication_token),
         g.Guard('CP38_publication_thread', g.Invariant('/source/publication/thread_id', 'equals the retained body thread_id'), 'checkpoint_refused', CP38_publication_thread),
         g.Guard('CP39_publication_computer', g.Invariant('/source/publication/computer_id', 'equals the retained body computer_id'), 'checkpoint_refused', CP39_publication_computer),
         g.Guard('CP40_publication_scope', g.Invariant('/source/publication/scope', 'equals the retained body scope'), 'checkpoint_refused', CP40_publication_scope),

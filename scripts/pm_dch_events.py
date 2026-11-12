@@ -16,7 +16,7 @@ from urllib.parse import unquote, urlparse
 import blake3
 import msgpack
 from jsonschema import Draft202012Validator
-from pm_dch_formats import retained_validator, validator as current_validator
+from pm_dch_formats import effective_checkpoint_schema, retained_validator, validator as current_validator
 # CV-1100 / SP-1100 shared number recipes (gated number scope a16f67c1ef) and,
 # through pm_dch_formats, the shared CV-1101 date-time check (gated 58c2816ff3).
 from pm_event_numbers import (EVENT_VALUE, FrozenRecipe, OriginalBinding, OriginalCustody, RecipeTuple, Refusal,
@@ -106,7 +106,12 @@ def schema_reference_errors(schema, path):
         errors.append(f'schema: {type(exc).__name__}: {exc}')
     return errors
 
-CURRENT_RULE = 'strict-v4'
+CURRENT_RULE = 'strict-v5'
+
+def uses_current_numbers(rule):
+    # The displaced strict-v4 edition keeps its exact CV-1100/SP-1100 behavior.
+    return rule in ('strict-v4', CURRENT_RULE)
+
 RETAINED_RECIPES = json.loads((ROOT/'Plans/dch_retained_recipes.json').read_text())['recipes']
 # This is the static adapter's independent Storage write-receipt catalogue,
 # never an input accepted from an event, caller, pack or checkpoint candidate.
@@ -302,16 +307,18 @@ def _recipe_tuple(rule, hashes):
         envelope_schema_id='pm.event.v0', envelope_schema_version='2.0.0',
         payload_schema_id='pm.dch_event.* and pm.storage_value.dch_*_checkpoint (34 DCH editions)',
         payload_schema_version='1.0.0', owner_source_id='Plans/dch_retained_recipes.json#/recipes/' + rule
-        if rule in RETAINED_RECIPES else 'Plans/dch_event_contracts.json', owner_edition=rule,
-        registry_revision=recipe.get('source_commit', 'prepared-unadmitted:dch'),
+        if rule in RETAINED_RECIPES and rule != 'strict-v4' else 'Plans/dch_event_contracts.json', owner_edition=rule,
+        registry_revision='prepared-unadmitted:dch' if rule == 'strict-v4' else recipe.get('source_commit', 'prepared-unadmitted:dch'),
         identity_recipe='DCH event identity and CV-366 idempotency key (CV-630..646)',
-        producer_recipe='CV-317 producer projection' + (' (CV-1100 qualified JCS)' if rule == CURRENT_RULE else ''),
-        physical_profile=EVENT_VALUE if rule == CURRENT_RULE else 'dch-retained-msgpack:' + rule,
+        producer_recipe='CV-317 producer projection' + (' (CV-1100 qualified JCS)' if uses_current_numbers(rule) else ''),
+        physical_profile=EVENT_VALUE if uses_current_numbers(rule) else 'dch-retained-msgpack:' + rule,
         full_value_profile='SP-236 physical EventRecord value', local_source_profile='none (the DCH payload is the source)',
         payload_profile='SP-337 payload:v1 application/msgpack', resource_manifest_sha256=_manifest(hashes))
 
 
-RECIPE_TUPLES = {rule: _recipe_tuple(rule, recipe['schema_sha256']) for rule, recipe in RETAINED_RECIPES.items()}
+RECIPE_TUPLES = {rule: _recipe_tuple(rule, recipe['schema_sha256']) for rule, recipe in RETAINED_RECIPES.items()
+                 if all(hashlib.sha256((ROOT/path).read_bytes()).hexdigest() == expected
+                        for path, expected in recipe.get('shared_resource_sha256', {}).items())}
 RECIPE_TUPLES[CURRENT_RULE] = _recipe_tuple(CURRENT_RULE, {path: hashlib.sha256((ROOT/path).read_bytes()).hexdigest()
                                                            for path in DCH_SCHEMA_PATHS})
 
@@ -381,9 +388,15 @@ def resolve_original(provenance, record, rule, verify):
 
 
 def stored_validator(current, path, rule):
-    """Use the entire original schema/format edition, not relaxed current prose."""
+    """Dispatch the exact authenticated edition; never reinterpret a retained selector."""
     if rule == CURRENT_RULE:
         return current
+    if rule == 'strict-v4':
+        recipe = RETAINED_RECIPES[rule]
+        if path in recipe['shared_resource_sha256']:
+            # Tuple installation requires the unchanged original bytes.
+            return current
+        return current_validator(recipe['schemas'][path])
     return retained_validator(RETAINED_RECIPES[rule]['schemas'][path], json.loads((ROOT/path).read_text()))
 
 
@@ -437,7 +450,7 @@ def body_bytes(value, rule=CURRENT_RULE):
     the encoder its recipe recorded (retained_body_bytes); its bytes are never
     restamped.
     """
-    if rule == CURRENT_RULE:
+    if uses_current_numbers(rule):
         return storage_value_bytes(value, profile=EVENT_VALUE)
     return retained_body_bytes(value, rule)
 
@@ -473,7 +486,7 @@ INTEGER_SLOTS = frozenset({'sequence_id', 'producer_sequence_id', 'revision', 'f
 # keep their own schema domain; RFC8785 route work is separate.
 UINT64_SLOTS = frozenset({'sequence_id', 'last_sequence_id', 'frontier_revision', 'selected_segment_generation',
                           'manifest_generation', 'recovery_epoch', 'byte_size'})
-OBJECT_SLOTS = frozenset({'payload', 'body', 'scope', 'source_token', 'source_selection', 'migration', 'record', 'witness',
+OBJECT_SLOTS = frozenset({'payload', 'body', 'scope', 'source_read_token', 'source_token', 'source_selection', 'migration', 'record', 'witness',
                           'source', 'value', 'retry', 'pointer', 'pack', 'checkpoint_storage', 'event_record',
                           'event_access', 'checkpoint', 'index_row', 'publication', 'before', 'after', 'request',
                           'started', 'outcome', 'live_state', 'generations'})
@@ -536,7 +549,7 @@ def type_facts(value, rule):
             if key in INTEGER_SLOTS and not (key == 'producer_sequence_id' and item is None) and integer_refusal(item):
                 facts['integer_types'].append(at(here))
                 continue
-            if rule == CURRENT_RULE and key in UINT64_SLOTS and uint64_refusal(item):
+            if uses_current_numbers(rule) and key in UINT64_SLOTS and uint64_refusal(item):
                 facts['uint64_ranges'].append(at(here))
                 continue
             if key in OBJECT_SLOTS and type(item) is not dict:
@@ -746,7 +759,7 @@ def _retry_outcome(original, retry, available, original_provenance):
     # An earlier out-of-current-domain semantic value cannot equal a valid
     # current retry. Compare that difference without sending it to today's
     # RFC8785 safe-domain encoder or changing its original stored recipe.
-    differences = [k for k in SEMANTIC_FIELDS if original[k] != retry[k]] if rule != CURRENT_RULE else []
+    differences = [k for k in SEMANTIC_FIELDS if original[k] != retry[k]] if not uses_current_numbers(rule) else []
     error = equal = None
     if not differences:
         try:
@@ -828,7 +841,8 @@ def _checkpoint_joins(value, source, row, key):
         schema_path = 'Plans/dch_event_payloads/dch_'+row['event_type'].replace('.', '_')+'_checkpoint.schema.json'
         schema = current_validator(json.loads((ROOT/schema_path).read_text()))
         require('cp_schema', dict(checkpoint_schema_valid=stored_validator(schema, schema_path, rule).is_valid(value)))
-        token = value['source_token']
+        token_field = 'source_read_token' if rule == CURRENT_RULE else 'source_token'
+        token = value[token_field]
         store = source['storage_instance_id']
         generation = token['generation_id']
         root = source['checkpoint']
@@ -880,7 +894,7 @@ def _checkpoint_joins(value, source, row, key):
                                        publication_id=value['publication_id'],
                                        publication_publication_id=publication['publication_id'],
                                        revision=value['revision'], publication_revision=publication['revision'],
-                                       publication_token=publication['source_token'], token=token,
+                                       publication_token=publication.get(token_field), token=token,
                                        publication_thread_id=publication['thread_id'], body_thread_id=p['thread_id'],
                                        publication_computer_id=publication['computer_id'], body_computer_id=p['computer_id'],
                                        publication_scope=publication['scope'], body_scope=p['scope']))
@@ -1113,6 +1127,7 @@ def main():
         target[path[-1]] = replacement
         return result
     def trailing_lf_checks(value, schema, validator, label):
+        schema = effective_checkpoint_schema(schema)
         patterns = []
         def collect(s):
             if isinstance(s, dict):
@@ -1300,10 +1315,10 @@ def main():
                 trailing_lf_checks(value,definition,actual,case['event_type']+': '+kind+' checkpoint '+name)
         for name in case['negative_cases']:
             invalid=copy.deepcopy(case['valid'])
-            if name=='persisted_redb_snapshot_id': invalid['source_token']['redb_snapshot_id']='forbidden'
+            if name=='persisted_redb_snapshot_id': invalid['source_read_token']['redb_snapshot_id']='forbidden'
             if name=='wrong_consumer': invalid['consumer_id']='sibling'
             if name=='wrong_projector': invalid['projector_id']='sibling'
-            if name=='missing_source_token': del invalid['source_token']
+            if name=='missing_source_read_token': del invalid['source_read_token']
             if name=='four_generations': invalid=copy.deepcopy(case['negative_values'][name])
             check(not validator.is_valid(invalid), case['event_type']+': '+name)
         for oracle in case['join_oracles']:
@@ -1312,6 +1327,40 @@ def main():
                 combined=changed(combined,tuple(path.split('.')),value)
             check((validator.is_valid(combined['value']) and checkpoint_joins(combined['value'],combined['source'],row,combined['key']))
                   ==oracle['expected_valid'],case['event_type']+': checkpoint join '+oracle['name'])
+    # Integration preservation: the displaced writer remains an authenticated
+    # original edition, never a current-schema probe or a rewrite-on-read.
+    prior = json.loads((ROOT/'Plans/dch_prior_v4_checkpoint_fixtures.json').read_text())['checkpoints']
+    selected_events = {row['event_type']: row for row in contracts}
+    for original in prior:
+        event = original['event_type']
+        if event not in selected_events:
+            continue
+        value = copy.deepcopy(original['value'])
+        source = copy.deepcopy(original['source'])
+        row = selected_events[event]
+        provenance = {'storage_instance_id': source['storage_instance_id'],
+                      'source_value_sha256': hashlib.sha256(body_bytes(value, 'strict-v4')).hexdigest()}
+        source['checkpoint_access'] = provenance
+        check(record_number_rule(provenance) == 'strict-v4', event + ': captured prior writer selection unchanged')
+        check(checkpoint_joins(value, source, row, original['key']), event + ': strict-v4 original checkpoint readable')
+        check(not checkpoint_joins(value, {**source, 'checkpoint_access': {**provenance, 'recipe_id': CURRENT_RULE}}, row, original['key']),
+              event + ': retained checkpoint cannot claim current selector edition')
+        changed_original = copy.deepcopy(value)
+        changed_original['source_token']['frontier_sha256'] = 'f' * 64
+        check(not checkpoint_joins(changed_original, source, row, original['key']), event + ': retained selector forgery refused')
+        current_schema = json.loads((ROOT/original['schema_ref'].split('#')[0]).read_text())
+        check(not current_validator(current_schema).is_valid(value), event + ': prior stored shape is not a current write')
+        installed = RECIPE_TUPLES.pop('strict-v4')
+        try:
+            check(not checkpoint_joins(value, source, row, original['key']), event + ': unavailable prior edition has no current fallback')
+        finally:
+            RECIPE_TUPLES['strict-v4'] = installed
+        current_case = next(c for c in checkpoints if c['event_type'] == event)
+        old_publication = copy.deepcopy(current_case['source'])
+        old_publication['publication']['source_token'] = old_publication['publication'].pop('source_read_token')
+        check(not checkpoint_joins(current_case['valid'], old_publication, row, current_case['key']),
+              event + ': current publication cannot reuse prior selector shape')
+
     # The same independent acceptance cases feed the guard-removal corpus.
     from types import SimpleNamespace
     from pm_dch_round5_oracles import cases as round5_cases, evaluate

@@ -111,6 +111,31 @@ class ExactSchemaValidator:
         return not list(self.iter_errors(instance))
 
 
+
+def checkpoint_source_constraints(schema):
+    """Compose the existing private lexical profile with the canonical SP-278 selector.
+
+    The registry stores the exact nine-field nonsecret selector schema. This
+    additional source-boundary check preserves all pre-integration constraints;
+    it does not redact, rename, normalize or rewrite a selector value.
+    """
+    declaration = json.loads((Path(__file__).resolve().parents[1] / 'Plans/dg6a_checkpoint_source_constraints.json').read_text())
+    canonical = declaration['canonical_durable_selector_schema']
+    strict = declaration['source_constraint_schema']
+    def compose(node):
+        if isinstance(node, dict):
+            result = {key: compose(value) for key, value in node.items()}
+            properties = result.get('properties')
+            if isinstance(properties, dict) and properties.get('index_read_token') == canonical:
+                # The preserved profile only strengthens canonical lexical bounds.
+                properties['index_read_token'] = strict
+            return result
+        if isinstance(node, list):
+            return [compose(value) for value in node]
+        return node
+    return compose(schema)
+
+
 def validator(schema, *args, **kwargs):
     # Passing an empty ambient FormatChecker must never disable these formats.
     kwargs['format_checker'] = FORMATS
@@ -122,7 +147,7 @@ def validator(schema, *args, **kwargs):
         if type(node) is list:
             return [exact_dialect(v) for v in node]
         return node
-    return ExactSchemaValidator(ExactValidator(exact_dialect(schema), *args, **kwargs))
+    return ExactSchemaValidator(ExactValidator(exact_dialect(checkpoint_source_constraints(schema)), *args, **kwargs))
 
 
 validator.check_schema = ExactValidator.check_schema
