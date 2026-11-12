@@ -1784,8 +1784,14 @@
         /* The destination can already be the place a claim would push a settled prop to.
            Retro Dark Review then drew the reflowed line across the clipboard that was still
            painted where it had settled, and the claim shunted the clipboard right. The
-           painted box of a settled prop is an obstacle of its own. */
-        if (pr.settled && pr.op > .5 && pr.box) {
+           painted box of a settled prop is an obstacle of its own, while it rests there: a
+           settled prop sent to a new slot keeps its flag as it travels, and its moving box
+           swept through the bubble's place, which jumped twice within a line (Basic Dark
+           r-source, the restore moving as a hover brings the folder in: 97-172 px, QA-4).
+           At rest is step()'s own arrival test. */
+        const tgp = this.propTarget(pr), resting = Math.abs(pr.len - tgp.len) < 2.5 && Math.abs(pr.ax - tgp.ax) < 2.5
+          && (pr.aimDx == null || pr.spec.stack != null || (Math.abs(pr.aimDx - pose.dx) < 2.5 && Math.abs(pr.aimDy - pose.dy) < 2.5));
+        if (pr.settled && resting && pr.op > .5 && pr.box) {
           const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]);
           obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]));
         }
