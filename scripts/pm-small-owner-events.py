@@ -11,6 +11,7 @@ import importlib.util
 from contextlib import contextmanager
 from functools import lru_cache
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time, format_checker
 from pm_event_numbers import (
     EVENT_VALUE, Refusal, current_integer, current_integer_token as _shared_integer_token,
     producer_semantic_bytes, producer_semantic_digest, storage_uint64, storage_value_bytes,
@@ -19,33 +20,94 @@ try:
     from blake3 import blake3
 except ImportError:
     raise SystemExit('pm-small-owner-events requires the blake3 Python package for exact SP-337 byte oracles')
-from datetime import datetime
 from pathlib import Path
 from referencing import Registry
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
-from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
-FORMATS = FormatChecker()
-@FORMATS.checks('date-time')
-def utc_datetime(value):
-    if not isinstance(value, str):
-        return True
-    if re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T(?:[01][0-9]|2[0-3]):[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z', value) is None:
-        return False
-    try:
-        parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
-        return parsed.tzinfo is not None
-    except ValueError:
-        return False
+from jsonschema import Draft202012Validator, ValidationError, validators
+# CV-1101 registered checker for envelope occurred_at_utc and family payload
+# clocks (event_record). Storage-assigned clocks use date_time with
+# storage_utc_z at their own facts; this checker does not guess the field.
+# The inventory gate runs at batch-2 integration, not in this lane tree.
+FORMATS = format_checker(profile=EVENT_RECORD)
+STORAGE_CLOCK_FIELDS = ('observed_at_utc', 'persisted_at_utc')
 
 ROOT = Path(__file__).resolve().parents[1]
 INLINE_LIMIT = 16 * 1024
 MAX_SAFE_JSON_INTEGER = 2**53 - 1
 # Frozen retained-original recipe (SP-1101): the exact-decimal sorted-JSON
-# producer digest in force when DM retained originals were written. Current
-# writers use the shared CV-1100 producer route; this recipe is selected only
-# for retained originals in resolve_original, never for current admission.
+# producer digest in force when DM retained originals were written, and the
+# date-time profiles bound to that same tuple. Current writers use the shared
+# CV-1100 producer route and the owner profiles directly; this recipe is
+# selected only for retained originals in resolve_original, never from
+# request data and never for current admission.
 RETAINED_RECIPE_ID = 'dm-retained-producer-v1'
+
+
+def bound_profile(recipe_id, kind):
+    """SP-1101 profile bound to dm-retained-producer-v1, or None.
+
+    source is the broad EventRecord profile. storage and ack are CV-253 /
+    SP-347 UTC: terminal uppercase Z, any fraction, no new digit cap.
+    A recipe id taken from request data is not this tuple and returns None.
+    """
+    if recipe_id != RETAINED_RECIPE_ID:
+        return None
+    if kind == 'source':
+        return EVENT_RECORD
+    if kind in ('storage', 'ack'):
+        return STORAGE_UTC_Z
+    return None
+
+
+def clock_ok(value, profile):
+    """True only when date_time accepts the string and returns it unchanged."""
+    if type(profile) is not str:
+        return False
+    try:
+        return date_time(value, profile=profile) == value
+    except Refusal:
+        return False
+
+
+def source_clock(value):
+    """Family and occurred_at_utc boundary: the event_record profile."""
+    return clock_ok(value, EVENT_RECORD)
+
+
+def storage_clock(value):
+    """One Storage-assigned clock: the storage_utc_z profile."""
+    return clock_ok(value, STORAGE_UTC_Z)
+
+
+def storage_clocks_ok(event, profile):
+    """observed_at_utc and persisted_at_utc. Non-strings stay with type."""
+    if type(profile) is not str:
+        return False
+    if type(event) is not dict:
+        return True
+    for field in STORAGE_CLOCK_FIELDS:
+        item = event.get(field)
+        if type(item) is not str:
+            continue
+        if not clock_ok(item, profile):
+            return False
+    return True
+
+
+def ack_clock_ok(custody, profile):
+    """SP-347 acknowledged_at_utc. A missing receipt is not this predicate."""
+    if type(profile) is not str:
+        return False
+    if type(custody) is not dict:
+        return True
+    receipt = custody.get('first_append_receipt')
+    if type(receipt) is not dict:
+        return True
+    value = receipt.get('acknowledged_at_utc')
+    if type(value) is not str:
+        return True
+    return clock_ok(value, profile)
 
 
 # --- Method B guard tables -------------------------------------------------
@@ -505,6 +567,7 @@ def valid_event(row, event, original):
     have = payload is not None
     facts = {
         'envelope_schema': _fact(lambda: envelope_valid(event)),
+        'storage_clocks': _fact(lambda: storage_clocks_ok(event, STORAGE_UTC_Z)),
         'producer_numbers': _fact(lambda: current_producer_numbers(event)),
         'original_integer': _fact(lambda: integer_tree(original)),
         'payload_resolved': have,
@@ -618,6 +681,10 @@ def resolve_original(row, incoming, authority):
         'receipt_event': _fact(lambda: receipt['event_id'] == stored['event_id']),
         'receipt_sequence': _fact(lambda: receipt['sequence_id'] == stored['sequence_id']),
         'receipt_exact': _fact(lambda: exact_value(authority['first_append_receipt'], receipt)),
+        # Retained profiles come only from dm-retained-producer-v1. authority
+        # keys such as datetime_profile are not read.
+        'storage_clocks': _fact(lambda: storage_clocks_ok(stored, bound_profile(RETAINED_RECIPE_ID, 'storage'))),
+        'ack_clock': _fact(lambda: ack_clock_ok(custody, bound_profile(RETAINED_RECIPE_ID, 'ack'))),
     }
     if refusal('resolve', facts) is not None:
         return None
@@ -1275,10 +1342,51 @@ def main(guard_first=None):
             assert not read_allowed(*vector)
         count += 6
         count += run_exact_family(row)
-        for value in row['timestamp_representation_cases']['positive']:
-            for field in ('occurred_at_utc', 'observed_at_utc', 'persisted_at_utc'):
-                assert publication(row, timestamp_state(row, value, field))['terminal'] is True, (event, 'valid UTC timestamp', field, value)
+        clocks = row['timestamp_representation_cases']
+        fields = ('occurred_at_utc', 'observed_at_utc', 'persisted_at_utc')
+        for value in clocks['positive']:
+            for field in fields:
+                assert clock_ok(value, EVENT_RECORD if field == 'occurred_at_utc' else STORAGE_UTC_Z), (event, field, value)
+                assert publication(row, timestamp_state(row, value, field))['terminal'] is True, (event, 'shared date_time positive', field, value)
+                count += 2
+        for value in clocks['event_record_only_positive']:
+            assert clock_ok(value, EVENT_RECORD) and not clock_ok(value, STORAGE_UTC_Z), (event, value)
+            assert publication(row, timestamp_state(row, value, 'occurred_at_utc'))['terminal'] is True, (event, 'event_record positive', value)
+            count += 2
+            for field in ('observed_at_utc', 'persisted_at_utc'):
+                assert publication(row, timestamp_state(row, value, field))['terminal'] is False, (event, 'storage_utc_z refuses', field, value)
                 count += 1
+        for kind in ('lexical_negative', 'timezone_negative', 'calendar_negative', 'lexical_parse_negative'):
+            for value in clocks[kind]:
+                for field in fields:
+                    profile = EVENT_RECORD if field == 'occurred_at_utc' else STORAGE_UTC_Z
+                    assert not clock_ok(value, profile), (event, kind, field, value)
+                    assert publication(row, timestamp_state(row, value, field))['terminal'] is False, (event, kind, field, value)
+                    count += 2
+        time_field = FAMILY_BINDINGS[event][0]
+        payload_schema = json.loads((ROOT / row['schema']).read_text())
+        payload_validator = DMValidator(payload_schema, format_checker=FORMATS)
+        for bad in ('2026-11-04T24:00:00Z', '2026-11-04T12:00:00Z\n', 'not-a-date'):
+            assert not payload_validator.is_valid(dict(row['positive_payload'], **{time_field: bad})), (event, 'payload refuses', bad)
+            count += 1
+        for good in ('2026-11-04t12:00:00Z', '2026-11-04T12:00:00+01:00', '2016-12-31T23:59:60Z', '0000-11-04T12:00:00Z'):
+            assert payload_validator.is_valid(dict(row['positive_payload'], **{time_field: good})), (event, 'payload accepts', good)
+            count += 1
+        stored_offset = timestamp_state(row, '2026-11-04T12:00:00+01:00', 'occurred_at_utc')
+        assert resolve_full_value(row, stored_offset['event'], stored_offset['committed_authority']) is not None, (event, 'retained source offset')
+        count += 1
+        forged = copy.deepcopy(stored_offset['committed_authority'])
+        forged['datetime_profile'] = 'event_record'
+        forged['stored_event'] = dict(forged['stored_event'], observed_at_utc='2026-11-04T12:00:00z')
+        assert bound_profile(forged.get('datetime_profile'), 'storage') is None, event
+        assert resolve_original(row, forged['stored_event'], forged) is None, (event, 'forged profile cannot admit storage lowercase z')
+        count += 2
+        ack = copy.deepcopy(row['receipt_authority'])
+        ack['datetime_profile'] = 'event_record'
+        ack['stored_custody']['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T12:00:00-00:00'
+        ack['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T12:00:00-00:00'
+        assert resolve_original(row, ack['stored_event'], ack) is None, (event, 'ack offset')
+        count += 1
         count += run_numeric_family(row)
         print(event + ': payload/full-envelope/original-joins/admission/receipt/withdrawal/rebuild vectors PASS; native NOT_RUN')
     print(json.dumps({'status': 'PASS', 'assertions': count, 'native_execution': 'NOT_RUN'}))

@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = {
     'writer': ('writer_refused', 'Current writer original-operation admission', [
         ('WR01_envelope_schema', 'envelope_schema', 'the complete EventRecord validates'),
+        ('WR26_storage_clocks', 'storage_clocks', 'observed_at_utc and persisted_at_utc pass date_time with storage_utc_z'),
         ('WR02_producer_numbers', 'producer_numbers', 'producer integers pass CV-1100 current slots and JCS qualification'),
         ('WR03_original_integer', 'original_integer', 'the original operation carries integer leaves only'),
         ('WR04_payload_resolved', 'payload_resolved', 'the payload resolves inline or through SP-337 custody'),
@@ -114,6 +115,8 @@ SPEC = {
         ('RS19_receipt_event', 'receipt_event', 'receipt event id is the stored event id'),
         ('RS20_receipt_sequence', 'receipt_sequence', 'receipt sequence is the stored sequence'),
         ('RS21_receipt_exact', 'receipt_exact', 'the first receipt copy is exactly the custody receipt'),
+        ('RS22_storage_clocks', 'storage_clocks', 'the retained stored event passes date_time with the recipe storage_utc_z profile'),
+        ('RS23_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with the recipe storage_utc_z profile'),
     ]),
     'fullvalue': ('fullvalue_refused', 'Full-value original commitment', [
         ('FV01_requested_integer', 'requested_integer', 'the requested event carries integer leaves only'),

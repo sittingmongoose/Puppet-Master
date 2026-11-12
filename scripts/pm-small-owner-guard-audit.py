@@ -460,18 +460,20 @@ def catalogue(m, fixtures):
 
 
 def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):
-    lexical = [("if re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T(?:[01][0-9]|2[0-3]):[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z', value) is None:", 'if False:')]
-    parse = [('return parsed.tzinfo is not None\n    except ValueError:\n        return False',
-              'return parsed.tzinfo is not None\n    except ValueError:\n        return True')]
-    timezone = [('return parsed.tzinfo is not None', 'return True')]
-    date_edits = {'lexical_negative': lexical, 'calendar_negative': parse,
-                  'timezone_negative': lexical + timezone,
-                  'lexical_parse_negative': lexical + parse}
+    # Source-edit strings are witness metadata only. The shared date_time
+    # predicate is proved by the guard tables, not by editing this file.
+    shared = (('pm_event_datetime.date_time', 'profile'),)
+    date_edits = {'lexical_negative': shared, 'calendar_negative': shared,
+                  'timezone_negative': shared, 'lexical_parse_negative': shared}
     date_guards = {'lexical_negative': 'datetime.lexical', 'calendar_negative': 'datetime.calendar',
                    'timezone_negative': 'datetime.timezone',
                    'lexical_parse_negative': 'datetime.parse'}
-    add('datetime.timezone','datetime:timezone','utc_datetime',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00',),lexical+timezone)
-    add('datetime.parse','datetime:parse','utc_datetime',('2026-11-04T12:00:00Z',),('not-a-date',),lexical+parse)
+    add('datetime.timezone','datetime:source-missing-zone','source_clock',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00',),shared)
+    add('datetime.parse','datetime:source-not-a-date','source_clock',('2026-11-04T12:00:00Z',),('not-a-date',),shared)
+    add('datetime.storage','datetime:storage-lowercase-z','storage_clock',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00z',),shared)
+    add('datetime.storage','datetime:storage-offset','storage_clock',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00+01:00',),shared)
+    add('datetime.storage','datetime:storage-hour-24','storage_clock',('2026-11-04T12:00:00Z',),('2026-11-04T24:00:00Z',),shared)
+    add('datetime.storage','datetime:storage-trailing-lf','storage_clock',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00Z\n',),shared)
     def old(guard, label, fn, positive, negative, accept=bool):
         add(guard, label, fn, positive, negative, mutants[guard], accept)
     def paths(value, prefix=()):
@@ -490,7 +492,11 @@ def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):
             for i,value in enumerate(row['timestamp_representation_cases'][kind]):
                 # No stale original/result/full-value copy: the one timestamp
                 # fact and every observation/commitment are changed together.
+                # Every listed negative must be refused by the field's profile;
+                # an accepted value fails here rather than being skipped.
                 for field in ('occurred_at_utc','observed_at_utc','persisted_at_utc'):
+                    profile = m.EVENT_RECORD if field == 'occurred_at_utc' else m.STORAGE_UTC_Z
+                    assert not m.clock_ok(value, profile), (family, field, kind, value)
                     bad=m.timestamp_state(row,value,field)
                     add(guard,family+':timestamp:'+field+':'+kind+':'+str(i),'publication',
                         (row,pub),(row,bad),date_edits[kind],lambda x:x['terminal'] is True)

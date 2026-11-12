@@ -191,4 +191,23 @@ def run_all(dm):
             lambda: dm.read_allowed('c', 1, True, True, False, '1.0.0'))
     witness('RP02-retry-digest-str', 'replay', 'RP02_retry_digest_str',
             lambda: dm.replay_decision('a', 1, 'r'))
+
+    # WR26: one Storage clock changed to an offset the event_record profile accepts.
+    state_w = dm.timestamp_state(r0, '2026-11-04T12:00:00+01:00', 'observed_at_utc')
+    witness('WR26-storage-clocks', 'writer', 'WR26_storage_clocks',
+            lambda: dm.valid_event(r0, state_w['event'], state_w['original_operation']))
+
+    # RS22: retained stored clock, with a request profile the resolver ignores.
+    authority_s = copy.deepcopy(state_w['committed_authority'])
+    authority_s['datetime_profile'] = 'event_record'
+    witness('RS22-storage-clocks', 'resolve', 'RS22_storage_clocks',
+            lambda: dm.resolve_original(r0, copy.deepcopy(authority_s['stored_event']), authority_s))
+
+    # RS23: acknowledged_at_utc offset; both receipt copies move together.
+    authority_a = copy.deepcopy(r0['receipt_authority'])
+    authority_a['datetime_profile'] = 'event_record'
+    authority_a['stored_custody']['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T12:00:00-00:00'
+    authority_a['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T12:00:00-00:00'
+    witness('RS23-ack-clock', 'resolve', 'RS23_ack_clock',
+            lambda: dm.resolve_original(r0, copy.deepcopy(r0['positive_event_record']), authority_a))
     return done
