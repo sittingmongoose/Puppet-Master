@@ -226,7 +226,11 @@ def format_case_failures():
         failures.append('date_time.str_subclass:date_time_type')
     # Order cases: the window and retention rows compare instant_key tuples.
     for case in pack.get('order_cases', []):
-        left, right = instant_key(case['earlier']), instant_key(case['later'])
+        try:
+            left, right = instant_key(case['earlier']), instant_key(case['later'])
+        except Refusal as refusal:
+            failures.append(case['id'] + ':instant_order_refused:' + refusal.reason)
+            continue
         if (left < right) != (case['relation'] == 'before') or (left == right) != (case['relation'] == 'same'):
             failures.append(case['id'] + ':instant_order')
     return failures

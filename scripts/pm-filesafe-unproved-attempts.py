@@ -46,7 +46,6 @@ CD, GR, PD = 'filesafe.command_denied', 'filesafe.destructive_override_granted',
 CR, RS = 'safe_point.created', 'safe_point.restored'
 CLEAN, FAILED, SKIPPED, REFUSED, RECOVERY = ('original_application_1', 'original_application_6', 'original_application_7',
                                              'original_application_8', 'original_application_9')
-HOUR = '2026-11-04T12:00:00Z'
 
 
 # ----------------------------------------------------------------- case builders
@@ -61,12 +60,6 @@ def proto(family, seed, actions, change=None, keep=()):
     steps = [{'action': a} for a in actions]
     return dict(kind='protocol', family=family, positive_index=B.seeds(family)[seed], seed=seed, edits=edits,
                 steps=steps, target_step=len(steps) - 1)
-
-
-def payload_case(family, index, change):
-    value = copy.deepcopy(C.contract_positive(family, index))
-    change(value)
-    return dict(kind='payload_semantic', family=family, payload=value)
 
 
 def tx(c):
@@ -187,8 +180,9 @@ def attempts():
     app_scope = lambda: other_scope('granted')
     add('SU01_kind', 'granted scope kind changed (authorized_scope from the application positive)',
         lambda: mat(GR, 'original_project_0', app_scope()), ('override_scope_kind', ['OS01_kind']),
-        'scripts/pm_filesafe_event_contracts.py:129 (semantic) and :610 (override_scope_semantic on the requested scope) '
-        'tie both scope kinds to the payload scope kind before override_subset (:66)')
+        'scripts/pm_filesafe_event_contracts.py:128 (semantic, on authorized_scope) and scripts/pm_filesafe_event_authority.py:610 '
+        '(override_scope_semantic on the requested scope) tie both scope kinds to the payload scope kind before '
+        'override_subset (scripts/pm_filesafe_event_contracts.py:65)')
     add('SU01_kind', 'requested scope kind changed', lambda: mat(GR, 'original_project_0', other_scope('requested')),
         ('override_scope_kind', ['OS01_kind']), 'as above')
     add('SU02_project', 'granted project_id changed', lambda: mat(GR, 'original_project_0', scope_field('granted', 'project_id', 'p-other')),
