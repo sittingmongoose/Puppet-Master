@@ -71470,7 +71470,7 @@
       "ui_command_id": "cmd.theme.reset",
       "handler_location": "handlers::theme::reset",
       "expected_event_types": [
-        "settings.theme.updated"
+        "settings.layer.changed"
       ],
       "acceptance_checks": [
         "cmd.theme.reset is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
@@ -71486,7 +71486,7 @@
         "effect_kind": "event",
         "description": "cmd.theme.reset emits the declared domain event(s) and records dispatch correlation evidence.",
         "receipt_or_event_refs": [
-          "settings.theme.updated"
+          "settings.layer.changed"
         ]
       },
       "accessibility_contract": {
@@ -71519,11 +71519,11 @@
         {
           "test_id": "wiring.catalog.theme_reset.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.theme.reset emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+          "requirement": "Assert cmd.theme.reset emits settings.layer.changed with command_id, origin, correlation_id, and handler target."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.theme.reset emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+        "Assert cmd.theme.reset emits settings.layer.changed with command_id, origin, correlation_id, and handler target."
       ]
     },
     "catalog.theme_set_accent": {
@@ -71532,7 +71532,7 @@
       "ui_command_id": "cmd.theme.set_accent",
       "handler_location": "handlers::theme::set_accent",
       "expected_event_types": [
-        "settings.theme.updated"
+        "settings.layer.changed"
       ],
       "acceptance_checks": [
         "cmd.theme.set_accent is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
@@ -71548,7 +71548,7 @@
         "effect_kind": "event",
         "description": "cmd.theme.set_accent emits the declared domain event(s) and records dispatch correlation evidence.",
         "receipt_or_event_refs": [
-          "settings.theme.updated"
+          "settings.layer.changed"
         ]
       },
       "accessibility_contract": {
@@ -71581,11 +71581,11 @@
         {
           "test_id": "wiring.catalog.theme_set_accent.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.theme.set_accent emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+          "requirement": "Assert cmd.theme.set_accent emits settings.layer.changed with command_id, origin, correlation_id, and handler target."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.theme.set_accent emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+        "Assert cmd.theme.set_accent emits settings.layer.changed with command_id, origin, correlation_id, and handler target."
       ]
     },
     "catalog.theme_set_density": {
@@ -71594,7 +71594,7 @@
       "ui_command_id": "cmd.theme.set_density",
       "handler_location": "handlers::theme::set_density",
       "expected_event_types": [
-        "settings.theme.updated"
+        "settings.layer.changed"
       ],
       "acceptance_checks": [
         "cmd.theme.set_density is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
@@ -71610,7 +71610,7 @@
         "effect_kind": "event",
         "description": "cmd.theme.set_density emits the declared domain event(s) and records dispatch correlation evidence.",
         "receipt_or_event_refs": [
-          "settings.theme.updated"
+          "settings.layer.changed"
         ]
       },
       "accessibility_contract": {
@@ -71643,11 +71643,11 @@
         {
           "test_id": "wiring.catalog.theme_set_density.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.theme.set_density emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+          "requirement": "Assert cmd.theme.set_density emits settings.layer.changed with command_id, origin, correlation_id, and handler target."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.theme.set_density emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+        "Assert cmd.theme.set_density emits settings.layer.changed with command_id, origin, correlation_id, and handler target."
       ]
     },
     "catalog.theme_set_mode": {
@@ -71656,7 +71656,7 @@
       "ui_command_id": "cmd.theme.set_mode",
       "handler_location": "handlers::theme::set_mode",
       "expected_event_types": [
-        "settings.theme.updated"
+        "settings.layer.changed"
       ],
       "acceptance_checks": [
         "cmd.theme.set_mode is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
@@ -71673,7 +71673,7 @@
         "effect_kind": "event",
         "description": "cmd.theme.set_mode sets the theme presentation mode (payload mode is one of light, dark, or auto; auto follows OS prefers-color-scheme live), emits the declared domain event(s), and records dispatch correlation evidence.",
         "receipt_or_event_refs": [
-          "settings.theme.updated"
+          "settings.layer.changed"
         ]
       },
       "accessibility_contract": {
@@ -71706,11 +71706,11 @@
         {
           "test_id": "wiring.catalog.theme_set_mode.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+          "requirement": "Assert cmd.theme.set_mode emits settings.layer.changed with command_id, origin, correlation_id, and handler target."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+        "Assert cmd.theme.set_mode emits settings.layer.changed with command_id, origin, correlation_id, and handler target."
       ]
     },
     "catalog.thread_await": {

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_payload.lsp_server_lifecycle_changed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "host_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "server_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "root_identity": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "lsp_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "previous_state": {
+      "enum": [
+        "Starting",
+        "Initializing",
+        "Ready",
+        "RestartBackoff",
+        "Degraded",
+        "ShuttingDown",
+        "Stopped"
+      ]
+    },
+    "state": {
+      "enum": [
+        "Starting",
+        "Initializing",
+        "Ready",
+        "RestartBackoff",
+        "Degraded",
+        "ShuttingDown",
+        "Stopped"
+      ]
+    },
+    "state_reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 40
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation_id",
+    "project_id",
+    "host_id",
+    "server_id",
+    "root_identity",
+    "lsp_session_id",
+    "previous_state",
+    "state",
+    "state_reason",
+    "ts"
+  ]
+}
