@@ -10865,3 +10865,91 @@ negative_constraints:
 - No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
   native execution proof.
 ```
+
+
+### ATS-380 - Card 2 independent guard oracles
+
+```yaml
+plan_unit_id: ATS-380
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: The six exact DCN families have per-family positive, negative and retained-read oracles in Plans/card2_event_fixtures.json,
+  checked by python3 scripts/pm_card2_events.py. Every negative is derived from a valid base and changes one logical
+  defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10
+  sweep every refusal is one named row of a generated Method B guard table (scripts/pm_card2_table_*.py, generator
+  scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the
+  before or the after record). Check 11 is proved by the shared tool scripts/pm_guard_isolation.py through python3
+  scripts/pm-card2-guard-tables.py. Each row needs a single-defect witness refused first at exactly that row, from
+  the fixtures or the coherent witnesses in Plans/card2_event_p2a_cases.json (python3 scripts/pm-card2-p2a-cases.py);
+  a row that an earlier row always refuses first sits alone in an entailed table with its written proof. The shared
+  number corpus runs through the complete checker (python3 scripts/pm-card2-number-corpus.py). Unresolved schema references fail closed and the command
+  exits nonzero on any failure or exception; failure-oracle testing rejects an exit code of zero. Native execution,
+  source authentication, redb snapshot/CAS, wire durability, first-receipt issuance, crash/restore and actual deletion/access
+  enforcement remain NOT_RUN. Synthetic owner/authenticity observations test contract predicates and cannot admit
+  a writer or establish native proof. No new test file under tests/ is authorized by .gitignore, so this lane keeps
+  its executable oracle in scripts/.
+
+  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join.
+  A foreign-Storage checkpoint negative is internally coherent, including source selection, generation, anchor,
+  key/reference/dataset and both observations; only its join to this event is wrong. Resolve before/after record
+  references and lineage from independent original owner records. Validate Storage original/receipt custody
+  before retry result comparison; reject forged identity, schema, sequence and timestamp observations. Recompute
+  CURRENT/manifest byte hashes and SP-278 binding commitments. Exact memory before/after semantic deltas cover
+  every successful command and automatic mutation; requested/failed/unchanged verifies retain command results only.
+  Retained-read positives include replay-only and other originally valid policies after a changed stop generation
+  or absent live subject. Current policy guards never reach those historical originals. The shared tool cuts each
+  row alone and requires its own witnesses to pass and every other witness to keep its exact refusal, then restores
+  it; unrelated stale copies or post-state contradictions are never accepted as a witness.
+
+  Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with
+  its owner's profile (TIMESTAMP_PROFILES in scripts/pm_card2_events.py), and the checker run itself refuses unless
+  each lane-recorded leak (hour 24, trailing LF, an illegitimate leap second, Feb 29 of a common year, a space
+  separator, a missing zone, offset hour 24, minute 60) is refused at every field with the shared Refusal reason as
+  the validator's error cause. The CV-253 storage_utc_z restriction on observed_at_utc and persisted_at_utc is its own
+  row per view. Retry originals and retained reads resolve through the shared SP-1101 RetainedDispatcher from the
+  sealed custody catalogue Plans/card2_original_custody.json (rows recipe_custody and recipe_installed, and the
+  entailed recipe_resolved); each run also proves that a replaced schema resource, a weakened Storage profile or a
+  caller recipe override installs or selects no verifier. The part 2B witnesses and controls (ids p2b/...) are in
+  Plans/card2_event_p2a_cases.json.
+
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- All family/scope positives pass, every negative is refused first at its own row with no other non-entailed row,
+  and every guard-table row is proved by the shared tool or entailed with a written proof.
+- Requested/failed/no-change verification emits no history, and changed live state does not invalidate retained
+  genuine history.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- python3 scripts/pm-card2-guard-tables.py --out <dir>
+- python3 scripts/pm-card2-p2a-cases.py --check
+- python3 scripts/pm-card2-number-corpus.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_p2a_cases.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_ats-380
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens: []
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
