@@ -88,7 +88,7 @@ class Index(O.WorldOwner):
     def read(self):return GS.EventRecordIndexSource(self.storage).read()
     def current(self):
         read=self.read()
-        return read.checkpoint,read.current_node,read.current_node['frontier']
+        return read.checkpoint,read.generation,read.generation['frontier']
     def read_token(self):return self.read().read_token
     def row(self,event_id):
         read=self.read()

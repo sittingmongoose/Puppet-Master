@@ -669,7 +669,13 @@ def off_run_event(w, kind='goal_run.started', same_run=False, pending=False, ext
                  effective_account_ref=None, occurred_at_utc=w.clock.now(), producer_sequence_id=None,
                  correlation_id='TEST_ONLY:correlation:' + tag, causation_event_id=None, parent_event_id=None,
                  idempotency_key='TEST_ONLY:%s:%s' % (kind, tag),
-                 payload_schema_id='pm.goal_runtime_event.%s.schema.v3' % kind.split('.')[1],
+                 payload_schema_id={
+                     'goal_run.started': 'pm.goal_runtime_event.goal_run_started.schema.v3',
+                     'goal_run.cancelled': 'pm.goal_runtime_event.goal_run_cancelled.schema.v3',
+                     'goal_run.stopped': 'pm.goal_runtime_event.goal_run_stopped.schema.v2',
+                     'goal_run.blocked': 'pm.goal_runtime_event.goal_run_blocked.schema.v2',
+                     'goal_run.replanned': 'pm.goal_runtime_event.goal_run_replanned.schema.v2',
+                 }[kind],
                  payload=dict(goal_id=w.scope['goal_id'], payload=dict(goal_run_id=run)), payload_ref=None,
                  redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key',
                  migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
@@ -740,6 +746,12 @@ def r5_cases():
     def form(w, p, v):
         return dict(kind=v['row']['content']['kind'], record=v['row']['content'].get('record', {}).get(
             'status_at_original_event'), frontier=w.storage.last_sequence)
+    # The retained v1 Goal event remains unregistered; explicitly prove quarantine.
+    for name, cfg in (('started', S0), ('no_start', N0)):
+        run_case(out, 'R5/unregistered_goal_cancelled_v1_' + name, 'R5', 'negative',
+                 projector_case(cfg, [must_unavailable(None)]),
+                 'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/unregistered_record')
+
     run_case(out, 'R5/positive/started_then_cancelled_combined', 'R5', 'positive', projector_case(S0, [publish], form))
     run_case(out, 'R5/positive/initialized_no_start_cancellation', 'R5', 'positive', projector_case(N0, [publish], form))
 
