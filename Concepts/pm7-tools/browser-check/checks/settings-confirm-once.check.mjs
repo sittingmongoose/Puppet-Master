@@ -23,14 +23,18 @@ const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
 
 async function dialogShown(f) {
 	return f.waitForFunction((sel) => {
-		const el = document.querySelector(sel);
-		return !!(el && el.getClientRects().length);
+		const els = [...document.querySelectorAll(sel)];
+		return els.some((e) => {
+			const cs = getComputedStyle(e);
+			return e.getClientRects().length > 0 && cs.display !== 'none' && cs.visibility !== 'hidden';
+		});
 	}, DIALOG, { timeout: 1200 }).then(() => true).catch(() => false);
 }
 
 async function dismiss(f) {
 	await f.evaluate((sel) => {
-		const dialog = document.querySelector(sel);
+		const els = [...document.querySelectorAll(sel)].filter((e) => e.getClientRects().length);
+		const dialog = els[els.length - 1];
 		if (!dialog) return;
 		const cancel = dialog.querySelector('.dialog-footer [data-action="close-overlay"]') || dialog.querySelector('[data-action="close-overlay"]');
 		if (cancel) cancel.click();
@@ -40,7 +44,12 @@ async function dismiss(f) {
 
 async function readDialog(f) {
 	return f.evaluate((sel) => {
-		const dialog = document.querySelector(sel);
+		const els = [...document.querySelectorAll(sel)];
+		const shown = els.filter((e) => {
+			const cs = getComputedStyle(e);
+			return e.getClientRects().length > 0 && cs.display !== 'none' && cs.visibility !== 'hidden';
+		});
+		const dialog = shown[shown.length - 1];
 		if (!dialog) return null;
 		const text = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim();
 		const subEl = dialog.querySelector('.dialog-sub');
@@ -84,14 +93,8 @@ async function readDialog(f) {
 	}, DIALOG);
 }
 
-async function judge(t, f, bag, where) {
-	const info = await readDialog(f);
-	if (!info) return false;
-	/* an editor/creation dialog reached from a "More" menu is not a confirm: its subtitle is a description, not a message */
-	if (info.form) {
-		await dismiss(f);
-		return false;
-	}
+/* One reading of a shown dialog: what the caller asserts. */
+function assess(info) {
 	const msg = info.sub.length >= info.alert.length ? info.sub : info.alert;
 	const other = msg === info.sub ? info.alert : info.sub;
 	const count = (msg && info.sub === msg ? 1 : 0) + (msg && info.alert === msg ? 1 : 0);
@@ -101,7 +104,25 @@ async function judge(t, f, bag, where) {
 	/* a body with nothing in it must take no space: absent, display:none, or no taller than a hairline */
 	const gap = info.bodyGap;
 	const noBand = !gap || gap.content || gap.display === 'none' || gap.h <= 1;
-	const label = info.title || norm(msg).slice(0, 60);
+	return { msg, other, count, once, readable, noBand, label: info.title || norm(msg).slice(0, 60), info };
+}
+
+async function judge(t, f, bag, where) {
+	let info = await readDialog(f);
+	if (!info) return false;
+	/* an editor/creation dialog reached from a "More" menu is not a confirm: its subtitle is a description, not a message */
+	if (info.form) {
+		await dismiss(f);
+		return false;
+	}
+	let v = assess(info);
+	/* a dialog pressed in the page can be read a frame before its text has a box: one re-read settles that */
+	if (!v.readable) {
+		await f.waitForTimeout(200);
+		const again = await readDialog(f);
+		if (again && !again.form) { info = again; v = assess(again); }
+	}
+	const { msg, other, count, once, readable, noBand, label } = v;
 	bag.dialogs += 1;
 	if (/^delete all memories\?$/i.test(norm(info.title))) bag.example += 1;
 	if (once && info.warning) bag.warning += 1;
@@ -109,7 +130,7 @@ async function judge(t, f, bag, where) {
 	const clip = (s) => JSON.stringify(s).slice(0, 160);
 	await t.check(`message once: ${where}: ${label}`, once, `occurrences ${count}, warning ${info.warning}, subtitle ${clip(info.sub)}, alert ${clip(info.alert)}, other ${clip(other)}`);
 	await t.check(`message readable: ${where}: ${label}`, readable, `subtitle box ${JSON.stringify(info.subBox)}, alert box ${JSON.stringify(info.alertBox)}`);
-	await t.check(`no empty body band: ${where}: ${label}`, noBand, `body ${gap ? JSON.stringify(gap) : 'absent'}`);
+	await t.check(`no empty body band: ${where}: ${label}`, noBand, `body ${v.info.bodyGap ? JSON.stringify(v.info.bodyGap) : 'absent'}`);
 	await dismiss(f);
 	return true;
 }
