@@ -164,7 +164,8 @@ class Consumer(RR.Consumer):
         # R3: settlements cover the complete effect inventory exactly once
         self._check_effects(native, effects, agg, candidate)
         if mode == 'preserved':
-            return self._check_preserved(native, intent, result, control, prep, pub)
+            self._check_preserved(native, intent, result, control, prep, pub)
+            return self._check_c3_settlement(native,goal_causes)
         # Candidate precedes prepare outputs; prepare origin closes only its own commitments
         cand_sel = self._find_selector(native['event_candidate'])
         eq('d06/intent_candidate', intent['event_candidate'], cand_sel)
@@ -219,6 +220,13 @@ class Consumer(RR.Consumer):
         # the exact v3 Event, first receipt and original value from Storage's own record
         self._check_event(native, candidate, result, before, after, effects)
         self._check_start(native, intent, upd)
+        self._check_c3_settlement(native,goal_causes)
+
+    def _check_c3_settlement(self,native,goal_causes):
+        w,R=self.world,self.roots
+        goal=goal_causes[0];audit=goal['original_source_audit']
+        cpub=goal['original_control_publication']['record'];published=cpub['original_publication']
+        scope=native['intent']['record']['scope'];ss=native['original_safe_stop']
         # The genuine C3 publication settles this exact D06/D05 graph. A
         # publication for another genuine native cancellation is insufficient.
         settlement=cpub['original_owner_settlement']
@@ -523,8 +531,25 @@ class CancelWorld(IW.S1CancelWorld):
         self.goal_receipt=adopt('goal_cancel_receipt',route.key('goal_cancel_receipt'),GC+'StorageCancellationReceipt')
         self._adopt_closure([s.wrapper for s in self.goal_cause.values()]+[self.goal_receipt.wrapper])
 
+    def _terminal_before(self):
+        guard('int/terminal/qualified_edition',self.edition=='native_v7' and self.cfg['terminal']=='certified')
+        from pm_goal_dg_int_coordinator import build_context,run
+        v=self.certified_world
+        v.original_start=SR.original_started(self.start_world,where='int/terminal/original_start')
+        ctx=build_context(v,op='TEST_ONLY:operation:certified:before-preservation')
+        self.original_terminal=run(v,ctx)
+        current=self.start_world.owners['native'].current()
+        self.body1=self.native.adopt(current['body'],'workflow_goal_run_body',RW.WA+'GoalRunBodyPhysical')
+        self.control1=self.native.adopt(current['control'],'workflow_goal_run_control',RW.WA+'GoalRunControlPhysical')
+        families=ST.d01_families(self.start_world.edition)
+        ptr=self.storage.cell(families['pointer'],self.start_world.owners['d01'].pointer_key())
+        head=SW.resolve_selector(self.storage,ptr['value']['record']['workflow_head'],'int/terminal/head')
+        self.head=self.d01.adopt(head,families['workflow_head'],RW.WO+'StorageWorkflowHead')
+        self._adopt_closure([current['body'],current['control'],head])
+
     def _d06(self):
         super()._d06()
+        if getattr(self,'preserved',False):self.body2,self.control2=self.body1,self.control1
         self.finish_goal_cancellation()
 
     def continue_d06(self):
@@ -705,9 +730,29 @@ class CancelWorld(IW.S1CancelWorld):
         return self.build_current('native_consumer',SS+'SuccessfulReadback',Prefer({}),source,'safe_readback_edit')
 
     def current_readback(self,start=None):
-        value=super().current_readback(start)
-        event=value['d06_readback']['original_event']['event']
-        value['d06_readback']['original_event']['custody']=self.storage.first_custody(event['event_id'])
+        if not getattr(self,'preserved',False):
+            value=super().current_readback(start)
+            event=value['d06_readback']['original_event']['event']
+            value['d06_readback']['original_event']['custody']=self.storage.first_custody(event['event_id'])
+        else:
+            c,ss=self.cancellation,self.safe_stop
+            overlays=[('/d06_readback/kind','terminal_preserved')]
+            overlays += [('/d06_readback/'+name,c[key].wrapper['record']) for name,key in
+                [('result','result'),('origin','publish_origin'),('intent','intent'),('control','committed_control')]]
+            for name,stored in [('body',self.body1),('control',self.control1)]:
+                overlays += [('/d06_readback/native_unchanged/'+name,stored.wrapper),
+                    ('/d06_readback/native_unchanged/'+name+'_selection',stored.selector())]
+            for name,key in [('head','original_d01_head'),('update','original_d01_update'),('origin','original_d01_origin')]:
+                overlays += [('/d06_readback/native_unchanged/lineage_'+name,c[key].wrapper['record']),
+                    ('/d06_readback/original_d01_lineage/'+name,c[key].wrapper)]
+            overlays += [('/d06_readback/safe_stop/scope',{k:self.scope[k] for k in ('storage_instance_id','project_id','goal_id','goal_run_id')}),
+                ('/d06_readback/safe_stop/operation_id',ss['aggregate_result'].wrapper['value']['operation_id']),
+                ('/d06_readback/safe_stop/goal_stop',self.goal_cause['original_stop_receipt'].selector()),
+                ('/d06_readback/safe_stop/scheduler_stop',ss['original_scheduler_stop'].selector()),
+                ('/d06_readback/safe_stop/inventory_cut',ss['original_inventory_cut'].selector()),
+                ('/current_start',self.current_start_full() if start is None else start)]
+            prefer=Prefer({'/d06_readback':RW.kind_choice(self.roots,'native_consumer','terminal_preserved')})
+            value=self.build_current('native_consumer',RW.CP+'CurrentSuccessfulReadback',prefer,overlays,'readback_edit')
         value['d06_readback']['safe_stop']['whole_original_safe_stop']=self.successful_safe_stop()
         sw=self.start_world;families=ST.d01_families(sw.edition)
         value['d06_readback']['original_d01_lineage']['pointer']=copy.deepcopy(

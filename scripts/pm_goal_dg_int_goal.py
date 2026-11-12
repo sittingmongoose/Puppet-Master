@@ -412,7 +412,8 @@ class Route(C3.WorkflowCancel):
         c,s=rw.cancellation,rw.safe_stop
         return dict(d06_result=select(c['result']),d06_origin=select(c['publish_origin']),
                     d05_result=select(s['aggregate_result']),d05_origin=select(s['aggregate_origin']),
-                    kind='cancelled_from_nonterminal',d06_operation_id=c['result'].wrapper['record']['operation_id'],preserved=None)
+                    kind=c['result'].wrapper['record']['kind'],d06_operation_id=c['result'].wrapper['record']['operation_id'],
+                    preserved=c['result'].wrapper['record'].get('preserved_status'))
 
 
 class Goal(ST.GoalOwner):

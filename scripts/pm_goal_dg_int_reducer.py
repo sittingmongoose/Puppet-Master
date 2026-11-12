@@ -384,7 +384,7 @@ def acquire_legacy(world):
             retained_start=[retained]
         else:started=[SR.original_started(sw,where='legacy/started')]
     cancelled = []
-    if getattr(world, 'cancellation', None) is not None:
+    if getattr(world, 'cancellation', None) is not None and not getattr(world,'preserved',False):
         request = dict(scope={k: world.scope[k] for k in ('storage_instance_id', 'project_id', 'goal_id', 'goal_run_id')},
                        storage_instance_id=world.sid)
         cancelled.append(getattr(world,'consumer_class',RR.Consumer)(world).inspect_original(request, RR.Presentation(world)))

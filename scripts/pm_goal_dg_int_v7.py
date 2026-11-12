@@ -921,6 +921,7 @@ class World(F.World):
         self.permission=W.PermissionOwner(self.registry,self.storage)
         self.permission.grant(self.scope['goal_run_id'])
         self.disclosure=Disclosure(self.registry,self)
+        self.disclosure.enroll(self.scope)
         self.group=W.GroupCommitOwner(self.registry,self.storage)
         self.guard=Guard(self.registry,self)
         self.coordinator=Coordinator(self.registry,self)

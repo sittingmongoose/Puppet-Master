@@ -135,12 +135,14 @@ def joint_faults(run):
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--groups',default='APPEND,JOINT,MATRIX')
     ap.add_argument('--child',choices=['run','classify']);ap.add_argument('--work');ap.add_argument('--cut');ap.add_argument('--output')
+    ap.add_argument('--filter')
     args=ap.parse_args();BASE.mkdir(parents=True,exist_ok=True)
     if args.child:
         return child_run(Path(args.work),args.cut) if args.child=='run' else child_classify(Path(args.work))
-    run=Run()
+    run=Run(args.filter)
     for group in args.groups.split(','):{'MATRIX':matrix,'APPEND':append_faults,'JOINT':joint_faults}[group](run)
     failed=[r for r in run.rows if r['status']!='pass']
+    if not run.rows:raise ValueError('No matching oracle cases')
     Path(args.output).write_text(json.dumps(dict(qualification='TEST_ONLY',native=V.NATIVE_LINE,
         status='fail' if failed else 'pass',cases=run.rows,failures=failed),indent=1,default=str)+'\n')
     return bool(failed)

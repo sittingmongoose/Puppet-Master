@@ -466,11 +466,10 @@ def r2_preserve_cases():
     run_case(out, 'R2/positive/terminal_preserved_with_effect_settlements', 'R2', 'positive', preserve_case(
         dict(T, effects='mutation', filesafe=['rollback'])))
 
-    def started_only(w, p):
-        r = must_publish(w, p)
-        W.guard('preserve/started_row_only', r['row']['content']['record']['status_at_original_event'] == 'running')
-        return dict(row=r['row']['content']['record']['status_at_original_event'])
-    run_case(out, 'R2/positive/terminal_preserved_projects_no_cancelled_row', 'R2', 'positive', projector_case(T, [started_only]))
+    def terminal_original_projection():
+        from pm_goal_dg_int_c3_oracles import terminal_preserved
+        return terminal_preserved()
+    run_case(out, 'R2/positive/terminal_preserved_projects_no_cancelled_row', 'R2', 'positive', terminal_original_projection)
     rows = [
         ('preserve_appends_event', knob(T, preserve_append=True), 'preserve/no_event'),
         ('preserve_writes_native', knob(T, preserve_native_write=True), 'preserve/native_bytes'),

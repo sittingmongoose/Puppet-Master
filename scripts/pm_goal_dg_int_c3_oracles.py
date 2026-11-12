@@ -94,9 +94,28 @@ def unknown(run,point):
     run.case('R2/unknown_'+point+'_then_genuine_c3',case)
 
 
+def terminal_preserved():
+    """An actual whole certified terminal source precedes C3 and preserved D06."""
+    w=C.CancelWorld(dict(terminal='certified'),base=BASE).build()
+    A.require('preservation/issued',w.preserved and hasattr(w,'original_terminal'))
+    before=snapshot(w)
+    C.Consumer(w).read_preserved(request(w),R.Presentation(w))
+    A.require('preservation/read_effect',snapshot(w)==before)
+    A.require('preservation/native_bytes',w.body2.wrapper==w.body1.wrapper and w.control2.wrapper==w.control1.wrapper)
+    A.require('preservation/no_cancelled_event',not any(w.storage.read_event(e)['event_type']=='goal_run.cancelled' for e in w.storage.events))
+    A.require('preservation/genuine_goal',w.goal_event['event_type']=='goal.cancelled')
+    consumer=Reduce.IntConsumer(w);scope=Reduce.run_scope(w)
+    src=Reduce.LegacySources(w.storage,scope,consumer.controls);before=snapshot(w)
+    result=Reduce.reduce_prefix(src.generic,scope,src.cells)
+    A.require('preservation/reducer_effect',snapshot(w)==before)
+    A.require('preservation/certified_row',result['complete'] and result['halt'] is None and result['status']=='certified')
+    return dict(status=result['status'],body_revision=w.body2.wrapper['record']['revision'],
+        goal_event=w.goal_event['event_id'],native_cancelled_events=0)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--groups',default='V7,OLD,NOSTART,UNKNOWN')
+    parser.add_argument('--groups',default='V7,OLD,NOSTART,UNKNOWN,TERMINAL')
     parser.add_argument('--output',required=True)
     args=parser.parse_args();BASE.mkdir(parents=True,exist_ok=True);run=Run()
     for name in args.groups.split(','):
@@ -105,6 +124,7 @@ def main():
             elif name=='OLD':qualify(run,'original_profile')
             elif name=='NOSTART':qualify(run,'native_v7','no_start')
             elif name=='MUTATION':qualify(run,'native_v7',effects='mutation')
+            elif name=='TERMINAL':run.case('R2/genuine_certified_terminal_preserved_without_cancelled_Event',terminal_preserved)
             elif name=='UNKNOWN':
                 for point in ('prepare','native','append'):unknown(run,point)
             else:raise ValueError(name)

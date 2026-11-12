@@ -41,7 +41,7 @@ def dispatch(world,phase,arguments):
 
 class Disclosure(F.IssuingOwner):
     role='current_disclosure'
-    def acquire(self,scope):
+    def enroll(self,scope):
         permission=self.world.permission.current(scope['goal_run_id'])
         require('int/disclosure/permission',permission['state']=='granted')
         cache=self.__dict__.setdefault('_reads',{})
@@ -54,6 +54,14 @@ class Disclosure(F.IssuingOwner):
             value.pop('_record',None)
             F.rvalidate('OriginalStructuredValue',value,'int/disclosure')
             cache[key]=self._issue(None,value,kind='current_disclosure')
+        return cache[key]
+
+    def acquire(self,scope):
+        permission=self.world.permission.current(scope['goal_run_id'])
+        require('int/disclosure/permission',permission['state']=='granted')
+        key=F.hsj([scope,permission])
+        require('int/disclosure/original_unavailable',key in self.__dict__.get('_reads',{}))
+        cache=self._reads
         handle=cache[key]
         value=A.acquire(self.registry,self.owner_id,self.role,handle)[1]
         F.authenticate_structured(self.world,value,'int/disclosure',scope)
@@ -750,7 +758,11 @@ def build_context(w,*,op='TEST_ONLY:operation:certified:dg-int'):
     """Execute CF1 owners and retain their handles; the coordinator owns the append."""
     scope=w.scope
     w.certification_operation=op
-    w.native.start(scope)
+    if not hasattr(w,'original_start'):w.native.start(scope)
+    else:
+        from pm_goal_dg_s_readers import original_started
+        require('int/context/existing_start',w.original_start==original_started(w.sw,where='int/context/existing_start') and
+            w.native.state(scope)['body']['status']=='running')
     w.values['cause_event_id']=w.original_start['original_append']['event']['event_id']
     for cid in w.values['criteria']:w.native.add_criterion(scope,cid,'satisfied')
     w.native.set_source_control(scope,'clean')
