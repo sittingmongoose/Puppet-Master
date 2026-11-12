@@ -543,7 +543,7 @@ class LegacyGoalOwner(SourceOwnerMixin, O.GoalOwner):
         if objective is not None:
             body['objective_text'] = objective
             message = uid('TEST_ONLY:message')
-            accepted = dict(goal_id=scope['goal_id'], revision=latest_n + 1, objective_text=objective, change_source='user_direct',
+            accepted = dict(goal_id=scope['goal_id'], revision=NR.uint64(latest_n + 1, 'goal/objective_revision'), objective_text=objective, change_source='user_direct',
                             source_message_id=None, approval_id=None, prior_revision_hash=latest['revision_hash'],
                             created_at=body['updated_at'])
             accepted['revision_hash'] = m.hashrev(accepted)
@@ -898,7 +898,7 @@ class LegacyPlanOwner(SourceOwnerMixin, C2.PlanOwner):
             cell = w.cell('assistant_plan_run', key)
             before = cell['value']
             after = copy.deepcopy(before)
-            after['source_revision'] = before['source_revision'] + 1
+            after['source_revision'] = NR.uint64(before['source_revision'] + 1, 'plan/source_revision')
             after['record']['state'] = new_state
             op, tx = uid('TEST_ONLY:run-transition'), uid('TEST_ONLY:tx')
             if new_state in ('completed', 'cancelled'):
@@ -921,8 +921,8 @@ class LegacyPlanOwner(SourceOwnerMixin, C2.PlanOwner):
             cell = w.cell('assistant_plan_record', key)
             before = cell['value']
             after = copy.deepcopy(before)
-            after['source_revision'] = before['source_revision'] + 1
-            version = before['record']['current_version'] + 1
+            after['source_revision'] = NR.uint64(before['source_revision'] + 1, 'plan/source_revision')
+            version = NR.uint64(before['record']['current_version'] + 1, 'plan/version')
             after['record'].update(current_version=version, approved_version=version,
                                    approved_hash=row_sha(dict(plan=plan_id, version=version, steps=['TEST_ONLY revised step'])))
             op = uid('TEST_ONLY:plan-approval')
@@ -1139,6 +1139,7 @@ class LegacyWorkflowOwner(SourceOwnerMixin, WorldOwner):
         g = '%s:%s:%s:%s' % (hx(self.world.storage_id), hx(scope['project_id']), hx(scope['goal_id']), hx(run_id))
         return dict(body='workflow_goal_run_body.v1:' + g, control='workflow_goal_run_control.v1:' + g,
                     birth='executor_workflow_workflow_birth.v4:' + g, head='executor_workflow_workflow_head.v4:%s:1' % g,
+                    head_prefix='executor_workflow_workflow_head.v4:%s:' % g,
                     pointer='executor_workflow_current_pointer.v2:' + g,
                     update='executor_workflow_workflow_update.v4:%s:' % g, lineage='executor_workflow_lineage_origin.v4:%s:' % g,
                     act='workflow_activation_source:%s:' % g, pending='workflow_pending_operation:%s:' % g)
@@ -1235,6 +1236,84 @@ class LegacyWorkflowOwner(SourceOwnerMixin, WorldOwner):
             slot.set(dict(run_id=run_id))
             return run_id
 
+    def latest_head_key(self, scope, run_id):
+        k = self.keys(scope, run_id)
+        heads = [key for key in self.world.storage.cells.get('executor_workflow_workflow_head', {}) if key.startswith(k['head_prefix'])]
+        require('workflow/head_unavailable', bool(heads))
+        return max(heads, key=lambda key: int(key.rsplit(':', 1)[1]))
+
+    def complete_d06(self, scope, run_id):
+        """A positive D06 publication on the native run (status cancelled): body/control, update, head and pointer advance once."""
+        w = self.world
+        with self.recorder.call(self.owner_id, 'complete_d06') as slot:
+            self.require_unexcluded(scope)
+            k = self.keys(scope, run_id)
+            op, tx = uid('TEST_ONLY:workflow-d06'), uid('TEST_ONLY:workflow-d06-tx')
+            rscope = dict(storage_instance_id=w.storage_id, project_id=scope['project_id'], goal_id=scope['goal_id'], goal_run_id=run_id)
+            acts, items = {}, []
+            for kind in ('owner_result', 'owner_origin'):
+                key, value = self._act(scope, run_id, kind, dict(disposition='d06_cancel_nonterminal', operation_id=op))
+                acts[kind] = key
+                items.append((self.ACT, key, value, MSGPACK, None, None))
+            w.write(self.physical_writes(items, method='owner.workflow.executor_cancel.disposition_sources.v3', operation_id=op))
+            sel = lambda family, key: source_selector(w, family, key)
+            vsel = lambda family, key, value: dict(storage_instance_id=w.storage_id, family_id=family, physical_key=key,
+                                                   schema_id=value['schema_id'], schema_version=value['schema_version'],
+                                                   physical_value_sha256=row_sha(value))
+            bcell, ccell = w.cell('workflow_goal_run_body', k['body']), w.cell('workflow_goal_run_control', k['control'])
+            hkey = self.latest_head_key(scope, run_id)
+            hcell, pcell = w.cell('executor_workflow_workflow_head', hkey), w.cell('executor_workflow_current_pointer', k['pointer'])
+            old_body, old_control, old_head = bcell['value'], ccell['value'], hcell['value']
+            require('workflow/d06_pending', old_control['record']['pending_operation_id'] is None)
+            body = copy.deepcopy(old_body)
+            body['record'].update(revision=NR.uint64(old_body['record']['revision'] + 1, 'workflow/body_revision'), status='cancelled')
+            control = copy.deepcopy(old_control)
+            control['record'].update(revision=NR.uint64(old_control['record']['revision'] + 1, 'workflow/control_revision'),
+                                     body_record_sha256=row_sha(body['record']))
+
+            def commitment(b, c):
+                return dict(kind='historical_native_issuance_commitment', body=vsel('workflow_goal_run_body', k['body'], b),
+                            control=vsel('workflow_goal_run_control', k['control'], c), identity=b['record']['identity'],
+                            body_revision=b['record']['revision'], activation_revision=b['record']['activation_state']['revision'],
+                            status=b['record']['status'], activation_state=b['record']['activation_state']['state'],
+                            workflow_owner_ref=self.owner_id, workflow_owner_epoch=self.owner_epoch)
+            revision = NR.uint64(old_head['record']['revision'] + 1, 'workflow/head_revision')
+            update_key = k['update'] + hx(op)
+            update = dict(schema_id='pm.storage_value.executor_workflow_workflow_update.v4', schema_version='4.0.0', record=dict(
+                scope=rscope, operation_id=op, transaction_id=tx, revision=revision, previous_head=vsel('executor_workflow_workflow_head', hkey, old_head),
+                before_body=vsel('workflow_goal_run_body', k['body'], old_body), before_control=vsel('workflow_goal_run_control', k['control'], old_control),
+                after_body=vsel('workflow_goal_run_body', k['body'], body), after_control=vsel('workflow_goal_run_control', k['control'], control),
+                cause='owner_status', original_owner_result=sel(self.ACT, acts['owner_result']), original_owner_origin=sel(self.ACT, acts['owner_origin']),
+                transition=dict(rule='d06_cancel_nonterminal', before=commitment(old_body, old_control), after=commitment(body, control),
+                                original_writer_method='owner.workflow.executor_cancel.publish_disposition.v3',
+                                original_owner_result=sel(self.ACT, acts['owner_result']), original_owner_origin=sel(self.ACT, acts['owner_origin']))))
+            usel = vsel('executor_workflow_workflow_update', update_key, update)
+            new_hkey = k['head_prefix'] + str(revision)
+            head = dict(old_head, record=dict(old_head['record'], revision=revision, current_body=vsel('workflow_goal_run_body', k['body'], body),
+                                              current_control=vsel('workflow_goal_run_control', k['control'], control),
+                                              previous_head=vsel('executor_workflow_workflow_head', hkey, old_head), last_update=usel))
+            hsel = vsel('executor_workflow_workflow_head', new_hkey, head)
+            pointer = dict(pcell['value'], record=dict(pcell['value']['record'], revision=NR.uint64(pcell['value']['record']['revision'] + 1,
+                                                                                                     'workflow/pointer_revision'),
+                                                       workflow_head=hsel, last_origin_operation_id=op))
+            lineage_key = k['lineage'] + hx(op) + ':' + hx('owner.executor.workflow_source.update_workflow.v3')
+            lineage = dict(schema_id='pm.storage_value.executor_workflow_lineage_origin.v4', schema_version='4.0.0', record=dict(
+                scope=rscope, method='owner.executor.workflow_source.update_workflow.v3', operation_id=op, transaction_id=tx,
+                owner=self.native_owner(), causation=sel(self.ACT, acts['owner_result']),
+                preimages=[vsel('workflow_goal_run_body', k['body'], old_body), vsel('workflow_goal_run_control', k['control'], old_control),
+                           vsel('executor_workflow_workflow_head', hkey, old_head)],
+                afterimages=dict(workflow_update=usel, workflow_head=hsel, pointer=vsel('executor_workflow_current_pointer', k['pointer'], pointer)),
+                issued_at_utc=self.clock.now()))
+            w.write(self.physical_writes([('workflow_goal_run_body', k['body'], body, MSGPACK, bcell['version'], None),
+                                          ('workflow_goal_run_control', k['control'], control, MSGPACK, ccell['version'], None),
+                                          ('executor_workflow_workflow_update', update_key, update, MSGPACK, None, None),
+                                          ('executor_workflow_workflow_head', new_hkey, head, MSGPACK, None, None),
+                                          ('executor_workflow_current_pointer', k['pointer'], pointer, MSGPACK, pcell['version'], None),
+                                          ('executor_workflow_lineage_origin', lineage_key, lineage, MSGPACK, None, None)],
+                                         method='owner.workflow.executor_cancel.publish_disposition.v3', operation_id=op))
+            slot.set(dict(op=op, head=new_hkey))
+            return op
+
     def begin_pending(self, scope, run_id, *, kind='d06_cancel', disposition='unknown'):
         """An in-flight D05/D06 operation: control pending_operation_id and the owner's pending record."""
         w = self.world
@@ -1244,7 +1323,7 @@ class LegacyWorkflowOwner(SourceOwnerMixin, WorldOwner):
             op = uid('TEST_ONLY:workflow-op')
             cell = w.cell('workflow_goal_run_control', k['control'])
             control = copy.deepcopy(cell['value'])
-            control['record'].update(revision=control['record']['revision'] + 1, pending_operation_id=op)
+            control['record'].update(revision=NR.uint64(control['record']['revision'] + 1, 'workflow/control_revision'), pending_operation_id=op)
             pending = dict(schema_id='pm.test_only.workflow_pending_operation.v1', qualification=QUALIFICATION, operation_id=op, kind=kind,
                            scope=copy.deepcopy(scope), goal_run_id=run_id, disposition=disposition, owner_ref=self.owner_id,
                            owner_epoch=self.owner_epoch, at=self.clock.now())
@@ -1263,7 +1342,7 @@ class LegacyWorkflowOwner(SourceOwnerMixin, WorldOwner):
             cell = w.cell('workflow_goal_run_control', k['control'])
             control = copy.deepcopy(cell['value'])
             require('workflow/reconcile_op', control['record']['pending_operation_id'] == op)
-            control['record'].update(revision=control['record']['revision'] + 1, pending_operation_id=None)
+            control['record'].update(revision=NR.uint64(control['record']['revision'] + 1, 'workflow/control_revision'), pending_operation_id=None)
             pcell = w.cell(self.PENDING, k['pending'] + hx(op))
             pending = dict(pcell['value'], disposition='no_effect', at=self.clock.now())
             w.write(self.physical_writes([('workflow_goal_run_control', k['control'], control, MSGPACK, cell['version'], None),
@@ -1281,12 +1360,11 @@ class LegacyWorkflowOwner(SourceOwnerMixin, WorldOwner):
         for run_id in self.run_ids(scope):
             k = self.keys(scope, run_id)
             for family, key in (('workflow_goal_run_body', k['body']), ('workflow_goal_run_control', k['control']),
-                                ('executor_workflow_workflow_birth', k['birth']), ('executor_workflow_workflow_head', k['head']),
-                                ('executor_workflow_current_pointer', k['pointer'])):
+                                ('executor_workflow_workflow_birth', k['birth']), ('executor_workflow_current_pointer', k['pointer'])):
                 if w.cell(family, key) is not None:
                     out.append((family, key))
-            for family, prefix in (('executor_workflow_workflow_update', k['update']), ('executor_workflow_lineage_origin', k['lineage']),
-                                   (self.ACT, k['act']), (self.PENDING, k['pending'])):
+            for family, prefix in (('executor_workflow_workflow_head', k['head_prefix']), ('executor_workflow_workflow_update', k['update']),
+                                   ('executor_workflow_lineage_origin', k['lineage']), (self.ACT, k['act']), (self.PENDING, k['pending'])):
                 for key in sorted(w.storage.cells.get(family, {})):
                     if key.startswith(prefix):
                         out.append((family, key))
@@ -1557,11 +1635,11 @@ class MaintenanceOwner(WorldOwner):
 
     def restore(self):
         with self.recorder.call(self.owner_id, 'restore'):
-            self._update(lambda v: v.update(restore_epoch=v['restore_epoch'] + 1))
+            self._update(lambda v: v.update(restore_epoch=NR.uint64(v['restore_epoch'] + 1, 'maintenance/restore_epoch')))
 
     def maintenance_window(self):
         with self.recorder.call(self.owner_id, 'maintenance_window'):
-            self._update(lambda v: v.update(maintenance_epoch=v['maintenance_epoch'] + 1))
+            self._update(lambda v: v.update(maintenance_epoch=NR.uint64(v['maintenance_epoch'] + 1, 'maintenance/epoch')))
 
     def request_deletion(self, scope):
         with self.recorder.call(self.owner_id, 'request_deletion'):

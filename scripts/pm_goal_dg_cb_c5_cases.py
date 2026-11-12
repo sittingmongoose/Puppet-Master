@@ -202,6 +202,21 @@ def positives(suite):
         return dict(sources=counts, association='workflow')
     suite.positive(G, 'C5/pos/workflow_bound_native_sources', workflow_bound)
 
+    def terminal_workflow():
+        w, scope = new(suite)
+        run_id = w.workflows.attach(scope)
+        w.workflows.complete_d06(scope, run_id)
+        before_goal, before_stop = goal_physical(w, scope), w.cell(w.host_stop.FAMILY, w.host_stop.key(scope))
+        sel, req, res = run(w, scope)
+        revision, _ = verify_enrolled(w, scope, before_goal, before_stop, res, associations=1)
+        body = w.workflows.decoded('workflow_goal_run_body', w.workflows.keys(scope, run_id)['body'])['record']
+        check(body['status'] == 'cancelled' and revision['active_run_ref'] == run_id, 'terminal D06 run still imported; no implicit detach')
+        heads = [M.split(i['selection']['physical_key'])[1] for i in req['owner_mappings'][3]['sources']
+                 if i['selection']['physical_key'].startswith('executor_workflow_workflow_head|')]
+        check(len(heads) == 2, 'both Workflow heads (activation and D06) in the mapping')
+        return dict(status='cancelled', heads=2)
+    suite.positive(G, 'C5/pos/terminal_workflow_d06_still_imported', terminal_workflow)
+
     def nonzero_unassociated_latched():
         w, scope = new(suite)
         for action in ('stop', 'resume', 'stop', 'resume', 'stop'):
@@ -565,6 +580,14 @@ def negatives(suite):
         delete_cells(w, [('executor_workflow_workflow_head', w.workflows.keys(scope, run_id)['head'])])
         return w, capture_of(w, scope)
     neg('C5/neg/workflow_member_unavailable', workflow_head_missing, 'M/capture/workflow_member_unavailable', 'derive/workflow')
+
+    def workflow_latest_head_missing():
+        w, scope = new(suite)
+        run_id = w.workflows.attach(scope)
+        w.workflows.complete_d06(scope, run_id)
+        delete_cells(w, [('executor_workflow_workflow_head', w.workflows.latest_head_key(scope, run_id))])
+        return w, capture_of(w, scope)
+    neg('C5/neg/workflow_d06_head_missing_breaks_chain', workflow_latest_head_missing, 'M/capture/workflow_head_chain', 'derive/workflow')
 
     # coordinator preconditions
     def deletion():

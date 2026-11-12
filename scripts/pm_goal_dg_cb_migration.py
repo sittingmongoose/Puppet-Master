@@ -189,9 +189,12 @@ class Coordinator(WorldOwner):
         w = self.world
         key = w.exclusion_key(scope)
         current = w.value(EXCLUSION, key)
-        require('M/capture/exclusion_held', current is None)
+        if current is not None:
+            # release/reacquire by the same migration identity recaptures under the exclusion it already holds
+            require('M/capture/exclusion_held', current['migration_id'] == migration_id and current['holder_ref'] == self.owner_id)
+            return dict(current, reacquired=True)
         value = dict(schema_id='pm.test_only.migration_exclusion.v1', qualification=QUALIFICATION, scope=copy.deepcopy(scope),
-                     migration_id=migration_id, holder_ref=self.owner_id, exclusion_epoch=w.storage.cell_generation + 1, state='held',
+                     migration_id=migration_id, holder_ref=self.owner_id, exclusion_epoch=NR.uint64(w.storage.cell_generation + 1, 'M/exclusion_epoch'), state='held',
                      acquired_at=self.clock.now())
         lane_bank().validate(TOS + 'MigrationExclusion', value, 'M/exclusion')
         w.write([w.put(EXCLUSION, key, value)])
@@ -224,7 +227,8 @@ class Coordinator(WorldOwner):
             except Exception:
                 # a refused capture leaves no exclusion behind (an in-process Crash is a BaseException and keeps it)
                 current = w.value(EXCLUSION, w.exclusion_key(scope))
-                if current is not None and current['migration_id'] == mid and current['exclusion_epoch'] == acquired['exclusion_epoch']:
+                if not acquired.get('reacquired') and current is not None and current['migration_id'] == mid \
+                        and current['exclusion_epoch'] == acquired['exclusion_epoch']:
                     self.release_exclusion(scope)
                 raise
             slot.set(dict(disposition='blocked_unresolved' if cap.blocked else 'enrolled', sources=len(cap.images)))
@@ -493,9 +497,14 @@ class Coordinator(WorldOwner):
             run_id = rec['identity']['goal_run_id']
             k = w.workflows.keys(scope, run_id)
             control_w = cap.images.get(('workflow_goal_run_control', k['control']))
-            head = cap.images.get(('executor_workflow_workflow_head', k['head']))
+            heads = {hk: v for (f, hk), v in cap.images.items() if f == 'executor_workflow_workflow_head' and hk.startswith(k['head_prefix'])}
+            head = heads[max(heads, key=lambda hk: int(hk.rsplit(':', 1)[1]))] if heads else None
+            pointer = cap.images.get(('executor_workflow_current_pointer', k['pointer']))
             birth = cap.images.get(('executor_workflow_workflow_birth', k['birth']))
-            require('M/%s/workflow_member_unavailable' % method, control_w is not None and head is not None and birth is not None)
+            require('M/%s/workflow_member_unavailable' % method, control_w is not None and head is not None and birth is not None
+                    and pointer is not None and k['head'] in heads)
+            require('M/%s/workflow_head_chain' % method, pointer['value']['record']['workflow_head']['physical_value_sha256'] == head['image']['selection']['sha256']
+                    and head['value']['record']['revision'] == len(heads))
             require('M/%s/workflow_goal_join' % method, rec['identity']['goal_id'] == scope['goal_id'] and rec['identity']['project_id'] == scope['project_id']
                     and rec['original_goal_body']['physical_key'] == gk['body'] and rec['original_goal_body']['storage_instance_id'] == w.storage_id)
             require('M/%s/workflow_join' % method, control_w['value']['record']['identity'] == rec['identity']
@@ -635,7 +644,8 @@ class Coordinator(WorldOwner):
                 writes += [w.put(w.binding.DOMAIN, dkey, dwrap), w.put(w.binding.HEAD, hkey, hwrap)]
                 published += [self.selection(w.binding.DOMAIN, dkey, dwrap, BINDING + '#/$defs/StorageWriterDomain'),
                               self.selection(w.binding.HEAD, hkey, hwrap, BINDING + '#/$defs/StorageWriterDomainHead')]
-                domain_selection = self.selection(w.binding.DOMAIN, dkey, dwrap, BINDING + '#/$defs/StorageWriterDomain')
+                domain_selection = dict(owner=w.binding.owner_id, physical_key=w.binding.DOMAIN + '|' + dkey,
+                                        schema_ref=BINDING + '#/$defs/StorageWriterDomain', sha256=row_sha(dwrap))
                 checks.append(dict(table=w.binding.HEAD, key=hkey, expected=None))
             else:
                 dsel = cap.domain_state['selection']
@@ -944,24 +954,25 @@ class Coordinator(WorldOwner):
             require('M/reinstall/permission', self.allowed(REINSTALL))
             gen = w.binding.domain_generation
             require('M/reinstall/domain_not_withdrawn', gen > 0 and w.binding.domain_withdrawn)
+            nxt = NR.uint64(gen + 1, 'M/reinstall/generation')
             permission = w.permissions.selection(self.permission(REINSTALL))
-            w.registration.register_all(generation=gen + 1)
+            w.registration.register_all(generation=nxt)
             state = w.registration.state()
             dispatch = dict(domain='pm.goal.execution_dispatch.v1', storage_instance_id=w.storage_id, native_root_identity=state['root_identity'],
                             complete_descriptors=w.registration.descriptors())
             op, tx_ref = uid('TEST_ONLY:reinstall'), uid('TEST_ONLY:reinstall-tx')
             domain = w.roots.check('producer', BINDING + '#/$defs/WriterDomain', dict(
-                storage_instance_id=w.storage_id, domain_generation=gen + 1, native_root_identity=state['root_identity'],
+                storage_instance_id=w.storage_id, domain_generation=nxt, native_root_identity=state['root_identity'],
                 schema_resources_sha256=w.shared.producer_bank_sha256, complete_original_dispatch_registration_sha256=w.codec.h(dispatch),
                 writers=w.registration.writer_registrations(),
                 original_installation=transaction_record(self, 'owner.goal.execution_binding.install_writer_domain.v1', op, permission, tx_ref, op)))
-            dkey = 'goal_execution_writer_domain.v1:%s:epoch:%d' % (w.binding.storage_key(), gen + 1)
+            dkey = 'goal_execution_writer_domain.v1:%s:epoch:%d' % (w.binding.storage_key(), nxt)
             dwrap = w.binding.wrap('StorageWriterDomain', dkey, domain)
             dsel = self.psel(w.binding.DOMAIN, dkey, dwrap)
             hkey = w.binding.head_key()
             hcell = w.cell(w.binding.HEAD, hkey)
             head = w.roots.check('producer', BINDING + '#/$defs/WriterDomainHead', dict(
-                storage_instance_id=w.storage_id, domain_generation=gen + 1, domain=dsel,
+                storage_instance_id=w.storage_id, domain_generation=nxt, domain=dsel,
                 original_installation_transaction_id=domain['original_installation']['original_transaction_id']))
             writes = [w.put(w.binding.DOMAIN, dkey, dwrap), w.put(w.binding.HEAD, hkey, w.binding.wrap('StorageWriterDomainHead', hkey, head),
                                                                    expected=hcell['version'])]
@@ -972,7 +983,7 @@ class Coordinator(WorldOwner):
                 rev_cell = w.cell(w.binding.REVISION, control['current_revision']['physical_key'])
                 org_cell = w.cell(w.binding.ORIGIN, control['current_origin']['physical_key'])
                 require('M/reinstall/revision_join', row_sha(rev_cell['value']) == control['current_revision']['complete_value_sha256'])
-                n = control['binding_revision'] + 1
+                n = NR.uint64(control['binding_revision'] + 1, 'M/reinstall/binding_revision')
                 bk = w.binding.keys(scope, n)
                 revision = dict(rev_cell['value']['record'], binding_revision=n, previous_revision=control['current_revision'], writer_domain=dsel,
                                 original_goal_birth_or_binding_operation=op)
@@ -995,7 +1006,7 @@ class Coordinator(WorldOwner):
                            w.put(w.binding.CONTROL, w.binding.keys(scope)['control'],
                                  w.binding.wrap('StorageBindingControl', w.binding.keys(scope)['control'], new_control), expected=ccell['version'])]
             tx = w.write(writes)
-            slot.set(dict(tx=tx['tx_id'], generation=gen + 1))
+            slot.set(dict(tx=tx['tx_id'], generation=nxt))
             return dsel
 
 
