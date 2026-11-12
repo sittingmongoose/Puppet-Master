@@ -3177,7 +3177,7 @@
       if (!pm7DashCdDirty || pm7Html.hasAttribute('data-o55-open') || !(shown || root().classList.contains('active'))) return;
       pm7DashCdDirty = false;
       var el = document.getElementById('pm6DashCooldown');
-      if (el) el.textContent = fmtCooldown(D.cooldown);
+      if (el) { var text = fmtCooldown(D.cooldown); if (el.textContent !== text) el.textContent = text; }
     }
     setInterval(function () {
       if (document.hidden) return;
