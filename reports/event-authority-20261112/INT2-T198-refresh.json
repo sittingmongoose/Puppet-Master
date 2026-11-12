@@ -6409,5 +6409,242 @@
   "added": 594,
   "exclusions_after": 650,
   "inventory_nodes_after": 254
+ },
+ "pass_2_after_main_b5bd6cafd1": {
+  "reason": "main's snapshot refresh b5bd6cafd1 replaced run pds-20261109-002 with pds-20261112-001; the 19 span_map line containers excluded under the old run moved to the new run with identical reason",
+  "removed_path_gone": [
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:1005",
+    "sha256": "5fb7e728742eaed1029d0294d5b9b71e092c469a39bb13614c3bf4bbf341fac6"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2205",
+    "sha256": "aa4df8c3db43706419ec4d7230f6f5ee62e7fd30bfea3715dcdf53812b9d9a9e"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2677",
+    "sha256": "80b04594eea7e7e73ac36e7bd97d6935dfa08798eb38c4cfc9e21394230ee2aa"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2678",
+    "sha256": "45e87b346c03b643d446b980b6d2aed5cb00015a029e79a97dfd99cbfae68e7c"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:3345",
+    "sha256": "3cbeff1a7082acec9b936c32957f64c89f2c0753e218aae7f7aba747c6a34c8b"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:6310",
+    "sha256": "ccf4716cd28f4e9cefe12912cff891b8d6d6d1276e613f1265c5fd0aa4ea2cf2"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:7489",
+    "sha256": "89f33f6ead3c5c9443ccab783fff22113ba0a57bbb14fb6d951493c1dc080f16"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:11757",
+    "sha256": "8d0ecec126eaac1b96b543b70fa0ccfe3c6f270526e5bf60d3d39615c2c0024f"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12185",
+    "sha256": "4d04de12d8ac3718c325c3bdc79d21c713e07931facf056dfb88b33aa60ad14c"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12257",
+    "sha256": "a028842a215ffb5664780db33cc5dcdea946467bf0982f65caa66d62b0bdef50"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12289",
+    "sha256": "ad4aa8a36422ac6e845551be24a1eee36099d443724196d753cd2fb0a3350038"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12293",
+    "sha256": "f138d4f5a8be7928fba8b93c2118f7000f3b11fda71b77576198a8988c4b387d"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12296",
+    "sha256": "1aff0c9a5af4fa4f82ba43104b45a6bcf9769bd63d5df5a543cfd9bbee4b194e"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12314",
+    "sha256": "9f9f66db49d955f228f9712e7225ae207854739bcb33d09349557519194b26ea"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12362",
+    "sha256": "7ab269daae7d40b9ba2ba382e5c188c31d679eec0e4cf7d292327deeb863ab92"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12367",
+    "sha256": "a4ccb6847ad3cdecce998adeca7df1e1d4b9141d48303e9ab6a110616c12be70"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12385",
+    "sha256": "22741fba8440a47852d62dea14c8844814efd19b72764fc444885de24958fc60"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12386",
+    "sha256": "ffebd8aa9a88affdc8ecf70b62e5f8e247d5ef4872ef3ea6704e095428756779"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:13682",
+    "sha256": "04e5680b1549a0392026aa55f7f9b9906761c6a727d24a3f228bec63654fde79"
+   }
+  ],
+  "added": [
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:1005",
+    "sha256": "440b7a9dd538d2fbe4efbcecb1e404cecafa25d5a69f1aeaf6a7124b2dfe107a",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:1005"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2205",
+    "sha256": "c32c185a47d482915a7267c99ca06bed885fbc8106affe3e99f2f28ca8d747a7",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:2205"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2677",
+    "sha256": "8302ff07e4c0468b6effdb8bf6e9faa61381c0a2fdce2ca93e4f397a9611f4bd",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:2677"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2678",
+    "sha256": "514d7517a9e5b86e45dba93138ddf95cc4ea41f61324fc5dab503bad54119e40",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:2678"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:3345",
+    "sha256": "1f626bb457a52c0f5871d985dd9b56c072527c8f85c1d7466e96949a2e3961f2",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:3345"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:6310",
+    "sha256": "9a03e9cc0b9a66a4cdc488bacea68294a9e102fcd1a58869127188cc6dd8cbf6",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:6310"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:7489",
+    "sha256": "41740ff00466f8a5154157dd2f5a0c6e86d035cbcccd9b646ee9a8e24eda82a9",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:7489"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:11757",
+    "sha256": "9589196d7b0c230c3d2148764a0d70167cce88121e78a730693c636d5706e87d",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:11757"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12185",
+    "sha256": "8090ca5b6042cf420cbf13c004eeb2b3618fb143dc94871651104eb100833219",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12185"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12257",
+    "sha256": "afb4b4075d6ebd956d4ef24401e07294b66b9551947b54d7445ee3bcdd59324b",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12257"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12289",
+    "sha256": "df2035d2db72b67c8e17a78ef60b0372606a1f666929fee809753bcb85f1fefb",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12289"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12293",
+    "sha256": "ef3c7d0e63f8663f302d79eadfd8ec35a65eb5fede4d55589e183064a0c0ae38",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12293"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12296",
+    "sha256": "e307b4e74841d2c0d31c736542ed82978956b473409db5056f2d100bddff2a6c",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12296"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12314",
+    "sha256": "43237b5de1d4c7d1eced22f1cddde26ce6f98e69c04c313caaff9f1a5e35fd10",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12314"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12362",
+    "sha256": "5f77d402ccfd62b5f59b17f398d3980d071156eeb00c22192ffe26ad45d80748",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12362"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12367",
+    "sha256": "fd34b140b85b41c912cb0479ebd3b1ad8219cfcb1f3bf369bd41f920d1bda1c6",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12367"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12385",
+    "sha256": "9e2ebc756b0600a8ea1207dd92996f478fe7f073115cfe4f6439aec3fdafb213",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12385"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12386",
+    "sha256": "33b0fc64c843603d852ed719acb34fa58782e233306a63890c674ffd2a3a4d4a",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:12386"
+   },
+   {
+    "path": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:13682",
+    "sha256": "3e4f261a1a5588137b3b6bc4d943348fffcea2b03179194e64b0c03ae701a69c",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-001-current-planunit-snapshot/span_map.jsonl#jsonl:13682"
+   }
+  ],
+  "exclusions_after": 650,
+  "tree": "8a5f4517d4"
  }
 }
