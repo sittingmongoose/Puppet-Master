@@ -48,15 +48,26 @@
   }
   const choiceWord = (p) => { const k = policy(p); return k.mode === 'auto' ? w('wk.auto') : w('wk.chosenBy', { computer: cname(k.def), who: k.by || 'Jared' }); };
   const rowWord = (x) => (x.mode === 'chosen' ? w('wk.chosenBy', { computer: cname(x.c), who: x.by || 'Jared' }) : x.queued ? w('wk.autoQueued') : w('wk.autoTo', { computer: cname(x.c) }));
-  /* where Auto would send new work right now: an allowed Computer Auto may pick (not Only when I choose it) with room, else
-     the default Computer, which breaks the tie */
+  /* the Computers Auto may pick among an allowed set: never one at Only when I choose it (SIR-056, SSYS-059) */
+  const autoCandidates = (allowed) => allowed.filter((c) => LEVEL[c] !== 'Only when I choose it');
+  /* why Auto has nothing to pick in an allowed set, in plain words ("Studio Mac is set to Only when I choose it"), or null */
+  const autoNone = (allowed) => (autoCandidates(allowed).length ? null : andList(allowed.map((c) => w('wk.none.level', { computer: cname(c), level: LEVEL[c] || 'Normal' }))));
+  /* where Auto would send new work right now: an allowed Computer Auto may pick with room, and among equals the default
+     Computer, which only breaks ties. With no Computer Auto may pick it is null: the work waits, and says why, and the
+     default is never a fallback (SIR-056: "none waits/blocks visibly, with no unmeasured fallback"; Sol max S1, 2026-11-12:
+     this used to return the default Computer even at Only when I choose it) */
   function autoPick(p) {
     const k = policy(p);
     if (k.mode === 'chosen') return k.def;
-    const ok = k.allowed.filter((c) => LEVEL[c] !== 'Only when I choose it');
+    const ok = autoCandidates(k.allowed);
+    if (!ok.length) return null;
     const free = ok.filter((c) => !(OBS[c] || {}).inUse && !(OBS[c] || {}).busy);
-    return free[0] || (ok.indexOf(k.def) >= 0 ? k.def : ok[0]) || k.def;
+    return free[0] || (ok.indexOf(k.def) >= 0 ? k.def : ok[0]);
   }
+  /* the Project is Auto and Auto has no Computer it may pick: its new work waits */
+  const autoWaits = (p) => policy(p).mode === 'auto' && autoPick(p) === null;
+  /* a piece of work that follows Auto, hasn't started, and waits because Auto has nothing to pick */
+  const noneWaits = (p, x) => x.mode === 'auto' && !!x.queued && autoWaits(p);
   /* a person's pin whose Computer the Project no longer allows: requested and effective differ, so it says so. Work that
      hasn't started waits with its reason and is never moved by itself; started work keeps its Computer (SIR-056, DL-473) */
   const stale = (p, x) => x.mode === 'chosen' && !x.project && !!x.c && policy(p).allowed.indexOf(x.c) < 0;
@@ -69,7 +80,7 @@
     const k = policy(p), now = workingNow(p), n = running(p), q = (p.workers || []).filter((x) => x.queued).length, wait = q ? w('wk.f.waiting', { n: q }) : '';
     return [
       { k: w('wk.f.home'), v: homeWord(p), tip: w('wk.f.homeTip') },
-      { k: w('wk.f.choice'), v: choiceWord(p) },
+      autoWaits(p) ? { k: w('wk.f.choice'), v: w('wk.f.noneV'), tone: 'warn', tip: w('wk.none.tip', { reasons: autoNone(k.allowed) }) } : { k: w('wk.f.choice'), v: choiceWord(p) },
       { k: w('wk.f.default'), v: cname(k.def) + ' · ' + (k.mode === 'auto' ? w('wk.f.tie') : w('wk.f.chosenHere')) },
       { k: w('wk.f.allowed'), v: andList(k.allowed.map(cname)) },
       { k: w('wk.f.now'), v: now.length ? andList(now.map(cname)) + ' · ' + w(n === 1 ? 'wk.f.task' : 'wk.f.tasks', { n }) + (wait ? ' · ' + wait : '') : wait ? w('wk.f.nothingYet') + ' · ' + wait : w('wk.f.none') }
@@ -90,16 +101,16 @@
       const pin = h('button.pjx-link.pjx-wk-pin', { type: 'button', 'data-c-key': 'wk:pin:' + i, 'aria-haspopup': 'menu', 'aria-disabled': x.queued ? null : 'true', 'data-cmd': 'cmd.execution_host.pin (bounded run/task pin)' }, w('wk.pin.run'));
       PJX.tip(pin, w('wk.pin.run'), x.queued ? w('wk.pin.runTip') : w('wk.pin.started', { computer: cname(x.c) }));
       pin.addEventListener('click', () => { if (x.queued) pinMenu(p, x, pin); });
-      const st = stale(p, x), waits = st && x.queued;
-      const wait = waits ? w('wk.stale.wait', { computer: cname(x.c), project: p.name }) : st ? w('wk.stale.keeps', { computer: cname(x.c) }) : x.waiting;
+      const st = stale(p, x), none = noneWaits(p, x), waits = (st && x.queued) || none;
+      const wait = none ? w('wk.none.wait') : waits ? w('wk.stale.wait', { computer: cname(x.c), project: p.name }) : st ? w('wk.stale.keeps', { computer: cname(x.c) }) : x.waiting;
       // a waiting pin offers both ways on: another allowed Computer (Run this on…) or the Project's choice
-      const follow = waits ? h('button.pjx-link.pjx-wk-follow', { type: 'button', 'data-c-key': 'wk:follow:' + i, 'data-cmd': 'cmd.execution_host.pin.clear' }, w('wk.stale.follow', { choice: choiceWord(p) })) : null;
+      const follow = waits && !none ? h('button.pjx-link.pjx-wk-follow', { type: 'button', 'data-c-key': 'wk:follow:' + i, 'data-cmd': 'cmd.execution_host.pin.clear' }, w('wk.stale.follow', { choice: choiceWord(p) })) : null;
       if (follow) follow.addEventListener('click', () => setPin(p, x, null));
       if (waits) b.textContent = w('wk.stale.whyBtn');
       box.appendChild(h('li.pjx-wk-row', { 'data-mode': x.mode, 'data-queued': x.queued ? '' : null, 'data-state': waits ? 'waiting' : st ? 'kept' : null },
         h('span.pjx-st-mark', { html: waits ? PJX.calm('waiting', 13) : x.queued ? PJX.calm('pending', 13) : PJX.mark(x.waiting ? 'pending' : 'working', 13), 'aria-hidden': 'true' }),
         h('span.pjx-wk-task', { text: x.task }),
-        h('span.pjx-wk-where', null, h('span.pjx-wk-to', { text: words }), wait ? h('span.pjx-wk-wait', { text: ' · ' + wait }) : null),
+        h('span.pjx-wk-where', null, h('span.pjx-wk-to', { text: none ? w('wk.auto') : words }), wait ? h('span.pjx-wk-wait', { text: ' · ' + wait }) : null),
         h('span.pjx-wk-acts', null, pin, follow, b)));
       void o;
     });
@@ -134,6 +145,16 @@
       body.appendChild(fl.facts([{ key: 'complete', text: w('wk.why.pinWins') }, { key: 'info', text: w('wk.why.pinWaits', { computer: cname(x.c) }) }, { key: 'info', text: w('wk.why.pinScope', { project: p.name, choice: choiceWord(p) }) },
         k.allowed.indexOf(x.c) < 0 ? { key: 'info', text: w('wk.stale.keepsWhy', { computer: cname(x.c), project: p.name }) } : null,
         LEVEL[x.c] === 'Only when I choose it' ? { key: 'info', text: w('wk.why.pinLevel', { computer: cname(x.c) }) } : null].filter(Boolean)));
+    } else if (noneWaits(p, x)) {
+      // (Sol max S1) Auto has no Computer it may pick: the work waits, each Computer says why it can't take it, the default
+      // Computer is said to be a tie-break and not a fallback, and both ways on are offered; nothing moves by itself
+      body.appendChild(h('p.pjx-q-lead', { text: w('wk.why.noneLead', { project: p.name }) }));
+      body.appendChild(fl.facts([{ key: 'waiting', text: w('wk.why.noneNow') }]));
+      body.appendChild(fl.group(w('wk.why.noneEach'), fl.facts(ENV.computers.map((c) => (k.allowed.indexOf(c.id) < 0 ? { key: 'off', text: w('wk.why.notAllowed', { computer: c.name, project: p.name }) }
+        : { key: 'off', text: w('wk.why.onlyWhenChosen', { computer: c.name }) })))));
+      body.appendChild(fl.facts([{ key: 'info', text: w('wk.why.noneNever', { computer: cname(k.def) }) }, { key: 'info', text: w('wk.why.noneWays', { project: p.name }) }]));
+      acts = [{ label: w('wk.change'), cmd: 'cmd.project.execution_policy.set', run: (d) => { d.close('change'); setTimeout(() => { if (PJX.split && PJX.split.openForm) PJX.split.openForm(p.id, 'work'); }, 200); } },
+        { label: w('wk.pin.run'), cmd: 'cmd.execution_host.pin', run: (d) => { d.close('pin'); setTimeout(() => { const a = W.document.querySelector('[data-plate="work"] [data-c-key="wk:pin:' + (p.workers || []).indexOf(x) + '"]'); if (a) pinMenu(p, x, a); }, 200); } }];
     } else if (x.queued) {
       body.appendChild(h('p.pjx-q-lead', { text: w('wk.why.queuedLead', { project: p.name }) }));
       body.appendChild(fl.facts([{ key: 'info', text: w('wk.why.queuedNow', { computer: cname(autoPick(p)) }) }, { key: 'info', text: w('wk.why.queuedPin') }]));
@@ -160,7 +181,7 @@
       { key: 'info', text: w('wk.why.weights') },
       { key: 'info', text: w('wk.why.version') }, { key: 'info', text: w('wk.why.levels', { here: LEVEL.here, homenas: LEVEL.homenas, studio: LEVEL.studio }) }])));
     body.appendChild(u.line(null, w('wk.why.policy'), { icon: 'settings', after: u.link(w('wk.settingsLink'), () => goSettings(), { key: 'wk:whysettings', cmd: 'cmd.settings.open' }) }));
-    const dlg = PJX.dialog({ title: stale(p, x) && x.queued ? w('wk.why.titleStale') : x.c ? w('wk.why.title', { computer: cname(x.c) }) : w('wk.why.titleQueued'), kicker: x.task, body, wide: true,
+    const dlg = PJX.dialog({ title: (stale(p, x) && x.queued) || noneWaits(p, x) ? w('wk.why.titleStale') : x.c ? w('wk.why.title', { computer: cname(x.c) }) : w('wk.why.titleQueued'), kicker: x.task, body, wide: true,
       actions: (acts || []).concat([{ spacer: true }, { label: w('np.done.ok'), primary: true, run: () => dlg.close('ok') }]) });
     return dlg;
   }
@@ -193,6 +214,8 @@
     box.appendChild(u.group(w('wk.form.allowed'), checks, u.hint(w('wk.form.allowedHint'))));
     // (N1) pinned work that hasn't started, on a Computer this choice would no longer allow: it would wait, never move
     const al = allowedList();
+    // (Sol max S1) Auto with no Computer it may pick among these: said before Save, since new work would wait
+    if (e.mode === 'auto' && autoNone(al)) box.appendChild(u.line('waiting', w('wk.form.noneWarn', { reasons: autoNone(al) }), { role: 'status' }));
     (p.workers || []).filter((x) => x.queued && x.mode === 'chosen' && !x.project && x.c && al.indexOf(x.c) < 0).forEach((x) =>
       box.appendChild(u.line('waiting', w('wk.form.staleWarn', { task: x.task, computer: cname(x.c), project: p.name }), { role: 'status' })));
     box.appendChild(u.line(null, w('wk.form.running'), { icon: 'info' }));
@@ -226,15 +249,32 @@
     const body = h('div.pjx-wk-whybody');
     const paint = () => {
       const u = U();
+      // (Sol max S1) under the Project's choice, Auto with no Computer it may pick: the run would wait. Say why, and offer
+      // both ways on: this run on a Computer the Project allows, or another Computer allowed for the Project
+      const none = where === 'auto' && k.mode === 'auto' && autoPick(p) === null;
+      const pinIt = k.allowed[0], ways = none ? h('div.pjx-row.pjx-wk-ways', null,
+        u.link(w('wk.start.pinit', { computer: cname(pinIt) }), () => { where = pinIt; paint(); }, { key: 'wk:start:pinit', cmd: 'cmd.execution_host.pin (run scope)' }),
+        u.link(w('wk.start.allow'), () => { dlg.close('allow'); setTimeout(() => { if (PJX.split && PJX.split.openForm) PJX.split.openForm(p.id, 'work'); }, 200); }, { key: 'wk:start:allow', cmd: 'cmd.project.execution_policy.set' })) : null;
       body.replaceChildren(h('p.pjx-q-lead', { text: w('wk.start.lead', { project: p.name, choice: choiceWord(p) }) }),
         u.group(w('wk.start.what'), u.choices('wk:start:what', TASKS.map(([id, t]) => ({ id, glyph: 'play', title: t })), what, (v) => { what = v; paint(); }, { label: w('wk.start.what') })),
         u.group(w('wk.start.where'), u.seg('wk:start:where', [{ id: 'auto', title: w('wk.pin.project'), sub: choiceWord(p) }].concat(k.allowed.map((c) => ({ id: c, title: cname(c), sub: LEVEL[c] }))), where, (v) => { where = v; paint(); }, w('wk.start.where')),
-          u.hint(where === 'auto' ? (k.mode === 'auto' ? w('wk.start.autoHint') : w('wk.start.chosenHint', { computer: cname(k.def) })) : w('wk.start.pinHint', { computer: cname(where), project: p.name }) + (LEVEL[where] === 'Only when I choose it' ? ' ' + w('wk.why.pinLevel', { computer: cname(where) }) : ''))));
-      dlg.setActions([{ spacer: true }, { label: 'Cancel', run: () => dlg.close('cancel') }, { label: w('wk.start.go'), primary: true, icon: 'play', cmd: 'cmd.work.start (+ run pin)', run: () => { dlg.close('ok'); start(); } }]);
+          none ? u.line('waiting', w('wk.start.noneLead', { project: p.name, reasons: autoNone(k.allowed) }), { role: 'status' }) : u.hint(where === 'auto' ? (k.mode === 'auto' ? w('wk.start.autoHint') : w('wk.start.chosenHint', { computer: cname(k.def) })) : w('wk.start.pinHint', { computer: cname(where), project: p.name }) + (LEVEL[where] === 'Only when I choose it' ? ' ' + w('wk.why.pinLevel', { computer: cname(where) }) : '')),
+          ways));
+      dlg.setActions([{ spacer: true }, { label: 'Cancel', run: () => dlg.close('cancel') }, none ? { label: w('wk.start.queue'), primary: true, cmd: 'cmd.work.start (queued: no eligible Computer)', run: () => { dlg.close('ok'); start(); } }
+        : { label: w('wk.start.go'), primary: true, icon: 'play', cmd: 'cmd.work.start (+ run pin)', run: () => { dlg.close('ok'); start(); } }]);
     };
     const start = async () => {
       const task = (TASKS.find((t) => t[0] === what) || TASKS[0])[1];
       const pinned = where !== 'auto', c = pinned ? where : autoPick(p);
+      // (Sol max S1) Auto with no Computer it may pick: the run is queued and waits, with no Computer; it never starts on the
+      // default Computer, and nothing says it started
+      if (!c) {
+        await PJX.run(p.id, 'pin', w('wk.start.queuing'), [{ label: w('wk.start.queuingStep', { task }), ms: 500 }], () => {
+          p.workers = (p.workers || []).concat([{ c: null, task, mode: 'auto', queued: true }]);
+        }, { cmd: 'cmd.work.start (queued: no eligible Computer)' });
+        PJX.toast(w('wk.start.queued', { task }), w('wk.start.queuedText', { project: p.name, reasons: autoNone(policy(p).allowed) }), 'warning');
+        return;
+      }
       await PJX.run(p.id, 'pin', w('wk.start.doing'), [{ label: w('wk.start.starting', { task, computer: cname(c) }), ms: 600 }], () => {
         p.workers = (p.workers || []).concat([pinned ? { c, task, mode: 'chosen', by: 'Jared' } : k.mode === 'chosen' ? { c, task, mode: 'chosen', by: k.by || 'Jared', project: true, at: choiceWord(p) } : { c, task, mode: 'auto' }]);
       }, { cmd: 'cmd.work.start' });
@@ -269,11 +309,13 @@
         { disabled: isDef ? w('wk.form.defAlways') : offW || null, sub: isDef ? w('wk.np.isDefault') : c.id === d.runsOn ? w('wk.np.isHome') : w('wk.form.getsCopy') }));
     });
     box.appendChild(h('div.pjx-np-field', null, u.cap(w('wk.form.allowed')), checks, u.hint(w('wk.np.allowedHint'))));
+    // (Sol max S1) Auto with no Computer it may pick among the allowed: the Project's new work would wait
+    if (d.work.mode === 'auto' && autoNone(npAllowed(s))) box.appendChild(u.line('waiting', w('wk.form.noneWarn', { reasons: autoNone(npAllowed(s)) }), { role: 'status' }));
     box.appendChild(u.line(null, w('wk.np.separate'), { icon: 'info' }));
     box.appendChild(u.line(null, w('wk.form.presets'), { icon: 'settings', after: u.link(w('wk.settingsLink'), () => PJX.toast(w('wk.settingsToast'), w('wk.settingsToastText'), 'info'), { key: 'wk:np:settings', cmd: 'cmd.settings.open' }) }));
     return box;
   }
-  const npChoice = (s) => { const d = s.d, m = (d.work && d.work.mode) || 'auto'; return m === 'auto' ? w('wk.auto') : w('wk.form.chosen', { computer: cname(npDef(s)) }); };
+  const npChoice = (s) => { const d = s.d, m = (d.work && d.work.mode) || 'auto'; return m === 'auto' ? (autoNone(npAllowed(s)) ? w('wk.f.noneV') : w('wk.auto')) : w('wk.form.chosen', { computer: cname(npDef(s)) }); };
 
-  PJX.work = { OBS, LEVEL, policy, autoPick, running, stale, choiceWord, rowWord, workingNow, homeWord, facts, rows, why, form, pinMenu, setPin, startDialog, npBlock, npDef, npAllowed, npChoice, comp, cname };
+  PJX.work = { OBS, LEVEL, policy, autoPick, autoCandidates, autoNone, autoWaits, noneWaits, running, stale, choiceWord, rowWord, workingNow, homeWord, facts, rows, why, form, pinMenu, setPin, startDialog, npBlock, npDef, npAllowed, npChoice, comp, cname };
 })(window);

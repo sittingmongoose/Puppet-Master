@@ -36,15 +36,19 @@
 html[data-pjx-read="v3"] #pjxc.pmu-shell { --v3-gap: 14px; --v3-pad: 18px; --v3-rule: var(--pmu-rule-2, var(--pmu-rule)); }
 
 /* ------------------------------------------------------------------ the library: machines apart, rows with air */
-html[data-pjx-read="v3"] #pjxc .pjxc-libhead { gap: 9px; }
+/* The library has the height of the window and no more, and at 1920 × 1080 in Basic the demo set fills it to the pixel in
+   Split's base layout: every group through Archived shows, with no scrolling (R5.4). So v3's room is moved, not added.
+   The groups stand further apart than in the base layout (18 px and a rule, against 12 px), and the room comes from inside
+   them: a row is 42 px with 2 px between rows (the base layout's 44 and 1), so a machine's Projects read as one block and
+   the machines as separate ones. The list keeps 8 px under its last group, not 16. (Sol max S5, 2026-11-12: the first
+   v3 took 21 px between groups and 46 px rows, and pushed Archived 44 px below the library's edge.) */
 /* a machine's group is one block: a rule and room above it, its head, its line, its Projects */
-html[data-pjx-read="v3"] #pjxc .pjxc-group + .pjxc-group { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--v3-rule); }
-html[data-pjx-read="v3"] #pjxc .pjxc-ghead { height: 22px; margin-bottom: 3px; }
-html[data-pjx-read="v3"] #pjxc .pjxc-group[data-device] > .pjxc-ghead { margin-bottom: 0; }
-html[data-pjx-read="v3"] #pjxc .pjxc-gdev { padding-bottom: 5px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-group + .pjxc-group { margin-top: 8px; padding-top: 9px; border-top: 1px solid var(--v3-rule); }
+html[data-pjx-read="v3"] #pjxc .pjxc-ghead { height: 22px; }
 html[data-pjx-read="v3"] #pjxc .pjxc-rows { gap: 2px; }
 /* (the row keeps v2's own column gap: in Retro Light the monospace second line has exactly the room it needs) */
-html[data-pjx-read="v3"] #pjxc .pjxc-row { min-height: 46px; padding-top: 6px; padding-bottom: 6px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-row { min-height: 42px; padding-top: 4px; padding-bottom: 4px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-list { padding-bottom: 8px; }
 /* the name leads; its line is lighter, and only a line that needs you keeps colour */
 html[data-pjx-read="v3"] #pjxc .pjxc-row-line { line-height: 16px; }
 html[data-pjx-read="v3"] #pjxc .pjxc-row-line[data-tone="blocked"], html[data-pjx-read="v3"] #pjxc .pjxc-row-line[data-tone="attention"] { font-weight: 500; }

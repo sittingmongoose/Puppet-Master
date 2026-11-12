@@ -186,5 +186,61 @@ export const tests = {
 		const rv = await f.evaluate(() => Array.from(document.querySelectorAll('.pjxc-review dt')).map((x) => x.textContent.trim()));
 		await t.check('Review names default Computer, new work, allowed and records home', ['Default Computer', 'New work', 'Allowed', 'Records home'].every((k) => rv.some((x) => x.indexOf(k) === 0)), rv.join(' | '));
 		await t.shot('np-where', 'New Project › Where it lives with Where its work runs: one Computer picker (LOOK)');
-	}
+	},
+	// (Sol max S1, 2026-11-12) SIR-056: Auto never picks a Computer at Only when I choose it, and the default Computer only
+	// breaks ties: with only such a Computer allowed, Auto has no candidate. New work waits visibly with its reason and the
+	// ways out (allow another Computer, or pin this run); nothing runs and nothing says it started until one is eligible.
+	async 'Auto with only a manual-only Computer allowed waits and says why (Sol max S1)'(t) {
+		const f = await t.app.open(t);
+		await t.app.click(t, f, '#pjxc .pjxc-row[data-pid="tastebook"]', { wait: 300 });
+		await t.app.click(t, f, '[data-c-key="p:work"]');
+		await t.page.waitForTimeout(200);
+		await t.app.click(t, f, '[data-c-key="wk:def:studio"]');
+		await t.app.tick(t, f, 'wk:allow:here');
+		await t.app.tick(t, f, 'wk:allow:homenas');
+		const formText = await f.evaluate(() => ((document.querySelector('[data-plate="work"] .pjxc-form') || {}).textContent || ''));
+		await t.check('the form says, before Save, that Auto would have no Computer it may pick', /Auto has no Computer it may pick/.test(formText) && /Studio Mac is set to Only when I choose it/.test(formText), formText.slice(0, 400));
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="f:save"]');
+		await t.app.until(t, f, 'saved: only Studio Mac is allowed', () => /^Studio Mac$/.test(((Array.from(document.querySelectorAll('[data-plate="work"] .pmu-fact')).find((x) => /^Allowed/.test(x.textContent)) || {}).querySelector?.('.pmu-factv') || {}).textContent || ''), null, 10000);
+		const pol = await f.evaluate(() => { const p = window.PJX.get('tastebook'), k = window.PJX.work.policy(p); return { mode: k.mode, def: k.def, allowed: k.allowed.join(), pick: window.PJX.work.autoPick(p) }; });
+		await t.check('the Project stays Auto with Studio Mac as its default and only allowed Computer', pol.mode === 'auto' && pol.def === 'studio' && pol.allowed === 'studio', JSON.stringify(pol));
+		await t.check('Auto picks nothing: the default only breaks ties, it is not a fallback', pol.pick === null, JSON.stringify(pol));
+		const fact = await f.evaluate(() => ((Array.from(document.querySelectorAll('[data-plate="work"] .pmu-fact')).find((x) => /^New work/.test(x.textContent)) || {}).textContent || ''));
+		await t.check('the summary says new work waits, and why', /Auto · waits: no Computer it may pick/.test(fact), fact);
+		const lane = await f.evaluate(() => { const r = document.querySelectorAll('[data-plate="work"] .pjx-wk-row')[3]; return r ? { state: r.getAttribute('data-state'), text: r.querySelector('.pjx-wk-where').textContent, why: r.querySelector('.pjx-wk-why').textContent } : null; });
+		await t.check('queued Auto work waits and says why', !!lane && lane.state === 'waiting' && /^Auto · Waiting: no Computer Auto may pick$/.test(lane.text) && lane.why === 'Why it waits', JSON.stringify(lane));
+
+		// Start a run under the Project's choice: the dialog says it would wait, offers both ways out, and only queues it
+		await holdStill(f, '[data-plate="work"] [data-c-key="p:startrun"]');
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="p:startrun"]', { wait: 350 });
+		const dlg = f.locator('.pjx-dlg').first();
+		const sd = await f.evaluate(() => { const d = document.querySelector('.pjx-dlg'); return d ? { text: d.textContent, pin: !!d.querySelector('[data-c-key="wk:start:pinit"]'), allow: !!d.querySelector('[data-c-key="wk:start:allow"]'), go: ((d.querySelector('.pjx-btn.is-primary') || {}).textContent || '').trim() } : null; });
+		await t.check('Start a run says Auto has no Computer it may pick, and why', !!sd && /Auto has no Computer it may pick for tastebook/.test(sd.text) && /Studio Mac is set to Only when I choose it/.test(sd.text), sd && sd.text.slice(0, 500));
+		await t.check('Start a run offers both ways out: pin this run, or allow another Computer', !!sd && sd.pin && sd.allow, JSON.stringify(sd && { pin: sd.pin, allow: sd.allow }));
+		await t.check('its button queues the run rather than claiming to start it', !!sd && sd.go === 'Queue it', sd && sd.go);
+		await t.shot('s1-start-waits', 'Start a run under Auto with only a manual-only Computer allowed: it would wait, with both ways out (LOOK: Sol max S1 after)');
+		await t.app.click(t, f, '.pjx-dlg .pjx-btn.is-primary', { noScroll: true });
+		await t.app.until(t, f, 'the run is listed', () => (window.PJX.get('tastebook').workers || []).some((x) => x.task === 'Run the tests'), null, 10000);
+		await t.page.waitForTimeout(400);
+		const run = await f.evaluate(() => { const p = window.PJX.get('tastebook'), i = p.workers.findIndex((x) => x.task === 'Run the tests'), x = p.workers[i], r = document.querySelectorAll('[data-plate="work"] .pjx-wk-row')[i]; return { i, x: { c: x.c, mode: x.mode, queued: !!x.queued }, state: r && r.getAttribute('data-state'), text: r && r.querySelector('.pjx-wk-where').textContent, now: ((Array.from(document.querySelectorAll('[data-plate="work"] .pmu-fact')).find((y) => /^Working now/.test(y.textContent)) || {}).textContent || '') }; });
+		await t.check('no running Auto row: the run waits, with no Computer', run.x.mode === 'auto' && run.x.queued && run.x.c === null && run.state === 'waiting' && /^Auto · Waiting: no Computer Auto may pick$/.test(run.text), JSON.stringify(run));
+		await t.check('nothing is said to run on Studio Mac', !/Auto → Studio Mac/.test(await f.evaluate(() => document.querySelector('[data-plate="work"]').textContent)) && /waiting to start/.test(run.now), run.now);
+		await holdStill(f, '[data-plate="work"] [data-c-key="wk:why:' + run.i + '"]');
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:' + run.i + '"]');
+		await t.page.waitForTimeout(300);
+		const wd = await f.evaluate(() => { const d = document.querySelector('.pjx-dlg'); return d ? { text: d.textContent, btns: Array.from(d.querySelectorAll('.pjx-btn')).map((b) => b.textContent.trim()) } : null; });
+		await t.check('Why it waits: no Computer Auto may pick, each Computer’s reason, and that the default is not a fallback', !!wd && /Why this waits/.test(wd.text) && /no Computer it may pick/.test(wd.text) && /Studio Mac: left out\. Its level is Only when I choose it/.test(wd.text) && /This computer: not allowed for tastebook/.test(wd.text) && /never a fallback/.test(wd.text), wd && wd.text.slice(0, 600));
+		await t.check('Why it waits offers both ways out', !!wd && wd.btns.some((b) => /^Change where work runs/.test(b)) && wd.btns.some((b) => /^Run this on/.test(b)), wd && wd.btns.join(' | '));
+		await t.shot('s1-why-waits', 'Why this waits: Auto has no Computer it may pick (LOOK: Sol max S1 after)');
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(250);
+
+		// a way out: allow Home NAS again, and the waiting Auto work can be picked up
+		await holdStill(f, '[data-plate="work"] [data-c-key="p:work"]');
+		await t.app.click(t, f, '[data-c-key="p:work"]');
+		await t.page.waitForTimeout(200);
+		await t.app.tick(t, f, 'wk:allow:homenas');
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="f:save"]');
+		await t.app.until(t, f, 'allowing Home NAS ends the wait', () => { const r = document.querySelectorAll('[data-plate="work"] .pjx-wk-row'); return r.length >= 5 && !r[3].getAttribute('data-state') && /Auto · picks a Computer when it starts/.test(r[3].textContent) && !r[4].getAttribute('data-state'); }, null, 10000);
+	},
 };

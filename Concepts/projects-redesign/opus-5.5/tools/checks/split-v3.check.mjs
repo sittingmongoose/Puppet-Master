@@ -309,5 +309,42 @@ export const tests = {
 		}
 		await t.app.look(t, 'basic-dark');
 		await t.app.page(t, f, 'projects');
-	}
+	},
+	// (Sol max S5, 2026-11-12) R5.4: at Basic Dark, 1920 × 1080, full width, the fresh demo set shows the whole library,
+	// through Archived, with no scrolling. v3 keeps its larger room between the machines' groups, every word and action,
+	// and type of 11 px or more; the rows give back the room.
+	async 'library at 1920 × 1080 shows every group through Archived without scrolling (Sol max S5)'(t) {
+		const f = await t.app.open(t);
+		await t.app.look(t, 'basic-dark');
+		await t.app.click(t, f, '#pjxc .pjxc-row[data-pid="tastebook"]', { wait: 300 });
+		const measure = () => f.evaluate(() => {
+			const list = document.querySelector('#pjxc .pjxc-list'); list.scrollTop = 0;
+			const lr = list.getBoundingClientRect(), arch = list.querySelector('.pjxc-group.is-archived');
+			const groups = Array.from(list.querySelectorAll('.pjxc-group'));
+			// the room between one machine's group and the next: from the last row of one to the head of the next
+			const seps = groups.slice(1).map((g, i) => { const prev = groups[i].querySelector('.pjxc-rows') || groups[i]; return Math.round(g.querySelector('.pjxc-ghead').getBoundingClientRect().top - prev.getBoundingClientRect().bottom); });
+			let minPx = 99;
+			const tw = document.createTreeWalker(list, NodeFilter.SHOW_TEXT);
+			for (let n = tw.nextNode(); n; n = tw.nextNode()) { if (!n.nodeValue.trim() || !n.parentElement.getClientRects().length) continue; minPx = Math.min(minPx, parseFloat(getComputedStyle(n.parentElement).fontSize)); }
+			return { read: document.documentElement.getAttribute('data-pjx-read'), vw: innerWidth, vh: innerHeight, clip: Math.round(lr.bottom), arch: arch ? [Math.round(arch.getBoundingClientRect().top), Math.round(arch.getBoundingClientRect().bottom)] : null,
+				overflow: list.scrollHeight - list.clientHeight, rows: Array.from(list.querySelectorAll('.pjxc-row')).map((r) => Math.round(r.getBoundingClientRect().height)), seps, minPx,
+				words: list.innerText.replace(/\s+/g, ' ').trim(), acts: Array.from(list.querySelectorAll('button, a, input, [role="button"]')).map((b) => b.getAttribute('data-c-key') || b.textContent.trim()).join('|') };
+		});
+		const v3 = await measure();
+		await f.evaluate(() => window.PJX.read.set('v2'));
+		await t.page.waitForTimeout(250);
+		const base = await measure();
+		await f.evaluate(() => window.PJX.read.set('v3'));
+		await t.page.waitForTimeout(250);
+		const info = JSON.stringify({ vw: v3.vw, vh: v3.vh, clip: v3.clip, arch: v3.arch, overflow: v3.overflow, rows: v3.rows, seps: v3.seps, baseArch: base.arch, baseOverflow: base.overflow, baseRows: base.rows, baseSeps: base.seps });
+		// (the window is 1920 × 1080; PMConcept7's frame under the review strip is the full width and a little shorter)
+		const vp = t.page.viewportSize();
+		await t.check('the page is v3, in a 1920 × 1080 window, full width', v3.read === 'v3' && vp.width === 1920 && vp.height === 1080 && v3.vw === 1920, JSON.stringify(vp) + ' ' + info);
+		await t.check('Archived’s bottom is at or above the library’s clip', !!v3.arch && v3.arch[1] <= v3.clip, info);
+		await t.check('the library needs no scrolling', v3.overflow <= 0, info);
+		await t.check('v3 keeps more room between the machines’ groups than the base layout', v3.seps.length === base.seps.length && v3.seps.every((x, i) => x > base.seps[i]), info);
+		await t.check('every word and action of the library is kept', v3.words === base.words && v3.acts === base.acts, v3.words === base.words ? 'actions differ' : 'words differ');
+		await t.check('no library type under 11 px', v3.minPx >= 11, String(v3.minPx));
+		await t.crop('s5-library', f.locator('#pjxc .pjxc-lib').first(), 'The library at 1920 × 1080, Basic Dark: every group through Archived, no scrolling (LOOK: Sol max S5 after)');
+	},
 };

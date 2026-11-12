@@ -78,7 +78,7 @@
       like: blankLike(),
       history: 'git', historyTouched: false, filesafe: true,
       online: blankOnline(),
-      backup: { dest: 'none', sub: null, acc: {}, include: 'all', leaveOut: {}, mode: 'daily', time: '2:00 AM', keep: 'standard', keepCustom: { d: 7, w: 4, m: 6 } }
+      backup: { dest: 'none', sub: null, acc: {}, include: 'all', leaveOut: {}, mode: 'daily', time: '2:00 AM', tz: null, keep: 'standard', keepCustom: { d: 7, w: 4, m: 6 } }
     };
   }
   function start(opts) {
@@ -477,6 +477,10 @@
     const cover = m.include === 'pm' ? w('np.restore.cover.pm') : kind ? w('np.restore.cover.all', { kind }) : w('np.restore.cover.files');
     return [{ id: 'p0', when: src.latest || 'the latest', tag: 'Newest', cover }, { id: 'p1', when: 'Yesterday, 3:00 AM', cover }, { id: 'p2', when: 'Oct 26 · kept weekly', cover }, { id: 'p3', when: 'Sep 30 · kept monthly', cover: m.include === 'pm' ? cover : w('np.restore.cover.older', { kind: kind || 'no' }) }];
   }
+  /* (Sol max S2, 2026-11-12; PWIZ-025, BRS-019) the copy the person chose, with what it covers, or null. Everything after the
+     choice (the folded section, the Review, the steps, the plan and the restored Project) reads this one answer; nothing
+     falls back to the newest copy by itself, and a change of source (Kit, place, storage, Project) clears it in set() */
+  const restorePoint = (s) => { const id = s.d.restore.point; return id ? restorePoints(s).find((x) => x.id === id) || null : null; };
   const lineage = (s) => { const src = restoreSource(s), p = s.d.restore.pick; return src && src.lineage && p ? src.lineage[p] || null : null; };
   /* what the chosen backup holds for that Project (its manifest): the history comes back as it was kept, never relabelled */
   const restoredHist = (s) => { const src = restoreSource(s), p = s.d.restore.pick; return src && src.manifest && p ? src.manifest[p] || null : null; };
@@ -678,6 +682,11 @@
       return /\.local$|^192\.168\.|^10\.|^172\.(1[6-9]|2\d|3[01])\./.test(host) ? { unknown: true } : { device: null, independent: true };
     });
   }
+  /* (Sol max S3, 2026-11-12; BRS-015) a backup's clock is part of its policy: a zone the person chose (backup.tz), or, only
+     when that default is the choice, the clock of the Computer it runs on (tz null). Said with the time wherever the time is
+     said: "2:00 AM UTC" for a chosen zone; the Review also names the Computer's clock for the default */
+  const bkTimeOf = (b) => (b && b.time ? b.time + (b.tz ? ' ' + b.tz : '') : '');
+  const bkTimeWord = (s, long) => { const b = s.d.backup, c = comp(s.d.runsOn); return bkTimeOf(b) + (!b.tz && long ? ', ' + w('np.bk.tz.clock', { computer: c.name, tz: c.tz }) : ''); };
   function bkOnNas(s) {
     if (s.d.backup.dest === 'nas') return true;
     const o = bkIdentity(s); return !!(o && o.state === 'done' && o.result.device === 'nas');
@@ -903,7 +912,7 @@
         const l = restoreList(s); if (!l || l.state === 'working') return { text: w('np.restore.looking', { where: restoreWhere(s) }), field: 'restore', wait: true };
         if (l.state === 'failed') return { text: w('np.restore.none', { where: restoreWhere(s) }), field: 'restore' };
         if (!r.pick) return { text: w('np.restore.pick'), field: 'pick' };
-        if (!r.point) return { text: w('np.restore.pointFirst'), field: 'point' };
+        if (!r.point || !restorePoint(s)) return { text: w('np.restore.pointFirst'), field: 'point' };
         return null;
       }
       case 'chat': {
@@ -1081,7 +1090,7 @@
         const it = intentOf(s), p = d.find.project;
         return it === 'contribute' ? w('np.sum.find.contribute', { project: p }) : it === 'copy' ? w('np.sum.find.copy', { project: p }) : it === 'offer' ? w('np.sum.find.offer', { project: p }) : it === 'direct' ? w('np.sum.find.direct', { project: p }) : w('np.sum.find.yours', { project: p });
       }
-      case 'restore': { const src = restoreSource(s); return d.restore.pick ? w('np.sum.restore', { project: d.restore.pick, where: restoreWhere(s), when: (src && src.latest) || 'the latest' }) : ''; }
+      case 'restore': { const pt = restorePoint(s); return d.restore.pick ? w('np.sum.restore', { project: d.restore.pick, where: restoreWhere(s), when: pt ? pt.when : w('np.restore.noPoint') }) : ''; }
       case 'chat': { const c = chatOf(d.chat.id), f = chatFiles(s); return c ? w('np.sum.chat', { chat: c.title, files: { move: 'move ' + chatPicked(s).length + ' of ' + (c.fileList || []).length + ' files', useFolder: 'its folder is the Project', worked: 'use ' + (c.workedIn || {}).path, empty: 'start empty' }[f] }) : ''; }
       case 'where': { const fp = fullPath(s); return w('np.sum.where', { name: nameOf(s), path: fp || '', computer: comp(d.runsOn).name }); }
       case 'like': {
@@ -1093,7 +1102,7 @@
       }
       case 'versions': { const k = histKeeps(s); const kind = k === 'restored' ? 'Comes back with its ' + kindWord(restoredHist(s).backend) + ' history' : k ? 'Keeps its ' + kindWord(k) + ' history' : d.history === 'jujutsu' ? 'Jujutsu' : 'Git'; return w('np.sum.ver', { kind, off: d.filesafe ? '' : w('np.sum.verOff') }); }
       case 'online': return onlineLine(s);
-      case 'backup': { const b = d.backup; if (b.dest === 'none') return w('np.bk.none'); return b.mode === 'manual' ? w('np.bk.sum.manual', { dest: bkDestLabel(s) }) : w('np.bk.sum.daily', { dest: bkDestLabel(s), time: b.time }); }
+      case 'backup': { const b = d.backup; if (b.dest === 'none') return w('np.bk.none'); return b.mode === 'manual' ? w('np.bk.sum.manual', { dest: bkDestLabel(s) }) : w('np.bk.sum.daily', { dest: bkDestLabel(s), time: bkTimeWord(s) }); }
       default: return '';
     }
   }
@@ -1133,7 +1142,7 @@
         const it = intentOf(s), svcName = R().service(d.src.service).name;
         return it === 'contribute' ? 'Your fork of ' + d.find.project : it === 'copy' ? d.find.project + ', just a copy' : d.find.project + ' from ' + svcName;
       }
-      case 'restore': return d.restore.pick ? 'Backup of ' + d.restore.pick + ' from ' + restoreWhere(s) : null;
+      case 'restore': { const pt = restorePoint(s); return d.restore.pick ? 'Backup of ' + d.restore.pick + ' from ' + restoreWhere(s) + (pt ? ' · ' + pt.when : '') : null; }
       case 'chat': { const c = chatOf(d.chat.id); return c ? 'From your chat “' + c.title + '”' : null; }
       default: return null;
     }
@@ -1144,6 +1153,8 @@
     const c = chatOf(d.chat.id);
     const project = [row(w('np.rv.name'), named && !nameProblem(s) ? nameOf(s) : null, 'where', { field: 'name' }), row(w('np.rv.begins'), begins(s), sections(s)[0])];
     if (d.way === 'chat' && c) project.push(row(w('np.rv.chat'), w('np.rv.chatLine', { chat: c.title }), 'chat'));
+    // (Sol max S2) which copy comes back, and what it covers
+    if (d.way === 'restore') { const pt = restorePoint(s); project.push(row(w('np.rv.copy'), pt ? pt.when + ' · ' + pt.cover : null, 'restore', { field: 'point' })); }
     if (d.way !== 'restore') { const p = likeSrc(s), k = p && likeCounts(s); project.push(row(w('np.rv.like'), p ? 'Like ' + p.name + ': ' + plural(k.own, 'setting') + (k.things ? ', ' + plural(k.things, 'thing') : '') + (k.accounts ? ', ' + plural(k.accounts, 'AI account') : '') + (k.headers ? ', ' + plural(k.headers, 'sign-in header') : '') + (k.files ? ', ' + plural(k.files, 'of its own files', 'of its own files') : '') : w('np.sum.like.usual'), 'like')); }
     if (d.way === 'chat' && c) {
       if (chatFiles(s) === 'move') project.push(row('Files', w('cv.pickN', { k: chatPicked(s).length, n: (c.fileList || []).length }), 'chat', { field: 'chatPick' }));
@@ -1164,7 +1175,7 @@
     // a choice made but not finished says what is left, so the row and the closed plan below never disagree
     const op0 = problem(s, 'online'), olm = onlineMode(s);
     const ol = op0 && !/^(none|leave|from)$/.test(olm) ? (/make|instead/.test(olm) && R().service(d.online.service) ? 'New on ' + R().kind(d.online.service, d.online.kind).label + ' · ' + op0.text : null) : onlineLine(s, true);
-    const bk = d.backup.dest === 'none' ? w('np.bk.none') : problem(s, 'backup') ? null : w('np.rv.bkLine', { place: bkPlace(s), when: d.backup.mode === 'manual' ? 'when you click Back up now' : 'every day at ' + d.backup.time });
+    const bk = d.backup.dest === 'none' ? w('np.bk.none') : problem(s, 'backup') ? null : w('np.rv.bkLine', { place: bkPlace(s), when: d.backup.mode === 'manual' ? 'when you click Back up now' : 'every day at ' + bkTimeWord(s, true) });
     const safe = [row(w('np.rv.ver'), ver, 'versions'), row(w('np.rv.filesafe'), d.filesafe ? 'On' : 'Off', 'versions'), row(w('np.rv.online'), ol, 'online', { field: 'omode', open: !!(op0 && ol && !/^(none|leave|from)$/.test(olm)) }), row(w('np.rv.bk'), bk, 'backup')];
     const groups = [{ id: 'project', label: w('np.rv.project'), rows: project }, { id: 'loc', label: w('np.rv.loc'), rows: loc }, { id: 'safe', label: w('np.rv.safe'), rows: safe }];
     if (/make|instead/.test(onlineMode(s))) {
@@ -1200,8 +1211,10 @@
     if (d.way === 'folder') add('again', w('np.ph.folderAgain', { path: d.folder.path }), 'cmd.project.source_location.test');
     if (d.way === 'device') add('device', w('np.ph.device', { device: holderName(s) }), 'cmd.project.source_location.test', { net: true, service: holderName(s) });
     if (d.way === 'restore') {
-      add('rget', w('np.ph.rGet'), 'cmd.restore.preview', { net: d.restore.from !== 'folder', service: restoreWhere(s) }); add('rcheck', w('np.ph.rCheck'), 'cmd.restore.preview');
-      add('rput', w('np.ph.rPut', { project: d.restore.pick, name }), 'cmd.restore.project_as_new');
+      // (Sol max S2) the steps name the copy chosen: the plan binds that snapshot, never the newest by implication (BRS-019)
+      const pt = restorePoint(s), when = pt ? pt.when : w('np.restore.noPoint');
+      add('rget', w('np.ph.rGet', { when }), 'cmd.restore.preview', { net: d.restore.from !== 'folder', service: restoreWhere(s) }); add('rcheck', w('np.ph.rCheck'), 'cmd.restore.preview');
+      add('rput', w('np.ph.rPut', { project: d.restore.pick, name, when }), 'cmd.restore.project_as_new');
     }
     const newFolder = d.way === 'new' || (d.way === 'chat' && /move|empty/.test(chatFiles(s)));
     if (newFolder) add('local', w('np.ph.newLocal', { path: fp }), 'cmd.project.new_local');
@@ -1339,7 +1352,7 @@
       const fam = bkFamily(s);
       const acc = d.backup.acc || {}, locator = {};
       Object.keys(acc).forEach((k) => { if (!/Typed$/.test(k) && k !== 'temp' && typeof acc[k] === 'string') locator[k] = acc[k]; });
-      backup = { dest: R().FAMILIES[fam].label, family: fam, place: bkPlace(s), include: d.backup.include, leaveOut: d.backup.include === 'some' ? Object.keys(d.backup.leaveOut).filter((k) => d.backup.leaveOut[k]) : [], mode: d.backup.mode, time: d.backup.time, keep: d.backup.keep, keepCustom: d.backup.keep === 'custom' ? Object.assign({}, d.backup.keepCustom) : null, locator,
+      backup = { dest: R().FAMILIES[fam].label, family: fam, place: bkPlace(s), include: d.backup.include, leaveOut: d.backup.include === 'some' ? Object.keys(d.backup.leaveOut).filter((k) => d.backup.leaveOut[k]) : [], mode: d.backup.mode, time: d.backup.time, tz: d.backup.tz || null, keep: d.backup.keep, keepCustom: d.backup.keep === 'custom' ? Object.assign({}, d.backup.keepCustom) : null, locator,
         schedule: d.backup.mode === 'manual' ? 'When you click Back up now' : 'Every day', state: listed ? 'setup' : 'pending', last: null, versions: 0, kit: null, note: listed ? null : 'Starts after setup',
         setup: listed ? { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: !!(demo && demo.bk), open: true, access: d.backup.dest === 'bucket' || d.backup.dest === 'server' } : null };
     }
@@ -1352,7 +1365,9 @@
       id: slugId + '-' + PJX.uid('n').split('-').pop(), name, glyph, active: false, lifecycle, order: PJX.all().length, runsOn: PJX.work ? PJX.work.npDef(s) : d.runsOn,
       home: d.runsOn, work: { mode: (d.work && d.work.mode) || 'auto', by: d.work && d.work.mode === 'chosen' ? 'Jared' : null, allowed: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn] }, workers: [],
       stack: (info && info.stack) || [], where, opened: 'Just added', openedRank: -0.5,
-      activity: listed ? { key: 'idle', word: 'Ready', text: d.way === 'restore' ? 'Restored from a backup · plan or open it' : 'Ready to plan in the Planning Wizard', at: 'just now', runs: 0 } : { key: 'waiting', word: 'Setup didn’t finish', text: '', at: 'just now', runs: 0 },
+      activity: listed ? { key: 'idle', word: 'Ready', text: d.way === 'restore' ? w('np.restore.activity', { when: (restorePoint(s) || {}).when || w('np.restore.noPoint') }) : 'Ready to plan in the Planning Wizard', at: 'just now', runs: 0 } : { key: 'waiting', word: 'Setup didn’t finish', text: '', at: 'just now', runs: 0 },
+      // (Sol max S2) the restore result: which backup, which Project in it, and which copy, with what it covered
+      restored: d.way === 'restore' && restorePoint(s) ? { from: (restoreSource(s) || {}).id || null, where: restoreWhere(s), project: d.restore.pick, point: restorePoint(s).id, when: restorePoint(s).when, covers: restorePoint(s).cover } : null,
       history: { backend, branch, defaultBranch: it0 === 'contribute' || it0 === 'offer' ? 'main' : null, worktrees: listed ? 1 : 0, changed: (info && info.changed) || 0, submodules: inside0.submodules || null, lfs: inside0.lfs || null, hooks: inside0.hooks || null, filesafe: d.filesafe },
       startFiles,
       online, backup, sync: { devices: listed ? 2 : 0, state: listed ? 'complete' : 'pending' }, attention: [], fresh: true,
@@ -1373,6 +1388,8 @@
       server_mode: d.runsOn === 'here' ? 'this_device' : 'existing_server', server_ref: d.runsOn === 'here' ? null : 'homenas',
       project_name: nameOf(s), local_location: fullPath(s), storage_mode: filesMode(s) === 'network' ? 'network_location' : null,
       history_backend: histKeeps(s) === 'restored' ? restoredHist(s).backend : histKeeps(s) || d.history, filesafe: d.filesafe,
+      // (Sol max S2; PWIZ-025, BRS-019) the restore binds the chosen copy and says what it covers; null until one is chosen
+      restore_point: d.way === 'restore' && restorePoint(s) ? { source: (restoreSource(s) || {}).id || null, project: d.restore.pick, id: restorePoint(s).id, when: restorePoint(s).when, covers: restorePoint(s).cover } : null,
       settings_transfer: sel ? { mode: 'copy', source_project_id: sel.from, explicit_choice_setting_ids: sel.settings.concat(sel.same), keep_fixed: sel.fixed, computer_values_as_own: sel.fromComputer > 0, thing_ids: sel.things,
         account_choices: sel.accounts.map((id) => ({ id, choice: 'same' })).concat(sel.headers.map((id) => ({ id, choice: 'same', header: true }))).concat(sel.later.map((id) => ({ id, choice: 'later' }))), project_only_row_ids: sel.ownFiles, send_keys: false } : { mode: 'usual' },
       online_mode: { none: 'none', leave: 'none', make: 'new', instead: 'new', link_found: 'existing', link: 'existing', again: 'existing', from: 'existing' }[m],
@@ -1384,6 +1401,8 @@
       backup_destination: d.backup.dest === 'none' ? null : bkFamily(s), backup_place: d.backup.dest === 'none' ? null : bkPlace(s),
       backup_include: d.backup.dest === 'none' ? null : d.backup.include, backup_leave_out: d.backup.include === 'some' ? Object.keys(d.backup.leaveOut).filter((k) => d.backup.leaveOut[k]) : [],
       backup_retention: d.backup.dest === 'none' ? null : d.backup.keep === 'custom' ? Object.assign({ kind: 'custom' }, d.backup.keepCustom) : { kind: 'standard' }, secrets_in_draft: false,
+      // (Sol max S3; BRS-015) when it runs, and by whose clock: a chosen zone, or the Computer's own only when that default is chosen
+      backup_schedule: d.backup.dest === 'none' ? null : { mode: d.backup.mode, time: d.backup.mode === 'manual' ? null : d.backup.time, time_zone: d.backup.tz || null, time_zone_source: d.backup.tz ? 'chosen' : 'computer', computer_time_zone: d.backup.tz ? null : comp(d.runsOn).tz || null },
       // pm.work_placement.project_policy.v1: requested_mode chosen sends new work to default_computer; there is no other
       // Project-level Computer (a single run's pin is placement_choice, on the run)
       requested_mode: (d.work && d.work.mode) || 'auto', default_computer: PJX.work ? PJX.work.npDef(s) : d.runsOn, allowed_computers: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], records_home: d.runsOn
@@ -1556,8 +1575,8 @@
     volOfPath, netCheck, netSignIn, bkHost, bkOnNas, likeSel, takenFor, forkNameCheck, visWord, restoredHist, kindWord, needsAccount, dropUi, onSettled: null,
     op, peek, retry, look, lookDone, lookTarget, limits, inspectAt, trusted, devicesFor, lookFor, addKey, resolveShare, smbShareKey, nfsShareKey, smbOk, nfsOk, volOk, dev, share, vol, comp, chatOf, chatFiles, serverOn,
     forgeRec, signedIn, signIn, signinOp, serverCheck, addrOk, srcRec, repoOf, findAnyone, access, accessDone, inside, gitAddressCheck, gitAddrValid, intentOf, intentDefault, forkName, forkOwner, knownFor,
-    restoreSource, restoreWhere, restoreList, unlock, reach, reachOp, reached, kitOf, kitOpen, restoreUnlocked, restorePoints, lineage, derivedName, nameOf, folderNameOf, nameProblem, filesModes, filesMode, networkPlaces, netPlace, placeRoot, fullPath, filesStay, holderName, filesOnNas,
+    restoreSource, restoreWhere, restoreList, unlock, reach, reachOp, reached, kitOf, kitOpen, restoreUnlocked, restorePoints, restorePoint, lineage, derivedName, nameOf, folderNameOf, nameProblem, filesModes, filesMode, networkPlaces, netPlace, placeRoot, fullPath, filesStay, holderName, filesOnNas,
     likeSrc, settingsOf, likePreview, likeCounts, accountRows, needsAfter, picked, histKeeps, histLimits, jjOn, onlineDefault, onlineMode, onlineRec, onlineKind, owners, ownerOf, projectOf, visOf, onlineName, nameCheck,
-    linkTarget, linkRec, linkCheck, bkFamily, bkPlace, bkExisting, bkDestLabel, keepBad, onlineLine, begins, review, phases, commit, makeProject, toPlan, detect, applyDetected, full, andList, plural, fmtGB, HOME
+    linkTarget, linkRec, linkCheck, bkFamily, bkPlace, bkExisting, bkDestLabel, bkTimeOf, bkTimeWord, keepBad, onlineLine, begins, review, phases, commit, makeProject, toPlan, detect, applyDetected, full, andList, plural, fmtGB, HOME
   };
 })(window);
