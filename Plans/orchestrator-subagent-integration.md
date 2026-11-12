@@ -735,9 +735,7 @@ subagentConfig:
 
 ### SubagentPolicy runtime defaults and compatibility aliases
 
-`SubagentPolicy` with `schema_id = pm.subagent_policy.v1` is the canonical runtime policy record for delegated
-SubagentWave admission. It is evaluated before any child_goal, bounded_work_unit,
-or delegated thread is spawned and is recorded in the parent GoalRun receipt.
+The GoalRun/SubagentWave admission and parent GoalRun receipt passage is retired by DL-478. Ordinary delegated-agent policy remains subject to its existing owners.
 
 Field contract:
 - `schema_id`: string const `pm.subagent_policy.v1`.
@@ -745,7 +743,7 @@ Field contract:
 - `enabled`: boolean, default `true`; compatibility alias `enable_tier_subagents`.
 - `mandatory_when`: booleans for `broad_stage`, `high_risk`, `audit_or_closure`, `owner_conflict`, and `user_requested`; all default `true`.
 - `fanout_thresholds`: integer thresholds `min_plan_units_for_wave = 8`, `min_owner_docs_for_wave = 3`, `min_independent_lanes_for_wave = 2`, `min_changed_files_for_wave = 6`, and enum `min_risk_class_for_wave = high`.
-- `limits`: `max_parallel_subagents = 4` with hard limit `8`; `max_subagents_per_wave = 8` with hard limit `12`; `max_waves_per_goal = 3`; `max_estimated_cost_microusd_per_wave = 2000000` with hard limit `10000000`; `max_estimated_tokens_per_wave = 16000` with hard limit `20000`; `max_input_refs_per_subagent = 12` with hard limit `24`; `max_input_bytes_per_subagent = 200000` with hard limit `1000000`; `max_prompt_tokens_per_subagent = 6000` with hard limit `12000`; `max_result_tokens_per_subagent = 2000` with hard limit `4000`; `max_write_targets_per_subagent = 0` for read-only waves with hard limit `1` unless parent write policy explicitly grants more; `max_wall_clock_ms_per_child = 900000` with hard limit `3600000`; `max_tool_rounds_per_child = 12` with hard limit `30`.
+- `limits`: `max_parallel_subagents = 4` with hard limit `8`; `max_subagents_per_wave = 8` with hard limit `12`; `max_estimated_cost_microusd_per_wave = 2000000` with hard limit `10000000`; `max_estimated_tokens_per_wave = 16000` with hard limit `20000`; `max_input_refs_per_subagent = 12` with hard limit `24`; `max_input_bytes_per_subagent = 200000` with hard limit `1000000`; `max_prompt_tokens_per_subagent = 6000` with hard limit `12000`; `max_result_tokens_per_subagent = 2000` with hard limit `4000`; `max_write_targets_per_subagent = 0` for read-only waves with hard limit `1` unless parent write policy explicitly grants more; `max_wall_clock_ms_per_child = 900000` with hard limit `3600000`; `max_tool_rounds_per_child = 12` with hard limit `30`.
 - `parent_budget_ceiling`: every numeric limit must be less than or equal to the parent run envelope from `Plans/Run_Modes.md`; narrower parent remaining budget wins over the defaults above.
 - `retry_policy`: retry only `provider_transient`, `rate_limit`, `tool_timeout`, and `coordination_conflict`; default `max_retry_attempts_per_child = 2`, `max_retry_attempts_per_wave = 1`, and `retry_backoff_ms = 30000`; never retry `permission_denied`, `filesafe_denied`, `authority_scope_denied`, `validation_failed`, `scope_mismatch`, or `repeated_same_read`.
 - `write_policy`: child units default to `read_only` or `proposal_only`; live canonical writes require an explicit parent-owned `leased_writer` or `parent_writer` grant.
@@ -31394,9 +31392,10 @@ owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md,
 ```yaml
 plan_unit_id: OSI-428
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun SubagentWave and certification routing flow is retired; the old text is retained only for source lineage.
   Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. SubagentPolicy governs fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory-subagent rules with default limits of 4 parallel children, 8 children per wave, 3 waves per GoalRun, 2000000 microusd per wave, 16000 estimated tokens per wave, 900000 wall-clock ms per child, 2 retry attempts per child, 1 retry attempt per wave, and 30000 ms retry backoff for provider_transient, rate_limit, tool_timeout, or coordination_conflict only.
   SubagentPolicy cost controls may reduce exploratory fanout, but cannot disable required verification, receipts, independent review where its owner requires it, or certification gates.
 gui_related: false
@@ -31404,18 +31403,7 @@ gui_classification_reason: Subagent task boundaries, capability lanes, and certi
 depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
 unblocks: [OP-022, F3-394]
 acceptance_criteria:
-  - Subagent fanout remains central to Orchestrator design rather than collapsing into one smart agent.
-  - Each SubagentWave records task boundaries, assigned inputs, capability lane, cost/budget policy, outputs, failures, and evidence refs.
-  - Each bounded_work_unit records child_goal or parent WorkNode context, capability_lane, agent_role, write_policy, parent_synthesis expectation, verification_cycle expectation, receipt expectation, write_mode, and certification_tier when applicable.
-  - Subagent policy records fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent rules.
-  - SubagentPolicy receipts record evaluated thresholds, selected child count, parallelism cap, cost ceiling, retry budget, capability lanes, write policy, and compatibility aliases consumed.
-  - Default limits are measurable in children, waves, microusd, estimated tokens, bytes, refs, write targets, wall-clock ms, and tool rounds; hard-limit exceedance blocks the wave rather than silently widening scope.
-  - SubagentPolicy limits cannot exceed the parent Run_Modes run-envelope budget or remaining budget.
-  - Cost limits may reduce exploratory fanout while preserving required verification, receipts, independent review where its owner requires it, and certification gates.
-  - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
-  - Parent synthesis and high-end certification remain required for meaningful completion.
-  - Old fixed-hierarchy and tier-era labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active runtime prose.
-  - Old tier/config-era code samples are not implemented literally as canonical runtime semantics.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Orchestrator subagent wave runtime review
@@ -31799,7 +31787,7 @@ canonical_text: >-
   revalidate before delivery.
 gui_related: false
 gui_classification_reason: Durable orchestration lineage and authority are backend coordination semantics.
-depends_on: [OSI-410, OSI-428, GRS-044]
+depends_on: [OSI-410, GRS-044]
 unblocks: []
 acceptance_criteria:
   - Restart/reconnect fixtures preserve request/spawn/await identity and do not duplicate child work.
