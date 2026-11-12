@@ -637,7 +637,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 31657,
+      "line_count": 31662,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 499,
       "plan_unit_ids": [
@@ -1498,7 +1498,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "e4f79ff67ddc82d1dff604804a724884f5f52725b2540dd960f732fd9f417970",
+      "sha256": "40e1fcb9c6709721c656701b4b8a742906ef179b6955f83acac8f8a901d6fb93",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 496,
@@ -8107,7 +8107,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 52112,
+      "line_count": 52120,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 665,
       "plan_unit_ids": [
@@ -8922,7 +8922,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "685574c4fd2382d159aa4346879f61b32bbcb6f2f85bb8644644bddb4e80d834",
+      "sha256": "5368dfb2e801d2b0f7b323ccddc23d97370abdaeb017f6b785a7f0780fade9dd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 656,
@@ -20911,7 +20911,7 @@
         "Plans/usage_run_estimate_contracts.schema.json",
         "future usage events"
       ],
-      "line_count": 7647,
+      "line_count": 7665,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 108,
       "plan_unit_ids": [
@@ -21066,7 +21066,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "34f9d35b34eb646892a11b83dff6df80cf13fba56a6f73c23c9230c5e38ded1e",
+      "sha256": "69ad562222c833788ef595334535ac31048f6e2acda15bb4b8d2b7ae9456f6fd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 108
@@ -21085,14 +21085,12 @@
       "validation_surfaces": [
         "Cache retention policy and org/account boundary shown when available",
         "Cache-miss churn on stable tasks is reported as optimization warning.",
-        "Compaction triggers use source-specific budgets",
         "Export failure produces degraded status only.",
         "Exporter can be disabled globally/project.",
         "Fallback receipt completeness fixtures",
-        "GUI shows budget by source family",
         "In-flight provenance immutability fixtures",
+        "Internal ContextBudgetReceipt records, omission/defer reasons and source-specific compaction budgets.",
         "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
-        "Omitted/deferred catalog entries have reason receipts",
         "Paid fallback budget gate fixtures",
         "Per-provider/model/account cache hit/miss/cost savings views expose measured vs estimated vs unsupported states.",
         "Plans/browser_event_admission_fixtures.json",
@@ -21772,7 +21770,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-12T18:59:01Z",
+  "generated_at_utc": "2026-11-12T19:00:38Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

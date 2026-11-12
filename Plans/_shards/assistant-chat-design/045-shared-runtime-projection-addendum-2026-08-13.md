@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3807-L22993
+Source lines: L3802-L22993
 
-Source SHA256: `e4f79ff67ddc82d1dff604804a724884f5f52725b2540dd960f732fd9f417970`
+Source SHA256: `40e1fcb9c6709721c656701b4b8a742906ef179b6955f83acac8f8a901d6fb93`
 
 ---
 
@@ -8805,18 +8805,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat UI surfaces an "Injected Context" breakdown per run or turn, including
-  included `AGENTS.md` paths and byte counts, parent summary and attempt
-  journal inclusion plus byte counts, and whether truncation occurred with its
-  reason and order.
+  The Injected Context record retains AGENTS.md paths and byte counts, parent summary and attempt
+  journal inclusion/byte counts, and truncation occurrence, reason and order internally for
+  enforcement and debugging. Chat retains basic on-demand capacity, cost and effective model
+  information plus useful compaction/truncation status. Source composition and per-run or per-turn
+  inclusion receipts are not user-facing.
 gui_related: true
-gui_classification_reason: Injected Context breakdown is visible chat UI.
+gui_classification_reason: "Defines the boundary between visible capacity/compaction status and internal source accounting."
 depends_on: [ACD-178]
 unblocks: []
 acceptance_criteria:
-  - Injected Context breakdown appears per run or turn.
-  - AGENTS.md, parent summary, and attempt journal inclusion disclose byte counts.
-  - Truncation occurrence, reason, and order are visible.
+  - "Internal Injected Context records retain source identity, inclusion/byte counts and truncation occurrence/reason/order under the existing permission and redaction rules."
+  - "Chat keeps basic capacity, cost and effective model information and useful compaction/truncation status available on demand."
+  - "The chat ring, menu, Context Detail Pane and replies show no assembled-source breakdown or per-run/turn inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8832,15 +8833,19 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0088
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
   - "Injected Context"
   - "AGENTS.md"
   - "parent summary"
   - "attempt journal"
-negative_constraints: []
+negative_constraints:
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+stale_retired_dispositions:
+  - "DL-475 retires the user-facing Injected Context breakdown; the historical title and preserved tokens identify internal accounting, not a required GUI label or receipt."
 ```
 
 ### ACD-181 - Context Injector User Configuration

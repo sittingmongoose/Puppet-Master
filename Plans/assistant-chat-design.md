@@ -1280,30 +1280,25 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-featur
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 
-**Context Detail Pane information architecture:**
-- the editor-tab pane has top-level `Curated` and `Raw` views
-- `Curated` contains `Overview`, `Breakdown`, and `Messages`
-- `Overview` shows thread/session title, message counts, headline provider/model/mode/persona summary (`/model/mode/persona`), effort/worker summary when relevant, and headline tokens/context/cost metrics (`/context/cost`)
-- `Breakdown` shows the context usage bar, token buckets, and grouped breakdowns by role, tools, provider, and model when available
-- `Messages` shows one expandable row per message with role, worker type, mode, model, time or duration, total tokens, and cost
-- `Raw` shows an accordion list of messages; expanding a message exposes the full serialized payload for that message, plus related `tool-part` payloads, provider metadata blobs, and path/runtime data needed for debugging
-- Amended 2026-10-31 (DL-270): `Raw` rows resolve payload references through the payload store (SP-337), will open the record inspector (F3-666) once their own production wiring row lands, show a bounded preview, and load the full body only on demand.
+**Context Detail Pane information architecture (DL-475):**
+- the thread-keyed editor tab provides basic on-demand capacity, effective window/loaded tokens, cost and provider/model/mode/persona information (`/model/mode/persona`, `/context/cost`)
+- useful compaction/transition state, outcome, reason and history remain visible; unknown or estimated values are labelled truthfully
+- message info retains human-readable runtime identity, token and cost facts through its existing owner
+- the former `Curated`/`Raw` source-inspection views, assembled-source `Breakdown`, raw message accordions and per-run inclusion receipts are retired from the user surface
 
-**Required Context Detail Pane breakdown:**
-- system and instruction blocks
-- user and assistant messages
-- compiled context attachments and forwarded document selections
-- tool-derived or activity-derived context when the thread uses it
-- run-level or message-level usage snapshots derived from canonical `usage.event` and `run.completed.usage`
-- debug-only Investigation Context items when the thread is an active debug-thread / debug thread
+**Internal source accounting:**
+- retain system/instruction blocks, messages, compiled attachments and forwarded selections, tool/activity sources, notebook/capsule and workflow contributions with their source restrictions
+- retain canonical usage snapshots, inclusion/omission records, truncation reasons/order, redaction and serialization state for enforcement and debugging
+- serialized message and `tool-part` payloads, provider metadata and path/runtime data remain permissioned internal diagnostics; they are not exposed by a chat Raw toggle or source-composition chart
+- DL-270 payload-store and record-inspector custody remains storage-owned (SP-337, F3-666); retiring the chat source-inspection entry creates no replacement reader, store or new inspector entry
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 Rules:
 - the thread surface MUST derive usage from canonical runtime records; it MUST NOT invent a second chat-local cost model
-- Amended 2026-10-31 (DL-270): thread usage totals and widgets read the redb usage rollups and never scan raw `usage.event` records (UF-108, SP-341). Raw `usage.event` reads are limited to the on-demand per-turn drill-down in the Raw view.
-- hidden/background helper calls MAY roll into thread totals, but their source class MUST remain inspectable in raw/detail views
-- truncation, redaction, and context-serialization state remain visible per item; the UI MUST NOT silently present omitted context as if it were still serialized
+- thread usage totals and widgets read the redb usage rollups (UF-108, SP-341); raw `usage.event` reads stay on the existing permissioned diagnostic path, not a user-facing thread Raw view
+- hidden/background calls may contribute to truthful thread totals; source-class attribution remains internal rather than a user-facing inclusion receipt
+- useful compaction/transition status must not claim omitted, truncated, redacted or unknown content is present; per-source details remain internal
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -1999,9 +1994,9 @@ Rule: The Work Bundle acceptance criteria MUST NEVER be truncated; if truncation
 
 ContractRef: ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
 
-### 17.2 Injected-context breakdown + truncation transparency (UI)
+### 17.2 Injected-context accounting and useful truncation status
 
-Rule: The chat UI MUST surface an “Injected Context” breakdown per run/turn, including: included `AGENTS.md` paths + byte counts; parent summary and attempt journal inclusion + byte counts; and whether truncation occurred (and the reason/order that was applied).
+Rule (DL-475): Keep the “Injected Context” record internally for enforcement and debugging, including `AGENTS.md` paths and byte counts, parent summary and attempt journal inclusion/byte counts, and truncation occurrence, reason and order. Chat shows basic capacity, cost and model information plus useful compaction/truncation status; it does not show source composition or a per-run/turn inclusion receipt.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
 
@@ -12601,18 +12596,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat UI surfaces an "Injected Context" breakdown per run or turn, including
-  included `AGENTS.md` paths and byte counts, parent summary and attempt
-  journal inclusion plus byte counts, and whether truncation occurred with its
-  reason and order.
+  The Injected Context record retains AGENTS.md paths and byte counts, parent summary and attempt
+  journal inclusion/byte counts, and truncation occurrence, reason and order internally for
+  enforcement and debugging. Chat retains basic on-demand capacity, cost and effective model
+  information plus useful compaction/truncation status. Source composition and per-run or per-turn
+  inclusion receipts are not user-facing.
 gui_related: true
-gui_classification_reason: Injected Context breakdown is visible chat UI.
+gui_classification_reason: "Defines the boundary between visible capacity/compaction status and internal source accounting."
 depends_on: [ACD-178]
 unblocks: []
 acceptance_criteria:
-  - Injected Context breakdown appears per run or turn.
-  - AGENTS.md, parent summary, and attempt journal inclusion disclose byte counts.
-  - Truncation occurrence, reason, and order are visible.
+  - "Internal Injected Context records retain source identity, inclusion/byte counts and truncation occurrence/reason/order under the existing permission and redaction rules."
+  - "Chat keeps basic capacity, cost and effective model information and useful compaction/truncation status available on demand."
+  - "The chat ring, menu, Context Detail Pane and replies show no assembled-source breakdown or per-run/turn inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12628,15 +12624,19 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0088
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
   - "Injected Context"
   - "AGENTS.md"
   - "parent summary"
   - "attempt journal"
-negative_constraints: []
+negative_constraints:
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+stale_retired_dispositions:
+  - "DL-475 retires the user-facing Injected Context breakdown; the historical title and preserved tokens identify internal accounting, not a required GUI label or receipt."
 ```
 
 ### ACD-181 - Context Injector User Configuration
@@ -25342,12 +25342,13 @@ Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (
 saved dock, and More Details opens or reveals the thread's context tab in the home centre (ACD-448, ACD-500).
 
 The context ring is the compact projection of the active thread's actual context state. Its compact surface
-shows current-window usage/percentage, effective window and tokens loaded, cache hit, and source
-composition. Clicking opens a compact menu with `Compact Now` and `More Details`; menu disclosure itself is
+shows current-window usage/percentage, effective window and tokens loaded, cache hit, estimated cost,
+and effective model information. Source composition and per-run inclusion receipts remain internal. Clicking opens a compact menu with `Compact Now` and `More Details`; menu disclosure itself is
 local and dispatches nothing. `Compact Now` explicitly dispatches `cmd.chat.compact_context` and updates the
 ring and drawer coherently from the owner result/projection. `More Details` dispatches
-`cmd.chat.open_thread_context_details` and reuses the existing thread Context Detail Pane, whose Curated and
-Raw views include routing, fallback, cache, model/limit, compaction state, and compaction history. Focus and
+`cmd.chat.open_thread_context_details` and reuses the existing thread Context Detail Pane for basic
+capacity/cost/model information, cache/limit facts and useful compaction/transition state and history.
+Assembled-source charts and raw source payloads remain internal diagnostics. Focus and
 close reuse the existing focus/close commands. No app-wide Usage route, second context drawer, or second
 context store is created.
 
@@ -25361,36 +25362,37 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  One shared Assistant node/controller/transcript/context store is re-seated between the
-  saved Home dock and the right-side global host on every primary page, preserving thread,
-  draft, attachment, activity, Context Detail Pane, and focus continuity and returning to
-  the saved Home dock. The active-thread context ring exposes current-window use,
-  effective window/tokens, cache hit, and source composition; its click menu is local and
-  offers Compact Now plus More Details. Compact Now alone dispatches
-  cmd.chat.compact_context and updates ring/detail projections coherently, while More
-  Details reuses cmd.chat.open_thread_context_details and the existing focus/close commands and
-  Curated/Raw routing, fallback, cache, limits, compaction-state, and history views. No
-  Assistant clone, app-wide Usage substitute, second detail drawer, or second context
-  store is permitted.
-  Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (Plans/FinalGUISpec.md#F3-637), not a
-  saved dock: returning Home puts the same Assistant back in its column, and its only other place is the popped-out
-  window, which Dock back returns (Plans/UI_Command_Catalog.md#UCC-203). Boot never restores a floating Home
-  placement, and nothing floats the chat inside the window. More Details opens or reveals the thread's context tab in
-  the home centre (ACD-500).
+  One shared Assistant node/controller/transcript/context store is re-seated between the saved Home
+  dock and the right-side global host on every primary page, preserving thread, draft, attachment,
+  activity, Context Detail Pane, and focus continuity and returning to the saved Home dock. The
+  active-thread context ring exposes current-window use, effective window/tokens, cache hit,
+  estimated cost and effective model information; its click menu is local and offers Compact Now
+  plus More Details. Compact Now alone dispatches cmd.chat.compact_context and updates ring/detail
+  projections coherently, while More Details reuses cmd.chat.open_thread_context_details and the
+  existing focus/close commands and basic capacity/cost/model, cache/limit, and useful
+  compaction/transition state and history views. Source records, assembled-source composition and
+  raw source payloads stay internal for enforcement/debugging, with no user-facing per-run inclusion
+  receipt. No Assistant clone, app-wide Usage substitute, second detail drawer, or second context
+  store is permitted. Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right
+  (Plans/FinalGUISpec.md#F3-637), not a saved dock: returning Home puts the same Assistant back in
+  its column, and its only other place is the popped-out window, which Dock back returns
+  (Plans/UI_Command_Catalog.md#UCC-203). Boot never restores a floating Home placement, and nothing
+  floats the chat inside the window. More Details opens or reveals the thread's context tab in the
+  home centre (ACD-500).
 gui_related: true
 gui_classification_reason: The unit defines cross-page Assistant visibility, identity continuity, context-ring fields, menu actions, and detail views.
 split_recommended: false
 depends_on: [ACD-441, ACD-445, ACD-447, CS-068, UCC-147, WM-045, UIW-012, DR-039, DL-180]
 unblocks: []
 acceptance_criteria:
-  - Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it.
+  - "Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it."
   - "Returning Home restores that same node to the chat column (F3-637) with active thread, draft, attachments, transcript, context, details, and focus continuity intact; boot never restores floating placement (DL-180)."
-  - The context ring/menu exposes current-window use, effective window/tokens loaded, cache hit, and source composition.
-  - The click menu contains Compact Now and More Details; opening or hovering the menu dispatches nothing.
-  - Compact Now dispatches cmd.chat.compact_context only after explicit selection and updates the ring plus detail state coherently for started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results.
-  - More Details reuses the existing thread Context Detail Pane with Curated and Raw views covering routing, fallback, cache, limits, compaction state, and history.
-  - No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created.
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+  - "The context ring/menu exposes current-window use, effective window/tokens loaded, cache hit, estimated cost and effective model information; it exposes no source-composition chart or per-run inclusion receipt."
+  - "The click menu contains Compact Now and More Details; opening or hovering the menu dispatches nothing."
+  - "Compact Now dispatches cmd.chat.compact_context only after explicit selection and updates the ring plus detail state coherently for started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results."
+  - "More Details reuses the existing thread Context Detail Pane for basic capacity/cost/model and cache/limit facts plus useful compaction/transition state and history; raw source payloads and source/inclusion records remain internal under their existing enforcement/debugging restrictions."
+  - "No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created."
 validation_surfaces:
   - scripts/pm-plans-verify.py
   - scripts/pm-plan-index.py
@@ -25413,6 +25415,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
   - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
   - Compact Now
   - More Details
@@ -25425,8 +25428,10 @@ negative_constraints:
   - Do not dispatch compaction from hover or menu disclosure.
   - Do not route thread context details through app-wide Usage or create a second detail store.
   - Do not treat concept-local storage as canonical Assistant state.
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is in depends_on now that it depends on no earlier unit, and ACD-500 stays in source_lineage because ACD-500 reaches this unit through F3-569, ACD-480 and ACD-452."
+  - "DL-475 retires Curated/Raw source inspection and source composition from the thread context surface; those preserved tokens are historical lineage, not visible view requirements."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -25488,7 +25493,7 @@ Packet `PM-WNC-2026-09-05-v1`. Notebook semantics are owned by `Plans/Working_No
 
 User corrections and additions are attributed revision-safe actions: a user edit creates a new attributed revision (CAS; a conflicting agent edit surfaces the stale-edit conflict instead of overwriting), in-flight requests keep their original receipt-bound bytes, and dependent future assembly revalidates or invalidates as necessary. Editing never claims to change bytes already sent.
 
-Context Detail and context controls disclose continuity truthfully: the Context Detail Pane shows notebook/capsule contributions as distinct source classes (separate from memory, history, and workflow state), requested/effective fresh-window transition reason and path, checkpoint status, omitted/truncated/redacted classes, and unknown native state labeled unknown — never fabricated. The context controls offer a separately labeled **fresh-context request** distinct from **Compact Now**: Compact Now remains compaction (`cmd.chat.compact_context`, unchanged); the fresh-context request is a new labeled affordance rendering truthful eligibility and disabled reasons (unsupported route, unsaved required checkpoint, deferred) and is never mislabeled as complete session deletion or `done.rotated`. Occupancy drops after a fresh window while cumulative usage and quota display stay correct per UF-099.
+Context Detail and context controls disclose continuity truthfully: basic capacity/cost/model information, requested/effective fresh-window transition reason and path, checkpoint status and useful compaction results remain visible, with unknown native state labelled unknown. Notebook/capsule contributions and memory/history/workflow source classes, inclusion records and per-source omission/truncation/redaction details remain internal for enforcement and debugging; they produce no user-facing source-composition view or per-run inclusion receipt. The context controls offer a separately labeled **fresh-context request** distinct from **Compact Now**: Compact Now remains compaction (`cmd.chat.compact_context`, unchanged); the fresh-context request is a new labeled affordance rendering truthful eligibility and disabled reasons (unsupported route, unsaved required checkpoint, deferred) and is never mislabeled as complete session deletion or `done.rotated`. Occupancy drops after a fresh window while cumulative usage and quota display stay correct per UF-099.
 
 ```yaml
 plan_unit_id: ACD-449
