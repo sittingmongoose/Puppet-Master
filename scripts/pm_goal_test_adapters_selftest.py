@@ -525,7 +525,9 @@ def test_source(s, work):
     }
 
     def registered_candidate(tag, **edits):
+        edits.setdefault('event_type', 'run.started')
         return candidate(tag, payload_schema_id=payload_ids[edits['event_type']], **edits)
+
     st = S.TestOwnerStorage.create(work / 'source', segment_target_bytes=7000)
     run = 'TEST_ONLY:run:1'
     seq = [('a', 'goal_run.started', run), ('b', 'run.started', None),
