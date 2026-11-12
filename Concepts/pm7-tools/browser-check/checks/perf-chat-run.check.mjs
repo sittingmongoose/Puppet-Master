@@ -38,7 +38,7 @@
 //     100 ms later and closed (O55.ui.close) 150 ms after that, or, the long visit, 2300 ms after that. The time from
 //     the arming to orbitB's start, less the time the window was open (PM56_HOST.onRest, as the chat hears it), is the
 //     delay, never more than 40 ms short and at most 300 ms over: a timer never fires early, and after the close the page
-//     is busy laying itself out again, which made it fire 90-110 ms late on the 3090 (2026-11-12). The short visit has
+//     is busy laying itself out again, which made it fire 50-130 ms late on the 3090 (2026-11-12). The short visit has
 //     to have ended before the delay would have been due (else it is not judged). The branch before lane C3 fails the
 //     short visit: there the successor started on the wall clock, as early as the visit was long;
 //   - a send flight under the window rests: the demo's Live reply sends a real message (typed and Send pressed), the
