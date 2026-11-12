@@ -118,10 +118,10 @@ html #panel-settings .overlay .dialog-footer .btn.primary.mm-danger:hover { back
 .pm7-mem-layer[hidden] { display: none; }
 .pm7-mem-layer > .pm7-mem-scrim { position: absolute; inset: 0; background: rgba(4, 6, 13, .35); opacity: 0; transition: opacity 200ms; pointer-events: auto; }
 .pm7-mem-layer.is-open > .pm7-mem-scrim { opacity: 1; }
-.pm7-mem-layer > .pm7-mem-sheet { position: absolute; left: 0; right: 0; bottom: 0; top: 46px; display: flex; flex-direction: column; box-sizing: border-box;
+.pm7-mem-layer > .pm7-mem-sheet { position: absolute; left: 1px; right: 0; bottom: 0; top: 46px; display: flex; flex-direction: column; box-sizing: border-box;
   overflow: hidden; pointer-events: auto; background: var(--surface, #1b1b1b); color: var(--k3-text-1, var(--text-primary)); border: 0; border-top: 1px solid var(--border, rgba(255,255,255,.1));
   border-radius: 14px 14px 0 0; box-shadow: 0 -18px 50px rgba(0, 0, 0, .35); transform: translateY(24px); opacity: 0;
-  transition: transform 220ms cubic-bezier(.22, .76, .18, 1), opacity 180ms; font-family: var(--body-font, Inter, system-ui, sans-serif); font-size: 14px; }
+  transition: transform 220ms cubic-bezier(.22, .76, .18, 1), opacity 180ms; font-family: var(--body-font, Inter, system-ui, sans-serif); font-size: 14px; letter-spacing: normal; }
 .pm7-mem-layer.is-open > .pm7-mem-sheet { transform: none; opacity: 1; }
 .pm7-mem-layer > .pm7-mem-sheet > .pm7-mem-head { position: relative; display: flex; align-items: center; gap: 10px; flex: 0 0 auto; padding: 16px 12px 10px 16px; border-bottom: 1px solid var(--border, rgba(255,255,255,.1)); }
 .pm7-mem-layer .pm7-mem-grip { position: absolute; top: 6px; left: 50%; width: 34px; height: 4px; margin-left: -17px; border-radius: 2px; background: var(--border, rgba(255,255,255,.14)); }
@@ -133,15 +133,27 @@ html #panel-settings .overlay .dialog-footer .btn.primary.mm-danger:hover { back
 .pm7-mem-layer .pm7-mem-x .icon, .pm7-mem-layer .pm7-mem-x svg { width: 15px; height: 15px; stroke: currentColor; }
 .pm7-mem-layer > .pm7-mem-sheet > .pm7-mem-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 12px 12px 24px; }
 .pm7-mem-layer .pm7-mem-body .pm-app, .pm7-mem-layer .pm7-mem-body .manager-page, .pm7-mem-layer .pm7-mem-body .manager-body,
-.pm7-mem-layer .pm7-mem-body .manager-scroll { display: block; height: auto; min-height: 0; max-height: none; margin: 0; padding: 0; overflow: visible; border: 0; background: none; box-shadow: none; }
-.pm7-mem-layer .pm7-mem-body .mm-intro { padding: 10px 12px; }
+.pm7-mem-layer .pm7-mem-body .manager-scroll { display: block; height: 100%; min-height: 0; max-height: none; margin: 0; padding: 0; overflow: visible; border: 0; background: none; box-shadow: none; }
+/* Match mock 10's nested manager-scroll insets and its reserved scrollbar gutter. */
+.pm7-mem-layer .pm7-mem-body .manager-scroll { height: 100%; overflow-y: auto; padding: 12px 14px 50px; scrollbar-gutter: stable; scrollbar-width: auto; }
+.pm7-mem-layer .pm7-mem-body .mm-intro { padding: 0; }
+.pm7-mem-layer .pm7-mem-body .mm-mount > .mm-toolbar,
+.pm7-mem-layer .pm7-mem-body .mm-mount > .mm-list { margin-top: 16px; }
+.pm7-mem-layer .pm7-mem-body .mm-intro .setting-row { padding-top: 10px; padding-bottom: 10px; }
+.pm7-mem-layer .pm7-mem-body .mm-share-line { margin-top: 10px; }
+.pm7-mem-layer .pm7-mem-body .mm-share-line .icon,
+.pm7-mem-layer .pm7-mem-body .mm-share-line .icon svg { width: 16px; height: 16px; }
 /* in the sheet the switch sits beside its words (mock 10), and the row's About button, which opens Settings' own Details
    panel, is left to the page */
-.pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 14px; }
+.pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row { grid-template-columns: minmax(0, 1fr) auto 30px; column-gap: 16px; }
 .pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row > .setting-copy { grid-area: 1 / 1; }
-.pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row > .setting-control { grid-area: 1 / 2; align-self: start; margin-top: 2px; }
+.pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row > .setting-control { grid-area: 1 / 2; align-self: center; margin-top: 0; }
 .pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row > .details-btn { display: none; }
-.pm7-mem-layer .pm7-mem-body .mm-row { padding-left: 12px; }
+.pm7-mem-layer .pm7-mem-body .mm-row { padding: 9px 10px 9px 12px; gap: 12px; }
+@media (max-width: 600px) {
+  .pm7-mem-layer .pm7-mem-body .mm-intro .setting-list .setting-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .pm7-mem-layer .pm7-mem-body .mm-row { padding: 10px 6px 10px 12px; gap: 8px; }
+}
 .pm7-mem-layer .pm7-mem-body .mm-archived-toggle { padding-left: 12px; }
 .pm7-mem-layer .pm7-mem-body .mm-archived-hint { display: none; }
 .pm7-mem-layer > .pm7-mem-sheet > .pm7-mem-portal { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
