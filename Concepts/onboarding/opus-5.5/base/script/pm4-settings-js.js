@@ -3220,7 +3220,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
         <label class="rail-search">${icon('search')}<input data-global-search autocomplete="off" spellcheck="false" placeholder="Search settings, providers, actions…" aria-label="Search Settings"/><span class="kbd">⌘ K</span></label>
       </div>
       <div class="rail-scroll">
-        <button type="button" class="side-link ${state.home ? 'active' : ''}" data-action="home">${icon('home')}<span>Settings Home</span></button>
+        <button type="button" class="side-link ${state.home ? 'active' : ''}" data-action="home">${icon('home')}<span class="side-link-label">Settings Home</span></button>
         <div class="rail-heading">Chapters</div>
         <nav class="domain-list">${domains}</nav>
         <div class="rail-heading">Essential setup</div>
