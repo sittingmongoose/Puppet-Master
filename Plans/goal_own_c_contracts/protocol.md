@@ -217,3 +217,46 @@ Newly authored, TEST_ONLY, for `goal_run.certified` F0, CF-10, CF-11, CF-12, P4,
 **Lifetime and restore** (`scripts/pm_goal_dg_cf3_restore.py`). RP-PROJECTION-3GEN is enforced: at most three generations, current without TTL, retired plus 604800 seconds before deletion, refused while an actual hold record exists; a hold string alone holds nothing and a held projection never extends its Start source. Backup is one coherent original-authority unit privately sealed by its owner; restore refuses incomplete, mixed, archive-bearing, re-sealed or derived-as-authority units, enforces current tombstones through the registered retention owner, drops every derived table and rebuilds from authenticated retained source (BRS-031), with no Event, custody or pending-work effect. Actual backup enumeration, deletion and restore remain NOT_RUN.
 
 DG-INT adapter batch 2 adoption (TEST_ONLY, 2026-11-12): the shared Storage holds canonical SP-278 CURRENT, manifest, lease, checkpoint and index rows, the sequence lease and append fence, and the Event Record Index read source. Every second re-entry preserves both the seglog `manifest_generation` and durable `commit_generation`; no-write checks use the latter, while source and receipt joins retain the former. Current projection fences compare every durable token field. DG-U fresh test births explicitly select `dg-u-adapter-b2-compat-v1/selection.json`; the original v4 selection and its Git-pinned source bytes stay history. Native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+## DG-INT whole-source integration qualification (TEST_ONLY)
+
+The integration harness in `scripts/pm_goal_dg_int_*.py` runs the S2 immutable
+Workflow body/control revisions and native pointer, D01 whole lineage and
+pointer, CF1 execution and Standard owners, CF2 coordinator, and actual CA3
+Goal owners against one adapter-batch-2 Storage instance. Original-profile
+qualification uses a separate S1 world with its own original native/D01
+schemas. No native source value is restamped to cross those profiles.
+
+The explicit selections are
+`Plans/goal_own_c_contracts/dg-int-native-v7-v1/resources.json` and
+`Plans/goal_own_c_contracts/dg-int-original-c3-v1/resources.json`. They pin
+complete additive resources under new literal URIs, the exact predecessor
+bytes, and every external reference's source location and target realm.
+The C3 Goal bank remains a separately retained whole bank. The aggregate
+selections also pin the complete source files and their predecessor. The
+original resource files, retrieval URIs and event-family registry remain
+unchanged.
+
+Positive Goal cancellation follows C3's actual Stop/receipt, native
+Scheduler/D05/D06, settlement, event freeze, late assignment, original
+append, control publication and SIR terminal owners. A merely prepared or
+uncertain D06 outcome cannot issue the Goal event. The retained consumer
+joins the C3 scope proof to the exact D06/D05 originals and checks the
+registered Goal event and its original custody. Every current read uses
+fresh native, D01, Goal/Stop, permission, guard and global-prefix sources;
+schema transport and cached originals supply no current authority.
+
+Disclosure originals are enrolled before the first guard read. Guard reads
+only acquire and authenticate those originals and the actual current controls;
+they do not create a new original or write a durable record. Terminal
+preservation first issues a complete original certified outcome through the
+same v7 owners, then settles C3/D05/D06 while preserving native body/control
+bytes and emitting no new `goal_run.cancelled` Event.
+
+The integration oracles record planning evidence only. Unread ancillary
+schema members are explicitly nonauthoritative model provenance; they do
+not establish a native service, native writer capability, native crash
+isolation or native retention behavior.
+
+native evidence stays NOT_RUN and is a separate claim; a planning PASS must
+never read as native proof.

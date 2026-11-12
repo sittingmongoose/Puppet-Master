@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L863-L946
 
-Source SHA256: `92db032a19ede0dc9ea07cc44bafc4a00fe33764caa8ded5e5b4f7b10fdeebd4`
+Source SHA256: `fa738869f6070a343b08330fe8d937a5f69ed338d7aa0036287ce0ab7b49384d`
 
 ---
 

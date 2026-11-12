@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L30440-L30951
+Source lines: L30440-L30955
 
-Source SHA256: `4809feb5ea7a33933ff0e945e520c89b3035a7fb7153f0466e362f1b3b880142`
+Source SHA256: `77e1dc31b35aa4d25e7da026c7f3c50aafdac1c8aeb35aaaeeb3f4546d3b5f7f`
 
 ---
 
@@ -100,6 +100,8 @@ acceptance_criteria:
 validation_surfaces:
 - scripts/pm_goal_own_c_oracles.py
 - Plans/goal_own_c_contracts/protocol.md
+- python3 scripts/pm_goal_dg_cb_oracles.py
+- Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json
 risk_class: forged_original_authority_or_lost_pending_effect
 reasoning_tier: high
 context_scope: dg_own_c_20261105
@@ -121,6 +123,8 @@ negative_constraints:
 ```
 
 The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation unenrolled binding and old Stop migration). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+DG-CB (2026-11-12) executes this migration as complete TEST_ONLY original paths on the shared owner adapters (C5 capture and mapping, C6 atomic installation, recovery and withdrawal); see `Plans/goal_own_c_contracts/protocol.md` (DG-CB paragraph after M9) and `Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json`. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
 

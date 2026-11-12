@@ -2011,7 +2011,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7786,
+      "line_count": 7791,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 86,
       "plan_unit_ids": [
@@ -2178,7 +2178,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "cafc229fe9a37f78026948b6cd4618bdfca24b0c2891d6a49e83d90d4a92a891",
+      "sha256": "ca893c8befbad14cb9a27733152cf36806e803618966df3555d914f81f010e31",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85,
@@ -2241,6 +2241,7 @@
         "Plans/goal_history_reader_outputs.schema.json",
         "Plans/goal_lifecycle_successor_fixtures.json",
         "Plans/goal_own_c_contracts/dg-ca-corpus-v1/coverage.json",
+        "Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json",
         "Plans/goal_own_c_contracts/dg-u-corpus.v1.json",
         "Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json",
         "Plans/goal_own_c_contracts/protocol.md",
@@ -2366,7 +2367,9 @@
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
         "python3 scripts/pm_goal_current_writer_oracles.py",
+        "python3 scripts/pm_goal_dg_ca3_oracles.py",
         "python3 scripts/pm_goal_dg_ca_oracles.py",
+        "python3 scripts/pm_goal_dg_cb_oracles.py",
         "python3 scripts/pm_goal_dg_u_oracles.py --output <result.json> --guards <guards.json>",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
         "python3 scripts/pm_goal_lifecycle_successor_oracles.py",
@@ -9730,7 +9733,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 9349,
+      "line_count": 9350,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 101,
       "plan_unit_ids": [
@@ -9925,7 +9928,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "92db032a19ede0dc9ea07cc44bafc4a00fe33764caa8ded5e5b4f7b10fdeebd4",
+      "sha256": "fa738869f6070a343b08330fe8d937a5f69ed338d7aa0036287ce0ab7b49384d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 92,
@@ -10137,6 +10140,7 @@
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm_goal_current_writer_oracles.py",
+        "python3 scripts/pm_goal_dg_ca3_oracles.py",
         "python3 scripts/pm_goal_dg_ca_oracles.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
         "python3 scripts/pm_goal_lifecycle_successor_oracles.py",
@@ -18929,7 +18933,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 30951,
+      "line_count": 30955,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 364,
       "plan_unit_ids": [
@@ -19432,7 +19436,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "4809feb5ea7a33933ff0e945e520c89b3035a7fb7153f0466e362f1b3b880142",
+      "sha256": "77e1dc31b35aa4d25e7da026c7f3c50aafdac1c8aeb35aaaeeb3f4546d3b5f7f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 360,
@@ -19562,6 +19566,7 @@
         "Plans/goal_execution_binding_custody.schema.json",
         "Plans/goal_history_reader_outputs.schema.json",
         "Plans/goal_lifecycle_successor_fixtures.json",
+        "Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json",
         "Plans/goal_own_c_contracts/protocol.md",
         "Plans/goal_progressed_history_contract_fixtures.json",
         "Plans/goal_receipt_recorded_history_contract_fixtures.json",
@@ -19743,6 +19748,7 @@
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "python3 scripts/pm_browser_workspace_created_v2.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_goal_dg_cb_oracles.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
         "python3 scripts/pm_goal_run_stop_block_oracles.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
@@ -21841,7 +21847,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-12T04:34:07Z",
+  "generated_at_utc": "2026-11-12T16:08:01Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
