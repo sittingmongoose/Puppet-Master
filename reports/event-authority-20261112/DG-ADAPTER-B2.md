@@ -2,9 +2,11 @@
 
 **native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.**
 
-Everything in this report is TEST_ONLY. Branch `plans/ea-goal-adapter-b2-20261112`, based on batch 1 `62e61fe59a`; the six adapter fixes are commit `783caeaf5faf380caf09a33a8a070964e066b88b`. Completion runs use that code on Nas1 and the Python venv `/home/sittingmongoose/pm-scratch/dg-adapter-b2/venv/bin/python`. The four completion negatives are a tests-only follow-up in `3e20ffded403e19e2120053dcba7b9d3dc6b2b37`; the runtime modules remain byte-identical to the smoke-tested fix commit (`smoke-runtime-equivalence.json`). This report is a separate documentation commit. No family grade, native implementation, admission, registry or governance seal is asserted.
+Everything in this report is TEST_ONLY. Branch `plans/ea-goal-adapter-b2-20261112`, based on batch 1 `62e61fe59a`; the initial six adapter fixes are commit `783caeaf5faf380caf09a33a8a070964e066b88b`. Initial completion runs use that code on Nas1 and the Python venv `/home/sittingmongoose/pm-scratch/dg-adapter-b2/venv/bin/python`. The four completion negatives are a tests-only follow-up in `3e20ffded403e19e2120053dcba7b9d3dc6b2b37`; the runtime modules remain byte-identical to the smoke-tested fix commit (`smoke-runtime-equivalence.json`). This report is a separate documentation commit. No family grade, native implementation, admission, registry or governance seal is asserted.
 
 Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-ADAPTER-B2/`. Relative evidence paths below refer there. `SHA256SUMS` binds the report and evidence; hashes of code and principal results are also listed below.
+
+**Fix 7 continuation:** implementation/test head `a3696a6e69` adds the registry gate below. Earlier check and smoke tables preserve the initial delivery at `eb903f8d1c`; the fix-7 section records current validation and lane changes. Evidence for this continuation is under `fix7/`. Historical section line numbers and hashes refer to their stated initial source heads.
 
 ## Fixes, APIs and tests
 
@@ -148,7 +150,145 @@ The completion follow-up adds exact-code negatives for the reachable `index/data
 
 The native read-id negative uses the same read already validated by the positive; only its read id changes. The malformed-manifest negative updates the observed byte digest alongside the malformed bytes. No local guard-removal engine or full check-11 proof is asserted.
 
-## Compatibility smoke
+### 7. Exact Event family registration before projection selection
+
+**Where:** `scripts/pm_goal_test_source.py`, `event_family_registration` and `GenericSource.project`. **Cause:** frame/custody validation alone allowed an off-run unregistered type or mismatched payload schema to be ignored by `select`, so a consumer could advance over it. DG-INT found this with S1 Start and R2 cancellation in one Storage. **Fix:** every retained row must match an exact `(event_type, scope_kind, payload_schema_id)` registration before `select` or `reducer.step`.
+
+The loader reads `Plans/event_family_registry.json` unchanged. Explicit `payload_versions` follow `exact_scope_and_schema_id_no_fallback`; other families use their declared project/application availability and exact top-level schema id. This gate does not add referenced-event inheritance joins. No prefix/alias coercion or TEST_ONLY exemption is introduced. Compiled registrations are an immutable cached set. Registration is not native producer admission.
+
+On a miss, `project` returns `complete=false`, `halt=('reducer/unregistered_record', position, event_id)` and `quarantine` with the registry's `quarantine_without_checkpoint_advance` disposition and the offending type/scope/schema. It stops before that row: first-row failure leaves frontier `None`; a later failure retains only the valid prefix. The reducer and selector never receive the bad row or its suffix. Reporting quarantine does not write to Storage. Successful return shapes are unchanged.
+
+The sample `LifecycleReducer` and source fixtures now use registered `goal_run.*` types and matching schema ids; registered unrelated `run.started`/platform rows still count toward global coverage. Its first supported type is the sample start transition. This preserves the source tests' intended lifecycle and off-run/retention/frame cases without registering synthetic `goal_test.*` families.
+
+**Tests:** the `registration` component adds three positives and five negatives:
+
+| Case | Expected result |
+|---|---|
+| `registered_record_reaches_reducer` | Registered row is reduced and advances the frontier |
+| `registered_application_payload_version` | Explicit application variant is accepted |
+| `registered_off_run_advances_global_prefix` | Registered off-run row counts without reducer dispatch |
+| `unregistered_type_quarantined` | `reducer/unregistered_record`; no frontier/Storage change |
+| `registered_type_wrong_schema_quarantined` | Same halt for another family's otherwise registered schema id |
+| `unregistered_off_run_halts_before_filter` | Global gate stops before off-run filtering and the suffix |
+| `wrong_schema_off_run_halts_before_filter` | Same gate for mismatched schema on an off-run row |
+| `application_schema_has_no_project_fallback` | Explicit scope selector has no fallback |
+
+Every case uses real TEST_ONLY Storage frames and first custody. Negatives verify exact quarantine metadata, processed count, prior frontier, state, absence of reducer/selector calls for the bad row, and unchanged `storage.observe()`.
+
+`fix7/registration-witness.json` compares the unchanged predecessor `GenericSource.project` extracted from `eb903f8d1c` with the fixed method, using the same current unchanged Storage/frame/custody APIs and these real-input cases. The predecessor ACCEPTS all five bad-record cases; the fix passes all eight. This is a predecessor regression comparison, not a local guard-isolation engine or a native evidence claim.
+
+**Current component validation:** all **349 self-tests pass (97 positive, 252 negative)**, including the eight registration cases and 14 fault-matrix rows. R1 passes 1 positive/36 negatives; CF-01 passes 2 positives/41 negatives; the separate reopen run passes 14 rows. NUMRULE loader, guard inventory, Python compilation and whitespace checks exit 0. Exact commands and resource gates are in `fix7/completion-checks.json`; exact registry/source hashes are in `fix7/registration-inputs.json` and each smoke record. The new gate is at `scripts/pm_goal_test_source.py:347–355`; its cases are in `scripts/pm_goal_test_selftest_b2.py:836–918`. `fix7/DG-ADAPTER-B2-guards.json` retains the literal require/refuse inventory; the new if/Halt path is covered by the explicit registration cases and is outside that scanner. The first run caught a missing default in the migrated test helper; it was corrected in `a3696a6e69` and the complete evidence run passed on attempt 2. Failed-attempt logs are retained.
+
+#### Fix-7 compatibility smoke
+
+Eight raw lane runners completed with source commit `a3696a6e69` pinned. The driver recorded the source module and registry SHA-256 in every worktree; all use source `7fa4b81a87853724310ac0a27290b97bbf0cd894262245384a29b4f7f3211b4e` and registry `443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653`. Full heads/measurements are in `fix7/smoke-summary.json`.
+
+| Lane / lane head | Scratch merged head | Exit | Process seconds | Max RSS (KiB) | Pos / neg attempted | Result |
+|---|---|---:|---:|---:|---:|---|
+| DG-S `3ec6fd928c` | `92acee6687` | 1 | 467.44 | 382500 | 46 / 154 | 5 fix-7 fixture changes |
+| DG-R `70bd7d7f45` | `57b7eb567c` | 1 | 486.18 | 541600 | 46 / 271 | 79 source/fixture cascades from unregistered inputs |
+| DG-CF3 `0dfde7bc02` | `e97d276dda` | 1 | 318.44 | 457944 | 23 / 150 | Only prior fix-2 P5-N15 mismatch |
+| DG-INT `cd49470d9c` | `cd49470d9c` | 1 | 278.13 | 1153988 | 9 / 33 | 2 mixed-Storage positives blocked by v1 Goal source |
+| DG-CF1 `3058f80fb3` | `24eb848de6` | 0 | 171.81 | 332068 | 6 / 196 | PASS |
+| DG-CA `f87dbe1f30` | `159086b669` | 0 | 386.11 | 203864 | 32 / 388 | PASS |
+| DG-U `bc03430ed2` | `635b0393e2` | 1 | 0.65 | 53428 | 0 / 0 | 4 old support pins refuse before cases; external-selection run below |
+| DG-CF2 `2637ad20ff` | `d4e2b4cdc0` | 0 | 982.89 | 678500 | 11 / 90 | PASS |
+
+The first smoke attempt lost its runner without an exit status before DG-S completed. Its partial log is retained in `fix7/interrupted-attempt1/`; the same pinned inputs completed on attempt 2. Every oracle ran under `MemoryMax=2G`, `MemorySwapMax=0`; the guard pauses its child below 6 GiB available and resumes at 7 GiB. Raw individual exits are reported above; the serial driver itself exits 0 after recording them.
+
+**Current DG-U functional diagnostic:** the untouched lane, selected through `fix7/smoke/dg-u-b2-selection.json` with only the four adapter support hashes updated, ran all **21 positives/480 negatives and 29 matrix rows**. All matrix rows pass. Exit 1 contains exactly the same seven fix-2 fixture/counter failures as the initial delivery: U1 pack ordering, U4 stale-checkpoint injection and five U5 checkpoint injections. There are no new fix-7 DG-U failures. `verify_selection` still verifies every hash and the edition; the historical selection and lane files remain untouched. The current external selection SHA-256 is `7b09b1c4095064594662bf1035dbb3592ed5b9ea260932e08b089b8382b54c16`.
+
+The diagnostic took 519.18 process seconds, max RSS 105816 KiB (520.46 wrapper seconds). It started at 8.108 GiB, paused at 5.968 GiB at 07:50:09Z and resumed at 7 GiB at 07:51:46Z. Exact cases, expected/observed results and proposed fixes are in `fix7/DG-U-failure-classifications.json`; complete results are in `fix7/smoke/dg-u-compat.json` and `fix7/dgu-completion-checks.json`.
+
+#### Fix-7 lane/source changes (lane files remain unchanged)
+
+**DG-S:** five affected cases use `scripts/pm_goal_dg_s_oracles.py:630,638` (`extra_event`). The default `goal_test.off_run` is unregistered, and the explicit `goal_run.blocked` fixture uses `TEST_ONLY:other.v1`. Create new candidates with registered pairs before Storage appends them. `DG-S-registered-fixtures.patch` changes the default to `run.started` and selects its exact URI or the blocked-v2 schema as appropriate. Keep the existing frame, retention, frontier and unsupported-reducer expectations.
+
+| Case | Old expected | Observed with gate |
+|---|---|---|
+| `S3/unique_start_projection_over_whole_global_prefix` | `PASS` | `s3/complete` |
+| `S3/authenticated_retention_gap_continues` | `PASS` | `s3/gap_continues` |
+| `S3/frontier_stops_before_defect` | `PASS` | `s3/halt_before_defect` |
+| `S3/unsupported_same_run_row_halts` | `reducer/unsupported_same_run:goal_run.blocked` | `reducer/unregistered_record` |
+| `S5/replay_halts_on_unsupported_row` | `projector/reducer/unsupported_same_run:goal_run.blocked` | `projector/reducer/unregistered_record` |
+
+Exact old/new candidate construction (`fix7/DG-S-registered-fixtures.patch`):
+
+```diff
+--- a/scripts/pm_goal_dg_s_oracles.py
++++ b/scripts/pm_goal_dg_s_oracles.py
+@@ -627,7 +627,7 @@
+
+ # ------------------------------------------------------------------ S3
+
+-def extra_event(world, tag, *, run=None, project=None, event_type='goal_test.off_run', append_receipt=True):
++def extra_event(world, tag, *, run=None, project=None, event_type='run.started', append_receipt=True):
+     c = world.ctx
+     event = dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project',
+                  event_id='TEST_ONLY:%s:%s' % (event_type, tag), event_type=event_type,
+@@ -635,7 +635,10 @@
+                  node_id=None, attempt_id=None, actor_ref='TEST_ONLY:actor:other', requested_account_ref=None,
+                  effective_account_ref=None, occurred_at_utc='2026-11-11T12:00:00Z', producer_sequence_id=None,
+                  correlation_id='TEST_ONLY:correlation:' + tag, causation_event_id=None, parent_event_id=None,
+-                 idempotency_key='TEST_ONLY:key:' + tag, payload_schema_id='TEST_ONLY:other.v1',
++                 idempotency_key='TEST_ONLY:key:' + tag, payload_schema_id={
++                     'run.started': 'https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0',
++                     'goal_run.blocked': 'pm.goal_runtime_event.goal_run_blocked.schema.v2',
++                 }[event_type],
+                  payload=dict(qualification=QUALIFICATION, tag=tag), payload_ref=None, redaction_profile='no_secrets',
+                  replay_policy='dedupe_by_idempotency_key',
+                  migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
+
+```
+
+**DG-R:** 79 affected cases share source prerequisites. `scripts/pm_goal_dg_r_world.py:997–1012`, especially line 1008, emits `goal.cancelled` with `pm.goal_runtime_event.goal_cancelled.schema.v1`. The unchanged registry registers project `goal.cancelled` as `pm.goal_runtime_event.goal_cancelled.schema.v3`. That existing v1 record is quarantined even when R5 would filter it off-run. R2 has 1 affected case, R4 27, R5 15 and R6 36. The complete case-by-case expected/observed table and classification is `fix7/DG-R-failure-classifications.json`.
+
+For intentional v1 inputs, the new expected behavior is `unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/unregistered_record`, rather than successful projection. `fix7/DG-R-v1-quarantine-regressions.patch` adds explicit started/no-start checks for that behavior using the existing world. Positive projection, historical-row setup and later-guard/crash tests need a fresh, fully constructed registered current Goal event and matching owner originals. Preserve retained v1 bytes; replacing only their schema-id label does not construct a valid v3 source. This is a lane/source-owner adoption dependency, not an adapter exception or a registry edit performed here.
+
+A second fixture issue is `scripts/pm_goal_dg_r_oracles.py:672`: old `payload_schema_id='pm.goal_runtime_event.%s.schema.v3' % kind.split('.')[1]` fabricates IDs such as `pm.goal_runtime_event.started.schema.v3`. The current exact IDs include `goal_run_`, and stopped/blocked/replanned use v2. `fix7/DG-R-registered-offrun-fixtures.patch` replaces that expression with the explicit type-to-schema map for newly built fixture events. This is also required before downstream negatives can isolate their intended defect.
+
+The 79 observations are 63 early project-unavailable results, 8 explicit wrapped unregistered-record halts, 5 exception-oracle `ACCEPTED` labels, 2 missing `child_exit` errors and 1 missing-checkpoint error. In the latter cases, quarantine prevented the publication/crash step from being reached. The `ACCEPTED` labels mean the exception-oriented test returned without its expected exception after the projector returned unavailable; they do not show publication of an unregistered row. Rebuild those test bases from registered source before testing their later guards.
+
+**DG-INT:** at `cd49470d9c`, these two positives use the same R2 v1 Goal source:
+
+| Case | Observed | Location |
+|---|---|---|
+| `INT/s1_start_r2_cancel_one_storage_r2_consumer_and_projector` | `int/published` | `scripts/pm_goal_dg_int_oracles.py:148–149` |
+| `P4/native_v7_s2_start_r2_cancel_one_storage_r2_v7_consumer` | `cutover/no_checkpoint` | `scripts/pm_goal_dg_int_oracles.py:383–388` |
+
+Keep the existing `P4/r2_goal_cancelled_v1_event_is_unregistered` negative (it passes). Replace the two positive source graphs with a genuine registered current Goal source and require projection success before cutover. With retained v1 source, assert quarantine and no checkpoint instead. `fix7/DG-INT-failure-classifications.json` records the exact cases and dependency.
+
+**DG-CF3:** only the earlier fix-2 P5-N15 mismatch remains; its existing exact patch is still required. **DG-U:** the old support-pin preflight and fix-2 checkpoint/pack-log changes remain; its current compatibility diagnostic is recorded in the smoke table. All proposed lane patches are unapplied, and patched complete lane runs remain NOT_RUN here. The adapter gate stays strict.
+
+#### Fix-7 source and evidence hashes
+
+| Path | SHA-256 |
+|---|---|
+| `scripts/pm_goal_test_source.py` at `a3696a6e69` | `7fa4b81a87853724310ac0a27290b97bbf0cd894262245384a29b4f7f3211b4e` |
+| `scripts/pm_goal_test_adapters_selftest.py` at `a3696a6e69` | `de6fed49ada57575a6acebc333b4109f14a0e49bf13e712be6a13f2c7e8e56d5` |
+| `scripts/pm_goal_test_selftest_b2.py` at `a3696a6e69` | `7301183686959fad4dc7956f76daecbf9f6a67a4bb8ab728d69cfd478e3d3144` |
+| `Plans/event_family_registry.json` at `a3696a6e69` | `443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653` |
+| `fix7/selftest.json` | `b4f6abd7ba977c3c1da747268d2f788075591aa7d5e5aa5f5b4776df3dbc59f5` |
+| `fix7/r1.json` | `92004d758783a993d438ae76f3280205a97631b2deca1ef0a46b001d535efa28` |
+| `fix7/cf01.json` | `0b43f4a9ca3adb03a20e87339599ad9698bf5f279220551955e0b7c26732725f` |
+| `fix7/reopen.json` | `c2099373baeccc7d5cd807d2d85c27f27e3bef0f1a111090f0ad3073b3474e4b` |
+| `fix7/registration-witness.json` | `bda7febf8c7858e5586dd75c7e4c54d65734a9d3d281cd7f6e9dfdc6ceb93619` |
+| `fix7/registration-inputs.json` | `3822cbecbd7ec0e17cf1f004bcc3d18136b60aab8663f70703406a56472c039a` |
+| `fix7/smoke-summary.json` | `38c4034daaca2a302350c10ff40f8ac9dd6f9c093d979a2084b198d50ca402e3` |
+| `fix7/all-raw-failure-classifications.json` | `62d6005c7be86d39a180034ff0a932f3c6006eab1038878cdd48eef18bf32e2e` |
+| `fix7/DG-S-failures.json` | `06e2024c1f2a8a0704d9bd9108048ae240cb66b22534850f0c98d19f329d3df8` |
+| `fix7/DG-R-failure-classifications.json` | `d73cd9a47a10d01975d3dbb090330f756a71cfb24c0a49dff3002c95a8c5449c` |
+| `fix7/DG-INT-failure-classifications.json` | `84bb77fbb92d0d0c636870bf84c852145fcd0fba23ad19bcbafcd8c76c3cd25d` |
+| `fix7/adapter-fix7.patch` | `3bfa258433b4094304ba27e2868c1e02b3ef88ee09fbf281f0c7f517d862b86c` |
+| `fix7/smoke/dg-u-compat.json` | `116a4b20ddb4194d8e7f743f4b239ff0ee52b3587fe9131da2e5775dbd00deb8` |
+| `fix7/smoke/dg-u-b2-selection.json` | `7b09b1c4095064594662bf1035dbb3592ed5b9ea260932e08b089b8382b54c16` |
+| `fix7/DG-U-failure-classifications.json` | `abdef1af8f70974ea0f6974d8f0a2aea3de6da0771bf0dd4d338287599544b4f` |
+| `fix7/dgu-completion-checks.json` | `30444840c4f1a03fc46e6e01d7fdc4707d13574ab75589e4a25f0e1e614ed4ec` |
+
+The final `fix7/SHA256SUMS` and root `SHA256SUMS` bind all new logs, patches, complete row results and delivery metadata. Earlier hashes/tables below remain the initial fixes 1–6 snapshot; no earlier captured bytes are rewritten.
+
+
+## Compatibility smoke (initial fixes 1–6 delivery)
 
 Seven required lane runners execute serially from their pinned lane heads with the adapter branch merged locally (`--no-ff`). Scratch merges are never pushed. Each process runs under `MemoryMax=2G`, `MemorySwapMax=0`, after the existing driver sees at least 7 GB available. The foreground waiter is `long-job wait dg-adapter-b2-smoke --timeout 1500`, rearmed on 124. Rows below distinguish checker failures from adapter API compatibility.
 
@@ -335,7 +475,7 @@ After adoption, rerun each affected lane. A compatibility pass with old lane wor
 
 ## Checks and exits
 
-Runs at tests-only head `3e20ffded403e19e2120053dcba7b9d3dc6b2b37`; runtime/demo/NUMRULE bytes equal smoke head `783caeaf5f`. Python/package versions are in `python-environment.json`. `completion-checks.json` records exact commands, timing, memory gates and exits. Runs are serial under `MemoryMax=2G`, `MemorySwapMax=0`, start at 8 GiB, pause below 6 GiB and resume at 7 GiB. No pause occurred.
+Runs at tests-only head `3e20ffded403e19e2120053dcba7b9d3dc6b2b37`; runtime/demo/NUMRULE bytes equal smoke head `783caeaf5f`. Python/package versions are in `python-environment.json`. `completion-checks.json` records exact commands, timing, memory gates and exits. Initial runs were serial under `MemoryMax=2G`, `MemorySwapMax=0`, start at 8 GiB, pause below 6 GiB and resume at 7 GiB. No pause occurred.
 
 | Check | Exit | Measured wrapper seconds | Result |
 |---|---:|---:|---|
