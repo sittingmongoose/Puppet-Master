@@ -833,6 +833,91 @@ def test_guards(s, work):
     s.negative('guards', 'retention_gap_out_of_order', gap_order, 'source/gap_order')
 
 
+def test_registration(s, work):
+    """Real Storage frames/custody; only registered rows may reach a reducer."""
+    ordinary = 'https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0'
+    other_schema = 'pm.goal_runtime_event.goal_run_started.schema.v3'
+    app_schema = 'pm.goal_runtime_event.goal_updated.application.v1'
+    target_run = 'TEST_ONLY:registration-run'
+
+    class Recorder:
+        def __init__(self):
+            self.seen = []
+
+        def initial(self):
+            return dict(events=[])
+
+        def step(self, state, event, custody):
+            self.seen.append(event['event_id'])
+            state['events'].append(event['event_id'])
+            return state
+
+    def event(tag, **edits):
+        return _candidate(tag, **dict(dict(event_type='run.started', payload_schema_id=ordinary,
+                                           run_id=target_run, project_id='TEST_ONLY-project-registration'), **edits))
+
+    def positive(tag, *, application=False, off_run=False):
+        st = S.TestOwnerStorage.create(work / ('b2-registration-' + tag))
+        edits = dict(event_type='goal.updated', payload_schema_id=app_schema,
+                     scope_kind='application', project_id=None) if application else {}
+        _append(st, tag, event(tag, **edits))
+        source = G.GenericSource(st)
+        snap, reducer = source.acquire(), Recorder()
+        before = st.observe()
+        result = source.project(snap, reducer, select=lambda e: not off_run)
+        assert result['complete'] and result['halt'] is None and 'quarantine' not in result
+        assert result['processed'] == 1 and result['frontier_sequence'] == snap.rows[0].sequence_id
+        assert len(reducer.seen) == (0 if off_run else 1) and st.observe() == before
+        return True
+
+    s.positive('registration', 'registered_record_reaches_reducer', lambda: positive('registered'))
+    s.positive('registration', 'registered_application_payload_version', lambda: positive('application', application=True))
+    s.positive('registration', 'registered_off_run_advances_global_prefix', lambda: positive('off-run', off_run=True))
+
+    def refused(tag, defect, *, off_run=False):
+        st = S.TestOwnerStorage.create(work / ('b2-registration-' + tag))
+        if off_run:
+            _append(st, tag + '-before', event(tag + '-before'))
+        bad = event(tag + '-bad', **defect)
+        if off_run:
+            bad.update(run_id='TEST_ONLY:another-run', project_id='TEST_ONLY-project-other')
+        _append(st, tag + '-bad', bad)
+        _append(st, tag + '-after', event(tag + '-after'))
+        source = G.GenericSource(st)
+        snap, reducer = source.acquire(), Recorder()
+        before, selections = st.observe(), []
+
+        def select(e):
+            selections.append(e['event_id'])
+            return e['run_id'] == target_run
+
+        result = source.project(snap, reducer, select=select)
+        if result['complete']:
+            return  # the Suite records unexpected acceptance
+        prefix = snap.rows[:1] if off_run else []
+        bad_position = len(prefix)
+        assert result['halt'] == ('reducer/unregistered_record', bad_position, bad['event_id'])
+        assert result['frontier_sequence'] == (prefix[-1].sequence_id if prefix else None)
+        assert result['processed'] == len(prefix)
+        assert reducer.seen == selections == result['state']['events'] == [r.event_id for r in prefix]
+        assert result['quarantine'] == dict(disposition='quarantine_without_checkpoint_advance',
+                                           event_id=bad['event_id'], event_type=bad['event_type'],
+                                           scope_kind=bad['scope_kind'], payload_schema_id=bad['payload_schema_id'])
+        assert st.observe() == before  # reporting quarantine never writes or advances Storage
+        raise G.SourceRefusal(result['halt'][0])
+
+    s.negative('registration', 'unregistered_type_quarantined', lambda: refused(
+        'unknown', dict(event_type='goal_test.unregistered')), 'reducer/unregistered_record')
+    s.negative('registration', 'registered_type_wrong_schema_quarantined', lambda: refused(
+        'schema', dict(payload_schema_id=other_schema)), 'reducer/unregistered_record')
+    s.negative('registration', 'unregistered_off_run_halts_before_filter', lambda: refused(
+        'off-unknown', dict(event_type='goal_test.unregistered'), off_run=True), 'reducer/unregistered_record')
+    s.negative('registration', 'wrong_schema_off_run_halts_before_filter', lambda: refused(
+        'off-schema', dict(payload_schema_id=other_schema), off_run=True), 'reducer/unregistered_record')
+    s.negative('registration', 'application_schema_has_no_project_fallback', lambda: refused(
+        'scope', dict(event_type='goal.updated', payload_schema_id=app_schema)), 'reducer/unregistered_record')
+
+
 def run(s, work):
     test_images(s, work)
     test_stable(s, work)
@@ -840,3 +925,4 @@ def run(s, work):
     test_index(s, work)
     test_recorder(s, work)
     test_guards(s, work)
+    test_registration(s, work)

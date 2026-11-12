@@ -20,9 +20,10 @@ the whole-source path S3, R5, CF-10 and P4 need:
 3. The index rows (event id, sequence, segment, offset, length, frame SHA-256,
    scope partition, type, key, receipt, group digest) are rebuilt
    independently and compared with first custody field by field.
-4. ``project`` runs a family reducer over the validated prefix. Off-run rows
-   are no-ops only after validation; coverage is the global prefix, never a
-   filtered maximum; a defect halts before itself and the frontier never
+4. ``project`` checks each row's exact family/scope/payload-schema registration
+   before selection. Unknown or mismatched rows follow the registry's
+   quarantine_without_checkpoint_advance disposition. Off-run rows are no-ops
+   only after validation; a defect halts before itself and the frontier never
    advances over it.
 
 Native retention authentication and physical log custody remain NOT_RUN.
@@ -32,7 +33,9 @@ from __future__ import annotations
 import base64
 import copy
 from dataclasses import dataclass, field
+from functools import lru_cache
 import hashlib
+import json
 
 import pm_goal_test_numrule as NR
 import pm_goal_test_storage as S
@@ -58,6 +61,29 @@ class Halt(Exception):
 def require(code, condition):
     if not condition:
         raise SourceRefusal(code)
+
+
+@lru_cache(maxsize=1)
+def event_family_registration():
+    """Exact registered type/scope/payload-schema triples and unknown-row policy.
+
+    Explicit payload versions use the registry's scope selector without falling
+    back to the family's top-level schema id. Registration is distinct from
+    native producer admission, which this TEST_ONLY reader cannot establish.
+    """
+    registry = json.loads((NR.ROOT / 'Plans/event_family_registry.json').read_text())
+    scopes = dict(project_only=('project',), application_only=('application',),
+                  application_or_project=('application', 'project'),
+                  inherits_referenced_event=('application', 'project'))
+    registered = set()
+    for family in registry['families']:
+        versions = family.get('payload_versions')
+        if versions:
+            registered.update((family['event_type'], v['scope_kind'], v['payload_schema_id']) for v in versions)
+        else:
+            registered.update((family['event_type'], scope, family['payload_schema_id'])
+                              for scope in scopes[family['scope_policy']])
+    return frozenset(registered), registry['unknown_event_disposition']
 
 
 @dataclass
@@ -308,13 +334,23 @@ class GenericSource:
         """Run a bounded reducer over the validated global prefix."""
         require('project/snapshot_type', isinstance(snapshot, SourceSnapshot))
         require('project/storage', snapshot.storage_instance_id == self.storage.storage_instance_id)
+        registered, unknown_disposition = event_family_registration()
         state = reducer.initial()
         frontier = None
         processed = 0
         halt = None
+        quarantine = None
         for row in snapshot.rows:
             if require_custody and row.custody is None:
                 halt = ('project/pending_custody', row.position, row.event_id)
+                break
+            registration = (row.event.get('event_type'), row.event.get('scope_kind'),
+                            row.event.get('payload_schema_id'))
+            if registration not in registered:
+                halt = ('reducer/unregistered_record', row.position, row.event_id)
+                quarantine = dict(disposition=unknown_disposition, event_id=row.event_id,
+                                  event_type=registration[0], scope_kind=registration[1],
+                                  payload_schema_id=registration[2])
                 break
             if select(row.event):
                 try:
@@ -326,9 +362,12 @@ class GenericSource:
             processed += 1
         if halt is None and snapshot.defect is not None:
             halt = snapshot.defect
-        return dict(qualification=QUALIFICATION, state=state, frontier_sequence=frontier, processed=processed,
-                    complete=halt is None, halt=halt, coverage_sha256=snapshot.coverage_sha256,
-                    token=copy.deepcopy(snapshot.token), gap_count=len(snapshot.gaps))
+        result = dict(qualification=QUALIFICATION, state=state, frontier_sequence=frontier, processed=processed,
+                      complete=halt is None, halt=halt, coverage_sha256=snapshot.coverage_sha256,
+                      token=copy.deepcopy(snapshot.token), gap_count=len(snapshot.gaps))
+        if quarantine is not None:
+            result['quarantine'] = quarantine
+        return result
 
 
 # ------------------------------------------------------------------ SP-278 Event Record Index read source
@@ -546,7 +585,7 @@ class LifecycleReducer:
     adapter's halting, no-op and frontier behaviour.
     """
 
-    def __init__(self, run_id, supported=('goal_test.started', 'goal_test.cancelled', 'goal_test.certified')):
+    def __init__(self, run_id, supported=('goal_run.started', 'goal_run.cancelled', 'goal_run.certified')):
         self.run_id = run_id
         self.supported = supported
 
@@ -557,7 +596,7 @@ class LifecycleReducer:
         kind = event['event_type']
         if kind not in self.supported:
             raise Halt('reducer/unsupported_same_run:' + kind)
-        if kind == 'goal_test.started':
+        if kind == self.supported[0]:
             if state['status'] is not None:
                 raise Halt('reducer/duplicate_start')
             state['status'] = 'started'
