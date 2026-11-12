@@ -1,0 +1,192 @@
+{
+  "fix_commit": "9c10e2c4b17cb1263b88825a81b0a305ecfcb8f0",
+  "rebased_main": "e42ce235b4711325ced818c777f070c3ee0d7952",
+  "native_execution": "NOT_RUN",
+  "ready_families": 0,
+  "part2_required": true,
+  "status_counts": {
+    "ABSENT": 19,
+    "PASS": 171,
+    "PARTIAL": 38,
+    "CONFLICT": 0
+  },
+  "family_checks": [
+    {
+      "family": "auth.github.authenticated",
+      "exit": 0,
+      "complete_path_negatives": 168,
+      "positive_envelopes": 7
+    },
+    {
+      "family": "auth.github.device_code.issued",
+      "exit": 0,
+      "complete_path_negatives": 165,
+      "positive_envelopes": 3
+    },
+    {
+      "family": "auth.github.disconnected",
+      "exit": 0,
+      "complete_path_negatives": 165,
+      "positive_envelopes": 3
+    },
+    {
+      "family": "auth.github.failed",
+      "exit": 0,
+      "complete_path_negatives": 165,
+      "positive_envelopes": 3
+    },
+    {
+      "family": "auth.github.token.polling",
+      "exit": 0,
+      "complete_path_negatives": 166,
+      "positive_envelopes": 3
+    },
+    {
+      "family": "plugin.hook.blocked",
+      "exit": 0,
+      "complete_path_negatives": 168,
+      "positive_envelopes": 7
+    },
+    {
+      "family": "plugin.hook.error",
+      "exit": 0,
+      "complete_path_negatives": 173,
+      "positive_envelopes": 22
+    },
+    {
+      "family": "plugin.hook.invoked",
+      "exit": 0,
+      "complete_path_negatives": 173,
+      "positive_envelopes": 22
+    },
+    {
+      "family": "plugin.load_failed",
+      "exit": 0,
+      "complete_path_negatives": 166,
+      "positive_envelopes": 4
+    },
+    {
+      "family": "plugin.loaded",
+      "exit": 0,
+      "complete_path_negatives": 166,
+      "positive_envelopes": 4
+    },
+    {
+      "family": "plugin.permission.override",
+      "exit": 0,
+      "complete_path_negatives": 166,
+      "positive_envelopes": 4
+    },
+    {
+      "family": "plugin.tool.collision",
+      "exit": 0,
+      "complete_path_negatives": 166,
+      "positive_envelopes": 4
+    },
+    {
+      "family": "plugin.tool.registered",
+      "exit": 0,
+      "complete_path_negatives": 166,
+      "positive_envelopes": 4
+    },
+    {
+      "family": "persona.created",
+      "exit": 0,
+      "complete_path_negatives": 224,
+      "positive_envelopes": 5
+    },
+    {
+      "family": "persona.deleted",
+      "exit": 0,
+      "complete_path_negatives": 228,
+      "positive_envelopes": 5
+    },
+    {
+      "family": "persona.exported",
+      "exit": 0,
+      "complete_path_negatives": 211,
+      "positive_envelopes": 6
+    },
+    {
+      "family": "persona.imported",
+      "exit": 0,
+      "complete_path_negatives": 229,
+      "positive_envelopes": 4
+    },
+    {
+      "family": "persona.selected",
+      "exit": 0,
+      "complete_path_negatives": 239,
+      "positive_envelopes": 22
+    },
+    {
+      "family": "persona.updated",
+      "exit": 0,
+      "complete_path_negatives": 227,
+      "positive_envelopes": 4
+    }
+  ],
+  "account_isolation": {
+    "independent_guard_removals": 38,
+    "new_flipping_targets": 76,
+    "all_other_negatives_unchanged": true,
+    "weakened_complete_suites_detected": 38
+  },
+  "verification": [
+    {
+      "label": "astra4-regressions",
+      "exit": 0,
+      "status": null
+    },
+    {
+      "label": "shard-generate",
+      "exit": 0,
+      "status": "pass"
+    },
+    {
+      "label": "index-generate",
+      "exit": 0,
+      "status": "pass"
+    },
+    {
+      "label": "shard-check",
+      "exit": 0,
+      "status": "pass"
+    },
+    {
+      "label": "index-validate",
+      "exit": 0,
+      "status": "pass"
+    },
+    {
+      "label": "projects-refresh",
+      "exit": 0,
+      "status": "pass"
+    },
+    {
+      "label": "github-integration",
+      "exit": 0,
+      "status": "pass"
+    },
+    {
+      "label": "primary-command-catalog",
+      "exit": 0,
+      "status": null
+    },
+    {
+      "label": "storage-profile",
+      "exit": 1,
+      "status": "fail"
+    },
+    {
+      "label": "diff-check",
+      "exit": 0,
+      "status": null
+    }
+  ],
+  "part2_items": [
+    "S1 shared guard inventory/tables/tool",
+    "S2 NUMRULE CV-1100/1101 SP-1100/1101 and at-write recipes",
+    "S3 UTC spelling and authenticated historical format recipes"
+  ]
+}
