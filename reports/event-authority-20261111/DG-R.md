@@ -13,7 +13,7 @@ Everything here is TEST_ONLY. No registry row, admission, Decision Log entry, re
 | R1 older scoped routing | **COMPLETE** | — |
 | R2 positive D06/D05 causal graph | **COMPLETE** (session 2) | — Terminal byte preservation is authored and tested. Native-v7 dispatch is tracked under R4, where the judge lists it ("original and native-v7 retained/inspection/current methods"); the judge's R2 case does not name it. |
 | R3 settlements / rollback / flush | **COMPLETE** (session 2) | — Modeled effect state with owner-applied rollback and process shutdown is authored and tested. |
-| R4 fresh current readers | **NOT COMPLETE** | The current-cancelled reader cannot yet return a whole `CombinedCurrentRead`: `CurrentSuccessfulReadback.current_start` (`CurrentSourceArgument`, original_started branch), the D05 current `SuccessfulReadback` inside `d06_readback.safe_stop`, `original_revision_join`, the separate `CurrentRead`, and `CurrentCancelledGoal` (`CurrentGoalStopArgument` plus current D06 controls) need genuine owner issuance. Native-v7 current dispatch is also not executed. The historical reader, fresh current-source acquisition at entry and final boundary, helper-return injection and the started-view refusal are executed. |
+| R4 fresh current readers | **NOT COMPLETE** | Only native-v7 dispatch remains. The judge's R4 case invokes the original **and native-v7** retained/inspection/current methods. On this base the v7 companion roots (`goal_run_certified_consumer_contracts` `companions` realm) resolve only through the certified consumer's location-scoped import composition, and its `cancelled_native_consumer` realm still has the 22 unresolved handoff sites; the explicit successor that repairs that edge is W5's `source-package.v2` (`plans/ea-goal-own-c3-w5-20261105`, `73c81fa470`), which is not on this branch. Needed: a location-scoped multi-realm validator for that import list (generalizing the CV-1136 route here), a v7 issuing edition (D06 `workflow_cancel_original_start_profile.v6`, D01 `executor_workflow_original_start.v6`, Start custody v6, cancel arguments v2), and v3/v7 cast refusals. Everything else in the judge's R4 case is executed, including the current-cancelled reader. |
 | R5 combined prefix / reducer | **COMPLETE** | — |
 | R6 CAS / crash / cutover / withdrawal / reference | **COMPLETE** | — (two adapter tool issues recorded below; neither makes a real check falsely pass) |
 
@@ -28,6 +28,10 @@ None of the open items is a product question or an owner-text gap; each is techn
 ## Session 2 (2026-11-12): R3
 
 **Modeled effects.** The FileSafe owner now keeps a TEST_ONLY workspace cell per invocation: it takes a safe point, the admitted invocation mutates files, and at cancellation a rollback invocation has the owner apply the safe-point restore (journal `phase=committed`, `restore_outcome=restored_clean`, target/pre/post state digests and one restore operation per changed path, all from that execution), a kept mutation records `restore_skipped` with no post state, and `unknown` leaves the journal in `recovery_required`. The process owner keeps a process-table cell (`running` → `terminated` → `shut_down`); the termination result names the actual probe birth and shutdown admission, and the shutdown result names the actual birth, admission and termination. The consumer checks: a terminal journal outcome (`effects/unknown_outcome`), the workspace cell named by the journal and its digest, rollback post state = safe point and the workspace actually restored, each restore operation's target content, a kept mutation's unchanged mutated state, the termination and shutdown joins, a delivered grace signal and the process table's `shut_down` state. `rollback_refs` is now derived from the journals' own outcomes, not from world knowledge. The same checks run on the terminal-preservation path. New negatives: post state not the safe point, restore not applied by the owner, wrong operation target, unknown outcome, kept mutation claiming a post state, termination and shutdown joins to other genuine records, process not shut down, signal not delivered, workspace substituted at rest, journal naming another workspace. `effects/filesafe_settlement_commitment` and `effects/process_settlement_commitment` are masked by the generic `select/commitment` on the same selector, and `effects/filesafe_settlement_result` by `effects/settlement_once`; they go to the sweep with those partners.
+
+## Session 2 (2026-11-12): R4 current-cancelled reader
+
+The owners now build the current sources at one held boundary: the whole current Start argument (`CurrentSourceArgument`, `original_started`, built once and shared), `CurrentSuccessfulReadback` (D06 `ReadbackCancelled` with the actual result, intent, committed control and publish origin records, the current native body/control cells and selectors, the D01 lineage records, the stored Event with its full-value result and candidate, the D05 join selectors and operation), `CurrentRead`, and `CurrentCancelledGoal` (the original Goal Stop intent, receipt and SourceAudit as current cells). Every wrapper whose schema id names a unique current owner wrapper is replaced by that fresh cell; the remaining members are schema filler made to satisfy the whole root by a deep repair modeled on DG-S's skeleton repair (consts, enums, types, exact `contains`, discriminator-preserving branch choice), never touching an owner-set member. `read_current_cancelled` acquires fresh native, D06 control, D01 head and Goal Stop cells at entry, reads the historical view, then checks the readback against the consumer's independently acquired original tuple and the fresh cells (`current/readback_d06`, `current/readback_native`, `current/readback_event`, `current/readback_lineage`, `current/readback_safe_stop`, `current/start`, `current/one_boundary`, `current/goal_stop_argument`), validates `CurrentCancelledPrivate` (with a freshly built whole `CombinedProjectPrivate`), `CurrentCancelledGoal` and the whole `CombinedCurrentRead`, and repeats the fresh current sources at the final boundary. Each new predicate has a one-defect negative (an owner-side substitution after filler repair), plus a Goal Stop issued after the current helper, a reader withdrawn before release and a native advance before release. Reads are recorder-checked to write nothing. The current-cancelled reader applies to the `original_started` branch; an initialized-no-Start run has no running current view to verify.
 
 ## What was built
 
@@ -51,12 +55,12 @@ All new code is in new files named for the lane:
 | Group | Positives | Negatives | Failures |
 |---|---:|---:|---:|
 | R1 | 4 | 39 | 0 |
-| R2 | 7 | 72 | 0 |
-| R3 | 3 | 14 | 0 |
-| R4 | 4 | 7 | 0 |
+| R2 | 11 | 128 | 0 |
+| R3 | 5 | 25 | 0 |
+| R4 | 6 | 18 | 0 |
 | R5 | 6 | 15 | 0 |
 | R6 | 8 | 32 | 0 |
-| **Total** | **32** | **179** | **0** |
+| **Total** | **40** | **257** | **0** |
 
 R1 includes the adopted adapter demonstration (1 positive, 31 negatives, rerun here unchanged), the binding of its derived route to the authored CV-1136 `routing.v1.json` (2 positives, 7 negatives) and routed versus predecessor validation (1 positive, 1 negative). R5 and R6 include 23 direct invocations of the projector's lower helpers (decode, checkpoint read, unpack, reducer step, cutover) with one substituted argument.
 
@@ -76,8 +80,8 @@ Every positive builds a fresh world in which the owners perform their modeled is
 
 `DG-R-guards.json` (beside this report in `drafts/DG-R/`) maps every guard code to the negatives that refuse with exactly that code. No local guard-removal engine and no check-11 claim are made; the shared tool adjudicates isolation.
 
-- **Product guards:** 204 codes in the DG-R consumer and projector; **114** have at least one negative refusing with exactly that code.
-- **Without a dedicated negative (90), listed in the JSON:** most are joins that a coherent one-defect negative reaches only after an earlier guard (the generic selector resolution, a whole-root schema rule, or the same join checked at another record first), self-consistency checks on owner output, or final-boundary repeats of an entry predicate. They go to the shared sweep; none is shown to make a real check falsely pass. This gap is one reason R2-R4 are not graded COMPLETE.
+- **Product guards:** 234 codes in the DG-R consumer and projector; **186** have at least one negative refusing with exactly that code.
+- **Without a dedicated negative (48), listed in the JSON:** most are joins that a coherent one-defect negative reaches only after an earlier guard (the generic selector resolution, a whole-root schema rule, or the same join checked at another record first), self-consistency checks on owner output, or final-boundary repeats of an entry predicate. They go to the shared sweep; none is shown to make a real check falsely pass. This gap is one reason R2-R4 are not graded COMPLETE.
 - **R5/R6 guards without a dedicated negative, and why:** `cas/coverage` (any frame change moves the log-derived token first, so `cas/source_token` refuses; a duplicate pair for the sweep), `decode/stored_event` (a coherent Event substitution changes Storage custody first: `decode/custody_commitment`), `final/projection` and `read/original_event` (final-boundary repeats; a row change after a returning helper is refused by `read/row_frontier` first), `read/no_row` (row and checkpoint commit in one transaction, so a checkpoint without its row is unreachable through the projector), `pack/canonical` (non-canonical pack bytes are refused by the shared decoder before this check), `operation/size` and `representation/compact_oversize` (no original value within the owner id caps makes the compact `record_reference` wrapper or an operation exceed 16 KiB; the guards stay as fail-closed limits). These are reported for the shared guard-isolation tool to adjudicate as duplicate pairs or unreachable limits; R5 and R6 are graded COMPLETE on that basis, and the tool may overturn it.
 - **Oracle assertions (24):** positive-case assertions (crash visibility, replay, determinism, order, spill, gap), not product guards.
 - **Adapter, Storage, NUMRULE and schema refusals reached by DG-R negatives (46 codes):** also in the JSON, for example `original/handle_type`, `original/issuer`, `original/withdrawn`, `registry/unregistered_owner`, `custody/receipt_mismatch`, `resume/conflict`, `append/conflict/producer25`, `tx/cas_absent`, `pack/unavailable`, `payload/numrule/payload_digest`, `native/cas_body`.
@@ -109,7 +113,7 @@ No PlanUnit was added. Owner text amended in place, W4 rows only:
 
 ## Re-grade on the twelve criteria (`goal_run.cancelled`)
 
-`PASS PASS PASS PASS PASS PASS PASS PASS PASS PARTIAL PASS PARTIAL` — **10/12, unchanged** from W34b. Criterion 10 (consumers/checkpoints) stays PARTIAL because the current-cancelled reader (R4) is not complete; criterion 12 (positive/negative oracles) stays PARTIAL because R2, R3 and R4 are not complete. The executed evidence behind both cells is far stronger than at W34b, but no cell is upgraded while a group is open, and none is lowered for native NOT_RUN.
+`PASS PASS PASS PASS PASS PASS PASS PASS PASS PARTIAL PASS PARTIAL` — **10/12, unchanged** from W34b. After session 2 only one group is open: R4's native-v7 dispatch. Criterion 10 (consumers/checkpoints) stays PARTIAL because the v7 retained/inspection/current methods are not executed; criterion 12 (positive/negative oracles) stays PARTIAL for the same R4 item. No cell is upgraded while a group is open, and none is lowered for native NOT_RUN.
 
 ## Shared-file hunks for the merge
 
@@ -130,11 +134,14 @@ New files: `scripts/pm_goal_dg_r_{world,readers,projector,oracles}.py`, `reports
 
 ## Checks
 
+Session 2 changed only the four DG-R scripts and this report (no `Plans/` file, no shared script), so session 1's heavy DG checkers, W34b qualification and index validation below still describe this head; session 2 reran the DG-R oracles, the adapter self-test, own-c, source oracles, the NUMRULE pins, the shard check and `git diff --check` (all exit 0), each under a 2 GB `systemd-run` cap.
+
+
 All heavy runs were serial and memory-gated at 13.5 GB inside the job (`long-job`), `PM_GOAL_AUDIT_WORKERS=1`.
 
 | Command | Exit | Result |
 |---|---:|---|
-| `python3 scripts/pm_goal_dg_r_oracles.py --output <evidence>/oracles.json` | 0 | pass: 32 positives, 179 negatives, 0 failures (12m32s) |
+| `python3 scripts/pm_goal_dg_r_oracles.py --output <evidence>/oracles.json` (session 2, 2 GB cap) | 0 | pass: 40 positives, 257 negatives, 0 failures (21m04s) |
 | `python3 scripts/pm_goal_test_adapters_selftest.py` | 0 | 204 cases pass (64 positives, 140 negatives) |
 | `python3 scripts/pm_goal_test_demo_r1.py` | 0 | pass: 1 positive, 31 negatives |
 | `python3 scripts/pm_goal_test_numrule.py` | 0 | NUMRULE pins verified |
