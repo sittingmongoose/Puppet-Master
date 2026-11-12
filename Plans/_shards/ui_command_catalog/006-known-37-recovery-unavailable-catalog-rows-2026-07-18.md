@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L133-L1182
+Source lines: L133-L1184
 
-Source SHA256: `3076b04b822023dbbc42190301d7803c7772652b6b3fc3f45d443c7c7683b726`
+Source SHA256: `3dd60bf41e7a99264fdbf885f984c8cfad55eb9ca3a966f59ff03c1fb9b6dc1b`
 
 ---
 
@@ -1008,11 +1008,11 @@ These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |
 |---|---|---|---|
-| `cmd.chat.memory.verify` | `{ project_id, gist_id }` | `memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.edit` | `{ project_id, gist_id, patch }` | `memory.gist.updated` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.pin` | `{ project_id, gist_id, pinned }` | `memory.gist.pinned` or `memory.gist.unpinned` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.discard` | `{ project_id, gist_id }` | `memory.gist.discarded` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.updated` | Assistant chat Gist Review panel |
+| `cmd.chat.memory.verify` | `{ project_id, gist_id }` | `memory.gist_state_changed` on a successful real change; none for requested/failed verification | Assistant chat Gist Review panel |
+| `cmd.chat.memory.edit` | `{ project_id, gist_id, patch }` | `memory.gist_state_changed` on a real edit | Assistant chat Gist Review panel |
+| `cmd.chat.memory.pin` | `{ project_id, gist_id, pinned }` | `memory.gist_state_changed` on a real pin/unpin | Assistant chat Gist Review panel |
+| `cmd.chat.memory.discard` | `{ project_id, gist_id }` | `memory.gist_state_changed` on a real discard | Assistant chat Gist Review panel |
+| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.layer.changed` (DL-408) | Assistant chat Gist Review panel |
 | `cmd.chat.memory.preview_capsule` | `{ project_id, thread_id? }` | no persisted domain event (preview computation only) | Assistant chat Gist Review panel |
 | `cmd.chat.memory.rebuild_lexical_index` | `{ project_id }` | `memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed` | Assistant chat Gist Review panel |
 | `cmd.chat.memory.rebuild_semantic_index` | `{ project_id }` | `memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed` | Assistant chat Gist Review panel |
@@ -1022,6 +1022,8 @@ These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7
 | `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |
 
 Lineage pointer (DL-333): for each command here that UCC-230 routes, the Args schema column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
+DL-407 / AMS-130: verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation, including automatic changes through RealMemoryProvider. Requested or failed verification retains only its command result and emits no history event; a no-op emits none. The seven former command event names are retired only under the complete AMS-130/CV-785/SP-765 contract. Preparation grants no native append permission.
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
 

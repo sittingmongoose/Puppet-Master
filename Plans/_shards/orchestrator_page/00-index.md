@@ -1,33 +1,33 @@
 # Shard Index: Plans/Orchestrator_Page.md
 
-Generated: 2026-11-08T11:19:17Z
+Generated: 2026-11-12T03:54:40Z
 
-Source SHA256: `a6f3ca1d5c29b7c53a34bd588b513ecc44f0620816da4dd436e58da366891e6d`
+Source SHA256: `22d3ca043e564c223a75a877b4e46a65ea1103b94698fc53a14a35006afafa04`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `737e95fae494a6b228e2e21026db567566be454d9cdecf408a7dc43734202a33`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L37 `569103a00c2eb49734aa1126c730b2202b23b46d07ca7ffb30e0459f80948725`
-- [003 - 1. Scope and canonical model](003-1.-scope-and-canonical-model.md) L40-L382 `4dd8eeca5780c4c8dc5813cbc490c8734fb6eea056ee33e190f3cea50bdadcc6`
-- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L384-L388 `ec583296f267392070af5fb2b5f0e5993747bc1dfc255e9349e6cb7f2ed0d6eb`
-- [005 - PlanUnits](005-planunits.md) L390-L452 `799d4babe402feb68cc8fd6adfc4c28992d36c120833d1644920923b03299aa7`
-- [006 - Known-37 recovery-unavailable orchestrator actions - 2026-07-18](006-known-37-recovery-unavailable-orchestrator-actions-2026-07-18.md) L454-L460 `05f28a23ad04d602be75c6a10622364927c3d1ad91dc79ceb29a6d56cf66444d`
-- [007 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](007-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L462-L1479 `5bc28df49a308dc97a6e98be4b20048d108e819a0925fa6ebcc785f448f7931c`
-- [008 - Migration Coverage](008-migration-coverage.md) L1481-L1491 `5a80118b40632e2d17940ba3a9ff9b4a86ba530555a2967c978873ed59daac3b`
-- [009 - Ledger Compile Addendum - pldg-20260614-001](009-ledger-compile-addendum-pldg-20260614-001.md) L1493-L1573 `2ee228c9896be361ca528047477dd296a07614e4be6b26738bf758b2e8e9a175`
-- [010 - Ledger Compile Addendum - pldg-20260616-002](010-ledger-compile-addendum-pldg-20260616-002.md) L1575-L1678 `6399487ed7d0930fd9225a144c3fd2ba3e45529183e6415a5b470d58d0d8b9c6`
-- [011 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](011-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L1680-L1779 `6b4183d42c24081c9ed39ae58550ebb86ce35b4962d3f60b64fd1e3b10f1ed9b`
-- [012 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](012-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1782-L1922 `75840af8f22e6cf9e1017e671ba0a9d60adf0875192ad47a5c1b94db8af60ae2`
-- [013 - Ledger Compile Addendum - pldg-20260626-001-feature-name](013-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1925-L2338 `28261ef25ac3b647e6786272a3a1a4dcec93ec088f2571ca976abada3358ac1b`
-- [014 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2340-L2348 `aa6afb6e61ec389179ab100315414526cb48e34693df429bf84620609d4b9b8a`
-- [015 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](015-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L2349-L2355 `f5ff028c308a300ed2338b0b69389d02117e4e6d907716a8e31af5c326ea3d78`
-- [016 - Usage GUI Propagation Addendum - 2026-07-09](016-usage-gui-propagation-addendum-2026-07-09.md) L2357-L2416 `a11ae5fac4aa89dd983c1a9dc067d1181a8521f9e206448dea4ff73ada8fbbc7`
-- [017 - PMConcept6 Shell Sweep Addendum - 2026-07-16](017-pmconcept6-shell-sweep-addendum-2026-07-16.md) L2418-L2644 `37c9036301a7a6355508b42c24e15cf40036c3ceef999010c8fc3bdf14b674cc`
-- [018 - PMConcept7 Concept Promotion Addendum - 2026-07-23](018-pmconcept7-concept-promotion-addendum-2026-07-23.md) L2646-L2648 `f86515c9315d078eec562ba8b05d47e11ed520544a71b1eb48c417c84c44b7c7`
-- [019 - Run & Debug Revival Addendum - 2026-07-27](019-run-debug-revival-addendum-2026-07-27.md) L2650-L2710 `08ea0818e6047175b9f56cc2bdb6cebbe7325c9e6b9839778d6b4e66bb865e9a`
-- [020 - Worker Notebook Detail Access Addendum (2026-09-05)](020-worker-notebook-detail-access-addendum-2026-09-05.md) L2712-L2745 `00a49c2c967bfd8c0b460327e05456099a518510d7bf9d4cf250907dcd53e019`
-- [021 - Run-start history consumer binding - 2026-09-11](021-run-start-history-consumer-binding-2026-09-11.md) L2747-L2815 `d8ba7b69eeabbef9ad1ccc7f2655c66d8ac52effd8847821338145a1f0038ff1`
-- [022 - PERF-001 Named Plan scope repair (2026-09-27)](022-perf-001-named-plan-scope-repair-2026-09-27.md) L2817-L2977 `4618cacff4ea19ad3e3388b224bb1509335e30bcf103bca04c84f23967d1209d`
-- [023 - Command payload definitions (DL-333, 2026-11-05)](023-command-payload-definitions-dl-333-2026-11-05.md) L2979-L3596 `6e01a35adffac4b1bf6343ddf59811b0d211b0da588ce2dc3d33a53df610d2fa`
+- [001 - Preamble](001-preamble.md) L1-L1 `7cabda4aa7e80ff7458a892faf5b5a21bd2dd4e2bb4146e8190d049ea0423269`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L37 `3bdd241750c28cf35c920b7554c050389adaaab5aeed94dc0bcdd3a7aa9ed4d1`
+- [003 - 1. Scope and canonical model](003-1.-scope-and-canonical-model.md) L40-L382 `7f0bc228b717e6f8803919a887474c529313a1ad03c3ce6968980a7ef4e0b71c`
+- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L384-L388 `136148d618fd6aceb575134c5795d04e4acaa0e557e2c09adec39dc1cbc6b82f`
+- [005 - PlanUnits](005-planunits.md) L390-L452 `312f9601b3b766a52fd021de9339c4e1a89197b5a9e7726d882a72bd61c2721e`
+- [006 - Known-37 recovery-unavailable orchestrator actions - 2026-07-18](006-known-37-recovery-unavailable-orchestrator-actions-2026-07-18.md) L454-L460 `00d48b862046e697990d00015d6428d32a55b75e8c4131211c501d3101328793`
+- [007 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](007-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L462-L1483 `66c9b42821b0205e4ceb41e8ef29f15490ba6b2346ede7764436816df0b3f843`
+- [008 - Migration Coverage](008-migration-coverage.md) L1485-L1495 `d56acd890a6012e3111e58203202bae5750a1da150ee2f6a42787ae1ab6db811`
+- [009 - Ledger Compile Addendum - pldg-20260614-001](009-ledger-compile-addendum-pldg-20260614-001.md) L1497-L1577 `dfca393ae28e2dde0aeedd7a19b6a81682dcf9f9ea57295fb14cce396bb7e56a`
+- [010 - Ledger Compile Addendum - pldg-20260616-002](010-ledger-compile-addendum-pldg-20260616-002.md) L1579-L1682 `87a6a3e7cbb278d06f1d0ca4c943611d59fc533bc266ab7c56f9a183d8287b9d`
+- [011 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](011-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L1684-L1783 `fa21924be7157a9c2f25d6037eaef2ef2ee4e82553cf9e433b2a02638298c5a6`
+- [012 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](012-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1786-L1926 `00af31c27560096972dc86b4306ba0dee630f9b4efa36205b216480b275cd1f2`
+- [013 - Ledger Compile Addendum - pldg-20260626-001-feature-name](013-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1929-L2342 `6c358dc18993fb1315a440c89172b345c31a5570e08966fabac64e2fdf174857`
+- [014 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2344-L2352 `6d4d2b2b5ea5ada21b45d141fe458f96d89de5b4204e81e181f721f25995fa25`
+- [015 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](015-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L2353-L2359 `d2abecd5265e50b1ca5d61b9a7f7ee1dae55e29703b60942611ce7ca8e437e25`
+- [016 - Usage GUI Propagation Addendum - 2026-07-09](016-usage-gui-propagation-addendum-2026-07-09.md) L2361-L2420 `ba7e922056e3629e5437a0586c5709e70ae9a6c65217e81992930ac7c496b168`
+- [017 - PMConcept6 Shell Sweep Addendum - 2026-07-16](017-pmconcept6-shell-sweep-addendum-2026-07-16.md) L2422-L2648 `acb6126b2bf1f86ae593c759a6b3aa01a0045046292960f467c039f0d7280fe3`
+- [018 - PMConcept7 Concept Promotion Addendum - 2026-07-23](018-pmconcept7-concept-promotion-addendum-2026-07-23.md) L2650-L2652 `bcf28b18fe4fdecb8aec890b4173d56c5bccade23315046e4222c8e2a9679339`
+- [019 - Run & Debug Revival Addendum - 2026-07-27](019-run-debug-revival-addendum-2026-07-27.md) L2654-L2714 `f0a215bd6bba4e37f1c0ead6cd9b4d42a3a10a7ce026374af1acbd77245770ea`
+- [020 - Worker Notebook Detail Access Addendum (2026-09-05)](020-worker-notebook-detail-access-addendum-2026-09-05.md) L2716-L2749 `2079bc54863cb613c995a491a8181029b534646e6eafd23bb53100ea313c51c8`
+- [021 - Run-start history consumer binding - 2026-09-11](021-run-start-history-consumer-binding-2026-09-11.md) L2751-L2819 `88f7f696ca394f63a7541c85c4cddbb8cc103d1a7de98cb63cd0fc76107baf77`
+- [022 - PERF-001 Named Plan scope repair (2026-09-27)](022-perf-001-named-plan-scope-repair-2026-09-27.md) L2821-L2981 `ef42a0fa7eb7847ce10f85d618464d77bf3ea754b8420b4e3e5a5c7dfb6fe647`
+- [023 - Command payload definitions (DL-333, 2026-11-05)](023-command-payload-definitions-dl-333-2026-11-05.md) L2983-L3600 `38a08d45968b3d82bbca0144d3af425001bb916103edc433d490a4f38261f65f`

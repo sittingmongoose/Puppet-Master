@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L3627-L5670
 
-Source SHA256: `efa0d584b565514addf6b0c0c42d53bf36adf36ce886cfdafbae81600129d900`
+Source SHA256: `582ff13ef7830583028eaa9ecc3ca293275a069b6e9aca44913a5ce017098240`
 
 ---
 
@@ -748,7 +748,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Br
 
 #### Crew lifecycle, cleanup, and GUI routing
 
-Crew lifecycle, timeout propagation, cancellation, and cleanup follow the canonical parent/child orchestration and runtime lifecycle contracts. This section no longer defines separate crew-only timeout ceilings, alternate cleanup paths, or stale concurrency examples.
+Crew lifecycle, timeout propagation, cancellation, and cleanup follow the canonical parent/child orchestration and runtime lifecycle contracts. DL-087 routes Crew lifecycle history to `Plans/Collaborative_Workflows.md`: one shared collaborative workflow history, with no separate Crew lifecycle event history. This section no longer defines separate crew-only timeout ceilings, alternate cleanup paths, or stale concurrency examples.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -806,7 +806,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Br
 
 #### Crew lifecycle, cleanup, and GUI routing
 
-Crew lifecycle, timeout propagation, cancellation, and cleanup follow the canonical parent/child orchestration and runtime lifecycle contracts. This section no longer defines separate crew-only timeout ceilings, alternate cleanup paths, or stale concurrency examples.
+Crew lifecycle, timeout propagation, cancellation, and cleanup follow the canonical parent/child orchestration and runtime lifecycle contracts. DL-087 routes Crew lifecycle history to `Plans/Collaborative_Workflows.md`: one shared collaborative workflow history, with no separate Crew lifecycle event history. This section no longer defines separate crew-only timeout ceilings, alternate cleanup paths, or stale concurrency examples.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -1133,7 +1133,7 @@ Messages can be threaded (conversations):
 - **Read:** Agent reads message (tracked in `read_by`)
 - **Replied:** Agent replies (creates new message with `in_reply_to`)
 - **Resolved:** Message marked as resolved (e.g., question answered, request fulfilled)
-- **Expired:** Old messages (>24 hours) are archived or deleted
+- **Expired:** Old messages (>24 hours) are archived (DL-085); unresolved blockers stay visible until resolved; leaving the board deletes nothing
 
 **Canonical implementation shape:**
 

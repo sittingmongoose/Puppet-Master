@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2690-L3149
+Source lines: L2702-L3161
 
-Source SHA256: `491fcd9f9b62043680aff28e14e60a048d6f38897f1933bdd4f97eda715d8068`
+Source SHA256: `8dcf3a0945e5913763213340fa70a4e3e67eae943e0b3ae91c2ce6913d1692f5`
 
 ---
 
