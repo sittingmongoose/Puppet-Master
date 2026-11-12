@@ -1193,6 +1193,8 @@ def r3_effect_cases():
                 next(st for (f, k, h), st in W.World.CURRENT.issued.items() if f == 'executor_process_birth')))),
          'effects/process_shutdown_join'),
         ('process_not_shut_down_by_owner', knob(M, process_not_shut_down=True), 'effects/process_state'),
+        ('journal_manifest_ref_other_workspace', knob(M, filesafe_journal=lambda wr: W.put(
+            wr, '/pre_restore_manifest_ref', wr['target_manifest_ref'] + ':other')), 'effects/workspace_present'),
         ('grace_signal_not_delivered', knob(M, process_signal_result='failed'), 'effects/process_unknown'),
     ]
     for name, cfg, expected in rows:

@@ -1721,3 +1721,131 @@ def _storage_reopen(self):
 
 World.storage_close = _storage_close
 World.storage_reopen = _storage_reopen
+
+
+def kind_choice(roots, realm, kind):
+    """Seeder choice: the oneOf/anyOf variant whose ``kind`` const is ``kind``."""
+    def choose(variants):
+        for i, v in enumerate(variants):
+            node = v
+            if '$ref' in v:
+                try:
+                    node = roots.registries[realm].resolver().lookup(v['$ref']).contents
+                except Exception:  # noqa: BLE001
+                    node = v
+            if node.get('properties', {}).get('kind', {}).get('const') == kind:
+                return i
+        return next((i for i, v in enumerate(variants) if v.get('type') != 'null'), 0)
+    return choose
+
+
+class Prefer(_NonNull):
+    def __init__(self, by_path):
+        super().__init__()
+        self.by_path = by_path
+
+    def get(self, path, default=None):
+        return self.by_path.get(path) or super().get(path, default)
+
+
+def _leaf_errors(errors):
+    """Leaf errors; inside a oneOf/anyOf, only the branch whose discriminator
+    (``kind`` const) already matches the instance, so repairs never flip it."""
+    for error in errors:
+        if error.context:
+            branches = {}
+            for sub in error.context:
+                branches.setdefault(sub.relative_schema_path[0] if sub.relative_schema_path else 0, []).append(sub)
+            matching = [b for b, subs in branches.items() if not any(
+                x.validator == 'const' and list(x.relative_path) == ['kind'] for x in subs)]
+            if matching and len(matching) < len(branches):
+                pick = min(matching, key=lambda b: len(branches[b]))
+                yield from _leaf_errors(branches[pick])
+            else:
+                yield from _leaf_errors(error.context)
+        else:
+            yield error
+
+
+def _repair_deep(self, realm, root, value, owned):
+    """Make schema filler satisfy its whole root (conditional consts, enums,
+    types, exact ``contains``), modeled on DG-S's skeleton repair. Owner-set
+    members (``owned`` path prefixes) are never touched; a remaining error on
+    an owned member is a real refusal.
+    """
+    def is_owned(path):
+        text = '/' + '/'.join(map(str, path))
+        return any(text == o or text.startswith(o + '/') for o in owned)
+    for _ in range(120):
+        errors = self.roots.errors(realm, root, value)
+        if not errors:
+            return value
+        changed = False
+        for error in sorted(_leaf_errors(errors), key=lambda e: e.validator == 'pattern'):
+            path = list(error.absolute_path)
+            if is_owned(path):
+                continue
+            kind = error.validator
+            if kind == 'const':
+                put(value, '/' + '/'.join(map(str, path)), copy.deepcopy(error.validator_value)) if path else None
+                changed = bool(path) or changed
+            elif kind == 'enum' and path:
+                put(value, '/' + '/'.join(map(str, path)), copy.deepcopy(error.validator_value[0]))
+                changed = True
+            elif kind == 'type' and path:
+                expected = error.validator_value
+                expected = expected[0] if isinstance(expected, list) else expected
+                put(value, '/' + '/'.join(map(str, path)), {'string': 'TEST_ONLY:filler', 'integer': 1, 'boolean': False,
+                                                             'null': None, 'array': [], 'object': {}, 'number': 1}[expected])
+                changed = True
+            elif kind == 'pattern' and path:
+                put(value, '/' + '/'.join(map(str, path)), sample(error.validator_value))
+                changed = True
+            elif kind == 'minProperties' and isinstance(error.instance, dict) and path:
+                schema = error.schema
+                pattern = next(iter(schema.get('patternProperties', {})), None)
+                if pattern:
+                    error.instance[sample(pattern)] = {}
+                    changed = True
+                elif schema.get('additionalProperties') is not False:
+                    error.instance['TEST_ONLY_filler_%d' % len(error.instance)] = {}
+                    changed = True
+            elif kind == 'required' and isinstance(error.instance, dict):
+                missing = error.message.split("'")[1]
+                error.instance[missing] = None
+                changed = True
+            elif kind in ('contains', 'minContains', 'maxContains') and isinstance(error.instance, list) and path is not None:
+                spec = error.schema.get('contains', {})
+                consts = [(p_, v_['const']) for p_, v_ in spec.get('properties', {}).items() if 'const' in v_]
+                if consts:
+                    prop, const = consts[0]
+                    items = error.instance
+                    keep, seen = [], set()
+                    for item in items:
+                        mark = json.dumps(item.get(prop) if isinstance(item, dict) else item, sort_keys=True, default=str)
+                        if mark not in seen:
+                            seen.add(mark)
+                            keep.append(item)
+                    if not any(isinstance(i, dict) and i.get(prop) == const for i in keep):
+                        template = copy.deepcopy(keep[0]) if keep and isinstance(keep[0], dict) else {}
+                        template[prop] = const
+                        keep.append(template)
+                    items[:] = keep
+                    changed = True
+            elif kind == 'additionalProperties' and isinstance(error.instance, dict):
+                allowed = set(error.schema.get('properties', {}))
+                for k in [k for k in error.instance if k not in allowed]:
+                    del error.instance[k]
+                changed = True
+        if not changed:
+            break
+    errors = self.roots.errors(realm, root, value)
+    if errors:
+        first = next(iter(_leaf_errors(errors)))
+        refusal = Refusal('repair/unrepairable/%s/%s' % (root.split('/')[-1], '/'.join(map(str, first.absolute_path))))
+        refusal.detail = [first.message[:200]]
+        raise refusal
+    return value
+
+
+World.repair_deep = _repair_deep
