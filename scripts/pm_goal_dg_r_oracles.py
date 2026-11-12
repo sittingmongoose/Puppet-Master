@@ -1270,7 +1270,103 @@ def r4_current_cases():
     return out
 
 
-GROUPS = dict(R1=r1_cases, R2=lambda: r2_cases() + r2_join_cases() + r2_preserve_cases() + r2_guard_cases(), R3=lambda: r3_cases() + r3_effect_cases(), R4=lambda: r4_cases() + r4_current_cases(),
+def r4_v7_cases():
+    """R4 native-v7: retained, inspection and current methods under their own roots (session 3)."""
+    V7, V7N = {'start': 'started', 'edition': 'native_v7'}, {'start': 'no_start', 'edition': 'native_v7'}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    out = []
+
+    def qualified():
+        r = W.RootsV7.get()
+        counts, unresolved = r.qualify()
+        W.guard('v7/qualified', unresolved == [] and counts['edge_sites'] == 22)
+        return dict(counts, package_commit=W.W5_PACKAGE_COMMIT)
+    run_case(out, 'R4/positive/v7_bank_eager_qualification', 'R4', 'positive', qualified)
+
+    def v7_case(cfg, read):
+        def run():
+            w = W.CancelWorld(cfg, base=BASE)
+            try:
+                w.build()
+                if read in ('retained', 'inspect'):
+                    c = R.Consumer(w)
+                    out_ = c.inspect_original(request_of(w), R.Presentation(w)) if read == 'inspect' else \
+                        c.read_retained_native(request_of(w), R.Presentation(w))
+                    return dict(edition=w.edition, d01_version=(out_.get('native_cancellation') or out_)['original_d01_update']['schema_version'])
+                p = P.ProjectorV7(w)
+                must_publish(w, p)
+                p.cutover()
+                before = w.recorder.snapshot()
+                r = p.read_historical() if read == 'historical' else p.read_current_cancelled()
+                after = w.recorder.snapshot()
+                W.guard('passive/no_effect', [k for k in after if after[k]['sha256'] != before[k]['sha256']] == [])
+                return dict(kind=r['kind'], row=r['projection']['schema_id'])
+            finally:
+                w.close()
+        return run
+    for name, cfg, read in [('v7_retained_native', V7, 'retained'), ('v7_inspect_original', V7, 'inspect'),
+                            ('v7_initialized_no_start_inspect', V7N, 'inspect'), ('v7_historical', V7, 'historical'),
+                            ('v7_current_cancelled', V7, 'current')]:
+        run_case(out, 'R4/positive/' + name, 'R4', 'positive', v7_case(cfg, read))
+
+    def cast(world_edition, consumer_roots):
+        def run():
+            w = W.CancelWorld({'start': 'started', 'edition': world_edition}, base=BASE)
+            try:
+                w.build()
+                c = R.Consumer(w)
+                c.roots = consumer_roots()
+                return c.read_retained_native(request_of(w), R.Presentation(w))
+            finally:
+                w.close()
+        return run
+    run_case(out, 'R4/v7_tuple_cast_to_original_profile', 'R4', 'negative', cast('native_v7', W.Roots.get),
+             'tuple/native/schema/original_d01_head/schema_id')
+    run_case(out, 'R4/original_tuple_cast_to_native_v7', 'R4', 'negative', cast('original_profile', W.RootsV7.get),
+             'tuple/native/schema/original_d01_head/schema_id')
+    run_case(out, 'R4/v7_projector_on_original_profile_world', 'R4', 'negative', projector_case(
+        {'start': 'started'}, [lambda w, p: P.ProjectorV7(w)]), 'edition/native_v7_world')
+
+    def without_edge():
+        r = W.RootsV7.get()
+        routes = {k: v for k, v in r.routes.items() if not (k[0] == 'cancelled_native_consumer' and v[0] == 'retained_original_d05')}
+        counts, unresolved = r.qualify(routes=routes)
+        W.guard('v7/qualified', unresolved == [])
+    def wrong_realm():
+        r = W.RootsV7.get()
+        routes = {k: (('cancelled_native_consumer' if v[0] == 'retained_original_d05' else v[0]), v[1]) for k, v in r.routes.items()}
+        counts, unresolved = r.qualify(routes=routes)
+        W.guard('v7/qualified', unresolved == [])
+    def wrong_location():
+        r = W.RootsV7.get()
+        routes = {(k[0], k[1], k[2] + 'x', k[3]) if v[0] == 'retained_original_d05' else k: v for k, v in r.routes.items()}
+        counts, unresolved = r.qualify(routes=routes)
+        W.guard('v7/qualified', unresolved == [])
+    def substituted_blob():
+        W.git_blob(W.W5_PACKAGE_COMMIT, 'Plans/goal_run_certified_consumer_contracts/source-package.v2/imports.json',
+                   W.W5_PACKAGE['Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json'])
+    for name, fn, expected in [('v7_without_w5_scoped_edge', without_edge, 'v7/qualified'),
+                               ('v7_edge_routed_to_wrong_realm', wrong_realm, 'v7/qualified'),
+                               ('v7_edge_at_unlisted_location', wrong_location, 'v7/qualified'),
+                               ('v7_package_blob_substituted', substituted_blob,
+                                'v7/blob_at_commit/Plans/goal_run_certified_consumer_contracts/source-package.v2/imports.json')]:
+        run_case(out, 'R4/' + name, 'R4', 'negative', fn, expected)
+
+    rows = [
+        ('v7_inline_row_oversize', knob(V7, event_payload=LONG_ACTOR(5000)), [lambda w, p: P.ProjectorV7(w).project()],
+         'representation/inline_oversize'),
+        ('v7_current_readback_prior_body', knob(V7, readback_edit=lambda v: v['d06_readback']['native_after'].update(
+            body=copy.deepcopy(W.World.CURRENT.body1.wrapper), body_selection=W.World.CURRENT.body1.selector())),
+         [lambda w, p: (P.ProjectorV7(w).project(), None)[1],
+          lambda w, p: (setattr(w, '_p7', P.ProjectorV7(w)), w._p7.cutover(), w._p7.read_current_cancelled())],
+         'current/readback_native'),
+    ]
+    for name, cfg, steps, expected in rows:
+        run_case(out, 'R4/' + name, 'R4', 'negative', projector_case(cfg, steps), expected)
+    return out
+
+
+GROUPS = dict(R1=r1_cases, R2=lambda: r2_cases() + r2_join_cases() + r2_preserve_cases() + r2_guard_cases(), R3=lambda: r3_cases() + r3_effect_cases(), R4=lambda: r4_cases() + r4_current_cases() + r4_v7_cases(),
               R5=r5_cases, R6=lambda: r6_cases() + r56_lower_cases())
 
 
