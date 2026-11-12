@@ -1,0 +1,30 @@
+{
+  "schema_id": "pm.coordination_wave2_oracles.v1",
+  "claim_boundary": "Static authored threshold and contract oracles; native execution NOT_RUN, no admission.",
+  "heartbeat_expiry_vectors": [
+    {
+      "age_ms": 299999,
+      "expected": false
+    },
+    {
+      "age_ms": 300000,
+      "expected": false
+    },
+    {
+      "age_ms": 300001,
+      "expected": true
+    }
+  ],
+  "native_obligations": [
+    {
+      "id": "DCO-HB-300000",
+      "status": "NOT_RUN",
+      "required": "Actual crash detector uses OSI-650 threshold strictly, retains last runtime liveness evidence and does not emit on equality; independent exit/loss evidence still works."
+    },
+    {
+      "id": "DCO-EXPORT-ON-REQUEST",
+      "status": "NOT_RUN",
+      "required": "For each of the six families SP-540..545, no automatic mirror or store write occurs; explicit export checks current permissions, tombstones and source coverage through running server."
+    }
+  ]
+}
