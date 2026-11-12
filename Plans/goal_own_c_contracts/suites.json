@@ -171,6 +171,24 @@
         "qualification": "NEWLY_AUTHORED_UNINSTALLED_FULL_ORIGINAL_PATH_REQUIRED",
         "whole_root_closure": "NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED",
         "native_v7_source_note": "Existing whole native-v7 companions/source-method composition are available; edition separation is not a blocker."
+      },
+      "scoped_routing_successor": {
+        "selection": "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
+        "protocol": "Plans/goal_run_cancelled_w4_contracts/protocol.md",
+        "qualification_oracles": "scripts/pm_goal_own_c3_w34b_oracles.py",
+        "qualification": "NEWLY_AUTHORED_UNINSTALLED_WHOLE_BANK_QUALIFICATION_REQUIRED",
+        "whole_root_closure": "NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED"
+      },
+      "dg_r_executable_composition": {
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN",
+        "native_line": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+        "world": "scripts/pm_goal_dg_r_world.py",
+        "consumer": "scripts/pm_goal_dg_r_readers.py",
+        "projector": "scripts/pm_goal_dg_r_projector.py",
+        "oracles": "scripts/pm_goal_dg_r_oracles.py",
+        "shared_adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
+        "group_status_report": "reports/event-authority-20261111/DG-R.md"
       }
     },
     {
