@@ -312,11 +312,7 @@ def p7_cases(run):
              neg(cancelled, 'cancelled', d06_control_substituted), 'unavailable:MISSING_ORIGINAL_VALUE:select/cell_substituted')
 
     def newer_goal_stop(w):
-        op = 'TEST_ONLY:op:newer-goal-stop:' + os.urandom(4).hex()
-        w.goal.issue_physical('goal_cancel_stop_receipt', 'goal_consumer', RW.GC + 'StorageStopReceipt',
-                              w.goal.key('goal_cancel_stop_receipt', op),
-                              [('/record/operation_id', op), ('/record/latched', True),
-                               ('/record/before_user_stop_epoch', 1), ('/record/after_user_stop_epoch', 2)])
+        w.goal_bridge.world.host_stop.manual(w.goal_bridge.route.scope,'stop')
     run.case(g, 'P7L/cancelled_newer_goal_stop_before_read', 'negative',
              neg(cancelled, 'cancelled', lambda w, c: newer_goal_stop(w)),
              'unavailable:SOURCE_CHANGED:legacy_current_cancelled/goal_stop')

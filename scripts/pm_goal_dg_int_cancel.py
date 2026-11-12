@@ -259,6 +259,7 @@ def current_projection_sources(projector):
         guard('current/native_'+name,A.same(native[name],stored.wrapper))
     executor=w.current_executor()
     guard('current/d01_head',A.same(executor['workflow']['head'],w.cancellation['original_d01_head'].wrapper['record']))
+    guard('current/goal_stop',w.goal_current_signature()==w.original_goal_current_signature)
     return out
 
 
@@ -578,6 +579,18 @@ class CancelWorld(IW.S1CancelWorld):
                                                                     root=GC+'StorageControlPublication',realm='c3_goal')
         self._adopt_closure([value,native])
         self.goal_event=w.storage.read_event(route.progress['publication']['event_id'])
+        self.original_goal_current_signature=self.goal_current_signature()
+
+    def goal_current_signature(self):
+        """Fresh protected Goal/Stop/binding cells and their actual owner epochs."""
+        bridge=self.goal_bridge;ca=bridge.world;r=bridge.route
+        cells=dict(bridge.goal_cells())
+        keys=ca.binding.keys(r.scope,1)
+        cells['binding_origin']=(ca.binding.ORIGIN,keys['origin'])
+        cells['writer_head']=(ca.binding.HEAD,'goal_execution_writer_domain_head.v1:'+ca.binding.storage_key())
+        ca.binding.read_current(r.scope)
+        return dict(cells={name:ca.value(*key) for name,key in cells.items()},
+            owner_epochs={name:getattr(ca,name).owner_epoch for name in ('goal','host_stop','binding','permissions')})
 
     def _safe_stop(self):
         self.d05=PackOwner(self,'d05_safe_stop')

@@ -319,6 +319,9 @@ class LegacyConsumer(C2.Consumer):
         latest = [s for (f, k, h), s in w.issued.items() if f == stop.family]
         unavailable_if(stage + '/goal_stop', 'SOURCE_CHANGED', all(
             s is stop or s.wrapper['record']['operation_id'] == stop.wrapper['record']['operation_id'] for s in latest))
+        if hasattr(w,'goal_bridge'):
+            unavailable_if(stage+'/goal_stop','SOURCE_CHANGED',
+                w.goal_current_signature()==w.original_goal_current_signature)
         readback, current_read, goal = w.current_boundary()
         rec = lambda v: v.get('record', v.get('value'))  # noqa: E731
         native = original['native_cancellation']

@@ -172,6 +172,12 @@ def other_stop_receipt(w):
     return stored.selector()
 
 
+def advance_current_goal_stop(w):
+    if hasattr(w,'goal_bridge'):
+        return w.goal_bridge.world.host_stop.manual(w.goal_bridge.route.scope,'stop')
+    return other_stop_receipt(w)
+
+
 def other_run_control(w):
     stored = w.scheduler.issue_physical('executor_run_execution_control', 'native_consumer',
                                         W.NA + 'StorageRunExecutionControl',
@@ -1146,7 +1152,7 @@ def r4_cases():
         advance(w, p)
         return p.current_sources()
     def newer_goal_stop(w, p):
-        other_stop_receipt(w)
+        advance_current_goal_stop(w)
         return p.current_sources()
     def d06_control_changed(w, p):
         c = w.cancellation['committed_control']
@@ -1279,7 +1285,7 @@ def r4_current_cases():
         run_case(out, 'R4/' + name, 'R4', 'negative', projector_case(cfg, [publish, cutover, cur]), expected)
 
     def drift_after_current(w, p):
-        p.hooks['after_current'] = lambda w_, p_: __import__('pm_goal_dg_r_oracles').other_stop_receipt(w_)
+        p.hooks['after_current'] = lambda w_, p_: __import__('pm_goal_dg_r_oracles').advance_current_goal_stop(w_)
         return p.read_current_cancelled()
     def withdraw_after_historical(w, p):
         p.hooks['after_historical'] = lambda w_, p_: setattr(p_, 'reader_withdrawn', True)
