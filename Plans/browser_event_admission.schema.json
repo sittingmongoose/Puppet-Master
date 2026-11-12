@@ -21,7 +21,9 @@
     "validation_command",
     "rows",
     "command_event_bindings",
-    "maximum_payload_utf8_bytes"
+    "maximum_payload_utf8_bytes",
+    "inline_payload_canonical_msgpack_bytes",
+    "governed_body_route_ref"
   ],
   "properties": {
     "$schema": {
@@ -129,6 +131,8 @@
       }
     },
     "maximum_payload_utf8_bytes": {"const": 65536},
+    "inline_payload_canonical_msgpack_bytes": {"const": 16384},
+    "governed_body_route_ref": {"const": "Plans/Contracts_V0.md#EventRecord"},
     "rows": {
       "type": "array",
       "minItems": 53,

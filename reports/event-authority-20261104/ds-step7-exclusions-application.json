@@ -1,0 +1,85 @@
+{
+ "application_id": "EA-B1-DS-EXCLUSIONS-WIDGET-MIRROR",
+ "applied_at_utc": "2026-11-04T18:50:00Z",
+ "applied_by": "claude-opus-5.5:lane-DS-ea-b1-20261104",
+ "branch": "plans/ea-b1-seal-blockers-20261104",
+ "applied_on_revision": "ade1ee3d6c4466d1c758c44b85e4a22ebe167c35",
+ "authority_refs": [
+  "Plans/Decision_Log.md#DL-039",
+  "Plans/Decision_Log.md#DL-180",
+  "Plans/Decision_Log.md#DL-270"
+ ],
+ "rows": [
+  {
+   "event_type": "dashboard.widget_added",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_dashboard.widget_added.json",
+   "before_sha256": "95afd692f3a6ad43ca3b6370445d5d6ed7beccf1984ba265feaff6c8b25532da",
+   "after_sha256": "e13e00454ab9223760924afa1e98a9ca838fa5ade1e41bd3dfd40e4e6c131a3d",
+   "ledger_line": 91,
+   "census_line": 126,
+   "disposition_before": "KEEP_QUARANTINED",
+   "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+   "provisional_before": false,
+   "provisional_after": false,
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale"
+   ],
+   "census_changed_fields": [
+    "disposition",
+    "notes"
+   ]
+  },
+  {
+   "event_type": "coordination.debug_mirror_exported",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.debug_mirror_exported.json",
+   "before_sha256": "52bebae4d7080a5755ec08b93b46d7645650e80bbc037c8d85f1624b7a09cf86",
+   "after_sha256": "bbf2d77771a15586dc4f23157d6f12fb311c51450a4760dfa74c7084061562f0",
+   "ledger_line": 81,
+   "census_line": 116,
+   "disposition_before": "KEEP_QUARANTINED",
+   "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+   "provisional_before": false,
+   "provisional_after": false,
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale"
+   ],
+   "census_changed_fields": [
+    "disposition",
+    "notes"
+   ]
+  }
+ ],
+ "files": {
+  "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+   "before_sha256": "1291dec58b62ee15f522d4ab960356c7a18f3e5125ac9fe861fa8aa4cf228f17",
+   "after_sha256": "df8a890d22ad4ce2d4f3ed10433099e509245cc5547d48b08f28cb475a5e747a",
+   "lines_changed": 2
+  },
+  "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+   "before_sha256": "43ad22c23070ae43964c4e372f4ee1d8eca69128dcad95f2b3e5bcbd9d761aa0",
+   "after_sha256": "d29585810b22b1280ac1c2f990287b2a246c7c0894c534430df5e527aaa80e2f",
+   "lines_changed": 2
+  }
+ },
+ "boundaries": {
+  "registry_changed": false,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "validator_changed": false,
+  "cohort_pins_changed": false,
+  "owner_choice_changed": false,
+  "denominator_removal_claimed": false,
+  "depth_pass_claimed": false,
+  "seal_claimed": false
+ },
+ "citation_anchor_revision": {
+  "new_citations": "ade1ee3d6c4466d1c758c44b85e4a22ebe167c35",
+  "note": "Every citation this application writes is an exact single-line quote located at this revision."
+ },
+ "not_updated": "individual-disposition/COVERAGE.json (generated 2026-09-11) is not regenerated, as the Step 9 batch 1 application did not regenerate it."
+}

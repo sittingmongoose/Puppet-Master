@@ -19886,6 +19886,7 @@ acceptance_criteria:
   - "The exact consumer/projector IDs, key derivations, schema versions, currentness proof and checkpoint advance/rebuild predicates are explicit."
   - "Permanent audit retention cannot retain or recreate deleted content; static fixtures and native acceptance obligations are distinguished."
 validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
   - Plans/context_compaction_completion_contract_fixtures.json
   - reports/event-authority-20260911/step-06-contract-validation.md
 risk_class: compaction_completion_authority
@@ -22180,6 +22181,8 @@ Amended 2026-10-09 (DL-180, DL-181): the selected layout is now `pm.home_workspa
 
 Amended 2026-10-10 (DL-188): Event Authority admitted the move on 2026-10-10 (Jared's D42): `Plans/event_family_registry.json` registers `workspace.layout_changed` at family revision 2.0.0, registry revision `2026-10-09.1`, still 43 families, and the PNC-019 checkpoint constant in `scripts/pm_pnc019_currentness.py` names that revision. The paragraph above said the move waited "once Event Authority admits it" with the family kept at 1.1.0 "until then"; that condition is met. Where the next paragraph speaks of `event-family-workspace-layout-changed@1.1.0` and its 26 required fields, it describes the 1.1.0 events already written, which stay readable and are never rewritten.
 
+Amended 2026-11-04 (DL-045): SP-400 closes the SP-330 open item named above. v2 writes use the Home4 slot and receipt contract `Plans/home_layout_v2_slot_receipt.schema.json` (slot and receipt schema version 4.0.0, slot producer version 4.0.0). It keeps this section's producer `home.workspace_layout_commit.v1`, its custody, transaction, crash convergence, retention mapping, read and withdrawal rules, and replaces only the parts typed for v1 layouts and the 1.1.0 payload, and the JSON and base64 encodings that DL-270 retires.
+
 This is a new technical binding under DL-045 for the existing `event-family-workspace-layout-changed@1.1.0`. Keep `project_only`, payload schema `https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0`, its exact 26 required fields and closed enums, and `RP-AUTHORITY-INDEFINITE@1.0.0`. The event is not a new admission. F3-515 owns applicable settled interaction; CV-323 owns truthful Home event/result/receipt joins; SP-245 owns the sole layout record's transaction/readback/recovery; UCC-144/UCC-147 retain command IDs. SP-273 owns this technical Storage supplement; no competing Home product owner is created.
 
 ### Existing behavior and exact applicability
@@ -22200,7 +22203,17 @@ Define `operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_
 
 Keep the actual command idempotency key and the NEW Home domain-request RFC8785 binding digest request_sha256 in the operation receipt. Its input is the normalized Home object with exactly command_id, command_instance_id and args, without retry transport dispatch fields. The separate normalized_command_payload_sha256 preserves the actual existing SIR normalized-command payload digest, whose owner algorithm is unchanged; do not equate it with this Home-specific request digest. request_source_bytes_sha256 additionally binds the exact authenticated original request bytes and never replaces semantic idempotency. Before executing a retry, resolve the same command-instance and the scoped command-idempotency binding to the original operation, request digest, result, receipt and event. Same binding joins pending or returns the original terminal result. Different request bytes under either identity refuse without effects. Neither a repeated gesture nor a caller-selected new command instance can reuse an old command idempotency key to bypass that comparison. Event-level app-root dedupe remains separately required. An operation ID, reference or schema-valid result alone is not proof of a valid original command.
 
-The first prepared event semantic fields are immutable after readback certification. Envelope project_id equals payload project_id and the actual layout project; scope_kind=project. Thread/run/node/attempt and account refs are null for this presentation-only fact. actor_ref is the authenticated admitted command actor, not a reconstructed UI identity. correlation_id equals command/payload correlation; parent_event_id and causation_event_id are the actually admitted causal EventRecord ID or null when no such event exists. producer_sequence_id is the accepted new layout revision; occurred_at_utc equals the frozen settled_at_utc. payload_ref=null, redaction_profile=no_secrets, replay_policy=dedupe_by_idempotency_key, and all migration fields are null for new native writes. Storage assigns event sequence and observed/persisted times. Freeze actor, correlation, causality, command refs, settled time and payload bytes before append retries; the retry does not regenerate them from current UI state.
+The first prepared event semantic fields are immutable after readback certification. Envelope project_id equals payload project_id and the actual layout project; scope_kind=project. Thread/run/node/attempt and account refs are null for this presentation-only fact. actor_ref is the authenticated admitted command actor, not a reconstructed UI identity. correlation_id equals command/payload correlation; parent_event_id and causation_event_id are the actually admitted causal EventRecord ID or null when no such event exists. producer_sequence_id is the accepted new layout revision; occurred_at_utc equals the frozen settled_at_utc. The 2026-11-04 DL-270 amendment below selects the exact EventRecord 3.0.0 inline/reference representation; redaction_profile=no_secrets, replay_policy=dedupe_by_idempotency_key, and all migration fields are null for new native writes. Storage assigns event sequence and observed/persisted times. Freeze actor, correlation, causality, command refs, settled time and payload bytes before append retries; the retry does not regenerate them from current UI state.
+
+### DL-270 SP-273/Home4 EventRecord body amendment (2026-11-04)
+
+Newly authored technical follow-through under DL-270 and DL-045: `workspace.layout_changed` uses the governed EventRecord **3.0.0** representation in Contracts_V0 section 1.2.1. SP-273's former unconditional `payload_ref=null` now applies only to the inline case: the entire canonical MessagePack semantic body at or below 16,384 bytes. Above that exact limit, `payload=null` and the closed BLAKE3/size/media reference resolves the **complete** body. All affected-id arrays remain complete and unbounded; there is no tab/panel cap, truncation, omitted event or split event. Exactly one event is committed per admitted changed structural transaction.
+
+SP-400's Home4 slot and operation receipt freeze that inner envelope's exact version and physical payload/reference along with existing actor, command, time, result and first-AppendReceipt pins. `home_layout_v2_slot_receipt.schema.json` dispatches retained 2.0.0 event semantics without rewriting them and validates new 3.0.0 semantics as the closed successor; its decoded-body joins still apply after reference verification. The Home4 whole-value reference remains independent: it bounds the complete redb value even when decoded layouts and the resolved event body are large. Do not inline the resolved body into a redb reference wrapper. Same-identity retries resolve the original physical envelope, source bytes, result and receipt; Storage-assigned metadata alone cannot conflict. Both the slot and the event pack bytes/index must be durable under SP-337 before acknowledgment.
+
+The SP-273 event reader/projector and all three existing consumers use the same exact envelope-version dispatcher and verified resolved payload before filtering, replay or any checkpoint advance. The SP-278 nine-field token and source Storage identity remain exact joins; checkpoint values do not acquire live snapshots or payload copies. Retained historical 1.0.0/2.0.0 records remain readable under their original validating reader independent of today's layout, subject to unchanged withdrawal, forgery, access and deletion fences. Missing/corrupt payloads make history unavailable and fence checkpoint advance; no current-layout reconstruction substitutes for them. All existing RP-CONFIG-CURRENT, RP-AUTHORITY-INDEFINITE, RP-PROJECTION-3GEN, holds and coherent restore rules remain. StorageMigrationCoordinator installs the successor validating codec and all writer/reader/checkpoint paths together under its existing protected migration before enabling the producer; native installation remains NOT_RUN.
+
+Large-event, inline boundary, missing/corrupt/media/size/encoding/schema, retry, replay-only and retained historical controls: `Plans/event_authority_ds_round2_fixtures.json`, executed by `scripts/pm_event_authority_ds_round2.py`, including guard-removal witnesses.
 
 ### Exact new custody, without an alternative layout history
 
@@ -22304,7 +22317,7 @@ An ordinary source/authority/layout/receipt refresh keeps schema_id, schema_vers
 Existing RP-PROJECTION-3GEN remains three generations and seven days after actual terminal state, with existing hold/live-reference eligibility. For a retired wrapper use its first actual retirement timestamp; for current withdrawal use first terminal_at_utc. This is exact storage of the existing anchor, not a new duration or sliding TTL. Retained core history is derived metadata only and grants no extra Home/source-body retention. Remove only an eligible oldest retired tail after seven days and after actual hold/ref/source-maintenance checks under serialized cleanup/publication/hold admission. Do not remove an intervening successor needed by a retained older node. All three protected slots blocks replacement and requires existing rebuild/recovery disclosure; never evict held history or exceed cap. Current authoritative Home layout and canonical receipts remain independently governed. Checkpoint loss rebuilds disposable state only from actual admitted sources.
 
 
-Exact byte-capture closure: the pending slot retains the actual prior and candidate layout source bytes as binary fields (or a BLAKE3 payload-store reference when over 16 KiB) alongside decoded layouts and their exact byte hashes. No base64 text field is stored (SP-337, SP-339); the prior_layout_source_bytes_base64 and candidate_layout_source_bytes_base64 field names are retired with the JSON slot encoding (Amended 2026-10-31, DL-270). Empty-slot release clears both bytes and both snapshots atomically. Rollback restores and verifies exact original Home bytes; equal-looking reserialization is insufficient. The terminal receipt retains only the new content-free identity capture bytes and typed original values, never full Home request args or layout bodies. Native source adapters and authenticated owner-value capture remain separate proof obligations.
+Exact byte-capture closure: the pending slot retains the actual prior and candidate layout source bytes as binary fields (or a BLAKE3 payload-store reference when over 16 KiB) alongside decoded layouts and their exact byte hashes. No base64 text field is stored (SP-337, SP-339); the prior_layout_source_bytes_base64 and candidate_layout_source_bytes_base64 field names are retired with the JSON slot encoding (Amended 2026-10-31, DL-270). Empty-slot release clears both bytes and both snapshots atomically. Rollback restores and verifies exact original Home bytes; equal-looking reserialization is insufficient. Amended 2026-11-04 (DL-045, SP-400): for Home4 values SP-340's limit bounds the complete slot or receipt value, never one field; a Home4 value over its family's limit is stored as SP-400's reference to its exact canonical bytes in the payload store, with its decoded layouts and source bytes inside the referenced value. The terminal receipt retains only the new content-free identity capture bytes and typed original values, never full Home request args or layout bodies. Native source adapters and authenticated owner-value capture remain separate proof obligations.
 
 ### Retained original publication v1 admission and current relocation
 
@@ -22376,6 +22389,8 @@ Static evidence independently types the actual MigrationReceipt, actual store ke
 
 The exact native and static validation boundaries, frozen synthetic source/owner adapters, and corrected proposal lineage are pinned by reports/event-authority-20260911/step-08-home-validation.md. Physical writes require the actual supported StorageMigrationCoordinator graph and owner activation; the fixtures do not install it.
 
+Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5, `/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v5/manifest.json` (SHA-256 `62823e0a62173cdd99bc41cc676e1aec9f4b5689122a51bc289ffb951aa70877`), which `Plans/home_layout_event_contract_fixtures.json` now pins. The v4 suite stored `redb_snapshot_id` wherever it stored the reader checkpoint's `generic_read_token`, against the 2026-09-24 amendment above. v5 stores the nine-field durable token there, joins each read's own live snapshot, and keeps every v4 case, its declared validity and every count. Its receipts are `reports/event-authority-20261104/ds-p2-layout-suite-refreeze.md` and `.json`; v4 and the 2026-09-11 report stay as lineage. The full-value suite that `reports/event-authority-20260911/step-08-home-full-value-validation.md` pins (SHA-256 `7ab4fb0046b9d1fb4824af9515b2361d8eed479ca73edf7dcc2e9dc725311eb2`) stores no reader checkpoint in its own cases: its tokens are live read tokens compared with the current source at each read. Its copy of the Home3 schema's reader-checkpoint definitions and its embedded copies of the v4 workspace regressions predate DL-076; for the stored token they are superseded by `Plans/home_layout_pending_receipt.schema.json`, corrected on 2026-09-24, and by v5.
+
 ```yaml
 plan_unit_id: SP-273
 unit_type: schema_contract
@@ -22407,6 +22422,15 @@ canonical_text: >-
   read by the 1.1.0 schema, which stays in place, and append admission takes 2.0.0 alone.
   Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42); the registry names it at revision
   2026-10-09.1 and the earlier condition "once Event Authority admits it" is met.
+  Amended 2026-11-04 (DL-045): SP-400 writes the v2 writer's slot and receipt schema (Home4, version 4.0.0), closing
+  the SP-330 open item; this custody, transaction, crash, retention, read and withdrawal contract governs Home4 values.
+  Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5, which stores the nine-field durable read
+  token in every stored reader checkpoint and keeps every v4 case and count; v4 stays as lineage.
+  Amended 2026-11-04 (DL-270 technical follow-through): SP-400 supplies Home4's complete-value
+  inline/reference custody; the explicit SP-273/Home4 EventRecord amendment above selects the governed
+  EventRecord 3.0.0 representation with complete affected-id arrays, exact frozen retry pins and one event
+  per committed structural change. Its validating writer, reader and SP-278 checkpoint paths migrate
+  together; retained EventRecord 2.0.0 semantics remain exact compatibility reads.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.
@@ -22459,6 +22483,7 @@ acceptance_criteria:
 - Preserve lawful independent source/direct-issue/backup effects on Home refusal; retry completes the same original event/receipt/response without repeating the layout operation.
 - Preserve exact Home1 and external Home2 readers, unchanged physical keys/lifetimes/checkpoint history and original hash meanings; unresolved old pending work settles under original authority or fences migration.
 validation_surfaces:
+- "python3 scripts/pm_event_authority_ds_round2.py"
 - Plans/home_layout_event_contracts.schema.json
 - Plans/home_layout_pending_receipt.schema.json
 - Plans/home_layout_pending_receipt_v2_reader.schema.json
@@ -22470,6 +22495,7 @@ validation_surfaces:
 - reports/event-authority-20260911/step-08-home-validation.md
 - reports/event-authority-20260911/step-08-home-full-value-validation.md
 - reports/event-authority-20260911/step-08-home-full-value-checks.json
+- reports/event-authority-20261104/ds-p2-layout-suite-refreeze.md
 risk_class: home_layout_readback_event_receipt_crash_or_replay_authority_escape
 reasoning_tier: high
 context_scope: workspace_layout_changed_only
@@ -27346,200 +27372,60 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-317, ContractName:Plans/Plan_
 
 ## Terminal workgroup moved — exact passive source read
 
-Amended 2026-10-09 (DL-181): workgroups and sections are retired and `terminal.workgroup_moved` is withdrawn under SMPFS-170's rule (`Plans/Contracts_V0.md#CV-361`): no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written. Its "fifth-section admission" oracle describes the retired cap of four sections. DL-070's principle carries forward into the panels: moving a terminal tab keeps its session, transcript and process and creates nothing (SP-332).
+Amended 2026-11-05 (DL-449, deck 2 item 8.a): this section now defines compatibility interpretation and protection of old data only. It admits no new terminal-history view or disclosure route. DL-449 supersedes this section's former passive inspection binding and companion backlog. DL-181's withdrawal remains in force: the producer never activated and no operation was ever admitted.
 
-This is a **NEW Storage owner binding** under DL-045 for the existing registered
-`terminal.workgroup_moved@1.0.0`, semantic producer/consumer owned by SMPFS-170.
-The documented search in SMPFS-170 found the unchanged CV-323/payload/registry
-contracts and generic SP-278 source reader, but no exact terminal-family reader,
-projector or checkpoint binding. SP-273's Home reader and three physical families
-are explicitly not terminal event custody. No sibling binding is borrowed.
+Any saved `terminal.workgroup_moved` event retains its exact 1.0.0 meaning, original event identity, idempotency identity, array order and bytes. Validate its payload using its own `payload_schema_id`, `https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0`, and the unchanged closed `Plans/event_payloads/terminal_workgroup_moved.schema.json`. Its Project, command, correlation, workgroup, source/target section, pane/session membership and creation/identity-preservation facts are historical facts only. The original move is between distinct sections with the complete distinct contained pane/session identities unchanged; section_created describes the original target creation and preserve_session_identity remains true. DL-070's vacated source stays empty and reusable, with no replacement workgroup, pane, session or reseed; these original semantics confer no new move or creation authority. Never reinterpret it as a current terminal-tab move, an alias of `workspace.layout_changed`, or proof of an operation's execution. Unsupported or invalid saved data remains unavailable under the existing source-validation fence; it is never repaired by inventing an event or missing original custody.
 
-Define `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, a private
-passive single-event source reader used only by
-`terminal.workgroup_move_history_read.v1@1.0.0`, for the committed-EventRecord
-resolution that SMPFS-170 names. Its selector identifies the actual
-Storage instance, Project, workgroup, exact event ID, original global sequence and
-complete canonical index key. These join the actual original EventRecord; payload
-has no workspace-tab field and none is inferred from a current Home tab. The reader
-has no pagination, durable cursor, acknowledgement or reconstructed live state.
-The exact family projection/checkpoint disposition is **`none_required`**, because
-this owner assigns only a fresh one-event historical observation with zero durable
-effects. This is an explicit per-family assignment, not absence mistaken for
-closure. SP-278's generic projector/checkpoint remains independently mandatory.
+No producer writes `terminal.workgroup_moved`, including a retry that supplies an old event or idempotency key, recovery of a pre-upgrade pending move, or SP-330's layout conversion. A pending old move is never reminted. Current terminal-tab movement is `workspace.layout_changed` with `change=tab_moved` under CV-361; it keeps its session, transcript and process and creates nothing (SP-332). No retired workgroup, section or move command is restored.
 
-### Complete source and original authority
+No consumer operates on this family. Its dedicated consumer and Storage inspection names, `terminal.workgroup_move_history_read.v1@1.0.0` and `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, are retired lineage, not available readers. The family projector and checkpoint disposition is `none_required`: there is no family projection, durable cursor, saved read token or reader effect. SP-278's generic EventRecord-index source, projector and checkpoint remain independently mandatory for existing generic Storage access; the nine-field durable token excludes `redb_snapshot_id` (DL-076), and a live read uses its own snapshot fence. This adoption protects existing data and grants no new terminal disclosure permission.
 
-Use actual `reader.storage.event_record_index@1.0.0` and the complete
-`Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one real
-redb snapshot resolve table `checkpoints`, key
-`event_record_index_checkpoint.v1:{storage_instance_id}`, uniquely current
-`current_generation_id`, exact `#/generations/{generation_id}` node and its
-same-database `event_record_index.v2@{generation_id}` dataset. Resolve the selector's
-exact key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`
-through the unchanged canonical Project scope/key codec. No flat table, foreign
-root, sibling checkpoint or optional lookup miss establishes source authority.
+The saved event retains `RP-AUTHORITY-INDEFINITE@1.0.0`. Existing source/index/ref custody, coherent backup/restore, holds, Project access/deletion/maintenance fences and `reject_unhandled_secrets` remain owned by their existing Storage contracts. Retained data grants no access to deleted terminals, transcripts, credentials, session bodies or refs. No new archive, hold, physical family/key, retention clock or original-move/result store is required or created. Removal of an unbuilt companion obligation does not delete any saved data or change its lifetime.
 
-Preserve every complete token member: `storage_instance_id`, `checkpoint_key`,
-`checkpoint_ref`, `generation_id`, `generation_anchor_sha256`, `frontier_revision`,
-`frontier_sha256`, `index_dataset_name`, `source_selection`, `redb_snapshot_id`.
-The entire closed source selection binds genuine synchronized CURRENT/manifest
-bytes, selected generation, recovery epoch, survivor prefix, retained inventory,
-durable watermarks, exclusions and retired inputs under SP-278's actual owner
-codec. Validate complete global retained coverage, including nonmatching events
-and other scopes, and all actual frame/index/value/key joins. A filtered maximum,
-matching generation or caller-supplied token/hash is insufficient. A same-generation
-append changes the frontier and invalidates the old current token. The tenth
-member, `redb_snapshot_id`, is the live fence of this read's own redb snapshot and
-is never stored (DL-076). This binding stores no read token. If a separately
-admitted contract stores this observation or its token, it stores the nine-field
-durable read token that SP-278 defines on 2026-09-24 (`DurableGenericToken`,
-without `redb_snapshot_id`), and every later read joins the snapshot ID of its own
-live read transaction. No stored value supplies, rewrites or manufactures a
-snapshot ID.
+DL-449 explicitly removes the obligation to build the new terminal-history view, saved viewing results, saved original-move/results records and obsolete original-move tests. Neither the `verified_historical` / `unresolved_historical_validation` / `unavailable` viewing-result companion nor the unbuilt original pending/result/custody companion is an implementation prerequisite. The earlier move/reader designs and their original-move, section-cap, rollback, sibling-settlement and lost-acknowledgement test backlog survive only as source lineage in SMPFS-170's prior revisions; they impose no current work. The original meaning, lifetime, write refusals and no-remint checks remain.
 
-The row's publication locator binds the immutable admitted birth anchor; the
-advancing frontier independently binds current selected source. Authenticate
-original anchor admission and reverify the anchored source prefix through current
-retained source, without demanding overwritten birth controls forever. Follow
-SP-278/Case L-2 for actual frame bounds/CRC/schema/payload, source-value bytes,
-identity, scope, sequence and complete coverage/gaps. Compaction/relocation changes
-current physical locators only through that source owner; it does not rewrite
-original event facts or require current coordinates to equal first-append ones.
-Unknown, malformed, unsupported, partial, stale or unauthenticated source refuses
-disclosure; index-only equality never produces a historical fact.
+### Retained compatibility checks
 
-For verified original-move semantics, independently resolve the actual original
-terminal owner admission and immutable ProducerInput, original request/revisions,
-predecessor membership, accepted target and section creation, the empty state of a
-source section the move vacated, with no replacement workgroup, pane or session
-(DL-070), full unchanged pane/session/PTY identity, actual terminal readback and
-any applicable sibling
-settlement, original result/SIR/CV-333 joins, and genuine original append authority.
-SP-286/CV-339 require the real eleven-field first AppendReceipt and original append
-result, actual original full EventRecord commitment and Storage-assignment joins,
-resolved only through explicitly adopted `storage.first_append_receipt.resolve.v2`
-and `storage.first_append_receipt.resolve_full_value.v1`; producer-semantic
-equality, a legacy selector or a semantic reader alone is insufficient. Do not
-acquire disposed controls
-or reconstruct missing original command/result custody from a current terminal,
-Home receipt or self-consistent event. The unchanged event payload has no result
-or revision fields; resolve those obligations only through independently admitted
-original owner custody, never guessed payload extensions. The companion original
-result/custody schema and physical admission remain separate unfinished work under
-SMPFS-170; they are not supplied by this passive reader.
+`Plans/terminal_workgroup_compatibility_fixtures.json` and `scripts/pm_terminal_workgroup_compatibility.py` author static controls for this reduced contract: a saved 1.0.0 payload keeps its original bytes and interpretation; unknown schema/version, malformed or changed retained data and a changed lifetime refuse; fresh/retry/recovery/conversion proposals never emit this event; and a new dedicated view, consumer, projector, checkpoint or companion obligation refuses. These are synthetic contract controls, not a terminal viewing feature, original-move simulation, native execution, admission or a seal. Complete guard isolation remains the shared-tool part-2 check.
 
-### Disclosure, replay and custody boundaries
-
-This private read returns one of three semantic outcomes, not a persisted record
-or newly admitted public result schema. `verified_historical` means complete actual
-current source plus independently verified original move obligations;
-`unresolved_historical_validation` means current source/disclosure is authorized
-but one or more original admission, request/revision, membership/target, result,
-sibling settlement or append-custody obligations remain unproved; `unavailable`
-means current source/access cannot authorize the read. The first two observations
-carry the complete unchanged original EventRecord and the whole live read token of
-this read's own snapshot (never persisted), with explicit original-validation
-status and unresolved obligation names as applicable; unavailable discloses
-neither. Neither observation certifies current
-terminal state or grants action authority. The closed private result companion
-must be defined and installed before runtime disclosure; these outcome names are
-a normative obligation, not an already deployed schema or validator pass.
-
-Current Project/access/deletion/maintenance permission must authorize every original
-value/ref disclosed. Recheck complete current token, actual selected source,
-permissions/tombstones, original resolved values and read output after all
-returning helpers and immediately before disclosure under the owner fence. Denied
-or changed current authority cannot be downgraded to unresolved-with-content.
-Do not silently drop/redact fields and call the result the full original event.
-The existing `reject_unhandled_secrets` rule remains. A retained event never grants
-access to deleted terminals, transcript, credentials, session bodies or refs.
-
-No reader write, checkpoint advance, new event, command/result fabrication,
-notification, PTY operation, terminal state restoration, Home mutation, hold,
-recovery action or effect replay occurs. Retry rereads actual source under a fresh
-valid token and yields only authorized history. Missing old original evidence
-remains explicitly unresolved, not reconstructed. Withdrawal stops the reader;
-unsupported successors never silently adopt its identity. Whole existing payload
-1.0.0 and EventRecord compatibility rules remain unchanged; no aliases, rewrite,
-new family or extension is admitted.
-
-The event retains `RP-AUTHORITY-INDEFINITE@1.0.0`; source/index/ref and original
-result/pending custody retain their separate actual owner lifetimes. No fresh
-indefinite body archive, hold, physical key, table or retention mapping is created.
-An absent unmaterialized result store is an original-depth blocker, not an excuse
-to assign Home custody or delete unresolved obligations. Generic SP-278 source
-admission, source/first-receipt authenticity, original producer execution, actual
-locks/codec/redb/fsync/crashes, migration and complete backup/recovery proof remain
-**NOT_RUN**. Prose and schemas alone grant no DEPTH_PASS, readiness or governance
-seal.
-
-### Paired acceptance obligations
-
-A positive static companion must independently join a real-shaped changed move,
-exact membership and created-section truth, unchanged closed payload, original
-result/append joins and complete current SP-278 source/token. Paired negatives
-must reject a foreign operation/correlation, source owning another workgroup,
-missing/extra/duplicated pane or session identity, changed PTY, wrong creation
-fact, same-section no-op masquerading as move, a cancelled or failed
-(rolled_back=true) operation carrying a moved event, a reseeded vacated source section
-or reported reseed (DL-070), fifth-section admission, false
-rollback after possible append, lost acknowledgement remint, missing required
-Home sibling settlement, first-receipt/full-value substitution, stale same-generation
-frontier, partial global coverage, foreign root/dataset, copied source token,
-denied/deleted disclosure and historical replay attempting any durable effect.
-A currently authorized authentic event with missing original move evidence yields
-unresolved historical validation rather than verified original success; missing
-current source yields unavailable with no event. Reader withdrawal yields no
-new disclosure. These are required paired oracles for the companion task, not
-claims of executed cases or native proof.
-
-### SP-319 - Terminal workgroup moved passive source and checkpoint disposition
+### SP-319 - Terminal workgroup moved compatibility and withdrawal
 
 ```yaml
 plan_unit_id: SP-319
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The new storage.terminal_workgroup_move.inspect_current.v1 binding performs only an
-  authorized single-event historical read through complete actual SP-278 root, generation, anchor,
-  advancing frontier, source frames and read token. This family has no durable read effect or projector
-  and its family checkpoint disposition is none_required. Original move validation separately requires
-  actual terminal owner and shared append/full-value custody; unavailable original evidence is never rebuilt.
-  The binding stores no read token, and any stored copy of its token is the nine-field durable token
-  without redb_snapshot_id (DL-076).
+canonical_text: >-
+  DL-449 removes the new terminal-history view, viewing-result, saved original-move/results and obsolete move-test obligations from SP-319 and SMPFS-170. Any saved terminal.workgroup_moved keeps its original 1.0.0 meaning, bytes, identities and RP-AUTHORITY-INDEFINITE@1.0.0 lifetime, including distinct sections, unchanged complete pane/session membership and DL-070's empty vacated source without reseed. No producer writes or remints it, including retry, pending recovery and layout conversion. No consumer operates; terminal.workgroup_move_history_read.v1@1.0.0 and storage.terminal_workgroup_move.inspect_current.v1@1.0.0 are retired lineage. The family projector/checkpoint disposition is none_required. Existing generic Storage access retains SP-278 source/index/checkpoint validation, DL-076's nine-field durable token, access/deletion/maintenance, reject_unhandled_secrets and coherent backup/restore fences. This grants no new disclosure route, durable read effect or custody companion. Only retained-data interpretation/protection and withdrawal/no-remint checks remain; complete guard isolation is a part-2 check.
 gui_related: false
-gui_classification_reason: Defines source authority and passive historical validation, not presentation.
-depends_on: [SMPFS-170, CV-323, CV-339, SP-278, SP-286, DL-045, DL-076]
+gui_classification_reason: Defines retained-data interpretation, custody and unconditional withdrawal, with no view implementation.
+depends_on: [SMPFS-180, CV-323, CV-361, SP-278, DL-076, DL-181, DL-449]
 unblocks: []
 acceptance_criteria:
-  - Resolve exact actual same-database generic root/current node/dataset and full original frame/index join.
-  - Preserve immutable birth-anchor versus advancing-frontier semantics and complete global coverage under the whole read token.
-  - Verify original move and append/full-value authority independently of current authorized source inspection.
-  - Use verified, unresolved-original and unavailable outcomes without granting live-state or action authority.
-  - Recheck current access/deletion/source and complete values after helpers before disclosure; no partial original-value substitution.
-  - No durable reader effect or family checkpoint exists; generic SP-278 remains mandatory.
-  - Store no read token; the whole ten-field token exists only for this read's own redb snapshot, and any stored copy is the nine-field durable token without redb_snapshot_id (DL-076).
-  - A verified original move that vacated its source section includes that section's empty state; paired negatives reject a reseeded vacated section or a reported reseed (DL-070).
-  - Paired static oracles and closed original/read-result companions remain required, distinct from native proof.
-validation_surfaces: [Plans/event_payloads/terminal_workgroup_moved.schema.json, Plans/event_record_index_checkpoint.schema.json, Plans/event_family_registry.json, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170]
-risk_class: terminal_move_history_source_or_original_authority_escape
+  - Saved 1.0.0 events retain exact payload interpretation, original bytes and identities, and RP-AUTHORITY-INDEFINITE@1.0.0.
+  - New append, retry, pending recovery and layout conversion never write or remint terminal.workgroup_moved.
+  - No dedicated consumer, view, projector, family checkpoint, saved read token or durable reader effect operates.
+  - The new view, viewing-result, saved original-move/results companion and obsolete move-test obligations are explicitly removed in both owners.
+  - Existing generic source/index/checkpoint, access/deletion, secrets, backup and retention protection remains; no data deletion follows.
+  - Reduced compatibility/withdrawal fixtures pass; full shared guard isolation remains a part-2 obligation.
+validation_surfaces: [Plans/event_payloads/terminal_workgroup_moved.schema.json, Plans/terminal_workgroup_compatibility_fixtures.json, scripts/pm_terminal_workgroup_compatibility.py, Plans/event_family_registry.json, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180]
+risk_class: terminal_retained_data_reinterpretation_or_remint
 reasoning_tier: high
 context_scope: terminal_workgroup_moved_only
 implementation_surfaces: [Plans/storage-plan.md, Plans/Section15_MVP_Promoted_Features_Spec.md]
-node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
-source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Contracts_V0.md#CV-323, Plans/storage-plan.md#SP-278, Plans/Decision_Log.md#DL-070, Plans/Decision_Log.md#DL-076, reports/event-authority-20260911/takeover-20260923.md, reports/event-authority-20260911/step-08-terminal-workgroup-draft-repair-20260924.md]
+node_compile_hint: {mode: compatibility_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
+source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-070, Plans/Decision_Log.md#DL-076, Plans/Decision_Log.md#DL-181, Plans/Decision_Log.md#DL-449, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170, reports/event-authority-20261104/ds-fix1-terminal-consumer-regrade.md]
 preserved_exact_tokens: [terminal.workgroup_moved, none_required, RP-AUTHORITY-INDEFINITE]
 stale_retired_dispositions:
-  - Drafted as SP-314 on the unlanded branch plans/terminal-workgroup-depth-20260923 (commit a475070763, rebased from 254505ccf9) and renumbered SP-319 on 2026-09-24,
-    because SP-314 on main is a different accepted unit. SP-314 is not an alias of this unit and never resolves to it.
+  - Drafted as SP-314 on unlanded plans/terminal-workgroup-depth-20260923 and renumbered SP-319; SP-314 is not an alias.
+  - DL-449 retires the dedicated inspection/view and both unbuilt companion obligations; prior designs and obsolete move tests are lineage only.
 negative_constraints:
-  - No registry, payload, retention policy, physical family/key, current terminal state or Home custody change.
-  - No source reconstruction, implied original producer success, native proof, DEPTH_PASS or governance seal.
-  - No stored redb_snapshot_id; no stored value supplies, rewrites or manufactures a snapshot ID (DL-076).
+  - No payload, registry, retention, physical key, current terminal state, Home custody or saved-data deletion change.
+  - No new disclosure, original producer success, native proof, DEPTH_PASS or governance seal.
+  - No stored redb_snapshot_id or fabricated original event/custody.
 ```
 
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-070, ContractName:Plans/Decision_Log.md#DL-076
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Decision_Log.md#DL-076, ContractName:Plans/Decision_Log.md#DL-449
 
 <a id="coordination-event-persistence-binding-dl-045-2026-09-25"></a>
 ## Coordination event persistence binding (DL-045, 2026-09-25)
@@ -27943,7 +27829,7 @@ Amended 2026-10-10 (DL-186, DL-187, DL-188): Jared's answers of 2026-10-10 are c
 
 **What it never holds.** Editor buffers and dirty state, terminal sessions, PTYs and scrollback, browser history and sessions, chat messages, credentials and a dashboard's widget layout. Each dashboard board keeps its own widget layout per project under `widget_layout:v1:<project_id>:<board_id>` (`Plans/Widget_System.md#WS-030`, SP-249; amended 2026-10-10, DL-186: the key `widget_layout:v1:dashboard:<board_id>` this sentence named was never written), apart from the snapshot a saved named layout keeps (below). Narrow-window states, overlays, open menus, hover and drag state are never written.
 
-**Transaction and receipt.** Every committed structural change is one admitted command (`Plans/UI_Command_Catalog.md#UCC-200`) that validates the candidate against the schema and the invariants, writes the canonical key, reads it back, and only then advances `revision` by exactly one, publishes its result and one dispatch receipt, and appends one `workspace.layout_changed` whose `change` names what happened (`Plans/Contracts_V0.md#CV-361`). A write or readback failure restores the exact prior record and commits a failed receipt with `rolled_back=true` and no event. An open that only reveals an existing tab, and a release that changes nothing, return `no_change` with no write and no event; a reveal whose tab sits in a collapsed panel expands that panel as one committed `panel_expanded` change under the open's command id (`Plans/Contracts_V0.md#CV-360`). View state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned and the chat column's `shown`) is written with the record but never advances `revision`, never takes a receipt and never appends an event. So are the chat column's `popped_out`, whose pop-out and return append only their own `panel.undocked` or `panel.redocked`, and a terminal tab's domain reference moving to a new session after Restart or a restore, which keeps the tab id (SP-332). (Amended 2026-10-10, DL-187: the pop-out is never written at all, D32; the pop-out and return still append only `panel.undocked` or `panel.redocked`. A terminal tab's notification mute and a Debug Console tab's chosen session sub-tab, both kept in the tab's state, are written like view state too.) SP-273's custody carries over to v2 writes: the transaction slot holds the prior and candidate v2 bytes while a change is unresolved, the operation receipt holds the content-free result, and the reader checkpoint stays disposable. The existing slot and receipt schemas (`Plans/home_layout_pending_receipt.schema.json` and its siblings) are typed for v1 layouts and v1 event semantics and stay the v1 readers. The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` instead of copying them inline, and until it exists no native v2 writer is admitted through those families.
+**Transaction and receipt.** Every committed structural change is one admitted command (`Plans/UI_Command_Catalog.md#UCC-200`) that validates the candidate against the schema and the invariants, writes the canonical key, reads it back, and only then advances `revision` by exactly one, publishes its result and one dispatch receipt, and appends one `workspace.layout_changed` whose `change` names what happened (`Plans/Contracts_V0.md#CV-361`). A write or readback failure restores the exact prior record and commits a failed receipt with `rolled_back=true` and no event. An open that only reveals an existing tab, and a release that changes nothing, return `no_change` with no write and no event; a reveal whose tab sits in a collapsed panel expands that panel as one committed `panel_expanded` change under the open's command id (`Plans/Contracts_V0.md#CV-360`). View state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned and the chat column's `shown`) is written with the record but never advances `revision`, never takes a receipt and never appends an event. So are the chat column's `popped_out`, whose pop-out and return append only their own `panel.undocked` or `panel.redocked`, and a terminal tab's domain reference moving to a new session after Restart or a restore, which keeps the tab id (SP-332). (Amended 2026-10-10, DL-187: the pop-out is never written at all, D32; the pop-out and return still append only `panel.undocked` or `panel.redocked`. A terminal tab's notification mute and a Debug Console tab's chosen session sub-tab, both kept in the tab's state, are written like view state too.) SP-273's custody carries over to v2 writes: the transaction slot holds the prior and candidate v2 bytes while a change is unresolved, the operation receipt holds the content-free result, and the reader checkpoint stays disposable. The existing slot and receipt schemas (`Plans/home_layout_pending_receipt.schema.json` and its siblings) are typed for v1 layouts and v1 event semantics and stay the v1 readers. The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` instead of copying them inline, and until it exists no native v2 writer is admitted through those families. Amended 2026-11-04 (DL-045): SP-400 writes that successor, `Plans/home_layout_v2_slot_receipt.schema.json` (slot and receipt schema version 4.0.0, "Home4"), which references both by `$ref`; a native v2 writer is admitted through those families once its 4.0.0 family edges are installed as SP-400 says.
 
 **First read and migration.** The first read for a project and workspace tab that has no v2 record converts its layout into one. The sources are read in this order: the v1 record (its dotted key, then its compatibility colon keys, as SP-245 reads them), else the Home part of `layout:v1`, else nothing, which creates the default Home layout of `Plans/FinalGUISpec.md#F3-630` (stamp `created_default`, revision 0, no event). The conversion runs through the StorageMigrationCoordinator in one verified transaction: convert, check the schema and every invariant, write the v2 key, read it back. The source is never written, reset or deleted: it stays where it was, read-only, as input and lineage. A converted record's `revision` is the v1 `layout_revision` plus one (1 for a `layout:v1` source), and the conversion appends one `workspace.layout_changed` with `change` `migrated_from_v1` and actor `system`. A user's layout is never lost on upgrade.
 
@@ -28688,6 +28574,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
+  The governed EventRecord 3.0.0 successor (Contracts_V0 section 1.2.1) materializes the exact inline/reference route; Browser created, Browser reset and workspace layout changes explicitly adopt it. The complete canonical MessagePack payload map is measured, inclusive 16384 inline, with no JSON-length approximation; resolved bodies pass their registered schemas and family invariants before append, historical read or checkpoint advance. Old envelope readers retain exact meanings; installation is StorageMigrationCoordinator-owned and native NOT_RUN.
   DL-270 card 3. An EventRecord carries at most 16 KiB of inline body. Larger tool output, file reads, images and other payloads go to a content-addressed payload store, and the record carries a reference: BLAKE3 id, byte size and media type. Base64 payloads are decoded to binary at ingest, and a base64 body inline in a record is an admission error. Payloads live in append-only pack files, not one file per payload. Identical payloads are stored once and reference-counted; garbage collection honours retention holds, legal holds and backups. Forks, summaries and conversation compaction keep parent record/payload references. Approved N13 chat conversion is the precise exception to the former universal no-event-copy move rule: preserve immutable source events/results/Usage, seal the source conversation for Undo, and materialize full destination-owned conversation records with explicit origin lineage. Same-store records share payload refs; cross-Server transfer verifies exact payload bytes before cutover. A destination copy is not a new execution, billing event or rewritten historical source. Independent Goal/Plan/Crew/schedule/permission custody follows its own source/hold/backup rules beyond chat Undo expiry. A payload's bytes and index entry are durable before any record that references it is acknowledged: the group either syncs the pack first or carries the new bytes in its own segment frames and moves them into packs at seal, so a crash never leaves a reference to missing bytes, and pack bytes no durable record references are dropped once no hold applies. Deleting content releases its references at once, and payload bytes that no live record or hold still references are physically removed within the deleting owner's deadline, 24 hours for a deleted thread, by rewriting the packs that hold them; a removal that fails is disclosed and retried. Text payloads are compressed with zstd level 3; already-compressed media is stored as is. Content-defined chunking is used only for large files that change and for safe-point snapshots. This sets SP-227's ManagedOutputRef cap at 16 KiB. Evidence: images were 1.4 GB, 46% of one T3 Code user's database within a week; six Codex subagent files reached 62.8 GB, 97.8% of it repeated records; base64 was 53-67% of session bytes in this machine's samples.
   SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
@@ -28704,6 +28591,7 @@ acceptance_criteria:
   - "A crash between writing payload bytes and the referencing record never leaves a reference to missing bytes."
   - "Unheld, unreferenced payload bytes of deleted content are physically gone within the owner's deadline."
 validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
 risk_class: payload_duplication_and_inline_bloat
@@ -42176,3 +42064,111 @@ preserved_exact_tokens: []
 negative_constraints:
 - No Event Authority admission, native readiness, retention choice or new user-visible behavior.
 ```
+
+<a id="home4-v2-layout-slot-receipt-dl-045-20261104"></a>
+## The v2 Home layout slot and receipt contract (DL-045, 2026-11-04)
+
+This is a **newly authored owner contract under DL-045** for `workspace.layout_changed`, one of DL-045's 285 names. SP-330 and SP-273's 2026-10-09 amendment require a successor slot and receipt schema for v2 Home layout writes that references `pm.home_workspace_layout.v2` and the CV-361 2.0.0 payload by `$ref`, and they admit no native v2 writer until it exists. SP-400 writes it: `Plans/home_layout_v2_slot_receipt.schema.json`, slot and receipt schema version 4.0.0 ("Home4"). It adds no feature, command, event family, retention policy, hold or physical family.
+
+**Search before authoring.** On 2026-11-04 every file under `Plans/`, `scripts/` and `tests/` that names `home_workspace_layout/2.0.0`, `workspace_layout_changed/2.0.0`, `home_layout_transaction_slot`, `home_layout_operation_receipt`, `home_content_free_capture` or `home_slot_migration_core` was read. Only the v2 layout schema and its storage registry row name the v2 record. Only CV-361, the event family registry and the Event Authority audit ledger name the 2.0.0 payload. No slot, receipt or capture definition is typed for either, and no MessagePack capture or migration-core codec id exists. The search record is `reports/event-authority-20261104/ds-p2-home4-binding-search.txt`.
+
+**What it reuses unchanged**, by `$ref` into `Plans/home_layout_pending_receipt.schema.json`:
+- the two physical families and their `.v1` keys, and the producer `home.workspace_layout_commit.v1`;
+- the slot states and their conditionals, Storage and scope identities, the migration binding, pending SIR custody and both pending append-origin variants;
+- the twenty-field operation binding except `command_id`, the dispatch receipt, the readback fields and the event envelope fields;
+- the eleven-field original AppendReceipt, the four-field append result, original publication v2, and the SIR outcome, normalized request and UI response.
+
+SP-273's custody, transaction, crash convergence, retention mapping, read, deletion and withdrawal rules govern Home4 values unchanged, as its 2026-10-09 amendment says.
+
+**What it replaces:**
+- **Layouts.** `prior_layout` and `candidate_layout` are `pm.home_workspace_layout.v2` records, by `$ref`.
+- **Event semantics.** `payload_schema_id` names the 2.0.0 payload and `payload` is the CV-361 payload, by `$ref`. Its `change` is never `migrated_from_v1` and its `command_id` is never null. The v1-to-v2 conversion has no admitted command, so it appends its event inside SP-330's StorageMigrationCoordinator transaction and never takes a slot operation or receipt. SP-273 already says that restore, migration and recovery values do not authorize making up a command, interaction or receipt.
+- **Commands.** The binding's and owner result's `command_id` is the CV-361 2.0.0 command set, by `$ref`. The owner result is `pm.home_layout_owner_result.v1` at version 2.0.0, and the SIR outcome's `owner_result_schema_ref` points at this contract's `#/$defs/owner_result`.
+- **Readback key.** `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`.
+- **Encodings (DL-270; SP-337, SP-339, SP-340).** Values are canonical MessagePack. `prior_layout_source_bytes` and `candidate_layout_source_bytes` replace the retired `*_base64` fields. Each holds the exact source bytes as a binary field when they are at most 16 KiB, and a payload-store reference (BLAKE3 id of exactly 64 lower-case hex characters, byte size, media type) above that. Identity capture uses `home_content_free_capture_canonical_msgpack.v1`. A prior migration core uses `home_slot_migration_core_canonical_msgpack.v1`; it may be the final Home3 core or a Home4 core, and it is always an empty resolved operation.
+
+<a id="home4-complete-value-reference-form-20261104"></a>
+**The complete value and its reference form (newly authored under DL-045, 2026-11-04).** SP-340 limits every redb value to its family's `max_value_bytes` in the storage registry's `storage_profile`, 16,384 bytes for `home_layout_transaction_slot` and `home_layout_operation_receipt`, and sends larger values to the payload store (SP-337). For Home4 the limit applies to the complete stored value: the canonical MessagePack encoding of the whole slot or receipt, every binary field as bin. Two decoded layouts, their source bytes, the event fields and the SIR custody count together; no single field's size decides it.
+- **Inline form.** A Home4 value whose complete encoding is at most the limit is stored at its key as itself.
+- **Reference form.** A larger value is written to the payload store as its exact canonical bytes, and its key holds a reference instead (`stored_value_ref` in the contract): `stored_form` `payload_ref`, the value's `schema_id` and `schema_version`, its Storage instance, its exact logical key, `value_ref` (a BLAKE3 id of exactly 64 lower-case hex characters, the byte size and the media type `application/msgpack`) and `value_sha256`. The decoded layouts, source bytes, event fields and custody stay inside the referenced value; nothing is split out of it. A value within the limit is never stored by reference, and the reference itself stays far below the limit. The per-field source-byte rule above still applies inside the value.
+- **Resolution.** Every reader of a Home4 key resolves a reference before it uses the value, including crash convergence, rollback, readback comparison, the pending resolver, the reader checkpoint and backup verification. The object must exist, its bytes must hash to the BLAKE3 id, their length must be the byte size and their media type must match. Their SHA-256 must be `value_sha256`. They must be exactly the canonical MessagePack encoding of a Home4 value of the named schema that passes the contract and its invariants, and the reference's Storage instance and key must equal the value's. A reference that fails any check makes the value unavailable, and SP-273's rule applies: a missing or corrupt slot or receipt fences the scope until existing backup recovery proves the state. No reader substitutes another value, a default layout or a re-serialized copy.
+- **Custody.** SP-337's order holds: the referenced bytes and their index entry are durable before the redb transaction that writes the reference commits. A crash therefore leaves the old value or the new reference, and pack bytes that no record references are dropped once no hold applies. While a key holds a reference, it is a live reference for SP-337's counting and garbage collection, with the custody, retention policy and mandatory backup of the family that holds it: the slot's operation values are temporary under `RP-CONFIG-CURRENT` and cleared at settlement, and the receipt's are `RP-AUTHORITY-INDEFINITE`. Coherent Home backup captures the referenced bytes with the key that references them. A later write of the same key, inline or by reference, releases the earlier reference in the same transaction, so empty-slot release also releases the operation's referenced value. Where SP-273 hashes, compares or backs up the complete or full value, it means the resolved value's canonical bytes, which `value_sha256` and the BLAKE3 id bind; a compare-and-swap compares the bytes stored at the key, the reference included.
+- **What it adds.** No family, key, retention policy, hold kind, setting or user-visible behaviour. The search before authoring is `reports/event-authority-20261104/ds-fix1-home4-value-reference-search.txt`: SP-340 and SP-330 say a value over the limit is split per key or stored by reference, SP-337 defines the reference triple, the EventRecord codec explicitly defines no overflow envelope, the storage registry's `whole_document_keys` names only `settings:v1` and `config:v1`, and no redb value-reference shape exists in `Plans/`, `scripts/` or `tests/`.
+
+**Installation and readers.** As for Home3, the sole StorageMigrationCoordinator installs coordinated slot and receipt 4.0.0 family edges, the 1.0.0 to 4.0.0 readers and the Home pending resolver, and the owner activation follows the committed MigrationReceipt, before a v2 write is admitted. Unresolved Home1 to Home3 operations are not converted: they settle under their original authority or fence the migration, as SP-273 says. Readers dispatch by `schema_version`: 1.0.0 to 3.0.0 through `Plans/home_layout_value_readers.schema.json`, 4.0.0 through this contract. The reader checkpoint `home.workspace_layout_event_reader.v1` is unchanged and resolves 4.0.0 receipts through this contract. The storage registry rows keep naming Home3 until the 4.0.0 family edges are registered with that installation; this unit changes no registry row.
+
+**Static oracles.** `Plans/home_layout_v2_slot_receipt_fixtures.json` holds 10 valid values, 30 schema negatives, 33 joined-value negatives and a synthetic payload store of 5 objects. The valid values are the empty slot, the empty slot after the Home3 migration, the prepared slot, the readback-verified slot, the committed receipt, a prepared slot of exactly 16,384 bytes stored inline, and four references: the same slot one byte over the limit, the 25-tab slot of the 2026-11-04 review (28,743 bytes), a readback-verified slot whose candidate source bytes are a 16,385-byte payload reference beside 16,384 inline prior bytes, and a committed receipt over the limit. The negatives include the over-limit inline values, a reference to a value within the limit, missing, corrupt, resized, retyped, mis-hashed and non-canonical referenced objects, foreign keys and Storage instances, malformed BLAKE3 ids (trailing or leading LF, upper case, 63 or 65 characters, non-hex) and `projector_replay_only`. `scripts/pm_home_layout_v2_slot_receipt.py` checks them against the schema and the invariants I1 to I11 in its `$comment`, evaluates every pattern with ECMA-262 end-of-input semantics, fails on any unresolved `$ref` and has a `--self-test` that shows it can fail. Native installation, codecs, payload packs, redb transactions, authentication and durability remain NOT_RUN.
+
+### SP-400 - The v2 Home Layout Slot And Receipt Contract (Home4)
+
+```yaml
+plan_unit_id: SP-400
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04). v2 Home layout writes use the Home4 slot and receipt contract Plans/home_layout_v2_slot_receipt.schema.json, slot and receipt schema version 4.0.0 and slot producer version 4.0.0, in the existing home_layout_transaction_slot and home_layout_operation_receipt families at their .v1 keys, with producer home.workspace_layout_commit.v1. It references pm.home_workspace_layout.v2 and the CV-361 2.0.0 payload by $ref and reuses every Home3 definition that is not typed for v1 layouts or the 1.1.0 payload, so SP-273's custody, transaction, crash convergence, retention mapping, read, deletion and withdrawal rules govern it unchanged. The binding's and owner result's command_id is the CV-361 command set; the owner result is pm.home_layout_owner_result.v1 at 2.0.0; the readback key is home_workspace_layout.v2:{project_id}:{workspace_tab_id}. A Home4 event is never migrated_from_v1 and never has a null command: the conversion appends inside SP-330's StorageMigrationCoordinator transaction without a slot operation or receipt. Under DL-270 values are canonical MessagePack. SP-340's 16,384-byte family limit bounds the complete stored value: a Home4 slot or receipt whose canonical encoding is within it is stored inline, and a larger one is stored in the payload store as its exact canonical bytes, its key holding a reference (stored_value_ref: schema id and version, Storage instance, logical key, BLAKE3 id of exactly 64 lower-case hex characters, byte size, media type application/msgpack, SHA-256) that every reader resolves and verifies before use; an unresolvable reference makes the value unavailable and fences the scope as SP-273's missing or corrupt rule says, and the referenced bytes follow SP-337's durability, reference counting, garbage collection and backup rules under the holding family's custody and retention. prior_layout_source_bytes and candidate_layout_source_bytes hold the exact source bytes as a binary field up to 16 KiB or a BLAKE3 payload-store reference above it, identity capture uses home_content_free_capture_canonical_msgpack.v1 and a prior migration core uses home_slot_migration_core_canonical_msgpack.v1. The 4.0.0 slot and receipt edges, readers and pending resolver are installed through the StorageMigrationCoordinator with post-receipt owner activation before a v2 write is admitted; unresolved Home1 to Home3 operations settle under their original authority or fence the migration. Readers dispatch 1.0.0 to 3.0.0 through Plans/home_layout_value_readers.schema.json and 4.0.0 through this contract.
+  The 2026-11-04 SP-273/Home4 amendment explicitly adopts EventRecord 3.0.0 for new events,
+  freezes its physical payload/reference in Home4, validates its complete resolved payload before semantic
+  joins and checkpoint advance, and dispatches retained inner 2.0.0 semantics without rewriting them.
+gui_related: false
+gui_classification_reason: Defines the stored custody of Home layout writes, not presentation.
+split_recommended: false
+depends_on: [SP-330, SP-273, CV-361, SIR-046, SP-337, SP-339, SP-340, DL-045, DL-180, DL-188, DL-270]
+unblocks: []
+acceptance_criteria:
+  - Plans/home_layout_v2_slot_receipt.schema.json references pm.home_workspace_layout.v2 and the CV-361 2.0.0 payload by $ref and copies neither.
+  - Every Home3 member not typed for v1 layouts, the 1.1.0 payload or a DL-270-retired encoding is reused by $ref; families, keys and producer id are unchanged.
+  - A Home4 slot or receipt rejects a v1 layout, a 1.1.0 payload, a *_base64 field, a retired JSON codec id, a v1 readback key, a retired command and a migrated_from_v1 event.
+  - Layout source bytes are a binary field up to 16 KiB and a payload-store reference only above it; their SHA-256 equals the layout hash.
+  - The complete canonical MessagePack encoding of every Home4 value stored inline is at most its family's max_value_bytes (16,384 bytes, SP-340); a larger value is stored only as a reference to its exact canonical bytes in the payload store, and a value within the limit is never stored by reference.
+  - Every payload reference resolves before use (object present, BLAKE3 id of exactly 64 lower-case hex characters, byte size, media type, SHA-256, canonical decoding to a valid Home4 value, matching key and Storage instance); one that does not makes the value unavailable and fences the scope.
+  - Every valid case of Plans/home_layout_v2_slot_receipt_fixtures.json passes the schema and invariants I1 to I11, and every invalid case is refused by the schema or by the invariant it names.
+  - No 4.0.0 write is admitted before the 4.0.0 family edges, readers, pending resolver and owner activation are installed; unresolved Home1 to Home3 operations are never converted.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches or production build tasks are created by this unit.
+validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
+  - Plans/home_layout_v2_slot_receipt.schema.json
+  - Plans/home_layout_v2_slot_receipt_fixtures.json
+  - python3 scripts/pm_home_layout_v2_slot_receipt.py
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_layout_v2_write_custody_or_encoding_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/home_layout_v2_slot_receipt.schema.json
+  - Plans/home_layout_v2_slot_receipt_fixtures.json
+  - scripts/pm_home_layout_v2_slot_receipt.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+  - Plans/storage-plan.md#SP-330
+  - Plans/storage-plan.md#SP-273
+  - Plans/Contracts_V0.md#CV-361
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-270
+  - reports/event-authority-20261104/ds-p2-home4-binding-search.txt
+  - reports/event-authority-20261104/ds-fix1-home4-value-reference-search.txt
+preserved_exact_tokens:
+  - home_layout_transaction_slot
+  - home_layout_operation_receipt
+  - home.workspace_layout_commit.v1
+  - pm.home_workspace_layout.v2
+  - workspace.layout_changed
+  - migrated_from_v1
+  - RP-CONFIG-CURRENT
+  - RP-AUTHORITY-INDEFINITE
+negative_constraints:
+  - No new feature, command, event family, payload version, retention policy, hold kind, physical family or key.
+  - No storage registry row change; the 4.0.0 family edges are registered with their installation.
+  - No conversion of unresolved Home1 to Home3 operations, no native proof, DEPTH_PASS or governance seal.
+owner_hints:
+  - Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/storage-plan.md#SP-273, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-270
