@@ -26,7 +26,20 @@
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
       "part2_component_witnesses": [
         "scripts/pm_goal_own_c_source_oracles.py: complete retained Direct Save capture schema/custody; proposal/resolution storage and provider joins; original Goal snapshot semantics"
-      ]
+      ],
+      "c3_w12_part2_successor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json",
+      "c3_w12_part2_qualification": "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
+      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE",
+      "c3_w12a_corpus_selection": "Plans/goal_own_c_contracts/w12a-corpus.v2.json",
+      "c3_w12a_oracles": "scripts/pm_goal_own_c3_w12a_p2_oracles.py",
+      "c3_w12a_whole_root_closure": "NOT_COMPLETE",
+      "c3_w12a_predecessor_corpus_selection": "Plans/goal_own_c_contracts/w12a-corpus.v1.json",
+      "c3_w12a_predecessor_oracles": "scripts/pm_goal_own_c3_w12a_oracles.py",
+      "c3_w12a_physical_successor": "Plans/goal_own_c_contracts/w12a-successor-v3/selection.json",
+      "dg_u_corpus_selection": "Plans/goal_own_c_contracts/dg-u-corpus.v1.json",
+      "dg_u_successor_selection": "Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json",
+      "dg_u_oracles": "python3 scripts/pm_goal_dg_u_oracles.py --output <result.json> --guards <guards.json>",
+      "dg_u_closure": "see Plans/goal_own_c_contracts/dg-u-corpus.v1.json per-group closure; native NOT_RUN"
     },
     {
       "event_type": "goal.cancelled",
@@ -55,7 +68,10 @@
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
       "part2_component_witnesses": [
         "scripts/pm_goal_own_c_source_oracles.py: original Goal outer image/receipt; ordered manifest and compact output transaction; no native binding/Stop installation"
-      ]
+      ],
+      "c3_w12_part2_successor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json",
+      "c3_w12_part2_qualification": "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
+      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE"
     },
     {
       "event_type": "goal_run.started",

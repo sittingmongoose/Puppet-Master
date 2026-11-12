@@ -1,0 +1,1896 @@
+{
+  "schema_id": "pm.goal.cancel.successor_method_selection.v2",
+  "status": "NEWLY_AUTHORED_PREPARED_WITHOUT_ADMISSION",
+  "event_type": "goal.cancelled",
+  "network_fallback": false,
+  "merge_resource_realms": false,
+  "resource_selections": [
+    {
+      "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+      "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+      "realm": null,
+      "requires_explicit_runtime_binding": true
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_schema_resources.json",
+      "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+      "realm": null,
+      "requires_explicit_runtime_binding": false
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+      "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+      "realm": "goal",
+      "requires_explicit_runtime_binding": true
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+      "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+      "realm": "native",
+      "requires_explicit_runtime_binding": true
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-inspection-resources.v3.json",
+      "sha256": "80d4028fb69466e281e7f9671de204698e0dd21b55b0ed790fbb85202a9d0b5c",
+      "realm": "goal_current_inspection",
+      "requires_explicit_runtime_binding": true
+    }
+  ],
+  "whole_resource_locations": "Plans/goal_own_c_contracts/w12-successor-v2/whole-resource-locations.v2.json",
+  "methods": [
+    {
+      "operation": "capture_source",
+      "original_owner": "original SIR + Goal + Storage",
+      "closed_types": "SourceAudit",
+      "write_boundary": "source/head epoch0 only",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "capture_source",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundSourceCaptureEntry",
+          "boundary": "SourceAudit and progress/source0 only; genuine bound association retained",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "capture_source"
+          ]
+        }
+      ],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "latch_and_reserve",
+      "original_owner": "original host Stop + shared body owner + Storage",
+      "closed_types": "StopIntent",
+      "write_boundary": "StopControl+StopReceipt+BodyControlV2 cancellation_pending+progress/head",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "latch_and_reserve",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundBeforeStopEntry",
+          "boundary": "existing original C-stop boundary only after complete Plan preparation",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "latch_and_reserve"
+          ]
+        }
+      ],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "commit_receipt",
+      "original_owner": "original Goal cancellation + shared body + Storage",
+      "closed_types": "CancellationReceipt",
+      "write_boundary": "minimal receipt+progress/head",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "settle_owner",
+      "original_owner": "actual Plan/run/schedule/quota owners if applicable",
+      "closed_types": "OwnerSettlement",
+      "write_boundary": "only original owner effects; progress records actual evidence",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "settle_owner",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundOwnersEntry",
+          "boundary": "existing owners_settled progression only from authentic current Plan settlement",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "settle_owner"
+          ]
+        }
+      ],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "freeze_event",
+      "original_owner": "original Goal event producer + Storage",
+      "closed_types": "ProducerInput",
+      "write_boundary": "frozen producer progress/head",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "append_original",
+      "original_owner": "actual SP278/SP286 append/first receipt owner",
+      "closed_types": "OriginalPublication",
+      "write_boundary": "original event and first custody; then progress/head",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "publish_control",
+      "original_owner": "sole shared body owner + Storage",
+      "closed_types": "ControlPublication",
+      "write_boundary": "control marker/slot/epoch+publication+progress/head; no body change",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "terminal",
+      "original_owner": "original SIR + Storage",
+      "closed_types": "TerminalInput / TerminalPrepared / Terminal",
+      "write_boundary": "original result/outcome/response/terminal together",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "terminal",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundTerminalEntry",
+          "boundary": "existing immutable SIR terminal/result/outcome/response",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "terminal",
+            "publish_cancel_terminal"
+          ]
+        },
+        {
+          "operation": "terminal_no_effect_or_unknown",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundUnsettledTerminalEntry",
+          "boundary": "unchanged original no_effect/unknown terminal; no assignment or Plan settlement requirement",
+          "mandatory_predicate": "all original TerminalInput phase, proof and SIR predicates",
+          "existing_operations": [
+            "terminal",
+            "publish_cancel_terminal"
+          ]
+        }
+      ],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "resolve_original",
+      "original_owner": "same actual original effect owners",
+      "closed_types": "Progress",
+      "write_boundary": "same original effects only; terminal immutable",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "audit_read",
+      "original_owner": "actual retained cancellation Storage audit owner",
+      "closed_types": "AuditReadRequest / AuditReadResult",
+      "write_boundary": "none",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "inspect_current",
+      "original_owner": "actual current SP278 + original receipt/audit owners",
+      "closed_types": "EventInspectRequest / EventInspectResult",
+      "write_boundary": "none",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "backup_capture",
+      "original_owner": "actual complete joined backup owners",
+      "closed_types": "all physical families/required source members",
+      "write_boundary": "existing original coherent backup",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "backup_restore",
+      "original_owner": "actual coordinator/backup/Goal/Stop/SIR/shared owners",
+      "closed_types": "all physical families/required source members",
+      "write_boundary": "existing qualified coherent restore, no new authority",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "enroll_stop_and_control",
+      "original_owner": "actual native Goal creator or StorageMigrationCoordinator + original host",
+      "closed_types": "StopControl / BodyControlV2",
+      "write_boundary": "actual fresh birth or exact original epoch adoption only",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "retained_terminal_replay",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundRetainedReplayEntry",
+      "boundary": "passive original terminal only; no C-publish authority",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": [],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "retained_no_effect_or_unknown_replay",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundUnsettledReplayEntry",
+      "boundary": "unchanged passive immutable no_effect/unknown replay; no nonexistent Plan effects required",
+      "mandatory_predicate": "original terminal/source/snapshot/proof and current passive-read permission",
+      "existing_operations": [],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/methods.json",
+        "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "install_writer_domain",
+      "actual_original_owner": "original Storage registration + Goal/Plan/Workflow",
+      "closed_types": "WriterDomain / WriterDomainHead",
+      "permitted_effect": "domain epoch+head only; original dispatch revocation/enrollment",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "birth_none",
+      "actual_original_owner": "actual original Goal creator + host Stop + shared body + Storage",
+      "closed_types": "BindingRevision / BindingOrigin / BindingControl",
+      "permitted_effect": "joint genuine Goal birth and binding revision0/control0; no execution",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "reserve_binding",
+      "actual_original_owner": "actual Plan/Workflow association owner + Goal + Storage",
+      "closed_types": "BindingPending",
+      "permitted_effect": "complete binding control CAS; original candidate only",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "commit_plan_binding",
+      "actual_original_owner": "actual original PGOAL joint issuer",
+      "closed_types": "GoalPlanBinding / PlanAssociation / BindingRevision",
+      "permitted_effect": "original Goal/PlanRun/Plan binding and association commit together",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "commit_workflow_binding",
+      "actual_original_owner": "actual original Workflow + Goal owner",
+      "closed_types": "WorkflowAssociation / BindingRevision",
+      "permitted_effect": "original Workflow association and shared Goal metadata join",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "transfer_binding_owner",
+      "actual_original_owner": "actual accepted execution owner transfer",
+      "closed_types": "BindingRevision",
+      "permitted_effect": "preserve full binding identities; accepted owner epoch transition only",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "adopt_existing_binding",
+      "actual_original_owner": "actual Storage migration + every original association owner",
+      "closed_types": "BindingRevision / BindingOrigin / BindingControl",
+      "permitted_effect": "complete original legacy mapping only; no empty default",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "resolve_stopped_pending",
+      "actual_original_owner": "actual original pending binding owner + Goal + Storage",
+      "closed_types": "BindingPendingResolution",
+      "permitted_effect": "clear only genuinely unpublished original pending; immutable resolution + control CAS",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "read_current_for_cancel",
+      "actual_original_owner": "actual original Goal association source reader",
+      "closed_types": "BindingReadRequest / BindingReadCurrent",
+      "permitted_effect": "passive full current source/owner/absence read; no durable selection",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "read_retained_selection",
+      "actual_original_owner": "original retained lineage/selection audit owner",
+      "closed_types": "BindingReadAudit",
+      "permitted_effect": "passive historical metadata only; no current absence claim",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "capture_cancel_selection",
+      "actual_original_owner": "original C-source Goal + SIR + Storage",
+      "closed_types": "BindingSelection",
+      "permitted_effect": "selection + unchanged SourceAudit + progress0 one transaction",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "reserve_append_assignment",
+      "actual_original_owner": "actual original append/sequence/rotation owner",
+      "closed_types": "AppendSourceRead / AppendReservationSource",
+      "permitted_effect": "real nonserializable fence; original lease single assignment; no event/receipt",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "bound_plan_pre_reservation_guard": {
+        "operation": "reserve_append_assignment",
+        "original_input_schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AppendSourceRead",
+        "bound_source_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundSourceAudit",
+        "bound_binding_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundBindingSelection",
+        "original_acknowledged_outcome_schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentInput/properties/original_acknowledged_outcome",
+        "mandatory_predicate": "The original full bound source, binding, actual SIR acknowledgement and its original physical custody/identity are authenticated and durably read back before the original exclusive reservation. All original AppendSourceRead/current/manifest/sequence and actual owner/fence predicates remain. No AssignmentInput, BoundAssignmentEntry, issued assignment audit/admission or Plan preparation is required before reservation; those follow the original reserved output."
+      },
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "issue_assignment_audit",
+      "actual_original_owner": "actual original append + Goal + SIR codec owners",
+      "closed_types": "AssignmentInput / AssignmentAudit",
+      "permitted_effect": "immutable administrative assignment evidence only",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "reserve_assignment",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundAssignmentEntry",
+          "boundary": "existing AssignmentAudit and admission under original exclusive fence; no PlanPrepared input",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "issue_assignment_audit",
+            "admit_codec_domain"
+          ]
+        }
+      ],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "admit_codec_domain",
+      "actual_original_owner": "actual SIR and original codec owners",
+      "closed_types": "DomainCommitmentInput / AssignmentAdmission",
+      "permitted_effect": "no durable effect; full exact-domain capability retained privately",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "reserve_assignment",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundAssignmentEntry",
+          "boundary": "existing AssignmentAudit and admission under original exclusive fence; no PlanPrepared input",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "issue_assignment_audit",
+            "admit_codec_domain"
+          ]
+        }
+      ],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "append_reserved",
+      "actual_original_owner": "actual original SP278/SP286 append/first-receipt owner",
+      "closed_types": "unchanged ProducerInput / OriginalPublication",
+      "permitted_effect": "original event+first receipt only under reserved assignment; current registered-family Step8 route not yet adopted",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "publish_cancel_terminal",
+      "actual_original_owner": "actual original SIR + Storage",
+      "closed_types": "unchanged TerminalInput / TerminalPrepared / Terminal",
+      "permitted_effect": "unchanged full result/outcome/response joint publication",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "terminal",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundTerminalEntry",
+          "boundary": "existing immutable SIR terminal/result/outcome/response",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "terminal",
+            "publish_cancel_terminal"
+          ]
+        },
+        {
+          "operation": "terminal_no_effect_or_unknown",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundUnsettledTerminalEntry",
+          "boundary": "unchanged original no_effect/unknown terminal; no assignment or Plan settlement requirement",
+          "mandatory_predicate": "all original TerminalInput phase, proof and SIR predicates",
+          "existing_operations": [
+            "terminal",
+            "publish_cancel_terminal"
+          ]
+        }
+      ],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "backup_capture",
+      "actual_original_owner": "actual complete original backup participants",
+      "closed_types": "all original source families",
+      "permitted_effect": "existing coherent backup only; locks never serialized as capabilities",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "backup_restore",
+      "actual_original_owner": "actual Storage coordinator + current original source owners",
+      "closed_types": "all original source families",
+      "permitted_effect": "existing qualified restore + deletion/Stop/domain fences; no lock resurrection",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "delete_binding_control",
+      "actual_original_owner": "actual thread deletion/hold + Storage owner",
+      "closed_types": "BindingControl",
+      "permitted_effect": "eligible current control only; no lineage/Plan/Stop clearing",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects",
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "retained_terminal_replay",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundRetainedReplayEntry",
+      "boundary": "passive original terminal only; no C-publish authority",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": [],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "operation": "retained_no_effect_or_unknown_replay",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundUnsettledReplayEntry",
+      "boundary": "unchanged passive immutable no_effect/unknown replay; no nonexistent Plan effects required",
+      "mandatory_predicate": "original terminal/source/snapshot/proof and current passive-read permission",
+      "existing_operations": [],
+      "source_method_map": {
+        "path": "Plans/goal_cancel_contracts/execution-methods.json",
+        "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-producer-resources.v2.json",
+          "sha256": "d48cd3cdcb39464706ff58dc7644ce3c5d44e73d6447a5151d768143406d0a57",
+          "realm": null,
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.assistant_plan.cancel_bound_run.prepare.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/BeforeStopSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparationResult",
+      "effect": "Original private identity reservation and full domain preparation only; no Stop or cancellation effect.",
+      "route": "pre_stop",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.assistant_plan.cancel_bound_run.commit.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparedBoundCancelRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CommitResult",
+      "effect": "One original joint Plan/Scheduler/Storage transaction, or exact original NotSettled.",
+      "route": "post_stop_fresh_commit",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.scheduling.invalidate_cancelled_execution.participate.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparedBoundCancelRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CommitResult",
+      "effect": "Same enlisted original joint commit only; cannot publish or return a partial successful effect.",
+      "route": "post_stop_enlisted_participant",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.cancel.read_current_plan_effects.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/EffectSelector",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadResult",
+      "effect": "Read full actual current after-state under existing C-owner settlement guards, or exact NotSettled. No mutation.",
+      "route": "current_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.plan_effects.verify_current_custody.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadResult",
+      "effect": "Inner native current reader receives actual complete current sources and independently checks them; no pre-Stop preparation.",
+      "route": "current_inner_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.cancel.read_retained_plan_effects.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectSelector",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadResult",
+      "effect": "Resolve immutable original custody under current disclosure permission; no pre-Stop preparation, raw old source or current completion authority.",
+      "route": "retained_audit_or_original_result_replay",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.plan_effects.read_original_custody.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadResult",
+      "effect": "Inner native retained reader independently verifies actual original full compact custody and current read controls.",
+      "route": "retained_inner_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.compact_expired.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult",
+      "effect": "Existing native Janitor resolves actual full inputs or original prior compact receipt; absent source without receipt is unavailable.",
+      "route": "native_janitor_compaction",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.compact_expired_native.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult",
+      "effect": "Original eligible native redb successor compaction: compact receipt and exact full Run row removal commit atomically.",
+      "route": "native_janitor_compaction",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.read_retirement.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult",
+      "effect": "Read original compact retirement receipt under current permission/origin and absence/conflict guards; no mutation.",
+      "route": "retained_retirement_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.verify_retirement_read.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementReadSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult",
+      "effect": "Inner native retirement reader checks original receipt, original anchor/origin and current read boundary.",
+      "route": "retained_retirement_inner",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.read_completion_anchor.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunAnchorReadResult",
+      "effect": "Read exact first original terminal source origin/anchor; never infer deletion, completed status or raw source existence.",
+      "route": "retained_original_anchor_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure.",
+      "source_method_map": {
+        "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+        "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/assistant_plan_cancel_schema_resources.json",
+          "sha256": "96ff10bdd4befdc649b998e0ec14766255bf50fa608a39819c0841504a9ac047",
+          "realm": null,
+          "requires_explicit_runtime_binding": false
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.capture_source.v1",
+      "phase": "C-source",
+      "original_owner": "original SIR + Goal + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SourceCaptureEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageSourceAudit"
+      },
+      "effect_boundary": "original source and v2 progress/head epoch 0 together",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.prepare.v1",
+      "phase": "after genuine SIR acknowledgment, before C-stop",
+      "original_owner": "original Goal + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/BeforeStopEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageBeforeStopReadiness"
+      },
+      "effect_boundary": "immutable readiness only; no next-sequence, append, rotation or selection fence",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.latch_and_reserve.v1",
+      "phase": "C-stop",
+      "original_owner": "original host Stop + sole shared Goal body owner + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/StopPublicationEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageStopReceipt"
+      },
+      "effect_boundary": "existing StopControl/StopReceipt + cancellation_pending + v2 stopped_reserved epoch 1",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.commit_receipt.v1",
+      "phase": "C-receipt",
+      "original_owner": "original Goal + sole shared body + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/CurrentStoppedGoalEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/GoalControlPlaneAdmission"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageCancellationReceipt"
+      },
+      "effect_boundary": "existing minimal receipt and v2 receipt_committed epoch 2",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.settle_owner.v1",
+      "phase": "C-owners after full D05 and positive D06 disposition",
+      "original_owner": "actual original Workflow + D05 + Goal + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/OriginalOwnersEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageWorkflowScopeProof"
+      },
+      "effect_boundary": "scope proof and workflow_settled owner arm in v2 owners_settled epoch 3, same transaction",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.freeze_event.v1",
+      "phase": "C-event",
+      "original_owner": "original Goal event producer + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+      },
+      "effect_boundary": "exact original producer in v2 event_ready epoch 4",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.goal_workflow_cancel.reserve_assignment.v1",
+      "phase": "after original Workflow disposition and event_ready",
+      "original_owner": "actual original Storage append owner",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LatePrepareEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/LateReservation"
+      },
+      "effect_boundary": "one actual post-owner exclusive append/rotation/selection reservation, before any Goal append",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.storage.goal_workflow_cancel.issue_assignment_audit.v1",
+      "phase": "actual late reservation before Goal append",
+      "original_owner": "actual original Storage codec/append owner",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LateAssignmentEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+      },
+      "effect_boundary": "immutable compact assignment audit of complete actual values/domains and exact codecs",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.append_original.v1",
+      "phase": "C-append after actual late assignment audit",
+      "original_owner": "actual SP278/SP286 original append/first-custody owner",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LateAssignmentEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+      },
+      "effect_boundary": "one original goal.cancelled and authentic first barrier; v2 event_issued or event_unknown progress",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.publish_control.v1",
+      "phase": "C-publish",
+      "original_owner": "sole shared Goal body owner + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageControlPublication"
+      },
+      "effect_boundary": "only control marker/slot/epoch and immutable v2 publication/progress; body/history unchanged",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.terminal_succeeded.v1",
+      "phase": "C-terminal succeeded",
+      "original_owner": "original SIR + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SucceededTerminalEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+      },
+      "effect_boundary": "same original V3 result/outcome/response and immutable v2 terminal select actual original snapshot",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.terminal_unsettled.v1",
+      "phase": "C-terminal no_effect or unknown",
+      "original_owner": "original SIR + Storage",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/UnsettledTerminalEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+      },
+      "effect_boundary": "same original V3 no_effect/unknown terminal; no future D05/D06/assignment/success requirement",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.read_retained_success.v1",
+      "phase": "passive original succeeded replay",
+      "original_owner": "original retained Storage + SIR + Workflow audit owners",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SucceededRetainedEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/RetainedWorkflowEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/AuditReadResult"
+      },
+      "effect_boundary": "none; original terminal only, action authority none; no current body or start/Stop/D05 admission",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.read_retained_unsettled.v1",
+      "phase": "passive original no_effect/unknown replay",
+      "original_owner": "original retained Storage + SIR audit owners",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/UnsettledRetainedEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/AuditReadResult"
+      },
+      "effect_boundary": "none; original immutable terminal; no nonexistent assignment or Workflow settlement",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v1",
+      "phase": "independent current source audit",
+      "original_owner": "actual SP278 and original SP286/Goal audit owners",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectRequest"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectResult"
+      },
+      "effect_boundary": "none; current matching full event only, source unavailable cannot be reconstructed from retained receipt",
+      "mandatory_contract": "Plans/Goal_Runtime_System.md#GRS-078",
+      "admission": "actual independently authenticated whole entry; serialized evidence grants no capability",
+      "final_guard": "same original whole applicable inputs and actual current native participants after all helpers, no helper between final predicate and effect/passive release",
+      "failure": "preserve authentic prior effects; no fabricated no_effect or success",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+        "sha256": "cd047acfc825f928d8169ec0deb0ca9f5f7c28671e334cec09ff1475eeb1052f"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "goal",
+          "requires_explicit_runtime_binding": true
+        },
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+          "sha256": "f502cfed741435b60e6caa49648d240beef224a22b9caab74c056b13524a8ab4",
+          "realm": "native",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "accepted_original_command_profile": "goal_workflow_cancel_late_assignment.v1",
+      "accepted_original_result_profile": "pm.goal.cancel.result.v3",
+      "visibility": "private_original_owner_boundary_only",
+      "effects": "none",
+      "storage_writes": false,
+      "entry": "Actual original owner independently obtains and admits complete typed request, every actual original/current source, whole permissible candidate and genuine owner/permission/codec/root/hold/deletion/backup participants before any returning helper.",
+      "final_guard": "After every returning helper and after the last, repeat the full pure typed/source/owner/candidate predicate under the actual held boundary; no helper, callback, mutation, async gap or unguarded disclosure follows it before this effect-free release.",
+      "failure": "Typed original UnavailableRead only; no partial authoritative result, source substitution, implicit recovery, fabricated absence, rewritten earlier effect or new issuance.",
+      "protocol": "Plans/storage-plan.md#SP-313",
+      "method": "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+      "original_owner": "original retained Goal/SIR source-custody and actual Storage audit owners",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadRequestV1"
+      },
+      "whole_private_entry_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadEntryV1"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadSuccessV1"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+      },
+      "complete_result_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadResultV1"
+      },
+      "release": "Whole private original custody only to this qualified inspector boundary; not a public audit API or Event observation. No current EventRecord availability claim.",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json",
+        "sha256": "08173ea4e841bf99ea01b7056b4d405666d116bd6dd7058064d611d4f46902d3"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-inspection-resources.v3.json",
+          "sha256": "80d4028fb69466e281e7f9671de204698e0dd21b55b0ed790fbb85202a9d0b5c",
+          "realm": "goal_current_inspection",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    },
+    {
+      "accepted_original_command_profile": "goal_workflow_cancel_late_assignment.v1",
+      "accepted_original_result_profile": "pm.goal.cancel.result.v3",
+      "visibility": "private_original_owner_boundary_only",
+      "effects": "none",
+      "storage_writes": false,
+      "entry": "Actual original owner independently obtains and admits complete typed request, every actual original/current source, whole permissible candidate and genuine owner/permission/codec/root/hold/deletion/backup participants before any returning helper.",
+      "final_guard": "After every returning helper and after the last, repeat the full pure typed/source/owner/candidate predicate under the actual held boundary; no helper, callback, mutation, async gap or unguarded disclosure follows it before this effect-free release.",
+      "failure": "Typed original UnavailableRead only; no partial authoritative result, source substitution, implicit recovery, fabricated absence, rewritten earlier effect or new issuance.",
+      "protocol": "Plans/storage-plan.md#SP-313",
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v2",
+      "original_owner": "actual current SP-278 source and original SP-286/Goal audit owners",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectRequest"
+      },
+      "whole_private_entry_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/InspectCurrentEventEntryV2"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventObservation"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+      },
+      "complete_result_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectResult"
+      },
+      "release": "Only existing narrow EventObservation or complete UnavailableRead. Full original source bundle and producer stay private; no terminal/action/body/current-Workflow result.",
+      "independently_callable_source_helper": "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+      "source_method_map": {
+        "path": "Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json",
+        "sha256": "08173ea4e841bf99ea01b7056b4d405666d116bd6dd7058064d611d4f46902d3"
+      },
+      "selected_banks": [
+        {
+          "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-inspection-resources.v3.json",
+          "sha256": "80d4028fb69466e281e7f9671de204698e0dd21b55b0ed790fbb85202a9d0b5c",
+          "realm": "goal_current_inspection",
+          "requires_explicit_runtime_binding": true
+        }
+      ]
+    }
+  ],
+  "whole_resource_locations_sha256": "88f4b4baaf3e3d0d1baa1a6cd64fc59e7b51d67820d8bf774568f8b695c1f69b",
+  "scoped_imports": {
+    "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-scoped-imports.v2.json",
+    "sha256": "2d755adb8247ad09e2c830de532fcf7009def50a1a0de67dde4e4972ce206511",
+    "source_bank": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+    "source_realm": "native"
+  }
+}

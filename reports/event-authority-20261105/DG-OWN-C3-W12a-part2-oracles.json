@@ -1,0 +1,149 @@
+{
+  "schema_id": "pm.goal.updated.w12a.part2.result.v1",
+  "event_type": "goal.updated",
+  "whole_root_closure": "NOT_COMPLETE",
+  "native_execution": "NOT_RUN",
+  "base": "0b2eb8ad664cab30387884cb1d71ef5df1d91759",
+  "selected_manifest_sha256": "31447afd3644e469594bf9c493e788cbe5bc9254d53e53a97d9098838c31dd1b",
+  "qualified_members": 785,
+  "positive_branches": 21,
+  "expected_refusals": 86,
+  "route_assertions": 163,
+  "whole_corpus_exit": 2,
+  "scenarios": [
+    {
+      "id": "empty",
+      "exit_code": 0,
+      "positives": 1,
+      "negatives": 0,
+      "assertions": 13,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/empty/result.json",
+      "capture_manifest_sha256": "adabdb43b5a89fe0ce3e263b01f40fadcc2d7e1d17f4e222b79dac7f9fae8b03"
+    },
+    {
+      "id": "unchanged",
+      "exit_code": 0,
+      "positives": 1,
+      "negatives": 0,
+      "assertions": 13,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/unchanged/result.json",
+      "capture_manifest_sha256": "9dac049f9b3aef522f08a6f9dc48b6df35137f27f7aa948cb3e0028bd1f42716"
+    },
+    {
+      "id": "ordinary",
+      "exit_code": 0,
+      "positives": 1,
+      "negatives": 0,
+      "assertions": 13,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/ordinary/result.json",
+      "capture_manifest_sha256": "5ac5a01a7fadbbb3eb6335afbfc511a610b68404c9db43a8dc6ba10e446bb84f"
+    },
+    {
+      "id": "approved_agent",
+      "exit_code": 0,
+      "positives": 1,
+      "negatives": 0,
+      "assertions": 13,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/approved_agent/result.json",
+      "capture_manifest_sha256": "1b0dad30af5151cafacee1369df8796fa16746396c78337e4f9e162312bd6351"
+    },
+    {
+      "id": "no_effect",
+      "exit_code": 0,
+      "positives": 1,
+      "negatives": 1,
+      "assertions": 11,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/no_effect/result.json",
+      "capture_manifest_sha256": "af6912a538b5495a5a7057c4fa06afaafca6b84ac97be62625afb13357147486"
+    },
+    {
+      "id": "boundaries",
+      "exit_code": 0,
+      "positives": 13,
+      "negatives": 49,
+      "assertions": 8,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/boundaries/result.json",
+      "capture_manifest_sha256": "9bb0c45a4cf5a339b150e8dd6bf27809c0aeb95b1888a7ef0a96abf3be4bf3ea"
+    },
+    {
+      "id": "replay_only",
+      "exit_code": 0,
+      "positives": 0,
+      "negatives": 1,
+      "assertions": 7,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/replay_only/result.json",
+      "capture_manifest_sha256": "d36ccb523ebac187ecd8f075c41ac33bc32575d5308008642498588306355011"
+    },
+    {
+      "id": "revision_type",
+      "exit_code": 0,
+      "positives": 0,
+      "negatives": 1,
+      "assertions": 7,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/revision_type/result.json",
+      "capture_manifest_sha256": "e2ddeed01a1408fd2183da6f42437f5455c0c0eaa9f6e715c315ae1931d1b685"
+    },
+    {
+      "id": "foreign_body",
+      "exit_code": 0,
+      "positives": 0,
+      "negatives": 1,
+      "assertions": 7,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/foreign_body/result.json",
+      "capture_manifest_sha256": "cdc56edc4941040ac80b88f74525c2058adb86ffb4c20a43c8f3b61219daf07c"
+    },
+    {
+      "id": "agent_masquerade",
+      "exit_code": 0,
+      "positives": 0,
+      "negatives": 1,
+      "assertions": 7,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/agent_masquerade/result.json",
+      "capture_manifest_sha256": "c5acfe5cf0caba7f26169f9976edd2d4375a268fa024788ac4680bd78378b3d9"
+    },
+    {
+      "id": "physical_current",
+      "exit_code": 0,
+      "positives": 3,
+      "negatives": 31,
+      "assertions": 52,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/physical_current/result.json",
+      "capture_manifest_sha256": "aebc96865e8ab627c95aac897724d2e4ba9439cb0e617886030193850eff3876"
+    },
+    {
+      "id": "physical_pack_cut",
+      "exit_code": 0,
+      "positives": 0,
+      "negatives": 1,
+      "assertions": 12,
+      "capture_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final/physical_pack_cut/result.json",
+      "capture_manifest_sha256": "27ecb28f14600d8f8a20127bf01c805ab29589ee4b66815146aec2d6213fdad1"
+    }
+  ],
+  "implemented_item": 1,
+  "remaining_items": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "unfixable_blocker_established": false,
+  "stopped_question": null,
+  "guard_inventory": {
+    "predicates": 214,
+    "matching_label_witnesses": 31,
+    "isolation": "SHARED_SWEEP_NOT_RUN"
+  },
+  "raw_result": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/v3-corpus-final.json",
+    "sha256": "e1d8ee23117a5755b101fd39a17be0ac22ae50850c7ce208f01090cc2130cac1"
+  },
+  "source_qualification": {
+    "positive": 1,
+    "negative": 1,
+    "qualified_members": 785,
+    "owners_constructed": false,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/harness-qa.json",
+    "sha256": "ae36c111364c9139590c52204bd9a60ef185a971f7bed706ef1924d4b66b0beb"
+  }
+}

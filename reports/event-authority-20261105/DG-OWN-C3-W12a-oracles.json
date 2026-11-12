@@ -1,0 +1,667 @@
+{
+  "event_type": "goal.updated",
+  "status": "PASS_BOUNDED_CASES",
+  "whole_root_closure": "NOT_COMPLETE",
+  "command_exit_code": 2,
+  "native_execution": "NOT_RUN",
+  "finite_whole_route_scenarios": 5,
+  "scenarios": 11,
+  "branch_and_input_cases": 72,
+  "positive_branch_cases": 18,
+  "negative_branch_and_input_cases": 54,
+  "setup_and_route_assertions": 106,
+  "selected_source_manifest_sha256": "e22c3bee94c37a6853c61d1b18a0a2eb631174160ddbe38644ad2ada6dc53273",
+  "new_product_guards": [],
+  "guard_isolation": "SHARED_TOOL_SWEEP_NOT_RUN",
+  "runs": [
+    {
+      "scenario": "empty",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 13,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/empty/result.json",
+      "result_sha256": "65409837ad7bc61a95499a95796ff413f1b80a8e60370c93e9742a52d4d841a6",
+      "cases": [
+        {
+          "id": "terminal/replay",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "scenario": "unchanged",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 13,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/unchanged/result.json",
+      "result_sha256": "65409837ad7bc61a95499a95796ff413f1b80a8e60370c93e9742a52d4d841a6",
+      "cases": [
+        {
+          "id": "terminal/replay",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "scenario": "ordinary",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 13,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/ordinary/result.json",
+      "result_sha256": "65409837ad7bc61a95499a95796ff413f1b80a8e60370c93e9742a52d4d841a6",
+      "cases": [
+        {
+          "id": "terminal/replay",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "scenario": "approved_agent",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 13,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/approved_agent/result.json",
+      "result_sha256": "65409837ad7bc61a95499a95796ff413f1b80a8e60370c93e9742a52d4d841a6",
+      "cases": [
+        {
+          "id": "terminal/replay",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "scenario": "no_effect",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 11,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/no_effect/result.json",
+      "result_sha256": "dd1260d1df9ecb40cb0c47ae954111bbf20d937ab21f601849fb7eb51be30f05",
+      "cases": [
+        {
+          "id": "cancel/absence_is_not_terminal",
+          "expected_refusal": "unresolved effect remains retained",
+          "observed_refusal": "original unresolved effect remains retained; terminal unavailable",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U5/replay",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "scenario": "boundaries",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 8,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/boundaries/result.json",
+      "result_sha256": "c8ad921e3525a4a3e35d2c836fc1e99e527b33a2ed01cf53a977c2052049f4b0",
+      "cases": [
+        {
+          "id": "U2/last_helper/revocation",
+          "expected_refusal": "A2/revoked",
+          "observed_refusal": "A2/revoked",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U2/last_helper/content_access",
+          "expected_refusal": "A2/content_access",
+          "observed_refusal": "A2/content_access",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U2/last_helper/stop",
+          "expected_refusal": "stop_epoch",
+          "observed_refusal": "stop_epoch",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U2/interrupted_before_commit",
+          "expected_refusal": null,
+          "status": "PASS"
+        },
+        {
+          "id": "U2/no_effect_after_body",
+          "expected_refusal": "cannot infer rollback",
+          "observed_refusal": "original no-effect resolution cannot infer rollback from missing acknowledgement",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U2/read_after_lost_ack",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U3/proof_before_append",
+          "expected_refusal": "first append receipt unavailable",
+          "observed_refusal": "actual original first append receipt unavailable",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U3/recover_lost_append_ack",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U3/repeat_publication",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "U4/approval_expired_after_body",
+          "expected_refusal": null,
+          "status": "PASS"
+        },
+        {
+          "id": "U4/approval_revoked_after_body",
+          "expected_refusal": null,
+          "status": "PASS"
+        },
+        {
+          "id": "U4/substituted_stage_ticket",
+          "expected_refusal": "same-owner terminal stage ticket",
+          "observed_refusal": "actual original SIR same-owner terminal stage ticket",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/source_audit/valid",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/source_audit/command.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/source_audit/sir.available",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/source_audit/semantic.receipt_installed",
+          "expected_refusal": "semantic receipt/audit installation",
+          "observed_refusal": "current original semantic receipt/audit installation",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/source_audit/shared.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/input/valid",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/input/command.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/input/sir.available",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/input/semantic.receipt_installed",
+          "expected_refusal": "semantic receipt/audit installation",
+          "observed_refusal": "current original semantic receipt/audit installation",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/input/shared.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/progress/valid",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/progress/command.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/progress/sir.available",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/progress/semantic.receipt_installed",
+          "expected_refusal": "semantic receipt/audit installation",
+          "observed_refusal": "current original semantic receipt/audit installation",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/progress/shared.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/immutable_progress/valid",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/immutable_progress/command.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/immutable_progress/sir.available",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/immutable_progress/semantic.receipt_installed",
+          "expected_refusal": "semantic receipt/audit installation",
+          "observed_refusal": "current original semantic receipt/audit installation",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/immutable_progress/shared.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal/valid",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal/command.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal/sir.available",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal/semantic.receipt_installed",
+          "expected_refusal": "semantic receipt/audit installation",
+          "observed_refusal": "current original semantic receipt/audit installation",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal/shared.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/proof/valid",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/proof/command.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/proof/sir.available",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/proof/semantic.receipt_installed",
+          "expected_refusal": "semantic receipt/audit installation",
+          "observed_refusal": "current original semantic receipt/audit installation",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/proof/shared.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal_replay/valid",
+          "expected_refusal": null,
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal_replay/command.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal_replay/sir.available",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal_replay/semantic.receipt_installed",
+          "expected_refusal": "semantic receipt/audit installation",
+          "observed_refusal": "current original semantic receipt/audit installation",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "read/terminal_replay/shared.allowed",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "reader_helper/SourceAudit/permission",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "reader_helper/SourceAudit/candidate",
+          "expected_refusal": "final exact original update row read",
+          "observed_refusal": "final exact original update row read and requested role fence",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "reader_helper/InputContent/permission",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "reader_helper/InputContent/candidate",
+          "expected_refusal": "final exact original update row read",
+          "observed_refusal": "final exact original update row read and requested role fence",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "reader_helper/Progress/permission",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "reader_helper/Progress/candidate",
+          "expected_refusal": "final exact original update row read",
+          "observed_refusal": "final exact original update row read and requested role fence",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "reader_helper/Terminal/permission",
+          "expected_refusal": "source/owner/shared audit admission",
+          "observed_refusal": "current original update source/owner/shared audit admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "reader_helper/Terminal/candidate",
+          "expected_refusal": "final exact original update row read",
+          "observed_refusal": "final exact original update row read and requested role fence",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "input/content_permission",
+          "expected_refusal": "current original thread content admission",
+          "observed_refusal": "current original thread content admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "input/thread_tombstone",
+          "expected_refusal": "current original thread content admission",
+          "observed_refusal": "current original thread content admission",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "progress/epoch/-1",
+          "expected_refusal": "exact historical progress epoch request",
+          "observed_refusal": "exact historical progress epoch request",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "progress/epoch/True",
+          "expected_refusal": "exact historical progress epoch request",
+          "observed_refusal": "exact historical progress epoch request",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "progress/epoch/'0'",
+          "expected_refusal": "exact historical progress epoch request",
+          "observed_refusal": "exact historical progress epoch request",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "progress/epoch/[]",
+          "expected_refusal": "exact historical progress epoch request",
+          "observed_refusal": "exact historical progress epoch request",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        },
+        {
+          "id": "progress/epoch/{}",
+          "expected_refusal": "exact historical progress epoch request",
+          "observed_refusal": "exact historical progress epoch request",
+          "preserved_earlier_effects": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "scenario": "replay_only",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 7,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/replay_only/result.json",
+      "result_sha256": "eb8f8c943c723931edaabddfa79f8154c77dd4de620a1ff55f7ab21b86408865",
+      "cases": [
+        {
+          "id": "input/replay_only",
+          "status": "PASS",
+          "expected_refusal": "dedupe_by_idempotency_key",
+          "observed_refusal": "'dedupe_by_idempotency_key' was expected",
+          "preserved_earlier_effects": true
+        }
+      ]
+    },
+    {
+      "scenario": "revision_type",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 7,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/revision_type/result.json",
+      "result_sha256": "fcc189f843dea00909aa224880e53027cc7148f48a6c2346f4eaeefb50728c78",
+      "cases": [
+        {
+          "id": "input/revision_type",
+          "status": "PASS",
+          "expected_refusal": "not of type",
+          "observed_refusal": "True is not of type 'integer'",
+          "preserved_earlier_effects": true
+        }
+      ]
+    },
+    {
+      "scenario": "foreign_body",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 7,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/foreign_body/result.json",
+      "result_sha256": "39bf64f183d34ab72aa41601ea561f3469d5a1bbcde78fe880a19d9b86422f04",
+      "cases": [
+        {
+          "id": "input/foreign_body",
+          "status": "PASS",
+          "expected_refusal": "actual accepted Direct Save body/head expectation",
+          "observed_refusal": "actual accepted Direct Save body/head expectation",
+          "preserved_earlier_effects": true
+        }
+      ]
+    },
+    {
+      "scenario": "agent_masquerade",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 7,
+      "runner_sha256": "5f89d71038e7223defc1a363f5152c0a916be316280a2b14efdfbb24f5e1560b",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/provider-one-defect-final/result.json",
+      "result_sha256": "b38bb96dd6b2999cbaa82f9e7a532782468773aac7f1fc947e52af3d0a897a6e",
+      "cases": [
+        {
+          "id": "input/agent_masquerade",
+          "status": "PASS",
+          "expected_refusal": "actual successor approval participant required",
+          "observed_refusal": "actual successor approval participant required",
+          "preserved_earlier_effects": true
+        }
+      ]
+    },
+    {
+      "scenario": "physical_gap",
+      "status": "PASS_BOUNDED_CASES",
+      "setup_assertions": 7,
+      "runner_sha256": "24f2d83e6879ef4fb2a5fa9a647a425425f7cc6d480ec269bd6567c09b6c8e9c",
+      "result_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/physical_gap/result.json",
+      "result_sha256": "9967f103673e9e6cbad69d67a4910115f049ed449270023384e4b77123c6f9c9",
+      "cases": []
+    }
+  ],
+  "raw_capture_manifests": [
+    {
+      "scenario": "empty",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/empty/capture-manifest.json",
+      "sha256": "ae3a16a02838d90d4f488677f6002a662e64b90f429e0b385e77302d4846d360"
+    },
+    {
+      "scenario": "unchanged",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/unchanged/capture-manifest.json",
+      "sha256": "7af6c446606654b48b90b6754656a11502bf7744e2567f11fb42498e9691756b"
+    },
+    {
+      "scenario": "ordinary",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/ordinary/capture-manifest.json",
+      "sha256": "4871df72804d9d8060ea115e2f04ef23422eebfac800b082340872ed307d7315"
+    },
+    {
+      "scenario": "approved_agent",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/approved_agent/capture-manifest.json",
+      "sha256": "dd60757d03e55c22397686ba5ebbe82fd8558d26e0ec7c478b1f01a10fd2c812"
+    },
+    {
+      "scenario": "no_effect",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/no_effect/capture-manifest.json",
+      "sha256": "c95618e4a64976bdcd33e69f9517e14bf5e7e8df4baa11bfc8340a02d43b8d7a"
+    },
+    {
+      "scenario": "boundaries",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/boundaries/capture-manifest.json",
+      "sha256": "bd205ef36baf9fc26f9b6f4209e80ca4904acb6bc83f9711595c0d302c2a494c"
+    },
+    {
+      "scenario": "replay_only",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/replay_only/capture-manifest.json",
+      "sha256": "11bd814c2962e11df67efc8e7f3b1c1a022d4cec396aece3e72cbf709b6d0815"
+    },
+    {
+      "scenario": "revision_type",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/revision_type/capture-manifest.json",
+      "sha256": "6d5619ab15754ea0c1d4fddf4d2ad6ef8f128298ebe18fe585c40b51f726664a"
+    },
+    {
+      "scenario": "foreign_body",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/foreign_body/capture-manifest.json",
+      "sha256": "709e3af411a4313129235abdda1fe6dbb2f738754672856e9e70451288983daa"
+    },
+    {
+      "scenario": "agent_masquerade",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/provider-one-defect-final/capture-manifest.json",
+      "sha256": "40426a80921cca487d70a20608b186f4b08a156f902dee58ffdfb9b5755ea1ed"
+    },
+    {
+      "scenario": "physical_gap",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/corpus-v2/physical_gap/capture-manifest.json",
+      "sha256": "1e5359155a9cdfea1e49072afb8ea581d59e03047da2b51e23c289716e58a7d0"
+    }
+  ]
+}

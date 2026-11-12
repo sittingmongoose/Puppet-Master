@@ -1,0 +1,126 @@
+{
+  "schema_id": "pm.goal.updated.w1.corpus_selection.v2",
+  "status": "NEWLY_AUTHORED_TEST_ONLY_PREPARED_WITHOUT_ADMISSION",
+  "event_type": "goal.updated",
+  "suite": "W1",
+  "native_execution": "NOT_RUN",
+  "selected_source": "Plans/goal_own_c_contracts/w12a-successor-v3/selection.json",
+  "selected_source_manifest_sha256": "31447afd3644e469594bf9c493e788cbe5bc9254d53e53a97d9098838c31dd1b",
+  "runner": "scripts/pm_goal_own_c3_w12a_p2_oracles.py",
+  "closure": "NOT_COMPLETE",
+  "completion_exit": 0,
+  "incomplete_exit": 2,
+  "assertion_failure_exit": 1,
+  "whole_root_obligations": [
+    {
+      "id": "W1-01",
+      "obligation": "Actual direct Save and actual approved-agent source through sole body, first append and immutable SIR terminal",
+      "status": "BOUNDED_CASES",
+      "scenarios": [
+        "ordinary",
+        "approved_agent"
+      ],
+      "remaining": "All provider and source predicates through complete original paths; full installed physical/read companion selection."
+    },
+    {
+      "id": "W1-02",
+      "obligation": "Empty and unchanged complete replacement saves",
+      "status": "EXECUTABLE_SCENARIOS",
+      "scenarios": [
+        "empty",
+        "unchanged"
+      ],
+      "remaining": null
+    },
+    {
+      "id": "W1-03",
+      "obligation": "Metadata revisions between accepted objective predecessors",
+      "status": "OPEN",
+      "remaining": "Original metadata mutation source and a subsequent update whose prior objective revision predates its ordinary body revision; preserve full old history/origin."
+    },
+    {
+      "id": "W1-04",
+      "obligation": "Active, paused, blocked, completed and exact Plan conflict/Stop paths",
+      "status": "PARTIAL",
+      "scenarios": [
+        "ordinary",
+        "boundaries"
+      ],
+      "remaining": "Genuine paused/blocked/completed and GoalPlanBinding source acquisition, epochs and material-conflict safe stop; owner epoch and all entry/helper/final Stop sites."
+    },
+    {
+      "id": "W1-05",
+      "obligation": "Before-body confirmed no-effect and actual reserved release",
+      "status": "BOUNDED_CASES",
+      "scenarios": [
+        "no_effect"
+      ],
+      "remaining": "Pre-reservation no-effect terminal publication; every cancellation/no-effect/unknown ordering and returning helper."
+    },
+    {
+      "id": "W1-06",
+      "obligation": "Body interruption and post-body/append lost acknowledgement recovery",
+      "status": "BOUNDED_CASES",
+      "scenarios": [
+        "boundaries"
+      ],
+      "remaining": "All original transaction/append/terminal crash cuts, entered-but-unknown body transaction, real process restart and source withdrawal/cutover."
+    },
+    {
+      "id": "W1-07",
+      "obligation": "Immutable terminal unknown survives later factual success",
+      "status": "OPEN",
+      "remaining": "Explicit successor of original SIR publisher for terminal_unknown; later progress must retain original response and original unknown result."
+    },
+    {
+      "id": "W1-08",
+      "obligation": "Current physical codec and every wrapper/operation SP-337 size route",
+      "status": "EXECUTABLE_SUCCESSOR_PHYSICAL_PATHS",
+      "scenarios": [
+        "physical_current",
+        "physical_pack_cut"
+      ],
+      "remaining": "Whole native/restart coverage and complete original guard inventory remain W1-06/W1-12; shared number/retained-recipe sweep remains separate."
+    },
+    {
+      "id": "W1-09",
+      "obligation": "Independent lower, passive and outer disclosure",
+      "status": "PARTIAL",
+      "scenarios": [
+        "boundaries"
+      ],
+      "remaining": "Full SP-299 event-inspection binding, generic current source/selected checkpoint, complete EventObservation/private witness and current body/history consumers; source/body/append/terminal helper inventory and every source/permission/Stop/tombstone/body/candidate mutation."
+    },
+    {
+      "id": "W1-10",
+      "obligation": "Lawful retained event/input/audit/replay after later edits and source changes",
+      "status": "PARTIAL",
+      "scenarios": [
+        "boundaries"
+      ],
+      "remaining": "Second genuine update on the same Goal; retained earlier event after state/metadata edits, disposed proposal content and withdrawal; genuine weaker/old recipe selection through original admission."
+    },
+    {
+      "id": "W1-11",
+      "obligation": "Exact input, replay-only, type and identity refusals",
+      "status": "BOUNDED_CASES",
+      "scenarios": [
+        "replay_only",
+        "revision_type",
+        "foreign_body",
+        "agent_masquerade"
+      ],
+      "remaining": "Complete own-field/type/format/LF/digest/source and semantic equal/altered retry corpus against original issuers, with all copies coherent."
+    },
+    {
+      "id": "W1-12",
+      "obligation": "Every real guard has an isolated one-defect negative",
+      "status": "OPEN",
+      "remaining": "Complete original guard and helper inventory plus dedicated negative witnesses, including outstanding O4 internal consistency predicates; shared isolation tool performs proof in the separate sweep, not here."
+    }
+  ],
+  "no_unfixable_blocker_established": true,
+  "stopped_question": null,
+  "predecessor_rule": "Original bytes, banks, URIs, hashes, class identities and private issuance maps are never rewritten or repaired by the corpus. Technical gaps require an explicit newly authored successor before another claim of closure.",
+  "predecessor_corpus": "Plans/goal_own_c_contracts/w12a-corpus.v1.json"
+}
