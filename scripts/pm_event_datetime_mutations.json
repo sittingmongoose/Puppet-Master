@@ -4056,7 +4056,7 @@
   {
    "id": "CV-1101:canonical_text:1.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "This newly authored technical owner unit binds the existing EventRecord envelope date_time_string format: date-time to an enforced RFC 3339 section 5.6 date-time predicate, with section 5.7 calendar and leap-second restrictions.",
    "normative": true,
    "rules": [
@@ -4072,7 +4072,7 @@
   {
    "id": "CV-1101:canonical_text:1.2",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "It is owned by EventRecord/CV-317, independently of CV-1100's number-input grammar.",
    "normative": true,
    "no_mutation": "Ownership or governance statement; no date-time code implements it."
@@ -4080,7 +4080,7 @@
   {
    "id": "CV-1101:canonical_text:1.3",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "Validate the entire string: four-digit Gregorian year, real month/day, T or t separator, hour 00..23, minute 00..59, second 00..59 or a legitimate second 60, optional fraction with one or more decimal digits and no general digit ceiling, then Z/z or a signed hh:mm offset with hour 00..23 and minute 00..59.",
    "normative": true,
    "rules": [
@@ -4101,7 +4101,7 @@
   {
    "id": "CV-1101:canonical_text:1.4",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "Missing zone, space separator, trailing LF, invalid calendar/range/offset and an illegitimate leap second refuse.",
    "normative": true,
    "rules": [
@@ -4120,7 +4120,7 @@
   {
    "id": "CV-1101:canonical_text:1.5",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "Lowercase t/z and nonzero offsets remain owner-valid for occurred_at_utc and broad family ts fields.",
    "normative": false,
    "rules": [
@@ -4135,7 +4135,7 @@
   {
    "id": "CV-1101:canonical_text:1.6",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse.",
    "normative": true,
    "rules": [
@@ -4146,7 +4146,7 @@
   {
    "id": "CV-1101:canonical_text:1.7",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "The enforced EventRecord validator composes CV-253 constraints on only these two fields, combining the original schema and enforced date-time predicate with the terminal-Z restriction.",
    "normative": true,
    "rules": [
@@ -4159,7 +4159,7 @@
   {
    "id": "CV-1101:canonical_text:1.8",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "Composition preserves the pinned envelope schema bytes and every existing schema predicate; it does not restamp a registry resource hash.",
    "normative": true,
    "rules": [
@@ -4170,7 +4170,7 @@
   {
    "id": "CV-1101:canonical_text:1.9",
    "source": "Plans/Contracts_V0.md",
-   "line": 1155,
+   "line": 1167,
    "statement": "This profile retains arbitrary fractional precision and legitimate UTC leap seconds; it adds no universal nine-digit input requirement.",
    "normative": true,
    "rules": [
@@ -4182,7 +4182,7 @@
   {
    "id": "CV-1101:canonical_text:2.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1156,
+   "line": 1168,
    "statement": "Second 60 is admitted only at a real announced leap second after mathematically applying the complete signed offset to the represented instant; a local month-end check is insufficient.",
    "normative": true,
    "rules": [
@@ -4193,7 +4193,7 @@
   {
    "id": "CV-1101:canonical_text:2.2",
    "source": "Plans/Contracts_V0.md",
-   "line": 1156,
+   "line": 1168,
    "statement": "Frozen validator resources include their authoritative leap-second data edition.",
    "normative": false,
    "rules": [
@@ -4203,7 +4203,7 @@
   {
    "id": "CV-1101:canonical_text:2.3",
    "source": "Plans/Contracts_V0.md",
-   "line": 1156,
+   "line": 1168,
    "statement": "The reference predicate pins the IERS Bulletin C72 insertion history through 2016-12-31; later announced insertions require the applicable resource/edition update rather than guessing from a clock or treating every June/December boundary as a leap second.",
    "normative": true,
    "rules": [
@@ -4213,7 +4213,7 @@
   {
    "id": "CV-1101:canonical_text:2.4",
    "source": "Plans/Contracts_V0.md",
-   "line": 1156,
+   "line": 1168,
    "statement": "Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.",
    "normative": true,
    "rules": [
@@ -4224,7 +4224,7 @@
   {
    "id": "CV-1101:canonical_text:3.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1157,
+   "line": 1169,
    "statement": "Preserve every original timestamp string, case, zone spelling and all fractional digits in identity/hash preimages.",
    "normative": false,
    "rules": [
@@ -4235,7 +4235,7 @@
   {
    "id": "CV-1101:canonical_text:3.2",
    "source": "Plans/Contracts_V0.md",
-   "line": 1157,
+   "line": 1169,
    "statement": "Validation never rewrites timestamps, rounds a fraction, converts to floating epoch seconds or truncates to microseconds.",
    "normative": true,
    "rules": [
@@ -4246,7 +4246,7 @@
   {
    "id": "CV-1101:canonical_text:3.3",
    "source": "Plans/Contracts_V0.md",
-   "line": 1157,
+   "line": 1169,
    "statement": "Exact instant comparisons remain with their existing owners and compare offsets mathematically and complete fractional values.",
    "normative": true,
    "no_mutation": "Exact instant comparison stays with its existing owners; the date-time code compares no instants."
@@ -4254,7 +4254,7 @@
   {
    "id": "CV-1101:canonical_text:4.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1158,
+   "line": 1170,
    "statement": "Stricter local profiles remain selectable only where their existing field owners require them.",
    "normative": true,
    "rules": [
@@ -4265,7 +4265,7 @@
   {
    "id": "CV-1101:canonical_text:4.2",
    "source": "Plans/Contracts_V0.md",
-   "line": 1158,
+   "line": 1170,
    "statement": "The coordination record timestamp profile requires trailing uppercase Z; do not impose that restriction on every envelope timestamp.",
    "normative": true,
    "rules": [
@@ -4276,7 +4276,7 @@
   {
    "id": "CV-1101:canonical_text:4.3",
    "source": "Plans/Contracts_V0.md",
-   "line": 1158,
+   "line": 1170,
    "statement": "Legacy normalization's exactly nine fractional digits and trailing uppercase Z are its output form, not the current envelope input grammar; excess precision is never rounded merely to manufacture that output.",
    "normative": true,
    "rules": [
@@ -4288,7 +4288,7 @@
   {
    "id": "CV-1101:canonical_text:4.4",
    "source": "Plans/Contracts_V0.md",
-   "line": 1158,
+   "line": 1170,
    "statement": "No existing local profile, hash recipe, schema range or field is replaced here.",
    "normative": true,
    "rules": [
@@ -4299,7 +4299,7 @@
   {
    "id": "CV-1101:canonical_text:5.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1159,
+   "line": 1171,
    "statement": "Install and pass the actual date-time predicate to validation.",
    "normative": false,
    "rules": [
@@ -4312,7 +4312,7 @@
   {
    "id": "CV-1101:canonical_text:5.2",
    "source": "Plans/Contracts_V0.md",
-   "line": 1159,
+   "line": 1171,
    "statement": "The shared reference helper supplies an explicitly registered jsonschema format checker and a validator constructor that passes it; merely constructing FormatChecker(), or relying on a format annotation, is insufficient.",
    "normative": true,
    "rules": [
@@ -4327,7 +4327,7 @@
   {
    "id": "CV-1101:canonical_text:5.3",
    "source": "Plans/Contracts_V0.md",
-   "line": 1159,
+   "line": 1171,
    "statement": "Negatives must demonstrate that the installed predicate runs through the validator.",
    "normative": true,
    "rules": [
@@ -4338,7 +4338,7 @@
   {
    "id": "CV-1101:canonical_text:5.4",
    "source": "Plans/Contracts_V0.md",
-   "line": 1159,
+   "line": 1171,
    "statement": "Every lane adopts this check at its timestamp boundaries using the relevant existing owner profile, not a new local regex.",
    "normative": true,
    "no_mutation": "An obligation of each adopting lane at its own boundaries; no shared date-time code implements it."
@@ -4346,7 +4346,7 @@
   {
    "id": "CV-1101:canonical_text:6.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1160,
+   "line": 1172,
    "statement": "SP-1101 selects the authentic frozen original schema and date-time profile/resources before retained validation.",
    "normative": true,
    "no_mutation": "SP-1101 original selection is RetainedDispatcher in pm_event_numbers (number scope, its own rules table); the date-time code supplies only the profiles it selects, whose rules are profile.*."
@@ -4354,7 +4354,7 @@
   {
    "id": "CV-1101:canonical_text:6.2",
    "source": "Plans/Contracts_V0.md",
-   "line": 1160,
+   "line": 1172,
    "statement": "Valid lowercase, offset and arbitrarily precise old source/family timestamps remain readable with exact original bytes/results under that profile; retained Storage-assigned timestamps still use CV-253's uppercase-Z profile, and skipped past format enforcement never authorizes offset or lowercase-z Storage history; forged/wrong-profile selections and owner-invalid originals refuse.",
    "normative": true,
    "rules": [
@@ -4369,7 +4369,7 @@
   {
    "id": "CV-1101:canonical_text:6.3",
    "source": "Plans/Contracts_V0.md",
-   "line": 1160,
+   "line": 1172,
    "statement": "Accidental past acceptance by a validator that skipped format is not an owner-valid legacy grammar.",
    "normative": true,
    "rules": [
@@ -4382,7 +4382,7 @@
   {
    "id": "CV-1101:canonical_text:6.4",
    "source": "Plans/Contracts_V0.md",
-   "line": 1160,
+   "line": 1172,
    "statement": "This binds existing envelope behavior under DL-045; it creates no family admission, new encoding, product feature or native custody proof.",
    "normative": true,
    "no_mutation": "Ownership or governance statement; no date-time code implements it."
@@ -4390,7 +4390,7 @@
   {
    "id": "CV-1101:acceptance_criteria:1.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1169,
+   "line": 1181,
    "statement": "Enforced source/family validator accepts valid lowercase, offsets, real offset-adjusted leap seconds and long fractions without rewriting strings.",
    "normative": false,
    "rules": [
@@ -4406,7 +4406,7 @@
   {
    "id": "CV-1101:acceptance_criteria:2.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1170,
+   "line": 1182,
    "statement": "Storage observed_at_utc and persisted_at_utc accept uppercase-Z UTC and refuse offsets including signed zero offsets and lowercase z under CV-253.",
    "normative": true,
    "rules": [
@@ -4417,7 +4417,7 @@
   {
    "id": "CV-1101:acceptance_criteria:3.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1171,
+   "line": 1183,
    "statement": "Missing zone, space, LF, invalid day/hour/offset and false leap seconds refuse through the registered format predicate.",
    "normative": true,
    "rules": [
@@ -4435,7 +4435,7 @@
   {
    "id": "CV-1101:acceptance_criteria:4.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1172,
+   "line": 1184,
    "statement": "Coordination Z-only and legacy normalization output checks are selected only for their existing owner contexts.",
    "normative": true,
    "rules": [
@@ -4447,7 +4447,7 @@
   {
    "id": "CV-1101:acceptance_criteria:5.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1173,
+   "line": 1185,
    "statement": "Authentic retained profiles preserve exact original timestamp spelling; forged profile selections and invalid originals refuse.",
    "normative": true,
    "rules": [
@@ -4460,7 +4460,7 @@
   {
    "id": "CV-1101:negative_constraints:1.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1201,
+   "line": 1213,
    "statement": "No universal Z-only or nine-digit input restriction; no timestamp normalization in hashes.",
    "normative": true,
    "rules": [
@@ -4471,7 +4471,7 @@
   {
    "id": "CV-1101:negative_constraints:2.1",
    "source": "Plans/Contracts_V0.md",
-   "line": 1202,
+   "line": 1214,
    "statement": "No caller-selected historical profile, skipped format enforcement, new family admission or native proof.",
    "normative": true,
    "rules": [
