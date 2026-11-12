@@ -4520,6 +4520,7 @@
     "SIR-009",
     "ACD-459",
     "SP-239",
+    "SP-1138",
     "SP-340",
     "SP-343",
     "MI-041",
@@ -7121,6 +7122,7 @@
     "SIR-052",
     "SP-310",
     "BRS-027",
+    "GRS-1136",
     "SP-1134",
     "SP-312",
     "ACD-511",
@@ -7152,6 +7154,7 @@
     "SP-422",
     "EP-1130",
     "BRS-028",
+    "GRS-1137",
     "SP-1135",
     "SP-424",
     "CS-111",
@@ -7180,6 +7183,7 @@
     "SP-423",
     "BRS-029",
     "SP-425",
+    "CV-1136",
     "EP-1131",
     "UCC-216",
     "WM-062",
@@ -7234,6 +7238,7 @@
     "ATS-210",
     "GRS-202",
     "SP-1136",
+    "SP-1139",
     "CDRY-022",
     "WM-063",
     "G-031",
@@ -7243,6 +7248,7 @@
     "ATS-1117",
     "SP-428",
     "EP-1132",
+    "CV-1137",
     "CDRY-023",
     "WM-064",
     "F3-445",
@@ -7251,12 +7257,15 @@
     "GRS-1131",
     "ATS-212",
     "ATS-1118",
+    "GRS-1138",
     "ATS-066",
     "DL-162",
     "F3-631",
+    "ATS-1120",
     "GRS-1132",
     "GRS-1133",
     "GRS-1134",
+    "ATS-1121",
     "DL-163",
     "F3-618",
     "F3-620",
@@ -15644,6 +15653,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-1120",
+      "to": "ATS-1118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1121",
+      "to": "ATS-057"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1121",
+      "to": "CV-1137"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1121",
+      "to": "GRS-1138"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1121",
+      "to": "SP-1139"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "ATS-210",
       "to": "ATS-057"
     },
@@ -23826,6 +23860,41 @@
       "edge_type": "depends_on",
       "from": "CV-1131",
       "to": "SP-1131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "CV-347"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "EP-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "GRS-1137"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "SP-1138"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1136",
+      "to": "SP-312"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1137",
+      "to": "CV-352"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1137",
+      "to": "SP-1139"
     },
     {
       "edge_type": "depends_on",
@@ -40761,6 +40830,31 @@
       "edge_type": "depends_on",
       "from": "GRS-1134",
       "to": "SP-1136"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1136",
+      "to": "SP-311"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1137",
+      "to": "SP-312"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1138",
+      "to": "CV-1137"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1138",
+      "to": "GRS-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1138",
+      "to": "SP-1139"
     },
     {
       "edge_type": "depends_on",
@@ -78201,6 +78295,26 @@
       "edge_type": "depends_on",
       "from": "SP-1136",
       "to": "SP-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1138",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1139",
+      "to": "SP-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1139",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1139",
+      "to": "SP-340"
     },
     {
       "edge_type": "depends_on",
@@ -118638,7 +118752,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-12T00:06:13Z",
+  "generated_at_utc": "2026-11-12T04:34:07Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -132811,12 +132925,46 @@
       "source_location": {
         "heading": "ATS-1118 - Three exact GoalRun producer and projector oracle suites",
         "heading_level": 3,
-        "heading_line": 7605,
-        "line": 7607,
+        "heading_line": 7609,
+        "line": 7611,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
       "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "c3_w34_reference_successor",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1120",
+      "reasoning_tier": "high",
+      "risk_class": "projection_reference_or_original_source_substitution",
+      "source_location": {
+        "heading": "ATS-1120 - W3 and W4 original-path reference successor qualification",
+        "heading_level": 3,
+        "heading_line": 7667,
+        "line": 7669,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "dg_own_c3_w5_part3_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1121",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_custody_or_reference_representation_drift",
+      "source_location": {
+        "heading": "ATS-1121 - Certified reference successor and full original tuple acceptance",
+        "heading_level": 3,
+        "heading_line": 7726,
+        "line": 7728,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "goal_current_writer_oracles",
@@ -141742,6 +141890,40 @@
       },
       "status": "accepted",
       "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "dg_own_c3_w34b_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1136",
+      "reasoning_tier": "high",
+      "risk_class": "wrong_original_source_realm_or_implicit_reference_alias",
+      "source_location": {
+        "heading": "CV-1136 - Explicit older cancelled-v3 scoped-routing successor",
+        "heading_level": 3,
+        "heading_line": 24939,
+        "line": 24947,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "dg_own_c3_w5_part3_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1137",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_custody_or_reference_representation_drift",
+      "source_location": {
+        "heading": "CV-1137 - Certified reference successor whole roots and scoped methods",
+        "heading_level": 3,
+        "heading_line": 25004,
+        "line": 25006,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "web_payload_ref_blob_batch_audit",
@@ -158957,8 +159139,8 @@
       "source_location": {
         "heading": "EP-1131 - goal_run.cancelled original producer suite adoption",
         "heading_level": 3,
-        "heading_line": 9238,
-        "line": 9240,
+        "heading_line": 9240,
+        "line": 9242,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158974,8 +159156,8 @@
       "source_location": {
         "heading": "EP-1132 - goal_run.certified original producer suite adoption",
         "heading_level": 3,
-        "heading_line": 9291,
-        "line": 9293,
+        "heading_line": 9293,
+        "line": 9295,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -180615,8 +180797,8 @@
       "source_location": {
         "heading": "GRS-1132 - goal_run.started original complete boundary suite",
         "heading_level": 3,
-        "heading_line": 9032,
-        "line": 9034,
+        "heading_line": 9033,
+        "line": 9035,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -180632,8 +180814,8 @@
       "source_location": {
         "heading": "GRS-1133 - goal_run.cancelled original complete boundary suite",
         "heading_level": 3,
-        "heading_line": 9087,
-        "line": 9089,
+        "heading_line": 9090,
+        "line": 9092,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -180649,12 +180831,63 @@
       "source_location": {
         "heading": "GRS-1134 - goal_run.certified original complete boundary suite",
         "heading_level": 3,
-        "heading_line": 9142,
-        "line": 9144,
+        "heading_line": 9145,
+        "line": 9147,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
       "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "c3_w34_reference_successor",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-1136",
+      "reasoning_tier": "high",
+      "risk_class": "projection_reference_or_original_source_substitution",
+      "source_location": {
+        "heading": "GRS-1136 - goal_run.started reference projection successor",
+        "heading_level": 3,
+        "heading_line": 9200,
+        "line": 9202,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "c3_w34_reference_successor",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-1137",
+      "reasoning_tier": "high",
+      "risk_class": "projection_reference_or_original_source_substitution",
+      "source_location": {
+        "heading": "GRS-1137 - goal_run.cancelled reference projection successor",
+        "heading_level": 3,
+        "heading_line": 9248,
+        "line": 9250,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "dg_own_c3_w5_part3_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-1138",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_custody_or_reference_representation_drift",
+      "source_location": {
+        "heading": "GRS-1138 - Certified projection reference successor",
+        "heading_level": 3,
+        "heading_line": 9297,
+        "line": 9299,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "goal_run_stopped_current",
@@ -226362,8 +226595,8 @@
       "source_location": {
         "heading": "SP-1135 - goal_run.cancelled original custody and oracle boundary adoption",
         "heading_level": 3,
-        "heading_line": 30722,
-        "line": 30724,
+        "heading_line": 30726,
+        "line": 30728,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -226379,12 +226612,46 @@
       "source_location": {
         "heading": "SP-1136 - goal_run.certified original custody and oracle boundary adoption",
         "heading_level": 3,
-        "heading_line": 30778,
-        "line": 30780,
+        "heading_line": 30782,
+        "line": 30784,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
       "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "c3_w34_reference_successor",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1138",
+      "reasoning_tier": "high",
+      "risk_class": "projection_reference_or_original_source_substitution",
+      "source_location": {
+        "heading": "SP-1138 - Explicitly selected GoalRun projection reference successors",
+        "heading_level": 3,
+        "heading_line": 30838,
+        "line": 30840,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "dg_own_c3_w5_part3_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1139",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_custody_or_reference_representation_drift",
+      "source_location": {
+        "heading": "SP-1139 - Certified projection bounded reference physical edition",
+        "heading_level": 3,
+        "heading_line": 30897,
+        "line": 30899,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "storage_scope_split_owner_reconciliation",
@@ -245824,10 +246091,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19022,
+    "depends_on_edge_count": 19043,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22230,
-    "node_count": 7481,
+    "edge_count": 22251,
+    "node_count": 7490,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

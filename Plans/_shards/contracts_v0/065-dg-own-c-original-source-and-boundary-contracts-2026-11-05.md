@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L24828-L25001
+Source lines: L24828-L25056
 
-Source SHA256: `3b7e18721a0a8661d5c9d0a985b5cc47dae9a6b944a8144240254f2400595e19`
+Source SHA256: `66de997a4776e946b96742104e1f6e685f3189c18fbe989233151e88ad3207e8`
 
 ---
 
@@ -182,3 +182,58 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/goal_run_cancelled_w4_contracts/protocol.md, ContractName:Plans/goal_run_cancelled_w4_contracts/selection.v1.json
+
+
+### CV-1137 - Certified reference successor whole roots and scoped methods
+
+```yaml
+plan_unit_id: CV-1137
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored owner contract under DL-045 for exactly goal_run.certified. Plans/goal_run_projection_reference_contracts/certified.v1.schema.json,
+  certified.resources.json, certified.imports.json, certified.methods.json and certified.definition-adaptations.json
+  define the explicitly selected derived reference.v1 whole roots. Each method retains its complete original
+  source arguments, return branches and entry/helper/final predicates. Only enumerated derived wrappers, key/table/checkpoint/profile
+  selections change; never cast original native, producer, custody or birth headers. Explicitly select source-package.v2
+  for its existing scoped retained-Handoff repair, keep original banks isolated, and eagerly resolve every
+  reference including unvisited branches. New location-scoped metadata references enter only the exact original
+  target realm. Profile commitments cover complete selected leaves before new generation birth; they never
+  replace the original native all_writers.v7 descriptor. Missing source/codec/owner/pack capability refuses;
+  schema or digest equality confers none.
+gui_related: false
+gui_classification_reason: Defines original source custody, derived physical representation and acceptance,
+  without visual presentation.
+depends_on:
+- CV-352
+- SP-1139
+unblocks: []
+acceptance_criteria:
+- Preserve all complete original source, scope, custody, phase and lifetime predicates through explicit successor
+  selection.
+- Measure complete stored values and operations; rebuild and atomically cut over without rewriting predecessors.
+- Report representation components separately from complete original semantic tuples and native NOT_RUN.
+validation_surfaces:
+- scripts/pm_goal_own_c3_w5_projection_oracles.py
+- Plans/goal_run_projection_reference_contracts/certified.md
+risk_class: original_source_custody_or_reference_representation_drift
+reasoning_tier: high
+context_scope: dg_own_c3_w5_part3_20261105
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/goal_run_projection_reference_contracts/certified.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/certified.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/DG-OWN-C3.md#part-3-for-c3-w34-split-and-c3-w5
+negative_constraints:
+- No Event registry admission, changed original bank/hash/header, retention/deletion policy, native installation
+  or governance seal.
+- No full oracle PASS from schema, size or source-shaped component controls.
+```
+
+ContractRef: ContractName:Plans/goal_run_projection_reference_contracts/certified.md
