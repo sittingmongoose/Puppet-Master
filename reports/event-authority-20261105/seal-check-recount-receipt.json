@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.assurance.event_authority.recount_change.v1",
+  "authority_ref": "Plans/Decision_Log.md#DL-451",
+  "authority_section_sha256": "34d27e732c56b5a2d33204f22f4131eb54bd6e7a7f79c762a46ceee46ed78e74",
+  "validator_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
+  "validator_id": "pm.plans.audits.event_authority.independent_validator",
+  "validator_before_sha256": "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91",
+  "validator_after_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "prior_receipt": {
+    "path": "reports/event-authority-20261104/seal-check-multifamily-step-receipt.json",
+    "sha256": "7d57ebde79f1b5ddc5acb224d16c0133bad924259677758b1d02adbbcd2f5882"
+  },
+  "recount_receipt": {
+    "path": "reports/event-authority-20261104/census-recount-20261104/RECEIPT.json",
+    "sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709"
+  },
+  "recount_list": {
+    "path": "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json",
+    "sha256": "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c"
+  },
+  "certification_scope": "august_and_recount_in_one_run",
+  "scope_ruling": {
+    "author": "pm7-build",
+    "mail": "1105050013-eb00",
+    "at": "2026-11-05T05:00:00Z",
+    "attribution": "pm7-build's reading of 9.b, not Jared's words",
+    "single_snapshot": "diagnostic_only"
+  },
+  "author_task": "codex:CA-SEAL2-20261105",
+  "lander_task": null,
+  "seal_applier_forbidden_tasks": [
+    "codex:CA-SEAL2-20261105"
+  ],
+  "seal_authorized": false,
+  "admission_authorized": false,
+  "definition_writing_authorized": false,
+  "app_recording_authorized": false,
+  "contract_depth_complete": false,
+  "change": "Add a separate strictly pinned recount input and verify every original source fingerprint. Require unchanged August checks and complete outcomes for all 249 recount names in one run. Add only the anchored fourth byte link to the existing receipt chain.",
+  "preserved_requirements": [
+    "No August list, fingerprint, freeze digest, earlier receipt or existing record is rewritten by this amendment. Snapshot receipt identities resolve at fixed Git revisions; the inherited default working-tree receipt remains runtime output.",
+    "Every original August predicate and per-family decision, full admission record and twelve-cell depth requirement remains.",
+    "Cards remain unresolved; input custody alone earns no approval; no admission, registry or application writer follows.",
+    "Stop and report if canon moving since August makes an unchanged August check impossible.",
+    "Independent reviews before and after the coordinated landing remain required."
+  ],
+  "landing_state": "PENDING actual lander, exact Spec Lock anchor, outcome records and independent review",
+  "seal_applier_procedural_exclusions": [
+    "author",
+    "actual lander",
+    "claude-opus-5.5:pm-ea-lead (b29da1b5-9877-474f-8a4c-e7a57ab7f899)",
+    "CA-SEAL",
+    "CA-SEAL-FIX1 through CA-SEAL-FIX8",
+    "CA-SEAL2 (Codex)",
+    "every other fix worker",
+    "CA-SEAL2-FIX1 (Codex)"
+  ]
+}
