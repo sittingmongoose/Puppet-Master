@@ -2,8 +2,8 @@
   "schema_id": "pm.event_authority.depth_assessment.v1",
   "assessment_id": "event-authority-20261104-DF-SWEEP-P2A-P2B-NUMBERS",
   "assessment_kind": "self_grade",
-  "assessed_tree": "b1dc935fe09ae15163cad080fa393683656d52a7",
-  "assessed_tree_note": "Sweep part 2B adopts CV-1101 date_time at this head. Schema format date-time fields use the EventRecord profile; observed_at_utc and persisted_at_utc use storage_utc_z. The gated tool proves 354 of 403 rows (174 PASS, 0 FAIL). No cell changes: C12 stays PARTIAL (schema keywords are one structural row per root, and datetime_validator plus the inventory gate run at batch-2), C7 stays PARTIAL for the five application scopes, membership ABSENT, native NOT_RUN. The Sol/Astra part-2 review remains.",
+  "assessed_tree": "d4c5fddf9d433055bd538f060f20806804fbb8cd",
+  "assessed_tree_note": "Fix round 2 DF-R2-1: OS01 is schema-plus-OS02 entailed and uncredited. Prior full-run accounting adjusts from 356 to 355 of 403 rows; current granted/requested-family guard totals and checks are in DF.md. Shared date_time adoption is unchanged. C12 remains PARTIAL, membership ABSENT, native NOT_RUN; independent review pending.",
   "prior_assessed_tree": "ef27813b0cd3d851f586729eddf94aef434f2fdd",
   "prior_report_commit": "f7b88ca1033707205109e58f965f61ddbf475271",
   "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -494,7 +494,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -523,7 +523,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -598,7 +598,7 @@
         "PASS": 9,
         "PARTIAL": 2
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     },
     {
       "event_type": "filesafe.destructive_override_denied",
@@ -1085,7 +1085,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1114,7 +1114,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -1189,7 +1189,7 @@
         "PASS": 9,
         "PARTIAL": 2
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     },
     {
       "event_type": "filesafe.destructive_override_granted",
@@ -1676,7 +1676,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1705,7 +1705,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -1778,7 +1778,7 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     },
     {
       "event_type": "filesafe.destructive_override_requested",
@@ -2265,7 +2265,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2294,7 +2294,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -2369,7 +2369,7 @@
         "PASS": 9,
         "PARTIAL": 2
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     },
     {
       "event_type": "filesafe.guard_init_failed",
@@ -2856,7 +2856,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2885,7 +2885,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -2960,7 +2960,7 @@
         "PASS": 9,
         "PARTIAL": 2
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     },
     {
       "event_type": "filesafe.path_denied",
@@ -3447,7 +3447,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3476,7 +3476,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -3551,7 +3551,7 @@
         "PASS": 9,
         "PARTIAL": 2
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     },
     {
       "event_type": "filesafe.policy_degraded",
@@ -4038,7 +4038,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4067,7 +4067,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -4140,7 +4140,7 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     },
     {
       "event_type": "safe_point.created",
@@ -4687,7 +4687,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4716,7 +4716,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -4789,7 +4789,7 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     },
     {
       "event_type": "safe_point.restored",
@@ -5336,7 +5336,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN.",
+          "finding": "Both complete own checkers pass at the sweep implementation head, with the 1,081 coherent part 2A witnesses and the shared number corpus through the complete checkers. Check 11 is Method B: every refusal is one named row of a generated guard table (204 tables, 403 rows) and the gated shared tool proves 354 of 403 rows in 174 table runs (174 PASS, 0 masked); rows no input can refuse first are listed with their reasons in the lane report and earn no credit. PARTIAL because each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one) and because datetime_validator and the inventory gate run at batch-2 integration. The shared date_time predicate covers this family's timestamp fields (EventRecord, and storage_utc_z for observed_at_utc and persisted_at_utc). Native NOT_RUN. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5365,7 +5365,7 @@
               "line_end": 197,
               "quote": "def format_checker():",
               "excerpt_sha256": "9d1851a079c5a225ffbbbf62eb29f95c7bf977c290daf41f145ad30687c41f9d",
-              "file_sha256": "b67b113b828cfa2f9b1253cd841519a76ce0a98dfd9fc6f2f97a6aeb21a71761",
+              "file_sha256": "01af72a11672ad3506e57af4863781333fadd89e5d1cce4838283bddc8ddd21e",
               "quote_check": "exact"
             },
             {
@@ -5438,7 +5438,15 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim."
+      "technical_depth_note": "Sweep part 2B adopts CV-1101 date_time (EventRecord profile; storage_utc_z on observed_at_utc and persisted_at_utc). Part 2A guard tables remain certified on the gated tool (354/403 proved). datetime_validator and the inventory gate run at batch-2. The Sol/Astra part-2 review is pending. No READY/admission claim. Fix round 2 supersedes prior OS01 credit: OS01 is schema-plus-OS02 entailed and uncredited (prior full-run accounting adjusted to 355/403); fresh granted/requested-family tool totals are in DF.md. C12 remains PARTIAL."
     }
-  ]
+  ],
+  "fix_round_2": {
+    "finding": "DF-R2-1",
+    "status": "OS01_ENTAILED_UNCREDITED",
+    "proof": "reports/event-authority-20261104/DF.md#fix-round-2-df-r2-1-2026-11-12",
+    "pair_proof": "scripts/pm-filesafe-fix1-cases.py:os01_pair_proof",
+    "assessed_tree": "d4c5fddf9d433055bd538f060f20806804fbb8cd",
+    "native_execution": "NOT_RUN"
+  }
 }

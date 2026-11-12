@@ -12,7 +12,8 @@ NUMRULE head `58c2816ff33365384d4039553f5efdb5370930e6`.
 by the shared `date_time` predicate: the EventRecord profile for schema
 `format: date-time`, and `storage_utc_z` for Storage-assigned `observed_at_utc`
 and `persisted_at_utc`. `datetime_validator` and the inventory gate run at
-batch-2 integration. The gated guard tool proves 354/403 rows (174 PASS, 0 FAIL).
+batch-2 integration. Fix round 2 withdraws OS01 credit: prior full-run accounting
+is adjusted to 355/403; fresh granted/requested-family totals are recorded below.
 C12 stays PARTIAL because each schema occurrence is one structural row and
 because that gate is not run in this lane tree. Membership stays ABSENT, native
 execution stays NOT_RUN, deck 3 Card 7 stays with Jared, and the Sol/Astra
@@ -199,7 +200,7 @@ signal; `bad` is 0.
 | Issued and retained (SP-1101 dispatch) | 10/10 of 11 | 20 | 19 | 155 | 156 | 2,345 | 155/228/0 |
 | Protocol oracle | 34/34 of 36 | 51 | 49 | 114 | 130 | 1,312 | 114/54/0 |
 
-(Corrected in fix round 1: the OS01 and MK03 rows of the table below are reachable and now witnessed; see "Fix round 1 after the Opus recheck".)
+(Corrected in fix round 2: MK03 is independently witnessed. OS01 is schema-plus-OS02 entailed and uncredited; see "Fix round 2: DF-R2-1".)
 49 rows in 30 tables have no negative and earn no credit. Each sits in a table
 with no proved row; the reason (every input it would refuse is refused first, or
 the two sides are computed identically) is:
@@ -209,7 +210,7 @@ the two sides are computed identically) is:
 | CI02–CI04 (identity selfcheck) | Both event ids are recomputed by the same df-event-v2 call inside the checker; they can only be observed agreeing. |
 | MO03, BD02 (source/body commitment) | The selected-source commitment and the exact selected join are computed on the same value immediately before. |
 | MG01 (grant expiry) | PG01 refuses the same issued/expires window in payload semantics, evaluated first. |
-| OS01 (override scope kind) | The grant scope kind is derived from the same payload scope value it is compared to. |
+| OS01 (override scope kind) | Schema-valid grant and payload kinds are determined by null versus string project_id; OS02 equality entails kind equality. See fix round 2. |
 | SU01–SU02, SU06–SU11 (override subsets) | The requested-scope subset facts are decided by the override scope rows/semantics before the subset tables on every schema-admitted scope. |
 | ME01, MX02, MD01, MJ02 | Envelope/effect/policy and SCM joins (AD01/MA01, MX01, SM09) refuse the same joined values first. |
 | MK03–MK06, CS02 (worktree fields) | Payload worktree rows (PW01/PW02) and the owner joins refuse partial worktree presence first; with all fields present the sibling rows refuse the same observation together (CS02 probe: first refusal PW01). |
@@ -390,7 +391,7 @@ No coordination or legacy-normalization profile is used. The SP-1101 frozen veri
 
 ### Rows with no negative
 
-**Corrected in fix round 1:** the OS01 and MK03 proofs below are false. Both rows are reachable and now have single-defect witnesses; every other proof was rebuilt as an attempted negative. See "Fix round 1 after the Opus recheck".
+**Corrected in fix round 2:** the original OS01 derivation proof below was false; its replacement schema-plus-OS02 entailment proof is in fix round 2. MK03 is independently witnessed; every other proof was rebuilt as an attempted negative.
 
 The 49 rows with no negative are the same set as part 2A (the four retired date-time rows were proved, and both new rows are proved). They earn no credit. Proof that no input refuses them first:
 
@@ -399,7 +400,7 @@ The 49 rows with no negative are the same set as part 2A (the four retired date-
 | CI02–CI04 | `scripts/pm_filesafe_guard_suites.py:233` recomputes both event ids with the same `identity` call. `scripts/pm_filesafe_guard_suites.py:51` names the phase unprovable. |
 | MO03, BD02 | `scripts/pm_filesafe_event_authority.py:565` and `scripts/pm_filesafe_event_authority.py:1001` compare a commitment to the value just computed for that same source. |
 | MG01 | `scripts/pm_filesafe_event_contracts.py:132` (`payload_grant_window`) refuses the issued/expires window before `scripts/pm_filesafe_event_authority.py:612` (`mat_grant_order`). |
-| OS01 | `scripts/pm_filesafe_event_contracts.py:40` compares `grant['scope_kind']` to the payload scope kind it was derived from. |
+| OS01 | `scripts/pm_filesafe_event_contracts.py:40` compares independently supplied scope kinds; schema plus OS02 entails their equality (fix round 2). |
 | SU01–SU02, SU06–SU11 | `scripts/pm_filesafe_event_contracts.py:66` runs the subset tables only after the scope rows in `override_scope_semantic`. |
 | ME01, MX02, MD01, MJ02 | `scripts/pm_filesafe_event_authority.py:579`, `:604`, `:646` and `:621` re-check joins the earlier envelope, effect, policy and body rows already refused. |
 | MK03–MK06, CS02 | `scripts/pm_filesafe_event_authority.py:640` and `:433` see worktree fields only after the payload worktree rows have refused a partial worktree. |
@@ -553,7 +554,7 @@ Notes: in RB02 the negative is a protocol trace (`owner_commit`, `withdraw_write
 
 Exit 1 is the expected signal for the 47 rows without a negative and the 7 two-row observations. Every one of the 47 has the path:line proof above and a built attempt that confirms it; 14 of them are also duplicates proved by pair.
 
-**OS01, stated plainly.** Its witness is refused by `OS01_kind` alone at the boundary: payload semantics stop at the first refusing table, and the gated tool proves the row. Its complete-boundary flip is "refused later" by `OS02_project`: the granted scope's kind and `project_id` are coupled by the `authorized_scope` `oneOf` (a Project grant carries a string `project_id`, an application grant a null one), so a grant whose kind differs from the payload scope's always differs in `project_id` too. No grant can violate OS01 without that coupled `project_id`. This is the "refused later by an independent row watching the same source fact" pattern the lane's other 2,075 refused-later flips record, and it is the negative the recheck asked for. ME01 has the same coupling (event `scope_kind` with event `project_id`), but materialization accumulates refusals, so its attempt is refused by ME01 and ME02 in the same run and is not counted as a witness. MK03's flip is accepted: when MK03 is cut its witness passes the whole boundary.
+**OS01 correction (fix round 2).** The round-1 isolated-table PASS above does not prove complete-boundary isolation. Cutting OS01 still refuses at OS02. OS01's credit is withdrawn; the negative remains an uncredited regression. The corrected full-inventory accounting is 355/403 (356 minus OS01), with 48 uncredited rows; this is an adjustment of the prior all-family run, not a new all-family certification. MK03's complete-boundary flip remains accepted. See the proof and fresh scoped run below.
 
 ### Checks (Nas1, at `1533229134`)
 
@@ -597,8 +598,63 @@ The recheck's harness `df_mut.py` re-pointed at this worktree (`df_mut_fix1.py`)
 
 ### Grades and self-grade
 
-No cell moves: family PASS counts stay 9, 9, 10, 9, 9, 9, 10, 10, 10; C12 and C7 stay PARTIAL for the reasons above; membership ABSENT. DF-1 was a guard-table proof row, not a grade cell, and is now witnessed. Self-grade: 672 of 672 quotes exact at their lines with current file hashes; 36 pins that the appended fixture cases and the `instant_key` docstring moved were relocated through the git diff hunks (quotes and `excerpt_sha256` unchanged).
+No cell moves: family PASS counts stay 9, 9, 10, 9, 9, 9, 10, 10, 10; C12 and C7 stay PARTIAL for the reasons above; membership ABSENT. DF-1 was a guard-table proof row, not a grade cell; fix round 2 withdraws OS01 credit and retains MK03 credit. Self-grade: 672 of 672 quotes exact at their lines with current file hashes; 36 pins that the appended fixture cases and the `instant_key` docstring moved were relocated through the git diff hunks (quotes and `excerpt_sha256` unchanged).
 
 ### Readiness
 
 Prepared for re-review. Not READY. Batch-2 items unchanged: inventory refresh, `datetime_validator`, the combined self-test. Native NOT_RUN, membership ABSENT. No new ids, no Decision Log entry, no registry append, no `Plans/*.md` edit. **Stopped for Jared:** none.
+
+
+## Fix round 2: DF-R2-1 (2026-11-12)
+
+**Response: fixed by withdrawing OS01 credit** (`d4c5fddf9d433055bd538f060f20806804fbb8cd`). The short-circuit observation was mistaken for isolation. `scripts/pm_filesafe_event_contracts.py:43` returns immediately when OS01 refuses; after its removal the boundary reaches OS02 at line 45. No schema-valid isolation witness exists. The guard stays because the owner requires matching scope identity; no product predicate is weakened. `scripts/pm-filesafe-fix1-cases.py:os01_pair_proof` rebuilds the named regression with the existing lane builder and checks the four vectors through `payload_failures`. The attempts report carries it as `entailments`, separate from the 14 same-predicate duplicate proofs.
+
+### Per-clause entailment proof
+
+- **Allowed payload kinds:** `Plans/shared_integration_runtime.schema.json:2911` requires `scope_kind` and `project_id`; line 2925 permits only application/project. Lines 2982–2989 force application project_id to null; lines 3003–3008 force Project project_id to a nonempty string. The contract payload scope resolves this definition (`Plans/event_payloads/filesafe_destructive_override_granted_v2.schema.json:13`); the offline alias registration is `scripts/pm_filesafe_schema_graph.py:248`.
+- **Allowed grant kinds:** `Plans/event_payloads/filesafe_destructive_override_granted_v2.schema.json:38` is a closed `oneOf`. Lines 44–52 require project kind and a nonempty string project_id; lines 93–109 require application kind and a null project_id. The requested family's same constraints are at `Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json:38`, lines 48–56 and 97–113.
+- **Companion predicate:** `scripts/pm_filesafe_table_override_scope_root.py:16` compares grant_project_id and scope_project_id for equality. A string cannot equal null. Therefore OS02 plus the schemas entails OS01, whose distinct kind comparison is at `scripts/pm_filesafe_table_override_scope_kind.py:16`.
+- **Exhaustive construction:** if payload=Project and grant=application, schema-valid ids are string/null, so OS02 refuses. If payload=application and grant=Project, ids are null/string, so OS02 refuses. These are the only unequal kind cases. Keeping ids equal instead makes one schema branch invalid. Changing both kinds together satisfies OS01 and cannot be its negative. This proof applies to every invocation on schema-valid requested/authorized scopes, including the authority checker's requested-scope join. No schema or OS02 weakening is used to claim OS01 credit.
+
+### Coupled pair proof (uncredited)
+
+Witness: `filesafe.destructive_override_granted.p2bfix1.override-scope-kind` in `Plans/filesafe_event_contract_fixtures.json:6327`, built from the Project positive by replacing only authorized_scope with the application positive's scope. Closed schema reports zero errors.
+
+| Cut | Complete boundary result |
+|---|---|
+| None | Refuses at override_scope_kind:OS01_kind |
+| OS01 only | Refuses at override_scope_root:OS02_project |
+| OS02 only | Refuses at override_scope_kind:OS01_kind |
+| OS01 + OS02 | Accepts |
+
+OS01/OS02 are different fields and predicates. This pair demonstrates the entailment requested by DF-FIX2; it earns no duplicate-set or isolated-row credit under the 03:56Z rule. The suite executes the regression but excludes its truncated phase observation from credited negatives. `UNPROVABLE['override_scope_kind']` explicitly records the reason. The generator and generated table label OS01 uncredited. The checker and original fixture stay intact.
+
+### Fresh checks and grade pins
+
+| Check | Exit |
+|---|---:|
+| fixcases | 0 |
+| contracts | 0 |
+| authority | 0 |
+| attempts | 0 |
+| numbers | 0 |
+| tables | 0 |
+| guard | 1 |
+
+Fresh guard run scope: filesafe.destructive_override_granted and filesafe.destructive_override_requested plus shared probes. {"bad": 2, "collection_findings": 0, "passed": 108, "proved": 191, "rows": 403, "rows_without_negative": 207, "run": 110, "tables": 205}. OS01 has zero credited negatives, no proved rows, and an explicit entailment reason. Runner exit 1 includes incomplete coverage in other tables when selecting these two families: their other negatives come from omitted families. Those FAIL rows are retained in guard/summary.json and earn no credit. The affected tables are recorded separately in affected-tables.json: OS02 PASS, OS01 entailed and uncredited. The two coverage-only FAIL tables are payload_scope (missing PS03_run_copy, PS04_node_id, PS05_attempt_id) and retention_capacity (missing RC02_count); both report only unproved_guards. There are no collection findings. This is not a passing whole-lane certificate. No all-family rerun is claimed.
+
+Full checkers: contracts and authority pass on all nine families. Attempts: 69/69 confirmed over 47 existing rows; 14/14 duplicate proofs; OS01 coupling is a separate uncredited entailment with four cut vectors. Numbers: **580/580**, exit 0. All 672 self-grade quotes are exact; 18 file hashes refreshed, zero quote relocations.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/sweep-p2b-fix2/`, with `SHA256SUMS`. Checks ran serially as long-job `df-fix2-checks`, waited in the foreground. Each command had MemoryMax=2G/MemorySwapMax=0 and a >=11 GiB start gate; guard arguments were `--max-rss 2048 --pause-when-low 10 --resume-at 11`. Guard tool and NUMRULE files are unchanged.
+
+Key evidence (paths relative to the evidence directory):
+
+| File | SHA-256 |
+|---|---|
+| `results.json` | `ee5baceb4cecb7adc478b76421103ef95034961352922dbaffe08db3fb66d1a9` |
+| `guard/summary.json` | `1730000ab52725f851461f498e6e88232f8255bc56eee3980988c950c6cf06f7` |
+| `attempts/unproved-attempts.json` | `0205e4223d79db7c5eee5dc8bf5f0ad8080d1f04b8c9a182c6b8e2a834a50936` |
+| `numbers.log` | `3e81a92755d356cfe5d3d84cc01c8ed2023ebbe614a4407c93c1789607950754` |
+
+
+Family grade cells stay unchanged: C12 PARTIAL, membership ABSENT, native NOT_RUN. Self-grade quotes and file hashes are refreshed against this implementation; no admission, new ids, owner decisions, canonical Markdown edits or governance reseal. No shard/index regeneration is required. Prepared for independent re-review; no READY claim.
