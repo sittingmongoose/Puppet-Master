@@ -365,7 +365,7 @@
   View.prototype._applyBackground = function (bg) {
     var L = this.bgLayer, th = this.theme, G = T.Grounds, ground = typeof bg.ground === 'number' ? bg.ground : null, dim = 0;
     this._bgSpec = bg; this._bgKey = '';
-    L.style.cssText = '';
+    if (L.getAttribute('style') !== '') L.style.cssText = '';
     L.className = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
     var mv = this.bgMove, moving = !!(bg.motion && G);
     if (!moving) { mv.hidden = true; mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
