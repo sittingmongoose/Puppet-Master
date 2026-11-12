@@ -1,22 +1,22 @@
 # Shard Index: Plans/GitHub_API_Auth_and_Flows.md
 
-Generated: 2026-11-03T22:13:31Z
+Generated: 2026-11-05T16:19:07Z
 
-Source SHA256: `d67b62830013f496d67e925f36cb00eea849875c94a5921af311ae8f29bd5271`
+Source SHA256: `fd52a7262fec3af2cb9c01bc9c9e37eb643c4a1d146bd05617d04107cdd8c5e5`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L39 `ca818b5f7abe7f98ac4118a86341c5809979c76a20f921d9aa1d1e8f83bdb7da`
-- [002 - Change Summary](002-change-summary.md) L41-L45 `a0713d55f40f0e9621e79cb59dd172466b6f0b5e16ca2aede5470f2916ee0002`
-- [003 - Purpose](003-purpose.md) L47-L107 `d2c18637740d3a7b5c6e2eefc6c1efea41c468a7aafbf858e503ed8abc81ed9a`
-- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L109-L150 `82b83cf5422381870e8472bcb19d0fa327ddd0d42738870d9450c03f5270bc25`
-- [005 - Browser/debug auth handoff and session shaping](005-browser-debug-auth-handoff-and-session-shaping.md) L152-L154 `f2c8a3988dc42b069b1db33bb941465b3208e2e5e352bf92eeb2ea3dcc5aad71`
-- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L156-L160 `1e0613732871baa412d410e13bf0709f00fdbd3ec7bbd0ea72364e5068ea58f7`
-- [007 - PlanUnits](007-planunits.md) L162-L821 `7def711835d5f283a3402a83454992efb58ba2e9a0f9ac5f1c51a4a2a3eb3091`
-- [008 - Migration Coverage](008-migration-coverage.md) L823-L833 `25368fe3cb140f8bf67dd9c5deb07e98b6fb48e3b62c1c136393c2fe5bb57765`
-- [009 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L836-L898 `4b56831cae4586199c81296f329f4401989d1ee40a76c252b6827712a73730ef`
-- [010 - FABLE Residual GitHub Auth Cleanup Addendum - 2026-07-07](010-fable-residual-github-auth-cleanup-addendum-2026-07-07.md) L900-L968 `2784698f02d40fee59b54b32d8b1e48c0e1c00e67bd51fa75523022c44a8840b`
-- [011 - Post-Integration Shared Authentication Consumer Addendum - 2026-09-01](011-post-integration-shared-authentication-consumer-addendum-2026-09.md) L970-L1018 `7d2c2fdb8a0402c5f416d7ef3dd3ee3ea6ce67aeb700c7d122fea8b144d59def`
-- [012 - Connection Draft, Scoped Profile, And Source-Orchestration Depth Repair - 2026-09-02](012-connection-draft-scoped-profile-and-source-orchestration-depth-r.md) L1020-L1136 `97f83a11b910541851e53f2bf2ec45c1aa69054346fcb85a66b878012e7705be`
+- [001 - Preamble](001-preamble.md) L1-L39 `efea56ea1c5fa270fc4525ef429dfee0c33890e45a4bdea46abb7057ba07fbd2`
+- [002 - Change Summary](002-change-summary.md) L41-L45 `8192ffa6a45e5cf55e61f7f2b236db189d71d323dd154eecdf5cc414914ef0b9`
+- [003 - Purpose](003-purpose.md) L47-L107 `174c455cccf29f89545733d57d0ec861253abdd1b22968c403a3fc74c7ff558e`
+- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L109-L150 `d953e15f4d7f09b50cf6533d0c38d5ac4a897234abfffe41d85ddbf64b4c7d60`
+- [005 - Browser/debug auth handoff and session shaping](005-browser-debug-auth-handoff-and-session-shaping.md) L152-L154 `a4c2e38f21da1c618a92340de68e34a1aade26b8c259aec27ea66f8ba2ad4c5f`
+- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L156-L160 `0bbe9959e28f3884abedf831d9afbdee05e9ed791519f8faa1c6bcf94ffd22db`
+- [007 - PlanUnits](007-planunits.md) L162-L821 `fd8a5038cff59991764100c0ae987f11d7e09ab86b589e0c9a72865ad99647b1`
+- [008 - Migration Coverage](008-migration-coverage.md) L823-L833 `3d8ddc841e6f0ee4618c1292bfb3854f46703f025f296b5fdbbf2521b2b1fc4b`
+- [009 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L836-L898 `36c817d8cea34af0696e5fd6c8913ccd383afc50630a5ca58d3b7ec38be99f7d`
+- [010 - FABLE Residual GitHub Auth Cleanup Addendum - 2026-07-07](010-fable-residual-github-auth-cleanup-addendum-2026-07-07.md) L900-L968 `bca8f586671749f23c309e01d9af611b294d3ae2beba1ac4ccaa39b75a84fa72`
+- [011 - Post-Integration Shared Authentication Consumer Addendum - 2026-09-01](011-post-integration-shared-authentication-consumer-addendum-2026-09.md) L970-L1018 `1e88617c8fa2ad5ab0cb72c5b47c30a2595e90592ac0626a802a33446f8adfa7`
+- [012 - Connection Draft, Scoped Profile, And Source-Orchestration Depth Repair - 2026-09-02](012-connection-draft-scoped-profile-and-source-orchestration-depth-r.md) L1020-L1310 `1f71f09efaa4c8c828ff497e601cac17ed82f29057899e851ae9e7e20cba2b93`
