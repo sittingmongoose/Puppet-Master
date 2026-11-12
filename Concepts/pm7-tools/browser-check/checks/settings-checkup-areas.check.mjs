@@ -71,6 +71,20 @@ const GPU = (soft) => {
 	return { raw, ok: !!raw && !new RegExp(soft, 'i').test(raw) };
 };
 
+// scroll only the Settings scroller that holds the checkup (scrollIntoView would also move the app's own document)
+const SCROLL_TO = ([B, pick]) => {
+	const body = document.querySelector(B); if (!body) return false;
+	const areas = [...body.querySelectorAll('section.pm51-section')].filter((x) => x.querySelector('[data-action="pm51-doctor-check"]'));
+	const scope = body.querySelector('[data-setting="system.health.check-scope"]');
+	const el = pick === 'scope' ? (scope && (scope.closest('.setting-row') || scope)) : pick === 'first' ? areas[0] : pick === 'last' ? areas[areas.length - 1] : body;
+	let sc = body.parentElement;
+	while (sc && !(/(auto|scroll)/.test(getComputedStyle(sc).overflowY) && sc.scrollHeight > sc.clientHeight)) sc = sc.parentElement;
+	if (!el || !sc) return false;
+	const top = el.getBoundingClientRect().top - sc.getBoundingClientRect().top;
+	sc.scrollTop = pick === 'top' ? 0 : pick === 'last' ? sc.scrollTop + el.getBoundingClientRect().bottom - sc.getBoundingClientRect().bottom + 12 : sc.scrollTop + top - 12;
+	return true;
+};
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const skip = async (t) => { if (t.app.surfaces().includes(surface)) return false; await t.check(`${surface} surface not asked for`, true); return true; };
@@ -159,7 +173,23 @@ for (const surface of ['normal', 'sandbox']) {
 		for (const look of looks) {
 			await t.step(look, async () => {
 				const f = await settings(t, surface, sizes[0]);
-				await setLookBySetting(t, f, look);
+				// the Theme rows live on General: open it and wait until they are drawn (a slow first draw timed out). On a
+				// remote host a dropdown click can miss its list while the page redraws: one more try, with the list closed
+				// first; the painted-look guard below still judges every cell.
+				for (let attempt = 1; attempt <= 2; attempt++) {
+					try {
+						await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first().click({ timeout: 15000 });
+						await f.waitForSelector('select[data-setting="general.visual.theme"]', { state: 'attached', timeout: 20000 });
+						await t.page.waitForTimeout(500);
+						await setLookBySetting(t, f, look, { toGeneral: false });
+						break;
+					} catch (e) {
+						if (attempt === 2) throw e;
+						t.log(`${look}: look pick missed (${String(e.message || e).split('\n')[0]}); trying once more`);
+						await t.page.keyboard.press('Escape');
+						await t.page.waitForTimeout(800);
+					}
+				}
 				await doctor(t, f);
 				for (const [w, h] of sizes) {
 					await t.viewport(w, h);
@@ -177,15 +207,16 @@ for (const surface of ['normal', 'sandbox']) {
 					const bad = heads.filter((x) => x.overlap).map((x) => x.title);
 					await t.check(`${cell}: no area's title runs under its Check Again`, !bad.length, bad.join(', ') || 'none');
 					if (t.args.shots && surface === 'normal' && w === 1390 && SHOT_LOOKS.includes(look)) {
-						await f.evaluate((B) => { const s = document.querySelector(`${B} [data-setting="system.health.check-scope"]`); const row = s && (s.closest('.setting-row, .pm51-row, .o55-row') || s); if (row) row.scrollIntoView({ block: 'start' }); }, B);
-						await t.page.waitForTimeout(400);
-						await t.shot(`${look}-what-is-checked`, `${look} 1390x900: "What is checked" lists the five areas`);
-						await f.evaluate((B) => { const s = [...document.querySelectorAll(`${B} section.pm51-section`)].find((x) => x.querySelector('[data-action="pm51-doctor-check"]')); if (s) s.scrollIntoView({ block: 'start' }); }, B);
-						await t.page.waitForTimeout(400);
-						await t.shot(`${look}-areas-top`, `${look} 1390x900: the checkup's first areas`);
-						await f.evaluate((B) => { const s = [...document.querySelectorAll(`${B} section.pm51-section`)].filter((x) => x.querySelector('[data-action="pm51-doctor-check"]')); const last = s[s.length - 1]; if (last) last.scrollIntoView({ block: 'end' }); }, B);
-						await t.page.waitForTimeout(400);
-						await t.shot(`${look}-areas-end`, `${look} 1390x900: the checkup's last areas`);
+						for (const [name, why, pick] of [
+							['what-is-checked', '"What is checked" lists the five areas', 'scope'],
+							['areas-top', 'the checkup\'s first areas', 'first'],
+							['areas-end', 'the checkup\'s last areas', 'last']
+						]) {
+							await f.evaluate(SCROLL_TO, [B, pick]);
+							await t.page.waitForTimeout(400);
+							await t.shot(`${look}-${name}`, `${look} 1390x900: ${why}`);
+						}
+						await f.evaluate(SCROLL_TO, [B, 'top']);
 					}
 				}
 			});
