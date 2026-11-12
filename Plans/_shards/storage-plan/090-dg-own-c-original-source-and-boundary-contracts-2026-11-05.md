@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L30440-L30890
+Source lines: L30440-L30894
 
-Source SHA256: `3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e`
+Source SHA256: `dedc4f9a3c6fe0b8c9def3d36147c04d9b7f7e6d602d21a4701e307c65922f7b`
 
 ---
 
@@ -247,7 +247,11 @@ canonical_text: Newly authored owner contract under DL-045. For exactly goal_run
   keys, whole-root CAS, all nine durable SP-278 token fields, atomic row/checkpoint advance, generation cutover
   and withdrawal; passive reads own no durable progress. Exercise actual receipt/source resolution, retained
   history after live change, helper/final refusal, unknown/lost acknowledgement and exact stored-part limits/reference
-  paths only where existing roots allow them. Native execution remains NOT_RUN.
+  paths only where existing roots allow them. Native execution remains NOT_RUN. Amended 2026-11-11 (DG-S, DL-045)
+  the TEST_ONLY Storage owner allocates sequences, times, first custody, packs, seeds and transactions for the
+  W3 corpus `scripts/pm_goal_dg_s_oracles.py`, which checks all nine durable token fields, atomic row and checkpoint
+  CAS with child-process cuts, staging and cutover, three generations with the 604800-second retirement window
+  and holds, withdrawal and rebuild. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
 gui_related: false
 gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
   changing visual presentation.
