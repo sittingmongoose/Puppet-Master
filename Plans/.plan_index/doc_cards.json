@@ -1993,7 +1993,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7286,
+      "line_count": 7293,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 78,
       "plan_unit_ids": [
@@ -2146,7 +2146,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "6bb651862d2e534f7c148cdaf6c1c23a567038a30c88f872fc6608532b51ffcd",
+      "sha256": "23df155922d2ce216591848557e98413f4ff1b2bf4e0856671a76434c1607dbc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -2298,9 +2298,14 @@
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-ui-command-response.py",
         "python3 scripts/pm-validate-pm7-gui-fixtures.py validate",
+        "python3 scripts/pm-w3f-cases.py --check",
+        "python3 scripts/pm-w3f-guard-tables.py --out <dir>",
+        "python3 scripts/pm-w3f-number-corpus.py",
+        "python3 scripts/pm-w3f-table-generate.py --check",
         "python3 scripts/pm-working-notebook-contracts.py",
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_w3f_event_oracles.py",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-assistant-contract-check.py",
@@ -4593,7 +4598,7 @@
         "scripts/pm_event_datetime.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 25910,
+      "line_count": 25911,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 378,
       "plan_unit_ids": [
@@ -5338,7 +5343,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "fa4c157beb2505ac36a9bf134315d7b2857729c4b2109904595ccafb5e2c1e3f",
+      "sha256": "271d1d4cb5fd8ab841741257d149cc5779efaba1c2ae1cd3e139b52c4749f34e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 378
@@ -19217,7 +19222,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "2e280e0919cb9c722752b67e24dcea2634772321f8c4460e3b78eaf2b11d2838",
+      "sha256": "ae7d618d5534b3d10b96c7d460a9902925ef686324f5e78deff1d3dfa5ed2255",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 354,
@@ -21601,7 +21606,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-13T15:42:41Z",
+  "generated_at_utc": "2026-11-13T17:26:19Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

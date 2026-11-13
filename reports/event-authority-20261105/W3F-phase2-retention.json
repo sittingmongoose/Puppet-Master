@@ -1,0 +1,139 @@
+{
+ "schema_id": "pm.w3f.phase2_retention.v1",
+ "brief": "lanes/W3-P2.md step 5",
+ "decisions_checked": [
+  "DL-401",
+  "DL-415..DL-452",
+  "DL-453..DL-464",
+  "DL-500..DL-509"
+ ],
+ "main_sha_read": "f8b20986082fe7b11ca5c22770ec042ee34e3327",
+ "cells": [
+  {
+   "event_type": "autonomy.ceiling_checked",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "discovery.backpressure",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "discovery.candidates_returned",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "discovery.disabled",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "discovery.fallback",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "discovery.invoked",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "discovery.selected",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "discovery.unsupported",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "discovery.verified",
+   "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 receipt/audit class (phase 1, reviewed PASS in reviews/W3F-sol/REVIEW-phase1-recheck.md); no later landed decision (Card 1 DL-401, deck 2 DL-415..DL-452, deck 3 DL-453..DL-464, deck 4 DL-500..DL-509) names this family or changes the class.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "run.graph_canonical_locked",
+   "retention_policy_ref": "RP-RUNTIME-365D@1.0.0",
+   "status": "BOUND",
+   "decision": "Storage Case L-3 Runtime/run/node/attempt class with the real run completion anchor (phase 1, reviewed PASS); no later landed decision names this family.",
+   "phase2_change": "none"
+  },
+  {
+   "event_type": "session_prompt.admitted",
+   "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+   "status": "BOUND",
+   "decision": "DL-456 (E-CARDS-3 item 4.a, option A): kept as long as the target chat exists, Project and application chats alike, counted under that chat's existing 250,000-entry shared limit with continuation; no new application allowance; prompt text keeps its own deletion rule.",
+   "storage_owner_text": "origin/main Plans/storage-plan.md: \"Kept as long as the target chat exists, four session-prompt request histories (DL-456)\"",
+   "owner_text_on_branch": "Plans/Contracts_V0.md CV-1461 paragraph 7; Plans/storage-plan.md SP-1461",
+   "phase2_change": "PENDING_RETENTION_DECISION -> bound",
+   "integration_note": "The RP-CHAT-THREAD-LIFETIME@1.0.0 policy object is on main (Plans/storage_value_registry.json), not on this unrebased lane branch; it arrives with the batch-3 rebase."
+  },
+  {
+   "event_type": "session_prompt.cancelled",
+   "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+   "status": "BOUND",
+   "decision": "DL-456 (E-CARDS-3 item 4.a, option A): kept as long as the target chat exists, Project and application chats alike, counted under that chat's existing 250,000-entry shared limit with continuation; no new application allowance; prompt text keeps its own deletion rule.",
+   "storage_owner_text": "origin/main Plans/storage-plan.md: \"Kept as long as the target chat exists, four session-prompt request histories (DL-456)\"",
+   "owner_text_on_branch": "Plans/Contracts_V0.md CV-1462 paragraph 7; Plans/storage-plan.md SP-1462",
+   "phase2_change": "PENDING_RETENTION_DECISION -> bound",
+   "integration_note": "The RP-CHAT-THREAD-LIFETIME@1.0.0 policy object is on main (Plans/storage_value_registry.json), not on this unrebased lane branch; it arrives with the batch-3 rebase."
+  },
+  {
+   "event_type": "session_prompt.expired",
+   "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+   "status": "BOUND",
+   "decision": "DL-456 (E-CARDS-3 item 4.a, option A): kept as long as the target chat exists, Project and application chats alike, counted under that chat's existing 250,000-entry shared limit with continuation; no new application allowance; prompt text keeps its own deletion rule.",
+   "storage_owner_text": "origin/main Plans/storage-plan.md: \"Kept as long as the target chat exists, four session-prompt request histories (DL-456)\"",
+   "owner_text_on_branch": "Plans/Contracts_V0.md CV-1463 paragraph 7; Plans/storage-plan.md SP-1463",
+   "phase2_change": "PENDING_RETENTION_DECISION -> bound",
+   "integration_note": "The RP-CHAT-THREAD-LIFETIME@1.0.0 policy object is on main (Plans/storage_value_registry.json), not on this unrebased lane branch; it arrives with the batch-3 rebase."
+  },
+  {
+   "event_type": "session_prompt.rejected",
+   "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+   "status": "BOUND",
+   "decision": "DL-456 (E-CARDS-3 item 4.a, option A): kept as long as the target chat exists, Project and application chats alike, counted under that chat's existing 250,000-entry shared limit with continuation; no new application allowance; prompt text keeps its own deletion rule.",
+   "storage_owner_text": "origin/main Plans/storage-plan.md: \"Kept as long as the target chat exists, four session-prompt request histories (DL-456)\"",
+   "owner_text_on_branch": "Plans/Contracts_V0.md CV-1464 paragraph 7; Plans/storage-plan.md SP-1464",
+   "phase2_change": "PENDING_RETENTION_DECISION -> bound",
+   "integration_note": "The RP-CHAT-THREAD-LIFETIME@1.0.0 policy object is on main (Plans/storage_value_registry.json), not on this unrebased lane branch; it arrives with the batch-3 rebase."
+  },
+  {
+   "event_type": "planning.question_budget_exhausted",
+   "retention_policy_ref": {
+    "project": "RP-OPERATIONAL-2555D@1.0.0",
+    "application": "RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0"
+   },
+   "status": "BOUND",
+   "decision": "DL-457 (E-CARDS-3 item 5.a, option A): seven years (2,555 days) from the first restart-surviving save of the actual refusal and next-step result; Project records share the existing 2,000,000-entry seven-year allowance; one separate 2,000,000-entry application allowance across Plan, Deep Plan and question-bank sources together.",
+   "storage_owner_text": "origin/main Plans/storage-plan.md: \"Kept seven years, the question-budget refusal history (DL-457)\" and \"Project first-save anchor adapter for RP-OPERATIONAL-2555D@1.0.0 (DL-455, DL-457)\"",
+   "owner_text_on_branch": "Plans/Contracts_V0.md CV-1459 paragraph 7; Plans/storage-plan.md SP-1459",
+   "phase2_change": "PENDING_RETENTION_DECISION -> bound",
+   "integration_note": "RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0 and the Project first-save anchor adapter are on main, not on this unrebased lane branch; they arrive with the batch-3 rebase. The phase-1 ledgers (W3F-row-outcomes.jsonl, W3F-census-adjudication.jsonl) and W3F-budget-reversal.json keep their reviewed phase-1 snapshot, whose row hashes the reversal record pins."
+  }
+ ],
+ "pending": [],
+ "questions_for_jared": [],
+ "main_passage_check": "DL-456 and DL-457 sections and the three Storage passages are byte-identical at a27594279e and f8b2098608."
+}
