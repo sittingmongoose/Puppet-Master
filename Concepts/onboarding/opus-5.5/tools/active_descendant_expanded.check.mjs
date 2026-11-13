@@ -44,12 +44,17 @@ export default async function(t){
     const missing=a.filter(e=>!sb.has(e)),extra=b.filter(e=>!sa.has(e));
     // A non-inherited old declaration (notably rule 10's animation) always needs a direct selector.
     const colourOnly=decls[r.rule]?.split(';').filter(Boolean).every(d=>['color','-webkit-text-fill-color'].includes(d.split(':')[0]));
-    const inherited=missing.filter(e=>colourOnly&&(e.namespaceURI==='http://www.w3.org/2000/svg'&&(!e.classList.length||e.matches('g.nx-st-base'))||e.tagName==='BR'));
+    // Main omits the Inspector's bare <em> too. In active/selected rows its own scoped rule already says
+    // color:inherit (30-inspector.css:146), and the restored strong root supplies both old properties.
+    // Qualify only that state and only when the current colour actually inherits. The in-place original
+    // probe below checks both properties, as-is AND forced, so an exposed competitor remains a failure.
+    const selectedInspectorEm=e=>[0,6].includes(r.rule)&&e.matches('#panel-settings .o55-pick-item:is(.is-active,[aria-selected="true"]) .o55-pick-copy > strong > em')&&getComputedStyle(e).color===getComputedStyle(e.parentElement).color;
+    const inherited=missing.filter(e=>colourOnly&&(e.namespaceURI==='http://www.w3.org/2000/svg'&&(!e.classList.length||e.matches('g.nx-st-base'))||e.tagName==='BR'||selectedInspectorEm(e)));
     const real=missing.filter(e=>!inherited.includes(e));
     const feature=e=>e.matches('.pmr-btn')?'pmr-btn':e.matches('.pmr-btn-label')?'pmr-btn-label':e.classList.length?[...e.classList].sort().join('.'):'unmarked:'+e.tagName.toLowerCase();
     const groups={};for(const e of real){const k=feature(e);const g=groups[k]||={n:0,samples:[]};g.n++;if(g.samples.length<3&&!g.samples.includes(describe(e)))g.samples.push(describe(e));}
     const rawChanges=[];let rawRestore=null;
-    if(forced&&inherited.length){const props=decls[r.rule].includes('-webkit-text-fill-color')?['color','-webkit-text-fill-color']:['color'];const values=()=>inherited.map(e=>props.map(p=>getComputedStyle(e).getPropertyValue(p)).join('|'));const before=values(),restored=window.__pmrOriginalSelectorProbe(v);rawRestore={rules:restored.rules,arms:restored.arms,originalArms:restored.originalArms};let after;try{after=values();}finally{restored.restore();}for(let i=0;i<inherited.length;i++)if(before[i]!==after[i])rawChanges.push({el:describe(inherited[i]),before:before[i],original:after[i]});}
+    if((forced||inherited.some(e=>e.tagName==='EM'))&&inherited.length){const props=decls[r.rule].includes('-webkit-text-fill-color')?['color','-webkit-text-fill-color']:['color'];const values=()=>inherited.map(e=>props.map(p=>getComputedStyle(e).getPropertyValue(p)).join('|'));const before=values(),restored=window.__pmrOriginalSelectorProbe(v);rawRestore={rules:restored.rules,arms:restored.arms,originalArms:restored.originalArms};let after;try{after=values();}finally{restored.restore();}for(let i=0;i<inherited.length;i++)if(before[i]!==after[i])rawChanges.push({el:describe(inherited[i]),before:before[i],original:after[i]});}
     const raw={};for(const e of inherited){const k=e.tagName.toLowerCase();raw[k]=(raw[k]||0)+1;}
     return {rule:r.rule,variant:vi,forced,original:a.length,replacement:b.length,groups,raw,rawChanges,rawRestore,extra:extra.map(describe),omitted:!!r.omit};
    }));
