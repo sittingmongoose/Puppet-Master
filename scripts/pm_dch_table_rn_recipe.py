@@ -10,7 +10,7 @@ order. FIELDS names every observation the rows read; the checker passes no other
 """
 import pm_guard_isolation as g
 
-FIELDS = ('provenance_type', 'store_type', 'digest_type', 'claim_present', 'claim', 'receipt_recipe', 'store_descriptor_valid', 'store_in_custody', 'recipe_installed')
+FIELDS = ('provenance_type', 'store_type', 'digest_type', 'claim_present', 'claim', 'receipt_recipe', 'store_descriptor_valid', 'store_in_custody', 'receipt_count', 'recipe_installed')
 
 
 def RN01_provenance_object(value, context):
@@ -34,7 +34,7 @@ def RN05_custody_store(value, context):
 
 
 def RN06_recipe_installed(value, context):
-    return 'recipe_unsupported' if value['store_in_custody'] is True and value['recipe_installed'] is not True else None
+    return 'recipe_unsupported' if value['store_in_custody'] is True and value['receipt_count'] == 1 and value['recipe_installed'] is not True else None
 
 
 def case(value):
@@ -45,7 +45,7 @@ def case(value):
         g.Guard('RN03_digest_type', g.Invariant('/provenance/source_value_sha256', 'the provenance source digest is exactly a string'), 'recipe_refused', RN03_digest_type),
         g.Guard('RN04_recipe_claim', g.Invariant('/provenance/recipe_id', 'a claimed recipe equals the receipt-selected recipe; it never selects one'), 'recipe_refused', RN04_recipe_claim),
         g.Guard('RN05_custody_store', g.Invariant('/provenance/storage_instance_id', 'a retained original belongs to a Store whose write custody the sealed receipt catalogue holds'), 'original_unavailable', RN05_custody_store),
-        g.Guard('RN06_recipe_installed', g.Invariant('/provenance/source_value_sha256', 'the receipt-selected recipe has an installed frozen verifier'), 'recipe_unsupported', RN06_recipe_installed),
+        g.Guard('RN06_recipe_installed', g.Invariant('/provenance/source_value_sha256', 'the receipt-selected recipe and its pinned resources have an installed frozen verifier'), 'recipe_unsupported', RN06_recipe_installed),
     ])
 
     def check(value):
