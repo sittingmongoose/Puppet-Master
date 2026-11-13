@@ -49,6 +49,25 @@
   const portal = () => (W.PM7_SETTINGS_TOME && W.PM7_SETTINGS_TOME.portal ? W.PM7_SETTINGS_TOME.portal() : D.body);
   const root = () => D.getElementById('pm-settings-root');
 
+  /* ------------------------------------------------------------------ Plans' inventory layering, the per-row authority
+     Inventory alignment (2026-11-13): SSYS-059 makes the inventory layering object, not legacy scope, the reviewed
+     authority for every row: home, may_differ_by, computer_key, combine, careful_order and not_offered. The layer reads
+     Plans/settings_inventory.json from the same tree, so it follows whatever inventory the repository carries:
+     index.html fetches it when served, and tools/build_standalone.py inlines it into the single files. Either way it
+     arrives as window.PSX_LAYERING = { source: { path, sha256, schema_version, rows }, groups: { 'cat.sub': title },
+     settings: [{ id, type, layering }] }. Without it the layer says so and falls back to its own heuristic. */
+  const layering = (() => {
+    const raw = W.PSX_LAYERING;
+    if (!raw || !Array.isArray(raw.settings)) { try { console.warn('[psx] Plans’ inventory layering is missing: rows use the concept’s own heuristic'); } catch (e) { /* no console */ } return null; }
+    const rows = {}, types = {};
+    raw.settings.forEach((r) => { if (r && r.id && r.layering) { rows[r.id] = r.layering; types[r.id] = r.type || null; } });
+    return { source: raw.source || null, groups: raw.groups || {}, rows, types };
+  })();
+  // a row's layering, or null when the inventory doesn't list it
+  const layerOf = (id) => (layering && layering.rows[id]) || null;
+  // the inventory's title for a row's group (its owner's page), from the id's first two parts
+  const groupOf = (id) => (layering && layering.groups[String(id).split('.').slice(0, 2).join('.')]) || null;
+
   /* ------------------------------------------------------------------ is this a path? One reader for the layer
      Review Sol max F1: Always allow decided "host-dependent" with a regexp that saw a path only at the start of a word,
      so a path behind "=", in quotes, on a drive written C:/, relative with backslashes, or on a UNC share offered
@@ -183,7 +202,6 @@
      "Show where each setting comes from" ships Off) */
   const DEFAULTS = {
     'ai.models.default-model': 'anthropic/claude-sonnet-4',
-    'ai.models.reasoning-effort': 'medium',
     'branching.subagents.max-parallel': 4,
     'general.interaction.eli5-default': false,
     'safety.rules.permission-preset': 'regular',
@@ -205,7 +223,6 @@
      how levels combine, and the one closed reason for every level it does not offer */
   const DEF = {
     'ai.models.default-model': { may: ['computer', 'project'] },
-    'ai.models.reasoning-effort': { may: ['computer', 'project'] },
     'branching.subagents.max-parallel': { may: ['computer', 'project'], combine: 'computer_ceiling' },
     'general.interaction.eli5-default': { may: ['computer', 'project'], chats: true },
     'safety.rules.permission-preset': { may: ['computer', 'project'], combine: 'more_careful', careful: ['read_only', 'plan', 'regular', 'full'], safety: true },
@@ -230,6 +247,8 @@
     names_a_folder: ['Each computer has its own, because a folder is in a different place on each computer.', 'Folders differ per computer'],
     names_a_path: ['Each computer has its own, because a path names a place on one computer.', 'Paths differ per computer'],
     kept_by_owner: ['Kept inside its owner, so it isn’t set for everywhere, a computer, a device or a project.', 'Kept by its owner'],
+    // the inventory's own code for an owner-held row's levels (Plans/settings_inventory.json not_offered)
+    set_inside_a_thing: ['Kept inside its owner, so it isn’t set for everywhere, a computer, a device or a project.', 'Kept by its owner'],
     about_hardware: ['Each computer has its own, because it depends on what that computer can do.', 'Depends on the computer'],
     about_the_network: ['Each computer has its own, because each one reaches the internet its own way.', 'Network differs per computer'],
     about_this_project: ['Each project has its own, because it’s about that project’s own files.', 'Belongs to one project'],
@@ -292,7 +311,8 @@
     };
     const set = (lvl, key, id, v) => { w[lvl][key][id] = v; };
     set('project', 'docs-site', 'ai.models.default-model', 'anthropic/claude-sonnet-4');
-    set('project', 'tastebook', 'ai.models.reasoning-effort', 'high');
+    /* main's one-model design (Settings batch 3) retired Thinking depth (ai.models.reasoning-effort; depth lives inside
+       the model picker now), so the demo's "This project" example is Everyday building (ai.models.worker-model, below) */
     set('computer', 'here', 'branching.subagents.max-parallel', 3);
     set('computer', 'homenas', 'branching.subagents.max-parallel', 8);
     set('project', 'tastebook', 'branching.subagents.max-parallel', 6);
@@ -643,7 +663,7 @@
   }
 
   Object.assign(PSX, {
-    D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip, paths,
+    D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip, paths, layering, layerOf, groupOf,
     store, COMPUTERS, HOSTS, DEVICES, PROJECTS, MENU_PROJECTS, projectById, DEFAULTS, DEF, IDS, REASONS, computerIds, home,
     homeName: () => placeName('computer', home()), bagOf,
     projectName, placeName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,

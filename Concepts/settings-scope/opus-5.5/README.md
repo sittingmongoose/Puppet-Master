@@ -18,7 +18,8 @@ PMConcept7 is not edited. `index.html` frames `../../PMConcept7.html?o55=off` an
   the layer and no strip, for the browser-check kit; review options come from the URL hash, for example
   `#psx=opt.end=origin,opt.changed=outline,ctx.project=tastebook,homenas=down,moment=11.1`).
 - It opens on Settings › AI & Providers › Models with tastebook open on This computer: Everyday model reads
-  "Changed · Varies", Thinking depth "Changed · This project".
+  "Changed · Varies", Everyday building "Changed · This project" (main's one-model design retired Thinking depth, the
+  example before the inventory alignment).
 - **Decided (Jared, 2026-11-03):** cards S1 to S16 as recommended. The page shows the decided design by default: the end
   of each row is the origin word (S5 A), and Changed is the word plus a 1px outline on the control (S6 A). The
   alternatives stay under the strip's **Compare options**.
@@ -55,7 +56,7 @@ projects-redesign.
 | What | Where | SETTINGS-PROPOSAL |
 |---|---|---|
 | The settings ladder: default, Everywhere, the computer (or the device for screen rows), the project, owner rungs; one resolver (`PSX.resolve`); more careful wins on safety rows; a computer's own value caps a project's on limit rows | every row, panel and manager line | 1.1 to 1.4 (NEW CANON) |
-| Every Settings row follows the ladder, not only the demo rows: 842 inventory rows are adopted (the fix pass keeps 14 fields of one thing off the ladder and no longer takes the token-budget rows for credentials) with a rule from 1.3 (a concept heuristic over id, control and scope; the reviewed classification is a Plans task) | every page | 1.3 |
+| Every Settings row follows Plans' inventory layering (`Plans/settings_inventory.json`, the per-row authority, SSYS-059): its places, Computer key, combine and the reasons for the places it doesn't offer. An owner-held row (`home: thing`) stays with its owner: no level, no Change, and a panel that names the owner (an action says it isn't a setting). The concept's own heuristic over id, control and scope decides only the rows the inventory doesn't list (`PSX.classReport()` names them) | every page | 1.3, SSYS-059 |
 | The end of the row: origin word, Details, Varies, This project, Home NAS, Studio Mac, Each account | rows | 2.3, 2.4, S5 |
 | Changed: the word at 11.5px and a 1px outline on the control | rows | 2.2, S6 |
 | Lines under a row: Limited to 3 on This computer; For safety, Home NAS's Plan only is used; May differ in garden-notes · Home NAS isn't answering | rows | 2.3 |
@@ -189,7 +190,8 @@ items 3, 4, 8 and 11) and the guided-flows check named what this concept must ch
   sound and keyboard). The sentence at the top says only what is in use. An account's or a service's own row (Each
   account) keeps the base page's list of each one's value and takes the same three parts. Libraries (Your own themes,
   Start custom themes from, Sound library, Add a sound) were on the device rule and offered “Set for a device”; they
-  are the same everywhere now (`your_library`). Where the base page shows its own scope next to the layer's, the
+  are the same everywhere now (`your_library`). *Since the inventory alignment:* the three libraries are owner-held
+  actions in Plans' inventory, and "Start custom themes from" is a value it gives Everywhere and Device. Where the base page shows its own scope next to the layer's, the
   layer's wins: the MCP server panel's “Where it applies” line and the server list's scope word are hidden. No row
   keeps the base page's own sentence any more: rows the reference doesn't list (Animation speed, Accent color,
   Autosave and the rest) are adopted at start with the same rule; rows the reference marks only “for a single run”
@@ -341,6 +343,43 @@ runner, `sudo`, or `rm -rf` followed by `*` is broad. A specific script path fol
 home read (§3.3, §4.2, PS-026, PS-145), a deletion on the remote (PS-146), and a looser rule from a repository, which
 stays held (PS-144). Nothing YOLO runs without asking becomes an Always rule (PS-144 "YOLO ordinary auto-allow creates
 neither an Always rule nor a FileSafe approved-command entry").
+
+## Inventory alignment (2026-11-13)
+
+Plans' inventory layering is now the source of truth for every row, as SSYS-059 makes it ("The inventory layering
+object, not legacy scope, is the reviewed per-row authority"). The branch was rebased onto `origin/main` first, so the
+concept runs over main's PMConcept7 and main's inventory.
+
+- **Where it comes from.** The layer reads the tree's own `Plans/settings_inventory.json`. The served `index.html` fetches
+  it before the layer starts. `tools/build_standalone.py` inlines it into both single files, with the file's SHA-256
+  (`--inventory PATH` reads another copy). There is no copy of it in the package, so a change to Plans reaches the
+  concept at the next build.
+- **On the ladder.** `classify()` reads the inventory first (`feed.js` `placesOf`). A row takes its places from
+  `may_differ_by`, its Computer key from `computer_key` (an execution host, or the server itself), and its `combine` and
+  `careful_order`. The reasons for the places it doesn't offer come from `not_offered` (`resolve.js` `reasons`). The
+  concept's own treatment stays: the safety preview and a run's own choice. The demo world's hand-written rows take
+  their places from it too. Main Branch name became project-only, as the inventory says.
+- **Owner-held.** A row the inventory gives `home: thing` is off the ladder, and the guard refuses it at every ordinary
+  level. Its panel names its owner in the same three parts, with no Change, and the base page's own choices are hidden
+  (`panel.js` `ownerWhere`). Owners are named from what each row is, in words:
+  - each AI account, each MCP server, each skill, each persona;
+  - the language server list, your publisher profile;
+  - this wizard session, each chat.
+
+  An action says "An action, not a setting: it runs when you choose it, so it has no place to set". A key or sign-in
+  also says it stays on the computer where you entered it. A row a project may choose inside its owner says so
+  ("A project can choose its own, inside each skill"). An account's own field keeps the base page's list of each
+  one's value.
+- **Outside it, named.** The six look details the engine paints keep their "follows Theme" view, with the inventory's
+  places. Rows the inventory doesn't list fall back to the heuristic (`PSX.classReport().fallback`): the layer's own
+  Projects folder, `safety.approvals.bsd-stage-bindings` and four crew rosters.
+- **Main's one-model design** (Settings batch 3) retired Thinking depth (`ai.models.reasoning-effort`; depth lives inside
+  the model picker now). The demo's "This project" example moved to Everyday building (`ai.models.worker-model`).
+  Moment 11.10's narrow assistant write, 11.12's update defaults and 11.6's joining setups moved with it. The kit's
+  `checks/settings-scope.check.mjs` moved every Thinking depth assertion to Everyday building, and dropped none.
+- **Checks.** `feedback.check.mjs --set only=where` reads the same inventory and its SHA-256. It walks every drawn row:
+  its places, reasons, combine and Computer key, or for an owner-held row no ladder, no write and an owner view. It
+  then opens a real panel for an owner-held action, field, key, the Rules file, and a row a project may choose.
 
 ## Sol max fixes (2026-11-12)
 
@@ -539,8 +578,10 @@ and Jared's YOLO rulings. The full table of findings and outcomes is in `pass2/B
   which paints it.
 - **YOLO is shown, not run:** the strip's Run mode stands for the chat's run mode; a person's own click in a sheet stands
   for an agent's request with a clear target. Real tool execution, pushes and publishing are simulated in 11.18.
-- **The classification** of the 842 adopted rows is still a concept heuristic beyond the reviewed list; the reviewed
-  classification of all 1010 rows is a Plans task (`PSX.classReport()` prints what this concept did).
+- **The classification** follows Plans' inventory layering for every row it lists. Three kinds of row stay outside it,
+  each named: the six look details the engine paints itself (they follow Theme, with the inventory's places in their
+  panel), the rows the inventory doesn't list (the heuristic decides them; `PSX.classReport().fallback`), and the
+  inventory's `per_item` combine, which the concept's resolver reads as `most_specific`.
 - **"MCP server" and "language server"** keep their protocol names; only the work machine is renamed Computer
   (decision S1). Whether the product renames MCP's own word is Jared's call.
 - **Glass transparency, the wallpaper and the Basic colour scheme** stay outside the ladder: the engine paints them on its

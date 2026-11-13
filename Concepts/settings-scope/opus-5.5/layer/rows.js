@@ -209,7 +209,7 @@
     if (!demo || row.classList.contains('o55-field')) return;
     const lab = row.querySelector('.setting-label');
     // one Changed word per row, whoever drew it (Jared's screen 02 showed "Changed · Changed"; the 1920 film of the old
-    // build shows it on Thinking depth and Everyday building after a redraw)
+    // build showed it on Thinking depth, since retired by main's one-model design, and on Everyday building after a redraw)
     const all = lab ? [...lab.querySelectorAll('.o55-changed:not(.o55-needed)')] : []; all.slice(1).forEach((x) => x.remove());
     if (inFlight(id)) return;
     row.classList.toggle('is-changed', !!changed);

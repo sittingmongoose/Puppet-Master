@@ -25,13 +25,15 @@
       project: may.includes('project') || def.home === 'project'
     };
   }
+  /* why a level isn't offered. Inventory alignment: a row Plans' inventory lists carries its not_offered codes
+     (def.notOffered), and they win; the derived reasons below are for rows it doesn't list */
   function reasons(def) {
-    const off = offered(def), r = {};
-    if (!off.everywhere) r.everywhere = def.reason;
-    if (!off.project) r.project = def.home === 'computer' ? def.reason : def.screen ? 'about_the_screen' : def.reason || 'same_for_you';
-    if (!off.computer && !off.device) r.computer = def.reason || 'same_for_you';
-    if (!off.device) r.device = def.screen ? null : 'not_about_the_screen';
-    if (def.home === 'project') { r.everywhere = 'about_this_project'; r.computer = 'about_this_project'; }
+    const off = offered(def), r = {}, n = def.notOffered || {};
+    if (!off.everywhere) r.everywhere = n.everywhere || def.reason;
+    if (!off.project) r.project = n.project || (def.home === 'computer' ? def.reason : def.screen ? 'about_the_screen' : def.reason || 'same_for_you');
+    if (!off.computer && !off.device) r.computer = n.computer || def.reason || 'same_for_you';
+    if (!off.device) r.device = def.screen ? null : n.device || 'not_about_the_screen';
+    if (def.home === 'project') { r.everywhere = n.everywhere || 'about_this_project'; r.computer = n.computer || 'about_this_project'; }
     return r;
   }
   /* who writes a level, and whether it is answering (7.1: one writer per level; Everywhere is the settings home's) */

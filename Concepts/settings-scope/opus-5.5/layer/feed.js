@@ -69,13 +69,56 @@
     if (o.some((v) => rank(v) < 0)) return [];
     return o.slice().sort((a, b) => rank(a) - rank(b));
   }
+  /* ------------------------------------------------------------------ Plans' inventory decides first
+     Inventory alignment (2026-11-13): the inventory layering is the per-row authority (SSYS-059), so classify() reads it
+     first. An owner-held row (home: thing: an action, a manager, anything set inside an owner) stays off the ladder:
+     no ordinary level takes it, it has no Change, and its panel names its owner (panel.js ownerWhere). A row on the
+     ladder takes the inventory's places (may_differ_by), its Computer key (computer_key: an execution host, or the
+     server itself), its combine and careful order, and its reasons for the levels it doesn't offer (not_offered); the
+     concept's own treatment (the safety preview, a run's own choice) stays. heuristic() decides only rows the inventory
+     doesn't list; PSX.classReport() names them */
+  function placesOf(L, h) {
+    h = h || {};
+    const may = (L.may_differ_by || []).filter((x) => x !== 'everywhere'), n = L.not_offered || {};
+    const r = { inventory: true, notOffered: n };
+    if (L.home === 'computer') Object.assign(r, { home: 'computer', reason: n.everywhere || 'names_a_program' });
+    else if (L.home === 'project') Object.assign(r, { home: 'project', reason: n.everywhere || 'about_this_project' });
+    else if (!may.length) Object.assign(r, { home: 'everywhere', reason: n.project || n.computer || 'same_for_you' });
+    else { r.may = may; if (may.includes('device')) r.screen = true; }
+    if (L.computer_key === 'execution_host') r.host = true;
+    if (L.combine === 'more_careful') { r.combine = 'more_careful'; r.careful = Array.isArray(L.careful_order) && L.careful_order.length ? L.careful_order.slice() : (h.careful || []); }
+    else if (L.combine === 'computer_ceiling') r.combine = 'computer_ceiling';
+    // the concept's safety preview stays (1.7); its careful order only previews, the inventory's combine resolves
+    if (h.safety) { r.safety = true; if (!r.careful && h.careful && h.careful.length) r.careful = h.careful; }
+    if (h.run) r.run = true;
+    return r;
+  }
   function classify(ref, s) {
+    const L = PSX.layerOf(ref.id);
+    if (!L) return heuristic(ref, s);
+    return L.home === 'thing' ? null : placesOf(L, heuristic(ref, s));
+  }
+  // an owner-held row: the inventory's home: thing, or (for a row it doesn't list) the reviewed list
+  const ownerHeld = (id) => { const L = PSX.layerOf(id); return L ? L.home === 'thing' : REVIEWED.thing.includes(id) || REVIEWED.libraryAction.includes(id); };
+  const OWNER_IDS = [...new Set(Object.keys((PSX.layering && PSX.layering.rows) || {}).filter((id) => PSX.layering.rows[id].home === 'thing')
+    .concat(REVIEWED.thing.concat(REVIEWED.libraryAction).filter((id) => !PSX.layerOf(id))))];
+  /* the demo world's own rows take their places from the inventory too (they were hand-written); a row the inventory
+     doesn't list (the layer's Projects folder, a row it has retired) keeps its own */
+  Object.keys(DEF).forEach((id) => {
+    const d = DEF[id], L = PSX.layerOf(id); if (!L || L.home === 'thing') return;
+    const r = placesOf(L, { safety: d.safety, careful: d.careful, run: d.run });
+    ['home', 'may', 'screen', 'host'].forEach((k) => { delete d[k]; });
+    Object.keys(r).forEach((k) => { if (r[k] !== undefined) d[k] = r[k]; });
+  });
+
+  /* the concept's own heuristic over id, control and scope: only for rows Plans' inventory doesn't list */
+  function heuristic(ref, s) {
     const id = ref.id, sc = ref.scope || [];
     if (REVIEWED.thing.includes(id) || REVIEWED.libraryAction.includes(id)) return null;
     /* Jared #8: a row the reference marks only "for a single run" still holds the value each run starts with, so it
        follows the ladder like every other row; its panel says a run can choose its own (it was off the ladder and showed
        the base page's own Where it applies) */
-    if (sc.length && sc.every((x) => x === 'run')) { const r = classify(Object.assign({}, ref, { scope: [] }), s); return r ? Object.assign(r, { run: true }) : r; }
+    if (sc.length && sc.every((x) => x === 'run')) { const r = heuristic(Object.assign({}, ref, { scope: [] }), s); return r ? Object.assign(r, { run: true }) : r; }
     if (sc.length && sc.every((x) => ['account', 'provider', 'persona', 'run'].includes(x))) return null;
     if ((sc.includes('account') || sc.includes('persona')) && !sc.includes('global')) return null;   // a field of one thing
     if (REVIEWED.library.includes(id)) return { home: 'everywhere', reason: 'your_library', reviewed: true };
@@ -99,10 +142,13 @@
     return { may: ['computer', 'project'] };
   }
   PSX.classReport = () => {
-    const out = { adopted: 0, reviewed: 0, byRule: {}, safety: [], ceiling: [], device: [], project: [], computer: [] };
+    // inventory alignment: which rows Plans' inventory decided, and the few the heuristic decided because it doesn't list them
+    const out = { adopted: 0, reviewed: 0, inventory: 0, fallback: [], ownerHeld: OWNER_IDS.length, source: PSX.layering ? PSX.layering.source : null, byRule: {}, safety: [], ceiling: [], device: [], project: [], computer: [] };
     Object.keys(DEF).forEach((id) => {
-      const d = DEF[id]; if (!d.adopted) return;
+      const d = DEF[id];
+      if (!d.adopted) { if (!d.inventory) out.fallback.push(id + ' (a demo row)'); return; }
       out.adopted++; if (d.reviewed) out.reviewed++;
+      if (d.inventory) out.inventory++; else out.fallback.push(id);
       const k = d.home ? 'home:' + d.home : (d.may || []).join('+') + (d.combine ? ' ' + d.combine : '');
       out.byRule[k] = (out.byRule[k] || 0) + 1;
       if (d.safety) out.safety.push(id); if (d.combine === 'computer_ceiling') out.ceiling.push(id);
@@ -484,5 +530,5 @@
   };
 
   PSX.on('world', () => { if (!feeding) PSX.emit('redraw'); });
-  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: REVIEWED.thing, owned: REVIEWED.ownerView, library: REVIEWED.libraryAction }, feed: { classify, full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
+  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: OWNER_IDS, owned: REVIEWED.ownerView, library: REVIEWED.libraryAction }, ownerHeld, feed: { classify, heuristic, placesOf, full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
 })(window);

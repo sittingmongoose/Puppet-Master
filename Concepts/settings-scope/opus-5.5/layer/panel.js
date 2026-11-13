@@ -197,7 +197,7 @@
     page.dataset.psxDone = sig;
     closeWord(head);
     const now = body.querySelector(':scope > .o55-insp-now');
-    if (now && now.classList.contains('is-per')) { perWhere(body, now); return; }
+    if (now && now.classList.contains('is-per')) { perWhere(body, now, id); return; }
     if (!DEF[id]) { offWhere(body, now, id); return; }
     body.querySelectorAll('[data-psx-block]').forEach((n) => n.remove());
     const r = PSX.resolve(id, S.ctx);
@@ -226,7 +226,7 @@
 
   /* a row that belongs to one thing (an account's nickname, a service's sign-in way): the base page lists each thing's
      value in Now; Where it applies takes the same three parts as every other panel (Jared #8) */
-  function perWhere(body, now) {
+  function perWhere(body, now, id) {
     body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
     const eng = [...body.querySelectorAll(':scope > section.o55-insp-block')].find((x) => /^Where it applies$/i.test(((x.querySelector('h4') || {}).textContent || '').trim()));
     const m = /Each ([\w ]+?) can have its own/i.exec(eng ? eng.textContent : '') || /Each ([\w ]+?) has its own/i.exec(now.textContent || '');
@@ -234,10 +234,13 @@
     hideEngineWhere(body);
     const sec = D.createElement('section');
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.setAttribute('data-psx-owner', 'per'); sec.setAttribute('data-psx-owner-name', `each ${thing}`);
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">Each ${esc(thing)} has its own.</p>`;
     const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
     slot('Everywhere', 'everywhere', `Not one value for everywhere, because each ${thing} has its own. Each one’s value is listed above.`, true);
-    slot('Computers', 'computer', `Not per computer: it belongs to the ${thing}.`);
+    // inventory alignment: a key or a sign-in kept by its account or service says where it stays
+    const secret = !!(id && (PSX.offLadder || {}).credential && PSX.offLadder.credential.test(id));
+    slot('Computers', 'computer', `Not per computer: it belongs to the ${thing}.${secret ? ' A key or sign-in stays on the computer where you entered it, and is never copied.' : ''}`);
     slot('Projects', 'project', `Not per project: it belongs to the ${thing}.${thing === 'account' ? ' A project chooses which accounts it uses, in its AI accounts.' : ''}`);
     now.after(sec);
   }
@@ -252,10 +255,17 @@
     if (lib) { libraryWhere(body, now, id); return; }
     const own = OWNER_VIEWS[(off.owned || {})[id]];
     if (own) { ownerWhere(body, now, own); return; }
+    /* inventory alignment: every owner-held row (Plans' inventory home: thing) names its owner, in the same three parts
+       and with no Change. A field of one account or one service keeps the base page's list of each one's value */
+    if (!look && PSX.ownerHeld && PSX.ownerHeld(id)) {
+      const eng = [...body.querySelectorAll(':scope > section.o55-insp-block')].find((x) => /^Where it applies$/i.test(((x.querySelector('h4') || {}).textContent || '').trim()));
+      if (eng && now && /Each [\w ]+? can have its own/i.test(eng.textContent)) { perWhere(body, now, id); return; }
+      ownerWhere(body, now, ownerFacts(id)); return;
+    }
     if (!look && !cred) {
       // a row that belongs to one thing but is drawn as a plain row: the same three parts as an account's own rows
       const eng = [...body.querySelectorAll(':scope > section.o55-insp-block')].find((x) => /^Where it applies$/i.test(((x.querySelector('h4') || {}).textContent || '').trim()));
-      if (eng && now && /Each [\w ]+? can have its own/i.test(eng.textContent)) perWhere(body, now);
+      if (eng && now && /Each [\w ]+? can have its own/i.test(eng.textContent)) perWhere(body, now, id);
       return;
     }
     body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
@@ -270,7 +280,9 @@
       sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">It goes with the look and follows Theme, which is ${esc(fromTxt)} here.</p>`;
       slot('Everywhere', 'everywhere', why('It follows Theme’s everywhere look.'), true);
       slot('Devices', 'device', `<p class="psx-wwhy">${esc(PSX.REASONS.about_the_screen[0])}</p>` + why('It follows Theme on each device.'));
-      slot('Projects', 'project', why('It follows Theme in a project with its own look.'));
+      // inventory alignment: a look detail the inventory keeps off a project says so, with its own reason
+      const Lk = PSX.layerOf(id), projOk = !Lk || (Lk.may_differ_by || []).includes('project');
+      slot('Projects', 'project', projOk ? why('It follows Theme in a project with its own look.') : why(`Not per project: ${(PSX.REASONS[(Lk.not_offered || {}).project] || PSX.REASONS.about_the_screen)[0].replace(/^This/, 'this')}`));
       const b = D.createElement('div'); b.className = 'psx-power';
       b.appendChild(btn('Open Theme', 'Open Theme’s Where it applies', 'open-theme', null, () => { try { W.PM51.revealSetting('general.visual.theme', { detail: true }); } catch (e) { /* not drawn */ } }));
       sec.appendChild(b);
@@ -297,6 +309,7 @@
     }
     const sec = D.createElement('section');
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.setAttribute('data-psx-owner', 'library'); sec.setAttribute('data-psx-owner-name', 'your library');
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">Same everywhere.</p>`;
     const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
     slot('Everywhere', 'everywhere', 'One library for every project and computer: it’s kept with your settings.', true);
@@ -313,6 +326,7 @@
      project's own .puppet-master/permissions.toml (Permissions_System §9 and PS-144) */
   const OWNER_VIEWS = {
     permissions_projection: {
+      kind: 'projection', owner: 'Permissions',
       now: 'Kept by Permissions · a read-only copy',
       sentence: 'Your rules are kept by Permissions. This file is a read-only copy of your everywhere rules: change a rule in Permissions, never in the file.',
       everywhere: 'Your everywhere rules are kept with your settings, and only there. Puppet Master keeps this file in step with them so tools that read TOML can see them; it is never a second place to change them.',
@@ -320,9 +334,69 @@
       project: 'Not per project: a project’s own rules are in that project’s own .puppet-master/permissions.toml.'
     }
   };
+  /* inventory alignment: who keeps each owner-held row, in plain words, from what the row is (its description in Plans'
+     inventory). The most specific entry first; a prefix ends in "." or "-". A row none of these name says its owner's
+     page, from the inventory's group title */
+  const OWNERS = [
+    ['general.interaction.chat-eli5', 'each chat'], ['general.interaction.assistant-mode', 'each chat'], ['general.interaction.thread-archive-days', 'your chat history'],
+    ['ai.accounts.', 'each AI account'],
+    ['ai.models.goal-', 'Goals'], ['ai.models.lane-bindings', 'the work lanes'], ['ai.models.per-lane-', 'the work lanes'], ['ai.models.execution-role', 'each run'],
+    ['ai.models.custom-variants', 'your own presets'], ['ai.models.model-alias', 'your model nicknames'],
+    ['safety.rules.chat-mode', 'each chat'], ['safety.rules.scope-selector', 'the rules editor'],
+    ['code.editing.formatter-', 'the formatter list'], ['code.editing.lsp-', 'the language server list'],
+    ['code.execution.run-mode', 'each agent run'], ['code.execution.execution-strategy', 'each agent run'], ['code.execution.strategy-override', 'each agent run'], ['code.execution.mode-overlay', 'each agent run'],
+    ['code.execution.dockerhub-', 'your Docker Hub sign-in'], ['code.execution.enterprise-registries', 'your company registry list'], ['code.execution.registry-credentials', 'your company registry list'],
+    ['code.execution.ssh-remotes', 'your list of SSH computers'], ['code.execution.ssh-keys', 'your SSH key list'], ['code.execution.server-sign-in', 'each server’s pairing'],
+    ['code.execution.debug-configurations', 'your debug profiles'], ['code.execution.maintainer-', 'your publisher profile'],
+    ['memory.assembly.app-rules', 'your rules for every project'],
+    ['planning.interview.', 'this wizard session'],
+    ['planning.verification.goal-template', 'each Goal template'], ['planning.verification.receipt-type', 'each finished Goal'], ['planning.verification.goal-write-mode', 'each Goal'],
+    ['branching.worktrees.git-push-', 'each code service’s sign-in'], ['branching.worktrees.commit-signing-key', 'your signing setup'], ['branching.worktrees.', 'the project you contribute to'],
+    ['web.providers.', 'each web service'], ['web.fetch.browser-', 'the protected browser profile'], ['web.fetch.proxy-credentials', 'your proxy sign-in'],
+    ['personas.library.active-persona', 'each chat'], ['personas.library.core-personas', 'the persona library'], ['personas.library.disabled-bundled', 'the persona library'],
+    ['personas.library.custom-scope', 'the persona library'], ['personas.library.ask-by-name', 'the persona library'], ['personas.', 'each persona'],
+    ['extensions.skills.sort', 'the skill list'], ['extensions.skills.search', 'the skill list'], ['extensions.skills.your-skills', 'the skill list'], ['extensions.skills.', 'each skill'],
+    ['extensions.plugins.packages', 'the plugin list'], ['extensions.plugins.', 'each plugin'],
+    ['extensions.commands.search-shortcuts', 'the shortcut list'], ['extensions.commands.custom-commands', 'your command list'], ['extensions.commands.', 'each command'],
+    ['system.health.', 'the Doctor'], ['system.mcp.server-list', 'your MCP server list'], ['system.mcp.', 'each MCP server'],
+    ['system.advanced.config-format', 'your settings file']
+  ];
+  const ownerOf = (id) => {
+    const m = OWNERS.find(([k]) => (/[.-]$/.test(k) ? String(id).startsWith(k) : id === k));
+    if (m) return m[1];
+    const g = PSX.groupOf && PSX.groupOf(id);
+    return g ? `its owner in ${g}` : 'its owner';
+  };
+  // an action: it runs when you choose it, and keeps nothing, so it has no place
+  const ACTION_VIEW = {
+    kind: 'action', owner: null, now: 'An action, not a setting',
+    sentence: 'An action, not a setting: it runs when you choose it, so it has no place to set.',
+    everywhere: 'Not a value for everywhere: nothing is kept.',
+    computer: 'Not per computer: it runs when you choose it.',
+    project: 'Not per project: it runs when you choose it.'
+  };
+  /* what an owner-held row's panel says, without drawing it (the check reads it for every owner-held row) */
+  function ownerFacts(id) {
+    const special = OWNER_VIEWS[(((PSX.offLadder || {}).owned) || {})[id]]; if (special) return special;
+    const type = PSX.layering && PSX.layering.types[id], s = W.PM51 && W.PM51.setting ? W.PM51.setting(id) : null;
+    if (type === 'action' || (!type && s && /^(action|resource)$/.test(String(s.control || '')))) return ACTION_VIEW;
+    const L = PSX.layerOf(id), owner = ownerOf(id);
+    const perProject = !!(L && (L.may_differ_by || []).includes('project'));
+    const secret = !!((PSX.offLadder || {}).credential && PSX.offLadder.credential.test(id));
+    return {
+      kind: 'owned', owner, now: `Kept by ${owner}`,
+      sentence: `Kept by ${owner}, and set there: it isn’t a setting with a place of its own.`,
+      everywhere: `Not one value for everywhere: ${owner} keeps it.`,
+      computer: secret ? `Not per computer: ${owner} keeps it, and a key or sign-in stays on the computer where you entered it.` : `Not per computer: ${owner} keeps it.`,
+      project: perProject ? `A project can choose its own, inside ${owner}.` : `Not per project: ${owner} keeps it.`
+    };
+  }
   function ownerWhere(body, now, v) {
     body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
     hideEngineWhere(body);
+    /* inventory alignment: an owner-held row takes no value in Settings (its owner changes it, as "When you might change
+       it" says), so the base page's own choices are hidden here too: no Change, in any form */
+    body.querySelectorAll(':scope > section.o55-insp-block').forEach((x) => { if (!x.hasAttribute('data-psx-block') && x.querySelector('.o55-insp-choice, .o55-pick-trigger, .o55-pick-inline')) { x.hidden = true; x.setAttribute('data-psx-hidden', ''); } });
     if (now) {
       const l = now.querySelector('.o55-insp-now-label'), f = now.querySelector('.o55-insp-now-foot');
       if (l) l.textContent = v.now;
@@ -330,7 +404,8 @@
       now.classList.remove('is-changed');
     }
     const sec = D.createElement('section');
-    sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where'); sec.setAttribute('data-psx-owner', '');
+    sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.setAttribute('data-psx-owner', v.kind || 'owned'); if (v.owner) sec.setAttribute('data-psx-owner-name', v.owner);
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">${esc(v.sentence)}</p>`;
     const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
     slot('Everywhere', 'everywhere', v.everywhere, true);
@@ -938,5 +1013,5 @@
   PSX.on('redraw', () => rerender());
   PSX.on('fed', () => rerender());
   PSX.on('ctx', () => { editing = null; rerender(); });
-  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, own: null, ownId: null, focusAfter: null, rerender };
+  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, ownerFacts, ownerOf, own: null, ownId: null, focusAfter: null, rerender };
 })(window);
