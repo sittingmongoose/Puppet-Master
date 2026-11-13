@@ -74,7 +74,7 @@
 #panel-settings .o55-insp-techbody .o55-textbtn svg { width: 12px; height: 12px; }
 
 /* FO-127 (Jared #2; his picks, option b and all 11 long lists): a model setting's or long list's Your choices is the
-   chat's picker unfolding in the panel
+   chat's picker, popping up over the panel since FO-178
    (kit.d/30-inspector.js o55PickerHtml). The trigger is the chat's shared-picker-button (maker mark, name, small line,
    chevron); the rows are its model menu's (28 px maker tile, name, one muted line, the tick); the maker tile is the
    chat's .provider-mark gradient on this look's accents. */
@@ -117,22 +117,25 @@
 .o55-pick-group.pm51-popout-group:not(:first-child) { border-top: 0; margin-top: 2px; }
 .o55-pick-mark .icon { width: auto; height: auto; display: grid; place-items: center; }
 
-/* the unfolded list under the trigger, makers as a strip of marks (the chat's rail, laid flat) */
-#panel-settings .o55-pick-inline { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding: 8px; border: 1px solid var(--k3-line); border-radius: 10px; background: var(--k3-bg-1); }
-#panel-settings .o55-pick-inline.is-entering { animation: o55-pick-unfold 220ms var(--k3-ease-out) both; }
-@keyframes o55-pick-unfold { from { opacity: 0; transform: translateY(-4px); clip-path: inset(0 0 100% 0 round 10px); } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 10px); } }
-html[data-motion="reduced"] #panel-settings .o55-pick-inline.is-entering { animation: none; }
-@media (prefers-reduced-motion: reduce) { #panel-settings .o55-pick-inline.is-entering { animation: none; } }
-#panel-settings .o55-pick-chips { display: flex; flex-wrap: wrap; gap: 4px; }
-#panel-settings .o55-pick-chip { position: relative; display: inline-grid; place-items: center; width: 32px; height: 30px; padding: 0; border: 1px solid transparent; border-radius: 8px; background: none; color: var(--k3-text-3); font: inherit; cursor: pointer; }
-#panel-settings .o55-pick-chip .icon { width: auto; height: auto; }
-#panel-settings .o55-pick-chip svg { width: 14px; height: 14px; }
-#panel-settings .o55-pick-chip:hover { background: var(--k3-bg-2); color: var(--k3-text-1); }
-#panel-settings .o55-pick-chip.is-on { border-color: color-mix(in srgb, var(--k3-accent) 50%, transparent); background: var(--k3-accent-soft); color: var(--k3-text-1); }
-#panel-settings .o55-pick-chip:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
-#panel-settings .o55-pick-inline .o55-pick-search { position: static; margin: 0; }
-#panel-settings .o55-pick-inline .o55-pick-list { position: relative; max-height: min(320px, 46vh); overflow-y: auto; margin: 0 -4px; padding: 0 4px; scrollbar-width: thin; }
-#panel-settings .o55-pick-inline .o55-pick-group:first-child { padding-top: 2px; }
+/* FO-178 (Jared's card Q6, answer A: "Pop up over the panel, like the chat picker"): the list pops up over the panel
+   (kit.d/30-inspector.js o55PopOpen) instead of unfolding in it. It is a Settings popout in document.body, so these rules
+   are not under #panel-settings and read the look's own tokens, as every popout does (the --k3 tokens live on the panel).
+   kit.js's positionPopout gives it the trigger's left edge and width, its top or bottom and its max-height; here it is a
+   column: the maker strip (the chat's rail, laid flat) and the search at the top, and the list, the popup's own scroll
+   box and its rows' offsetParent, taking what is left. */
+.pm51-popout.o55-pick-pop { display: flex; flex-direction: column; min-width: 0; max-width: calc(100vw - 16px); padding: 8px; overflow: hidden; }
+.o55-pick-pop .o55-pick-chips { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 8px; }
+.o55-pick-pop .o55-pick-chip { position: relative; display: inline-grid; place-items: center; width: 32px; height: 30px; padding: 0; border: 1px solid transparent; border-radius: 8px; background: none; color: var(--text-muted, #8f8ab0); font: inherit; cursor: pointer; }
+.o55-pick-pop .o55-pick-chip .icon { width: auto; height: auto; }
+.o55-pick-pop .o55-pick-chip svg { width: 14px; height: 14px; }
+.o55-pick-pop .o55-pick-chip:hover { background: color-mix(in srgb, var(--text-primary, #f4f2ff) 8%, transparent); color: var(--text-primary, #f4f2ff); }
+.o55-pick-pop .o55-pick-chip.is-on { border-color: color-mix(in srgb, var(--accent-primary, #7c6cff) 50%, transparent); background: var(--accent-soft, rgba(124,108,255,.18)); color: var(--text-primary, #f4f2ff); }
+.o55-pick-pop .o55-pick-chip:focus-visible { outline: 2px solid var(--accent-primary, #7c6cff); outline-offset: 1px; }
+.o55-pick-pop .o55-pick-search { position: static; flex: 0 0 auto; margin: 0 0 8px; }
+.o55-pick-pop .o55-pick-list { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; margin: 0 -4px; padding: 0 4px; scrollbar-width: thin; }
+.o55-pick-pop .o55-pick-group:first-child { padding-top: 2px; }
+.o55-pick-pop .o55-insp-dot { width: 16px; height: 16px; flex: 0 0 auto; margin-top: 0; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); }
+.o55-pick-pop :is(.o55-pick-mark, .o55-pick-tick) .icon { width: auto; height: auto; display: grid; place-items: center; }
 
 /* the side panels' head tile (PM51.panel's hero, styles.css): the same quiet tile and PM glyph as the Details panel's;
    a tone keeps its colour for the glyph and a faint ring */
@@ -143,4 +146,4 @@ html[data-motion="reduced"] #panel-settings .o55-pick-inline.is-entering { anima
 #panel-settings .pm51-hero.tone-attention .pm51-hero-icon { color: var(--k3-amber); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-amber) 35%, transparent); }
 #panel-settings .pm51-hero.tone-blocked .pm51-hero-icon { color: var(--k3-red); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-red) 35%, transparent); }
 /* a chosen or keyed row (NieR inverts it to ink): its tag and small line follow the row's own ink */
-#panel-settings .o55-pick-item:is(.is-active, [aria-selected="true"]) .o55-pick-copy :is(em, small) { color: inherit; opacity: .8; }
+.o55-pick-pop .o55-pick-item:is(.is-active, [aria-selected="true"]) .o55-pick-copy :is(em, small) { color: inherit; opacity: .8; }

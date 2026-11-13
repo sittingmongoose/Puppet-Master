@@ -56,7 +56,8 @@ function o55ChoicesFor(setting, current) {
 /* FO-127 (Jared, 2026-11-09 #2): "Shouldnt the your choices list be a drop down rather than listing every model down
    the page? you could use the model selector from assistant chat." Jared's pick (2026-11-10, "option b"): a model
    setting's Your choices is one picker button, the chat's (5.6 Pro shared-picker-button: the maker's mark, the name, a
-   small line, the chevron), and it unfolds the chat model menu's rows inside the panel under itself: a strip of maker
+   small line, the chevron), and it opens the chat model menu's rows (since FO-178 in a popup over the panel, o55PopOpen
+   below; they first unfolded inside it): a strip of maker
    marks (the chat menu's rail, laid flat for the narrow panel), a search box, one section per maker, one row per model
    with the maker's mark (PM56_PICKERS.providerMark), where it runs, the Default/Recommended tags and the tick. Which
    lists, by id, exactly as Jared chose them: the 13 model settings (option B, 2026-11-10) and the 11 long single-choice
@@ -116,44 +117,43 @@ function o55PickItems(pm, idBase) {
   });
   return html + '<div class="pm51-popout-empty" hidden>No matches</div>';
 }
-/* The active row of the unfolded list, kept wholly inside the list's own visible box. kit.js's setActiveOption scrolls
-   by offsetTop with a pad for a popout's sticky search; here the list is the scroller, its search sits above it, and an
-   option's offsetParent was not the list (the unfolding box, or the Details panel under Reduced Motion), so Arrow Up and
-   every step under Reduced Motion left the row out of view. The row is placed against the list's rect instead, and then
-   against every scroller that holds the list up to the Details panel (its body), so a short window (1280x500), where
-   the list itself runs past the panel's scrolled view, still shows the row: each scroller moves the least it must. */
-function o55InlineActive(entry, index) {
+/* The active row, kept wholly inside the popup's own scroll box: its list. kit.js's setActiveOption scrolls by offsetTop
+   with a pad for a popout's sticky search; here the maker strip and the search sit above the list, which is the only
+   scroller, so the row is placed in the list's own layout box (the list is the rows' offsetParent). Layout boxes are not
+   scaled by the sprout, so a key pressed while the popup is still growing moves the list as far as one pressed after it
+   (FO-127's walk: Arrow Up and every step under Reduced Motion had left the row out of view; FO-178 keeps it in the popup,
+   which never runs past the window, so no scroller outside it has to move). */
+function o55PopActive(entry, index) {
   setActiveOption(entry, index, false);
-  const node = entry.el.querySelector(`[role="option"][data-index="${index}"]`); if (!node) return;
-  const m = 4;
-  const reveal = scroller => {
-    const sr = scroller.getBoundingClientRect(), nr = node.getBoundingClientRect();
-    if (nr.top < sr.top + m) scroller.scrollTop -= Math.ceil(sr.top + m - nr.top);
-    else if (nr.bottom > sr.bottom - m) scroller.scrollTop += Math.ceil(nr.bottom - (sr.bottom - m));
-  };
-  reveal(entry.el);
-  for (let el = entry.el.parentElement; el && el !== document.body; el = el.parentElement) {
-    if (el.scrollHeight > el.clientHeight + 1 && /(auto|scroll)/.test(getComputedStyle(el).overflowY)) reveal(el);
-    if (el.classList.contains('detail-inspector')) break;
-  }
+  const list = entry.el, node = list.querySelector(`[role="option"][data-index="${index}"]`); if (!node) return;
+  const m = 4, top = node.offsetTop, bottom = top + node.offsetHeight;
+  if (top - m < list.scrollTop) list.scrollTop = Math.max(0, top - m);
+  else if (bottom + m > list.scrollTop + list.clientHeight) list.scrollTop = bottom + m - list.clientHeight;
 }
-function o55InlineMove(entry, delta, edge) {
+function o55PopMove(entry, delta, edge) {
   const nodes = [...entry.el.querySelectorAll('[role="option"]')].filter(n => !n.hidden && n.getAttribute('aria-disabled') !== 'true');
   if (!nodes.length) return;
   let i = nodes.findIndex(n => Number(n.dataset.index) === entry.active);
   if (edge === 'home') i = 0; else if (edge === 'end') i = nodes.length - 1;
   else i = Math.max(0, Math.min(nodes.length - 1, (i < 0 ? (delta > 0 ? -1 : nodes.length) : i) + delta));
-  o55InlineActive(entry, Number(nodes[i].dataset.index));
+  o55PopActive(entry, Number(nodes[i].dataset.index));
 }
-/* search and the maker filter together; a maker's section hides with its last row */
+/* search and the maker filter together; a maker's section hides with its last row. The popup keeps where it was placed
+   (one that opened over its trigger keeps its bottom edge, as the chat's model picker does) and, when its height
+   changed, springs it with the menu sprout's size bounce, as every popout does under a filter (none under Reduced Motion) */
 function o55PickFilter(entry, root) {
+  const before = entry.pop ? entry.pop.offsetHeight : 0;
+  o55PickFilterRows(entry, root);
+  if (entry.pop && Math.abs(entry.pop.offsetHeight - before) > 4 && window.PM6_SPROUT && PM6_SPROUT.bounce) PM6_SPROUT.bounce(entry.pop);
+}
+function o55PickFilterRows(entry, root) {
   const q = String(entry.searchInput.value || '').trim().toLowerCase();
   let any = false;
   root.querySelectorAll('[role="option"]').forEach(n => { const hit = (!entry.brand || n.dataset.brand === entry.brand) && (!q || `${n.textContent} ${n.dataset.brand || ''}`.toLowerCase().includes(q)); n.hidden = !hit; if (hit) any = true; });
   root.querySelectorAll('.o55-pick-group').forEach(g => { g.hidden = !root.querySelector(`[role="option"][data-brand="${cssEscape(g.dataset.brand)}"]:not([hidden])`); });
   const empty = root.querySelector('.pm51-popout-empty'); if (empty) empty.hidden = any;
   const first = [...root.querySelectorAll('[role="option"]')].find(n => !n.hidden && n.getAttribute('aria-disabled') !== 'true');
-  if (first) { entry.el.scrollTop = 0; o55InlineActive(entry, Number(first.dataset.index)); } else entry.active = -1;
+  if (first) { entry.el.scrollTop = 0; o55PopActive(entry, Number(first.dataset.index)); } else entry.active = -1;
 }
 function o55PickCommit(id, raw) {
   const found = findSettingGlobal(id); if (!found) return;
@@ -186,34 +186,83 @@ function o55PickFocusBack(id) {
 const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!(it.why || it.off), reason: it.why || it.reason || '' }; }); return o; };
 const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip is-on" data-brand="" aria-pressed="true" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
   .concat(pm.brands.map(b => `<button type="button" class="o55-pick-chip" data-brand="${a(b)}" aria-pressed="false" aria-label="${a(b)}" data-pm-hover-label="${a(b)}">${o55BrandMark(b, size)}</button>`)).join('');
-/* The rows unfold in the panel under the trigger, with the makers as a strip (the panel is too narrow for the chat's
-   rail beside the list). Not a popout, so it keeps its own keys: arrows, Page Up/Down, Home/End, Enter; Escape below. */
-let o55Inline = null;
-function o55InlineClose(focusTrigger) {
-  const e = o55Inline; if (!e) return; o55Inline = null;
+/* FO-178 (Jared's card Q6, answer A, 2026-11-13: "Pop up over the panel, like the chat picker"): the rows no longer
+   unfold in the panel under the trigger, pushing what follows down; they pop up over the panel, the way the chat's model
+   picker pops up over its sheet, and the panel under them does not move. The popup is built from the parts the chat's
+   picker and every Settings popout are built from, nothing of its own:
+     where it lives   document.body, position: fixed (a .pm51-popout, kit.js's popout layer at z-index 1300), so it sits
+                      above the panel and the panel's toasts whatever stacking context the panel makes (isolation or not)
+     where it stands  kit.js's positionPopout: from the trigger's left edge at the trigger's width, so it fits the narrow
+                      panel; under the trigger when the list fits there, over it when it does not (it keeps that bottom
+                      edge while a search shortens it, as the chat's picker does), never past the window's edges or under
+                      the status bar
+     how it moves     the menu sprout, PM6_SPROUT, from the trigger's centre (origin 'trigger', the chat's menus' own);
+                      its size bounce when a search or a maker changes its height; nothing under Reduced Motion
+     its surface      a menu sheet in Glass (data-lg-surface="menu") and a popout in every other look
+   Inside it, the maker strip (the chat's rail, laid flat for the narrow panel) and the search stay at the top and the
+   list is the popup's own scroll box. It keeps its own keys (arrows, Page Up/Down, Home/End, Enter, Escape, Tab out to
+   the trigger); a press outside it, focus leaving it, a window resize or its trigger leaving the page close it, and a
+   scroll that moves its trigger takes it along. */
+let o55Pop = null;
+function o55PopClose(focusTrigger) {
+  const e = o55Pop; if (!e) return; o55Pop = null;
+  if (e.watch) e.watch.disconnect();
   if (e.trigger.isConnected) { e.trigger.setAttribute('aria-expanded', 'false'); e.trigger.removeAttribute('aria-controls'); }
-  e.box.remove();
+  const box = e.box;
+  sproutClose(box, () => { if (box.isConnected && !box.classList.contains('is-open')) box.remove(); });
   if (focusTrigger && e.trigger.isConnected) { try { e.trigger.focus({ preventScroll: true }); } catch (err) { e.trigger.focus(); } }
 }
-function o55InlineOpen(trigger, setting, pm, src) {
-  if (o55Inline && o55Inline.trigger === trigger) { o55InlineClose(true); return; }
-  o55InlineClose(false); PM51.closePopouts();
+/* Where it stands: the chat's model picker's rule (5.6 Pro positionOverlays, a scoped picker): from the trigger's left
+   edge, under the trigger when the whole box fits there, else over it, its bottom edge kept by the trigger so a search
+   that shortens it shrinks it toward the trigger (the chat's pinBottom), and never past the window's edges. The room is
+   Settings' popout frame (kit.js popoutFrame: 8 px from the window's edges, above the status bar) and the box is capped
+   as every popout is (420 px). When neither side holds the whole box, the list is cut to the larger side, as kit.js's
+   positionPopout does; a side too small even for that (under 180 px) gives way to the chat's clamp, which slides the box
+   over the trigger to stay on screen. The box is measured at its full height as a block, then is a column again (strip,
+   search, the list taking what is left), and the list keeps its scroll. */
+function o55PopPlace(p) {
+  const box = p.box, list = p.entry.el, keep = list.scrollTop, gap = 6, MIN = 180;
+  const { vw, vh, top: ft, bottom: fb } = popoutFrame();
+  const ar = p.trigger.getBoundingClientRect();
+  const w = Math.max(200, Math.min(vw - 16, ar.width));
+  box.style.width = w + 'px'; box.style.left = Math.round(Math.max(8, Math.min(vw - w - 8, ar.left))) + 'px';
+  box.style.display = 'block'; box.style.maxHeight = 'none'; box.style.top = '0px'; box.style.bottom = '';
+  const ph = box.offsetHeight;
+  let h = Math.min(ph, 420, fb - ft);
+  const below = fb - ar.bottom - gap, above = ar.top - gap - ft;
+  let top = null, bottom = null;
+  if (below >= h) top = ar.bottom + gap;
+  else if (above >= h) bottom = ar.top - gap;
+  else if (Math.max(below, above) >= MIN) { if (below >= above) { h = below; top = ar.bottom + gap; } else { h = above; bottom = ar.top - gap; } }
+  else top = Math.max(ft, Math.min(fb - h, ar.bottom + gap));
+  box.style.maxHeight = Math.floor(h) + 'px';
+  if (bottom != null) { box.style.top = 'auto'; box.style.bottom = Math.round(vh - bottom) + 'px'; }
+  else { box.style.top = Math.round(top) + 'px'; box.style.bottom = ''; }
+  box.style.display = 'flex';
+  list.scrollTop = keep;
+  p.at = anchorAt(p.trigger);
+}
+function o55PopOpen(trigger, setting, pm, src) {
+  if (o55Pop && o55Pop.trigger === trigger) { o55PopClose(true); return; }
+  o55PopClose(false); PM51.closePopouts();
   const label = PM51.rowLabel(setting), id = POP_ID();
-  const box = document.createElement('div'); box.className = 'o55-pick-inline';
+  const box = document.createElement('div');
+  box.className = `pm51-popout o55-pick-pop${pm.model ? ' is-model' : ''}`; box.id = id;
+  box.dataset.portalDisplay = 'flex'; box.setAttribute('data-lg-surface', 'menu');
   box.innerHTML = `${pm.model && pm.brands.length > 1 ? `<div class="o55-pick-chips" role="group" aria-label="Show models from">${o55PickBrands(pm, 14)}</div>` : ''}<div class="pm51-popout-search o55-pick-search">${icon('search')}<input type="search" role="combobox" aria-autocomplete="list" aria-controls="${id}-list" aria-expanded="true" data-pm-hover-exempt="menu" aria-label="${a('Filter ' + label)}" placeholder="${a(pm.model ? 'Search models…' : 'Search choices…')}"/></div><div class="o55-pick-list" role="listbox" id="${id}-list" aria-label="${a(label)}">${o55PickItems(pm, id)}</div>`;
-  trigger.insertAdjacentElement('afterend', box);
+  document.body.appendChild(box);
   const list = box.querySelector('.o55-pick-list');
-  const entry = { el: list, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
-  o55Inline = { box, trigger, entry };
+  const entry = { el: list, pop: box, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
+  const p = o55Pop = { box, trigger, entry, setting: setting.id, at: null, watch: null };
   trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', id + '-list');
-  const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55InlineClose(true); if (src && src.commit) o55PickOwnerCommit(setting.id, src, o.value); else o55PickCommit(setting.id, o.value); };
+  const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55PopClose(true); if (src && src.commit) o55PickOwnerCommit(setting.id, src, o.value); else o55PickCommit(setting.id, o.value); };
+  o55PopPlace(p);
+  /* the current choice (else the first that can be picked) is the active row, in the middle of the list's view */
   const sel = pm.items.find(x => x.on), first = pm.items.find(x => !x.why);
   setActiveOption(entry, (sel || first || { index: -1 }).index, false);
   const node = list.querySelector(`[data-index="${entry.active}"]`);
-  if (node) { const lr = list.getBoundingClientRect(), nr = node.getBoundingClientRect(); list.scrollTop = Math.max(0, list.scrollTop + nr.top - lr.top - (lr.height - nr.height) / 2); }
-  /* the unfolded list is brought into the panel's view, instantly (the panel scroll is not an animation) */
-  const body = box.closest('.o55-insp-body');
-  if (body) { const br = body.getBoundingClientRect(), xr = box.getBoundingClientRect(), over = xr.bottom + 12 - br.bottom; if (over > 0) body.scrollTop += Math.min(over, Math.max(0, trigger.getBoundingClientRect().top - br.top - 8)); }
+  if (node) list.scrollTop = Math.max(0, node.offsetTop - (list.clientHeight - node.offsetHeight) / 2);
+  if (window.PM6_SPROUT) PM6_SPROUT.open(box, null, trigger, { origin: 'trigger' }); else box.classList.add('is-open');
   box.addEventListener('pointermove', e => { const it = e.target.closest('[role="option"]'); if (it && Number(it.dataset.index) !== entry.active) setActiveOption(entry, Number(it.dataset.index), false); });
   box.addEventListener('click', e => {
     const chip = e.target.closest('.o55-pick-chip');
@@ -224,21 +273,46 @@ function o55InlineOpen(trigger, setting, pm, src) {
   box.addEventListener('keydown', e => {
     const k = e.key, stop = () => { e.preventDefault(); e.stopPropagation(); };
     if (e.target.closest('.o55-pick-chip') && (k === 'Enter' || k === ' ')) return;
-    if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp') { stop(); o55InlineMove(entry, { ArrowDown: 1, ArrowUp: -1, PageDown: 8, PageUp: -8 }[k]); return; }
-    if ((k === 'Home' || k === 'End') && e.target !== entry.searchInput) { stop(); o55InlineMove(entry, 0, k === 'Home' ? 'home' : 'end'); return; }
-    if (k === 'Enter' && entry.active >= 0) { stop(); pick(entry.active); }
+    if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp') { stop(); o55PopMove(entry, { ArrowDown: 1, ArrowUp: -1, PageDown: 8, PageUp: -8 }[k]); return; }
+    if ((k === 'Home' || k === 'End') && e.target !== entry.searchInput) { stop(); o55PopMove(entry, 0, k === 'Home' ? 'home' : 'end'); return; }
+    if (k === 'Enter' && entry.active >= 0) { stop(); pick(entry.active); return; }
+    /* the popup sits at the end of the page, away from its trigger: Tab past its last control, or Shift+Tab before its
+       first, closes it on the trigger, so the next Tab goes on from there through the panel */
+    if (k === 'Tab') {
+      const stops = [...box.querySelectorAll('button, input')].filter(n => !n.disabled && n.getClientRects().length);
+      if ((!e.shiftKey && e.target === stops[stops.length - 1]) || (e.shiftKey && e.target === stops[0])) { stop(); o55PopClose(true); }
+    }
   });
-  box.addEventListener('focusout', () => { requestAnimationFrame(() => { if (o55Inline && o55Inline.box === box && !box.contains(document.activeElement) && document.activeElement !== trigger) o55InlineClose(false); }); });
-  requestAnimationFrame(() => { if (o55Inline && o55Inline.box === box) entry.searchInput.focus({ preventScroll: true }); });
-  if (!o55Still()) { box.classList.add('is-entering'); box.addEventListener('animationend', () => box.classList.remove('is-entering'), { once: true }); }
+  box.addEventListener('focusout', () => { requestAnimationFrame(() => { if (o55Pop === p && !box.contains(document.activeElement) && document.activeElement !== trigger) o55PopClose(false); }); });
+  /* a re-render that replaces the trigger (the panel closed, or its block was swapped) takes the popup with it, and
+     hands focus to the new trigger when the popup held it, as a pick does */
+  const host = document.getElementById('panel-settings') || document.body;
+  if (window.MutationObserver) {
+    p.watch = new MutationObserver(() => {
+      if (o55Pop !== p || trigger.isConnected) return;
+      const had = box.contains(document.activeElement);
+      o55PopClose(false); if (had) o55PickFocusBack(setting.id);
+    });
+    p.watch.observe(host, { childList: true, subtree: true });
+  }
+  requestAnimationFrame(() => { if (o55Pop === p) entry.searchInput.focus({ preventScroll: true }); });
 }
-document.addEventListener('pointerdown', e => { const p = o55Inline; if (!p) return; if (p.box.contains(e.target) || p.trigger.contains(e.target)) return; o55InlineClose(false); }, true);
-/* Escape folds the unfolded list and nothing else: registered at load, ahead of the Details panel's own Escape
+document.addEventListener('pointerdown', e => { const p = o55Pop; if (!p) return; if (p.box.contains(e.target) || p.trigger.contains(e.target)) return; o55PopClose(false); }, true);
+/* Escape closes the popup and nothing else: registered at load, ahead of the Details panel's own Escape
    (onDetailEsc, a later capture listener), as kit.js's popout keys are */
 document.addEventListener('keydown', e => {
-  const p = o55Inline; if (!p || e.key !== 'Escape' || !(p.box.contains(e.target) || p.trigger.contains(e.target))) return;
-  e.preventDefault(); e.stopImmediatePropagation(); o55InlineClose(true);
+  const p = o55Pop; if (!p || e.key !== 'Escape' || !(p.box.contains(e.target) || p.trigger.contains(e.target))) return;
+  e.preventDefault(); e.stopImmediatePropagation(); o55PopClose(true);
 }, true);
+/* a scroll that moves the trigger (the panel's body, the page) takes the popup along, as kit.js's lists go with their
+   anchor; a scroll inside the popup, or one that leaves the trigger where it was, changes nothing. A resize closes it,
+   as it closes every Settings popout. */
+document.addEventListener('scroll', e => {
+  const p = o55Pop; if (!p || p.box.contains(e.target) || !p.trigger.isConnected) return;
+  const now = anchorAt(p.trigger); if (p.at && now && Math.abs(now.left - p.at.left) < 0.5 && Math.abs(now.top - p.at.top) < 0.5) return;
+  o55PopPlace(p);
+}, true);
+window.addEventListener('resize', () => o55PopClose(false));
 /* the trigger is a combobox: Arrow Down (or Alt+Arrow Down) opens it, as it does a Settings dropdown */
 document.addEventListener('keydown', e => {
   const t = e.target && e.target.closest && e.target.closest('.o55-pick-trigger'); if (!t || e.key !== 'ArrowDown' || t.getAttribute('aria-expanded') === 'true') return;
@@ -418,7 +492,7 @@ dispatchAction = function (action, el, event) {
     const found = findSettingGlobal(el.dataset.setting); if (!found) return;
     const ch = o55ChoicesFor(found.setting, settingValue(found.setting)); if (!ch) return;
     const ps = o55PickSource(found.setting, ch);
-    o55InlineOpen(el, found.setting, o55PickModel(found.setting, ps.ch, ps.src), ps.src); return;
+    o55PopOpen(el, found.setting, o55PickModel(found.setting, ps.ch, ps.src), ps.src); return;
   }
   if (action === 'reset-setting') {
     const id = el.dataset.setting, found = findSettingGlobal(id); if (!found || !restoreSettingDefault(id)) return;
