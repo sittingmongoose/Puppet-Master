@@ -46,12 +46,15 @@ async function reveal(t, f, id) {
 	await t.page.waitForTimeout(400);
 	return f.locator(`[id="setting-${id}"]`).first();
 }
-// true when the page's own build-validated placement retires this row (PM51_PLACEMENT.retire_ids):
+// true when the page's own build-validated placement retires this row (the public
+// PM51.placement.audit().retiredIds; the raw PM51_PLACEMENT constant is private to the page's closure):
 // such a row is drawn nowhere. A row that exists is never skipped; it runs every original assertion.
 async function retired(f, id) {
 	return f.evaluate((i) => {
-		const P = typeof PM51_PLACEMENT === 'object' && PM51_PLACEMENT ? PM51_PLACEMENT : null;
-		return !!(P && Array.isArray(P.retire_ids) && P.retire_ids.includes(i));
+		const a = window.PM51 && PM51.placement && typeof PM51.placement.audit === 'function' ? PM51.placement.audit() : null;
+		const ids = a && Array.isArray(a.retiredIds) ? a.retiredIds : null;
+		const live = !!(window.PM51 && PM51.placement && PM51.placement.byId && PM51.placement.byId[i]);
+		return !!(ids && ids.includes(i) && !live);
 	}, id);
 }
 async function notRetired(t, f, id) {
