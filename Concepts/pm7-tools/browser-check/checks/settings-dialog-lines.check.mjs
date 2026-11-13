@@ -37,6 +37,34 @@ const DIALOG = '.overlay section.dialog[role="dialog"]';
 const MENU = '.pm51-popout[role="menu"]';
 const CONFIRM_IN_PAGE = /^(delete|remove|forget|reset|disconnect|revoke|clear|sign out|turn off|roll back|clean up|claim|restart|rotate|allow|copy settings|copy the recovery|start |move workspace|back up|stop )/i;
 const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
+/* settings-dialog-entries.json (beside this check, shared with settings-confirm-once): base dialogs a later approved design
+   retired, and design-pinned confirms drawn by their own body. --set dialogEntries=<json>|none names another file or
+   turns it off (the bite: without it FO-167's page fails here). */
+function dialogEntries(t) {
+	if (t.args.dialogEntries === 'none') return { path: 'none', retired: [], custom: [] };
+	const path = t.args.dialogEntries ? String(t.args.dialogEntries) : fileURLToPath(new URL('./settings-dialog-entries.json', import.meta.url));
+	const d = JSON.parse(fs.readFileSync(path, 'utf8'));
+	return { path, retired: d.retired || [], custom: d.custom || [] };
+}
+/* a design-pinned custom confirm's one message line: its words and the lines it draws, entrance finished first */
+const CUSTOM_READ = ([sel, msgSel]) => {
+	const shown = [...document.querySelectorAll(sel)].filter((e) => e.getClientRects().length > 0 && getComputedStyle(e).display !== 'none');
+	const d = shown[shown.length - 1];
+	if (!d) return null;
+	for (const a of document.getAnimations()) {
+		const el = a.effect && a.effect.target;
+		if (!el || !(el === d || d.contains(el) || el.contains(d))) continue;
+		try { if (Number.isFinite(a.effect.getComputedTiming().endTime)) a.finish(); } catch (e) { /* an endless one stays */ }
+	}
+	const el = d.querySelector(msgSel);
+	if (!el) return { n: 0, t: '', f: 0, w: 0 };
+	const r = document.createRange();
+	r.selectNodeContents(el);
+	const tops = [...r.getClientRects()].filter((b) => b.width > 0.5 && b.height > 0.5).map((b) => b.top).sort((a, b) => a - b);
+	let n = 0, last = -1e9;
+	for (const y of tops) if (y - last > 1.5) { n++; last = y; }
+	return { n, t: el.textContent.replace(/\s+/g, ' ').trim(), f: +parseFloat(getComputedStyle(el).fontSize).toFixed(2), w: +el.clientWidth.toFixed(1) };
+};
 
 /* The shown dialog's copy and the lines each part draws. Self-contained: serialized into the page alone. */
 const READ = (sel) => {
@@ -231,19 +259,45 @@ async function openManagerTab(f, ws, tab) {
 		const pressed = await f.evaluate((s) => { const b = document.querySelector(s); if (!b) return false; b.click(); return true; }, sel).catch(() => false);
 		if (!pressed) return false;
 	}
-	return f.waitForFunction((s) => { const b = document.querySelector(s); return !!(b && b.classList.contains('active')); }, sel, { timeout: 6000 }).then(() => true).catch(() => false);
+	const active = await f.waitForFunction((s) => { const b = document.querySelector(s); return !!(b && b.classList.contains('active')); }, sel, { timeout: 6000 }).then(() => true).catch(() => false);
+	if (active) await tabDrawn(f, ws, tab);
+	return active;
+}
+/* A tab marked active is not yet drawn: the swap still holds the old body, so a scan right after the click found no
+   button on Servers › Servers (fo-integ12b: "Restart Home TrueNAS?" and "Remove Ubuntu VM?" were then only ever drawn
+   by the replay). Wait for one manager body under the active tab, then for its text and box to hold for two frames
+   (diagnostics/fo159-crops' settle). */
+async function tabDrawn(f, ws, tab) {
+	await f.waitForFunction(([w, id]) => {
+		if (document.querySelector('.tab-swap-a, .tab-swap-b')) return false;
+		const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+		const page = body && body.querySelector('.pm51-mgr');
+		if (!page || page.querySelectorAll(':scope > .manager-body').length !== 1) return false;
+		const on = page.querySelector(':scope > .pm51-tabs .manager-tab.active');
+		return !!on && on.getAttribute('data-tab') === id;
+	}, [ws, tab], { timeout: 4000 }).catch(() => {});
+	await f.waitForFunction((w) => {
+		const b = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+		if (!b) return false;
+		const sig = `${b.textContent.length}:${b.getBoundingClientRect().height.toFixed(1)}:${b.querySelectorAll('*').length}`;
+		const prev = window.__fo176TabSig;
+		window.__fo176TabSig = sig;
+		return prev === sig;
+	}, ws, { polling: 'raf', timeout: 4000 }).catch(() => {});
 }
 
 /* The walk: every confirm a real click reaches, each read as the click drew it. */
-async function walk(t, f, limits) {
+async function walk(t, f, limits, entries = { retired: [], custom: [] }) {
 	const found = new Map();
-	const bag = { dialogs: 0, skipped: 0, warning: 0, plain: 0, custom: [] };
+	const bag = { dialogs: 0, skipped: 0, warning: 0, plain: 0, custom: [], pinned: [] };
 	const seen = new Set();
 	const take = async (where) => {
 		const info = await f.evaluate(READ, DIALOG).catch(() => null);
 		if (!info || info.form) { await dismiss(f); return; }
 		bag.dialogs += 1;
-		if (info.custom) bag.custom.push(`${where}: ${info.title}`);
+		const pin = info.custom && entries.custom.find((c) => c.title === info.title);
+		if (pin) bag.pinned.push({ title: info.title, where, line: await f.evaluate(CUSTOM_READ, [DIALOG, pin.message]).catch(() => null) });
+		else if (info.custom) bag.custom.push(`${where}: ${info.title}`);
 		else {
 			const it = itemOf(info);
 			if (!found.has(it.key)) found.set(it.key, { ...it, where, clicked: info });
@@ -338,6 +392,10 @@ for (const surface of ['normal', 'sandbox']) {
 		const fixturePath = t.args.lineBaseline ? String(t.args.lineBaseline) : fileURLToPath(new URL('./settings-dialog-lines.lines.json', import.meta.url));
 		const fixture = fs.existsSync(fixturePath) ? unpack(readJson(fixturePath)) : null;
 		const doWalk = !/^(0|false|no|off)$/i.test(String(t.args.walk ?? '1'));
+		const entries = dialogEntries(t);
+		const retiredTitles = new Set(entries.retired.map((r) => r.title));
+		const exampleRetired = entries.retired.some((r) => EXAMPLE.test(r.title));
+		t.log(`dialog entries: ${entries.path} (${entries.retired.length} retired, ${entries.custom.length} custom)`);
 
 		await t.viewport(...WALK_SIZE);
 		const f = await t.app.open({ sandbox: surface === 'sandbox', settleMs: 800 });
@@ -348,16 +406,31 @@ for (const surface of ['normal', 'sandbox']) {
 
 		/* the list to replay: what this page's walk finds, plus the recorded list (a dialog the walk misses keeps its row) */
 		const list = new Map();
-		const given = t.args.dialogs ? readJson(String(t.args.dialogs)) : (fixture && fixture.dialogs) || [];
+		/* a retired base dialog is not replayed: PM51.confirm would draw it although no click reaches it any more */
+		const recorded = t.args.dialogs ? readJson(String(t.args.dialogs)) : (fixture && fixture.dialogs) || [];
+		const given = recorded.filter((it) => !retiredTitles.has(it.title));
+		if (given.length !== recorded.length) t.log(`${recorded.length - given.length} retired base dialog(s) left out of the replay: ${recorded.filter((it) => retiredTitles.has(it.title)).map((it) => it.title).join(' | ')}`);
 		let walked = null;
 		if (doWalk) {
 			await t.step('walk', async () => {
-				walked = await walk(t, f, limits);
+				walked = await walk(t, f, limits, entries);
 				const { bag, found } = walked;
 				t.log(`walk: ${bag.dialogs} confirms opened (${bag.warning} warning, ${bag.plain} plain), ${found.size} distinct, ${bag.skipped} unvisited, ${bag.custom.length} with a custom body`);
 				for (const c of bag.custom) t.log(`custom body (measured only as clicked): ${c}`);
 				await t.check('the walk opened a warning confirm and a plain confirm', bag.warning > 0 && bag.plain > 0, `warning ${bag.warning}, plain ${bag.plain}`);
-				await t.check("the walk reached the item's own example, \"Delete all memories?\"", [...found.values()].some((x) => EXAMPLE.test(x.title)), `${found.size} distinct`);
+				if (exampleRetired) await t.check("the item's own example is retired and the walk does not reach it", ![...found.values()].some((x) => EXAMPLE.test(x.title)), `${found.size} distinct; ${entries.retired.find((r) => EXAMPLE.test(r.title)).why}`);
+				else await t.check("the walk reached the item's own example, \"Delete all memories?\"", [...found.values()].some((x) => EXAMPLE.test(x.title)), `${found.size} distinct`);
+				const reachedRetired = [...found.values()].filter((x) => retiredTitles.has(x.title));
+				await t.check('no retired dialog is reachable', reachedRetired.length === 0, reachedRetired.map((x) => `${x.where}: ${x.title}`).slice(0, 4).join(' | ') || `${entries.retired.length} retired`);
+				/* a base dialog no click reaches any more was only ever drawn by the replay: it fails unless an entry retires it */
+				const unreached = given.filter((it) => !found.has(it.key));
+				await t.check(`every base dialog is reached by a click (${given.length - unreached.length}/${given.length})`, unreached.length === 0, unreached.slice(0, 12).map((it) => it.title).join(' | ') || `${given.length} reached`);
+				for (const c of entries.custom) {
+					const got = bag.pinned.filter((x) => x.title === c.title);
+					const line = got.length && got[0].line;
+					t.log(`design-pinned confirm "${c.title}": ${got.length} reading(s)${line ? `, ${c.message} draws ${line.n} line(s) at ${line.f} px in ${line.w} px: "${line.t.slice(0, 80)}"` : ''} (no base row: the dialog is new with FO-167)`);
+					await t.check(`the design-pinned confirm "${c.title}" was reached and its ${c.message} read on at least one line at 11 px or more`, !!line && line.n >= 1 && line.f >= 11 && !!line.t, line ? `${line.n} line(s), ${line.f} px` : `seen ${got.length}`);
+				}
 				await t.check('the walk left no confirm it set out to visit', bag.skipped === 0, `skipped ${bag.skipped}`);
 				await t.check('every confirm found is one PM51.confirm draws (no custom body)', bag.custom.length === 0, bag.custom.slice(0, 4).join(' | '));
 				for (const [k, v] of found) list.set(k, v);
@@ -365,7 +438,7 @@ for (const surface of ['normal', 'sandbox']) {
 		}
 		for (const it of given) if (!list.has(it.key)) list.set(it.key, it);
 		const items = [...list.values()].map(({ key, title, message, label, danger }) => ({ key, title, message, label, danger }));
-		await t.check(`${items.length} dialogs to measure`, items.length > 0 && items.some((x) => EXAMPLE.test(x.title)), `${items.length}`);
+		await t.check(`${items.length} dialogs to measure`, items.length > 0 && (exampleRetired ? !items.some((x) => EXAMPLE.test(x.title)) : items.some((x) => EXAMPLE.test(x.title))), `${items.length}${exampleRetired ? ', the example retired' : ''}`);
 		if (t.args.listOut) {
 			const p = String(t.args.listOut);
 			const prior = fs.existsSync(p) ? readJson(p) : [];
@@ -441,7 +514,7 @@ for (const surface of ['normal', 'sandbox']) {
 							if (n > b) { grew.push({ id, k, base: b, now: n }); diffs.push({ id, k, base: b, now: n }); }
 						}
 						if (nobase) t.log(`${id}: ${nobase} copy rows have no base row (new or reworded since the base)`);
-						await t.check(`${id}: the item's own example is compared`, example > 0, `"Delete all memories?" rows compared: ${example}`);
+						if (!exampleRetired) await t.check(`${id}: the item's own example is compared`, example > 0, `"Delete all memories?" rows compared: ${example}`);
 						await t.check(`${id}: every dialog's copy keeps the base's line count (${compared} compared)`, held && !!base && compared > 0 && grew.length === 0,
 							!base ? 'no baseline cell' : grew.slice(0, 5).map((d) => `${d.k.slice(0, 70)} ${d.base}->${d.now}`).join(' | ') || (held ? 'nothing compared' : 'look not held'));
 					}
