@@ -1783,7 +1783,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "83fe9d2ea751a44e58850e17ea49d08f998e8f44ce46e2cbfac9ffae6e201d6b",
+      "sha256": "c762c8b604809ac0eb7e46eb9ae5b5d3ec2a8b822c6fa95cb42981ccd7c7d67d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 64
@@ -1935,8 +1935,8 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 100,
-        "True": 48
+        "False": 101,
+        "True": 47
       },
       "heading_count": 226,
       "implementation_surfaces": [
@@ -2301,7 +2301,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "4d3f1cace81584bea41a93d031d1ae9ed60ab2c5690290127b100ef0631ef9f5",
+      "sha256": "4787625103f0742db48e5e1df0b815768830e76ff8d6391196a237197cf8c511",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 147,
@@ -4746,8 +4746,8 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 453,
-        "True": 79
+        "False": 455,
+        "True": 77
       },
       "heading_count": 737,
       "implementation_surfaces": [
@@ -5788,7 +5788,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "04212dda537453e950517e21df869534d5ed2734615bc26ecb54d26cda77dc48",
+      "sha256": "a069e74278198a90aa725331e42a654856719cefb8e99a8d9d6bf083fbd83f96",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 531,
@@ -19600,8 +19600,8 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 398,
-        "True": 114
+        "False": 400,
+        "True": 112
       },
       "heading_count": 1013,
       "implementation_surfaces": [
@@ -20371,7 +20371,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "db2a94f673296fff30ba523c868ea8be1f79b97ad4996f105c90470d08e4fa46",
+      "sha256": "70d4271f0daed43322affc5954bbd333d0c3760556c24b8f6347170f5cd405d5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 508,
@@ -22822,7 +22822,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-13T00:35:24Z",
+  "generated_at_utc": "2026-11-13T07:25:00Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -22830,8 +22830,8 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 4272,
-      "True": 3890
+      "False": 4277,
+      "True": 3885
     },
     "plan_unit_count": 8162,
     "source_preserving_unit_count": 0,

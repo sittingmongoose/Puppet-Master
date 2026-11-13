@@ -38,7 +38,7 @@ RETURN_SOURCE = 'return g.Case(table, check, context)'
 CORE_ENTRIES = ('accept', 'accept_check', 'checkpoint_check', 'append_current', 'transition', 'read_history', 'read_canonical_history',
                 'checkpoint_identity_matches', 'valid_operation', 'valid_target', 'valid_selector',
                 'start_custody_gate', 'matrix_call')
-ARCHIVE_ENTRIES = ('archive_candidate', 'archive_validate', 'cutoff_gate', 'panel', 'transition',
+ARCHIVE_ENTRIES = ('archive_candidate', 'archive_validate', 'cutoff_gate', 'transition',
                    'append_current', 'accept', 'read_history', 'probe')
 POLICY_ENTRIES = ('dedup_candidate', 'dedup_validate', 'selection_require', 'instant')
 

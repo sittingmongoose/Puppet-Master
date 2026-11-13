@@ -85,14 +85,6 @@ def cutoff_gate(state):
     core.require('cg_commitment', cutoff_sha256=row['cutoff_sha256'], record_sha256=core.digest(record))
 
 
-def panel(state):
-    try:
-        cutoff_gate(state)
-    except core.Refusal:
-        return {'available': False, 'reason': 'The approved cutoff binding is unavailable'}
-    return {'available': True, 'reason': None}
-
-
 def memory_flags(memories):
     return type(memories) is dict and all(type(memory) is dict and all(type(memory.get(field)) is bool
         for field in ('pinned', 'archived')) for memory in memories.values())
@@ -301,11 +293,6 @@ def probe(case, fixtures, contracts):
             if 'expected_state' in action:
                 action['expected_operation'] = deepcopy(family['states'][action.pop('expected_state')]['operation'])
             result = transition(state, action)
-        elif kind == 'panel':
-            result = panel(state)
-            if not result['available']:
-                assert context == before, (case['name'], 'refusal mutated its inputs')
-                return {'accepted': False, 'refusal': 'cutoffs_unavailable'}
         elif kind == 'archive_candidate':
             result = archive_candidate(context['state']['archive'], COMMANDS[state['operation']['command_id']])
         elif kind == 'archive':
