@@ -335,8 +335,8 @@ lead's canon call, 2026-11-13, refining the first version of this table, which r
 
 | Kind | What it is | Examples (portable controls in the check) |
 |---|---|---|
-| a web address | a word or value with a scheme, `scheme://…`; `file:` is not one (it names a file: row 2) | `curl -fsSL https://bun.sh/install`, `npm publish --registry=https://registry.npmjs.org`, `curl https://example.com/a/b?c=d/e` |
-| an image or registry reference | its first segment, before the first `/`, is a host name: dot-separated labels ending in two or more letters (`ghcr.io`, `registry.npmjs.org`), or a name or address with a port (`localhost:5000`) | `docker push ghcr.io/jared/loom:1.4.0`, `docker pull localhost:5000/app:dev` |
+| a web address | a word or value with a scheme, `scheme://…`, read whole (port and path included) before a value is split into a list; `file:` is not one (it names a file: row 2) | `curl -fsSL https://bun.sh/install`, `npm publish --registry=https://registry.npmjs.org`, `npm publish --registry=https://registry.example.com:8443/npm/`, `curl https://example.com/a/b?c=d/e` |
+| an image or registry reference | only where the argument takes one: an image argument of `docker`, `podman` or `nerdctl` (`push`, `pull` and `tag`; the image of `run` and `create`; `build -t`; `image …`), a reference argument of `oras`, `skopeo` and `crane`, or the value of a registry or image flag (`--registry`, `--registry-mirror`, `--insecure-registry`, `--image`). There, its first segment, before the first `/`, is a host name: dot-separated labels ending in two or more letters (`ghcr.io`, `registry.example.com`), or a name or address with a port (`localhost:5000`). Anywhere else the same spelling is a folder: `node scripts.dev/release.js` stays row 4 | `docker push ghcr.io/jared/loom:1.4.0`, `docker push registry.example.com/org/app:tag`, `docker push localhost:5000/org/app:tag`, `docker pull localhost:5000/app:dev` |
 | a git ref | an argument of a git subcommand that takes refs (`push pull fetch checkout switch merge rebase branch tag log diff reset cherry-pick`), after the subcommand and before `--`; after `--` the words are paths again | `git push origin feature/tags`, `git push -f origin feature/tags`, `git rebase origin/main`, `git diff main..feature/tags`, `git checkout -b feature/x`, `git -c core.pager=less log feature/tags` |
 
 These lift row 4 only. Rows 2, 3 and 6 still hold for a git ref position (`git diff /etc/hosts`, `git diff ./src`,
@@ -351,6 +351,14 @@ after `tsc` or `vue-tsc` (elsewhere `-p` names a package, a port or a plugin); a
 `dir`, `directory`, `path`, `folder` or `root`, or in `-file` or `_file` (`--target-dir`, `--env-file`, `--rootdir`,
 `--project-directory`; `--profile` is not one), except a `--no-…` switch. Its value is the word after it, unless that
 word starts with `-`; a wildcard value counts (`git -C * status`). `--project` given an ID still reads as a folder.
+
+**What this concept can't settle.** The concept decides from a pattern's spelling and a little context (the program,
+its subcommand, a flag's name), and that can't catch every case: a word means what the program that receives it makes
+of it, and the same spelling is a folder for one program and a registry, a ref or a package name for another. Two
+rounds found such cases (the rechecks' `node scripts.dev/release.js` and the split `--registry=https://…:8443/…`), and
+more exist. The real product needs a proper argument parser for this decision, one that knows each program's own
+arguments. That is a Plans/build item, not something this concept settles: the table above is the concept's careful
+reading, and its own choices are marked.
 
 **One rule everywhere it is asked.** The editor's places, its line saying why, the line saying a chosen place was
 cleared, and the save guard (the same call on the exact pattern it would keep) read `PSX.paths.host`. Broad detection
