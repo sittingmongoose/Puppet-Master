@@ -10,7 +10,6 @@ unchanged), and the shared NUMRULE corpus through the complete append/retry/reta
 integer slot (scripts/pm_w3h_numbers.py). Exit 0 only when everything agrees.
 """
 import argparse
-import copy
 import json
 import sys
 import time
@@ -20,49 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_w3h_events as m  # noqa: E402
 import pm_w3h_cases as c  # noqa: E402
-
-
-def outcome(boundary, value):
-    """None (accepted) or the first refusal (phase, row, code) of one boundary call."""
-    if boundary == 'verify':
-        return m.verify_publication(value, 'current')
-    if boundary == 'retry':
-        r = m.retry(*value)
-        return None if r[0] == 'return_original_without_effect' else r[1]
-    if boundary == 'transition':
-        r = m.transition(value)
-        return None if r[0] in ('written', 'read_only_resolution') else r[1]
-    if boundary == 'cleanup':
-        r = m.cleanup(value[0], value[1])
-        return None if r == 'removed' else r[1]
-    if boundary == 'retained':
-        w, read = value
-        before = copy.deepcopy(w)
-        sealed_before = len(w['storage'].get('sealed', []))
-        r = m.retained_read(w, read)
-        assert len(w['storage'].get('sealed', [])) == sealed_before, 'a read created a receipt'
-        assert m.exact(w, before), 'a read changed custody bytes'
-        return None if r[0] == 'available' else r[1]
-    if boundary == 'compound':
-        r = m.compound(value)
-        return None if r == 'published' else r[1]
-    if boundary == 'retention':
-        family, registry = value
-        r = m.retention_cell(family, registry)
-        return None if r == 'bound' else r[1]
-    raise AssertionError(boundary)
-
-
-def all_cases(registry):
-    out = []
-    out += [(cid, f, 'verify', w, exp) for cid, f, w, exp in c.verify_positives() + c.verify_witnesses()]
-    out += [(cid, f, 'retry', v, exp) for cid, f, v, exp in c.retry_cases()]
-    out += [(cid, f, 'transition', v, exp) for cid, f, v, exp in c.transition_cases()]
-    out += [(cid, f, 'cleanup', (f, v), exp) for cid, f, v, exp in c.cleanup_cases()]
-    out += [(cid, f, 'retained', v, exp) for cid, f, v, exp in c.retained_cases()]
-    out += [(cid, f, 'compound', v, exp) for cid, f, v, exp in c.compound_cases()]
-    out += [(cid, f, 'retention', (f, v), exp) for cid, f, v, exp in c.retention_cases(registry)]
-    return out
+from pm_w3h_cases import all_cases, outcome  # noqa: E402
 
 
 def run_cases(cases, record=None):

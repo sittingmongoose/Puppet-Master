@@ -721,8 +721,19 @@ FX = {
         ('TD44_binding_join', 'binding_join', 'binding_id is the committed TodoWorkBinding', T('todo.work_bound'), lambda p, x, a: p['binding_id'] == x['admission']['binding_id']),
     ],
 }
+# A row that applies to exactly one family sits in that family's own table (ToDo and Named Plan), so every
+# table stays small enough for the tool's per-cut proof; the evaluation order is the group order above.
+FX_TABLE = {}
 for _group, _rows in FX.items():
-    ROWS['fx_' + _group] = ('family_refused', f'Family owner predicates ({_group})', [(r[0], r[1], r[2]) for r in _rows])
+    for _r in _rows:
+        _single = _r[3] is not None and len(_r[3]) == 1 and _group in ('todo', 'named')
+        FX_TABLE[_r[0]] = 'fx_' + _group + ('_' + ACTION[next(iter(_r[3]))] if _single else '')
+    for _r in _rows:
+        _t = FX_TABLE[_r[0]]
+        if _t not in ROWS:
+            ROWS[_t] = ('family_refused', f'Family owner predicates ({_t[3:]})', [])
+        ROWS[_t][2].append((_r[0], _r[1], _r[2]))
+GROUP_TABLES = {g: tuple(dict.fromkeys(FX_TABLE[r[0]] for r in rows)) for g, rows in FX.items()}
 
 
 # --- coherent synthetic originals (fixture authority, never native custody) ------------------------------
@@ -1033,6 +1044,7 @@ def _slot_validator(f, name):
 
 
 _ENV_V = {k: _validator(ENVELOPE['$id'] + '#/properties/' + k) for k in ('sequence_id', 'producer_sequence_id')}
+_REDACTION_V = _validator(ENVELOPE['$id'] + '#/properties/redaction_profile')
 _RCPT_V = {k: _validator(RECEIPTS['$id'] + '#/$defs/AppendReceipt/properties/' + k) for k in RECEIPT_UINT64}
 
 
@@ -1134,7 +1146,8 @@ def observe_publication(w, mode):
     obs['replay_family'] = not have or (mode == 'current' and ev.get('replay_policy') == 'projector_replay_only') \
         or ev.get('replay_policy') == 'dedupe_by_idempotency_key'
     obs['migration_null'] = not have or (type(ev.get('migration')) is dict and all(v is None for v in ev['migration'].values()))
-    obs['redaction_family'] = not have or ev.get('redaction_profile') == 'secret_refs_only'
+    # The enum/type of redaction_profile is LG01's predicate; LG15 judges only the family policy among valid values.
+    obs['redaction_family'] = not have or not _REDACTION_V.is_valid(ev.get('redaction_profile')) or ev.get('redaction_profile') == 'secret_refs_only'
     full0 = shaped and numbers_ok and journal_ok and obs['scalar_fields'] and obs['closed_keys']
     # id ------------------------------------------------------------------------------------------------
     obs['source_scope'] = not full0 or (src['scope_kind'] == 'application' and src['project_id'] is None) or (
@@ -1215,7 +1228,7 @@ ENTAILED = {
 def assert_fields_unique():
     for group in FX:
         seen = {}
-        for phase in ('ad',) + VERIFY_ORDER + ('fx_' + group,):
+        for phase in ('ad',) + VERIFY_ORDER + GROUP_TABLES[group]:
             for row in ROWS[phase][2]:
                 assert row[1] not in seen, ('observation field shared by two rows', row[0], seen.get(row[1]))
                 seen[row[1]] = row[0]
@@ -1226,7 +1239,7 @@ def verify_publication(w, mode='current'):
     """Complete verification of one journal value with its authentic custody. Returns None or the first
     refusal (phase, row, code). mode 'current' adds writer admission and the current replay gate."""
     obs, _ = observe_publication(w, mode)
-    phases = (('ad',) if mode == 'current' else ()) + VERIFY_ORDER + ('fx_' + GROUP_OF[w['family']],)
+    phases = (('ad',) if mode == 'current' else ()) + VERIFY_ORDER + GROUP_TABLES[GROUP_OF[w['family']]]
     for phase in phases:
         first = refusal(phase, obs)
         if first is not None:
@@ -1456,7 +1469,7 @@ def retained_facts(w, read):
                 token_instance=token['storage_instance_id'] == w['storage']['storage_instance_id'],
                 token_frontier=exact(token['frontier'], live['frontier']), token_snapshot=token['snapshot_id'] == live['snapshot_id'],
                 coverage=all(covered[i][1] + 1 == covered[i + 1][0] for i in range(len(covered) - 1)) and covered[0][0] == 0
-                and covered[-1][1] >= live['frontier'],
+                and covered[-1][1] >= token['frontier'],
                 selection=token['partition'] == w['publication']['scope_partition'] and token['event_type'] == f)
 
 

@@ -163,6 +163,13 @@ wit('LG04_payload_schema', 'payload-missing-required', lambda w: _pe(w)['payload
 wit('LG04_payload_schema', 'payload-unknown-key', lambda w: _pe(w)['payload'].__setitem__('notes', 'x'))
 wit('LG04_payload_schema', 'payload-id-trailing-lf', lambda w: _pe(w)['payload'].__setitem__('owner_operation_id', _pe(w)['payload']['owner_operation_id'] + '\n'))
 wit('LG04_payload_schema', 'payload-version-other', lambda w: _pe(w)['payload'].__setitem__('schema_version', '1.0.1'))
+BOOL_FIELD = {f: next((k for k, v in m.SCHEMAS[f]['$defs']['payload']['properties'].items()
+                       if v.get('type') == 'boolean' or type(v.get('const')) is bool), None) for f in F}
+wit('LG04_payload_schema', 'payload-boolean-as-string', lambda w: _pe(w)['payload'].__setitem__(BOOL_FIELD[w['family']], 'false'),
+    families=[f for f in F if BOOL_FIELD[f]])
+wit('LG04_payload_schema', 'payload-null-for-string', lambda w: _pe(w)['payload'].__setitem__('server_id', None))
+wit('LG04_payload_schema', 'payload-array-for-string', lambda w: _pe(w)['payload'].__setitem__('source_record_ref', ['src']))
+wit('LG04_payload_schema', 'payload-object-for-string', lambda w: _pe(w)['payload'].__setitem__('owner_operation_id', {'id': 'op'}))
 wit('LG04_payload_schema', 'payload-app-schema-with-project', lambda w: (_pe(w)['payload'].__setitem__('schema_id', m.payload_schema_id(w['family'], 'application')),
                                                                          _pe(w).__setitem__('payload_schema_id', m.payload_schema_id(w['family'], 'application'))),
     families=[f for f in F if 'application' in m.SCOPES[f]])
@@ -270,7 +277,7 @@ fx('AP01_version_committed', 'version-not-committed', setf(('committed_version',
 fx('AP02_committed_join', 'committed-hash-differs', setf(('committed_version', 'hash'), m.H('plan-7@9')))
 fx('AP03_version_change', 'same-version-claimed', lambda w: (set_field(w, 'plan_version', 2), set_field(w, 'plan_hash', m.H('plan-7@2')),
                                                              facts(w)['committed_version'].update(version=2, hash=m.H('plan-7@2'))))
-fx('AP04_binding_join', 'binding-other-version', setf(('binding_before', 'version'), 1))
+fx('AP04_binding_join', 'binding-other-version', lambda w: (facts(w)['binding_before'].update(version=1), facts(w)['binding_after'].update(version=1)))
 fx('AP05_binding_invalidated', 'binding-still-pending', setf(('binding_after', 'status'), 'pending'))
 fx('AP06_old_target_retained', 'rebound-to-latest', lambda w: facts(w)['binding_after'].update(version=3, hash=m.H('plan-7@3')))
 fx('AP06_old_target_retained', 'old-target-hash-substituted', setf(('binding_after', 'hash'), m.H('plan-7@x')))
@@ -521,7 +528,6 @@ def transition_cases():
     def pub(f, state, scope='project', external=False):
         return m.build_world(f, scope, None, state, external)['publication'] if state != 'absent' else None
     for f in F:
-        policy = m.GROUP_POLICY[m.FAMILY_ROWS[f]['group']]
         for prior_state, next_state in (('absent', 'prepared'), ('prepared', 'appended'), ('appended', 'settled')):
             for external in (False, True):
                 w = m.build_world(f, 'project', None, next_state, external)
@@ -532,6 +538,9 @@ def transition_cases():
             w = m.build_world(f, state=state)
             t = dict(world=w, prior=w['publication'], expected=copy.deepcopy(w['publication']), proposed=copy.deepcopy(w['publication']), cleanup=None)
             out.append((f'transition/{f}/same-state-{state}-read-only', f, t, ('accept',)))
+        w = m.build_world(f, state='prepared')
+        t = dict(world=w, prior=None, expected=None, proposed=None, cleanup=None)
+        out.append((f'transition/{f}/absent-absent-abort-without-effect', f, t, ('accept',)))
         w = m.build_world(f, state='settled')
         t = dict(world=w, prior=w['publication'], expected=copy.deepcopy(w['publication']), proposed=None, cleanup=cleanup_request(f))
         out.append((f'transition/{f}/settled-cleanup', f, t, ('accept',)))
@@ -548,6 +557,10 @@ def transition_cases():
         neg('regress-settled-to-prepared', 'TR02_edge_legal', 'settled', 'prepared')
         neg('remove-prepared', 'TR02_edge_legal', 'prepared', 'absent')
         neg('skip-prepared-to-settled', 'TR02_edge_legal', 'prepared', 'settled')
+        neg('skip-absent-to-settled', 'TR02_edge_legal', 'absent', 'settled')
+        neg('remove-appended', 'TR02_edge_legal', 'appended', 'absent')
+        neg('regress-appended-to-prepared', 'TR02_edge_legal', 'appended', 'prepared')
+        neg('regress-settled-to-appended', 'TR02_edge_legal', 'settled', 'appended')
         neg('frozen-event-mutated', 'TR03_frozen_event', 'prepared', 'appended',
             lambda t: (t['prior']['prepared_event'].__setitem__('correlation_id', 'corr-old'), t.__setitem__('expected', copy.deepcopy(t['prior']))))
         neg('frozen-copy-mutated', 'TR04_frozen_copies', 'prepared', 'appended',
@@ -560,7 +573,6 @@ def transition_cases():
         bad['trigger'] = 'age_expired'
         neg('cleanup-by-age', 'TR06_cleanup_authorized', 'settled', 'absent', cleanup=bad)
         neg('cleanup-without-request', 'TR06_cleanup_authorized', 'settled', 'absent', cleanup=None)
-        del policy
     return out
 
 
@@ -704,4 +716,48 @@ def retention_cases(registry):
             neg('indefinite-gets-ttl', 'RT04_policy_terms', lambda reg: obj_of(reg).__setitem__('ttl_seconds', 86400))
         neg('rebuildable-index-class', 'RT05_canonical_class', lambda reg: row_of(reg)['recovery_disposition'].__setitem__('authority_class', 'rebuildable_index'))
         neg('group-not-named', 'RT06_decision_named', lambda reg: row_of(reg).__setitem__('retention_compaction', 'canonical publication custody'))
+    return out
+
+
+# --- boundary dispatch (shared by the CLI and the guard-table suites) ----------------------------------------
+def outcome(boundary, value):
+    """None (accepted) or the first refusal (phase, row, code) of one boundary call."""
+    if boundary == 'verify':
+        return m.verify_publication(value, 'current')
+    if boundary == 'retry':
+        r = m.retry(*value)
+        return None if r[0] == 'return_original_without_effect' else r[1]
+    if boundary == 'transition':
+        r = m.transition(value)
+        return None if r[0] in ('written', 'read_only_resolution') else r[1]
+    if boundary == 'cleanup':
+        r = m.cleanup(value[0], value[1])
+        return None if r == 'removed' else r[1]
+    if boundary == 'retained':
+        w, read = value
+        before = copy.deepcopy(w)
+        sealed_before = len(w['storage'].get('sealed', []))
+        r = m.retained_read(w, read)
+        assert len(w['storage'].get('sealed', [])) == sealed_before, 'a read created a receipt'
+        assert m.exact(w, before), 'a read changed custody bytes'
+        return None if r[0] == 'available' else r[1]
+    if boundary == 'compound':
+        r = m.compound(value)
+        return None if r == 'published' else r[1]
+    if boundary == 'retention':
+        family, registry = value
+        r = m.retention_cell(family, registry)
+        return None if r == 'bound' else r[1]
+    raise AssertionError(boundary)
+
+
+def all_cases(registry):
+    out = []
+    out += [(cid, f, 'verify', w, exp) for cid, f, w, exp in verify_positives() + verify_witnesses()]
+    out += [(cid, f, 'retry', v, exp) for cid, f, v, exp in retry_cases()]
+    out += [(cid, f, 'transition', v, exp) for cid, f, v, exp in transition_cases()]
+    out += [(cid, f, 'cleanup', (f, v), exp) for cid, f, v, exp in cleanup_cases()]
+    out += [(cid, f, 'retained', v, exp) for cid, f, v, exp in retained_cases()]
+    out += [(cid, f, 'compound', v, exp) for cid, f, v, exp in compound_cases()]
+    out += [(cid, f, 'retention', (f, v), exp) for cid, f, v, exp in retention_cases(registry)]
     return out
