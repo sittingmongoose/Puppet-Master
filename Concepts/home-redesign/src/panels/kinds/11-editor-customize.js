@@ -559,6 +559,9 @@ function* construct(opts) {
   var setA = function (e, n, x) { if (e && e.getAttribute(n) !== x) e.setAttribute(n, x); };
   // text written only when it differs: a rewrite of the same words still lays the page out again, once per slider step
   var setT = function (e, x) { if (e && e.textContent !== x) e.textContent = x; };
+  // hidden written only when it differs, like setA and setT: the sheet's unseen redraw after a look change rewrote the hidden
+  // it held on every chip, weight and group control (pm7-perf lane K)
+  var setH = function (e, h) { h = !!h; if (e && e.hidden !== h) e.hidden = h; };
   function fmt(key, x) {
     if (x === null || x === undefined || x === '' || isNaN(x)) return '';
     if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
@@ -586,7 +589,7 @@ function* construct(opts) {
     if (I.own) return name + ' is indented with ' + I.own + ' spaces, so Tab puts in ' + I.own + '.';
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
-  function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
+  function note(sel, text) { var e = root.querySelector(sel); if (!e) return; setH(e, !text); if (e.textContent !== text) e.textContent = text; }
   /* the look's own code colours (Follow look), read off the editor once per look, colour mode and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
   var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
@@ -701,7 +704,7 @@ function* construct(opts) {
     append(function () {
       tiles.forEach(function (tile, i) {
         if (heights[i] === null) { tile.removeAttribute('data-pmed-sized'); return; }
-        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; tile.setAttribute('data-pmed-sized', '');
+        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; if (!tile.hasAttribute('data-pmed-sized')) tile.setAttribute('data-pmed-sized', '');
       });
       root.classList.add('pmed-contained'); contained = true;
     });
@@ -767,7 +770,7 @@ function* construct(opts) {
       if (key === 'ligatures' && o && !R.font.ligatures) word = 'On · this face has none';
       if (st.textContent !== word) st.textContent = word;
       c.classList.toggle('pmt-cz-is-mine', mine(key));
-      var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
+      var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) setH(more, !o);
       box.classList.toggle('pmt-cz-lit', o);
     });
     [].forEach.call(root.querySelectorAll('input[type="range"][data-key]'), function (r) {
@@ -778,18 +781,20 @@ function* construct(opts) {
     });
     setT(root.querySelector('[data-out="fontSize"]'), fmt('fontSize', R.font.size));
     setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
-    root.querySelector('[data-when-line]').hidden = R.caret.shape !== 'line';
-    root.querySelector('[data-chip="activeIndent"]').hidden = R.lines.guides === 'off';
+    setH(root.querySelector('[data-when-line]'), R.caret.shape !== 'line');
+    setH(root.querySelector('[data-chip="activeIndent"]'), R.lines.guides === 'off');
     /* weights the face has */
     var wr = R.font.weights;
-    [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1]; });
+    [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); setH(b, !wr || n < wr[0] || n > wr[1]); });
     var why = root.querySelector('[data-weight-why]'), wtxt = R.font.id === 'jetbrains-mono' ? 'JetBrains Mono comes from Regular to Heavy here.' : '';
     if (why.textContent !== wtxt) why.textContent = wtxt;
     /* the Follow look tile: the look's own colours, read from the editor's own tokens */
     var fa = root.querySelector('[data-follow-art]');
     if (fa && lt && fa.getAttribute('data-for') !== lkKey) {
       var g = function (n) { return lt[n] || ''; };
-      fa.innerHTML = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      var art = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      var parsed = document.createElement('template'); parsed.innerHTML = art;
+      if (fa.innerHTML !== parsed.innerHTML) fa.innerHTML = art;
       fa.setAttribute('data-for', lkKey);
     }
     var fm = root.querySelector('[data-follow-meta]'), fs2 = EL().followScheme(), ftxt = fs2 ? 'Like ' + fs2.name : 'The look’s own';
@@ -821,7 +826,7 @@ function* construct(opts) {
       var k = GROUP_KEYS[gp[0]].filter(mine).length, t = k ? k + ' changed' : '';
       var c = root.querySelector('[data-count="' + gp[0] + '"]'); if (c.textContent !== t) c.textContent = t;
       var nv = root.querySelector('[data-navn="' + gp[0] + '"]'); if (nv.textContent !== (k ? String(k) : '')) nv.textContent = k ? String(k) : '';
-      root.querySelector('[data-act="group-reset"][data-group="' + gp[0] + '"]').hidden = !k;
+      setH(root.querySelector('[data-act="group-reset"][data-group="' + gp[0] + '"]'), !k);
     });
     var ft = root.querySelector('[data-foot-n]'), ftt = n ? n + (n === 1 ? ' change from the look in ' : ' changes from the look in ') + (scope === 'tab' ? 'this editor' : 'all editors') : 'Following the look';
     if (ft.textContent !== ftt) ft.textContent = ftt;
@@ -902,7 +907,7 @@ function* construct(opts) {
     var s = root.querySelectorAll('.pmt-cz-scrim > i'), x0 = hole ? Math.max(0, r.left) : 0, y0 = hole ? Math.max(0, r.top) : 0, x1 = hole ? Math.min(W, r.right) : 0, y1 = hole ? Math.min(H, r.bottom) : 0;
     var rects = hole ? [[0, 0, W, y0], [0, y1, W, H - y1], [0, y0, x0, y1 - y0], [x1, y0, W - x1, y1 - y0]] : [[0, 0, W, H], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
     rects.forEach(function (q, i) { s[i].style.cssText = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; });
-    var fr = root.querySelector('.pmt-cz-frame'); fr.hidden = !hole;
+    var fr = root.querySelector('.pmt-cz-frame'); setH(fr, !hole);
     if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
     root.classList.toggle('pmt-cz-narrow', narrow);
     syncDock();
@@ -1398,7 +1403,7 @@ function* construct(opts) {
   function dockTo(on) {
     if (!preview || !!on === !dock.hidden) return;
     (on ? dockBox : homeBox).appendChild(pvHost);
-    dock.hidden = !on; root.classList.toggle('pmt-cz-docked', !!on);
+    setH(dock, !on); root.classList.toggle('pmt-cz-docked', !!on);
     if (on) Motion.play(dock);
     preview.demo.relayout();
   }

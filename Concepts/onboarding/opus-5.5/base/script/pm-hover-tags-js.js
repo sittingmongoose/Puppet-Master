@@ -746,9 +746,15 @@
     this.overlayScanTimer=setTimeout(function(){self.overlayScanTimer=0;self.overlaySettling=false;var overlay=activeOverlay();self.scheduleScan(overlay||activeSurface());},reduced?0:OVERLAY_SETTLE_MS);
     return changedRoot||activeOverlay();
   };
+  /* A record from the decoration on Pip's onboarding stage (aria-hidden: its drawing, bubble and readouts) can change
+     no tag, and the stage rewrites that decoration on every frame it draws: about 3,400 records a second with the
+     window open and nothing touched, 10 to 16 ms of this observer a second (2026-11-11, performance). The tip box
+     and its close button are not aria-hidden and are still heard. */
+  function stageDecoration(record){var n=record.target;n=n&&n.nodeType===1?n:n&&n.parentElement;return !!(n&&n.closest&&n.closest('#pm-o55-onboarding .pst [aria-hidden="true"]'));}
   HoverTagController.prototype.observe=function(){
     var self=this;if(this.observer)this.observer.disconnect();
     this.observer=new MutationObserver(function(records){
+      for(var di=0;di<records.length&&stageDecoration(records[di]);di++);if(di===records.length)return;
       /* Opening either product-owned modal can construct and animate hundreds
          of descendants in one turn. Recognize that boundary before consuming
          any child-list record, cancel stale page/live work, update modal

@@ -123,6 +123,9 @@
   /* count-up: since the WOW round every count is an odometer roll (PMU.film.odometer, WOW-SPEC 3.1 and 3.6): first render
      spins the digit columns up from zero (rightmost first), a change rolls only the changed digits; compositor-only.
      opts.plain keeps the old text tween (first render 1000 ms from 0 with an ease-out cubic; a change 520 ms). */
+  /* a text written only when it differs (a count that lands on the value it shows, a decode's settled frames): a write of
+     the same text still replaces the node, restyles and wakes every DOM watcher of the page (pm7-perf lane K) */
+  function setText(el, s) { if (el.firstElementChild || el.textContent !== s) el.textContent = s; }
   function countUp(el, from, to, format, opts) {
     opts = opts || {};
     if (!el) return { cancel: function () {} };
@@ -135,7 +138,7 @@
     var fam = family(), stepped = fam === 'retro' || fam === 'nier';
     var handle = tween({ from: from == null ? 0 : from, to: to, dur: opts.dur || (from == null ? 'count' : 'value'), delay: opts.delay,
       ease: stepped ? undefined : function (t) { return 1 - Math.pow(1 - t, 3); },
-      step: function (v) { el.textContent = format(v); }, done: function () { el.textContent = format(to); el._pmuCount = null; } });
+      step: function (v) { setText(el, format(v)); }, done: function () { setText(el, format(to)); el._pmuCount = null; } });
     el._pmuCount = handle.cancelled === false && !reduced() ? handle : null;
     return handle;
   }

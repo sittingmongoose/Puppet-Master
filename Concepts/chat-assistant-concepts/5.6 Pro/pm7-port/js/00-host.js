@@ -97,12 +97,26 @@
     if (layers) layers.hidden = tour;
   }
   syncTour();
+  /* pm7-perf lane C2: the onboarding window (html[data-o55-open], 60-ui-core.js open/close) lays its scrim over the
+     app and makes it inert, and the app's own loops rest while it is open (onboarding README, Performance rules, 6).
+     The chat rests with them: its work clock, its follow glide and its room and stream loops stop where they are and
+     carry on from there when the window has gone (app.js and turn-stream.js listen through onRest). Under the window
+     a demo run went on: on main 70-113 room and follow frames a second and 150-180 ms of script; after pm7-perf lane C
+     still 96-145 chat frames a second and its card patched twice a second (Windows, RTX 3090, 120 Hz). */
+  var resting = doc.documentElement.hasAttribute('data-o55-open'), restFns = [];
+  function syncRest() {
+    var on = doc.documentElement.hasAttribute('data-o55-open');
+    if (on === resting) return;
+    resting = on;
+    restFns.forEach(function (fn) { try { fn(on); } catch (err) { try { console.error('[pm56] rest hook failed', err); } catch (_) {} } });
+  }
   if (typeof MutationObserver === 'function') new MutationObserver(function (recs) {
-    var tour = false, motion = false;
-    recs.forEach(function (r) { if (r.attributeName === 'data-o55-tour') tour = true; else motion = true; });
+    var tour = false, motion = false, rest = false;
+    recs.forEach(function (r) { if (r.attributeName === 'data-o55-tour') tour = true; else if (r.attributeName === 'data-o55-open') rest = true; else motion = true; });
     if (tour) syncTour();
     if (motion) syncState();
-  }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-o55-tour', 'data-motion'] });
+    if (rest) syncRest();
+  }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-o55-tour', 'data-motion', 'data-o55-open'] });
   /* what the chat appends to <body> goes to the effects layer (class prefixes only the chat uses) */
   var FX_CLASS = /(?:^|\s)(?:pm56-|pmx-|tx-fly|rec-tap)/;
   function isChatFx(n) { return !!(n && n.nodeType === 1 && fx && FX_CLASS.test(n.className && n.className.baseVal != null ? n.className.baseVal : (n.className || ''))); }
@@ -377,6 +391,10 @@
       if (doc.documentElement.hasAttribute('data-o55-tour')) return false;
       return true;
     },
+    /* the onboarding window is open over the app (above): the chat's clocks and loops stand still. onRest(fn) hears
+       fn(true) as it opens and fn(false) once it has gone */
+    resting: function () { return resting; },
+    onRest: function (fn) { if (typeof fn === 'function') restFns.push(fn); },
     kindFor: kindFor,
     mountChatBody: mountChatBody,
     wrapKinds: wrapKinds,

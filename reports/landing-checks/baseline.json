@@ -111,6 +111,16 @@
   },
   {
    "check": "audit-governance",
+   "count": 1,
+   "error": "stale_audit_status_index",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "Plans/.audits/_audit_status_index.json",
+   "subcheck": "audit_status_index"
+  },
+  {
+   "check": "audit-governance",
    "count": 100,
    "error": "artifact_hash_stale",
    "fingerprints": [
@@ -230,7 +240,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 56,
+   "count": 72,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -238,28 +248,40 @@
     "05f3221fafa3",
     "0f872955b9a1",
     "102348ee8268",
+    "11307f8ee89e",
     "11d388842492",
+    "12c854441388",
     "160d9c40da13",
     "1df06a42c9ab",
     "1e89965ec8c7",
+    "229c6c260d79",
     "237c1953c9a7",
+    "2a9afa12ee0a",
+    "2dde2bc7700b",
     "30211e1a7e33",
     "3144f19a6964",
+    "31cb07fddf06",
     "3a148e9930cd",
     "3f6bdb1dfac6",
     "41f4e93fb130",
     "42f5c483d3ad",
     "47b0783cbeb0",
+    "48bc205c65de",
     "525092d31377",
     "5555c7df9632",
+    "64392ff7cf25",
     "67573257f635",
     "6da0d97c81fa",
     "6e7f4d13a6a9",
+    "6f39e5925e0b",
     "7efb9719345a",
+    "7f0fdf9fc168",
     "7fea903aea1a",
     "820ce1064826",
+    "85b744d73149",
     "87144dca10ac",
     "948eca363615",
+    "966713e6ac2f",
     "97e212c23116",
     "9a7041d907e8",
     "9ab756ff1c91",
@@ -268,10 +290,13 @@
     "a30d32e5cc7b",
     "a40aa02ebc9f",
     "a56f058b4b3a",
+    "a982c5185210",
     "b05520a9880a",
     "b486fe84d434",
     "b7cfd83316e1",
     "bc789a50a5a6",
+    "bdff16237e72",
+    "c5be0f3e184d",
     "c6c40780fef1",
     "d1cb22ec6bb2",
     "d402895d586b",
@@ -283,6 +308,7 @@
     "dd3707254603",
     "dd5519df234d",
     "df3850d1ccf2",
+    "e5b743d2bdde",
     "e62a59ff2641",
     "eb336c21b3dd",
     "ebc2af553cac",
@@ -498,6 +524,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/Automated_Testing_System.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/Commands_System.md",
    "subcheck": "spec_lock"
   },
@@ -568,6 +604,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/Glossary.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/Goal_Runtime_System.md",
    "subcheck": "spec_lock"
   },
@@ -579,6 +625,26 @@
     "271f85538f3e"
    ],
    "path": "Plans/Media_Generation_and_Capabilities.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/Models_System.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/Multi-Account.md",
    "subcheck": "spec_lock"
   },
   {
@@ -678,6 +744,26 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/Wiring_Matrix.schema.json",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/Working_Notebook.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/assistant-chat-design.md",
    "subcheck": "spec_lock"
   },
@@ -709,6 +795,16 @@
     "271f85538f3e"
    ],
    "path": "Plans/orchestrator-subagent-integration.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/plans_to_code_handoff.schema.json",
    "subcheck": "spec_lock"
   },
   {
@@ -822,6 +918,26 @@
    "subcheck": "spec_lock"
   },
   {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "missing_ref",
+   "fingerprints": [
+    "976753f2c3a3"
+   ],
+   "path": "Plans/00-plans-index.md",
+   "subcheck": "support_refs"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "missing_ref",
+   "fingerprints": [
+    "976753f2c3a3"
+   ],
+   "path": "Plans/00-plans-index.md",
+   "subcheck": "lint_contractrefs"
+  },
+  {
    "check": "run-gates",
    "count": 50,
    "error": "audit_closure_validator_error",
@@ -879,6 +995,16 @@
    ],
    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
    "subcheck": "validate_audit_closure"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_audit_status_index",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "Plans/.audits/_audit_status_index.json",
+   "subcheck": "validate_audit_status_index"
   },
   {
    "check": "run-gates",
@@ -956,34 +1082,34 @@
    "fingerprints": [
     "05f3221fafa3",
     "0f872955b9a1",
+    "11307f8ee89e",
     "160d9c40da13",
     "1df06a42c9ab",
-    "1e89965ec8c7",
+    "2a9afa12ee0a",
     "30211e1a7e33",
     "3144f19a6964",
+    "31cb07fddf06",
     "3a148e9930cd",
-    "47b0783cbeb0",
-    "525092d31377",
     "5555c7df9632",
+    "64392ff7cf25",
     "6e7f4d13a6a9",
     "7efb9719345a",
+    "85b744d73149",
     "948eca363615",
+    "966713e6ac2f",
     "97e212c23116",
     "9a7041d907e8",
     "9ab756ff1c91",
-    "9bbda8d47e30",
-    "a30d32e5cc7b",
     "a56f058b4b3a",
     "b05520a9880a",
     "b486fe84d434",
+    "bdff16237e72",
     "c6c40780fef1",
-    "d1cb22ec6bb2",
     "d5be4dc5e9b9",
     "d83d6c0d8bc9",
     "d9e287f261e5",
-    "dd5519df234d",
+    "e5b743d2bdde",
     "e62a59ff2641",
-    "ebc2af553cac",
     "fe9b3049d0f1"
    ],
    "path": "",
@@ -1092,6 +1218,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/Automated_Testing_System.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/Commands_System.md",
    "subcheck": "verify_spec_lock"
   },
@@ -1162,6 +1298,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/Glossary.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/Goal_Runtime_System.md",
    "subcheck": "verify_spec_lock"
   },
@@ -1173,6 +1319,26 @@
     "271f85538f3e"
    ],
    "path": "Plans/Media_Generation_and_Capabilities.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/Models_System.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/Multi-Account.md",
    "subcheck": "verify_spec_lock"
   },
   {
@@ -1272,6 +1438,26 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/Wiring_Matrix.schema.json",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/Working_Notebook.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/assistant-chat-design.md",
    "subcheck": "verify_spec_lock"
   },
@@ -1303,6 +1489,16 @@
     "271f85538f3e"
    ],
    "path": "Plans/orchestrator-subagent-integration.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/plans_to_code_handoff.schema.json",
    "subcheck": "verify_spec_lock"
   },
   {
@@ -1418,30 +1614,38 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 4843,
+   "failure_total": 5386,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
      "reported": 201,
      "sampled": 100
     },
+    "audit_status_index": {
+     "reported": 1,
+     "sampled": 1
+    },
     "evidence": {
-     "exported": 2262,
-     "reported": 2262,
+     "exported": 2521,
+     "reported": 2521,
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 84,
-     "sampled": 84
+     "reported": 100,
+     "sampled": 100
     },
     "plan_graph": {
-     "exported": 2262,
-     "reported": 2262,
+     "exported": 2521,
+     "reported": 2521,
      "sampled": 100
     },
     "spec_lock": {
-     "reported": 34,
-     "sampled": 34
+     "reported": 41,
+     "sampled": 41
+    },
+    "support_refs": {
+     "reported": 1,
+     "sampled": 1
     }
    }
   },
@@ -1456,40 +1660,48 @@
    }
   },
   "run-gates": {
-   "failure_total": 4843,
+   "failure_total": 5386,
    "status": "fail",
    "subchecks": {
+    "lint_contractrefs": {
+     "reported": 1,
+     "sampled": 1
+    },
     "validate_audit_closure": {
      "reported": 201,
      "sampled": 50
     },
+    "validate_audit_status_index": {
+     "reported": 1,
+     "sampled": 1
+    },
     "validate_evidence": {
-     "exported": 2262,
-     "reported": 2262,
+     "exported": 2521,
+     "reported": 2521,
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "exported": 84,
-     "reported": 84,
+     "exported": 100,
+     "reported": 100,
      "sampled": 50
     },
     "validate_plan_graph": {
-     "exported": 2262,
-     "reported": 2262,
+     "exported": 2521,
+     "reported": 2521,
      "sampled": 50
     },
     "verify_spec_lock": {
-     "reported": 34,
-     "sampled": 34
+     "reported": 41,
+     "sampled": 41
     }
    }
   }
  },
- "commit": "d28dba72e5d949535c953d8136f940dbde338100",
+ "commit": "48dd033447c5feb95866d6978d2cfd70961c5cbb",
  "export_buckets": [
   {
    "check": "audit-governance",
-   "count": 2259,
+   "count": 2518,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1509,7 +1721,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 2259,
+   "count": 2518,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1529,7 +1741,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2259,
+   "count": 2518,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1559,7 +1771,7 @@
   },
   {
    "check": "run-gates",
-   "count": 56,
+   "count": 72,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -1567,28 +1779,40 @@
     "05f3221fafa3",
     "0f872955b9a1",
     "102348ee8268",
+    "11307f8ee89e",
     "11d388842492",
+    "12c854441388",
     "160d9c40da13",
     "1df06a42c9ab",
     "1e89965ec8c7",
+    "229c6c260d79",
     "237c1953c9a7",
+    "2a9afa12ee0a",
+    "2dde2bc7700b",
     "30211e1a7e33",
     "3144f19a6964",
+    "31cb07fddf06",
     "3a148e9930cd",
     "3f6bdb1dfac6",
     "41f4e93fb130",
     "42f5c483d3ad",
     "47b0783cbeb0",
+    "48bc205c65de",
     "525092d31377",
     "5555c7df9632",
+    "64392ff7cf25",
     "67573257f635",
     "6da0d97c81fa",
     "6e7f4d13a6a9",
+    "6f39e5925e0b",
     "7efb9719345a",
+    "7f0fdf9fc168",
     "7fea903aea1a",
     "820ce1064826",
+    "85b744d73149",
     "87144dca10ac",
     "948eca363615",
+    "966713e6ac2f",
     "97e212c23116",
     "9a7041d907e8",
     "9ab756ff1c91",
@@ -1597,10 +1821,13 @@
     "a30d32e5cc7b",
     "a40aa02ebc9f",
     "a56f058b4b3a",
+    "a982c5185210",
     "b05520a9880a",
     "b486fe84d434",
     "b7cfd83316e1",
     "bc789a50a5a6",
+    "bdff16237e72",
+    "c5be0f3e184d",
     "c6c40780fef1",
     "d1cb22ec6bb2",
     "d402895d586b",
@@ -1612,6 +1839,7 @@
     "dd3707254603",
     "dd5519df234d",
     "df3850d1ccf2",
+    "e5b743d2bdde",
     "e62a59ff2641",
     "eb336c21b3dd",
     "ebc2af553cac",
@@ -1703,7 +1931,7 @@
   },
   {
    "check": "run-gates",
-   "count": 2259,
+   "count": 2518,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1743,8 +1971,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-12T17:03:32Z",
- "run_dir": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-12T22:26:07Z",
+ "run_dir": "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
