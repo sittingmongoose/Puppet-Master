@@ -867,6 +867,62 @@ async function beadPixelsPart(t, surface, W, H) {
 	writeFileSync(pathm.join(t.run.dir, 'beadpx.json'), JSON.stringify(out, null, 1));
 }
 
+/* --set parts=liftpx and parts=ridepx (round 2's pixel proof): the end of the bead's lift on an Activity icon, and the end
+   of a ride (the Planning Wizard's first arrival, a fresh page per look). The page is frozen, the lift or the ride is set
+   to its last frame (end - 8.3 ms) and shot with the lens's live filter, then dressed as at rest (its live filter off,
+   its resting tint on where it keeps one), then let finish and shot again: <look>-<what>-t4-live / -t4-rest / -t5-after
+   PNGs and endpx.json in the run folder (lens boxes) */
+async function endPixelsPart(t, surface, W, H, what) {
+	const { writeFileSync } = await import('node:fs');
+	const pathm = await import('node:path');
+	const shot = async (name) => { writeFileSync(pathm.join(t.run.dir, name + '.png'), await t.page.screenshot({ type: 'png' })); };
+	const out = {};
+	for (const look of list(t.args.looks, LOOKS)) {
+		const f = await t.app.open({});
+		await f.evaluate(PROBE); await t.page.waitForTimeout(Number(t.args.settle ?? 8000));
+		await t.app.look(look); await t.page.waitForTimeout(1500);
+		await f.evaluate(() => PM_PAGES.go('dashboard')); await t.page.waitForTimeout(2000);
+		await parkPointer(t.page, W, H); await f.evaluate(() => window.__g.settle(4000));
+		await f.evaluate(() => { const l = document.getAnimations(); window.__pre = new Set(l); });
+		let sel;
+		if (what === 'lift') {
+			const ic = await f.evaluate(() => { const e = [...document.querySelectorAll('#activityBar .icon[data-target]:not([data-lg-current])')].find((x) => x.getBoundingClientRect().width > 4); if (!e) return null; const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+			if (!ic) { await t.check(`${what}px: an Activity icon to hover ${look}`, false, ''); continue; }
+			const off = await offsetOf(t, f); await t.page.mouse.move(off.x + ic.x, off.y + ic.y);
+			sel = 'i.lg-lens.lg-bead';
+		} else {
+			await f.evaluate(() => PM_PAGES.go('wizard'));
+			sel = null;
+		}
+		/* freeze what started: everything at its last frame, the page's own entrance included */
+		await t.page.waitForTimeout(what === 'lift' ? 60 : 400);
+		const made = await f.evaluate((s) => {
+			const n = document.getAnimations().filter((a) => !window.__pre.has(a)); window.__new = n;
+			n.forEach((a) => { try { a.pause(); a.currentTime = a.effect.getComputedTiming().endTime - 1000 / 120; } catch (e) { /* gone */ } });
+			/* the lens to read: the bead, or the lens a ride moves */
+			let l = s ? document.querySelector(s) : null;
+			if (!l) l = [...document.querySelectorAll('i.lg-lens')].find((x) => x.getAnimations().some((a) => a.effect && a.effect.composite === 'add')) || null;
+			window.__pxLens = l;
+			return { n: n.length, lens: !!l };
+		}, sel);
+		await t.page.waitForTimeout(300);
+		const state = () => f.evaluate(() => { const l = window.__pxLens; if (!l) return null; const r = l.getBoundingClientRect(); return { filter: getComputedStyle(l).backdropFilter, box: { x: r.left, y: r.top, w: r.width, h: r.height } }; });
+		const rec = out[look] = { what, made, frames: {} };
+		rec.frames.live = await state(); await shot(`${look}-${what}-t4-live`);
+		await f.evaluate(() => { const l = window.__pxLens; if (!l) return; l.__pxKeep = [l.style.getPropertyValue('backdrop-filter'), l.style.getPropertyValue('-webkit-backdrop-filter')]; l.__pxBf = l.__lgBf; l.__lgBf = null; l.style.removeProperty('backdrop-filter'); l.style.removeProperty('-webkit-backdrop-filter'); if (l.__lgRest) { l.style.setProperty('backdrop-filter', l.__lgRest, 'important'); l.style.setProperty('-webkit-backdrop-filter', l.__lgRest, 'important'); } });
+		await t.page.waitForTimeout(250);
+		rec.frames.rest = await state(); await shot(`${look}-${what}-t4-rest`);
+		await f.evaluate(() => { const l = window.__pxLens; if (!l) return; if (l.__pxBf) { l.__lgBf = l.__pxBf; l.__pxBf = null; } const k = l.__pxKeep; l.__pxKeep = null; ['backdrop-filter', '-webkit-backdrop-filter'].forEach((p, j) => { if (k && k[j]) l.style.setProperty(p, k[j], 'important'); else l.style.removeProperty(p); }); });
+		await f.evaluate(() => new Promise((r) => { (window.__new || []).forEach((a) => { try { a.finish(); } catch (e) { /* gone */ } }); requestAnimationFrame(() => requestAnimationFrame(r)); }));
+		await t.page.waitForTimeout(250);
+		rec.frames.after = await state(); await shot(`${look}-${what}-t5-after`);
+		t.log(`${what}px ${look}: ${JSON.stringify({ made, live: rec.frames.live && rec.frames.live.filter, rest: rec.frames.rest && rec.frames.rest.filter, after: rec.frames.after && rec.frames.after.filter })}`);
+		await t.check(`${what}px: the ${what}'s last frame bends, shot both ways ${look}`, !!(rec.frames.live && /url\(/.test(rec.frames.live.filter || '')), JSON.stringify(rec.frames));
+		await parkPointer(t.page, W, H);
+	}
+	writeFileSync(pathm.join(t.run.dir, 'endpx-' + what + '.json'), JSON.stringify(out, null, 1));
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const run = (part, fn) => async (t) => {
@@ -891,5 +947,7 @@ for (const surface of ['normal', 'sandbox']) {
 		tests[`PERF-4 lens film`] = named('film', filmPart);
 		tests[`PERF-4 lens resting tint cost`] = named('restcost', restcostPart);
 		tests[`PERF-4 bead pixels`] = named('beadpx', beadPixelsPart);
+		tests[`PERF-4 lift pixels`] = named('liftpx', (t, sf, W, H) => endPixelsPart(t, sf, W, H, 'lift'));
+		tests[`PERF-4 ride pixels`] = named('ridepx', (t, sf, W, H) => endPixelsPart(t, sf, W, H, 'ride'));
 	}
 }
