@@ -1,0 +1,71 @@
+{
+ "v": 1,
+ "about": "settings-min-text: committed renames of line-baseline state keys in the committed fixture settings-min-text.lines.json (a supplement is recorded under the new keys and is not renamed). A baseline state that finds no head state fails unless this file renames it or lists it under retired. Prefix renames only: rows are never edited. Each rule replaces a leading \"from\" with its \"to\" and applies, in order, to the key the rules before it produced. Retired states are named by their original fixture key.",
+ "prefixes": [
+  {
+   "from": "Memory & Automation Context, › ",
+   "to": "Memory & Automation Memory,  › ",
+   "why": "FO-167 rewrote Memory & Automation's rail description, which now starts 'Memory, ' (the key holds the rail item's first 28 characters at widths that show it)."
+  },
+  {
+   "from": "Memory & Automation Memory,  › Context & Memory",
+   "to": "Memory & Automation Memory,  › Memory",
+   "why": "FO-167 renamed the Context & Memory manager to Memory (narrow widths, after the rename above)."
+  },
+  {
+   "from": "Memory & Automation › Context & Memory",
+   "to": "Memory & Automation › Memory",
+   "why": "FO-167 renamed the Context & Memory manager to Memory (1920 px, where the rail key has no description)."
+  }
+ ],
+ "retired": [
+  {
+   "state": "Memory & Automation Context, › Context & Memory › Memories",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation › Context & Memory › Memories",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation Context, › Context & Memory › Context space",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation › Context & Memory › Context space",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation Context, › Context & Memory › Instructions",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation › Context & Memory › Instructions",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation Context, › Context & Memory › Finding memories",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation › Context & Memory › Finding memories",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation Context, › Context & Memory › Keeping & privacy",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. Its one recorded row, 'Tidy up memories', is the memory.retention.maintenance row's button, which the build retires (PM51.placement.audit().retiredIds; settings-managers-e memory 10)."
+  },
+  {
+   "state": "Memory & Automation › Context & Memory › Keeping & privacy",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. Its one recorded row, 'Tidy up memories', is the memory.retention.maintenance row's button, which the build retires (PM51.placement.audit().retiredIds; settings-managers-e memory 10)."
+  },
+  {
+   "state": "Memory & Automation Context, › Context & Memory › Sources",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  },
+  {
+   "state": "Memory & Automation › Context & Memory › Sources",
+   "why": "FO-167 (quiet Memory, Jared 2026-11-11) removed the Context & Memory manager's tabs; Memory is one page. The fixture recorded no row in this state."
+  }
+ ]
+}
