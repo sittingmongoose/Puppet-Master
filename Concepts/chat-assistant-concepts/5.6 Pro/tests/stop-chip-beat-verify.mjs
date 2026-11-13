@@ -455,6 +455,32 @@ const CASES = {
 		}
 		return out.join('; ');
 	},
+	"Animation speed changed while the chip has no loops, then again while it breathes, before any cadence change: no jump": () => {
+		// R32 F1: a speed the module stored went stale while the chip had no loops, and the next change re-placed the loop
+		// from it. Three routes: Reduced Motion on, the chip missing, and the first run of the session under Reduced Motion.
+		const out = [];
+		const breathe = (W) => W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 0.5; }, 8000);
+		for (const route of ['reduced', 'missing', 'first-run-reduced']) {
+			const W = route === 'first-run-reduced' ? world({}) : start({}, false);
+			if (route === 'first-run-reduced') { W.set('reduced', true); W.render({ busy: false }); W.render({ busy: true }); W.run(1500); }
+			else { W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1.3; }); }
+			const k1 = route === 'first-run-reduced' ? 1.6 : 2, k2 = route === 'first-run-reduced' ? 1 : 1;
+			if (route === 'reduced') { W.set('reduced', true); W.run(50); W.speed(k1); W.run(50); W.set('reduced', false); W.run(50); }
+			if (route === 'missing') { W.set('shown', false); W.run(50); W.speed(k1); W.run(50); W.set('shown', true); W.render({ busy: true }); W.run(50); }
+			if (route === 'first-run-reduced') { W.set('reduced', false); W.run(50); }
+			breathe(W);
+			const i0 = W.frames.length;
+			if (route === 'first-run-reduced') W.speed(k1); else W.speed(k2);  // while it breathes, before any cadence change
+			W.run(500);
+			try {
+				assert.equal(W.attrs.get('data-flow'), 'waiting', 'no word: still waiting');
+				smooth(W, i0); smooth(W, i0, 'b');
+				out.push(`${route}: ok`);
+			} catch (e) { out.push(`${route}: FAIL ${e.message.split('\n')[0]}`); }
+		}
+		assert.ok(out.every((x) => /: ok$/.test(x)), out.join('; '));
+		return out.join('; ');
+	},
 	"another thread's words do not change the pace": () => {
 		const W = start({}, false);
 		W.run(1500);
