@@ -196,7 +196,9 @@ for (const surface of ['normal', 'sandbox']) {
 			return { main: main ? [...main.options].map((o) => o.textContent.trim()) : null, back: back ? [...back.options].map((o) => `${o.textContent.trim()} · ${o.closest('optgroup')?.label || o.dataset.group || ''}`) : null, backRaw: back ? [...back.options].map((o) => o.textContent.trim()) : null };
 		});
 		if (await t.check('the advisor has both model lists', !!lists.main && !!lists.back)) {
-			const mainModels = lists.main.filter((x) => x !== 'Automatic' && x !== 'Default model');
+			// choices that are not a model: Automatic, Default model, and an inherited "Same as …" choice
+			// (P's model-defaults batch, main 48dd033447, added "Same as the project" to the model list)
+			const mainModels = lists.main.filter((x) => x !== 'Automatic' && x !== 'Default model' && !/^Same as\b/.test(x));
 			const pic = lists.main.concat(lists.backRaw).filter((x) => /GPT Image/.test(x));
 			await t.check(`its backup model offers the models its model offers (${mainModels.length} and ${lists.backRaw.length})`, mainModels.length === lists.backRaw.length, `model: ${mainModels.join(', ')} | backup: ${lists.backRaw.join(', ')}`);
 			await t.check('neither offers a picture model', pic.length === 0, pic.join(', '));
