@@ -51,9 +51,14 @@
     if (mode === 'tailscale') base.endpoint_label = d.tailscale_control === 'headscale' ? d.headscale_url : 'Tailscale';
     /* FO-175: a web address keeps the proxy the person chose, so the app shows and makes the file for that one: proxy_family
        is exactly caddy, nginx or traefik for a file Puppet Master makes (generate_only), and null for a proxy they
-       already run (existing_proxy). Settings read the route without it and showed Caddy whatever was picked. */
-    if (mode === 'reverse_proxy') Object.assign(base, { endpoint_label: d.proxy_hostname, proxy_hosting: d.proxy_hosting === 'existing_proxy' ? 'existing_proxy' : d.proxy_hosting === 'generate_only' ? 'generate_only' : null,
-      proxy_family: d.proxy_hosting === 'existing_proxy' ? null : ['caddy', 'nginx', 'traefik'].includes(d.proxy_kind) ? d.proxy_kind : null });
+       already run (existing_proxy). Settings read the route without it and showed Caddy whatever was picked.
+       FO-179: an existing Server reached by its web address (the connect journey, the draft serverDraft names) already
+       runs the proxy at that address; its draft keeps no proxy choice (35-draft clears it for connect_existing), so the
+       hand-off says existing_proxy — the same value the new-Project path copies over (67-screens-connect createNew).
+       Settings then shows the person's own proxy and offers no Caddy file. */
+    const hosting = S.sess.active === 'connect' || d.proxy_hosting === 'existing_proxy' ? 'existing_proxy' : d.proxy_hosting === 'generate_only' ? 'generate_only' : null;
+    if (mode === 'reverse_proxy') Object.assign(base, { endpoint_label: d.proxy_hostname, proxy_hosting: hosting,
+      proxy_family: hosting === 'existing_proxy' ? null : ['caddy', 'nginx', 'traefik'].includes(d.proxy_kind) ? d.proxy_kind : null });
     if (mode === 'remote_link') base.endpoint_label = d.remote_endpoint;
     if (d.server_mode === 'this_device' || mode === 'none') return Object.assign(base, { mode: 'none', control: null, endpoint_label: '', proxy_family: null, proxy_hosting: null });
     if (d.server_mode === 'existing_server') {

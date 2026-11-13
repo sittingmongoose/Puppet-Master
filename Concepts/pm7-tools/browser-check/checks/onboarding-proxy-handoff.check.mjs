@@ -19,7 +19,17 @@
 //   block, Traefik dynamic config, Caddyfile), the same one onboarding gave; for a proxy of the person's own, nothing
 //   is offered to make.
 // The surface the switch picks (`--set sandbox=1`, `--set sandbox=0`); without it, both. `--set kinds=nginx,traefik`
-// picks some. Fails on main for nginx, traefik and existing; caddy passes on both (the guard that the default holds).
+// picks some. Fails on main for all four choices, caddy included (its Make the settings file built an NGINX block
+// there); the FO-175 hand-off fix is what makes them pass.
+//
+// FO-179 adds one case for the connect journey: an EXISTING Server reached by its web address. Where is this
+// Puppet Master? › Connect this device, Continue, Other ways to connect › My own web address, the address typed
+// (it resolves to the fixture Home NAS), Continue, Connect, the pairing's Continue, Enter Puppet Master — all real
+// clicks. The hand-off must say proxy_hosting existing_proxy with no family, and Settings' Custom domain sheet must
+// keep it a proxy of the person's own: Your own proxy, nothing offered to make, Trusted proxy "Your proxy at
+// pm.example.net". Fails on main and on the FO-175 base d9399baa40: the connect draft's cleared proxy came over as
+// null, which Settings reads as an old saved result and shows Caddy with Make the settings file. Passes with the
+// FO-179 hand-off fix. `--set kinds` does not filter this case.
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const BLOCK = '.workspace-block[data-workspace-block="servers"]';
 const HOST = 'pm.example.net';
@@ -70,7 +80,41 @@ async function walkOnboarding(t, f, kind) {
 	if (kind !== 'existing') await t.check(`onboarding gave the ${KINDS[kind]} settings file`, FILE_HEAD[kind].test(file), file.slice(0, 80));
 }
 
-async function readSheet(t, f, kind, surface) {
+/* FO-179: the connect journey, an existing Server reached by its web address. The Server choice (Connect this
+   device), the route, the address, Connect, the pairing's Continue and Enter are real clicks; the typed address
+   resolves to the fixture Home NAS (resolveAddress), as it would for a person. */
+async function walkConnect(t, f) {
+	const click = async (sel) => { const l = f.locator(sel).filter({ visible: true }).first(); await l.click({ timeout: 10000 }); await sleep(f, 450); };
+	await f.evaluate(() => { O55.ui.go('where'); });
+	await f.waitForFunction(() => O55.S.sess.screen === 'where' && !document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer.o55-out'), null, { timeout: 15000 });
+	await sleep(f, 600);
+	await click(`${LAYER} [data-o55-do="pick"][data-arg="connect"]`);
+	await click('#pm-o55-onboarding .o55-foot [data-o55-do="next"]');
+	await f.waitForFunction(() => O55.S.sess.screen === 'c-route' && O55.S.sess.active === 'connect', null, { timeout: 15000 });
+	await sleep(f, 600);
+	await click(`${LAYER} [data-o55-do="more"]`);
+	await click(`${LAYER} [data-o55-do="route"][data-arg="reverse_proxy"]`);
+	const field = f.locator('#o55f-proxy'); await field.click(); await field.pressSequentially(HOST, { delay: 20 }); await sleep(f, 400);
+	const d = await f.evaluate(() => (({ server_ref, remote_mode, proxy_hostname }) => ({ server_ref, remote_mode, proxy_hostname }))(O55.S.sess.drafts.connect));
+	await t.check('onboarding: the connect plan holds the existing Server and the web address', d.remote_mode === 'reverse_proxy' && !!d.server_ref && [HOST, `https://${HOST}`].includes(d.proxy_hostname), JSON.stringify(d));
+	await click('#pm-o55-onboarding .o55-foot [data-o55-do="next"]');
+	await f.waitForFunction(() => O55.S.sess.screen === 'c-review', null, { timeout: 15000 }); await sleep(f, 700);
+	await click('#pm-o55-onboarding .o55-foot .o55-primary'); /* Connect: the review's one confirmation, then the pairing */
+	await f.waitForFunction(() => O55.S.sess.screen === 'c-pair', null, { timeout: 15000 });
+	await f.waitForFunction(() => { const c = O55.S.sess.connect, d = O55.S.sess.drafts.connect; return !!(c.trusts && c.trusts[d.server_ref] && d.server_trust_confirmed); }, null, { timeout: 20000 });
+	await sleep(f, 600);
+	await click('#pm-o55-onboarding .o55-foot [data-o55-do="next"]');
+	await f.waitForFunction(() => O55.S.sess.screen === 'c-ready', null, { timeout: 15000 }); await sleep(f, 700);
+	await click('#pm-o55-onboarding [data-o55-do="enter"]');
+	await f.waitForFunction(() => !(O55.S && O55.S.open) && !!window.PM_ONBOARDING_RESULT, null, { timeout: 20000 });
+	await sleep(f, 1500);
+	const r = await f.evaluate(() => PM_ONBOARDING_RESULT.route);
+	t.log(JSON.stringify({ journey: 'connect_existing', route: r }));
+	await t.check('onboarding finished with the existing Server in use over its web address', !!r && r.mode === 'reverse_proxy' && r.state === 'in_use', JSON.stringify(r));
+	await t.check('onboarding hands over the proxy already running at that address (existing_proxy, no family)', !!r && r.proxy_hosting === 'existing_proxy' && r.proxy_family === null, JSON.stringify(r));
+}
+
+async function readSheet(t, f, kind, surface, tag) {
 	await f.locator('#tab-settings').click();
 	await f.waitForSelector('#pm-settings-root .domain-link[data-domain="system"]', { timeout: 15000 });
 	await f.evaluate(() => PM51.go('system', 'servers'));
@@ -97,7 +141,7 @@ async function readSheet(t, f, kind, surface) {
 	const s = await read();
 	t.log(JSON.stringify({ kind, surface, tech, sheet: { ...s, text: s.text.slice(0, 500), config: s.config.slice(0, 80) } }));
 	const fam = KINDS[kind];
-	await t.shot(`fo175-${kind}-${surface}`, `Settings › Away From Home › Custom domain after onboarding with ${fam || 'a proxy of my own'}`);
+	await t.shot(`${tag || 'fo175'}-${kind}-${surface}`, `Settings › Away From Home › Custom domain after onboarding with ${fam || 'a proxy of my own'}`);
 	await t.check(`${surface}: the Custom domain sheet opened`, /Custom domain/i.test(s.title), s.title);
 	if (fam) {
 		await t.check(`${surface}: Settings shows the proxy picked in onboarding, ${fam} (painted dropdown label and value)`, s.select === fam && s.shown === fam && s.painted, JSON.stringify({ select: s.select, shown: s.shown, painted: s.painted }));
@@ -126,3 +170,13 @@ for (const kind of Object.keys(KINDS)) {
 		}
 	};
 }
+
+tests['FO-179: an existing Server reached by its web address in onboarding reaches Settings as my own proxy'] = async (t) => {
+	for (const surface of t.app.surfaces()) {
+		await t.viewport(1440, 900);
+		const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: surface === 'sandbox', settleMs: 1500 });
+		await f.waitForFunction(() => window.O55 && O55.S && O55.S.open, null, { timeout: 40000 });
+		await walkConnect(t, f);
+		await readSheet(t, f, 'existing', surface, 'fo179');
+	}
+};
