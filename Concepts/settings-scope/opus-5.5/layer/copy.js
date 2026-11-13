@@ -136,7 +136,13 @@
      names it for the preview. (The operating system's motion preference is never a setting value: resolve.js keeps it
      in motion.effective.) The source project's own values come in sourceDiff under their own contract, untouched */
   const deviceOrigin = (r) => !!r && r.from.level === 'device';
-  function fixedRows(src, dstCtx, have, screenHeld) {
+  /* Follow-up (2026-11-13, the lead's canon call on SSYS-062: "project_only_rows is off by default, as are copied
+     instructions/build files/remotes and Computer-effective freeze"). A value the source has in use from its own
+     computer is frozen only by that opt-in, "Copy what … gets from …", whose list brings it first (and so it is in
+     `have`). Keep them fixed alone leaves it out, before anything counts, ticks, previews or writes it, and `compHeld`
+     names it for the preview. This overturns Sol max F2's accepted design, in which Keep them fixed froze it too */
+  const computerOrigin = (r) => !!r && r.from.level === 'computer';
+  function fixedRows(src, dstCtx, have, screenHeld, compHeld) {
     const p = PSX.projectById(src), srcCtx = { project: src, device: S.ctx.device, on: p ? p.home : null };
     const w = PSX.W, out = [];
     Object.keys(DEF).forEach((id) => {
@@ -144,6 +150,7 @@
       if (have.has(id) || d.home || d.demoRow || d.owner || !(d.may || []).includes('project')) return;
       const r = PSX.resolve(id, srcCtx); if (!r || r.notOffered) return;
       if (deviceOrigin(r)) { if (screenHeld) screenHeld.push({ id, value: clone(r.value), device: r.from.key }); return; }
+      if (computerOrigin(r)) { if (compHeld) compHeld.push({ id, value: clone(r.value), computer: r.from.key }); return; }
       const v = r.asked !== undefined ? r.asked : r.value;
       /* review Sol max F2, found while proving the write: a setting with no value at all can't be kept fixed (writing
          nothing keeps nothing), so it is never counted, previewed or written as one */
@@ -208,8 +215,8 @@
       const ids = new Set(diff.map((x) => x.id));
       const out = diff.map((x) => Object.assign({ from: x.files ? 'file' : 'own' }, x));
       if (st.fromComp) fromComputer(st.src).forEach((x) => { if (ids.has(x.id)) return; ids.add(x.id); out.push(Object.assign({ from: 'computer', usual: PSX.resolve(x.id, dstCtx()).value, dstOwn: mode !== 'new' && PSX.has(PSX.W.project[st.dst], x.id), same: false, files: false }, x)); });
-      out.held = [];
-      if (st.fixed) fixedRows(st.src, dstCtx(), ids, out.held).forEach((x) => { ids.add(x.id); out.push(Object.assign({ from: 'fixed' }, x)); });
+      out.held = []; out.compHeld = [];
+      if (st.fixed) fixedRows(st.src, dstCtx(), ids, out.held, out.compHeld).forEach((x) => { ids.add(x.id); out.push(Object.assign({ from: 'fixed' }, x)); });
       return out;
     }
     /* the one tick each row has: a file by About its own files; an AI row never while "Use the same AI accounts" is off;
@@ -221,7 +228,7 @@
        receipt are all made from it. `left` is what an opt-in would bring that you left out, so the preview can say it
        stays as usual */
     function plan() {
-      if (st.src === 'usual' || !st.dst) return { rows: [], things: [], accts: [], copied: [], kept: [], left: [], held: [] };
+      if (st.src === 'usual' || !st.dst) return { rows: [], things: [], accts: [], copied: [], kept: [], left: [], held: [], compHeld: [] };
       const all = candidates();
       const rows = all.filter(isOn);
       rows.forEach((x) => { if (x.dstOwn && !st.clash[x.id]) st.clash[x.id] = 'keep'; });
@@ -230,7 +237,7 @@
       const kept = rows.filter((x) => x.dstOwn && st.clash[x.id] === 'keep');
       const copied = rows.filter((x) => !kept.includes(x));
       const left = all.filter((x) => (x.from === 'fixed' || x.from === 'computer') && !aiOff(x) && !isOn(x));
-      return { rows, things, accts, copied, kept, left, held: all.held || [] };
+      return { rows, things, accts, copied, kept, left, held: all.held || [], compHeld: all.compHeld || [] };
     }
     function totals() { const p = plan(); return { n: p.copied.length, kept: p.kept.length, things: p.things.length, accts: p.accts.length }; }
     function primaryLabel() {
@@ -356,7 +363,7 @@
       const fixedWould = fixedRows(st.src, dstCtx(), new Set(all.map((x) => x.id).concat(cand.filter((x) => x.from === 'computer').map((x) => x.id))));
       const nFixed = fixedWould.filter((x) => isOn(x)).length;
       const fcList = fc.map((x) => `${label(x.id)} ${vt(x.id, x.value)}${isOn(x) ? '' : aiOff(x) ? ': stays as usual, “Use the same AI accounts” is off' : ': stays as usual, as you chose'}`).join(' · ');
-      const alsoHtml = `<label class="psx-check"><input type="checkbox" data-act="fixed" data-k="fixed"${st.fixed ? ' checked' : ''}><span><b>Keep them fixed</b><small>Copy every setting as ${esc(st.src)} has it (${nFixed} more), so ${esc(st.dst)} stops following later changes to your usual settings. For a client’s project that must not drift. Screen, program and folder settings stay with each device and computer.</small></span></label>`
+      const alsoHtml = `<label class="psx-check"><input type="checkbox" data-act="fixed" data-k="fixed"${st.fixed ? ' checked' : ''}><span><b>Keep them fixed</b><small>Copy every setting as ${esc(st.src)} has it (${nFixed} more), so ${esc(st.dst)} stops following later changes to your usual settings. For a client’s project that must not drift. Screen, program and folder settings stay with each device and computer, and what ${esc(st.src)} gets from ${esc(placeName('computer', compOf()))} comes only with the next choice.</small></span></label>`
         + `<label class="psx-check"${fc.length ? '' : ' aria-disabled="true"'}><input type="checkbox" data-act="fromcomp" data-k="fromcomp"${st.fromComp ? ' checked' : ''}${fc.length ? '' : ' disabled'}><span>Copy what ${esc(st.src)} gets from ${esc(placeName('computer', compOf()))} as ${esc(st.dst)}’s own (${fcOn.length === fc.length ? fc.length : `${fcOn.length} of ${fc.length}`})<small data-k="fromcomp-list">${esc(fcList || 'Nothing')}</small></span></label>`;
       const never = [['Shell', 'belongs to each computer'], ['Claude Code app location', 'belongs to each computer'], ['Text size', 'belongs to each device'], ['OpenRouter API key', 'keys never move'], ['Sign-ins', 'stay on the computer where you signed in']];
       return `<details class="psx-adv"${st.advOpen ? ' open' : ''}><summary data-k="adv"><svg class="psx-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${esc(t('np.like.adv'))}</span></summary><div class="psx-adv-body">`
@@ -389,6 +396,8 @@
       // review Sol max F2: what an opt-in would have brought and you left out is named, so the preview shows it held
       if ((p.left || []).length) h += `<p class="psx-p psx-muted" data-k="leftout">${mark('info')} Stays as usual, as you chose: ${esc(list(p.left.map((x) => label(x.id)), 4))}.</p>`;
       // Astra max A3: a screen value the source uses from a device is never kept fixed, and the preview names it
+      // Follow-up: what the source gets from its computer is never frozen by Keep them fixed alone, and the preview names it
+      if ((p.compHeld || []).length) h += `<p class="psx-p psx-muted" data-k="compheld">${mark('info')} Not kept fixed: ${esc(list(p.compHeld.map((x) => `${label(x.id)} (${vt(x.id, x.value)})`), 4))}. ${esc(st.src)} gets ${p.compHeld.length === 1 ? 'it' : 'them'} from ${esc(placeName('computer', compOf()))}, and only “Copy what ${esc(st.src)} gets from ${esc(placeName('computer', compOf()))}” brings ${p.compHeld.length === 1 ? 'it' : 'them'}.</p>`;
       if ((p.held || []).length) { const devs = [...new Set(p.held.map((x) => placeName('device', x.device)))]; h += `<p class="psx-p psx-muted" data-k="screenheld">${mark('info')} Not kept fixed: ${esc(list(p.held.map((x) => `${label(x.id)} (${vt(x.id, x.value)})`), 4))}. ${p.held.length === 1 ? 'It comes' : 'They come'} from ${esc(list(devs))}’s own screen settings, and screen settings belong to each device.</p>`; }
       h += `<p class="psx-p psx-muted" style="margin-top:10px">Skipped: sign-ins, keys, files and history (never copied); screen settings (they belong to each device); program and folder settings (they belong to each computer).</p>`;
       if (!done) h += `<p class="psx-p psx-muted">${mode === 'new' ? 'Nothing applies before the project is made.' : 'It is one change with one Undo, checked when it is saved.'}</p>`;

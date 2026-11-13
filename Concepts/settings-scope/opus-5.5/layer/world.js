@@ -78,7 +78,10 @@
      The pattern is split the way a shell splits it (quotes keep a word together and come off). The program word is the
      first after sudo, env (with their flags) and NAME=value; every other word, a NAME=value before the program included,
      is an argument. A flag's value is read with its flag (row 5). The pattern is host-dependent when any row holds for
-     any word; the first such word, in pattern order, is named with its row. */
+     any word; the first such word, in pattern order, is named with its row.
+     Refined the same day (the lead's canon call, PS-144): a web address, an image or registry reference whose first
+     segment is a host name, and a git ref (an argument of a ref-taking git subcommand, before --) are not paths. They
+     lift row 4, the bare relative path, and nothing else: NOT_A_PATH below */
   const PATH_EXT = /\.(sh|bash|zsh|fish|ps1|psm1|bat|cmd|exe|py|js|mjs|cjs|ts|rb|pl|php|lua)$/i;
   // the parts of a NAME=value or --flag=value value: a , ; or : list (a drive's C: and a web address's :// stay whole)
   const PATH_LIST = /[,;]|(?<!(?:^|[,;])[A-Za-z]):(?!\/\/)/;
@@ -90,7 +93,20 @@
   const FLAG_AFTER = { '-p': /^(tsc|vue-tsc)$/ };
   const FLAG_NAME = /^--(?!no-)(?:[\w.-]*(?:dir|directory|path|folder|root)|(?:[\w.]+[-_])+file)$/i;
   const baseName = (w) => String(w || '').split(/[\\/]/).pop();
-  const pathFlag = (name, seen) => DIR_FLAGS.includes(name) || FLAG_NAME.test(name) || (!!FLAG_AFTER[name] && seen.some((w) => FLAG_AFTER[name].test(baseName(w))));
+  /* git: -C is git's own "run in this folder" only before the subcommand (after it, git commit -C names a commit), and
+     -f is force, never a file; -c and the other global options with a value take the next word */
+  const GIT_REF_CMDS = /^(push|pull|fetch|checkout|switch|merge|rebase|branch|tag|log|diff|reset|cherry-pick)$/;
+  const GIT_VALUE_OPTS = ['-c', '-C', '--git-dir', '--work-tree', '--namespace', '--exec-path', '--super-prefix', '--config-env'];
+  const pathFlag = (name, seen, git) => (git && (name === '-f' || (name === '-C' && git.sub))) ? false : DIR_FLAGS.includes(name) || FLAG_NAME.test(name) || (!!FLAG_AFTER[name] && seen.some((w) => FLAG_AFTER[name].test(baseName(w))));
+  /* not a path (the README's "Not a path" table): a web address (a scheme then ://; file: is a file, row 2), and an image
+     or registry reference whose first segment is a host name (dot-separated labels ending in two or more letters, or a
+     name or address with a port). A git ref is decided by its place in the pattern (read(), x.ref) */
+  const HOST_NAME = /^(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}(?::\d+)?|[A-Za-z0-9.-]+:\d+)$/;
+  const NOT_A_PATH = [
+    { kind: 'web', test: (p) => /^[a-z][a-z0-9+.-]*:\/\//i.test(p) && !/^file:/i.test(p) },
+    { kind: 'image', test: (p) => { const i = p.indexOf('/'); return i > 0 && !/\\/.test(p.slice(0, i)) && HOST_NAME.test(p.slice(0, i)); } }
+  ];
+  const notAPath = (p) => NOT_A_PATH.find((n) => n.test(p)) || null;
   // where a word starts: a root, the home folder, a drive, a UNC share, a variable then a separator, file:, or dots
   const ROOTS = [
     ['unc', /^(\\\\|\/\/)[^\\/]/],
@@ -130,7 +146,8 @@
      holds for is the one it names */
   function partsOf(w) {
     const out = [], eq = w.indexOf('=');
-    if (eq > 0 && !/[\\/]/.test(w.slice(0, eq))) out.push(...w.slice(eq + 1).split(PATH_LIST).filter(Boolean));
+    // a NAME=value or --flag=value is read by its value alone: its name holds no separator (--registry=https://… is a web address)
+    if (eq > 0 && !/[\\/]/.test(w.slice(0, eq))) return w.slice(eq + 1).split(PATH_LIST).filter(Boolean);
     const glued = /^-[A-Za-z]([^=].*)$/.exec(w); if (glued && !w.startsWith('--')) out.push(glued[1]);
     out.push(w);
     return out;
@@ -138,32 +155,41 @@
   // the words of a pattern, each with its role: program, flag, value (a directory or file flag's), arg or end (--)
   function read(text) {
     const ws = shellWords(text), at = programAt(ws), words = [];
-    let ended = false, takes = null;
+    // git: its subcommand (the first argument after its own options) and, for a ref-taking one, its ref arguments
+    const git = at < ws.length && /^git(\.exe)?$/i.test(baseName(ws[at])) ? { sub: null } : null;
+    let ended = false, takes = null, skip = false;
     ws.forEach((w, i) => {
       const x = { word: w, at: i, role: i === at ? 'program' : 'arg', program: i === at, parts: i === at ? [w] : partsOf(w), value: null };
       if (i > at) {
         if (takes) { x.role = 'value'; x.value = { flag: takes, word: w }; takes = null; }
+        else if (skip) { x.role = 'value'; skip = false; }
         else if (!ended && w === '--') { x.role = 'end'; ended = true; }
         else if (!ended && /^-./.test(w)) {
           x.role = 'flag';
           const eq = w.indexOf('='), name = eq > 0 ? w.slice(0, eq) : w, seen = ws.slice(at, i);
-          if (pathFlag(name, seen)) { if (eq > 0) x.value = { flag: name, word: w.slice(eq + 1) }; else if (i + 1 < ws.length && !/^-/.test(ws[i + 1])) takes = name; }
-        }
+          const next = i + 1 < ws.length && !/^-/.test(ws[i + 1]);
+          if (pathFlag(name, seen, git)) { if (eq > 0) x.value = { flag: name, word: w.slice(eq + 1) }; else if (next) takes = name; }
+          else if (git && !git.sub && eq < 0 && next && GIT_VALUE_OPTS.includes(name)) skip = true;
+        } else if (git && !git.sub) { git.sub = w; x.sub = true; }
+        else if (git && GIT_REF_CMDS.test(git.sub) && !ended) x.ref = true;
       }
       words.push(x);
     });
-    return { words, at, program: at < ws.length ? ws[at] : '' };
+    return { words, at, program: at < ws.length ? ws[at] : '', git };
   }
   const first = (parts, ok) => parts.find((p) => ok(p)) || null;
   const homeWord = (p) => /^~/.test(p) || /^(\$HOME|\$\{HOME\}|%USERPROFILE%|%HOMEPATH%|\$env:USERPROFILE|\$env:HOME)$/i.test(p);
   /* README table E2, row by row. Each test gets one word and gives the word it names, or nothing */
+  const atRoot = (p) => { const r = rootOf(p); return (!!r && r !== 'relative') || homeWord(p); };
   const HOST_ROWS = [
     { row: 1, why: 'program', test: (x) => (x.program && (/[\\/]/.test(x.word) || /^[~.]/.test(x.word) || !!rootOf(x.word)) ? x.word : null) },
-    { row: 2, why: 'separator', test: (x) => (x.program ? null : first(x.parts, (p) => /[\\/]/.test(p))) },
+    { row: 2, why: 'root', test: (x) => (x.program ? null : first(x.parts, atRoot)) },
     { row: 3, why: 'relative', test: (x) => (x.program ? null : first(x.parts, (p) => /^\.{1,2}([\\/]|$)/.test(p))) },
-    { row: 4, why: 'home', test: (x) => (x.program ? null : first(x.parts, (p) => homeWord(p) || /^[A-Za-z]:$/.test(p) || /^file:/i.test(p))) },
+    // the bare relative path: lifted for a git ref, a web address and an image or registry reference (NOT_A_PATH)
+    { row: 4, why: 'separator', test: (x) => (x.program || x.ref ? null : first(x.parts, (p) => /[\\/]/.test(p) && !notAPath(p))) },
     { row: 5, why: 'flag', test: (x) => (x.value && x.value.word !== '' ? x.value.word : null) },
-    { row: 6, why: 'file', test: (x) => first(x.parts, (p) => PATH_EXT.test(p)) },
+    // a web address or an image reference that ends like a script is still not a local file
+    { row: 6, why: 'file', test: (x) => first(x.parts, (p) => PATH_EXT.test(p) && !notAPath(p)) },
     { row: 7, why: 'filecmd', test: (x) => (x.program && FILE_CMDS.test(x.word) ? x.word : null) },
     { row: 8, why: 'wildcard', test: (x) => (x.program && x.word.includes('*') ? x.word : null) }
   ];
@@ -171,7 +197,7 @@
   function hostWord(x) {
     for (const R of HOST_ROWS) {
       const w = R.test(x); if (w == null) continue;
-      const why = R.why === 'home' && !homeWord(w) ? 'root' : R.why;
+      const why = R.why === 'root' && homeWord(w) ? 'home' : R.why;
       return Object.assign({ row: R.row, why, word: w, path: w, root: rootOf(w), program: x.program, at: x.at }, R.row === 5 ? { flag: x.value.flag } : {});
     }
     return null;
@@ -180,6 +206,7 @@
     words: shellWords,
     programAt,
     rows: HOST_ROWS.map((R) => ({ row: R.row, why: R.why })),
+    notAPath: (p) => { const n = notAPath(String(p || '')); return n ? n.kind : null; },
     program(text) { const ws = shellWords(text), i = programAt(ws); return i < ws.length ? ws[i] : ''; },
     rootOf,
     // a pattern's words with their roles, each with the first row that holds for it (host) or null

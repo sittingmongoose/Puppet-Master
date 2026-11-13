@@ -607,14 +607,15 @@
   const PATHS = PSX.paths;
   /* E. host-dependent: what the rule allows depends on one computer. A folder rule always is; a command rule is when a
      row of the README's table E2 holds for one of its words: the one rule PSX.paths.host (layer/world.js) holds as
-     HOST_ROWS. Rows 1 to 6 are PS-144's host-dependent targets (an executable location, a path, a relative place, the
-     home folder or a drive, a directory or file flag's value, a script file); rows 7 and 8 are concept choices (a file
-     command, a wildcard program). Review A-r4 N2: it comes from the pattern, what the rule is about (PS-144), never from
+     HOST_ROWS. Rows 1 to 6 are PS-144's host-dependent targets (an executable location, a root, a drive, a share or the
+     home folder, a place relative to where it runs, a bare relative path, a directory or file flag's value, a script
+     file); rows 7 and 8 are concept choices (a file command, a wildcard program). A web address, an image or registry
+     reference and a git ref are not paths (NOT_A_PATH). Review A-r4 N2: it comes from the pattern, what the rule is about (PS-144), never from
      the step it was typed on.
      Review Sol max F1: hostOf() is the one classifier. The editor's places, its line saying why, the line saying a
      chosen place was cleared, and the save guard all call it, so what the editor offers and what Add the rule keeps
      can never differ. Astra max A2: it no longer has a reader of its own; it asks PSX.paths.host, row by row.
-     It says why: { why: folder | program | separator | relative | home | root | flag | file | filecmd | wildcard,
+     It says why: { why: folder | program | root | home | relative | separator | flag | file | filecmd | wildcard,
      row, word, flag? } or null */
   const hostOf = (pattern, a) => {
     if (a && ruleKind(a) === 'path') return { why: 'folder', row: 'folder' };
@@ -629,10 +630,10 @@
     return {
       folder: 'a folder rule is about a path on one computer',
       program: `it runs ${w} by its location on one computer`,
-      separator: `${w} has a / or a \\, so it reads as a path on one computer`,
+      root: `${w} is a path on one computer`,
+      home: /[\\/]/.test(h.word) ? `${w} is in the home folder of one computer` : `${w} is the home folder of one computer`,
       relative: `${w} is a place relative to the folder it runs in`,
-      home: `${w} is in the home folder of one computer`,
-      root: `${w} names a drive or a file of one computer`,
+      separator: `${w} is a path relative to the folder it runs in`,
       flag: `${c(h.flag)} takes a folder or a file, so ${w} names a place on one computer`,
       file: `it names the file ${w}, which is on one computer`,
       filecmd: `${w} works on the files of one computer`,
@@ -645,9 +646,9 @@
      (npm *, npx *, git *, rm -rf *, read *, git -C repo *). A named script or subcommand followed by * is not
      (./scripts/release.sh *, npm test *, git push origin *). A folder rule is broad when it reaches past the file or
      folder the step asked for (/mnt/team-share/**). The whole list is a concept choice: canon names none.
-     Astra max A2: it reads the same words as E2 (PSX.paths.read): a named script is a word rows 1, 2, 3 or 6 hold for */
+     Astra max A2: it reads the same words as E2 (PSX.paths.read): a named script is a word rows 1, 2, 3, 4 or 6 hold for */
   const SHELLS = /^(bash|sh|zsh|fish|dash|ksh|csh|tcsh|pwsh|powershell|cmd(\.exe)?|env|eval|exec|xargs|python[0-9.]*|node|deno|bun|ruby|perl|php|lua|osascript)$/i;
-  const isScript = (x) => !!x && !!x.host && [1, 2, 3, 6].includes(x.host.row);
+  const isScript = (x) => !!x && !!x.host && [1, 2, 3, 4, 6].includes(x.host.row);
   const isBroad = (pattern, a) => {
     const p = String(pattern || '').trim(); if (!p) return false;
     // a folder rule: its literal start and the step's path, each written one way (quotes off, either separator)
