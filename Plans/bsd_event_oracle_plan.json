@@ -25925,10 +25925,15 @@
         }
       ],
       "retention": {
-        "assignment": "PENDING_RETENTION_DECISION",
-        "positive": "Pending retention refuses admission/deletion policy inference",
+        "assignment": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-AUTHORITY-INDEFINITE",
+          "policy_version": "1.0.0"
+        },
+        "decision": "DL-453 item 1.a Back Seat Driver (Project editions only), Plans/storage-plan.md:17638,17642 at main f8b2098608",
+        "positive": "No age/count expiry; explicit Delete Puppet Master project data only; finite disk budgets refuse new records under pressure",
         "negative": {
-          "one_defect": "Restart an expiry anchor on retry, or infer a destructive rule for a pending policy, as separate cases",
+          "one_defect": "Infer an age/count expiry or a destructive rule the indefinite policy does not authorize",
           "expected": "reject"
         }
       },
@@ -36195,10 +36200,15 @@
         }
       ],
       "retention": {
-        "assignment": "PENDING_RETENTION_DECISION",
-        "positive": "Pending retention refuses admission/deletion policy inference",
+        "assignment": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-AUTHORITY-INDEFINITE",
+          "policy_version": "1.0.0"
+        },
+        "decision": "DL-453 item 1.a Back Seat Driver (Project editions only), Plans/storage-plan.md:17638,17642 at main f8b2098608",
+        "positive": "No age/count expiry; explicit Delete Puppet Master project data only; finite disk budgets refuse new records under pressure",
         "negative": {
-          "one_defect": "Restart an expiry anchor on retry, or infer a destructive rule for a pending policy, as separate cases",
+          "one_defect": "Infer an age/count expiry or a destructive rule the indefinite policy does not authorize",
           "expected": "reject"
         }
       },

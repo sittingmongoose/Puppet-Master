@@ -1240,7 +1240,11 @@
         "SP-318 lifecycle physical family registration",
         "event admission for bsd.policy_changed"
       ],
-      "event_retention_policy_ref": "PENDING_RETENTION_DECISION"
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
     },
     {
       "family_id": "bsd_policy_changed_checkpoint",
@@ -1276,7 +1280,11 @@
         "SP-318 lifecycle physical family registration",
         "event admission for bsd.policy_changed"
       ],
-      "event_retention_policy_ref": "PENDING_RETENTION_DECISION"
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
     },
     {
       "family_id": "bsd_policy_changed_projection",
@@ -1312,7 +1320,11 @@
         "SP-318 lifecycle physical family registration",
         "event admission for bsd.policy_changed"
       ],
-      "event_retention_policy_ref": "PENDING_RETENTION_DECISION"
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
     },
     {
       "family_id": "bsd_review_failed_operation",
@@ -1708,7 +1720,11 @@
         "SP-318 lifecycle physical family registration",
         "event admission for bsd.workflow_binding_created"
       ],
-      "event_retention_policy_ref": "PENDING_RETENTION_DECISION"
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
     },
     {
       "family_id": "bsd_workflow_binding_created_checkpoint",
@@ -1744,7 +1760,11 @@
         "SP-318 lifecycle physical family registration",
         "event admission for bsd.workflow_binding_created"
       ],
-      "event_retention_policy_ref": "PENDING_RETENTION_DECISION"
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
     },
     {
       "family_id": "bsd_workflow_binding_created_projection",
@@ -1780,7 +1800,11 @@
         "SP-318 lifecycle physical family registration",
         "event admission for bsd.workflow_binding_created"
       ],
-      "event_retention_policy_ref": "PENDING_RETENTION_DECISION"
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
     },
     {
       "family_id": "bsd_source_policy",

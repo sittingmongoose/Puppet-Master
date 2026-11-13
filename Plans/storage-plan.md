@@ -30590,7 +30590,8 @@ canonical_text: 'Newly authored pending original-source graph for the fifteen W3
 
   Policy and binding source values use the existing RP-CONFIG-CURRENT current-plus-history policy, with frozen run/review/live
   references and coherent backups holding any referenced historical version; this is a current configuration value policy
-  and does not assign the two pending event-history lifetimes. Assignment, review, finding and quarantine source values use
+  and does not assign the two event-history lifetimes, which DL-453 item 1.a now assigns to RP-AUTHORITY-INDEFINITE@1.0.0
+  (Plans/storage-plan.md:17638,17642 at main f8b2098608). Assignment, review, finding and quarantine source values use
   RP-RUNTIME-365D through their actual primary assignment/run, with held/closure/recovery/live/backup references protected
   before run-completion expiry. Raw advisor transcript/output retains its independently owned content deletion/retention rules
   and is not kept merely because a metadata wrapper survives. The actual immutable closure and held records live outside the
@@ -30600,7 +30601,8 @@ canonical_text: 'Newly authored pending original-source graph for the fifteen W3
   values and SP-286 receipt/full-value controls in the same verified cut. Preserve original logical and physical identities,
   schema versions and access/deletion/withdrawal state; a missing or conflicting source is unavailable, never reconstructed
   from bsd_runtime_record or a filtered event projection. Physical family/migration/budget/readiness admission and native
-  restore proof remain separately required. No command is enabled, no count/age policy is chosen for pending event histories,
+  restore proof remain separately required. No command is enabled; the two configuration event histories carry the DL-453
+  RP-AUTHORITY-INDEFINITE@1.0.0 assignment and the thirteen assignment-backed histories carry RP-RUNTIME-365D@1.0.0,
   and no EventRecord is admitted by this source graph.'
 gui_related: false
 gui_classification_reason: Defines original-source custody and pending storage shapes.

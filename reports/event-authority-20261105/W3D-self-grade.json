@@ -2,22 +2,7 @@
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
   "assessment_id": "EA-W3D-PHASE1-FIX1-BACK-SEAT-DRIVER-20261105",
   "assessment_kind": "author_self_grade_phase1_prepared_without_admission",
-  "assessed_tree": {
-    "branch": "plans/ea-w3-back-seat-driver-20261105",
-    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
-    "commit": "0c32b66749473a8ebff23c4d3bdff85290d05efb",
-    "normative_files_sha256": {
-      "Plans/Back_Seat_Driver.md": "61c70b3ede17219185415dd6b68a3c483e22fd6d49df3e34cf5db1fa28a897c8",
-      "Plans/Contracts_V0.md": "c94f72477c767a966088dcda8d36c1a58061c52eb58b7c61675c5c5b1cd35665",
-      "Plans/storage-plan.md": "b75d34d77986815533e9953d724c2be2cbb92ad7e6f510b0fb6989d538bd675e",
-      "Plans/Automated_Testing_System.md": "e1933bc5b21f5b269a2588d7085b94e3744d81837d1f67b2ba11cc76f7b49680",
-      "Plans/bsd_event_payloads.schema.json": "252fee5d79de1eafa2de754dde6aae2d47cb9793f73db00b6d7bc0935d7e06af",
-      "Plans/bsd_event_storage_contracts.schema.json": "b4d12c9e6316772e149db52313a966b619c6aea654a21d9d018b84e4cb63df09",
-      "Plans/bsd_event_storage_candidates.json": "4b6986a83c522560e6936331cddfc192e25f2a191c0ed7bb2059af8fea9217d1",
-      "Plans/bsd_event_oracle_plan.json": "20d5a93b54bffbfcfd42722a41015e57ba4f9fb712f8fb34bec82185059c61da"
-    },
-    "note": "The final handoff commit may add only report/assessment evidence after this assessed code commit; normative hashes bind the exact final Plans text."
-  },
+  "assessed_tree": "phase2-head",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
     "criteria": [
@@ -47,7 +32,7 @@
     "edited": false
   },
   "native_execution": "NOT_RUN",
-  "oracle_execution": "NOT_RUN_PHASE1_PLAN_ONLY",
+  "oracle_execution": "EXECUTABLE_PHASE2_LANE_LOCAL_PROOF",
   "rows": [
     {
       "event_type": "bsd.advice_emitted",
@@ -165,16 +150,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1350",
-              "line_start": 2650,
-              "line_end": 2650,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -250,16 +235,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1350",
-              "line_start": 2655,
-              "line_end": 2655,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -268,10 +253,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -402,16 +387,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1351",
-              "line_start": 2720,
-              "line_end": 2720,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -487,16 +472,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1351",
-              "line_start": 2725,
-              "line_end": 2725,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -505,10 +490,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -639,16 +624,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1352",
-              "line_start": 2790,
-              "line_end": 2790,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -724,16 +709,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1352",
-              "line_start": 2795,
-              "line_end": 2795,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -742,10 +727,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -876,16 +861,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1353",
-              "line_start": 2859,
-              "line_end": 2859,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -961,16 +946,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1353",
-              "line_start": 2864,
-              "line_end": 2864,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -979,10 +964,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -1113,16 +1098,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1354",
-              "line_start": 2930,
-              "line_end": 2930,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -1198,16 +1183,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1354",
-              "line_start": 2935,
-              "line_end": 2935,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -1216,10 +1201,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -1350,16 +1335,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1355",
-              "line_start": 2999,
-              "line_end": 2999,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -1435,16 +1420,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1355",
-              "line_start": 3004,
-              "line_end": 3004,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -1453,10 +1438,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -1587,16 +1572,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1356",
-              "line_start": 3068,
-              "line_end": 3068,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -1672,16 +1657,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1356",
-              "line_start": 3073,
-              "line_end": 3073,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -1690,10 +1675,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -1824,16 +1809,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1357",
-              "line_start": 3137,
-              "line_end": 3137,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -1909,16 +1894,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1357",
-              "line_start": 3142,
-              "line_end": 3142,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -1927,10 +1912,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -2061,16 +2046,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1358",
-              "line_start": 3206,
-              "line_end": 3206,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -2146,16 +2131,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1358",
-              "line_start": 3211,
-              "line_end": 3211,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -2164,10 +2149,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -2298,16 +2283,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1359",
-              "line_start": 3274,
-              "line_end": 3274,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -2383,16 +2368,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1359",
-              "line_start": 3279,
-              "line_end": 3279,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -2401,10 +2386,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -2535,16 +2520,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact event lifetime/deletion choice remains PENDING_RETENTION_DECISION; question is in outcomes/report.",
+          "finding": "Bound to RP-AUTHORITY-INDEFINITE@1.0.0 by DL-453 item 1.a (Back Seat Driver, Project editions only), Plans/storage-plan.md:17638,17642 at main f8b2098608. No age/count expiry; explicit Delete Puppet Master project data only; disk budgets refuse new records under pressure. The phase-1 PENDING cell is resolved by this landed decision.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1360",
-              "line_start": 3343,
-              "line_end": 3343,
-              "quote": "7 retention: retention_policy_ref=PENDING_RETENTION_DECISION. For bsd.policy_changed, which exact lifetime, count/overflow and deletion rule should apply to the saved project BSDPolicy revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-AUTHORITY-INDEFINITE"
             }
           ],
           "prior": null,
@@ -2620,16 +2605,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1360",
-              "line_start": 3348,
-              "line_end": 3348,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -2638,11 +2623,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
         "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
-        "For bsd.policy_changed, which exact lifetime, count/overflow and deletion rule should apply to the saved project BSDPolicy revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May this history expire, or should it remain until Delete Puppet Master project data?"
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -2773,16 +2757,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1361",
-              "line_start": 3413,
-              "line_end": 3413,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -2858,16 +2842,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1361",
-              "line_start": 3418,
-              "line_end": 3418,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -2876,10 +2860,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -3010,16 +2994,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1362",
-              "line_start": 3482,
-              "line_end": 3482,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -3095,16 +3079,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1362",
-              "line_start": 3487,
-              "line_end": 3487,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -3113,10 +3097,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -3247,16 +3231,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The real assignment/run supports a proposed RP-RUNTIME-365D binding with explicit anchor/caps/holds; boundary/hold/deletion negatives await phase 2.",
+          "finding": "Bound to RP-RUNTIME-365D@1.0.0 — Card 1 G13 rule (DL-401) through Storage Case L-3 Runtime/run/node/attempt class (Plans/storage-plan.md:17542) and policy table :18452; run-completion anchor, 1,000,000/run and 5,000,000/project, linked successor; holds override.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1363",
-              "line_start": 3552,
-              "line_end": 3552,
-              "quote": "7 retention: retention_policy_ref={registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, with 1,000,000/run and 5,000,000/pro"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-RUNTIME-365D"
             }
           ],
           "prior": null,
@@ -3332,16 +3316,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1363",
-              "line_start": 3557,
-              "line_end": 3557,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -3350,10 +3334,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
-        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled"
+        "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",
@@ -3484,16 +3468,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact event lifetime/deletion choice remains PENDING_RETENTION_DECISION; question is in outcomes/report.",
+          "finding": "Bound to RP-AUTHORITY-INDEFINITE@1.0.0 by DL-453 item 1.a (Back Seat Driver, Project editions only), Plans/storage-plan.md:17638,17642 at main f8b2098608. No age/count expiry; explicit Delete Puppet Master project data only; disk budgets refuse new records under pressure. The phase-1 PENDING cell is resolved by this landed decision.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1364",
-              "line_start": 3621,
-              "line_end": 3621,
-              "quote": "7 retention: retention_policy_ref=PENDING_RETENTION_DECISION. For bsd.workflow_binding_created, which exact lifetime, count/overflow and deletion rule should apply to the saved frozen workflow-binding revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this ev"
+              "path": "Plans/bsd_event_storage_candidates.json",
+              "unit": "SP-1365",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "event_retention_policy_ref RP-AUTHORITY-INDEFINITE"
             }
           ],
           "prior": null,
@@ -3569,16 +3553,16 @@
           "change_reason": "Re-graded at the fixed normative head. Preserve conservative phase-1 statuses; executable cases and shared-rule/isolation proof remain phase 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Per-family positive and one-defect negative plans now name live-write gates, original source and envelope joins. Schema-only domain checks have their own validation boundary. Execution and shared guard isolation remain phase 2.",
+          "finding": "Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof (scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its witness and restores. Shared number corpus runs through the checker with 0 disagreements. OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.",
           "evidence": [
             {
-              "path": "Plans/Back_Seat_Driver.md",
-              "unit": "BSD-1364",
-              "line_start": 3626,
-              "line_end": 3626,
-              "quote": "12 oracle plan: ATS-1230 and Plans/bsd_event_oracle_plan.json enumerate this exact family's valid paths and one-defect negatives. Criterion 12 is PARTIAL; no oracle code, shared number/format adoption or shared guard-isolation proof is claimed in phase 1. Other grading cells report contract text only, never native proo"
+              "path": "scripts/pm_w3d_bsd_events.py",
+              "unit": "ATS-1230",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "complete checker over guard tables; status pass, 0 mismatches"
             }
           ],
           "prior": null,
@@ -3587,11 +3571,10 @@
         }
       },
       "remaining_gaps": [
-        "PHASE2: reviewed NUMRULE/date-time foundation adoption",
-        "PHASE2: executable one-defect oracle cases and shared guard-isolation evidence",
+        "Gated-tool real-predicate certification (lead point 1): rearchitect guard rows to pure predicates the tool analyses",
         "Sol and Astra review before any later admission",
         "SP-318 exact physical/migration/budget/native custody prerequisites remain disabled",
-        "For bsd.workflow_binding_created, which exact lifetime, count/overflow and deletion rule should apply to the saved frozen workflow-binding revision history? Card-1 G18 covers scheduling only; RP-CONFIG-CURRENT covers current configuration values, not this event history. May this history expire, or should it remain until Delete Puppet Master project data?"
+        "date-time inventory gate and datetime_validator run at batch-3 integration (lane-tree hash drift recorded)"
       ],
       "static_checks_seen": [
         "phase1-fix-check-complete",

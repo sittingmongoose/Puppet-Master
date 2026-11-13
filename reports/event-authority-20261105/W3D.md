@@ -218,3 +218,161 @@ Two initial scratch-audit assertions were corrected: the new-definition schema p
 Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/p1fix1/`. `fix-coverage.json` records each family and its new guard ids; compact copy `W3D-p1fix1-coverage.json`. The report and complete self-grade are copied back to `drafts/W3D/`. The phase-1 evidence manifest hashes retained reproducibility scripts and logs.
 
 **Stopped:** no fix cell stopped, no finding disputed. The two existing retention questions remain pending exactly as quoted above. The next action is the lead's phase-2 foundation rebase and executable-oracle work. No admission, registry append, Decision Log change, governance reseal, `main` push, pm-mail or subagent. The fix worktree is removed with its literal path after the pushed handoff.
+
+
+## Wave 3 phase 2: findings and responses
+
+Phase-2 worker for lane W3D (Back Seat Driver, 15 rows). Branch `plans/ea-w3-back-seat-driver-20261105`,
+start `a6749a55292b1bd9e17f41c36d32c88a6e098c9c`. Two gated merges, in order, each `--no-ff`:
+
+1. `acc2c56d49` merges the gated guard tool `004bdedd632d9463f3535190a6ed5772338cdce1` (11 files, unedited).
+2. `123efc3c99` merges the gated NUMRULE head `58c2816ff33365384d4039553f5efdb5370930e6`. The 163 conflicts
+   were all under `Plans/_shards/**` and `Plans/.plan_index/**` and were resolved by regeneration, never by hand.
+   Every NUMRULE file is byte-identical to `58c2816ff3` and every guard-tool file to `004bdedd63`
+   (`git diff --name-only <gated> HEAD -- <files>` is empty for both sets). No rebase; `main` never pushed.
+
+### Executable oracles
+
+`scripts/pm_w3d_bsd_events.py` is the complete checker over the 15 families; `scripts/pm_w3d_bsd_rows.py`
+is the row inventory and `scripts/pm-w3d-table-generate.py` generates the Method B table modules
+(`scripts/pm_w3d_bsd_table_*.py`, 71 tables). Every refusal goes through a named guard row evaluated in
+row order on an observation the checker derives from the complete boundary input. The checker builds a
+complete world (native owner decision, captured source, payload, envelope, admission, operation, packs,
+custody/receipt, head, retry, publication, retained read, replay, withdrawal) and regenerates every
+unrelated copy/digest/commitment through the valid builder, so each negative carries exactly one defect.
+
+Complete checker result (`python3 scripts/pm_w3d_bsd_events.py`): **status pass**, 15 families,
+**190 positives, 4203 negatives, 4188 single-row, 15 declared multi-row, 0 mismatches, 0 unresolved refs**.
+The 15 multi-row cases are schema/type-confusion witnesses where one wrong-type value legitimately trips
+the type row and a dependent keyword row; each is declared `multi=True`. Every reachable row has a
+single-defect witness in every family; the witness-requirement is asserted by the checker itself.
+
+### Guard tables and the gated tool
+
+`scripts/pm_w3d_bsd_guard_suites.py` collects the checker's observations (4393 cases, 14811 records,
+48 phases) and builds one Method B suite per phase; `--all` runs the gated tool on each. The tool's own
+summaries are in the evidence directory. **Credit is exactly what the tool reports.**
+
+**Lead point 1 (real predicates) — open item, honest status:** the current table predicates read one
+boolean observation per row (`value[field] is not True`); the real comparison logic lives in the
+checker's observation derivation, which the gated tool does not analyse because importing the shared
+`pm_event_numbers`/`pm_event_datetime` modules into a scanned predicate module fails the tool's static
+stop (those modules use `getattr`/`exec`/`re.ASCII`). The lead's recheck bar requires each guard row to
+be the real predicate the tool analyses. The mutation proof below is lane-local evidence that the rows
+are real guards, but the gated-tool real-predicate certification requires rearchitecting the predicates
+to pure comparisons over fixture reference data (the DG6B pattern). That rearchitecture is the remaining
+phase-2 work and is **not** claimed as done here.
+
+Entailed rows (no single-defect witness by construction) each sit alone in their own table with a written
+proof naming the earlier row/schema clause that always refuses first:
+
+| Table | Row | Proof (earlier refusal) |
+|---|---|---|
+| `event_arity_entailed` | `ID02_event_components` | ID03/ID04/ID05/ID06 each require a five-part event_id whose indexed component equals an exact lowercase-hex preimage (`obs_identity`). |
+| `key_arity_entailed` | `ID09_key_components` | ID10/ID11 each require a three-part key whose indexed component equals an exact lowercase-hex preimage (`obs_identity`). |
+| `operation_size_entailed` | `OZ01_operation_size` | operation stores only refs/identity (SP-1350); every inline field is schema-bounded or joined earlier at OP03/OP04/OP05/OP06 or refused by EN17/ID rows. |
+| `checkpoint_type_entailed` | `CP03_checkpoint_type` | `selected_event_type` is a schema const; any other value refused by CP01_root_schema. |
+| `checkpoint_consumer_entailed` | `CP05_checkpoint_consumer` | `consumer_id` is a schema const; refused by CP01_root_schema. |
+| `checkpoint_snapshot_entailed` | `CP06_token_snapshot` | `durable_read_token` is closed with exactly the nine required fields; extra/missing refused by CP01_root_schema. |
+| `checkpoint_size_entailed` | `CZ01_checkpoint_size` | checkpoint stores only token/cursor/identity; unbounded token fields joined at CP08/CP09/CP14, others schema-bounded. |
+| `foreign_original_entailed` | `HI08_not_foreign` | a foreign storage_instance_id changes the event_id preimage; HI05_original_verifies recomputes and refuses first (`frozen_verify`). |
+| `source_logical_schema_entailed_<slug>` | `SR03_wrapper_logical_schema` | `logical_schema_id`/`version` are schema consts on each source wrapper; refused by SR01_wrapper_schema. |
+| `start_premature_result_entailed` | `SR26_start_no_premature_result` | result/latency_ms/no_call_reason/usage_attempt_ref are not members of the closed review_start schema; refused by start_body.closed. |
+
+Schema-entailed payload keyword rows are omitted at generation with the reason recorded: `minLength` where a
+pattern already requires the minimum, and `maxLength` for the fixed-length sha256 pattern `^[0-9a-f]{64}$`.
+`PK10_source_body_clocks` is only a witness row for source kinds whose logical schema has a timestamp
+(finding/review_cycle/quarantine/workflow_binding); derived from the schemas, not a fixture flag.
+
+### Mutation proof (lead point 2 / standing check 11)
+
+`scripts/pm_w3d_bsd_mutation_proof.py` weakens 12 different guards one at a time (forces the row's
+observation to pass), rebuilds the row's single-defect witness and runs it through the complete checker.
+**Result: pass, 12/12.** For every guard: baseline refused at exactly that row; weakened → witness no longer
+refused at that row (accepted); restored → refused at exactly that row again. Guards covered: AD03_replay_writer,
+EN02_occurred_clock, EN05_sequence_uint64, ID07_operation_recipe, PK02_pack_digest, RC08_full_value,
+HI01_receipt_present, HI07_no_receipt_created, EL01_not_off, SR09_sem_newer_generation, SR08_sem_revision_cas,
+SR24_start_admission_identity.
+
+### Numbers (CV-1100/SP-1100/SP-1101)
+
+- `python3 scripts/pm_event_numbers.py --self-test --scope numbers`: **exit 0, `"status": "pass"`, 276 positives.**
+- `scripts/pm_w3d_bsd_numbers.py` runs the shared corpus through the complete checker at every integer slot
+  (producer_sequence_id, sequence_id, payload.policy_revision, retained original): **status pass, 0 disagreements,
+  0 untracked exceptions.** A 4,400-digit integer (`10**4400-1`) is refused with a code at the envelope row on
+  every route, never raises (`exact_integer_digits()` context). `2**64` is refused by `storage_uint64`. No
+  lane-local bound: the checker calls `storage_uint64`/`current_integer`/`producer_semantic_digest`/
+  `full_value_commitment`/`storage_value_bytes`/`qualified_jcs`/`RetainedDispatcher`.
+
+### Timestamps (CV-1101)
+
+Every timestamp field the lane validates goes through `pm_event_datetime.date_time` with its owner profile:
+
+| Field | Profile | Owner | Site |
+|---|---|---|---|
+| envelope.occurred_at_utc | event_record | CV-317/CV-1101 | EN02_occurred_clock |
+| envelope.observed_at_utc | storage_utc_z | CV-253 Storage-assigned | EN03_observed_clock |
+| envelope.persisted_at_utc | storage_utc_z | CV-253 Storage-assigned | EN04_persisted_clock |
+| receipt.acknowledged_at_utc | storage_utc_z | CV-253 Storage-assigned | RC16_ack_clock |
+| logical source body created_at/updated_at | event_record | existing logical BSD schema | PK10_source_body_clocks |
+
+Negatives cover missing zone, hour 24, trailing LF, Feb 30, space separator, invalid leap second (occurred),
+and +00:00/lowercase-z/-00:00/nonzero-offset (Storage fields). The date-time inventory gate
+(`scripts/pm_event_datetime_inventory.py`) exits 1 with **85 hash-drift rows** (53 unclassified_mentioning_container,
+30 unreadable_mentioning_container, 2 stale_scan_exclusion; 233 nodes, 0 unclassified nodes; only 1 names a BSD
+file). Per lead addendum 2 this is lane-tree drift from Plans edits; the inventory/exclusions are NUMRULE files
+and are not edited; `datetime_validator` and the gate run at batch-3 integration. Recorded, not credited.
+
+### Retained reads (SP-1101, batch 2 fix 1)
+
+`SealedOwner.authenticated_original` selects the recipe only from the one independently sealed receipt for that
+exact original: none → `original_unavailable`, several → `recipe_ambiguous`, a receipt bound to another original
+fails the binding join. `perform_retained_read` performs the actual read on a private copy and **snapshots the
+sealed store and bytes before and after** — no fixture flag decides the observation. A misbehaving reader that
+mints a receipt (`reader_kind=writes_receipt`) or alters bytes (`reader_kind=alters_bytes`) is caught by the
+snapshot (HI07/HI06). The caller override is passed through the shared `RetainedDispatcher.resolve(recipe_override=...)`
+and `dispatcher_agrees` cross-checks the dispatcher against HI01–HI05/HI13 on every read case. Negatives: missing
+receipt (HI01), ambiguous (HI02), wrong original (HI03), unknown recipe (HI04), substituted bytes (HI05),
+byte-altering reader (HI06), receipt-writing reader (HI07), withdrawn/deleted/permission/ref-unavailable, caller
+override (HI13), incoherent backup (HI14).
+
+### Retention cells (bound to landed decisions)
+
+- 13 assignment-backed families: `RP-RUNTIME-365D@1.0.0` — Card 1 G13 rule (DL-401) through Storage Case L-3's
+  Runtime/run/node/attempt class (`Plans/storage-plan.md:17542` at main) and the policy table at `:18452`.
+- `bsd.policy_changed` and `bsd.workflow_binding_created`: **now bound** to `RP-AUTHORITY-INDEFINITE@1.0.0` by
+  DL-453 item 1.a (Back Seat Driver, Project editions only), `Plans/storage-plan.md:17638,17642` at main
+  `f8b2098608`. The two phase-1 PENDING_RETENTION_DECISION cells are resolved by this landed decision (no longer
+  pending): no age/count expiry, explicit Delete Puppet Master project data only, finite disk budgets refuse new
+  records under pressure. Updated in BSD-1360/BSD-1364 §7, SP-1365, the six candidate `event_retention_policy_ref`
+  rows and the oracle-plan retention objects. No retention question remains for Jared.
+
+### Checks
+
+| Check | Exit | Result |
+|---|---:|---|
+| complete checker (`pm_w3d_bsd_events.py`) | 0 | pass; 190 pos / 4203 neg / 4188 single / 15 multi / 0 mismatch |
+| number self-test (`--scope numbers`) | 0 | pass, 276 positives |
+| number corpus through checker | 0 | pass, 0 disagreements, 0 untracked |
+| mutation proof (12 guards) | 0 | pass, 12/12 flip+restore |
+| shard check | 0 | pass, 3095 shards, 99 sources, 0 failures |
+| index generate | 0 | pass |
+| index validate | 1 | 760 base-drift failures (739 plan_unit_removed_without_ledger_decision, 21 plan_unit_removal_ledger_invalid); **0 name BSD/W3D**; origin/main moved to `290742ce3d` after the branch base — these are units added on main after the base, listed as base failures |
+| date-time inventory gate | 1 | 85 hash-drift rows, recorded per addendum 2 (gate runs at integration) |
+
+Regeneration touched only this lane's documents: `Plans/Back_Seat_Driver.md`, `Plans/storage-plan.md`,
+`Plans/bsd_event_oracle_plan.json`, `Plans/bsd_event_storage_candidates.json`, the `storage-plan` shard tree and
+`.plan_index`. No other owner document's shards changed.
+
+### Grades before/after
+
+Membership stays ABSENT (no admission). Native execution stays NOT_RUN. `positive_negative_oracles` moves from
+PARTIAL (plan only) to executable-oracle evidence: the complete checker passes with single-defect witnesses and the
+lane-local mutation proof passes; the gated-tool real-predicate certification (lead point 1) remains the open item.
+`retention` moves from PARTIAL to bound for all 15 families (13 RP-RUNTIME-365D, 2 RP-AUTHORITY-INDEFINITE per DL-453).
+The self-grade (`W3D-self-grade.json`) records the per-cell evidence.
+
+**Stopped for Jared:** none. The two phase-1 retention questions are resolved by the landed DL-453 decision.
+**Open phase-2 item:** lead point 1 — rearchitect guard rows to real pure predicates the gated tool analyses
+(the synthetic observation pattern is not credited at the recheck bar). No admission, registry append, Decision Log
+change, governance reseal, `main` push, pm-mail or subagent.
