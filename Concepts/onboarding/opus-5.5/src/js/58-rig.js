@@ -1656,6 +1656,7 @@
          than a tenth of a pixel a 60 Hz frame, so the next frame's draw is due too and no frame is asked for in vain;
          slower, the timer asks for a frame once the draw falls due, its 16 ms and that frame at most about 50 ms of drift
          under 8 px/s (0.4 px) after it; anything that draws every frame counts as fast) */
+      const previousSpeed = this.speed;
       this.speed = Infinity;
       if (this.fx.length || this.faceOut || this.faceT0 != null || this.moodNow() !== this.curMood) return true;
       if (this.blinkK() !== this.blinkDrawn) return true;
@@ -1663,9 +1664,14 @@
       if (this.famName === 'nier' && this.hudBusy && this.hudBusy()) return true;
       if (this.tipBox && this.tipMoving) return true;
       for (const pr of this.props.values()) if (pr.spec.ground && pr.landed && this.t - pr.landT < .6) return true;
-      const v = this.poseVec(), d = this.drawnPose, u = this.tickV;
-      if (u && u.length === v.length && this.t > this.tickT) { let m = 0; for (let i = 0; i < v.length; i++) m = Math.max(m, Math.abs(v[i] - u[i])); this.speed = m / (this.t - this.tickT); }
-      this.tickV = v; this.tickT = this.t;
+      const v = this.poseVec(), d = this.drawnPose, motion = this.motionPose, u = this.tickMotionV;
+      /* Speed follows continuous motion. Rounding a slow scale or position for paint can jump a whole written step;
+         that step must draw, but it does not mean another frame will move. Reuse speed if physics has not advanced. */
+      if (u && u.length === motion.length) {
+        if (this.t > this.tickT) { let m = 0; for (let i = 0; i < motion.length; i++) m = Math.max(m, Math.abs(motion[i] - u[i])); this.speed = m / (this.t - this.tickT); }
+        else this.speed = previousSpeed;
+      }
+      this.tickMotionV = motion; this.tickT = this.t;
       if (!d || d.length !== v.length) return true;
       for (let i = 0; i < v.length; i++) if (!(Math.abs(v[i] - d[i]) < .1)) return true;
       return false;
@@ -1677,27 +1683,31 @@
        offset and scale), its drawn opacity and squash. (Breathing's scale is written to .01: its step moves the head's
        top about 0.85 px at once, on the same frame as before.) */
     poseVec() {
-      const ps = this.ps, Lay = this.L, k = (this.map && this.map.k) || 1, v = [], deg = (a) => R(a * 57.3) / 57.3;
+      const ps = this.ps, Lay = this.L, k = (this.map && this.map.k) || 1, v = [], motion = [], deg = (a) => R(a * 57.3) / 57.3;
       const hp = this.headPose(), hd = [R(hp.H[0]), R(hp.H[1])], ang = deg(hp.ang), sx = R(hp.sx), sy = R(hp.sy);
       /* (the corners of the head's and the control's own drawn boxes, pipBB, as kit units; the kit's frame until measured) */
       const box = (b) => [[b[0], b[1]], [b[0] + b[2], b[1]], [b[0], b[1] + b[3]], [b[0] + b[2], b[1] + b[3]]], bb0 = this.pipBB;
-      for (const q of box(bb0 ? bb0.h : [0, 0, 64, 62])) { const p = this.headXf(q, hd, ang, sx, sy); v.push(p[0] * k, p[1] * k); }
-      for (const q of box(bb0 ? bb0.c : [0, 0, 64, 29])) { const p = this.ctlXf(q, { x: R(ps.C.x), y: R(ps.C.y) }, deg(ps.phi)); v.push(p[0] * k, p[1] * k); }
+      for (const q of box(bb0 ? bb0.h : [0, 0, 64, 62])) { const p = this.headXf(q, hd, ang, sx, sy), m = this.headXf(q, hp.H, hp.ang, hp.sx, hp.sy); v.push(p[0] * k, p[1] * k); motion.push(m[0] * k, m[1] * k); }
+      for (const q of box(bb0 ? bb0.c : [0, 0, 64, 29])) { const p = this.ctlXf(q, { x: R(ps.C.x), y: R(ps.C.y) }, deg(ps.phi)), m = this.ctlXf(q, ps.C, ps.phi); v.push(p[0] * k, p[1] * k); motion.push(m[0] * k, m[1] * k); }
       v.push(R(ps.look[0]) * Lay.s * k, R(ps.look[1]) * Lay.s * k);
+      motion.push(ps.look[0] * Lay.s * k, ps.look[1] * Lay.s * k);
       /* (Pip's strings' ends: they follow the breathing head smoothly, from its unrounded scale, as render draws them) */
-      this.solveStrings({ C: ps.C, phi: ps.phi, H: hp.H, ang: hp.ang, sx: hp.sx, sy: hp.sy }).forEach((e) => v.push(R(e.T[0]) * k, R(e.T[1]) * k, R(e.E[0]) * k, R(e.E[1]) * k));
+      this.solveStrings({ C: ps.C, phi: ps.phi, H: hp.H, ang: hp.ang, sx: hp.sx, sy: hp.sy }).forEach((e) => { v.push(R(e.T[0]) * k, R(e.T[1]) * k, R(e.E[0]) * k, R(e.E[1]) * k); motion.push(e.T[0] * k, e.T[1] * k, e.E[0] * k, e.E[1] * k); });
       /* (NieR's brackets breathe on the diagonal: each corner moves the pulse's change times the square root of two) */
-      if (this.famName === 'nier' && this.hudPulse) v.push(this.hudPulse() * k * Math.SQRT2);
+      if (this.famName === 'nier' && this.hudPulse) { const pulse = this.hudPulse() * k * Math.SQRT2; v.push(pulse); motion.push(pulse); }
       this.props.forEach((pr) => {
         const tg = this.propTarget(pr), sc = tg.sc * (pr.scale / (pr.spec.scale || 1)), bb = pr.bb || [0, 0, 0, 0];
         const tm = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
         const hang = [pr.ax + Math.sin(pr.a) * Math.max(0, pr.len), Lay.anchorY + Math.cos(pr.a) * Math.max(0, pr.len)];
         const f = this.fit(pr, hang, sc, tm), s2 = R(sc * f.f), hx = R(hang[0] + f.dx), hy = R(hang[1] + f.dy), a = deg(pr.a), t0 = R(tm[0]), t1 = R(tm[1]);
-        for (const [x, y] of box(bb)) { const c = rot([(x - t0) * s2, (y - t1) * s2], a); v.push((hx + c[0]) * k, (hy + c[1]) * k); }
+        const sm = sc * f.f, mx = hang[0] + f.dx, my = hang[1] + f.dy;
+        for (const [x, y] of box(bb)) { const c = rot([(x - t0) * s2, (y - t1) * s2], a), m = rot([(x - tm[0]) * sm, (y - tm[1]) * sm], pr.a); v.push((hx + c[0]) * k, (hy + c[1]) * k); motion.push((mx + m[0]) * k, (my + m[1]) * k); }
         /* (its opacity as drawn, to the .01 a draw writes: a change draws, a residue the write would round away does not) */
         const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12);
         v.push(R(pr.op) * 40, (Math.abs(sq) > .002 ? R(1 - sq) - 1 : 0) * (pr.foot || 0) * s2 * k);
+        motion.push(pr.op * 40, (Math.abs(sq) > .002 ? -sq : 0) * (pr.foot || 0) * sm * k);
       });
+      this.motionPose = motion;
       return v;
     }
     /* Speech follows the head. Reserve obstacles in that same frame through the head's whole small motion,
