@@ -200,3 +200,15 @@ html[data-psx-first] #panel-settings .setting-row.o55-row > .setting-control { o
 /* the approvals moment: one line per action, its answer in Regular and in YOLO */
 #panel-settings .psx-ask .psx-li { grid-template-columns: minmax(0, 1fr) auto; }
 #panel-settings .psx-ask code { font: 600 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--k3-text-1); }
+
+/* 11.18 Always allow: the pattern and the place are chosen in the list, under the step (guided-flows 8.03, 8.04) */
+#panel-settings .psx-li.psx-always { display: block; padding: 2px 0 12px; }
+#panel-settings .psx-always-body { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px 8px; border: 1px solid var(--k3-line); border-radius: 8px; background: color-mix(in srgb, var(--k3-accent) 3%, transparent); }
+#panel-settings .psx-always-body .psx-h { margin: 4px 0 0; }
+#panel-settings .psx-always-body .psx-p { margin: 0; }
+#panel-settings .psx-always-body .psx-li-end { margin-left: -8px; gap: 4px; }
+#panel-settings .psx-always-body code { font-size: 12px; }
+html[data-theme^="retro"] #panel-settings .psx-always-body, html[data-o55-nier="on"] #panel-settings .psx-always-body { border-radius: 0; }
+
+/* what the layer hides of the base page (a second Where it applies): the base page's own display rules would show it */
+[data-psx-hidden][hidden] { display: none !important; }

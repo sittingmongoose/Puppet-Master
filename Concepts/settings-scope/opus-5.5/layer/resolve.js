@@ -10,7 +10,9 @@
    rungs. A level with no value is absent and falls through, never a copy.
    Combine: most_specific (almost every row); more_careful (safety rows: between a computer's or a device's own value and
    a project's own value, the more careful one by the row's careful_order; a custom value with both set yields the
-   computer's); computer_ceiling (limit rows: a computer's own value is the most any project there can use). */
+   computer's); computer_ceiling (limit rows: a computer's own value is the most any project there can use); per_item
+   (the three permission rows: each item by its owner's own rule, PER_ITEM below). Reduce motion has its own named rule,
+   an OR (MOTION below). */
 (function (W) {
   'use strict';
   const PSX = W.PSX; if (!PSX || PSX.resolve) return;
@@ -25,13 +27,15 @@
       project: may.includes('project') || def.home === 'project'
     };
   }
+  /* why a level isn't offered. Inventory alignment: a row Plans' inventory lists carries its not_offered codes
+     (def.notOffered), and they win; the derived reasons below are for rows it doesn't list */
   function reasons(def) {
-    const off = offered(def), r = {};
-    if (!off.everywhere) r.everywhere = def.reason;
-    if (!off.project) r.project = def.home === 'computer' ? def.reason : def.screen ? 'about_the_screen' : def.reason || 'same_for_you';
-    if (!off.computer && !off.device) r.computer = def.reason || 'same_for_you';
-    if (!off.device) r.device = def.screen ? null : 'not_about_the_screen';
-    if (def.home === 'project') { r.everywhere = 'about_this_project'; r.computer = 'about_this_project'; }
+    const off = offered(def), r = {}, n = def.notOffered || {};
+    if (!off.everywhere) r.everywhere = n.everywhere || def.reason;
+    if (!off.project) r.project = n.project || (def.home === 'computer' ? def.reason : def.screen ? 'about_the_screen' : def.reason || 'same_for_you');
+    if (!off.computer && !off.device) r.computer = n.computer || def.reason || 'same_for_you';
+    if (!off.device) r.device = def.screen ? null : n.device || 'not_about_the_screen';
+    if (def.home === 'project') { r.everywhere = n.everywhere || 'about_this_project'; r.computer = n.computer || 'about_this_project'; }
     return r;
   }
   /* who writes a level, and whether it is answering (7.1: one writer per level; Everywhere is the settings home's) */
@@ -43,6 +47,92 @@
     return null;
   }
   const w0 = () => PSX.W;
+
+  /* ------------------------------------------------------------------ per_item (Astra max A1)
+     SSYS-059: "per_item invokes the existing domain merge by stable name/ID and never invents structured field merges".
+     So each per_item row in Plans' inventory names its owner's own rule here, and nothing else is merged:
+       answers  safety.rules.per-tool-permissions, safety.protection.web-tool-permissions. PS-144: "first resolve each
+                layer own answer for the exact permission key with existing owner matching/deny semantics, then protectively
+                combine simultaneous Computer-own and Project-own declared answers with deny before ask before allow".
+                So each key on its own: when this computer's own and this project's own answer for it both exist, the
+                more careful is used (an answer outside deny/ask/allow: the computer's, SSYS-059's custom rule); otherwise
+                the most specific own answer, then Everywhere's, then the default. Everywhere is a fallback, never an
+                extra comparison (SSYS-059).
+       rules    safety.rules.rule-editor, the ordered rules ("Checked top to bottom; the last matching rule wins").
+                Permissions §2.4: layers "shadow lower layers on a per-rule basis, but they do NOT replace the entire lower
+                ruleset"; §3.1: the last matching rule wins. So the list is the default's, Everywhere's, this computer's,
+                then this project's rules, and a rule a more specific place also has (the same tool pattern, condition and
+                profile) is kept only there. No protective reordering: PS-144 says its combination "is not per-field
+                profile merging or a reordering of independent granular durable-rule specificity".
+     A per_item row with no rule here would be a new kind of item: it keeps the most specific value whole and says so
+     (out.perItemGap), and the check fails on it. */
+  const PER_ITEM = { 'safety.rules.per-tool-permissions': 'answers', 'safety.protection.web-tool-permissions': 'answers', 'safety.rules.rule-editor': 'rules' };
+  const ANSWERS = ['deny', 'ask', 'allow'];
+  const RANK = { default: 0, everywhere: 1, computer: 2, device: 2, project: 3 };
+  const isMap = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
+  // a rule's stable name: its tool pattern, condition and profile, everything but the answer ("github_*: ask (On a branch)")
+  const ruleKey = (x) => {
+    if (x && typeof x === 'object') return String(x.rule_id || x.id || x.pattern || JSON.stringify(x));
+    const m = /^(.*?):\s*(allow|ask|deny|block)\b(.*)$/i.exec(String(x));
+    return m ? (m[1] + m[3]).trim() : String(x).trim();
+  };
+  function perItem(kind, layers, ctx) {
+    const items = [];
+    let value;
+    if (kind === 'answers') {
+      value = {};
+      const keys = [];
+      layers.forEach((L) => { if (isMap(L.value)) Object.keys(L.value).forEach((k) => { if (!keys.includes(k)) keys.push(k); }); });
+      const comp = layers.find((L) => L.level === 'computer'), proj = layers.find((L) => L.level === 'project');
+      const own = (L, k) => (L && isMap(L.value) && has(L.value, k) ? L.value[k] : undefined);
+      keys.forEach((k) => {
+        const c = own(comp, k), p = own(proj, k);
+        let win, careful = null;
+        if (c !== undefined && p !== undefined) {
+          const ci = ANSWERS.indexOf(c), pi = ANSWERS.indexOf(p);
+          win = ci < 0 || pi < 0 || ci < pi ? comp : proj;
+          if (win === comp && !same(c, p)) careful = { asked: clone(p), by: { level: comp.level, key: comp.key }, askedBy: { level: proj.level, key: proj.key } };
+        } else win = layers.slice().reverse().find((L) => own(L, k) !== undefined);
+        value[k] = clone(own(win, k));
+        items.push({ key: k, value: clone(own(win, k)), from: { level: win.level, key: win.key }, careful });
+      });
+    } else {
+      value = [];
+      const lists = layers.filter((L) => Array.isArray(L.value)), names = lists.map((L) => new Set(L.value.map(ruleKey)));
+      lists.forEach((L, i) => L.value.forEach((x) => {
+        const k = ruleKey(x);
+        if (names.slice(i + 1).some((n) => n.has(k))) return;          // a more specific place has the same rule: it shadows this one
+        value.push(clone(x)); items.push({ key: k, value: clone(x), from: { level: L.level, key: L.key }, careful: null });
+      }));
+    }
+    // the place the row's word names: the most specific one any item comes from (or the most specific own value)
+    const top = items.reduce((a, i) => (!a || RANK[i.from.level] >= RANK[a.level] ? i.from : a), null) || (layers.filter((L) => L.level !== 'default').pop() || { level: 'default', key: null });
+    const careful = items.filter((i) => i.careful);
+    return {
+      value, items, from: { level: top.level, key: top.key },
+      careful: careful.length ? { items: careful.map((i) => i.key), asked: Object.fromEntries(careful.map((i) => [i.key, i.careful.asked])), used: Object.fromEntries(careful.map((i) => [i.key, i.value])), by: careful[0].careful.by, askedBy: careful[0].careful.askedBy } : null
+    };
+  }
+
+  /* ------------------------------------------------------------------ Reduce motion (Astra max A4)
+     SSYS-059 names it apart: "general.visual.reduce-animations is Everywhere/Device/Project, with true more careful than
+     false: OR the applicable own requests (or the factory default when all are absent) with the OS preference". So its
+     value is true when any own request here (Everywhere, this device, this project) is true; the default only when none
+     exists. The operating system's preference is ORed after, as its own input: the strip's Reduced motion stands for
+     it, on the device in use (ctx.os overrides). `value` is what Settings shows (your requests); `motion.effective` is
+     the motion in use. The more_careful comparison of the other safety rows never runs for it. */
+  const MOTION = 'general.visual.reduce-animations';
+  function motionOr(steps, dflt, c, ctx) {
+    const reqs = steps.filter((s) => s.has && (s.level === 'everywhere' || s.level === 'device' || s.level === 'project')).map((s) => ({ level: s.level, key: s.key, value: s.value === true }));
+    const yes = reqs.filter((s) => s.value), asked = reqs.length ? yes.length > 0 : dflt === true;
+    // the request that decides, the most specific true one (or, when none asks, the most specific own one)
+    const by = asked ? yes[yes.length - 1] || null : reqs[reqs.length - 1] || null;
+    const os = c && c.os !== undefined ? !!c.os : !!(PSX.S && ctx.device === PSX.S.actor && PSX.S.osReduced);
+    return {
+      value: asked, from: by ? { level: by.level, key: by.key } : { level: 'default', key: null },
+      motion: { rule: 'or', requests: reqs, os, effective: asked || os, overruled: asked && by ? reqs.filter((s) => !s.value && RANK[s.level] > RANK[by.level]) : [] }
+    };
+  }
   const answering = (w, comp) => !comp || w.up[comp] !== false;
   const has = (bag, id) => !!bag && Object.prototype.hasOwnProperty.call(bag, id);
 
@@ -95,7 +185,18 @@
 
     const top = steps.filter((s) => s.has).pop();
     if (top) { out.value = clone(top.value); out.from = { level: top.level, key: top.key }; }
-    if (def.combine === 'more_careful' && place && place.has && proj && proj.has) {
+    if (id === MOTION) {
+      const m = motionOr(steps, dflt, c, ctx);
+      out.value = m.value; out.from = m.from; out.motion = m.motion;
+    } else if (def.combine === 'per_item') {
+      const kind = PER_ITEM[id];
+      if (kind) {
+        const layers = [{ level: 'default', key: null, value: dflt }].concat(steps.filter((s) => s.has && s.level !== 'provider'));
+        const m = perItem(kind, layers, ctx);
+        out.value = m.value; out.from = m.from; out.items = m.items; out.perItem = kind;
+        if (m.careful) out.careful = m.careful;
+      } else out.perItemGap = true;
+    } else if (def.combine === 'more_careful' && place && place.has && proj && proj.has) {
       const order = def.careful || [];
       const pi = order.findIndex((x) => same(x, place.value)), qi = order.findIndex((x) => same(x, proj.value));
       let win = proj;
@@ -162,5 +263,5 @@
     return { pass: results.filter((r) => r.ok).length, fail: results.filter((r) => !r.ok).length, results };
   }
 
-  Object.assign(PSX, { resolve, offered, reasons, writer, answering: (comp) => answering(PSX.W, comp), themePair, selfTest });
+  Object.assign(PSX, { resolve, offered, reasons, writer, answering: (comp) => answering(PSX.W, comp), themePair, selfTest, PER_ITEM, MOTION });
 })(window);

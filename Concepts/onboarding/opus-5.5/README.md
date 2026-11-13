@@ -31,6 +31,8 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches,
 The `--no-usage` / `--no-home` private reference builds were retired on 2026-10-18; `usage_boot.mjs` compares against
 the published `Concepts/PMConcept7.html` from a git ref (`--base-ref`, default `origin/main`) instead.
 
+The build needs a full repository checkout including `Plans/settings_inventory.json`; a Concepts-only checkout fails fast. Verify both: `python3 -B Concepts/onboarding/opus-5.5/tools/build_clean_checkout.test.py`.
+
 `build.py` assembles the live `base/manifest.json` sources. Edit the shell in `base/` (markup in
 `shell.html`, block bodies in `style/` and `script/`); see `base/README.md` for source ownership.
 The one-time split reproduced the historical `b3888fad…` input. Its legacy strip, shell fixes,
