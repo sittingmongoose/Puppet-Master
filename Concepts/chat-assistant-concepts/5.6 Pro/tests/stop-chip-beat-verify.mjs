@@ -72,7 +72,9 @@ function loopSpec(layer, st, k) {
 /* ---------------------------------------------------------------- the browser */
 const FRAME = 1000 / 120;
 function world({ clockApi = true } = {}) {
-	const W = { clock: 0, k: 1, listeners: [], restarts: [], log: [] };
+	// clock: the wall clock (performance.now, timers, the compositor); ft: the last frame's time, which the document
+	// timeline and every Animation's current time read during a task (Chrome's frame clock)
+	const W = { clock: 0, ft: 0, k: 1, listeners: [], restarts: [], log: [], jumps: [], shown: new Map() };
 	let seq = 0;
 	const timers = new Map();
 	let rafs = [];
@@ -84,7 +86,7 @@ function world({ clockApi = true } = {}) {
 	let anims = [];
 	class Anim {
 		constructor(layer, spec) {
-			Object.assign(this, { layer, animationName: spec.name, t: { duration: spec.duration, delay: spec.delay }, startTime: W.clock, hold: null, playbackRate: 1 });
+			Object.assign(this, { layer, animationName: spec.name, t: { duration: spec.duration, delay: spec.delay }, _start: W.ft, hold: null, playbackRate: 1 });
 			if (layer === 'g' && st.held) this.hold = 0;
 			const self = this;
 			this.effect = {
@@ -92,8 +94,12 @@ function world({ clockApi = true } = {}) {
 				getComputedTiming: () => { const lt = self.currentTime, a = lt - self.t.delay; if (a < 0) return { localTime: lt, currentIteration: null, progress: null }; const i = Math.floor(a / self.t.duration); return { localTime: lt, currentIteration: i, progress: (a - i * self.t.duration) / self.t.duration }; }
 			};
 		}
-		get currentTime() { return this.hold != null ? this.hold : (W.clock - this.startTime) * this.playbackRate; }
-		set currentTime(v) { W.log.push({ at: W.clock, set: this.layer, v }); if (this.hold != null) this.hold = v; else this.startTime = W.clock - v / this.playbackRate; }
+		// as the Web Animations API has it: a held (paused) loop has a hold time and no start time
+		get playState() { return this.hold != null ? 'paused' : 'running'; }
+		get startTime() { return this.hold != null ? null : this._start; }
+		set startTime(v) { this._start = v; W.log.push({ at: W.clock, set: this.layer, v: this.currentTime }); }
+		get currentTime() { return this.hold != null ? this.hold : (W.ft - this._start) * this.playbackRate; }
+		set currentTime(v) { W.log.push({ at: W.clock, set: this.layer, v }); if (this.hold != null) this.hold = v; else this._start = W.ft - v / this.playbackRate; }
 		place() { const c = this.effect.getComputedTiming(); return c.currentIteration == null ? null : c.currentIteration + c.progress; }
 	}
 	// style: what the rules say now, applied to the running loops (same name: retimed in place; new name: a new loop)
@@ -128,7 +134,7 @@ function world({ clockApi = true } = {}) {
 		head: { nodeName: 'HEAD' },
 		body: { classList: { contains: () => false } },
 		documentElement: { getAttribute: (n) => (n === 'data-motion' && st.reduced ? 'reduced' : null) },
-		timeline: { get currentTime() { return W.clock; } },
+		timeline: { get currentTime() { return W.ft; } },
 		querySelector: () => (st.shown ? chip : null),
 		addEventListener: (type) => W.listeners.push(type)
 	};
@@ -168,10 +174,20 @@ function world({ clockApi = true } = {}) {
 		W.clock = to;
 	};
 	W.frames = [];
+	// the compositor shows each loop by the timing it was handed at the last commit, on the wall clock
+	const shown = (x, T) => (x.hold != null ? (x.hold - x.l) / x.d : (T - x.start - x.l) / x.d);
 	W.frame = () => {
 		W.advance(W.clock + FRAME);
+		W.ft = W.clock;
 		flush();
-		const cbs = rafs; rafs = []; for (const cb of cbs) cb(W.clock);
+		const cbs = rafs; rafs = []; for (const cb of cbs) cb(W.ft);
+		flush();
+		// the commit: what the square showed just before and shows just after, at this moment
+		for (const a of anims) {
+			const now = { start: a._start, hold: a.hold, d: a.t.duration, l: a.t.delay }, was = W.shown.get(a);
+			if (was) { const before = shown(was, W.clock), after = shown(now, W.clock); if (before >= 0 && after >= 0) W.jumps.push({ i: W.frames.length, t: W.clock, layer: a.layer, before, after, d: Math.min(was.d, now.d) }); }
+			W.shown.set(a, now);
+		}
 		const g = W.glyph(), b = W.glow();
 		W.frames.push({ t: W.clock, flow: st.flow, g: g && { a: g, place: g.place(), dur: g.t.duration }, b: b && { a: b, place: b.place(), dur: b.t.duration } });
 	};
@@ -182,7 +198,12 @@ function world({ clockApi = true } = {}) {
 		W.k = k;
 		for (const o of observers) if (o.on) o.cb([{ type: 'childList', target: { nodeName: 'STYLE', id: 'o55-look-scale' }, addedNodes: [{ nodeType: 3, nodeName: '#text', parentNode: { nodeName: 'STYLE' } }], removedNodes: [] }], o);
 	};
-	W.hold = (on) => { st.held = on; const g = W.glyph(); if (!g) return; if (on && g.hold == null) g.hold = g.currentTime; if (!on && g.hold != null) { g.startTime = W.clock - g.hold; g.hold = null; } };
+	W.hold = (on) => { st.held = on; const g = W.glyph(); if (!g) return; if (on && g.hold == null) g.hold = g.currentTime; if (!on && g.hold != null) { g._start = W.ft - g.hold; g.hold = null; } };
+	// where the compositor shows a loop now (by what it was handed last) and where it will show it once handed this
+	W.shownNow = (a) => shown(W.shown.get(a), W.clock);
+	W.handedNow = (a) => shown({ start: a._start, hold: a.hold, d: a.t.duration, l: a.t.delay }, W.clock);
+	// a long task: the wall clock moves on with no frame and no timer (the compositor keeps drawing what it was handed)
+	W.task = (ms, fn) => { W.clock += ms; if (fn) fn(); };
 	W.set = (k, v) => { st[k] = v; };
 	W.armed = () => ({ timers: timers.size, rafs: rafs.length, observing: observers.filter((o) => o.on).length });
 	W.api = api; W.attrs = attrs; W.st = st;
@@ -203,6 +224,10 @@ function smooth(W, i0 = 0, what = 'g') {
 		if (over > worst) { worst = over; where = { i, t: Math.round(W.frames[i].t), step: +step.toFixed(5), bound: +bound.toFixed(5), from: p.dur, to: c.dur }; }
 	}
 	assert.ok(worst <= 1, `${what === 'g' ? 'the glyph' : 'the backlight'}'s loop moved more than one frame at the faster pace in one frame: ${JSON.stringify(where)}`);
+	// what a person sees: at every hand-over the square shown just after is where it was shown just before
+	const hand = W.jumps.filter((j) => j.i >= i0 && j.layer === what).map((j) => ({ ...j, over: Math.abs(j.after - j.before) / (FRAME / Math.min(fast, j.d) + 1e-9) }));
+	const bad = hand.sort((x, y) => y.over - x.over)[0];
+	assert.ok(!bad || bad.over <= 1, `${what === 'g' ? 'the glyph' : 'the backlight'} jumped when a frame handed it to the compositor: ${bad && JSON.stringify({ t: Math.round(bad.t), before: +bad.before.toFixed(4), after: +bad.after.toFixed(4) })}`);
 	return worst;
 }
 const feed = (W, msLong, every = 100) => { const end = W.clock + msLong; let next = W.clock; while (W.clock < end) { if (W.clock >= next) { W.api.token('one'); next += every; } W.frame(); } };
@@ -231,11 +256,13 @@ const CASES = {
 			assert.equal(W.attrs.get('data-flow'), 'waiting', 'starts waiting with no word');
 			W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1 + target; });
 			const before = W.glyph().place(), i0 = W.frames.length;
-			W.advance(W.clock + 3); W.api.token('one');                     // between two frames
+			W.advance(W.clock + 3);                                          // between two frames
+			const seenBefore = W.shownNow(W.glyph());
+			W.api.token('one');
 			const g = W.glyph();
 			assert.equal(W.attrs.get('data-flow'), 'flowing', 'the word turns it to flowing in the same task');
 			assert.equal(g.t.duration, 2200, 'the loop is at the flowing length at once');
-			assert.ok(Math.abs(g.place() - (before + 3 / 3200)) < 1e-9, `the loop kept its place: ${g.place()} vs ${before + 3 / 3200}`);
+			assert.ok(Math.abs(W.handedNow(g) - seenBefore) < 1e-9, `the loop keeps the place it is shown at: ${W.handedNow(g)} vs ${seenBefore}`);
 			W.run(400);
 			const w = smooth(W, i0 - 1); smooth(W, i0 - 1, 'b');
 			out.push(`${target}: kept ${before.toFixed(4)}, worst step ${(w * 100).toFixed(0)}% of a frame at 2200 ms`);
@@ -251,7 +278,7 @@ const CASES = {
 			W.api.token('one'); last = W.clock;
 			const i0 = W.frames.length;
 			W.until(() => W.attrs.get('data-flow') === 'waiting', 3000);
-			const sw = W.log.filter((x) => x.set === 'g').pop();
+			const sw = W.log.find((x) => x.set === 'g' && x.at > last);    // the first re-placement after the last word
 			assert.ok(sw && Math.abs(sw.at - (last + 901)) < 1e-6, `the change came 901 ms after the last word: ${sw && sw.at - last}`);
 			assert.equal(W.glyph().t.duration, 3200, 'the loop is at the waiting length');
 			W.run(400);
@@ -290,7 +317,7 @@ const CASES = {
 		W.speed(0.6);
 		assert.equal(W.glyph().place(), null, 'still in the delay after the change');
 		W.until(() => W.glyph().place() != null, 2000);
-		assert.ok(W.clock <= 300 + 500 * 0.6 + FRAME + 1e-6, `starts within the delay's rescaled rest: at ${W.clock}`);
+		assert.ok(W.clock <= 300 + 500 * 0.6 + 2 * FRAME + 1e-6, `starts within the delay's rescaled rest (a frame either way): at ${W.clock}`);
 		return `started at ${Math.round(W.clock)} ms`;
 	},
 	'the onboarding window holds the glyph: a cadence change under it keeps its place, and it carries on after': () => {
@@ -377,6 +404,33 @@ const CASES = {
 		const before = W.glyph().place();
 		W.speed(0.6);
 		assert.ok(Math.abs(W.glyph().place() - before) < 1e-9, 'a speed change after it keeps the place');
+		return 'ok';
+	},
+	"Settings' speed changed at the end of a 260 ms long task (as Settings' save is): no jump when the frame hands it over": () => {
+		const out = [];
+		for (const flowing of [false, true]) {
+			const W = start({}, flowing);
+			let last = W.clock;
+			const keep = () => { if (flowing && W.clock - last >= 100) { W.api.token('one'); last = W.clock; } };
+			W.until(() => { keep(); const g = W.glyph(); return g && g.place() != null && g.place() >= 1.3; });
+			const i0 = W.frames.length;
+			W.task(260, () => W.speed(0.6));                             // the sheet is written at the task's end
+			W.run(600, keep);
+			smooth(W, i0); smooth(W, i0, 'b');
+			const j = W.jumps.filter((x) => x.i >= i0 && x.layer === 'g').map((x) => Math.abs(x.after - x.before));
+			out.push(`${flowing ? 'flowing' : 'waiting'}: largest hand-over step ${Math.max(...j).toFixed(5)} of a loop`);
+		}
+		return out.join('; ');
+	},
+	'a word, then a 300 ms long task: no jump when the frame hands it over': () => {
+		const W = start({}, false);
+		W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1.4; });
+		const i0 = W.frames.length;
+		W.advance(W.clock + 3);
+		W.task(300, () => {}); W.api.token('one');                    // the word comes at the end of a long task
+		W.task(300, () => {});                                       // and another long task before the frame
+		W.run(400);
+		smooth(W, i0); smooth(W, i0, 'b');
 		return 'ok';
 	},
 	"another thread's words do not change the pace": () => {

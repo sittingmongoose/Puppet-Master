@@ -64,7 +64,7 @@
   /* the pace (below): send-stop.css's two loop lengths and its --ss-ld at Animation speed 1, the loops' names, how
      recent a word must be for "flowing"; the quiet timer, the <head> observer and the speed the loops were last seen at */
   var BEAT = { flowing: 2200, waiting: 3200 }, LEAD = 800, LOOPS = ['ss-breathe', 'ss-glow', 'ss-glow-l'], QUIET = 900;
-  var quietH = null, watch = null, speed = 0;
+  var quietH = null, watch = null, speed = 0, olds = null;
 
   function stateOf(o) {
     var text = String(o.text || '').trim();
@@ -166,40 +166,69 @@
   function loops(b) {
     try { return b.getAnimations({ subtree: true }).filter(function (a) { return LOOPS.indexOf(a.animationName) >= 0; }); } catch (e) { return []; }
   }
-  /* where a loop is: loops run so far plus the way through this one (time, before the keyframes' easing); null while
-     it waits out its delay (the square is still then, at full size) */
-  function placeOf(a) {
-    var c = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
-    return c && c.currentIteration != null && c.progress != null ? c.currentIteration + c.progress : null;
-  }
   function seen(runs) {
     var d = runs.length ? +runs[0].effect.getTiming().duration : 0;
     if (d > 0) speed = d / BEAT[flow];
   }
-  /* The cadence changes now: each loop is read where it is, data-flow gives it the other length, and it is put back at
-     the same point of that length. */
+  /* Where the square actually is. Chrome hands a retimed loop to the compositor only with the next frame, and until
+     then the compositor keeps moving the square on the OLD timing by its own clock, also through a long task: Settings'
+     save is one (about 260 ms on the Windows PC, the speed sheet written at its end), and a loop re-placed by the last
+     frame's time then showed a jump of 0.07 of a loop when the frame came (film, 2026-11-13). So each loop's old timing
+     is taken before the first retime since the last frame (olds), the loop is put where that timing has it NOW on the
+     wall clock, and once more at the next frame, just before that frame hands it over. A held loop (the onboarding
+     window) does not move, so its place is its current time on the old timing. */
+  function wall() {
+    var p = performance.now(), t = document.timeline ? document.timeline.currentTime : null;
+    return t == null || Math.abs(p - t) < 2000 ? p : t;   // a film tool's slowed timeline: its own clock
+  }
+  function timingOf(a) { var t = a.effect.getTiming(); return { a: a, s: a.startTime, c: a.currentTime, h: a.playState === 'paused', d: +t.duration, l: +t.delay || 0 }; }
+  function remember(runs, taken) {
+    if (!olds) {
+      olds = [];
+      requestAnimationFrame(function () { var b = stopChip(); if (b && olds) place(loops(b), true); olds = null; });
+    }
+    runs.forEach(function (a) { if (!olds.some(function (o) { return o.a === a; })) olds.push(taken(a)); });
+  }
+  function place(runs, framed) {
+    var w = wall();
+    runs.forEach(function (a) {
+      var o = (olds || []).filter(function (x) { return x.a === a; })[0];
+      if (!o) return;
+      var t = a.effect.getTiming(), d = +t.duration, l = +t.delay || 0;
+      var held = a.playState === 'paused' || o.s == null;
+      if (!(d > 0) || !(o.d > 0)) return;
+      if (Math.abs(d - o.d) < 0.5 && Math.abs(l - o.l) < 0.5) {   // back to the timing it had (two changes in one frame)
+        if (held) { if (o.c != null && a.currentTime !== o.c) a.currentTime = o.c; } else if (a.startTime !== o.s) a.startTime = o.s;
+        return;
+      }
+      if (held && framed) return;                          // nothing moved since it was placed
+      var c = held ? (o.h ? o.c : a.currentTime) : (w - o.s) * (a.playbackRate || 1);
+      if (c == null) return;
+      var n = c < o.l ? (o.l > 0 ? c * l / o.l : c) : l + (c - o.l) * d / o.d;
+      if (held) a.currentTime = n; else a.startTime = w - n / (a.playbackRate || 1);
+    });
+  }
+  /* The cadence changes now: data-flow gives each loop the other length, and each is put at the same point of it. */
   function pace(b, to) {
-    var before = loops(b).map(function (a) { return { a: a, at: placeOf(a) }; });
+    remember(loops(b), timingOf);
     flow = to;
     b.setAttribute('data-flow', to);
     var runs = loops(b);
-    before.forEach(function (r) {
-      if (r.at == null || runs.indexOf(r.a) < 0) return;
-      var t = r.a.effect.getTiming();
-      r.a.currentTime = (+t.delay || 0) + r.at * +t.duration;
-    });
+    place(runs, false);
     seen(runs);
   }
   /* Settings' Animation speed has rewritten the loops' length and delay (FO-153 scales the delay too): each loop goes
-     back to where it was. What it had is the cadence's length and --ss-ld at the speed the loops were last seen at. */
+     back to where it was. What it had is the cadence's length and --ss-ld at the speed the loops were last seen at;
+     the start time is the sheet's to leave alone. */
   function retime(b) {
     var runs = loops(b);
-    if (speed) runs.forEach(function (a) {
-      var t = a.effect.getTiming(), d = +t.duration, l = +t.delay || 0, c = a.currentTime;
-      var d0 = BEAT[flow] * speed, l0 = LEAD * speed;
-      if (c == null || !(d > 0) || (Math.abs(d - d0) < 0.5 && Math.abs(l - l0) < 0.5)) return;
-      a.currentTime = c < l0 ? (l0 > 0 ? c * l / l0 : c) : l + (c - l0) * d / d0;
-    });
+    if (!speed) { seen(runs); return; }
+    var d0 = BEAT[flow] * speed, l0 = LEAD * speed;
+    var moved = runs.filter(function (a) { var t = a.effect.getTiming(); return Math.abs(+t.duration - d0) >= 0.5 || Math.abs((+t.delay || 0) - l0) >= 0.5; });
+    if (moved.length) {
+      remember(moved, function (a) { return { a: a, s: a.startTime, c: a.currentTime, h: a.playState === 'paused', d: d0, l: l0 }; });
+      place(moved, false);
+    }
     seen(runs);
   }
   function sheetNode(n) { return !!n && (n.nodeName === 'STYLE' || n.nodeName === 'LINK' || (n.nodeType === 3 && !!n.parentNode && n.parentNode.nodeName === 'STYLE')); }
