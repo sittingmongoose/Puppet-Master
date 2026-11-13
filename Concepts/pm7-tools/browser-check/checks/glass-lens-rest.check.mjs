@@ -358,6 +358,119 @@ async function onboardingPart(t, surface, W, H) {
 	}
 }
 
+/* --set parts=pixels (lane G's pixel proof, normal surface): PNGs in the run folder, read by its report's script.
+   Per look on Home and Usage: the resting frame with every animation frozen at 4 s (comparable across builds), the
+   same load with each laid-out lens's own filter put back where the build keeps one (what main drew there), and
+   frames across one travel (Home's rail tabs, Usage's range): before the press, the travel's first and second frames,
+   its last frame, and the first frame after it ended, the rest of the page frozen throughout */
+async function pixelsPart(t, surface, W, H) {
+	const { writeFileSync } = await import('node:fs');
+	const pathm = await import('node:path');
+	const f = await t.app.open({});
+	await f.evaluate(PROBE);
+	await f.evaluate(() => document.fonts.ready.then(() => true));
+	await t.page.waitForTimeout(Number(t.args.settle ?? 8000));
+	const shot = async (name) => { const b = await t.page.screenshot({ type: 'png' }); writeFileSync(pathm.join(t.run.dir, name + '.png'), b); };
+	const lensRows = () => f.evaluate(() => window.__g.all().map((l, i) => { const r = l.getBoundingClientRect(), s = getComputedStyle(l); return { i, laid: window.__g.laid(l), box: { x: r.left, y: r.top, w: r.width, h: r.height }, kind: l.getAttribute('data-lg-lens'), bead: l.classList.contains('lg-bead'), filter: s.backdropFilter, opacity: s.opacity, kept: !!l.__lgBf }; }));
+	const freeze = () => f.evaluate(() => { const list = document.getAnimations(); window.__pre = new Set(list); let n = 0; list.forEach((a) => { try { if (a.playState === 'running' || a.playState === 'pending') { a.pause(); a.currentTime = 4000; n++; } } catch (e) { /* gone */ } }); return n; });
+	const thaw = () => f.evaluate(() => { document.getAnimations().forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (e) { /* gone */ } }); });
+	const out = {};
+	for (const look of list(t.args.looks, LOOKS)) {
+		await t.app.look(look);
+		for (const view of ['home', 'usage']) {
+			const tag = `${look}-${view}`, rec = out[tag] = {};
+			await f.evaluate((p) => PM_PAGES.go(p), VIEWS[view]);
+			await t.page.waitForTimeout(3000);
+			await parkPointer(t.page, W, H);
+			await f.evaluate(() => window.__g.settle());
+			rec.frozen = await freeze();
+			await t.page.waitForTimeout(400);
+			rec.lenses = await lensRows();
+			await shot(`${tag}-rest`);
+			rec.relive = await f.evaluate(() => { let n = 0; window.__g.all().forEach((l) => { if (window.__g.laid(l) && l.__lgBf && !l.style.getPropertyValue('backdrop-filter')) { l.style.setProperty('backdrop-filter', l.__lgBf, 'important'); l.__pxPut = true; n++; } }); return n; });
+			if (rec.relive) { await t.page.waitForTimeout(300); await shot(`${tag}-relive`); await f.evaluate(() => window.__g.all().forEach((l) => { if (l.__pxPut) { l.style.removeProperty('backdrop-filter'); l.__pxPut = false; } })); }
+			await thaw();
+			/* frames across one travel */
+			const sel = view === 'home' ? '#sidePanelSlot .pm-segtab' : '#pmuRange';
+			const x = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === sel && z.other);
+			await t.check(`pixels: ${sel} has its lens and another item ${tag}`, !!x, '');
+			if (!x) continue;
+			const off = await offsetOf(t, f), at = (b) => ({ x: off.x + b.x + b.w / 2, y: off.y + b.y + b.h / 2 });
+			await t.page.mouse.move(at(x.other).x, at(x.other).y); await t.page.waitForTimeout(600);
+			await f.evaluate(() => window.__g.settle(3000));
+			await freeze(); await t.page.waitForTimeout(300);
+			const lensState = () => f.evaluate((i) => { const l = window.__g.all()[i], r = l.getBoundingClientRect(); return { filter: getComputedStyle(l).backdropFilter, box: { x: r.left, y: r.top, w: r.width, h: r.height } }; }, x.lens);
+			rec.travel = { strip: sel, from: x.box, to: x.other, frames: {} };
+			rec.travel.frames.before = await lensState(); await shot(`${tag}-t0-before`);
+			await t.page.mouse.down();
+			rec.travel.made = await f.evaluate(() => { const n = document.getAnimations().filter((a) => !window.__pre.has(a)); window.__new = n; n.forEach((a) => { try { a.pause(); a.currentTime = 0; } catch (e) { /* gone */ } }); return n.map((a) => { const fx = a.effect; return { el: fx && fx.target ? fx.target.tagName.toLowerCase() + '.' + String(fx.target.className && fx.target.className.baseVal !== undefined ? fx.target.className.baseVal : fx.target.className).split(' ')[0] + (fx.pseudoElement || '') : '?', end: fx ? Math.round(fx.getComputedTiming().endTime) : 0 }; }); });
+			await t.page.waitForTimeout(250);
+			rec.travel.frames.first = await lensState(); await shot(`${tag}-t1-first`);
+			await f.evaluate(() => window.__new.forEach((a) => { try { a.currentTime = 1000 / 120; } catch (e) { /* gone */ } }));
+			await t.page.waitForTimeout(250);
+			rec.travel.frames.second = await lensState(); await shot(`${tag}-t2-second`);
+			/* released as a person's click is (the app chooses on it); what the choice starts is frozen where it starts,
+			   so a tab that grows when chosen (the rail's) does not finish growing under a frozen travel and get the lens
+			   snapped to it by the next sync, which a real 600 ms travel never waits for */
+			await t.page.mouse.up();
+			rec.travel.stillPaused = await f.evaluate(() => new Promise((r) => requestAnimationFrame(() => { let n = 0; document.getAnimations().forEach((a) => { if (!window.__pre.has(a) && !window.__new.includes(a)) { try { a.pause(); n++; } catch (e) { /* gone */ } } }); r(n); })));
+			await t.page.waitForTimeout(500);
+			await f.evaluate(() => window.__new.forEach((a) => { try { a.currentTime = a.effect.getComputedTiming().endTime - 2000 / 120; } catch (e) { /* gone */ } }));
+			await t.page.waitForTimeout(250);
+			rec.travel.frames.penult = await lensState(); await shot(`${tag}-t3-penult`);
+			await f.evaluate(() => window.__new.forEach((a) => { try { a.currentTime = a.effect.getComputedTiming().endTime - 1000 / 120; } catch (e) { /* gone */ } }));
+			await t.page.waitForTimeout(250);
+			rec.travel.frames.last = await lensState(); await shot(`${tag}-t4-last`);
+			await f.evaluate(() => new Promise((r) => { window.__new.forEach((a) => { try { a.finish(); } catch (e) { /* gone */ } }); requestAnimationFrame(() => requestAnimationFrame(r)); }));
+			await t.page.waitForTimeout(250);
+			rec.travel.frames.after = await lensState(); await shot(`${tag}-t5-after`);
+			await thaw();
+			/* the original item chosen again */
+			await t.page.mouse.move(at(x.cur).x, at(x.cur).y); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+			await t.page.waitForTimeout(1500);
+			t.log(`${tag}: ${JSON.stringify({ frozen: rec.frozen, relive: rec.relive, laid: rec.lenses.filter((l) => l.laid).length, frames: Object.fromEntries(Object.entries(rec.travel.frames).map(([k, v]) => [k, v.filter])), made: rec.travel.made.length })}`);
+		}
+	}
+	writeFileSync(pathm.join(t.run.dir, 'pixels.json'), JSON.stringify(out, null, 1));
+	await t.check('pixels: frames written', Object.keys(out).length > 0, Object.keys(out).join(','));
+}
+
+/* --set parts=film with --record: one travel on Home (the rail tabs) and one on Usage (the range) per Glass look, each
+   chosen with a held click (down, 90 ms, up) and chosen back, marked on the film */
+async function filmPart(t, surface, W, H) {
+	const f = await t.app.open({});
+	await f.evaluate(PROBE);
+	await t.page.waitForTimeout(Number(t.args.settle ?? 8000));
+	for (const look of list(t.args.looks, LOOKS)) {
+		await t.app.look(look);
+		for (const view of ['home', 'usage']) {
+			await f.evaluate((p) => PM_PAGES.go(p), VIEWS[view]);
+			await t.page.waitForTimeout(2500);
+			await f.evaluate(() => window.__g.settle());
+			const sel = view === 'home' ? '#sidePanelSlot .pm-segtab' : '#pmuRange';
+			const x = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === sel && z.other);
+			if (!x) { await t.check(`film: ${sel} has its lens ${look} ${view}`, false, ''); continue; }
+			const off = await offsetOf(t, f), at = (b) => ({ x: off.x + b.x + b.w / 2, y: off.y + b.y + b.h / 2 });
+			for (const [name, b] of [['to ' + (x.label || 'next'), x.other], ['back', x.cur]]) {
+				await t.page.mouse.move(at(b).x, at(b).y, { steps: 6 }); await t.page.waitForTimeout(700);
+				await f.evaluate((i) => window.__g.watch(i), x.lens);
+				await t.mark(`${look} ${view} ${sel} travel ${name}`);
+				await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+				await t.page.waitForTimeout(1600);
+				/* the same click read per frame (a probe beside the film): where the lens is drawn, whether it moves and
+				   bends; a travel cut short shows as a jump of its centre between two frames */
+				const fr = await f.evaluate(() => window.__g.stop()), cx = (z) => z.b.x + z.b.w / 2, cy = (z) => z.b.y + z.b.h / 2;
+				let jump = 0, at2 = -1; for (let k = 1; k < fr.length; k++) { const d = Math.hypot(cx(fr[k]) - cx(fr[k - 1]), cy(fr[k]) - cy(fr[k - 1])); if (d > jump) { jump = d; at2 = k; } }
+				const lastMv = fr.reduce((k, z, n) => (z.mv ? n : k), -1), after = fr.slice(lastMv + 1), mv = fr.filter((z) => z.mv);
+				const row = { frames: fr.length, moving: mv.length, movingFlat: mv.filter((z) => !z.bend).length, after: after.length, afterBent: after.filter((z) => z.bend).length,
+					jump: Math.round(jump * 10) / 10, jumpAt: at2, jumpMoving: at2 > 0 ? [fr[at2 - 1].mv, fr[at2].mv] : null, path: fr.filter((z, k) => k % 6 === 0 || z.mv !== (fr[k - 1] || {}).mv).map((z) => [z.t, Math.round(cx(z)), z.mv ? 1 : 0, z.bend ? 1 : 0]).slice(0, 40) };
+				t.log(`film ${look} ${view} ${name}: ${JSON.stringify(row)}`);
+				await t.check(`film: the click's travel bends in every frame and rests unbent ${look} ${view} ${name}`, mv.length >= 3 && row.movingFlat === 0 && after.length >= 5 && row.afterBent === 0, JSON.stringify(row));
+			}
+		}
+	}
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const run = (part, fn) => async (t) => {
@@ -372,4 +485,13 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`PERF-4 lens rest app ${surface}`] = run('app', appPart);
 	tests[`PERF-4 lens rest reduced motion ${surface}`] = run('reduced', reducedPart);
 	tests[`PERF-4 lens rest onboarding ${surface}`] = run('onboarding', onboardingPart);
+	/* lane G's proof material, asked for by name (--set parts=pixels or parts=film), normal surface */
+	if (surface === 'normal') {
+		const named = (part, fn) => async (t) => {
+			if (!list(t.args.parts, []).includes(part)) { t.log(`skipped: ${part} runs only when --set parts names it`); return; }
+			return run(part, fn)(t);
+		};
+		tests[`PERF-4 lens pixels`] = named('pixels', pixelsPart);
+		tests[`PERF-4 lens film`] = named('film', filmPart);
+	}
 }
