@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.filesafe.filesafe_path_denied.source_graph.v1",
+  "schema_version": "1.0.0",
+  "event_type": "filesafe.path_denied",
+  "owner_refs": [
+    "Plans/Contracts_V0.md#CV-555",
+    "Plans/storage-plan.md#SP-555",
+    "Plans/FileSafe.md#F2-213",
+    "Plans/Contracts_V0.md#CV-366"
+  ],
+  "producer": "FileSafe::check_path -> FileGuard::check_operation -> record_path_denial",
+  "resources": [
+    {
+      "path": "Plans/filesafe_event_sources/filesafe_path_denied.schema.json",
+      "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/filesafe_path_denied/1.0.0",
+      "sha256": "b1213674fab078023c1c81611b4351f8bc4be0e501969e18b69dc1f794431cc5"
+    },
+    {
+      "path": "Plans/event_payloads/filesafe_path_denied_v2.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_payloads/filesafe_path_denied/2.0.0",
+      "sha256": "5e79f00d2f82e6017b36a5a0db254f0cc34a33fb74e4998dd89473fe66179cf1"
+    },
+    {
+      "path": "Plans/shared_integration_runtime.schema.json",
+      "uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60"
+    }
+  ],
+  "methods": [
+    {
+      "interface_id": "owner.filesafe.filesafe_path_denied.original_source.project@1.0.0",
+      "component": "FileSafe::check_path -> FileGuard::check_operation -> record_path_denial",
+      "input_root_ref": "Plans/filesafe_event_sources/filesafe_path_denied.schema.json#/$defs/project_request",
+      "output_root_ref": "Plans/filesafe_event_sources/filesafe_path_denied.schema.json#/$defs/project_source",
+      "operations": [
+        "capture_at_original_commit",
+        "read_same_operation",
+        "recover_same_operation"
+      ],
+      "adoption_disposition": "specified_unimplemented",
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance."
+    },
+    {
+      "interface_id": "owner.filesafe.filesafe_path_denied.original_source.application@1.0.0",
+      "component": "FileSafe::check_path -> FileGuard::check_operation -> record_path_denial",
+      "input_root_ref": "Plans/filesafe_event_sources/filesafe_path_denied.schema.json#/$defs/application_request",
+      "output_root_ref": "Plans/filesafe_event_sources/filesafe_path_denied.schema.json#/$defs/application_source",
+      "operations": [
+        "capture_at_original_commit",
+        "read_same_operation",
+        "recover_same_operation"
+      ],
+      "adoption_disposition": "specified_unimplemented",
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance."
+    }
+  ],
+  "request_payload_joins": [
+    "guard_type",
+    "normalized_path",
+    "canonical_parent",
+    "path_kind",
+    "operation",
+    "permission_snapshot_id",
+    "filesafe_scope_ref"
+  ],
+  "required_body_roles": [
+    "path_request",
+    "path_denial"
+  ],
+  "ordered_stages": [
+    {
+      "ordinal": 0,
+      "role": "original_intent",
+      "barrier": "path_resolved: admit actual owner operation; no native write unless exact family is independently admitted and retention is resolved"
+    },
+    {
+      "ordinal": 1,
+      "role": "body_commit",
+      "barrier": "denied_no_file_effect: Resolve the recorded Host/root and canonical parent, including symlink/reparse and create checks; refusal leaves the target unchanged."
+    },
+    {
+      "ordinal": 2,
+      "role": "prepared_event",
+      "barrier": "Freeze the original semantic envelope after source/result commit; retain the same operation on retry"
+    },
+    {
+      "ordinal": 3,
+      "role": "append",
+      "barrier": "Ordinary SeglogFrameV2 barrier append; SP-026/SP-236 and SP-336/SP-347"
+    },
+    {
+      "ordinal": 4,
+      "role": "first_receipt",
+      "barrier": "SP-286/CV-339 strict full-value v2; resolve original issued value and all eleven receipt fields"
+    },
+    {
+      "ordinal": 5,
+      "role": "terminal_publication",
+      "barrier": "Publish original terminal/outbox only after full-value receipt custody; never repeat a domain effect"
+    },
+    {
+      "ordinal": 6,
+      "role": "history_read",
+      "barrier": "SP-278 verified CURRENT/index generation and fresh live token; passive consumer only"
+    },
+    {
+      "ordinal": 7,
+      "role": "backup_restore",
+      "barrier": "Original source/body/receipt/index selection share coherent backup/restore epoch; missing older-restored source fences"
+    },
+    {
+      "ordinal": 8,
+      "role": "withdrawal",
+      "barrier": "Stop new writer admissions; reconcile same pending originals, fence reader/index, then verified retained-survivor rebuild; no zero cursor"
+    },
+    {
+      "ordinal": 9,
+      "role": "retention_release",
+      "barrier": "Project history: RP-OPERATIONAL-2555D under DL-426; application history PENDING_RETENTION_DECISION, no recording before exact approved rules. Original bodies keep their own policies."
+    }
+  ],
+  "consumer_id": "storage.filesafe_path_denied_history_read.v1@1.0.0",
+  "family_checkpoint": "none_required",
+  "retention_policy_ref": "PENDING_RETENTION_DECISION",
+  "native_admission": "unavailable_until_complete_owner_adoption",
+  "preserved_project_resources": [],
+  "graph_sha256": "eb5a970b91158ab67819ef79a451c0c19600f78e7c9801415e675cccd4ba4c02",
+  "retention_policy_by_scope": {
+    "project": "RP-OPERATIONAL-2555D",
+    "application": "PENDING_RETENTION_DECISION"
+  },
+  "retention_decision_ref": "DL-426"
+}

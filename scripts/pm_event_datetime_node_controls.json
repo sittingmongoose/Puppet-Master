@@ -1,0 +1,1603 @@
+{
+ "schema_id": "pm.event_datetime_node_controls.v1",
+ "purpose": "Fix round 18 (Sol max gate r2 finding 1): for every Storage-classified node of Plans/event_datetime_inventory.json, one valid committed object reaching that node. The per-node self-checks (datetime_node_*) validate it through a neutral reference with the node's complete committed resource preloaded, then set each classified timestamp field to an invalid string and require refusal at that field. Each object is copied from the committed Plans object named by its source, where it was found valid at the node; objects are keyed by their checker-only digest.",
+ "objects": {
+  "b31c5f17d4004bc284bc71620ee7ba4eda77456b52086a882f4602575aa8d576": {
+   "source": {
+    "path": "Plans/event_index_consumer_adoption_fixtures.json",
+    "origin": "json",
+    "pointer": "/positive/both_full_owner_joins/original_creation_commit_transaction/companion_value/frozen_append_input"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+    "event_type": "restore_point.created",
+    "project_id": "project-A",
+    "thread_id": "thread-A",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor-A",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-06-10T17:00:00Z",
+    "observed_at_utc": "2026-06-10T17:00:00Z",
+    "producer_sequence_id": null,
+    "correlation_id": "command-A",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "create-A",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+    "payload": {
+     "schema_version": "1.0.0",
+     "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "project_id": "project-A",
+     "source_thread_ref": "thread-A",
+     "source_branch_ref": "branch-A",
+     "message_boundary_ref": "message-A",
+     "record_ref": "rp:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+     "context_refs": [
+      "ctx-A"
+     ],
+     "provenance_refs": [
+      "prov-A"
+     ],
+     "attachment_refs": [],
+     "citation_refs": [],
+     "status": "available",
+     "created_at_utc": "2026-06-10T17:00:00Z"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb": {
+   "source": {
+    "path": "Plans/event_record_index_checkpoint_contract_fixtures.json",
+    "origin": "json",
+    "pointer": "/positive/current_read_without_old_controls/current_source/frames/0/event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+    "event_type": "restore_point.created",
+    "project_id": "project-A",
+    "thread_id": "thread-A",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor-A",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-06-10T17:00:00Z",
+    "observed_at_utc": "2026-06-10T17:00:00Z",
+    "producer_sequence_id": null,
+    "correlation_id": "command-A",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "create-A",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+    "payload": {
+     "schema_version": "1.0.0",
+     "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "project_id": "project-A",
+     "source_thread_ref": "thread-A",
+     "source_branch_ref": "branch-A",
+     "message_boundary_ref": "message-A",
+     "record_ref": "rp:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+     "context_refs": [
+      "ctx-A"
+     ],
+     "provenance_refs": [
+      "prov-A"
+     ],
+     "attachment_refs": [],
+     "citation_refs": [],
+     "status": "available",
+     "created_at_utc": "2026-06-10T17:00:00Z"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    },
+    "sequence_id": 7,
+    "persisted_at_utc": "2026-06-10T17:00:00Z"
+   }
+  },
+  "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30": {
+   "source": {
+    "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+    "origin": "json",
+    "pointer": "/artifact_receipts/plan_approved_event"
+   },
+   "value": {
+    "actor_ref": "actor:pnc019-certifier",
+    "attempt_id": null,
+    "causation_event_id": null,
+    "correlation_id": "corr-pnc019-0001",
+    "effective_account_ref": "account:certification-harness",
+    "event_id": "evt-pnc019-plan-approved-0001",
+    "event_type": "planning.plan_approved",
+    "idempotency_key": "idem-pnc019-approved-plan-pack-0001",
+    "migration": {
+     "compatibility_event_type": null,
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null
+    },
+    "node_id": null,
+    "observed_at_utc": "2026-07-06T00:00:00Z",
+    "occurred_at_utc": "2026-07-06T00:00:00Z",
+    "parent_event_id": null,
+    "payload": {
+     "approval_cas_receipt_id": "approval-cas-pnc019-0001",
+     "approved_plan_pack_id": "app-pnc019-0001",
+     "plan_compile_run_id": "pcr-pnc019-0001",
+     "source_refs": [
+      "Plans/Planning_Wizard.md#PWIZ-014"
+     ]
+    },
+    "payload_ref": null,
+    "payload_schema_id": "pm.event_payload.plan_approved.v1",
+    "persisted_at_utc": "2026-07-06T00:00:00Z",
+    "producer_sequence_id": 1,
+    "project_id": "pnc019-clean-room-project",
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "requested_account_ref": "account:certification-harness",
+    "run_id": "pcr-pnc019-0001",
+    "schema_id": "pm.event.v0",
+    "schema_version": "1.0.0",
+    "sequence_id": 1,
+    "thread_id": "thread-pnc019"
+   }
+  },
+  "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e": {
+   "source": {
+    "path": "Plans/context_compaction_completion_contract_fixtures.json",
+    "origin": "json",
+    "pointer": "/valid_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "evt_compaction_12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+    "event_type": "context.compaction.completed",
+    "project_id": "project_fixture_alpha",
+    "thread_id": "thr_01K00000000000000000000000",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor:fixture:user",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-11T16:00:00.123456Z",
+    "observed_at_utc": "2026-09-11T16:00:00.123457Z",
+    "persisted_at_utc": "2026-09-11T16:00:00.123458Z",
+    "sequence_id": 100,
+    "producer_sequence_id": null,
+    "correlation_id": "correlation:fixture:compact",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "compaction:4d82c6fc2e68223f019a2b04bebe9f7b530db80fd2bd853ee861f61ea41e7986",
+    "payload_schema_id": "pm.context_compaction_completed.schema.v1",
+    "payload": {
+     "schema_id": "pm.context_compaction_completed.schema.v1",
+     "schema_version": "1.0.0",
+     "project_id": "project_fixture_alpha",
+     "thread_id": "thr_01K00000000000000000000000",
+     "operation_id": "operation_fixture_compact_001",
+     "operation_generation": 7,
+     "compaction_receipt_ref": "compaction_receipt:12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+     "input_context_revision": 17,
+     "output_context_revision": 18,
+     "context_epoch_id": "epoch_fixture_3",
+     "trigger": "manual",
+     "disposition": "committed",
+     "input_tokens": 12000,
+     "output_tokens": 4000,
+     "reclaimed_tokens": 8000,
+     "input_bytes": 48000,
+     "output_bytes": 16000,
+     "committed_at_utc": "2026-09-11T16:00:00.123456Z",
+     "redaction_profile": "no_secrets"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0": {
+   "source": {
+    "path": "Plans/event_index_consumer_adoption_fixtures.json",
+    "origin": "json",
+    "pointer": "/positive/both_full_owner_joins/generic/datasets/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521"
+   },
+   "value": {
+    "schema_id": "pm.storage_value.event_record_index.v2",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "project_id": "project-A",
+    "scope_partition": "project~cHJvamVjdC1B",
+    "sequence_id": 7,
+    "event_id": "er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+    "event_type": "restore_point.created",
+    "source_locator": {
+     "segment_generation": 1,
+     "segment_name": "seg-000001-00000000000000000007.active",
+     "byte_offset": 0,
+     "sequence_id": 7
+    },
+    "publication_locator": {
+     "manifest_generation": 11,
+     "recovery_epoch": 0,
+     "survivor_prefix_sha256": "3ae4eb959acc10bbd692f1a99eb17981d045b369b468b29618e0289e9b62a541",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c",
+     "compaction_translation_manifest_ref": null
+    },
+    "payload_sha256": "27828ecf366592826e730465e91e0d1d5580d8604c341cb71daea3d97da27d3d",
+    "producer_semantic_digest": "c7a097521115568057e0d3bad0c82e6e9ebd8f92993587393c7586425d866991",
+    "idempotency_key": "create-A",
+    "correlation_id": "command-A",
+    "causation_event_id": null,
+    "persisted_at_utc": "2026-06-10T17:00:00Z",
+    "redaction_profile": "no_secrets",
+    "source_schema_id": "pm.event.v0",
+    "source_schema_version": "2.0.0",
+    "projector_replay_only": false
+   }
+  },
+  "4d92af6c180016edb9a225beb1704e725446cf5741e608aa710991fb2d6c6c15": {
+   "source": {
+    "path": "Plans/home_layout_full_value_contract_fixtures.json",
+    "origin": "json",
+    "pointer": "/value_shape_cases/8/value/event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "event_type": "workspace.layout_changed",
+    "project_id": "project-fixture",
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor:fixture",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-12T08:00:02Z",
+    "producer_sequence_id": 8,
+    "correlation_id": "correlation:fixture",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0",
+    "payload": {
+     "schema_id": "pm.event.workspace_layout_changed.v1",
+     "schema_version": "1.1.0",
+     "project_id": "project-fixture",
+     "workspace_tab_id": "workspace-fixture",
+     "command_id": "cmd.workspace_layout.move_surface",
+     "interaction_transaction_id": "interaction:fixture",
+     "origin": "home_workspace",
+     "correlation_id": "correlation:fixture",
+     "command_result_ref": "home_layout_result:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+     "receipt_refs": [
+      "home_layout_dispatch_receipt:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b"
+     ],
+     "prior_layout_revision": 7,
+     "new_layout_revision": 8,
+     "mutation_kind": "move",
+     "affected_surface_instance_ids": [
+      "editor_panel_1",
+      "editor_panel_2"
+     ],
+     "source_host": "home_main",
+     "target_host": "dock_right",
+     "target_slot_index": 0,
+     "target_surface_instance_id": null,
+     "insertion_edge": null,
+     "commit_origin": "pointer_release",
+     "semantic_size_preset_id": null,
+     "settled_layout_ref": "home_layout_settlement:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+     "settled_at_utc": "2026-09-12T08:00:02Z",
+     "settled_only": true,
+     "preview_state_included": false,
+     "persisted": true
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    },
+    "sequence_id": 52,
+    "observed_at_utc": "2026-09-12T08:00:03Z",
+    "persisted_at_utc": "2026-09-12T08:00:04Z"
+   }
+  },
+  "85538d31aa18516b50c12fcac810a658900088342dd6e7c302a2e171f30bab09": {
+   "source": {
+    "path": "Plans/platform_capability_decision_contract_fixtures.json",
+    "origin": "json",
+    "pointer": "/value_shape_cases/1/value/original_storage_fields"
+   },
+   "value": {
+    "sequence_id": 52,
+    "observed_at_utc": "2026-09-11T22:00:00Z",
+    "persisted_at_utc": "2026-09-11T22:00:00Z"
+   }
+  },
+  "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509": {
+   "source": {
+    "path": "Plans/restore_point_created_contract_fixtures.json",
+    "origin": "json",
+    "pointer": "/schema_cases/13/value/frozen_append_input"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "created-A",
+    "event_type": "restore_point.created",
+    "project_id": "project-A",
+    "thread_id": "thread-A",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor-A",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-11T17:00:00Z",
+    "observed_at_utc": "2026-09-11T17:00:00Z",
+    "producer_sequence_id": null,
+    "correlation_id": "command-A",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "create-A",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+    "payload": {
+     "schema_version": "1.0.0",
+     "restore_point_id": "restore-A",
+     "project_id": "project-A",
+     "source_thread_ref": "thread-ref-A",
+     "source_branch_ref": "branch-ref-A",
+     "message_boundary_ref": "message-ref-A",
+     "record_ref": "rp:project-A:restore-A",
+     "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "context_refs": [
+      "ctx-ref-A"
+     ],
+     "provenance_refs": [
+      "prov-ref-A"
+     ],
+     "attachment_refs": [],
+     "citation_refs": [],
+     "status": "available",
+     "created_at_utc": "2026-09-11T17:00:00Z"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88": {
+   "source": {
+    "path": "Plans/restore_point_deleted_contract_fixtures.json",
+    "origin": "json",
+    "pointer": "/value_shape_cases/0/value/frozen_append_input"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "er_rpd_debe1ee5aea6267fc0c591f863cd9376a0bef3243d1931ac0710f654b02f8d64",
+    "event_type": "restore_point.deleted",
+    "project_id": "project-A",
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor-A",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-11T20:00:02Z",
+    "observed_at_utc": "2026-09-11T20:00:02Z",
+    "producer_sequence_id": null,
+    "correlation_id": "command-correlation-A",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "delete-A",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_deleted/1.0.0",
+    "payload": {
+     "schema_version": "1.0.0",
+     "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "project_id": "project-A",
+     "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+     "status": "deleted",
+     "actor_ref": "actor-A",
+     "reason": "explicit_user_delete",
+     "occurred_at_utc": "2026-09-11T20:00:02Z"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7": {
+   "source": {
+    "path": "Plans/restore_point_created_joined_value_fixtures.json",
+    "origin": "json",
+    "pointer": "/examples/native/index"
+   },
+   "value": {
+    "schema_id": "pm.storage_value.event_record_index.v2",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "project_id": "project-A",
+    "scope_partition": "project~cHJvamVjdC1B",
+    "sequence_id": 7,
+    "event_id": "er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+    "event_type": "restore_point.created",
+    "source_locator": {
+     "segment_generation": 1,
+     "segment_name": "seg-000001-00000000000000000000.active",
+     "byte_offset": 512,
+     "sequence_id": 7
+    },
+    "publication_locator": {
+     "manifest_generation": 1,
+     "recovery_epoch": 0,
+     "survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+     "checkpoint_ref": "index-publication-A",
+     "compaction_translation_manifest_ref": null
+    },
+    "payload_sha256": "27828ecf366592826e730465e91e0d1d5580d8604c341cb71daea3d97da27d3d",
+    "producer_semantic_digest": "c7a097521115568057e0d3bad0c82e6e9ebd8f92993587393c7586425d866991",
+    "idempotency_key": "create-A",
+    "correlation_id": "command-A",
+    "causation_event_id": null,
+    "persisted_at_utc": "2026-06-10T17:00:00Z",
+    "redaction_profile": "no_secrets",
+    "source_schema_id": "pm.event.v0",
+    "source_schema_version": "2.0.0",
+    "projector_replay_only": false
+   }
+  },
+  "fdaaed26f9628a6ce8adcc776d2d1afcba695f9057efcf2a4b533c4a366d27b5": {
+   "source": {
+    "path": "Plans/event_number_recipe_corpus.json",
+    "origin": "json",
+    "pointer": "/inventory_datetime_resources/storage-node-050/baseline"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "er_rpd_debe1ee5aea6267fc0c591f863cd9376a0bef3243d1931ac0710f654b02f8d64",
+    "event_type": "restore_point.deleted",
+    "project_id": "project-A",
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor-A",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-11T20:00:02Z",
+    "observed_at_utc": "2026-09-11T20:00:02Z",
+    "producer_sequence_id": null,
+    "correlation_id": "command-correlation-A",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "delete-A",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_deleted/1.0.0",
+    "payload": {
+     "schema_version": "1.0.0",
+     "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "project_id": "project-A",
+     "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+     "status": "deleted",
+     "actor_ref": "actor-A",
+     "reason": "explicit_user_delete",
+     "occurred_at_utc": "2026-09-11T20:00:02Z"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    },
+    "sequence_id": 9,
+    "persisted_at_utc": "2026-09-11T20:00:02Z"
+   }
+  },
+  "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747": {
+   "source": {
+    "path": "Plans/restore_point_expired_contract_fixtures.json",
+    "origin": "json",
+    "pointer": "/value_shape_cases/0/value/frozen_append_input"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+    "event_type": "restore_point.expired",
+    "project_id": "project-A",
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "retention-owner-A",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-12-12T17:00:00Z",
+    "observed_at_utc": "2026-12-12T17:00:00Z",
+    "producer_sequence_id": null,
+    "correlation_id": "expiry-owner-operation-A",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_expired/1.0.0",
+    "payload": {
+     "schema_version": "1.0.0",
+     "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "project_id": "project-A",
+     "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+     "status": "expired",
+     "retention_policy_ref": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+     "ref_release_evidence_refs": [
+      "release-fact-A"
+     ],
+     "occurred_at_utc": "2026-12-12T17:00:00Z"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "14c837c25cb1e304bc8d42afda55aeada1a489d0a2d8bd2cf887c063c4639ab4": {
+   "source": {
+    "path": "Plans/storage_boot_custody_fixtures.json",
+    "origin": "json",
+    "pointer": "/value_shape_cases/4/value/issued"
+   },
+   "value": {
+    "first_append_receipt": {
+     "event_id": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+     "sequence_id": 1,
+     "segment_generation": 1,
+     "segment_name": "seg-000001-00000000000000000001.active",
+     "byte_offset": 0,
+     "commit_group_id": "fixture-group-11",
+     "durability_class": "barrier",
+     "durable_end_offset": 2031,
+     "durability_state": "synced",
+     "manifest_generation": 11,
+     "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+    },
+    "original_segment_ref": "segment:fixture-original-1",
+    "original_event_value_commitment": {
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "sha256": "7807bb38c8c77a91545f79a4796e973cd38b7e85d786b47a5428e03b20deeb7b"
+    },
+    "sequence_id": 1,
+    "observed_at_utc": "2026-09-11T22:00:00Z",
+    "persisted_at_utc": "2026-09-11T22:00:00Z"
+   }
+  },
+  "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73": {
+   "source": {
+    "path": "Plans/event_number_recipe_corpus.json",
+    "origin": "json",
+    "pointer": "/embedded_compaction_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "application",
+    "event_id": "evt_storage_compaction_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "event_type": "storage.compaction_lifecycle_changed",
+    "project_id": null,
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "storage.coordinator:fixture",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+    "observed_at_utc": "2026-09-11T20:00:01.000Z",
+    "persisted_at_utc": "2026-09-11T20:00:02.000Z",
+    "sequence_id": 99,
+    "producer_sequence_id": null,
+    "correlation_id": "storage.integrity_capture:88e46701fac1860e9c667ce50d05c0b625d029f32e349cfaea34f3baebb1524e",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "storage.compaction_lifecycle_changed:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_compaction_lifecycle_changed/1.0.0",
+    "payload": {
+     "checkpoint_action": "translate_by_semantic_identity",
+     "compaction_id": "x",
+     "phase": "preparing",
+     "policy_hash": "x",
+     "policy_revision": "x",
+     "projection_action": "activate_verified_target_shadow",
+     "removal_map_ref": "x",
+     "schema_version": "1.0.0",
+     "source_generation_refs": [
+      "x"
+     ],
+     "survivor_ref": "x",
+     "target_generation_ref": "x"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "2abbcf1a7234fa6aee23e25b2c0d21bd113761b8398ded157ad78b97e389d664": {
+   "source": {
+    "path": "Plans/small_owner_event_fixtures.json",
+    "origin": "json",
+    "pointer": "/families/0/rebuild_cases/8/overrides/event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "3.0.0",
+    "scope_kind": "project",
+    "project_id": "project:actual-1",
+    "thread_id": "thread:format_applied:1",
+    "run_id": "run:format:1",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "ref:actor.format_applied",
+    "requested_account_ref": "ref:account.requested",
+    "effective_account_ref": "ref:account.effective",
+    "producer_sequence_id": null,
+    "correlation_id": "correlation:format_applied:original",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+    "event_type": "format.applied",
+    "occurred_at_utc": "2026-11-04T12:00:00Z",
+    "observed_at_utc": "2026-11-04T12:00:01Z",
+    "persisted_at_utc": "2026-11-04T12:00:02Z",
+    "sequence_id": 41,
+    "idempotency_key": "format.applied:896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+    "payload_schema_id": "pm.event_payload.format_applied.v1",
+    "payload": {
+     "schema_version": "1.0.0",
+     "operation_id": "op:format_applied:original",
+     "project_id": "project:actual-1",
+     "formatter_id": "formatter_id:format_applied:1",
+     "file_path": "src/main.rs",
+     "diff_bytes": 1,
+     "timestamp": "2026-11-04T12:00:00Z",
+     "tool_output_ref": "ref:source.1",
+     "formatted_output_ref": "ref:source.1"
+    },
+    "payload_ref": null,
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  }
+ },
+ "nodes": [
+  {
+   "path": "Plans/event_index_consumer_adoption.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/original_creation_commit_transaction/properties/companion_value/properties/frozen_append_input",
+   "control": "b31c5f17d4004bc284bc71620ee7ba4eda77456b52086a882f4602575aa8d576"
+  },
+  {
+   "path": "Plans/event_record.schema.json",
+   "origin": "json",
+   "pointer": "",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/event_record.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/EventRecord",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/goal_run_certified_consumer_contracts/companions/cancelled-consumer.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/goal_run_certified_consumer_contracts/companions/started-consumer.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/home_layout_pending_receipt.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/PendingAppendOrigin/properties/event",
+   "control": "4d92af6c180016edb9a225beb1704e725446cf5741e608aa710991fb2d6c6c15"
+  },
+  {
+   "path": "Plans/home_layout_pending_receipt.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/PendingAppendOrigin/properties/event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/home_layout_pending_receipt_v2_reader.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/PendingAppendOrigin/properties/event",
+   "control": "4d92af6c180016edb9a225beb1704e725446cf5741e608aa710991fb2d6c6c15"
+  },
+  {
+   "path": "Plans/home_layout_pending_receipt_v2_reader.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/PendingAppendOrigin/properties/event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/platform_capability_decision_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/e_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/platform_capability_decision_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/decision/properties/original_storage_fields/anyOf/0",
+   "control": "85538d31aa18516b50c12fcac810a658900088342dd6e7c302a2e171f30bab09"
+  },
+  {
+   "path": "Plans/platform_capability_decision_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/decision/allOf/1/then/properties/original_storage_fields",
+   "control": "85538d31aa18516b50c12fcac810a658900088342dd6e7c302a2e171f30bab09"
+  },
+  {
+   "path": "Plans/restore_point_created_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/creation_companion/properties/frozen_append_input",
+   "control": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509"
+  },
+  {
+   "path": "Plans/restore_point_deleted_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/deletion_commit/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_deleted_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/native_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_deleted_owner_controls.schema.json",
+   "origin": "json",
+   "pointer": "/properties/original_B1/properties/operation_value/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_deleted_owner_controls.schema.json",
+   "origin": "json",
+   "pointer": "/properties/original_B3/properties/operation_value/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/current_source/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_021034ede9def436ce18337942b1dbec65956db172e409fea70f27735421f67b/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_021034ede9def436ce18337942b1dbec65956db172e409fea70f27735421f67b/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_021034ede9def436ce18337942b1dbec65956db172e409fea70f27735421f67b/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000009:historical-delete-event-A",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000010:nonmatching-run-second",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000009:er_rpd_debe1ee5aea6267fc0c591f863cd9376a0bef3243d1931ac0710f654b02f8d64",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/source_by_generation/properties/eig_021034ede9def436ce18337942b1dbec65956db172e409fea70f27735421f67b/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/source_by_generation/properties/eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/generic/properties/current_source/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/generic/properties/datasets/properties/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/generic/properties/datasets/properties/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/generic/properties/source_by_generation/properties/eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/original_creation_commit_transaction/properties/companion_value/properties/frozen_append_input",
+   "control": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/original_creation_source/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/restore_created/properties/companion/properties/frozen_append_input",
+   "control": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/restore_created/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/restore_created/properties/index",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/successor_handoff/properties/rebuilt_generic/properties/current_source/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/successor_handoff/properties/rebuilt_generic/properties/datasets/properties/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/successor_handoff/properties/rebuilt_generic/properties/datasets/properties/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_context/anyOf/0/properties/successor_handoff/properties/rebuilt_generic/properties/source_by_generation/properties/eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/deletion_transactions/anyOf/0/properties/B1/properties/operation_value/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/deletion_transactions/anyOf/0/properties/B3/properties/operation_value/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/event/anyOf/0",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/event/anyOf/0/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/generic/anyOf/0/properties/current_source/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/generic/anyOf/0/properties/current_source/properties/frames/items/properties/event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/generic/anyOf/0/properties/datasets/additionalProperties/additionalProperties",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/generic/anyOf/0/properties/source_by_generation/additionalProperties/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/generic/anyOf/0/properties/source_by_generation/additionalProperties/properties/frames/items/properties/event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/historical_admission/anyOf/0/properties/source_event",
+   "control": "fdaaed26f9628a6ce8adcc776d2d1afcba695f9057efcf2a4b533c4a366d27b5"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/index/anyOf/0",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/operation/anyOf/0/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/original_deletion_source/anyOf/0/properties/frames/items/properties/event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/original_deletion_source/anyOf/0/properties/frames/items/properties/event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/original_owner_resolution/anyOf/0/properties/original_B1/properties/operation_value/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_deleted_read_adapter.schema.json",
+   "origin": "json",
+   "pointer": "/properties/original_owner_resolution/anyOf/0/properties/original_B3/properties/operation_value/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_expired_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/expiry_commit/properties/frozen_append_input",
+   "control": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747"
+  },
+  {
+   "path": "Plans/restore_point_expired_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/native_append_input",
+   "control": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747"
+  },
+  {
+   "path": "Plans/restore_point_expired_owner_resolution.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/E1/properties/pending_operation/properties/frozen_append_input",
+   "control": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747"
+  },
+  {
+   "path": "Plans/restore_point_expired_owner_resolution.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/E3/properties/before_operation/properties/frozen_append_input",
+   "control": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747"
+  },
+  {
+   "path": "Plans/restore_point_expired_owner_resolution.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/E3/properties/after_operation/properties/frozen_append_input",
+   "control": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747"
+  },
+  {
+   "path": "Plans/restore_point_retained_creation_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_companion/properties/value/properties/frozen_append_input",
+   "control": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509"
+  },
+  {
+   "path": "Plans/restore_point_retained_creation_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/created_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_retained_creation_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/created_event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/restore_point_retained_creation_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/created_event_index",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/creation_companion/properties/value/properties/frozen_append_input",
+   "control": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/terminal_companion/properties/value/oneOf/0/properties/frozen_append_input",
+   "control": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/terminal_companion/properties/value/oneOf/1/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/created_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/created_event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/terminal_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/terminal_event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/created_event_index",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/properties/terminal_event_index",
+   "control": "ca35f2576433785bfac3903750d90012cd384a864fd291cc1e5f888f23fd5ed7"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/allOf/0/then/properties/terminal_companion/properties/value/properties/frozen_append_input",
+   "control": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747"
+  },
+  {
+   "path": "Plans/restore_point_retained_read.schema.json",
+   "origin": "json",
+   "pointer": "/allOf/0/else/properties/terminal_companion/properties/value/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/storage_boot_recovery_control.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/pending_event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/storage_boot_recovery_control.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/issued",
+   "control": "14c837c25cb1e304bc8d42afda55aeada1a489d0a2d8bd2cf887c063c4639ab4"
+  },
+  {
+   "path": "Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73"
+  },
+  {
+   "path": "Plans/storage_recovery_action_custody.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/8/value_schema",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/95/value_schema/properties/frozen_append_input",
+   "control": "b31c5f17d4004bc284bc71620ee7ba4eda77456b52086a882f4602575aa8d576"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/103/value_schema/$defs/PendingAppendOrigin/properties/event",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/103/value_schema/$defs/PendingAppendOrigin/properties/event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/112/value_schema/properties/frozen_append_input",
+   "control": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/114/value_schema/properties/frozen_append_input",
+   "control": "e220bf512d8f6f42bd2a655fb3a578d667b94196fdb7bd86d52f4efa17c90f88"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/118/value_schema/properties/original_storage_fields/anyOf/0",
+   "control": "85538d31aa18516b50c12fcac810a658900088342dd6e7c302a2e171f30bab09"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/118/value_schema/allOf/1/then/properties/original_storage_fields",
+   "control": "85538d31aa18516b50c12fcac810a658900088342dd6e7c302a2e171f30bab09"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/118/value_schema/$defs/e_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/118/value_schema/$defs/decision/properties/original_storage_fields/anyOf/0",
+   "control": "85538d31aa18516b50c12fcac810a658900088342dd6e7c302a2e171f30bab09"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/118/value_schema/$defs/decision/allOf/1/then/properties/original_storage_fields",
+   "control": "85538d31aa18516b50c12fcac810a658900088342dd6e7c302a2e171f30bab09"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/119/value_schema/$defs/pending_event/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/119/value_schema/$defs/issued",
+   "control": "14c837c25cb1e304bc8d42afda55aeada1a489d0a2d8bd2cf887c063c4639ab4"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/122/value_schema/$defs/event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/129/value_schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73"
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "origin": "json",
+   "pointer": "/families/136/value_schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/event_record.schema.json",
+   "origin": "json",
+   "pointer": "",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/event_record.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/EventRecord",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/inputs/Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/EventRecord",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_record.schema.json",
+   "origin": "json",
+   "pointer": "",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_record.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/EventRecord",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-custody.v3.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-custody.v3.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/EventRecord",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-custody.v4.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-custody.v4.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/EventRecord",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/EventRecord",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/event_record_v3.schema.json",
+   "origin": "json",
+   "pointer": "",
+   "control": "2abbcf1a7234fa6aee23e25b2c0d21bd113761b8398ded157ad78b97e389d664"
+  },
+  {
+   "path": "Plans/event_record_v3.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  }
+ ]
+}

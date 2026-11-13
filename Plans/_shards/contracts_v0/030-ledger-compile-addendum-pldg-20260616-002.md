@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L18131-L18246
+Source lines: L19554-L19670
 
-Source SHA256: `4b70f80fd8b3fd121e33fa29ddb9f8828ad20d3063407af3393b2445bbf53296`
+Source SHA256: `e91c8b29fb8a1eb9c2c6c5a5e4f3b96f44d02552c3b0358d0decce4b7b5c0900`
 
 ---
 
@@ -18,8 +18,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Contracts_V0 owns the shared envelope for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt references. The envelope preserves goal_id, workgraph_ref, worknode_ref, verification_cycle_id, target_ref, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, repeated_signature_count, repair_strategy, next_required_action, route-open owner commands, page-local mutation semantics, receipt refs, evidence refs, adjudication refs, requested/effective runtime identity, write_mode, and certification_tier. The contract-owned VerificationCycle example shape preserves verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action. VerificationReceipt preserves verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt preserves executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt preserves child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Requested/effective provider/model/account meanings are owned by Models_System, Multi-Account, and provider-specific docs; write_mode authority and worktree lease semantics are owned by Permissions_System and WorktreeGitImprovement; this envelope only carries their references. Concrete goal event names and payload minima are registered by CV-287 and stored/replayed under storage-plan.
-  A DefectBundle groups the typed VerificationFinding records from a failed VerificationCycle for the affected target, retaining each defect signature, failing check, affected artifact/path/span, root_cause_key, and evidence ref so bounded repair and regression verification can address every finding.
+  The GoalRun/SubagentWave/VerificationCycle family is retired as current product flow by DL-478. The following envelope grammar remains only as historical receipt grammar for the live workflow-owned Original Standard certification in GRS-065 and Event Authority custody; it imposes no current GoalRun execution, verification, repair, or completion-certification obligations.
+  Contracts_V0 retains the historical receipt envelope for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt references. The envelope preserves goal_id, workgraph_ref, worknode_ref, verification_cycle_id, target_ref, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, repeated_signature_count, repair_strategy, next_required_action, route-open owner commands, page-local mutation semantics, receipt refs, evidence refs, adjudication refs, requested/effective runtime identity, write_mode, and certification_tier. The contract-owned VerificationCycle example shape preserves verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action. VerificationReceipt preserves verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt preserves executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt preserves child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Requested/effective provider/model/account meanings are owned by Models_System, Multi-Account, and provider-specific docs; write_mode authority and worktree lease semantics are owned by Permissions_System and WorktreeGitImprovement; this envelope only carries their references. Concrete goal event names and payload minima are registered by CV-287 and stored/replayed under storage-plan.
+  A DefectBundle groups the typed VerificationFinding records from a failed VerificationCycle for the affected target, retaining each defect signature, failing check, affected artifact/path/span, root_cause_key, and evidence ref for historical repair and regression-verification interpretation.
 gui_related: false
 gui_classification_reason: Shared contract envelopes and receipt references are backend/runtime schema work, not visual presentation.
 depends_on:
@@ -28,12 +29,12 @@ depends_on:
   - SP-214
 unblocks: []
 acceptance_criteria:
-  - Shared references exist for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt.
-  - A DefectBundle preserves the distinct typed VerificationFindings and their target, signature, failing-check, affected-span, root-cause, and evidence references from a failed VerificationCycle.
-  - VerificationCycle records preserve verification_cycle_id, target_ref, attempt, status failed | passed | blocked, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, next_required_action, evidence, and adjudication refs.
-  - Receipt envelopes preserve requested/effective runtime identity, write_mode, certification_tier, verifier/executor/certifier identity, changed artifacts, validator outcomes, authority checks, evidence refs, and unresolved risks.
-  - Route-open owner commands and page-local mutation semantics do not mint unauthorized panel-local mutations.
-  - Concrete goal event payload minima are registered by CV-287 and storage-plan owns persistence/replay schemas.
+  - Historical receipt references remain decodable for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt.
+  - Historical DefectBundle grammar preserves the distinct typed VerificationFindings and their target, signature, failing-check, affected-span, root-cause, and evidence references from a failed VerificationCycle.
+  - Historical VerificationCycle grammar preserves verification_cycle_id, target_ref, attempt, status failed | passed | blocked, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, next_required_action, evidence, and adjudication refs.
+  - Historical receipt envelopes preserve requested/effective runtime identity, write_mode, certification_tier, verifier/executor/certifier identity, changed artifacts, validator outcomes, authority checks, evidence refs, and unresolved risks.
+  - Historical route-open owner commands and page-local mutation semantics do not mint current writes or unauthorized panel-local mutations.
+  - GRS-065 and Event Authority custody may read this historical grammar; it does not require the retired current GoalRun flow. Concrete event registration and persistence/replay remain with CV-287 and storage-plan.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plan-index.py validate

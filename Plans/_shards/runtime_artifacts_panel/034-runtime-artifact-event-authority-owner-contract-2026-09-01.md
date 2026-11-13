@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2487-L2665
+Source lines: L2479-L2660
 
-Source SHA256: `911539ee450cf52fbdf0034698efc56b9ebb090c67688c4e7e19e1cc6056464c`
+Source SHA256: `27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `911539ee450cf52fbdf0034698efc56b9ebb090c67688c4e7e19e1cc6056464c
 
 This section is the Runtime Artifacts semantic-owner disposition for the exact Option 2 taxonomy in RAP-004. It closes owner intent and payload-schema material depth only. It does not edit or supersede the EventRecord envelope, register any family, assign persistence behavior, authorize append or dispatch, advance a projector checkpoint, certify executable depth, or authorize PNC-019. Registry admission, storage binding, dedupe execution, replay/recovery fixtures, projector fixtures, and producer/consumer runtime evidence remain a separate Event Authority wave.
 
-Every row below has project scope `project_id required; cross-project payload or routing references rejected`, and recommends retention class `RP-AUTHORITY-INDEFINITE` for later storage-owner adjudication. On 2026-09-23 Jared approved that recommendation for all 19 event histories (DL-075), so `RP-AUTHORITY-INDEFINITE` is their retention assignment for the time their full contracts are admitted. The assignment is retention only: it registers no family, defines no binding, and does not make the schemas complete. Text embedded in each event is retained with it, and each full contract must make that and any applicable deletion requirement explicit before admission. The exact dedupe identity recommendation is the length-framed tuple `[event_type, project_id, artifact_id, schema_id]`; storage must bind that tuple before admission and must not dedupe by timestamp, summary, preview content, or artifact subtype.
+Every row below has project scope `project_id required; cross-project payload or routing references rejected`, and recommends retention class `RP-AUTHORITY-INDEFINITE` for later storage-owner adjudication. On 2026-09-23 Jared approved that recommendation for all 19 event histories (DL-075), so `RP-AUTHORITY-INDEFINITE` is their retention assignment for the time their full contracts are admitted. The assignment is retention only: it registers no family, defines no binding, and does not make the schemas complete. Text embedded in each event is retained with it, and each full contract must make that and any applicable deletion requirement explicit before admission. The exact dedupe identity recommendation is the length-framed tuple `[event_type, project_id, artifact_id, schema_id]`; storage must bind that tuple before admission and must not dedupe by timestamp, summary, preview content, or artifact subtype. RAP-113 explicitly completes this recommendation for runtime_artifact.restore_point: the tuple remains artifact grouping identity, while each original source-backed lifecycle observation adds its owner revision to event idempotency identity. The other 18 families retain the four-member event recipe. Point identity, visible artifact rows and action authority do not change.
 
 | Exact event type | Semantic transition | Payload schema ID / ref / version | Producer -> consumers | Material-depth status |
 | --- | --- | --- | --- | --- |
@@ -50,12 +50,15 @@ owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
   Runtime Artifacts owns exactly 19 Option 2 runtime_artifact.* semantic transitions and their closed
   per-type payload schemas. Every transition is project-scoped, recommends RP-AUTHORITY-INDEFINITE for
-  later storage adjudication, uses the exact dedupe tuple [event_type, project_id, artifact_id,
-  schema_id], rejects unhandled secrets, inline previews, private chain-of-thought, unknown fields, and
+  later storage adjudication, uses the exact four-member tuple [event_type, project_id, artifact_id,
+  schema_id] for the 18 other families' event dedupe and for runtime_artifact.restore_point grouping;
+  RAP-113 additionally binds each original source-backed restore observation's producer_sequence_id
+  to its event idempotency key while preserving point identity, visible rows and action authority.
+  Every transition rejects unhandled secrets, inline previews, private chain-of-thought, unknown fields, and
   generic subtype routing, and can be produced only by the named domain owner after durable artifact
   materialization. This owner/schema closure does not register a family or authorize EventRecord append,
   dispatch, projection, checkpoint advance, replay, retention execution, runtime implementation,
-  buildability, or PNC-019. The original 19 Project transition codecs/dedupe tuples are not relaxed.
+  buildability, or PNC-019. Original Project transition codecs and the other 18 dedupe tuples are not relaxed.
   Approved app artifacts require separate exact scope-aware payload/identity editions and explicit
   per-family registration; absent native writer remains non-emitting. Scope extension never registers or
   certifies an event by itself.

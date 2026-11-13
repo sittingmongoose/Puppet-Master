@@ -1,0 +1,45 @@
+{
+  "schema_id": "pm.ds.fix3.assessment_update.v1",
+  "applied_at_utc": "2026-11-05T01:58:09.465774+00:00",
+  "source_revision": "3f762144faf6edc258e070d680aab2a14fe79d8e",
+  "purpose": "Required round-3 self-regrade and current verification pointers, with all sixty criterion statuses unchanged. No ledger/admission/registry write.",
+  "files": [
+    {
+      "path": "reports/event-authority-20261104/DS.selfgrade.json",
+      "before_sha256": "1610288136c938769626759644bd5ca4ec57ea2714a3455b63e991c261ece0f6",
+      "after_sha256": "1f3f589822fadf6ed95c1bd23d27b1f75e3eef41d19c92a4fa6b244f6db128d4"
+    }
+  ],
+  "grades": [
+    {
+      "event_type": "context.compaction.completed",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "browser.workspace.created",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "browser.workspace.reset",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "workspace.layout_changed",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "terminal.workgroup_moved",
+      "before_pass_count": 10,
+      "after_pass_count": 10
+    }
+  ],
+  "preserved_assessment": {
+    "path": "reports/event-authority-20261104/depth-b1-seal-families.json",
+    "sha256": "535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035"
+  },
+  "original_corrections": "All prior correction/application records and every Plans path are unchanged from the reviewed base."
+}

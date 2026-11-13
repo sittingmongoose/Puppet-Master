@@ -2,15 +2,15 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L2712-L2745
+Source lines: L2702-L2735
 
-Source SHA256: `a6f3ca1d5c29b7c53a34bd588b513ecc44f0620816da4dd436e58da366891e6d`
+Source SHA256: `7ac0440bbf7df272f65f2b98c2918ece20982eb6a28a55072e14aa430f410937`
 
 ---
 
 ## Worker Notebook Detail Access Addendum (2026-09-05)
 
-Packet `PM-WNC-2026-09-05-v1`. The Orchestrator exposes notebook access for the selected run/worker through existing detail surfaces: the SubagentWave/worker inspector rows (OP-022 patterns) gain a notebook entry point rendering the worker_lineage/coordinator_run notebook with author, epistemic kind, freshness, evidence refs, and included-context status, under OP-006 projection-trust freshness (stale/degraded/unavailable disables mutation). No new rail or tab is added; a trivially empty worker notebook renders a positive empty state, and notebook data never becomes scheduling or completion truth (OSI-436).
+Packet `PM-WNC-2026-09-05-v1`. The Orchestrator exposes notebook access for the selected run/worker through existing detail surfaces: the worker inspector rows gain a notebook entry point rendering the worker_lineage/coordinator_run notebook with author, epistemic kind, freshness, evidence refs, and included-context status, under OP-006 projection-trust freshness (stale/degraded/unavailable disables mutation). The Goal-bound SubagentWave projection and OP-022 patterns are retired by DL-478. No new rail or tab is added; a trivially empty worker notebook renders a positive empty state, and notebook data never becomes scheduling or completion truth (OSI-436).
 
 ```yaml
 plan_unit_id: OP-035

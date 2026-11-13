@@ -751,7 +751,7 @@ plan_unit_id: ATS-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: 'Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH,
+canonical_text: 'Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, WorkNode, attempt, capability, and source currentness. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH,
   optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
@@ -7268,3 +7268,4442 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-360 — DO exact-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-360
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Each of OSI-680 through OSI-704 independently adopts its exact-family fixture in
+  Plans/orchestrator_event_contract_fixtures.json and python3 scripts/pm-orchestrator-event-contracts.py.
+  Run its positive payloads for every admitted scope, then individually remove every required field,
+  add an unknown field, change schema version, use a foreign scope, zero occurrence, invalid UTC,
+  absent Project identity or fabricated application Project. Every negative refuses.
+  Identity vectors preserve a retry and distinguish operation, occurrence, Server, thread, run and family.
+  OSI-681..683 and OSI-686..704 application vectors decode CV-366's exact application@1 Server and
+  original-operation observation component; the incompatible do1 application key refuses. Project
+  identity and project~base64url partitions remain exact. Same identity with changed full semantics
+  conflicts. OSI-681 tests inline content at 16,384 UTF-8 bytes, oversized ASCII and multibyte text,
+  missing/both body representations, closed SP-337 BLAKE3/byte-size/media-type references and secrets.
+  Each board family validates both scope editions against its actual coordination_event_records
+  member (SP-720..722), preserving all old members and rejecting missing members, source/append
+  edition drift, foreign Server/thread/crew/run/operation/message joins and false Run anchors.
+  OSI-699 tests a new attempt after failure, blockage and interruption independently, with terminal,
+  permission, parent-ceiling, Stop, deadline, resume/reroute/replacement and attempt-counter refusals.
+  All twenty-five families have full selected EventRecord@2.0.0 append/retry and joined generic
+  checkpoint/read-token vectors. Reject replay_only_not_appendable before append or retry; compare
+  each recorded project~ partition with its actual Project encoding. Use the exact EventRecord
+  producer-semantic RFC8785 field set, exclude Storage sequence/observed/persisted metadata, return
+  the original complete result on equal semantics and reject changed caller semantics without append.
+  Run every family's S1..S10 authored failure (each requires exit 1); success-labelled failures reject.
+  Enforce the complete inline MessagePack payload budget, exact ASCII/multibyte boundaries and
+  valid external SP-337 pack bytes, digest/length/media and bytes/index durability witnesses.
+  Missing/forged references, foreign Storage checkpoints, every changed token member, source/index
+  mismatch and a nonmatching append's frontier advance refuse. Enforce the phase count predicate,
+  retry counter/cause/current-source join, truncation ordering and existing board priority enum on
+  the actual selected payload. Validate full closed application originals/input/wrappers for every
+  board contract, including missing/foreign fields. Application posts select CV-740/SP-723's complete
+  governed V2 message/source/wrapper graph with genuine original headers/body/routing and separate
+  accepted-source/stage/semantic/physical commitments; frozen Project/V1 resources remain exact.
+  All V1/V2 application board consumers require accepted original pre-publication stages and resolved
+  original stage request/result/evidence joins; refuse each refused/not-reached/unknown stage,
+  absent request/result/evidence, foreign witness/method/operation and forged accepted-source/physical hash.
+  Admission-dependent event append/first receipt stays not_reached until actual admission.
+  Every family/scope runs 1.0, -0, 1e0 and 01 number-input refusals, synchronized event/retry controls,
+  actual RFC8785 identity/observation preimages and equal-semantic JCS digest checks.
+  Apply the shared CV-1100 calls only at current input boundaries before schema, identity, source
+  hash and retry comparison: `loads_current_json` at raw ingress, `current_integer` at every schema
+  integer slot with its own bounds, and `qualified_jcs` on the producer projection and identity preimage. The fixture loader preserves retained EventRecords, receipts and
+  typed source/wrapper values under their original selected codec without rewriting their numbers.
+  For every family, file-backed retained originals resolve through the SP-1101 RetainedDispatcher:
+  sealed custody authenticates the exact original bytes and selects ea-do-json-v1 or ea-do-rfc8785-v2,
+  whose frozen verifier recomputes key/ID and source commitment; the disclosed recipe label and evidence
+  are joined against custody, and a coherent forgery of the original's bytes refuses. Recompute with that
+  recipe only; unknown or unproven fallback refuses. The shared number corpus runs through the complete
+  append and retry routes, CV-1101 profiles are witnessed per payload and Storage timestamp field, and
+  `python3 scripts/pm_event_numbers.py --self-test --scope numbers` passes.
+  Exercise old 1.0, 1e0 and 1e20 originals, both recipes and compatibility reads through complete main,
+  exact original-result recovery/retry bytes, and forged IDs/keys with every Storage observation synced.
+  Foreign/unverified recipe evidence, withdrawn readers and invalid current number inputs still refuse.
+  Sweep all families for exact types before comparisons: string booleans/numbers, null, arrays and
+  nested objects; include payload/schema, producer context, receipt, durability and exit-code boundaries.
+  Join each board's declared family/schema/envelope to its unchanged selected complete EventRecord.
+  Eagerly resolve every declared selected $ref, including dormant optional branches and actual stored
+  compositions, with exact offline URIs and scoped JSON Pointers; unresolved resources/fragments refuse.
+  Every family runs retained originally-valid history after live producer state/writer admission changes,
+  supported compatibility reads, forged/unproven/foreign originals and exact-family withdrawal/publication
+  fences with an unchanged valid generic checkpoint. Current disclosure access/deletion/hold still applies.
+  Prove every lane guard by removing it in an isolated in-memory checker, showing its own single-defect
+  negatives pass and unrelated negatives still refuse; keep the full guard-removal table in the report.
+  Restore all production guards; no bypass flag or weakened production guard is permitted.
+  Native obligations remain NOT_RUN per family: race the exact producer predicate with cancellation,
+  commit referenced content before append, crash before and after first receipt, resolve full value on
+  uncertain acknowledgment, reject same-key changed semantics, replay without its semantic effect,
+  reject stale full SP-278 token even on nonmatching append, and fence changed permissions/deletion/hold,
+  restore and withdrawn/unsupported editions. Each fixture contract names its own predicate and reader;
+  a sibling pass supplies no evidence. Static success grants no admission or native execution proof.
+gui_related: false
+gui_classification_reason: Contract and source-authority verification.
+depends_on: [OSI-680, OSI-681, OSI-682, OSI-683, OSI-684, OSI-685, OSI-686, OSI-687, OSI-688, OSI-689, OSI-690, OSI-691, OSI-692, OSI-693, OSI-694, OSI-695, OSI-696, OSI-697, OSI-698, OSI-699, OSI-700, OSI-701, OSI-702, OSI-703, OSI-704]
+unblocks: []
+acceptance_criteria:
+- Every exact family has positive and negative static cases; native obligations stay NOT_RUN until executed.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [scripts/pm-orchestrator-event-contracts.py]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: [NOT_RUN, SP-278, SP-286]
+negative_constraints: [No registry admission or native proof follows.]
+owner_hints: [Plans/Automated_Testing_System.md]
+```
+
+
+<a id="ATS-335"></a>
+### ATS-335 - DG6B per-family oracle obligations
+
+```yaml
+plan_unit_id: ATS-335
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  DG6B per-family oracle obligations. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [CV-690, SP-670, SP-671]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+Each following family owns its own cases in Plans/dg6b_event_contract_fixtures.json; scripts/pm-dg6b-event-contracts.py validates schemas, exact-family identity, original retry stability, changed-payload conflict, wrong scope/identity, and poll slow_down cadence. These static models do not execute native producers.
+
+- `auth.github.authenticated`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `auth.github.device_code.issued`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `auth.github.disconnected`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `auth.github.failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `auth.github.token.polling`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.hook.blocked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.hook.error`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.hook.invoked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.load_failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.loaded`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.permission.override`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.tool.collision`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.tool.registered`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. The `auth.github.authenticated` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `auth.github.device_code.issued` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `auth.github.disconnected` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `auth.github.failed` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `auth.github.token.polling` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.hook.blocked` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.hook.error` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.hook.invoked` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.load_failed` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.loaded` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.permission.override` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.tool.collision` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.tool.registered` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+
+For `plugin.hook.blocked` (PLUG-131), ATS-335 also requires positive cases for `pre_tool_invoke`, `pre_attempt_start`, `pre_node_dispatch` and schema/semantic rejection of `post_tool_invoke` and `post_attempt_complete` Block-shaped observations. Such observations never block execution or append this event. The full DG6B checker executes these negatives. Native observation/dispatch proof remains NOT_RUN.
+
+
+<a id="ATS-336"></a>
+### ATS-336 - DG6B Persona exact-family oracle obligations
+
+```yaml
+plan_unit_id: ATS-336
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  DG6B Persona exact-family oracle obligations. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, SP-672, CV-691]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+- `persona.created`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. The `persona.created` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.deleted`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. The `persona.deleted` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.exported`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Event writer_current=false refuses independently of source access and definition_writer_current; authorized read-only source export with current event writer passes. The `persona.exported` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.imported`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. The `persona.imported` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.selected`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Coherent frozen-source tier/tier_id and wrong thread/run/node/attempt/actor lineage refuse; metadata-only null and five actual lineage-owner positives pass. The `persona.selected` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.updated`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+ The `persona.updated` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal.
+
+### ATS-285 - Debug family independent event oracles
+
+```yaml
+plan_unit_id: ATS-285
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Nine prepared exact families in Plans/debug_investigation_event_fixtures.json have independent
+  closed-payload, identity, Project join, replay/idempotency, original-receipt, custody, compatibility
+  and withdrawal oracles in scripts/pm-debug-investigation-events.py. DL-428 state_changed covers all
+  six Failed reasons and rejects every other failure pairing, separates failed_cleanup, compares original
+  before-state/phase, refuses terminal in-place restart and preserves historical opening/new-linked-work
+  semantics. DL-429 instrumentation_state_changed covers every approved transition row and each source
+  alternative, all eight legal pairs, whole-lane never-needed proof, verified removal including detach,
+  exact visible leftovers/recovery, retry authorization/count/attempt ceiling, pending handoff acceptance,
+  retained responsibility on failure, no second unaccepted handoff, no cleaned restart, restore/permission/overlap
+  guards and immutable original detail joins. Each current writer/retry refuses projector_replay_only;
+  every family has its own missing-field/version/unknown-field, encoded project partition, changed semantic
+  digest, native custody/CAS/permission/withdrawal obligations and none_required transient-checkpoint
+  assertion. The pre-existing seven contracts and mode-resolution cases retain their prior scope. Eagerly
+  resolve every schema reference, including unvisited definitions; malformed references fail the whole
+  checker. Retained original positives ignore current live transition state and current-writer replay
+  policy while forged or withdrawn originals refuse. scripts/pm-debug-investigation-standing-checks.py
+  promotes each family's bad candidates and rejects successful exits masquerading as failure. Static fixtures
+  use projected original facts; they never prove native receipt, proof dereference, payload-pack, writer
+  exclusion, recovery, CAS or effects. Those obligations remain authored and NOT_RUN. Number, physical
+  and date-time checks call the shared helpers of CV-1100, SP-1100 and CV-1101 (current_integer at every
+  companion-schema integer slot with its schema bounds, qualified RFC 8785 identity and producer digests,
+  EVENT_VALUE inline sizes, exact uint64 Storage metadata, date_time with the EventRecord profile and with
+  CV-253 storage_utc_z), and the shared number corpus runs through the complete checker. Every refusal is
+  a named guard-table row proved by the shared guard-isolation tool. No local number, date-time or proof
+  helper is introduced.
+gui_related: false
+gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
+  its surface.
+depends_on:
+- CV-570
+- CV-571
+- CV-572
+- CV-573
+- CV-574
+- CV-575
+- CV-576
+- CV-577
+- SP-570
+- CV-578
+unblocks: []
+acceptance_criteria:
+- Exact family remains unadmitted until its own integration landing and all open product cells close.
+- Named positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-debug-investigation-events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_debug_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-123
+- reports/event-authority-20261104/DDBG.md
+- Plans/Decision_Log.md#DL-428
+- Plans/Decision_Log.md#DL-429
+preserved_exact_tokens:
+- ATS-285
+negative_constraints:
+- No admission, retention decision, native readiness or governance seal.
+```
+
+<a id="collaboration-event-oracles-dl-090-2026-11-04"></a>
+## Collaborative workflow event oracles (DL-090, DL-091, 2026-11-04)
+
+This is a **newly authored owner contract under DL-090** (DL-091 for `collaboration.failed`). It names the oracles of the 18 collaborative workflow families: `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.failed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized`. Their contracts are CWR-105 to CWR-123, CV-460 to CV-478 and SP-460 to SP-478. Nothing here admits a family.
+
+### ATS-230 - Shared static and native oracles of the collaborative workflow families
+
+**Static oracles.** They run now and must pass:
+- The fixtures `Plans/collaboration_event_contract_fixtures.json`: 127 positive and 193 negative payloads with their first failing layer, plus 19,322 schema negatives and 276 valid schema counterparts, 36 valid EventRecords (each family in both scopes) and 100 envelope join negatives, 54 identity vectors (each family in both scopes and under a new recovery epoch), 15 transition sequences with 115 accepted/retry steps plus 117 independently captured refusal pre-states and their expected results and final state, 11 valid and 15 invalid projection and checkpoint values, and 23 native obligations, all `NOT_RUN`.
+- The checker `python3 scripts/pm_collaboration_events.py` and its `--self-test`. The checker validates the payload schema against Collaborative Workflows' closed sets, the projection schema and its binding record against the SP-278 durable token, the admission ledger `Plans/collaboration_event_admission.json` and every prepared registry row against the registry schema and its SHA-256, each family's owner units, and every fixture expectation, running the transition sequences through its own reducer of SP-460 to SP-478. It fails when one of the 18 is in the event family registry while its ledger row is `prepared_not_admitted`, or when an admitted row differs from its prepared row. It reports a missing or mismatched `RP-CHAT-THREAD-LIFETIME@1.0.0` as an admission blocker; the landed Storage registry supplies the current object. The self-test plants one defect per scenario and requires the checker to find it.
+- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables). Every decision, shape and integrity refusal of `scripts/pm_collaboration_events.py` is one named predicate row of a phase guard table (`scripts/pm_collab_table_*.py`, generated by `scripts/pm-collab-table-generate.py`), and the checker refuses only through those rows. `python3 scripts/pm-collab-guard-tables.py --out <dir>` builds one suite per table from the checker's own witnesses: valid invocations give controls, and each single-defect witness gives the observation of its first refusal, targeted at the refusing row. The tool's per-row credit is copied unchanged. A row is proved only when its own negatives are accepted with that row alone cut and every other case keeps its exact result. A witness that is two rows by construction stays a refused negative in the full checker and is listed with its reason. All oracles stay in these scripts; no test module is added.
+- A pass shows static contract consistency only. It proves no producer, append path, projector, reader, durability, deletion, readiness or seal.
+
+**Sequences.** Each sequence exercises Storage's append admission and the family transitions. A sibling appears in a sequence only as a transition partner, never as evidence for another family (DL-039). SP-460's activation gate, under which a kind appends nothing until every family it needs is admitted, is outside the sequences; `family_not_admitted_quarantined` covers the quarantine of a family that is not admitted.
+
+**Native obligations.** They stay `NOT_RUN` until native code exists and runs them. No static check stands in for them.
+
+| Oracle | Given | Required result |
+|---|---|---|
+| `COLLAB-START-01` | A Start admission that commits a new definition and run | The definition and run records commit with their prepared events; collaboration.created then collaboration.started append with first receipts; CollaborationStartResult is committed only after the started receipt; no card or Activity entry appears before it |
+| `COLLAB-RETRY-01` | A repeated Start with the same command idempotency binding, and a lost append acknowledgement for any admitted family | The original run, event and receipt return through storage.first_append_receipt.resolve.v2; no second run, event or first mint |
+| `COLLAB-UNCERTAIN-01` | An uncertain append of a run's event | The run is fenced: no later event of that run appends until Storage resolves the original identity |
+| `COLLAB-RESTART-01` | A crash after an owner commit and before its event's first receipt | Restart finds the committed record's prepared event, resolves or retries only that original identity, and never mints a new one; an in-flight attempt gets exactly one terminal outcome |
+| `COLLAB-PAUSE-01` | Pause and resume of a running run, and a quota reset while paused | paused appends when the safe boundary is reached; resumed only on cmd.collaboration.resume; a quota reset or scheduled window never resumes it |
+| `COLLAB-CANCEL-01` | Cancel of a run with open attempts and a late participant result | Every open attempt closes canceled before collaboration.cancelled; the late result appends nothing and changes no card |
+| `COLLAB-COMPLETE-01` | A run whose last provider turn finished while a required slot is unresolved | Predicate-driven completion uses original-definition requiredness and settled outputs; explicit Chat Room End keeps CWR-031's exception without an invented waiver action |
+| `COLLAB-FAIL-01` | A run settled failed by its owner, and a coordinator failure | collaboration.failed with the section 11 reason for the run; a coordinator failure appends no run event and leaves the run in attention |
+| `COLLAB-ATTEMPT-01` | Two slots on the same model, a retry and a replacement | Distinct attempt IDs and started events; the retry keeps the assignment revision, the replacement raises it; each attempt gets one outcome |
+| `COLLAB-MESSAGE-01` | A streamed helper message that completes, one that is cancelled, and a replayed completion | One message_added for the written message with the next sequence; nothing for the cancelled one and no gap; the replay writes nothing |
+| `COLLAB-ARTIFACT-01` | A Review artifact created by the artifact owner, then the chat deleted | artifact_added then artifact_finalized; deleting the chat removes the events and never purges the shared artifact |
+| `COLLAB-RECONFIGURE-01` | A reconfigure that waives a slot, and a stale expected revision | configuration_changed then message_added for the system entry; the stale one is refused and appends nothing |
+| `COLLAB-BLIND-01` | A participant read during a blind proposal or blind review phase | No proposal or finding event exists yet, and no reader discloses another participant's existence metadata |
+| `COLLAB-VOTE-01` | A Wonderer vote attempt and a vote from a superseded attempt | Both refused; tallies count only current core attempts |
+| `COLLAB-SYNTH-01` | Two synthesis requests for one BrainStorm run | One Plan, one plan_synthesized; the second returns the original result |
+| `COLLAB-QUORUM-01` | A Multi-Pass Review with one failed reviewer, then accept_partial | No finalization until the waiver is recorded; the artifact says partial coverage; a single reviewer is a single-pass result |
+| `COLLAB-CAS-01` | A projector advance whose checkpoint changed after it was read | Prior-value compare-and-swap fails; no row or checkpoint advances |
+| `COLLAB-TOKEN-01` | A checkpoint advance, read and recovery | The stored nine-field durable token is joined to the live read's redb_snapshot_id and revalidated whole |
+| `COLLAB-QUARANTINE-01` | An event of a family that is not admitted | Quarantined before append; no checkpoint advance; no sibling state inferred |
+| `COLLAB-READER-01` | A read while the checkpoint is not current, coverage is short or the publication changed | Typed unavailable; no fallback to older rows |
+| `COLLAB-WITHDRAW-01` | Withdrawal of one admitted family | Writer cut off, current core withdrawn, readers fenced, governed rebuild from kept seglog records; no deletion |
+| `COLLAB-DELETE-01` | Deletion of the chat a run belongs to, with and without a hold | Content-free tombstone at once; unheld active copies purged within 24 hours and deleted backup bytes within 30 days; a hold delays physical purge but never restores visibility; projection rows of that chat's runs are removed |
+| `COLLAB-APP-01` | An application-scope run before the owner adopts the app source graph | No application payload is appended (requires_owner_adoption); the Project path is unaffected |
+
+Round-two static obligations include coherent source contradictions through the full prepared-event path for all eighteen families; Start/Resume running/waiting/blocked counterparts; nested application contexts; definition roster and per-slot requiredness; original proposal/vote attempts and constraints; original Plan-create output; Review vote targets/counts; and exact remaining owner-control fields. Each of the four application wrappers has complete MessagePack boundary positives at 16,384 bytes, inline refusal at 16,385 and a valid SP-337 reference counterpart, plus missing/forged pack negatives. Number vectors include safe-integer boundaries, large decimal/exponent equivalence, negative zero, leading zeros and lossy-decimal refusal through DC's v1 identity and digest recipes; as current input each alternate spelling refuses exactly as its case records (CV-1100). Historical and retention controls test exact types, including string booleans/numbers, null, arrays and objects. Guard-table proof runs one table at a time behind the tool's memory gate. Every row records its flipping negatives and the unchanged refusals; neither an isolated helper substitution nor a retained earlier proof replaces a fresh whole-lane run. All native obligations remain NOT_RUN.
+
+Sweep part 2B adopts the gated shared rules. Every family timestamp, EventRecord timestamp, Collaborative Workflows owner timestamp in a prepared source, checkpoint timestamp and projection timestamp is checked by CV-1101's shared `pm_event_datetime.date_time` with its owner's profile, with witnesses for hour 24, an illegitimate second 60, an impossible date, minute 60, month 13, offsets and lowercase `z` where CV-253 forbids them, and the trailing LF an unguarded owner pattern admitted, plus leap-second and long-fraction positives. Every integer slot of a current payload, EventRecord, prepared source, application wrapper and checkpoint is checked by the shared `current_integer` (Storage fields by `storage_uint64`), raw SP-337 bodies are parsed by the shared `loads_current_json`, identity preimages use the shared `qualified_jcs`, and the stored EventRecord and application wrappers use the shared `storage_value_bytes` with EVENT_VALUE and APP_PHYSICAL. Historical and checkpoint last-event reads resolve one frozen v1 recipe through the shared `RetainedDispatcher`; integral-float, negative-zero and uint64-maximum originals stay readable, while coherent forgeries, unsealed originals, an unsupported recipe tuple, a 24:00:00Z original and a disclosed write epoch that differs from custody refuse. The shared number corpus runs through the SP-337 reference route and the inline route of one event per family, with expectations composed from the shared helpers, and the 4,400-digit integer reaches every boundary without a crash. `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must pass; the shared date-time inventory gate and `datetime_validator` run at batch-2 integration.
+
+```yaml
+plan_unit_id: ATS-230
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The static oracles of the 18 collaborative workflow families are
+  Plans/collaboration_event_contract_fixtures.json and python3 scripts/pm_collaboration_events.py with its
+  self-test: closed payloads in both scopes, envelope joins, identity vectors, transition sequences through
+  the checker's own reducer of SP-460 to SP-478, projection and checkpoint values, and the admission ledger
+  with its prepared registry rows. The checker fails when a prepared family is in the registry or an admitted
+  row differs from its prepared row, and reports the missing retention object as an admission blocker. Native
+  obligations COLLAB-START-01 to COLLAB-APP-01 stay NOT_RUN. A pass proves static consistency only.
+  Whole-lane check 11 runs on the gated shared guard tool over Method B guard tables: every decision, shape
+  and integrity refusal is one named table row proved by its own single-defect negatives, including all family/scope replay-only writer refusals, retained compatibility
+  history, eager reference closure, physical bindings, source custody, checkpoint semantics, payload-store
+  boundaries, true-end lexical/type guards, numeric equivalents and owner-bound completion requirements.
+  Timestamps use CV-1101's shared predicate with each owner's profile; current integer slots, Storage uint64
+  fields and physical bytes use the shared CV-1100/SP-1100 calls; retained originals use SP-1101 dispatch.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [DL-090, CWR-105, CV-460, SP-460]
+unblocks: []
+acceptance_criteria:
+  - "The checker passes with every family's positive and negative cases, joins, identity vectors and sequences."
+  - "A prepared family in the registry, or an admitted row that differs from its prepared row, fails the checker."
+  - "Every native obligation stays NOT_RUN until it actually runs."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "python3 scripts/pm-collab-guard-tables.py --out <dir>"
+  - "python3 scripts/pm_event_numbers.py --self-test --scope numbers"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_shared
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+  - scripts/pm_collaboration_events.py
+  - scripts/pm-collab-table-generate.py
+  - scripts/pm-collab-guard-tables.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+  - "Plans/Automated_Testing_System.md#ATS-058"
+preserved_exact_tokens:
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "scripts/pm_collaboration_events.py"
+  - "NOT_RUN"
+negative_constraints:
+  - "Do not treat a static pass as native proof, readiness or admission."
+  - "Do not let a sibling's case stand in for a family's own case."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/Collaborative_Workflows.md#CWR-105
+
+**Round-1 full-lane oracles (B1–B8).** `scripts/pm_collaboration_events.py` owns every new oracle; no test file is added. Each family and scope exercises typed durable source custody, inline/reference payload parity and size boundaries, true-end identifiers, sibling/unknown family refusal, replay-only writer refusal and retained historical reads after live changes, with withdrawn/forged refusals. Checkpoint contexts supply independent source-token/frame/event joins. Completion tests authoritative requiredness and CWR-031 End. All schema references are resolved, including unused optional paths. `scripts/pm-collab-guard-tables.py` runs the gated guard tool over every guard table and publishes the check-11 table: row, own negatives that become accepted when that row alone is cut, and every other negative that keeps its exact refusal. An unexercised or masked row fails the proof. Failure CLI expectations require nonzero, and all native obligations remain NOT_RUN.
+
+**Additional mandatory round-one probes.** Canonical numeric vectors cover `1`, `1.0`, `1e0`, `-0`, `-0.0`, illegal `01`, fractions, large exact integers and nonfinite forms; all 36 family/scope envelopes keep the same v1 identity and digest under equivalent numeric forms, and as current input those forms refuse under CV-1100 (sweep part 2B). Wrong-type vectors cover string booleans/numbers, nulls, arrays and nested objects. Retained replay-only compatibility originals are accepted after live changes through the historical reader, while current append/retry still refuses them. Full stored holder/projection/checkpoint encoded sizes are measured without treating the EventRecord 16 KiB inline boundary as a redb value cap.
+
+### ATS-231 - Oracles of collaboration.created
+
+`collaboration.created`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `created_project`, `created_application`, `created_crew_auto_dedicated_coordinator`, `created_review_application`.
+- **Negative payloads (9).** `created_text_field_refused`, `created_missing_definition_revision`, `created_project_null_project_id`, `created_application_with_project_id`, `created_offset_timestamp`, `created_key_of_another_subject`, `created_currentness_not_a_hash`, `created_impossible_date`, `created_revision_2`.
+- **Valid eventrecords (2).** `event_valid_created_project`, `event_valid_created_application`.
+- **Envelope join negatives (5).** `event_created_occurred_at_join`, `event_created_sibling_payload_schema_id`, `event_created_sibling_event_id`, `event_created_application_schema_in_project_record`, `event_created_run_id_join`.
+- **Identity vectors (3).** `identity_created_project`, `identity_created_application`, `identity_created_new_epoch`.
+- **Transition sequences (15).** `crew_lifecycle_to_completed`, `pause_resume_cancel_with_fence`, `limit_stop_is_cancelled`, `run_fails_after_participant_failure`, `completion_needs_required_slots`, `definition_revisions_and_rerun`, `attempt_identity_rules`, `brainstorm_proposals_votes_synthesis`, `brainstorm_event_on_crew_run`, `review_partial_then_accepted`, `review_finish_stale`, `review_completion_needs_artifact`, `chat_room_end_from_paused`, `application_scope_lifecycle`, `family_not_admitted_quarantined`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-START-01`, `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_created`, `idempotency_conflict`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-231
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.created are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-START-01, COLLAB-RETRY-01,
+  COLLAB-UNCERTAIN-01, COLLAB-RESTART-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01,
+  COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands
+  in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-461, CV-461, CWR-106]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.created exists in the fixtures and passes the checker."
+  - "collaboration.created has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.created is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_created
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.created"
+  - "COLLAB-START-01"
+  - "COLLAB-RETRY-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.created's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-461, ContractName:Plans/Contracts_V0.md#CV-461
+
+### ATS-232 - Oracles of collaboration.started
+
+`collaboration.started`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (6).** `started_project`, `started_application`, `started_review_with_pack`, `started_crew_auto`, `started_build_with_crew`, `started_brainstorm_waiting`.
+- **Negative payloads (14).** `started_text_field_refused`, `started_missing_lifecycle_seq`, `started_project_null_project_id`, `started_application_with_project_id`, `started_offset_timestamp`, `started_key_of_another_subject`, `started_currentness_not_a_hash`, `started_impossible_date`, `started_seq_2`, `started_crew_auto_without_revision`, `started_revision_without_crew_auto`, `started_build_with_crew_without_plan`, `started_review_without_pack`, `started_state_configuring`.
+- **Valid eventrecords (2).** `event_valid_started_project`, `event_valid_started_application`.
+- **Envelope join negatives (15).** `event_started_occurred_at_join`, `event_started_sibling_payload_schema_id`, `event_started_sibling_event_id`, `event_started_application_schema_in_project_record`, `event_started_run_id_join`, `event_shared_project_payload_in_application_record`, `event_shared_inline_payload_ref`, `event_shared_thread_join`, `event_shared_project_join`, `event_shared_attempt_on_run_event`, `event_shared_key_join`, `event_shared_redaction_redacted`, `event_shared_replay_append_once`, `event_shared_event_id_off_recipe`, `event_shared_node_id_set`.
+- **Identity vectors (3).** `identity_started_project`, `identity_started_application`, `identity_started_new_epoch`.
+- **Transition sequences (15).** `crew_lifecycle_to_completed`, `pause_resume_cancel_with_fence`, `limit_stop_is_cancelled`, `run_fails_after_participant_failure`, `completion_needs_required_slots`, `definition_revisions_and_rerun`, `attempt_identity_rules`, `brainstorm_proposals_votes_synthesis`, `brainstorm_event_on_crew_run`, `review_partial_then_accepted`, `review_finish_stale`, `review_completion_needs_artifact`, `chat_room_end_from_paused`, `application_scope_lifecycle`, `family_not_admitted_quarantined`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-START-01`, `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:definition_not_recorded`, `exact_retry`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-232
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.started are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-START-01, COLLAB-RETRY-01,
+  COLLAB-UNCERTAIN-01, COLLAB-RESTART-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01,
+  COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands
+  in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-462, CV-462, CWR-107]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.started exists in the fixtures and passes the checker."
+  - "collaboration.started has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.started is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_started
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.started"
+  - "COLLAB-START-01"
+  - "COLLAB-RETRY-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.started's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-462, ContractName:Plans/Contracts_V0.md#CV-462
+
+### ATS-233 - Oracles of collaboration.paused
+
+`collaboration.paused`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `paused_project`, `paused_application`, `paused_from_waiting`, `paused_chat_room_application`.
+- **Negative payloads (10).** `paused_text_field_refused`, `paused_missing_lifecycle_seq`, `paused_project_null_project_id`, `paused_application_with_project_id`, `paused_offset_timestamp`, `paused_key_of_another_subject`, `paused_currentness_not_a_hash`, `paused_impossible_date`, `paused_seq_1`, `paused_from_paused`.
+- **Valid eventrecords (2).** `event_valid_paused_project`, `event_valid_paused_application`.
+- **Envelope join negatives (5).** `event_paused_occurred_at_join`, `event_paused_sibling_payload_schema_id`, `event_paused_sibling_event_id`, `event_paused_application_schema_in_project_record`, `event_paused_run_id_join`.
+- **Identity vectors (3).** `identity_paused_project`, `identity_paused_application`, `identity_paused_new_epoch`.
+- **Transition sequences (3).** `pause_resume_cancel_with_fence`, `chat_room_end_from_paused`, `application_scope_lifecycle`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-PAUSE-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:run_not_started`, `conflict:run_state_invalid`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-233
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.paused are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-PAUSE-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-463, CV-463, CWR-108]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.paused exists in the fixtures and passes the checker."
+  - "collaboration.paused has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.paused is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_paused
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.paused"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.paused's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-463, ContractName:Plans/Contracts_V0.md#CV-463
+
+### ATS-234 - Oracles of collaboration.resumed
+
+`collaboration.resumed`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `resumed_project`, `resumed_application`, `resumed_to_blocked`, `resumed_review_application`.
+- **Negative payloads (9).** `resumed_text_field_refused`, `resumed_missing_lifecycle_seq`, `resumed_project_null_project_id`, `resumed_application_with_project_id`, `resumed_offset_timestamp`, `resumed_key_of_another_subject`, `resumed_currentness_not_a_hash`, `resumed_impossible_date`, `resumed_state_after_paused`.
+- **Valid eventrecords (2).** `event_valid_resumed_project`, `event_valid_resumed_application`.
+- **Envelope join negatives (5).** `event_resumed_occurred_at_join`, `event_resumed_sibling_payload_schema_id`, `event_resumed_sibling_event_id`, `event_resumed_application_schema_in_project_record`, `event_resumed_run_id_join`.
+- **Identity vectors (3).** `identity_resumed_project`, `identity_resumed_application`, `identity_resumed_new_epoch`.
+- **Transition sequences (1).** `pause_resume_cancel_with_fence`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-PAUSE-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_terminal`, `conflict:run_state_invalid`, `conflict:stale_lifecycle_seq`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-234
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.resumed are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-PAUSE-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-464, CV-464, CWR-109]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.resumed exists in the fixtures and passes the checker."
+  - "collaboration.resumed has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.resumed is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_resumed
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.resumed"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.resumed's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-464, ContractName:Plans/Contracts_V0.md#CV-464
+
+### ATS-235 - Oracles of collaboration.cancelled
+
+`collaboration.cancelled`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (3).** `cancelled_project`, `cancelled_application`, `cancelled_limit_cost`.
+- **Negative payloads (11).** `cancelled_text_field_refused`, `cancelled_missing_lifecycle_seq`, `cancelled_project_null_project_id`, `cancelled_application_with_project_id`, `cancelled_offset_timestamp`, `cancelled_key_of_another_subject`, `cancelled_currentness_not_a_hash`, `cancelled_impossible_date`, `cancelled_limit_with_command`, `cancelled_user_without_command`, `cancelled_failure_stop_reason`.
+- **Valid eventrecords (2).** `event_valid_cancelled_project`, `event_valid_cancelled_application`.
+- **Envelope join negatives (5).** `event_cancelled_occurred_at_join`, `event_cancelled_sibling_payload_schema_id`, `event_cancelled_sibling_event_id`, `event_cancelled_application_schema_in_project_record`, `event_cancelled_run_id_join`.
+- **Identity vectors (3).** `identity_cancelled_project`, `identity_cancelled_application`, `identity_cancelled_new_epoch`.
+- **Transition sequences (4).** `pause_resume_cancel_with_fence`, `limit_stop_is_cancelled`, `application_scope_lifecycle`, `family_not_admitted_quarantined`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-CANCEL-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:open_attempts`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-235
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.cancelled are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-CANCEL-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-465, CV-465, CWR-110]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.cancelled exists in the fixtures and passes the checker."
+  - "collaboration.cancelled has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.cancelled is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_cancelled
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.cancelled"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.cancelled's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-465, ContractName:Plans/Contracts_V0.md#CV-465
+
+### ATS-236 - Oracles of collaboration.completed
+
+`collaboration.completed`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `completed_project`, `completed_application`, `completed_chat_room_end_paused`, `completed_review_outputs`.
+- **Negative payloads (10).** `completed_text_field_refused`, `completed_missing_lifecycle_seq`, `completed_project_null_project_id`, `completed_application_with_project_id`, `completed_offset_timestamp`, `completed_key_of_another_subject`, `completed_currentness_not_a_hash`, `completed_impossible_date`, `completed_chat_room_end_on_crew`, `completed_predicate_from_paused`.
+- **Valid eventrecords (2).** `event_valid_completed_project`, `event_valid_completed_application`.
+- **Envelope join negatives (5).** `event_completed_occurred_at_join`, `event_completed_sibling_payload_schema_id`, `event_completed_sibling_event_id`, `event_completed_application_schema_in_project_record`, `event_completed_run_id_join`.
+- **Identity vectors (3).** `identity_completed_project`, `identity_completed_application`, `identity_completed_new_epoch`.
+- **Transition sequences (7).** `crew_lifecycle_to_completed`, `completion_needs_required_slots`, `definition_revisions_and_rerun`, `brainstorm_proposals_votes_synthesis`, `review_partial_then_accepted`, `review_completion_needs_artifact`, `chat_room_end_from_paused`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-COMPLETE-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:missing_output`, `conflict:open_attempts`, `conflict:unresolved_required_slots`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-236
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.completed are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-COMPLETE-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01,
+  COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands
+  in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-466, CV-466, CWR-111]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.completed exists in the fixtures and passes the checker."
+  - "collaboration.completed has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.completed is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_completed
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.completed"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.completed's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-466, ContractName:Plans/Contracts_V0.md#CV-466
+
+### ATS-237 - Oracles of collaboration.failed
+
+`collaboration.failed`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `failed_project`, `failed_project_required_only`, `failed_application`, `failed_model_unavailable_paused`.
+- **Negative payloads (10).** `failed_text_field_refused`, `failed_missing_lifecycle_seq`, `failed_project_null_project_id`, `failed_application_with_project_id`, `failed_offset_timestamp`, `failed_key_of_another_subject`, `failed_currentness_not_a_hash`, `failed_impossible_date`, `failed_reason_cancelled`, `failed_free_text_reason`.
+- **Valid eventrecords (2).** `event_valid_failed_project`, `event_valid_failed_application`.
+- **Envelope join negatives (5).** `event_failed_occurred_at_join`, `event_failed_sibling_payload_schema_id`, `event_failed_sibling_event_id`, `event_failed_application_schema_in_project_record`, `event_failed_run_id_join`.
+- **Identity vectors (3).** `identity_failed_project`, `identity_failed_application`, `identity_failed_new_epoch`.
+- **Transition sequences (2).** `limit_stop_is_cancelled`, `run_fails_after_participant_failure`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-FAIL-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_terminal`, `conflict:open_attempts`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-237
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-091. The oracles of collaboration.failed are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-FAIL-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-467, CV-467, CWR-112]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.failed exists in the fixtures and passes the checker."
+  - "collaboration.failed has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.failed is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_failed
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.failed"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.failed's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-467, ContractName:Plans/Contracts_V0.md#CV-467
+
+### ATS-238 - Oracles of collaboration.participant_started
+
+`collaboration.participant_started`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `participant_started_project`, `participant_started_project_required_only`, `participant_started_application`, `participant_started_wonderer_retry`.
+- **Negative payloads (10).** `participant_started_text_field_refused`, `participant_started_missing_participant_slot_id`, `participant_started_project_null_project_id`, `participant_started_application_with_project_id`, `participant_started_offset_timestamp`, `participant_started_key_of_another_subject`, `participant_started_currentness_not_a_hash`, `participant_started_impossible_date`, `participant_started_grill_me_role`, `participant_started_no_attempt`.
+- **Valid eventrecords (2).** `event_valid_participant_started_project`, `event_valid_participant_started_application`.
+- **Envelope join negatives (5).** `event_participant_started_occurred_at_join`, `event_participant_started_sibling_payload_schema_id`, `event_participant_started_sibling_event_id`, `event_participant_started_application_schema_in_project_record`, `event_participant_started_run_id_join`.
+- **Identity vectors (3).** `identity_participant_started_project`, `identity_participant_started_application`, `identity_participant_started_new_epoch`.
+- **Transition sequences (10).** `crew_lifecycle_to_completed`, `pause_resume_cancel_with_fence`, `run_fails_after_participant_failure`, `completion_needs_required_slots`, `definition_revisions_and_rerun`, `attempt_identity_rules`, `brainstorm_proposals_votes_synthesis`, `brainstorm_event_on_crew_run`, `review_partial_then_accepted`, `review_finish_stale`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-ATTEMPT-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:attempt_already_started`, `conflict:run_state_invalid`, `conflict:slot_not_in_roster`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-238
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.participant_started are its own
+  cases in Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a
+  valid EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-ATTEMPT-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01,
+  COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands
+  in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-468, CV-468, CWR-113]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.participant_started exists in the fixtures and passes the checker."
+  - "collaboration.participant_started has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.participant_started is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_participant_started
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.participant_started"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.participant_started's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-468, ContractName:Plans/Contracts_V0.md#CV-468
+
+### ATS-239 - Oracles of collaboration.participant_completed
+
+`collaboration.participant_completed`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (6).** `participant_completed_project`, `participant_completed_application`, `participant_completed_failed`, `participant_completed_unavailable`, `participant_completed_waived_no_attempt`, `participant_completed_canceled`.
+- **Negative payloads (12).** `participant_completed_text_field_refused`, `participant_completed_missing_participant_slot_id`, `participant_completed_project_null_project_id`, `participant_completed_application_with_project_id`, `participant_completed_offset_timestamp`, `participant_completed_key_of_another_subject`, `participant_completed_currentness_not_a_hash`, `participant_completed_impossible_date`, `participant_completed_unavailable_with_attempt`, `participant_completed_failed_without_reason`, `participant_completed_waiver_without_actor`, `participant_completed_missing_callback_value`.
+- **Valid eventrecords (2).** `event_valid_participant_completed_project`, `event_valid_participant_completed_application`.
+- **Envelope join negatives (5).** `event_participant_completed_occurred_at_join`, `event_participant_completed_sibling_payload_schema_id`, `event_participant_completed_sibling_event_id`, `event_participant_completed_application_schema_in_project_record`, `event_participant_completed_run_id_join`.
+- **Identity vectors (3).** `identity_participant_completed_project`, `identity_participant_completed_application`, `identity_participant_completed_new_epoch`.
+- **Transition sequences (9).** `crew_lifecycle_to_completed`, `pause_resume_cancel_with_fence`, `run_fails_after_participant_failure`, `completion_needs_required_slots`, `definition_revisions_and_rerun`, `attempt_identity_rules`, `brainstorm_proposals_votes_synthesis`, `review_partial_then_accepted`, `review_finish_stale`.
+- **Native obligations (12, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-CANCEL-01`, `COLLAB-ATTEMPT-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:attempt_already_closed`, `conflict:unknown_attempt`, `conflict:waiver_not_recorded`, `exact_retry`, `idempotency_conflict`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-239
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.participant_completed are its own
+  cases in Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a
+  valid EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-CANCEL-01, COLLAB-ATTEMPT-01, COLLAB-CAS-01, COLLAB-TOKEN-01,
+  COLLAB-QUARANTINE-01, COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No
+  sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-469, CV-469, CWR-114]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.participant_completed exists in the fixtures and passes the checker."
+  - "collaboration.participant_completed has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.participant_completed is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_participant_completed
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.participant_completed"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.participant_completed's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-469, ContractName:Plans/Contracts_V0.md#CV-469
+
+### ATS-240 - Oracles of collaboration.message_added
+
+`collaboration.message_added`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (6).** `message_added_project`, `message_added_project_required_only`, `message_added_application`, `message_added_user_to_two`, `message_added_system_reply`, `message_added_participant_attempt`.
+- **Negative payloads (11).** `message_added_text_field_refused`, `message_added_missing_collaboration_message_id`, `message_added_project_null_project_id`, `message_added_application_with_project_id`, `message_added_offset_timestamp`, `message_added_key_of_another_subject`, `message_added_currentness_not_a_hash`, `message_added_impossible_date`, `message_added_sequence_zero`, `message_added_user_with_attempt`, `message_added_partial_delta_type`.
+- **Valid eventrecords (2).** `event_valid_message_added_project`, `event_valid_message_added_application`.
+- **Envelope join negatives (5).** `event_message_added_occurred_at_join`, `event_message_added_sibling_payload_schema_id`, `event_message_added_sibling_event_id`, `event_message_added_application_schema_in_project_record`, `event_message_added_run_id_join`.
+- **Identity vectors (3).** `identity_message_added_project`, `identity_message_added_application`, `identity_message_added_new_epoch`.
+- **Transition sequences (6).** `crew_lifecycle_to_completed`, `completion_needs_required_slots`, `review_partial_then_accepted`, `chat_room_end_from_paused`, `application_scope_lifecycle`, `family_not_admitted_quarantined`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-MESSAGE-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_terminal`, `conflict:lineage_mismatch`, `conflict:message_already_written`, `conflict:sequence_gap`, `idempotency_conflict`, `quarantined`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-240
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.message_added are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-MESSAGE-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01,
+  COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands
+  in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-470, CV-470, CWR-115]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.message_added exists in the fixtures and passes the checker."
+  - "collaboration.message_added has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.message_added is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_message_added
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.message_added"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.message_added's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-470, ContractName:Plans/Contracts_V0.md#CV-470
+
+### ATS-241 - Oracles of collaboration.artifact_added
+
+`collaboration.artifact_added`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `artifact_added_project`, `artifact_added_project_required_only`, `artifact_added_application`, `artifact_added_wonderer_pass`.
+- **Negative payloads (9).** `artifact_added_text_field_refused`, `artifact_added_missing_artifact_ref`, `artifact_added_project_null_project_id`, `artifact_added_application_with_project_id`, `artifact_added_offset_timestamp`, `artifact_added_key_of_another_subject`, `artifact_added_currentness_not_a_hash`, `artifact_added_impossible_date`, `artifact_added_absolute_path_ref`.
+- **Valid eventrecords (2).** `event_valid_artifact_added_project`, `event_valid_artifact_added_application`.
+- **Envelope join negatives (5).** `event_artifact_added_occurred_at_join`, `event_artifact_added_sibling_payload_schema_id`, `event_artifact_added_sibling_event_id`, `event_artifact_added_application_schema_in_project_record`, `event_artifact_added_run_id_join`.
+- **Identity vectors (3).** `identity_artifact_added_project`, `identity_artifact_added_application`, `identity_artifact_added_new_epoch`.
+- **Transition sequences (3).** `crew_lifecycle_to_completed`, `review_partial_then_accepted`, `review_finish_stale`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-ARTIFACT-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:artifact_already_added`, `idempotency_conflict`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-241
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.artifact_added are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-ARTIFACT-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01,
+  COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands
+  in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-471, CV-471, CWR-116]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.artifact_added exists in the fixtures and passes the checker."
+  - "collaboration.artifact_added has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.artifact_added is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_artifact_added
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.artifact_added"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.artifact_added's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-471, ContractName:Plans/Contracts_V0.md#CV-471
+
+### ATS-242 - Oracles of collaboration.configuration_changed
+
+`collaboration.configuration_changed`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (5).** `configuration_changed_project`, `configuration_changed_application`, `configuration_changed_start_commit`, `configuration_changed_finish_stale`, `configuration_changed_waive`.
+- **Negative payloads (13).** `configuration_changed_text_field_refused`, `configuration_changed_missing_definition_revision`, `configuration_changed_project_null_project_id`, `configuration_changed_application_with_project_id`, `configuration_changed_offset_timestamp`, `configuration_changed_key_of_another_subject`, `configuration_changed_currentness_not_a_hash`, `configuration_changed_impossible_date`, `configuration_changed_revision_1`, `configuration_changed_previous_not_minus_one`, `configuration_changed_reconfigure_without_change`, `configuration_changed_start_commit_with_system_message`, `configuration_changed_unknown_change_kind`.
+- **Valid eventrecords (2).** `event_valid_configuration_changed_project`, `event_valid_configuration_changed_application`.
+- **Envelope join negatives (5).** `event_configuration_changed_occurred_at_join`, `event_configuration_changed_sibling_payload_schema_id`, `event_configuration_changed_sibling_event_id`, `event_configuration_changed_application_schema_in_project_record`, `event_configuration_changed_run_id_join`.
+- **Identity vectors (3).** `identity_configuration_changed_project`, `identity_configuration_changed_application`, `identity_configuration_changed_new_epoch`.
+- **Transition sequences (4).** `completion_needs_required_slots`, `definition_revisions_and_rerun`, `review_partial_then_accepted`, `review_finish_stale`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-RECONFIGURE-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `revision_rule`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_terminal`, `conflict:stale_definition_revision`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-242
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of collaboration.configuration_changed are its own
+  cases in Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a
+  valid EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-RECONFIGURE-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01,
+  COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands
+  in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-472, CV-472, CWR-117]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for collaboration.configuration_changed exists in the fixtures and passes the checker."
+  - "collaboration.configuration_changed has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "collaboration.configuration_changed is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_collaboration_configuration_changed
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "collaboration.configuration_changed"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as collaboration.configuration_changed's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-472, ContractName:Plans/Contracts_V0.md#CV-472
+
+### ATS-243 - Oracles of brainstorm.proposal_added
+
+`brainstorm.proposal_added`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (3).** `proposal_added_project`, `proposal_added_application`, `proposal_added_hybrid_round_2`.
+- **Negative payloads (10).** `proposal_added_text_field_refused`, `proposal_added_missing_proposal_id`, `proposal_added_project_null_project_id`, `proposal_added_application_with_project_id`, `proposal_added_offset_timestamp`, `proposal_added_key_of_another_subject`, `proposal_added_currentness_not_a_hash`, `proposal_added_impossible_date`, `proposal_added_on_crew`, `proposal_added_round_0`.
+- **Valid eventrecords (2).** `event_valid_proposal_added_project`, `event_valid_proposal_added_application`.
+- **Envelope join negatives (5).** `event_proposal_added_occurred_at_join`, `event_proposal_added_sibling_payload_schema_id`, `event_proposal_added_sibling_event_id`, `event_proposal_added_application_schema_in_project_record`, `event_proposal_added_run_id_join`.
+- **Identity vectors (3).** `identity_proposal_added_project`, `identity_proposal_added_application`, `identity_proposal_added_new_epoch`.
+- **Transition sequences (2).** `brainstorm_proposals_votes_synthesis`, `brainstorm_event_on_crew_run`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-BLIND-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:lineage_mismatch`, `conflict:not_core_participant`, `conflict:proposal_already_added`, `conflict:unknown_attempt`, `idempotency_conflict`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-243
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of brainstorm.proposal_added are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-BLIND-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-473, CV-473, CWR-118]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for brainstorm.proposal_added exists in the fixtures and passes the checker."
+  - "brainstorm.proposal_added has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "brainstorm.proposal_added is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_brainstorm_proposal_added
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "brainstorm.proposal_added"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as brainstorm.proposal_added's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-473, ContractName:Plans/Contracts_V0.md#CV-473
+
+### ATS-244 - Oracles of brainstorm.vote_added
+
+`brainstorm.vote_added`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (3).** `vote_added_project`, `vote_added_application`, `vote_added_oppose_conflicts`.
+- **Negative payloads (10).** `vote_added_text_field_refused`, `vote_added_missing_vote_id`, `vote_added_project_null_project_id`, `vote_added_application_with_project_id`, `vote_added_offset_timestamp`, `vote_added_key_of_another_subject`, `vote_added_currentness_not_a_hash`, `vote_added_impossible_date`, `vote_added_confidence_over_1`, `vote_added_position_majority`.
+- **Valid eventrecords (2).** `event_valid_vote_added_project`, `event_valid_vote_added_application`.
+- **Envelope join negatives (5).** `event_vote_added_occurred_at_join`, `event_vote_added_sibling_payload_schema_id`, `event_vote_added_sibling_event_id`, `event_vote_added_application_schema_in_project_record`, `event_vote_added_run_id_join`.
+- **Identity vectors (3).** `identity_vote_added_project`, `identity_vote_added_application`, `identity_vote_added_new_epoch`.
+- **Transition sequences (1).** `brainstorm_proposals_votes_synthesis`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-VOTE-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:attempt_not_current`, `conflict:unknown_proposal`, `conflict:vote_already_added`, `conflict:wonderer_cannot_vote`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-244
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of brainstorm.vote_added are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-VOTE-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-474, CV-474, CWR-119]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for brainstorm.vote_added exists in the fixtures and passes the checker."
+  - "brainstorm.vote_added has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "brainstorm.vote_added is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_brainstorm_vote_added
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "brainstorm.vote_added"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as brainstorm.vote_added's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-474, ContractName:Plans/Contracts_V0.md#CV-474
+
+### ATS-245 - Oracles of brainstorm.plan_synthesized
+
+`brainstorm.plan_synthesized`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `plan_synthesized_project`, `plan_synthesized_project_required_only`, `plan_synthesized_application`, `plan_synthesized_tie`.
+- **Negative payloads (10).** `plan_synthesized_text_field_refused`, `plan_synthesized_missing_assistant_plan_id`, `plan_synthesized_project_null_project_id`, `plan_synthesized_application_with_project_id`, `plan_synthesized_offset_timestamp`, `plan_synthesized_key_of_another_subject`, `plan_synthesized_currentness_not_a_hash`, `plan_synthesized_impossible_date`, `plan_synthesized_on_review`, `plan_synthesized_tie_by_order`.
+- **Valid eventrecords (2).** `event_valid_plan_synthesized_project`, `event_valid_plan_synthesized_application`.
+- **Envelope join negatives (5).** `event_plan_synthesized_occurred_at_join`, `event_plan_synthesized_sibling_payload_schema_id`, `event_plan_synthesized_sibling_event_id`, `event_plan_synthesized_application_schema_in_project_record`, `event_plan_synthesized_run_id_join`.
+- **Identity vectors (3).** `identity_plan_synthesized_project`, `identity_plan_synthesized_application`, `identity_plan_synthesized_new_epoch`.
+- **Transition sequences (1).** `brainstorm_proposals_votes_synthesis`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-SYNTH-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_synthesized`, `idempotency_conflict`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-245
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of brainstorm.plan_synthesized are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-SYNTH-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-475, CV-475, CWR-120]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for brainstorm.plan_synthesized exists in the fixtures and passes the checker."
+  - "brainstorm.plan_synthesized has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "brainstorm.plan_synthesized is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_brainstorm_plan_synthesized
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "brainstorm.plan_synthesized"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as brainstorm.plan_synthesized's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-475, ContractName:Plans/Contracts_V0.md#CV-475
+
+### ATS-246 - Oracles of review.finding_added
+
+`review.finding_added`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (3).** `finding_added_project`, `finding_added_application`, `finding_added_two_reviewers`.
+- **Negative payloads (10).** `finding_added_text_field_refused`, `finding_added_missing_finding_id`, `finding_added_project_null_project_id`, `finding_added_application_with_project_id`, `finding_added_offset_timestamp`, `finding_added_key_of_another_subject`, `finding_added_currentness_not_a_hash`, `finding_added_impossible_date`, `finding_added_no_reviewers`, `finding_added_uppercase_hash`.
+- **Valid eventrecords (2).** `event_valid_finding_added_project`, `event_valid_finding_added_application`.
+- **Envelope join negatives (5).** `event_finding_added_occurred_at_join`, `event_finding_added_sibling_payload_schema_id`, `event_finding_added_sibling_event_id`, `event_finding_added_application_schema_in_project_record`, `event_finding_added_run_id_join`.
+- **Identity vectors (3).** `identity_finding_added_project`, `identity_finding_added_application`, `identity_finding_added_new_epoch`.
+- **Transition sequences (4).** `brainstorm_event_on_crew_run`, `review_partial_then_accepted`, `review_finish_stale`, `review_completion_needs_artifact`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-BLIND-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_terminal`, `conflict:finding_already_added`, `conflict:lineage_mismatch`, `conflict:slot_not_in_roster`, `conflict:target_hash_mismatch`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-246
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of review.finding_added are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-BLIND-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-476, CV-476, CWR-121]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for review.finding_added exists in the fixtures and passes the checker."
+  - "review.finding_added has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "review.finding_added is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_review_finding_added
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "review.finding_added"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as review.finding_added's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-476, ContractName:Plans/Contracts_V0.md#CV-476
+
+### ATS-247 - Oracles of review.finding_dispositioned
+
+`review.finding_dispositioned`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (3).** `finding_dispositioned_project`, `finding_dispositioned_application`, `finding_dispositioned_uncertain`.
+- **Negative payloads (9).** `finding_dispositioned_text_field_refused`, `finding_dispositioned_missing_finding_id`, `finding_dispositioned_project_null_project_id`, `finding_dispositioned_application_with_project_id`, `finding_dispositioned_offset_timestamp`, `finding_dispositioned_key_of_another_subject`, `finding_dispositioned_currentness_not_a_hash`, `finding_dispositioned_impossible_date`, `finding_dispositioned_unknown_disposition`.
+- **Valid eventrecords (2).** `event_valid_finding_dispositioned_project`, `event_valid_finding_dispositioned_application`.
+- **Envelope join negatives (5).** `event_finding_dispositioned_occurred_at_join`, `event_finding_dispositioned_sibling_payload_schema_id`, `event_finding_dispositioned_sibling_event_id`, `event_finding_dispositioned_application_schema_in_project_record`, `event_finding_dispositioned_run_id_join`.
+- **Identity vectors (3).** `identity_finding_dispositioned_project`, `identity_finding_dispositioned_application`, `identity_finding_dispositioned_new_epoch`.
+- **Transition sequences (2).** `review_partial_then_accepted`, `review_finish_stale`.
+- **Native obligations (11, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-QUORUM-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_dispositioned`, `conflict:unknown_finding`, `idempotency_conflict`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-247
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of review.finding_dispositioned are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-QUORUM-01, COLLAB-CAS-01, COLLAB-TOKEN-01, COLLAB-QUARANTINE-01, COLLAB-READER-01,
+  COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-477, CV-477, CWR-122]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for review.finding_dispositioned exists in the fixtures and passes the checker."
+  - "review.finding_dispositioned has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "review.finding_dispositioned is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_review_finding_dispositioned
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "review.finding_dispositioned"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as review.finding_dispositioned's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-477, ContractName:Plans/Contracts_V0.md#CV-477
+
+### ATS-248 - Oracles of review.artifact_finalized
+
+`review.artifact_finalized`'s own cases, listed in its ledger row's `validation_case_ids`:
+
+- **Positive payloads (4).** `artifact_finalized_project`, `artifact_finalized_application`, `artifact_finalized_single_reviewer`, `artifact_finalized_partial_stale`.
+- **Negative payloads (10).** `artifact_finalized_text_field_refused`, `artifact_finalized_missing_artifact_ref`, `artifact_finalized_project_null_project_id`, `artifact_finalized_application_with_project_id`, `artifact_finalized_offset_timestamp`, `artifact_finalized_key_of_another_subject`, `artifact_finalized_currentness_not_a_hash`, `artifact_finalized_impossible_date`, `artifact_finalized_single_with_three`, `artifact_finalized_counts_disagree`.
+- **Valid eventrecords (2).** `event_valid_artifact_finalized_project`, `event_valid_artifact_finalized_application`.
+- **Envelope join negatives (5).** `event_artifact_finalized_occurred_at_join`, `event_artifact_finalized_sibling_payload_schema_id`, `event_artifact_finalized_sibling_event_id`, `event_artifact_finalized_application_schema_in_project_record`, `event_artifact_finalized_run_id_join`.
+- **Identity vectors (3).** `identity_artifact_finalized_project`, `identity_artifact_finalized_application`, `identity_artifact_finalized_new_epoch`.
+- **Transition sequences (2).** `review_partial_then_accepted`, `review_finish_stale`.
+- **Native obligations (12, NOT_RUN).** `COLLAB-RETRY-01`, `COLLAB-UNCERTAIN-01`, `COLLAB-RESTART-01`, `COLLAB-ARTIFACT-01`, `COLLAB-QUORUM-01`, `COLLAB-CAS-01`, `COLLAB-TOKEN-01`, `COLLAB-QUARANTINE-01`, `COLLAB-READER-01`, `COLLAB-WITHDRAW-01`, `COLLAB-DELETE-01`, `COLLAB-APP-01`.
+
+The negative payloads fail at these layers: `identity_recipe`, `review_counts`, `schema`, `valid_utc_datetime`. In the sequences the family is appended and also refused with `conflict:already_finalized`, `conflict:artifact_not_added`, `conflict:findings_not_dispositioned`, `conflict:partial_not_accepted`, `conflict:stale_not_accepted`, `exact_retry`, `idempotency_conflict`. The checker fails when any listed case is missing or gives another result.
+
+```yaml
+plan_unit_id: ATS-248
+unit_type: verification_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-090. The oracles of review.artifact_finalized are its own cases in
+  Plans/collaboration_event_contract_fixtures.json: positive and negative payloads in both scopes, a valid
+  EventRecord per scope and its join negatives, identity vectors including a new recovery epoch, and the
+  transition sequences in which it is appended and refused, all checked by python3
+  scripts/pm_collaboration_events.py; its native obligations COLLAB-RETRY-01, COLLAB-UNCERTAIN-01,
+  COLLAB-RESTART-01, COLLAB-ARTIFACT-01, COLLAB-QUORUM-01, COLLAB-CAS-01, COLLAB-TOKEN-01,
+  COLLAB-QUARANTINE-01, COLLAB-READER-01, COLLAB-WITHDRAW-01, COLLAB-DELETE-01, COLLAB-APP-01 stay NOT_RUN. No
+  sibling case stands in for its own.
+gui_related: false
+gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
+split_recommended: false
+depends_on: [ATS-230, SP-478, CV-478, CWR-123]
+unblocks: []
+acceptance_criteria:
+  - "Every case listed for review.artifact_finalized exists in the fixtures and passes the checker."
+  - "review.artifact_finalized has positive and negative payload cases in both scopes, its own EventRecord join negatives and identity vectors."
+  - "review.artifact_finalized is appended and refused in at least one transition sequence."
+  - "Its native obligations stay NOT_RUN until they run."
+validation_surfaces:
+  - "python3 scripts/pm_collaboration_events.py"
+  - "Plans/collaboration_event_contract_fixtures.json"
+  - "Plans/collaboration_event_payloads.schema.json"
+  - "Plans/collaboration_projection_contracts.schema.json"
+  - "Plans/collaboration_event_admission.json"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: collaborative_event_oracle_gap
+reasoning_tier: high
+context_scope: collaborative_event_oracles_review_artifact_finalized
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/collaboration_event_contract_fixtures.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-090"
+  - "Plans/Decision_Log.md#DL-091"
+  - "Plans/Decision_Log.md#DL-092"
+  - "Plans/Decision_Log.md#DL-292"
+  - "reports/event-authority-20261104/DC-binding-search.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/L8/REPORT.md"
+preserved_exact_tokens:
+  - "review.artifact_finalized"
+  - "COLLAB-RETRY-01"
+  - "COLLAB-UNCERTAIN-01"
+negative_constraints:
+  - "Do not use a sibling's case as review.artifact_finalized's own evidence."
+  - "Do not record a native obligation as passed without running it."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/storage-plan.md#SP-478, ContractName:Plans/Contracts_V0.md#CV-478
+
+
+
+### ATS-290 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-290
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For approval.requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (An actual current blocked episode creates one ordered action request; it is not a grant. Tool requests carry tool_use_id; other requests omit it.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For approval.granted alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Requires the exact unresolved requested episode and an authenticated human selecting a member of its ordered allowed_action_ids; PAUSE precedence and live revocation remain enforced. Grant resolves only this episode.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For approval.requested alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative resolved_episode, empty_actions; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For approval.granted alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative no_request, actor_not_human, paused, revoked, unlisted_action; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For approval.requested alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For approval.granted alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For approval.requested alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For approval.granted alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-291 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-291
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For approval.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Requires the exact unresolved requested episode; terminal denial never unblocks or executes the tool.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For approval.timeout alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Requires the exact unresolved requested episode and the original owner timeout expiry evidence; terminal timeout never authorizes work.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For approval.denied alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative already_resolved; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For approval.timeout alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative already_resolved, not_expired; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For approval.denied alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For approval.timeout alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For approval.denied alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For approval.timeout alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-292 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-292
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For config.migrated alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Only first-load single→None, per_phase→Phase and per_task→Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For gate.evaluation_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (A fresh evaluation_id is captured with the exact gate inputs before evaluation. Neither this event nor a previous pass permits progression.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For config.migrated alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative not_first_load, wrong_input_hash, wrong_result; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For gate.evaluation_started alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative reused_evaluation, wrong_evaluation; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For config.migrated alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For gate.evaluation_started alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For config.migrated alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For config.migrated alone, retention_binding_oracle pins the exact existing-policy assignment and SP-349 Server-wide counterpart boundary. Pending technical adapters fence deletion/admission; original terminal/run anchors and holds are tested without inventing a new retention decision.
+   For gate.evaluation_started alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For gate.evaluation_started alone, scored_gate_dispatch_context is a positive complete source/EventRecord case. Missing ref, missing tuple, wrong original ref/tuple, altered numeric result/threshold and bare reviewer scores without original context are negative cases through the full source checker. The immutable source and original outcome are changed only by the original-owner fixture adapter, never retrofitted at append.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-293 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-293
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For gate.failed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Exactly one failed result follows the matching evaluation_started with failure code and evidence. A blocked GATE-012 report with clarification items is BLOCKED, not falsely classified FAIL or PASS.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For gate.passed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Exactly one result follows the matching evaluation_started; all gate-specific PASS predicates and evidence must hold. GATE-012 requires a valid PASS report with zero clarification items.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For gate.failed alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative no_start, blocked_not_failed, wrong_evaluation; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For gate.passed alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative no_start, blocked_not_passed, clarification_pending, failed_predicate; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For gate.failed alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For gate.passed alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For gate.failed alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For gate.failed alone, scored_gate_dispatch_context is a positive complete source/EventRecord case. Missing ref, missing tuple, wrong original ref/tuple, altered numeric result/threshold and bare reviewer scores without original context are negative cases through the full source checker. The immutable source and original outcome are changed only by the original-owner fixture adapter, never retrofitted at append.
+   For gate.passed alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For gate.passed alone, scored_gate_dispatch_context is a positive complete source/EventRecord case. Missing ref, missing tuple, wrong original ref/tuple, altered numeric result/threshold and bare reviewer scores without original context are negative cases through the full source checker. The immutable source and original outcome are changed only by the original-owner fixture adapter, never retrofitted at append.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-294 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-294
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For requirements.clarification_requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Only a schema-valid blocked requirements report with nonempty needs_user_clarification emits. question_ids equals the complete report question set. No automatic answers or progression; explicit answers and a new PASS report are required.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For run.background_enqueued alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Append only after the durable enqueue intent captures authenticated actual scope/Host/root. Queue release follows receipt. Missing worktree fields never choose main Project or application scope. Replay never enqueues again.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For requirements.clarification_requested alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative not_blocked, incomplete_questions, wrong_thread; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For run.background_enqueued alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative uncommitted_queue, wrong_host, wrong_root; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For requirements.clarification_requested alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For run.background_enqueued alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For requirements.clarification_requested alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For run.background_enqueued alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-295 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-295
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For tool.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (The policy/user-denial path precedes dispatch; DL-430 excludes FileSafe blocks from tool.denied and saves only the dedicated FileSafe refusal. Denial follows policy/user refusal and precedes any tool dispatch; never executes or contributes to executed-call tool_usage rollups. Current runtime node denials retain all blocked and attempt joins.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For tool.execution_completed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Exactly one terminal record follows a matching execution_started; result_ref joins original result custody and duration_ms is nonnegative. Replay never reexecutes.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For tool.denied alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative already_dispatched, not_denied; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For tool.execution_completed alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative no_start, wrong_result, wrong_duration; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For tool.denied alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For tool.execution_completed alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For tool.denied alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For tool.denied alone, full runtime mapping, user-declined and headless-ask-denied positives pass through the complete source checker. Swapping blocked_sequence plus approval_scope_key, swapping either separately, reversing ordered actions and changing the effective permission snapshot are negative cases with the original prepared source unchanged. Explicit emission oracles accept policy/user refusal and assert non-emission for allow/schema/already-dispatched boundaries; the DL-430 FileSafe cell is no_emission with zero tool.denied appends. Its emission-boundary fixture contains only denial_origin, policy_decision and dispatch_state, so it carries no stale policy-reason or action copies. FileSafe saves its dedicated refusal entry; the tool view preserves its reason and allowed recovery actions, distinct from execution failure and with no automatic retry.
+   For tool.denied alone, retention_binding_oracle pins the exact existing-policy assignment and SP-349 Server-wide counterpart boundary. Pending technical adapters fence deletion/admission; original terminal/run anchors and holds are tested without inventing a new retention decision.
+   For tool.execution_completed alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-296 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-296
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For tool.execution_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (After every dispatch policy/schema/hook gate succeeds, record the admitted tool-use start before invoking the tool. No start is emitted for a policy denial.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For tool.invoked alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used describes actual acceleration and never guesses. Web operations stay this family, never web.operation.*.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For tool.execution_started alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative policy_denied, schema_refused, hook_blocked, already_started; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For tool.invoked alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative refused_not_executed, wrong_success, wrong_latency; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For tool.execution_started alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For tool.invoked alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For tool.execution_started alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For tool.invoked alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For tool.invoked alone, web_map_edges_and_ref, web_read_source_and_body_refs, web_extract_content_ref, web_research_summary_refs, batch_parent and two independently keyed batch_url children are complete positive source/envelope cases. Wrong operation/tier, read carrying map counters, missing required context or body/source references substituted without original outcome, missing child provider attempt, changed URL/parent, missing URL child and duplicate child identity refuse through the complete source/batch oracle. Parent/child identity is checked as a batch, in addition to individual source joins.
+   For tool.invoked alone, retention_binding_oracle pins the exact existing-policy assignment and SP-349 Server-wide counterpart boundary. Pending technical adapters fence deletion/admission; original terminal/run anchors and holds are tested without inventing a new retention decision.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-297 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-297
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For usage.event alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Normalize actual provider/header/CLI/estimate observations; null means unknown, never zero. Cache/reasoning subset fields are not added to inclusive totals. Adjustments replace the prior contribution for usage_record_id atomically, never add it twice. Opening Usage reads rollups and does not scan events; JSONL is import/export only. Daily account/provider/model totals survive detail expiry.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For worktree.created alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Original allocation ownership and branch/path custody must exist before created is appended and before a node starts work. Creation replay inspects original allocation, never creates another tree.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For usage.event alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative wrong_observation, wrong_account, wrong_provider_attempt, invalid_settlement; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For worktree.created alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative not_created, wrong_path, wrong_lane; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For usage.event alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For worktree.created alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For usage.event alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+   For usage.event alone, absent_provider_account, unknown_without_account, local_without_account, cli_without_account and application_absent_provider_account preserve original null account/billing/provider-account slots and omit optional payload identities. Each has a fabricated-account negative; changed known account/billing/provider-account identities refuse. Unknown/no-payload variants do not require a pretend provider account.
+   For usage.event alone, retention_binding_oracle pins the exact existing-policy assignment and SP-349 Server-wide counterpart boundary. Pending technical adapters fence deletion/admission; original terminal/run anchors and holds are tested without inventing a new retention decision.
+   For worktree.created alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-298 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-298
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For worktree.deleted alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Delete only after original result custody, grace period, file-lock and active-lock/safe-point dependency checks pass. Active lock references must be empty or proven released; no held safe point may lose its dependencies. Replay never deletes another tree.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+   For worktree.deleted alone, second-pass materialized cases in Plans/dt_event_contract_fixtures.json include complete prepared/completed source values, original eleven-field receipt and full EventRecord joins; full checkpoint/token/empty-prefix values; wrong source/scope/subject and missing-join cases; all required source/payload/checkpoint omissions; every individual family transition negative not_deleted, grace_not_elapsed, lock_held, safe_point_held, terminal_open, editor_open, recovery_held, file_lock_unchecked; exact retry/conflict, crash-before-outcome, crash-before-append, lost acknowledgement, missing original, older restore, source gaps, incomplete filter, CAS loss, frontier change, denied/deleted read, unknown version, reader withdrawal and governed rebuild. Static model assertions compare complete original values, unchanged checkpoints and zero repeated external effects, not labels or case counts. The checker adopts the SP-278 source-verification adapter as an explicit assumed boundary. Native filesystem/redb/provider/Git operations, original-owner transaction authentication and crash injection remain NOT_RUN. The static results prove contract vectors only. Retention-choice-dependent execution is held; known policy vectors preserve original anchors, holds and canonical daily totals.
+   For worktree.deleted alone, the materialized checkpoint verified_prefix adapter binds the complete nine-field token, exact globally examined row-set digest/count/range and filter result; a transplanted row-set or token is unavailable. This synthetic adapter is an explicit native-authentication assumption, not a claim that fixture booleans authenticate Storage frames. The source codec byte vectors, exact source/owner_result separation, application server/operation/codec negatives where applicable, independent lifecycle transitions, pending/known retention gates and held-generation capacity cases are executable static oracles in scripts/pm-dt-event-contracts.py. Each recovery/checkpoint fixture is also a concrete native crash/race obligation; original owner transaction, fsync, wire, permissions and redb CAS remain NOT_RUN.
+   For worktree.deleted alone, round-1 fixtures refuse projector_replay_only in both writer and retry models with replay_only_not_appendable, and refuse an above-16-KiB inline body with payload_ref_required while retaining verified/refused pack-body cases. These remain static oracles with native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-305 — DCH
+
+DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry. Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278 frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild. These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+
+Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization cases), CV-366 application keys with original Server/operation identity and rejection of application dch: keys, and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every Project fixture now uses project~cDE for p1; dependent identities are recomputed. For chat.thread_archived both editions cover manual active/suspended to archived, expected/committed revision joins, existing catalog selection/no-active-run guards, and reject automatic origin, stale/changed source, creating/already-archived/deleted predecessors, active run and absent readback. These are static contract fixtures; native command/receipt/storage execution remains NOT_RUN.
+
+Review rounds 2 and 3 require all ten standing checks for every one of the seventeen families: explicit append/retry rejection of projector_replay_only; exact CV-366 application keys; encoded CV-365 project~ partitions; actual MessagePack inline byte boundaries and authorized SP-337 payload-reference readback; exact-end guards on every anchored identifier pattern with trailing-LF negatives; the exact producer-semantic digest field list with metadata-only retry positives and one mutation per included field plus global event-ID integrity; coherent Storage/source/token/key/ref/dataset/publication joins and independent current-frontier negatives; and rejection of successful exit 0 in the failed-test family with original started/outcome joins, nonzero/timeout/process-error positives and mismatches; complete schema-reference closure before fixture execution, including local/file references in optional, conditional and historical branches of selected and embedded registry schemas; and retained-original historical reads after live-state changes, with current access checks and refusal of withdrawn or forged events. The full checker executes the regression cases for both payload editions and every separate checkpoint family. Dependencies for this static checker are jsonschema, msgpack, blake3 and rfc8785. Native process, receipt, source-adapter, CRC, CAS, durability, custody and withdrawal obligations remain NOT_RUN. No admission or retention decision follows from a static pass.
+
+
+Review round 3 requires exact object equality between every materialized DCH checkpoint value_schema and its selected same-ID/version schema. Both definitions independently validate current and populated-history positives and reject trailing LF in every patterned current/history identifier, digest and retirement timestamp. Schema closure is independent of which fixture branches execute; an unresolved reference fails the checker as a structured failure. scripts/pm_dch_event_regressions.py supplies a separate full-checker negative for each of the ten standing checks in each family, plus the original F1-F3 and first Astra B1-B5 regressions. Retained historical lookup verifies the original encoded event commitment, original edition, scope/identity and current source/access evidence; current lifecycle or worktree state does not redefine the historical event. This fixture witness is synthetic and grants neither native proof nor admission. Manual archive remains manual under DL-287; the Stop record question remains unprepared.
+
+Review round 4 requires standing check 11 across the complete DCH lane: construct each negative from an accepted case and change exactly one contract fact; keep every observational copy and every unrelated identity, encoded commitment and source/publication witness coherent. Generation-limit negatives contain three schema-valid retired entries beyond the valid two-entry history. Unsupported historical editions carry the independently supplied commitment of those exact retained bytes; forged-byte negatives remain separate. Terminal-test event-identity negatives change the terminal payload started_event_id and preserve the valid started source. For every acceptance guard, remove only that guard in an in-memory test variant, require its own negatives to become accepted, and require all other negatives to remain rejected for their own defects; restore the guard before the next row. The retained guard-removal table identifies the exact guard, negatives that flip, negatives that remain rejected and any equivalent schema/semantic copies removed together. A masked negative, unproved guard, unexpected exception or incomplete table fails acceptance. Every product refusal is a named row of a phase guard table (scripts/pm_dch_table_*.py, generated by scripts/pm-dch-table-generate.py), and scripts/pm-dch-guard-tables.py runs the shared guard-isolation tool (scripts/pm_guard_isolation.py) over every table, alongside the complete ordinary checker and regression runner. No production guard may be weakened. Native execution remains NOT_RUN.
+
+Review round 5 requires actual-instance event-ID verification for both payload editions and two independent Storage instances, including inline and referenced historical and checkpoint paths. Checkpoint publication validates supported original envelope/payload editions and current custody under historical-reader policy, accepts retained compatibility originals after live-state changes, and refuses unsupported, withdrawn, forged and foreign originals. Measure the complete encoded checkpoint and every physical inline pointer at 16384/16385 bytes, including two retained generations and maximum legal reference arrays; oversized logical positives require verified SP-337 pack/index/readback custody. All seventeen families exercise numeric aliases 1/1.0/1e0 and -0/0, invalid JSON 01, and wrong-type strings, null, arrays and nested objects; declared integer slots reject non-integer runtime types (CV-1100 current_integer; SP-1100 storage_uint64 for Storage metadata) before joins, and SP-1100 physical encoding preserves the float type, so an alias never shares an integer's commitment or reference. Every guard-removal variant preserves every unrelated rule. A missing-generation mutant may substitute only an explicit independent lookup witness and must continue all remaining joins; withdrawn-state, last-event and publication-id containment controls must still refuse in every family. Never return early success to prove a guard. Preserve all earlier round findings and negative fixtures; native execution and Stop remain unchanged.
+
+Review round 6 requires UUID-format/type validation for every actual Storage context before source reads, with coherently re-keyed/recommitted malformed contexts in both editions of all seventeen families. Current schemas and writers preserve exact owner integer domains: Storage uint64 metadata is never capped at 2^53, and logical payload and publication integers retain their owner bounds. Retained originals select their protected original recipe as refined by round 7. Producer route availability (CV-1100 qualified JCS over the CV-317 projection) is separate from logical integer admission; physical bytes follow SP-1100 type-preserving encoding, and retained-dispatch (SP-1101) changes belong to the shared sweep. Test owner endpoints, successors and MessagePack overflow with structured refusals and no exception-as-rejection path. Both terminal-test families accept historically valid inline/reference/compatibility/second-Store starts after live-state changes and refuse independently forged, withdrawn and foreign starts under current custody. Sweep all eleven Astra defect classes, including numeric aliases and wrong-type forms, and rerun the complete guard table serially, one family and one guard or named duplicate set at a time. Preserve all earlier guards and witnesses; never use early success to prove a rule. Stop remains held for Jared and native execution remains NOT_RUN.
+
+Review round 7 requires C7-B1 and sweep S1/S2 in every applicable family. Plans/dch_retained_history_fixtures.json and scripts/pm_dch_round7_oracles.py supply retained cases; scripts/pm_dch_formats.py supplies mandatory formats, whose schema verdicts and primitive guards are guard-table rows proved by scripts/pm-dch-guard-tables.py. record_number_rule() is the single numeric/schema/format/encoder selector: strict-v4 for current inputs; protected original write-receipt provenance for every retained source, compatibility record, materialized payload, checkpoint/history value, saved retry original and retained test start. Prove raw-v1 float-sequence and normalized-v2 earlier integer-domain positives in both editions of all seventeen families, both replay policies and inline/reference routes. Add retained strict-v3 format positives, independent forged-recipe/source/access/withdrawal controls, checkpoint-source and retained-start positives, and stored checkpoint/history controls. Mandatory explicit date-time calendar/full-match and RFC 3986 HTTPS grammars must work with optional format packages absent. Negatives cover missing zones, wrong separators, calendar/range errors, trailing LF, leap-second and fractional edges, and malformed PR hosts/brackets/percent encodings in both editions. Rerun the entire guard-removal table serially with no bypass, including named duplicate copies of the timestamp grammar on joined payload/EventRecord values. Keep all earlier current-write/identity, custody, numeric-domain, overflow and eleven standing-check controls. Every Astra class 1–12 and 10a gets an explicit result; native receipt authentication/execution is NOT_RUN and Stop stays held for Jared.
+
+Review round 8 replaces the masked oversized-pointer negative with an in-limit exact-reference negative. An exact SP-337 pointer has a fixed 64-hex digest and media type plus at most 20 uint64 decimal size digits; its encoded size is below 16384, so the defensive pointer-size predicate is entailed on exact references, not a duplicate of equality. Keep both predicates. Test each affected Storage field at 2^53, 2^60 and uint64 maximum and refuse overflow, negative, boolean, float and string substitutes independently. Checkpoint primitive admission probes have no stale source copies; full positive publications synchronize all copies. The legacy grouped guard table is historical evidence only: the shared pm_guard_isolation.py tool must replace merged identifiers, shared input/grouped types, compound envelope/access and size/reference removal groups. No lane proof rebuild is required by this round; admission still requires completed isolation evidence.
+
+Sweep part 2B adopts the shared CV-1101 check and SP-1101 dispatch. Every DCH validator is pm_event_datetime.datetime_validator over the complete outer schema (scripts/pm_dch_formats.py composes it with the DCH HTTPS URI grammar); negatives show the shared predicate's own refusal through the validator at occurred_at_utc, observed_at_utc, persisted_at_utc, ts and retired_at_utc. The timestamp battery records per-field expectations: the EventRecord profile for occurred_at_utc, CV-253 storage_utc_z for observed_at_utc and persisted_at_utc, and the registered predicate with the owner-schema terminal-Z pattern for ts and retired_at_utc; year 0000, lowercase t and legitimate leap seconds are owner-valid. Retained strict-v3 originals whose timestamps CV-1101 refuses are owner-invalid and refuse; owner-valid strict-v3 originals and checkpoints (legitimate leap second, lowercase t, long fraction) are retained positives with sealed receipts. Retained reads compose RetainedDispatcher once; an original of a Store outside the sealed custody refuses (RN05) and an unsupported receipt recipe refuses (RN06), each with a single-row witness. Run python3 scripts/pm_event_numbers.py --self-test and python3 scripts/pm_event_datetime_inventory.py and credit exactly what they report; the shared inventory must classify the lane's resources before installation.
+
+```yaml
+plan_unit_id: ATS-305
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: '### ATS-305 — DCH
+
+
+  DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application
+  fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates
+  every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict
+  and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry.
+  Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after
+  body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278
+  frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild.
+  These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint
+  with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention
+  acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+
+
+  Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization
+  cases), CV-366 application keys with original Server/operation identity and rejection of application dch: keys,
+  and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every Project fixture now uses project~cDE
+  for p1; dependent identities are recomputed. For chat.thread_archived both editions cover manual active/suspended
+  to archived, expected/committed revision joins, existing catalog selection/no-active-run guards, and reject automatic
+  origin, stale/changed source, creating/already-archived/deleted predecessors, active run and absent readback.
+  These are static contract fixtures; native command/receipt/storage execution remains NOT_RUN.
+
+
+  Review rounds 2 and 3 require all ten standing checks for every one of the seventeen families: explicit append/retry
+  rejection of projector_replay_only; exact CV-366 application keys; encoded CV-365 project~ partitions; actual
+  MessagePack inline byte boundaries and authorized SP-337 payload-reference readback; exact-end guards on every
+  anchored identifier pattern with trailing-LF negatives; the exact producer-semantic digest field list with metadata-only
+  retry positives and one mutation per included field plus global event-ID integrity; coherent Storage/source/token/key/ref/dataset/publication
+  joins and independent current-frontier negatives; and rejection of successful exit 0 in the failed-test family
+  with original started/outcome joins, nonzero/timeout/process-error positives and mismatches; complete schema-reference
+  closure before fixture execution, including local/file references in optional, conditional and historical branches
+  of selected and embedded registry schemas; and retained-original historical reads after live-state changes, with
+  current access checks and refusal of withdrawn or forged events. The full checker executes the regression cases
+  for both payload editions and every separate checkpoint family. Dependencies for this static checker are jsonschema,
+  msgpack, blake3 and rfc8785. Native process, receipt, source-adapter, CRC, CAS, durability, custody and withdrawal
+  obligations remain NOT_RUN. No admission or retention decision follows from a static pass.
+
+
+
+  Review round 3 requires exact object equality between every materialized DCH checkpoint value_schema and its selected
+  same-ID/version schema. Both definitions independently validate current and populated-history positives and reject
+  trailing LF in every patterned current/history identifier, digest and retirement timestamp. Schema closure is
+  independent of which fixture branches execute; an unresolved reference fails the checker as a structured failure.
+  scripts/pm_dch_event_regressions.py supplies a separate full-checker negative for each of the ten standing checks
+  in each family, plus the original F1-F3 and first Astra B1-B5 regressions. Retained historical lookup verifies
+  the original encoded event commitment, original edition, scope/identity and current source/access evidence; current
+  lifecycle or worktree state does not redefine the historical event. This fixture witness is synthetic and grants
+  neither native proof nor admission. Manual archive remains manual under DL-287; the Stop record question remains
+  unprepared.
+
+
+  Review round 4 requires standing check 11 across the complete DCH lane: construct each negative from an accepted
+  case and change exactly one contract fact; keep every observational copy and every unrelated identity, encoded
+  commitment and source/publication witness coherent. Generation-limit negatives contain three schema-valid retired
+  entries beyond the valid two-entry history. Unsupported historical editions carry the independently supplied commitment
+  of those exact retained bytes; forged-byte negatives remain separate. Terminal-test event-identity negatives change
+  the terminal payload started_event_id and preserve the valid started source. For every acceptance guard, remove
+  only that guard in an in-memory test variant, require its own negatives to become accepted, and require all other
+  negatives to remain rejected for their own defects; restore the guard before the next row. The retained guard-removal
+  table identifies the exact guard, negatives that flip, negatives that remain rejected and any equivalent schema/semantic
+  copies removed together. A masked negative, unproved guard, unexpected exception or incomplete table fails acceptance.
+  Every product refusal is a named row of a phase guard table (scripts/pm_dch_table_*.py, generated by scripts/pm-dch-table-generate.py),
+  and scripts/pm-dch-guard-tables.py runs the shared guard-isolation tool (scripts/pm_guard_isolation.py) over every
+  table, alongside the complete ordinary checker and regression runner. No production guard may be weakened. Native
+  execution remains NOT_RUN.
+
+
+  Review round 5 requires actual-instance event-ID verification for both payload editions and two independent Storage
+  instances, including inline and referenced historical and checkpoint paths. Checkpoint publication validates supported
+  original envelope/payload editions and current custody under historical-reader policy, accepts retained compatibility
+  originals after live-state changes, and refuses unsupported, withdrawn, forged and foreign originals. Measure
+  the complete encoded checkpoint and every physical inline pointer at 16384/16385 bytes, including two retained
+  generations and maximum legal reference arrays; oversized logical positives require verified SP-337 pack/index/readback
+  custody. All seventeen families exercise numeric aliases 1/1.0/1e0 and -0/0, invalid JSON 01, and wrong-type strings,
+  null, arrays and nested objects; declared integer slots reject non-integer runtime types (CV-1100 current_integer;
+  SP-1100 storage_uint64 for Storage metadata) before joins, and SP-1100 physical encoding preserves the float type,
+  so an alias never shares an integer''s commitment or reference. Every guard-removal variant preserves every
+  unrelated rule. A missing-generation mutant may substitute only an explicit independent lookup witness and must
+  continue all remaining joins; withdrawn-state, last-event and publication-id containment controls must still refuse
+  in every family. Never return early success to prove a guard. Preserve all earlier round findings and negative
+  fixtures; native execution and Stop remain unchanged.
+
+
+  Review round 6 requires UUID-format/type validation for every actual Storage context before source reads, with
+  coherently re-keyed/recommitted malformed contexts in both editions of all seventeen families. Current schemas
+  and writers preserve exact owner integer domains: Storage uint64 metadata is never capped at 2^53, and logical
+  payload and publication integers retain their owner bounds. Retained originals select their protected original
+  recipe as refined by round 7. Producer route availability (CV-1100 qualified JCS over the CV-317 projection) is
+  separate from logical integer admission; physical bytes follow SP-1100 type-preserving encoding, and retained-dispatch
+  (SP-1101) changes belong to the shared sweep. Test owner endpoints, successors and
+  MessagePack overflow with structured refusals and no exception-as-rejection path. Both terminal-test families
+  accept historically valid inline/reference/compatibility/second-Store starts after live-state changes and refuse
+  independently forged, withdrawn and foreign starts under current custody. Sweep all eleven Astra defect classes,
+  including numeric aliases and wrong-type forms, and rerun the complete guard table serially, one family and one
+  guard or named duplicate set at a time. Preserve all earlier guards and witnesses; never use early success to
+  prove a rule. Stop remains held for Jared and native execution remains NOT_RUN.
+
+
+  Review round 7 requires C7-B1 and sweep S1/S2 in every applicable family. Plans/dch_retained_history_fixtures.json
+  and scripts/pm_dch_round7_oracles.py supply retained cases; scripts/pm_dch_formats.py supplies mandatory formats,
+  whose schema verdicts and primitive guards are guard-table rows proved by scripts/pm-dch-guard-tables.py. record_number_rule()
+  is the single numeric/schema/format/encoder selector: strict-v4 for current inputs; protected original write-receipt
+  provenance for every retained source, compatibility record, materialized payload, checkpoint/history value, saved
+  retry original and retained test start. Prove raw-v1 float-sequence and normalized-v2 earlier integer-domain positives
+  in both editions of all seventeen families, both replay policies and inline/reference routes. Add retained strict-v3
+  format positives, independent forged-recipe/source/access/withdrawal controls, checkpoint-source and retained-start
+  positives, and stored checkpoint/history controls. Mandatory explicit date-time calendar/full-match and RFC 3986
+  HTTPS grammars must work with optional format packages absent. Negatives cover missing zones, wrong separators,
+  calendar/range errors, trailing LF, leap-second and fractional edges, and malformed PR hosts/brackets/percent
+  encodings in both editions. Rerun the entire guard-removal table serially with no bypass, including named duplicate
+  copies of the timestamp grammar on joined payload/EventRecord values. Keep all earlier current-write/identity,
+  custody, numeric-domain, overflow and eleven standing-check controls. Every Astra class 1–12 and 10a gets an explicit
+  result; native receipt authentication/execution is NOT_RUN and Stop stays held for Jared.
+
+
+  Review round 8 replaces the masked oversized-pointer negative with an in-limit exact-reference negative. An exact
+  SP-337 pointer has a fixed 64-hex digest and media type plus at most 20 uint64 decimal size digits; its encoded
+  size is below 16384, so the defensive pointer-size predicate is entailed on exact references, not a duplicate
+  of equality. Keep both predicates. Test each affected Storage field at 2^53, 2^60 and uint64 maximum and refuse
+  overflow, negative, boolean, float and string substitutes independently. Checkpoint primitive admission probes
+  have no stale source copies; full positive publications synchronize all copies. The legacy grouped guard table
+  is historical evidence only: the shared pm_guard_isolation.py tool must replace merged identifiers, shared input/grouped
+  types, compound envelope/access and size/reference removal groups. No lane proof rebuild is required by this round;
+  admission still requires completed isolation evidence.
+
+
+  Sweep part 2B adopts the shared CV-1101 check and SP-1101 dispatch. Every DCH validator is
+  pm_event_datetime.datetime_validator over the complete outer schema (scripts/pm_dch_formats.py composes it with the
+  DCH HTTPS URI grammar); negatives show the shared predicate''s own refusal through the validator at occurred_at_utc,
+  observed_at_utc, persisted_at_utc, ts and retired_at_utc. The timestamp battery records per-field expectations: the
+  EventRecord profile for occurred_at_utc, CV-253 storage_utc_z for observed_at_utc and persisted_at_utc, and the
+  registered predicate with the owner-schema terminal-Z pattern for ts and retired_at_utc; year 0000, lowercase t and
+  legitimate leap seconds are owner-valid. Retained strict-v3 originals whose timestamps CV-1101 refuses are
+  owner-invalid and refuse; owner-valid strict-v3 originals and checkpoints (legitimate leap second, lowercase t, long
+  fraction) are retained positives with sealed receipts. Retained reads compose RetainedDispatcher once; an original
+  of a Store outside the sealed custody refuses (RN05) and an unsupported receipt recipe refuses (RN06), each with a
+  single-row witness. Run python3 scripts/pm_event_numbers.py --self-test and python3
+  scripts/pm_event_datetime_inventory.py and credit exactly what they report; the shared inventory must classify the
+  lane''s resources before installation.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+- All ten standing-check mutations fail the full checker for each prepared family; selected/registered schemas agree
+  exactly, every reference resolves and populated histories are exercised.
+- 'Standing check 11 passes for every lane guard: one contract defect per negative, coherent copies and unrelated
+  commitments, own negatives accepted only when that guard is removed, all others still rejected; retain the complete
+  guard-removal table.'
+- Complete checkpoint byte/reference and original-reader boundaries, exact types and actual-instance identity have
+  isolated witnesses; generation lookup mutants preserve all downstream guards.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm_dch_event_regressions.py
+- python3 scripts/pm-dch-table-generate.py scripts --check
+- python3 scripts/pm-dch-guard-tables.py --out <guard-tables-dir>
+- python3 scripts/pm_dch_round5_regressions.py --out <round5-regressions.json>
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- DCH
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-306 — Stop request, saved outcome and retirement contract oracles
+
+DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins; current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody; actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers. Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and successful exits never count as refusal. New real guards need negatives. Every Stop refusal is a named st_* guard-table row (or a reused DCH row), proved by the shared guard-isolation tool through scripts/pm-dch-guard-tables.py; number recipes follow CV-1100/SP-1100 (scripts/pm_event_numbers.py) and timestamps the shared CV-1101 check (scripts/pm_event_datetime.py through scripts/pm_dch_formats.py); the Stop contract has one current edition, so SP-1101 dispatch selects no earlier recipe. Witnesses accept a legitimate leap second, lowercase t and year 0000 at ts and outcome_at_utc and show the shared predicate's own refusal for hour 24, a false leap second and trailing LF; do not introduce another lane serializer/format grammar.
+
+Native acceptance remains NOT_RUN and is mandatory before the SP-628 retirement cutoff: stop the real process after original-request receipt, cancellation delivery, result staging, result CAS and acknowledgement loss; restart and recover from a coherent backup; verify exact request/assistant turn/work/result bytes and first receipt, preserve the original deadline, never rerun work, keep unresolved or unsaved outcomes behind the queue barrier, require separate user release and rerun current permission/hold gates. Prove both cancelled and timeout outcomes survive restart and recovery and that a lost result cannot be mistaken for success. The static model does not certify physical sync, redb CAS, authenticated source provenance or these native crash tests. Run each of the seventeen unchanged families separately through pm_dch_events.py --family, then this separate Stop checker; record every exit code. No admission or twelve-PASS claim is implied.
+
+```yaml
+plan_unit_id: ATS-306
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: '### ATS-306 — Stop request, saved outcome and retirement contract oracles
+
+
+  DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json
+  supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment
+  and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json
+  are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover
+  schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins;
+  current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project
+  partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody;
+  actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result
+  CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers.
+  Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant
+  on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and
+  successful exits never count as refusal. New real guards need negatives. Every Stop refusal is a named st_* guard-table
+  row (or a reused DCH row), proved by the shared guard-isolation tool through scripts/pm-dch-guard-tables.py; number
+  recipes follow CV-1100/SP-1100 (scripts/pm_event_numbers.py) and timestamps the shared CV-1101 check
+  (scripts/pm_event_datetime.py through scripts/pm_dch_formats.py); the Stop contract has one current edition, so
+  SP-1101 dispatch selects no earlier recipe. Witnesses accept a legitimate leap second, lowercase t and year 0000 at
+  ts and outcome_at_utc and show the shared predicate''s own refusal for hour 24, a false leap second and trailing LF;
+  do not introduce another lane serializer/format grammar.
+
+
+  Native acceptance remains NOT_RUN and is mandatory before the SP-628 retirement cutoff: stop the real process
+  after original-request receipt, cancellation delivery, result staging, result CAS and acknowledgement loss; restart
+  and recover from a coherent backup; verify exact request/assistant turn/work/result bytes and first receipt, preserve
+  the original deadline, never rerun work, keep unresolved or unsaved outcomes behind the queue barrier, require
+  separate user release and rerun current permission/hold gates. Prove both cancelled and timeout outcomes survive
+  restart and recovery and that a lost result cannot be mistaken for success. The static model does not certify
+  physical sync, redb CAS, authenticated source provenance or these native crash tests. Run each of the seventeen
+  unchanged families separately through pm_dch_events.py --family, then this separate Stop checker; record every
+  exit code. No admission or twelve-PASS claim is implied.'
+gui_related: false
+gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+## ATS-250 — Executor family oracles: attempt.completed, attempt.started
+
+`attempt.completed` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`attempt.started` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`attempt.completed` pass-two acceptance independently adds the exact `executor.attempt_completed.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-210's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`attempt.completed` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family attempt.completed`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+`attempt.started` pass-two acceptance independently adds the exact `executor.attempt_started.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-211's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`attempt.started` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family attempt.started`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+```yaml
+plan_unit_id: ATS-250
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of attempt.completed, attempt.started has its own paired positive
+  and negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-210
+- EP-211
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- attempt.completed
+- attempt.started
+```
+
+
+## ATS-251 — Executor family oracles: node.blocked, node.completed
+
+`node.blocked` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`node.completed` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`node.blocked` pass-two acceptance independently adds the exact `executor.node_blocked.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-212's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`node.blocked` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family node.blocked`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+`node.completed` pass-two acceptance independently adds the exact `executor.node_completed.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-213's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`node.completed` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family node.completed`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+```yaml
+plan_unit_id: ATS-251
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of node.blocked, node.completed has its own paired positive and
+  negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-212
+- EP-213
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- node.blocked
+- node.completed
+```
+
+
+## ATS-252 — Executor family oracles: node.started, node.unblocked
+
+`node.started` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`node.unblocked` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`node.started` pass-two acceptance independently adds the exact `executor.node_started.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-214's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`node.started` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family node.started`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+`node.unblocked` pass-two acceptance independently adds the exact `executor.node_unblocked.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-215's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`node.unblocked` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family node.unblocked`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+```yaml
+plan_unit_id: ATS-252
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of node.started, node.unblocked has its own paired positive and
+  negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-214
+- EP-215
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- node.started
+- node.unblocked
+```
+
+
+## ATS-253 — Executor family oracles: plan.decomposition_degraded, remediation.resolved
+
+`plan.decomposition_degraded` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`remediation.resolved` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`plan.decomposition_degraded` pass-two acceptance independently adds the exact `executor.plan_decomposition_degraded.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-216's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`plan.decomposition_degraded` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family plan.decomposition_degraded`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+`remediation.resolved` pass-two acceptance independently adds the exact `executor.remediation_resolved.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-217's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`remediation.resolved` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family remediation.resolved`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+```yaml
+plan_unit_id: ATS-253
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of plan.decomposition_degraded, remediation.resolved has its
+  own paired positive and negative static oracle cases; native durability remains
+  NOT_RUN.
+gui_related: false
+depends_on:
+- EP-216
+- EP-217
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- plan.decomposition_degraded
+- remediation.resolved
+```
+
+
+## ATS-254 — Executor family oracles: remediation.spawned, run.completed
+
+`remediation.spawned` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.completed` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`remediation.spawned` pass-two acceptance independently adds the exact `executor.remediation_spawned.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-218's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`remediation.spawned` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family remediation.spawned`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+`run.completed` pass-two acceptance independently adds the exact `executor.run_completed.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-219's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`run.completed` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family run.completed`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+```yaml
+plan_unit_id: ATS-254
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of remediation.spawned, run.completed has its own paired positive
+  and negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-218
+- EP-219
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- remediation.spawned
+- run.completed
+```
+
+
+## ATS-255 — Executor family oracles: run.graph_integrity_failed, run.node_backoff_expired
+
+`run.graph_integrity_failed` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.node_backoff_expired` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.graph_integrity_failed` pass-two acceptance independently adds the exact `executor.run_graph_integrity_failed.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-220's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`run.graph_integrity_failed` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family run.graph_integrity_failed`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+`run.node_backoff_expired` pass-two acceptance independently adds the exact `executor.run_node_backoff_expired.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-221's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`run.node_backoff_expired` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family run.node_backoff_expired`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+```yaml
+plan_unit_id: ATS-255
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of run.graph_integrity_failed, run.node_backoff_expired has its
+  own paired positive and negative static oracle cases; native durability remains
+  NOT_RUN.
+gui_related: false
+depends_on:
+- EP-220
+- EP-221
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- run.graph_integrity_failed
+- run.node_backoff_expired
+```
+
+
+## ATS-256 — Executor family oracles: run.node_backoff_started, run.node_ready
+
+`run.node_backoff_started` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.node_ready` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.node_backoff_started` pass-two acceptance independently adds the exact `executor.run_node_backoff_started.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-222's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`run.node_backoff_started` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family run.node_backoff_started`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+`run.node_ready` pass-two acceptance independently adds the exact `executor.run_node_ready.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-223's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`run.node_ready` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family run.node_ready`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+```yaml
+plan_unit_id: ATS-256
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of run.node_backoff_started, run.node_ready has its own paired
+  positive and negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-222
+- EP-223
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- run.node_backoff_started
+- run.node_ready
+```
+
+
+## ATS-257 — Executor family oracles: run.node_retry_scheduled, scheduler.pass
+
+`run.node_retry_scheduled` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`scheduler.pass` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.node_retry_scheduled` pass-two acceptance independently adds the exact `executor.run_node_retry_scheduled.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-224's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`run.node_retry_scheduled` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family run.node_retry_scheduled`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+`scheduler.pass` pass-two acceptance independently adds the exact `executor.scheduler_pass.source_adapter.v1@1.0.0` read-join/lifecycle contract, all conditional omissions and every actual parent/scope/revision/snapshot/evidence mismatch to `Plans/executor_event_semantic_fixtures.json`. Run `python3 scripts/pm_executor_event_semantics.py`. Its own positive variants and negative predecessor/successor/post-CAS/publication cases cover EP-225's table; its own six traces cover original receipt crash recovery, duplicate/conflict, lost custody, writer cutoff and original reconciliation, reader withdrawal, source generation/token invalidation and rebuild. Native complete owner-record validation, actual read adapters, SeglogFrameV2/receipt codecs, transaction CAS, flush, backup, restore, deletion and withdrawal concurrency remain mandatory NOT_RUN obligations; static normalized records and the finite trace model grant no runtime authority.
+
+`scheduler.pass` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.py`, generated by `scripts/pm-executor-table-generate.py`). Run `python3 scripts/pm-executor-guard-tables.py --out <dir>`: it replays this family's witnesses, including its single-defect part 2A witnesses in `Plans/executor_event_p2a_cases.json`, and credits only the rows the gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves. Run `python3 scripts/pm-executor-number-corpus.py --family scheduler.pass`: the shared CV-1100/SP-1100 number corpus through this family's numeric, complete capture and first-receipt routes. Timestamp grammar remains part 2B; its review here is interim only.
+
+```yaml
+plan_unit_id: ATS-257
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of run.node_retry_scheduled, scheduler.pass has its own paired
+  positive and negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-224
+- EP-225
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- run.node_retry_scheduled
+- scheduler.pass
+```
+
+
+### ATS-315 - Memory maintenance prepared event oracles
+
+```yaml
+plan_unit_id: ATS-315
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Newly authored static oracles for the eight exact families in Plans/memory_maintenance_contracts.json. Run python3 scripts/pm_memory_maintenance_events.py against Plans/memory_maintenance_event_fixtures.json, payload/operation schemas and Plans/memory_maintenance_rebuild_target.schema.json. Boundary cases retain all original schema/admission/permission/source/withdrawal checks and additionally supply concrete phase-valid operation rows and retained synthetic full event values. They compare the complete original payload, including frozen timestamp, status/ref/hash, not asserted proof Booleans. Invalid completed rows with null start/terminal/outcome are rejected by the closed operation schemas.
+
+  Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement, settled effect, terminal append and terminal-row advancement, lost acknowledgement, retry and replay. Trace expectations are separately authored full operation snapshots, retained originals and effect/selector counters; the checker computes transitions and rejects repeated effect attempts, conflicting original outcomes and repeated swaps. Lexical and semantic traces separately interrupt durable target preparation and selector publication and compare the complete prepared descriptor/selected target, including post-swap/pre-effect recovery. Negative descriptors cover wrong target identity/manifest/source/prior selector, unsafe or mismatched artifacts and unprepared publication. A mutated succeeded/failed result with unchanged original custody must fail for every completed family.
+
+  Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking, its own exact payload definition URI and dedupe_by_idempotency_key policy. Positive append and identical retry return the retained full-value original with one append and no maintenance effect; scoped dedupe keys use the encoded project~ partition. Both fresh append and retry with projector_replay_only refuse replay_only_not_appendable with no output, append or effect. Unsupported/missing envelope fields, wrong payload dispatch, Project/correlation/causation joins, trailing-LF event names and raw Project partitions are negative cases. Compatibility reader shapes are never accepted as current writers. The reduced phase-model values remain explicitly synthetic and are not canonical envelopes or physical receipts.
+
+  Completed recovery has separate permission-revoked and family-withdrawn negative traces for every exact family, requiring no output and unchanged durable state; authorized recovery returns the original value. All four started gates distinguish lawful accepted pre-append admission from recorded receipt/later phases and reject missing original start custody through completed state. Post-completion retry and recovery with lost start custody refuse rather than infer proof from terminal IDs. Schema-level trailing-LF negatives cover every lane-owned patterned identifier, including nested target inventories/selectors and operation schema copies in the storage registry.
+
+  Every completed-family current-writer suite checks retained-original retries in effect_committed and completed phases, for both succeeded and failed outcomes. Missing, changed or unflushed original start custody refuses start_receipt_missing before any original return; intact custody returns the exact terminal original without append or effect. Each of the eight exact families also rejects Application attempts, including CV-366-shaped application keys, because these contracts are Project-only. Maximum-width schema-valid UTF-8 payloads must fit the 16 KiB inline cap; oversized bodies fail the closed schema rather than acquire an undeclared large-body path. Storage-assigned sequence/observed/persisted retry changes individually return the original; changes to caller semantics conflict. SP-337 remains authoritative for any separately declared larger body.
+
+  Each exact family's SP-278 adoption has a synthetic storage-identity join case reusing Plans/event_record_index_checkpoint_contract_fixtures.json's existing generic checkpoint positive and its canonical schema. The event identity binds the same operation storage_instance_id as the checkpoint and instance-qualified key. Foreign checkpoint storage, key or event identity fails. This tests only that join, creates no DMEM checkpoint/cursor and does not validate a native source inclusion or authorize disclosure. The external full-checker mutation audit must corrupt each family's negative expectation independently and require a nonzero checker exit. These in-process maintenance events have no process-exit field; exit_code=0 is an unknown payload property and is rejected, not interpreted as a maintenance outcome.
+
+  Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point of every phase-model transition except crash, every canonical current-writer append or retry, every boundary acceptance and every history read; every earlier start-custody check calls the same gate. start_custody_matrix takes, for each exact family, every positive non-crash step of every unedited authored trace, retry and replay of every retained original, recovery from every phase, both terminal row advances (succeeded and failed), every positive writer and boundary case and a history read of every retained original. Each is first run intact as a positive control against its authored after-state and output, then once per start-record defect: missing, digest-only corruption, rehashed changed source value, coherently rehashed other operation, rehashed foreign storage identity, coherently rehashed foreign started family, coherently rehashed changed frozen time, unflushed receipt, extra record field, and a withdrawal fence. Every retained-value mutation refreshes its own digest and every identity or envelope copy affected by its one semantic change; digest-only corruption keeps the value intact. Started families also mutate the canonical writer's own retained start. Each negative cell must refuse exactly (start_receipt_missing; original_missing where the path's requested original is the start record itself; permission_or_withdrawal under withdrawal; false at the boundary) with no output and unchanged state, and each family's declared cell count must match. Absence is skipped only for first start admission from an accepted row. Operation cases reject a null, foreign or trailing-LF start receipt in every later phase of every operation definition.
+
+  Standing check 11 (sweep part 2A, Method B guard tables): every refusal of scripts/pm_memory_maintenance_events.py, scripts/pm_memory_archive_events.py and scripts/pm_memory_policy.py is one named row of a generated phase table (scripts/pm_memory_table_<phase>.py, written by scripts/pm-memory-table-generate.py: one phase per former refusal site, split at every predicate), and the checkers refuse only through those rows. `python3 scripts/pm-memory-guard-tables.py --out <evidence-path>` collects every witness call of the twelve complete family checkers, requires every control to pass every row and every negative to fail exactly its own row, and runs the shared guard tool scripts/pm_guard_isolation.py once per table: each row is cut alone, its own negatives must then be accepted while every other case keeps its exact result and guard-call trace, and a fresh restoration follows. Integrity, flush, record shape, absence and retained-value binding are separate rows, and each SP-1101 custody resolution is its own phase (sealed original, one binding and recipe, binding, installed recipe); withdrawal, phase, receipt and later-original witnesses also run at the common start custody gate. A row the tool reports unproved is decided first by a named earlier row or schema and stays as defence in depth. Each schema occurrence is one verdict row; per-keyword JSON Schema and format cuts are not ported to the shared tool. This is synthetic static evidence, with native custody and physical atomicity still NOT_RUN.
+
+  Canonical historical-reader oracles additionally run Plans/memory_canonical_history_fixtures.json through read_canonical_history for each exact family. They resolve an immutable write-time operation witness and full retained EventRecords, verify the same original-start identity/flush/digest/custody gate, and compare every producer/payload join. Ordinary 2.0.0, replay-only 2.0.0, the envelope owner's frozen 1.0.0 compatibility reader and replay-only compatibility originals remain readable after arbitrary live operation/source/request/selector/counter changes, current admission removal or absent cutoffs. Current-writer replay restrictions never reach those historical originals. Missing/corrupt/unflushed start custody, forged commitments, coherently rehashed foreign Project/storage identity or producer/body values, unknown families, revoked access and withdrawal refuse. Complete schemas independently own required/unknown fields; binding removal never suppresses required-field errors. Sweep part 2B (SP-1101): each of these reads, and the writer's returned and canonical start originals and the checkpoint join, first resolves the original once through the shared RetainedDispatcher against Storage's sealed custody of that exact retained record; composition seals the committed positive originals and the writers seal what they append at their commit point. The custody phase of each reading site refuses an unsealed original, an original sealed with more than one binding or recipe, a sealed binding that is not the reader's, and a recipe with no installed frozen verifier; its witnesses, and the sealed one-defect witnesses of every row behind it, include a current-writer original carrying the frozen digest (CV-339 still selected by custody) and a valid 1.0.0 original sealed under the 2.0.0 recipe (refused: the record never selects its edition). The CV-1101 battery (scripts/pm_memory_write_recipes.py datetime_profile_cases) checks every declared date-time field against hand-written expectations for its profile, requires the installed shared predicate's own refusal reason, refuses a str subclass, and checks CV-253 storage_utc_z on the envelope Storage fields at the writer and at retained editions; scripts/pm_memory_policy.py timestamp_checks covers the Card 6 policy instants, created_at on every selected original, and strict order across a legitimate leap second.
+
+  Current producer-semantic projections and current identity inputs follow CV-1100 (current recipe cv1100-exact-integer-write-v3): every numeric leaf is an exact integer primitive, never a boolean, runtime float or fraction/exponent token, within the range its field owner schema declares; no global safe-integer ceiling applies, and raw input uses the CV-1100 current JSON integer grammar (scripts/pm_event_numbers.py loads_current_json), so 01, +1, -0, 1.0 and 1e0 are never read as integers. This producer route excludes Storage-assigned sequence_id, observed_at_utc and persisted_at_utc under Contracts_V0.md#EventRecord. Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type; booleans, floats and strings refuse. Fresh writes and metadata-only retries preserve that full domain without a producer-number ceiling. Plans/memory_storage_uint64_fixtures.json and scripts/pm_memory_storage_metadata.py exercise every family through the complete current writer and metadata-only retry at 0, 2^53-1, 2^53, 2^53+1, 2^60 and 2^64-1; 2^64, -1, booleans, typed 1.0, strings, null, arrays and objects refuse. The Storage uint64 type exclusion is its own guard-table row, evaluated before the producer-number row and the envelope schema verdict. Decimal and exponent tokens decode losslessly to exact decimal carriers before validation and are never folded into integers. Identity, idempotency, result and target commitments keep their local recipes, sorted-key compact UTF-8 JSON over unchanged preimages, and admit only exact integers: a fraction, exponent or float spelling, a nonfinite value or an integer outside the range of its field owner refuses before hashing or append instead of being normalized. A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment (pm.storage.original_event_value_commitment.v1 over the complete 2.0.0 EventRecord map in SP-236 EVENT_VALUE bytes, scripts/pm_event_numbers.py full_value_commitment) with exact Storage uint64 metadata; no new serializer is introduced. Historical originals instead use their frozen write-time recipe integer-json-v1: pm.event.v0 envelope editions 1.0.0 and 2.0.0 both retain their original unbounded integral sequence domains; operation/target edition 1.0.0 uses the explicit historical_ definitions frozen from 77323e87d65908dbce2ea655ee344b6185a13ff1, including artifact byte_length up to 9223372036854775807. The two frozen envelope editions share the integer-json-v1 numeric/hash recipe, and no record field, edition included, selects a recipe. Reader dispatch follows SP-1101: each retained canonical original (the writer's returned or canonical start original, a canonical history original and its start record, a checkpoint-joined original) resolves once through the shared RetainedDispatcher, which takes the write-time recipe tuple (envelope edition, writer recipe, full-value profile and resources) from Storage's sealed custody of that exact retained record, never from the record's schema_id/schema_version, a recipe field or the caller, and the composition-installed frozen verifier of that tuple then runs its checks. An original Storage did not seal at its seglog ref, one sealed with more than one binding or recipe, a sealed binding that is not the reader's, or a recipe with no installed verifier refuses at the site's custody guard; there is no current-then-legacy probing, permissive fallback or current writer predicate. The original full-value commitment is recomputed under that recipe with no rewrite of retained values, hashes, frozen operation or receipt. Historical numeric decoding preserves the original typed integer or binary64 stored value; a current lossless decimal parse never reinterprets an older binary64 original. Original verification in current-writer retries and checkpoint reader projections uses the sealed recipe of that original (CV-339 for a current-writer original, frozen integer-json-v1 for an older one); only the new caller producer-semantic projection and new-write producer admission use the strict current recipe; new caller Storage metadata is independently checked against SP-236. Valid retained large integers remain readable in canonical, replay-only, compatibility and compatibility-replay modes after live state/admission/cutoffs change; forged commitments, rehashed foreign values, unknown editions/recipe fields, lost custody, revoked permission and withdrawal still refuse. Plans/memory_maintenance_event_record.schema.json keeps SP-236 current Storage uint64 bounds (SP-1100, checked with storage_uint64), the producer_sequence_id domain of the EventRecord owner without an added ceiling, and unchanged frozen reader definitions; operation/target schemas keep current definitions and their frozen historical_ counterparts. Generic Storage metadata ownership is unchanged. Every declared date-time format is enforced by the shared CV-1101 predicate (scripts/pm_event_datetime.py date_time) with the explicit profile of its field owner, without optional validator packages: payload and EventRecord occurred_at_utc and the SP-278 checkpoint times take the broad event_record profile (RFC 3339 with an explicit zone, lowercase t or z, offsets, year 0000, any fraction length and announced leap seconds); Storage-assigned observed_at_utc and persisted_at_utc take CV-253 storage_utc_z at the current and every retained envelope edition; the operation row's frozen started_occurred_at_utc and completed_occurred_at_utc keep their terminal-uppercase-Z owner pattern and take storage_utc_z. Bad calendar fields or separators, missing zones, an unannounced second 60 and trailing LF refuse, and a skipped old format check never authorizes invalid retained history. Existing length constraints remain. Timestamp strings retain their exact hash bytes. UUID uses the full 8-4-4-4-12 hexadecimal grammar. The selected recipe's frozen verifier applies the same profiles to retained originals; there is no narrower historical format edition. Per-family Plans/memory_write_recipe_fixtures.json records 48 integral and 24 integral-binary64 actual old-writer receipts, large retained values in every mode, and original-recipe rebuild artifacts; none is repaired during evaluation. Plans/memory_maintenance_boundary_fixtures.json retains current numeric/type controls. Every formatted leaf of every used schema, including dormant checkpoint branches and frozen definitions, has malformed/edge-case negatives and allowed fractional/leap-day positives. Current numeric normalization and each schema verdict are separate guard-table rows; numeric bounds, historical integer schemas, required/unknown fields and formats are enforced inside those schema verdicts, whose per-keyword cuts are not ported to the shared tool. Permission/admission/withdrawal and all receipt/source/acceptance fields retain exact Boolean checks. Every input/output archive memory retains exact Boolean pinned/archived checks and unchanged DL-402 evidence/version/pin preservation. The sequential --family mode checks free RAM before each family and pauses below 6 GiB available.
+
+  history_families checks standing check 10 for each exact family: a retained original is returned unchanged after completion and when the source revision, request digest, counters or (for rebuilds) selector have changed; a withdrawal fence, revoked access, forged hash, rehashed changed value, rehashed foreign identity, missing start custody, unwritten original, another family's type and a trailing-LF type refuse without changing state. reference_cases checks standing check 9: before any instance validation the checker walks every subschema of every schema document it uses and of the registry mirrors, follows nested $id bases, resolves every $ref offline and fails on any unresolved one. Each family has dormant, active, nested-base, cross-document and unknown-document mutations, and definitions are validated inside their own documents.
+
+  These are a static contract model and adversarial fixtures. They do not execute MemoryMaintenance, authenticate real SP-286 receipts, validate physical SeglogFrameV2 bytes or prove redb/filesystem atomicity/flush, native crash recovery, backup/restore or read-time deletion/permission races. Those native obligations remain NOT_RUN. Static success confers no Event Authority, retention assignment or deletion policy. The four monthly-summary/prune families have conditional payload and operation definitions under ATS-316; activation still requires their own admission, operation/result retention resolution and an authenticated binding of the DL-446/DL-447 cutoffs. Card 6 supplies those cutoff values; the independent activation gates remain.
+
+  Card 6 policy oracles execute scripts/pm_memory_policy.py through each exact --family checker using Plans/memory_card6_policy_fixtures.json. DL-444/DL-445 positives cover oldest creation time, same-time stable-ID tie, preserved evidence/merge history, archive-only copies and excluded pins. Negative post-states carry one semantic defect, with survivor-dependent archive/link/lineage copies changed coherently for a wrong-survivor case. DL-446/DL-447 positives and refusals cover 89/90 and 179/180 idle days, exact duration boundaries, scores 0.0999/0.10 and 0.0499/0.05, independent edit/access fallback, both conditions together, each Project separately and refusal of no-project execution. Each negative must produce only its named failed predicate; the full checker must exit nonzero on a wrong oracle. Round-11 preservation checks compare exact primitive types before values recursively, including selected and unselected originals, nested evidence/version/metadata values and full expected results. Dedup input flags must be exact Booleans; output flags must match exact Boolean originals or the explicitly permitted Boolean archived state. Boolean/integer aliases, typed floats, strings, null, arrays and objects have isolated one-field negatives. Eligible groups, selected IDs, embed_text_hash values and evidence references are exact-type checked before any value test, so aliases cannot read as one identical group or collapse in an evidence union. A malformed dedup or archive input or output refuses with its own named reason rather than raising, and the snapshot fields a job does not write (Project, eligible or selected IDs, capture time) must compare exactly. Full-checker wrong typed expected results must fail. Compare owner-admitted creation instants and elapsed idle durations with every fractional digit preserved, without truncation or a precision cap; retained timestamp spellings and commitments stay unchanged. Early, equal and late 90/180-day boundaries cover edit, access, creation fallback and capture at 9, 18 and 40 fractional digits; creation-order and stable-note-ID tie cases cover the same precisions. The dedup no-project input has coherent Project copies and a separate foreign-Project join negative. Minimum group size, unique IDs and original existence are separate guard-table rows, each with its own negative, proved by the shared guard tool. Snapshot usefulness scores remain owner-declared values outside integer identity recipes. No count cutoff, lane-local serializer or native proof is introduced. Existing number/format recipe issues are shared-sweep items, not repaired here. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-630
+- SP-631
+- SP-632
+- SP-633
+- SP-634
+- SP-635
+- SP-636
+- SP-637
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+- python3 scripts/pm-memory-table-generate.py scripts --check
+- python3 scripts/pm-memory-guard-tables.py --out <evidence-path>
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### ATS-316 - Card 1b maintenance oracles
+
+```yaml
+plan_unit_id: ATS-316
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: For memory.monthly_summary.started, memory.monthly_summary.completed, memory.prune_archive.started
+  and memory.prune_archive.completed, each at 1.0.0, execute scripts/pm_memory_archive_events.py against Plans/memory_archive_event_fixtures.json.
+  Each exact family adopts ATS-315 and the SP-636/SP-637 first-start-custody model by explicit SP-638/SP-639/CV-658/CV-659
+  adoption, not sibling admission. Test the closed separate payload and operation definitions, full EventRecord
+  2.0.0, encoded Project partition, storage-assigned retry-field exclusion, replay-only refusal, both terminal outcomes,
+  CAS, start receipt on all writer/effect/recovery/history paths and SP-278 storage joins. Test cutoff refusal for
+  automatic and direct invocation with no operation/effect/append/output;
+  synthetic authority exercises the DL-446/DL-447 approved values without granting runtime admission. Historical originals stay readable with current
+  cutoffs absent and source/request/counters changed, but forgery, access revocation and withdrawal refuse. Archive
+  oracles compare selected originals in full except the allowed archived change, preserve all evidence refs/version refs and pins, and reject deletion/merging a pin. Cutoff lookup keys, resolved self-references and frozen operation refs must identify exactly one record; copied content hashes and all owner fields agree. A contradictory or ambiguous reference refuses despite coherent rehashing and intact start custody. Every negative is derived
+  from an intact control; every refusal is a named guard-table row, and the shared guard tool cuts each row alone,
+  requires its own negatives to flip and every other negative to keep its exact refusal, then restores it. A failed oracle must produce a nonzero process exit;
+  unresolved refs including dormant branches fail. Bounds enforce 16 KiB and trailing LF rejection. Physical transactions,
+  receipts, flushes and native execution are NOT_RUN. No admission or runtime activation is authorized by these tests.
+
+  Card 6 policy oracles execute scripts/pm_memory_policy.py through each exact --family checker using Plans/memory_card6_policy_fixtures.json. DL-444/DL-445 positives cover oldest creation time, same-time stable-ID tie, preserved evidence/merge history, archive-only copies and excluded pins. Negative post-states carry one semantic defect, with survivor-dependent archive/link/lineage copies changed coherently for a wrong-survivor case. DL-446/DL-447 positives and refusals cover 89/90 and 179/180 idle days, exact duration boundaries, scores 0.0999/0.10 and 0.0499/0.05, independent edit/access fallback, both conditions together, each Project separately and refusal of no-project execution. Each negative must produce only its named failed predicate; the full checker must exit nonzero on a wrong oracle. Round-11 preservation checks compare exact primitive types before values recursively, including selected and unselected originals, nested evidence/version/metadata values and full expected results. Dedup input flags must be exact Booleans; output flags must match exact Boolean originals or the explicitly permitted Boolean archived state. Boolean/integer aliases, typed floats, strings, null, arrays and objects have isolated one-field negatives. Eligible groups, selected IDs, embed_text_hash values and evidence references are exact-type checked before any value test, so aliases cannot read as one identical group or collapse in an evidence union. A malformed dedup or archive input or output refuses with its own named reason rather than raising, and the snapshot fields a job does not write (Project, eligible or selected IDs, capture time) must compare exactly. Full-checker wrong typed expected results must fail. Compare owner-admitted creation instants and elapsed idle durations with every fractional digit preserved, without truncation or a precision cap; retained timestamp spellings and commitments stay unchanged. Early, equal and late 90/180-day boundaries cover edit, access, creation fallback and capture at 9, 18 and 40 fractional digits; creation-order and stable-note-ID tie cases cover the same precisions. The dedup no-project input has coherent Project copies and a separate foreign-Project join negative. Minimum group size, unique IDs and original existence are separate guard-table rows, each with its own negative, proved by the shared guard tool. Snapshot usefulness scores remain owner-declared values outside integer identity recipes. No count cutoff, lane-local serializer or native proof is introduced. Existing number/format recipe issues are shared-sweep items, not repaired here. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- ATS-315
+- SP-638
+- SP-639
+- CV-658
+- CV-659
+unblocks: []
+acceptance_criteria:
+- All four families pass the static suite with exact refusal, unchanged state and no output.
+- Each guard-table row the shared tool proves has its own negatives flip when it alone is cut and all other negatives keep their exact refusal; an unproved row names the row or schema that decides first.
+validation_surfaces:
+- python3 scripts/pm_memory_archive_events.py
+- python3 scripts/pm-memory-guard-tables.py --out <evidence-path>
+risk_class: event_authority_oracle
+reasoning_tier: high
+context_scope: ea_DMEM_card1b_20261104
+implementation_surfaces:
+- scripts/pm_memory_archive_events.py
+- Plans/memory_archive_event_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-card1b-search.json
+preserved_exact_tokens:
+- cutoffs_unavailable
+- NOT_RUN
+negative_constraints:
+- No admission, automatic deletion or native proof.
+```
+
+
+### ATS-320 — doctor.custom_headless.checked positive/negative oracles.
+
+```yaml
+plan_unit_id: ATS-320
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  doctor.custom_headless.checked positive/negative oracles.
+  Plans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-217 remain NOT_RUN. Successful static checks never admit this family or settle retention.
+  Round 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.
+  Round 2 doctor.custom_headless.checked oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 3 doctor.custom_headless.checked oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-320
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-321 — tool.custom_headless.skipped — withdrawn DS15 draft; DT question reference
+
+```yaml
+{
+  "plan_unit_id": "ATS-321",
+  "unit_type": "contract",
+  "status": "superseded",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "Historical withdrawal of the unsupported tool.custom_headless.skipped draft. DL-436 (deck-2 item 4.f) now resolves first-absent-check eligibility/reset/import/restore; the newly authored DS15 owner contract is Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326. DT cites DS15 rather than holding a separate row. This old unit id remains retired and is not reused; it grants no admission.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "No DS15 draft remains; DT question stays unresolved."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-321"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-322 — live.session.started positive/negative oracles.
+
+```yaml
+plan_unit_id: ATS-322
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  live.session.started positive/negative oracles.
+  Plans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-219 remain NOT_RUN. Successful static checks never admit this family or settle retention.
+  Round 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.
+  Round 2 live.session.started oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 3 live.session.started oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-322
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-323 — live.step.updated positive/negative oracles.
+
+```yaml
+plan_unit_id: ATS-323
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  live.step.updated positive/negative oracles.
+  Plans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-220 remain NOT_RUN. Successful static checks never admit this family or settle retention.
+  Round 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.
+  Round 2 live.step.updated oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 3 live.step.updated oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-323
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-324 — live.artifact.created positive/negative oracles.
+
+```yaml
+plan_unit_id: ATS-324
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  live.artifact.created positive/negative oracles.
+  Plans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-221 remain NOT_RUN. Successful static checks never admit this family or settle retention.
+  Round 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.
+  Round 2 live.artifact.created oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 3 live.artifact.created oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-324
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-325 — live.session.completed positive/negative oracles.
+
+```yaml
+plan_unit_id: ATS-325
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  live.session.completed positive/negative oracles.
+  Plans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-222 remain NOT_RUN. Successful static checks never admit this family or settle retention.
+  Round 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.
+  Round 2 live.session.completed oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 3 live.session.completed oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-325
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-326 — live.session.degraded positive/negative oracles.
+
+```yaml
+plan_unit_id: ATS-326
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  live.session.degraded positive/negative oracles.
+  Plans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-223 remain NOT_RUN. Successful static checks never admit this family or settle retention.
+  Round 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.
+  Round 2 live.session.degraded oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 3 live.session.degraded oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-326
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-327 — DS15 independent family semantic oracle sections
+
+```yaml
+plan_unit_id: ATS-327
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  browser.context_captured@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.
+  Round 2 browser.context_captured oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN. Application capture additionally executes exact CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}, raw-hash/wrong-Server/wrong-original-operation negatives, and the unchanged Project recipe positive; genuine source identity comes from OriginalBrowserTransitionSource, never a checkpoint scope hash.
+  Round 3 browser.context_captured oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-327
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-328 — DS15 independent family semantic oracle sections
+
+```yaml
+plan_unit_id: ATS-328
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  dev.session.started@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-311; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.
+
+  dev.session.stopping@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-312; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.
+
+  dev.session.stopped@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.
+
+  dev.session.restarting@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.
+  Round 2 dev.session.started oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 2 dev.session.stopping oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 2 dev.session.stopped oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 2 dev.session.restarting oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 3 dev.session.started oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+  Round 3 dev.session.stopping oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+  Round 3 dev.session.stopped oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+  Round 3 dev.session.restarting oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-328
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-329 — DS15 independent family semantic oracle sections
+
+```yaml
+plan_unit_id: ATS-329
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Deck-2 exact-family oracle tool.custom_headless.skipped: SMPFS-326, own closed payload/checkpoint/context/source schemas and own fixture row in Plans/ds15_deck2_fixtures.json; run python3 scripts/pm-ds15-deck2-contracts.py --family tool.custom_headless.skipped. Valid original, single-defect transition refusal, replay-only writer refusal/history acceptance, full-value custody, access/deletion, global coverage/CAS, recovery and withdrawal are required. No admission; native NOT_RUN.
+  Deck-2 exact-family oracle catalog.remove.completed: SMPFS-325, own closed payload/checkpoint/context/source schemas and own fixture row in Plans/ds15_deck2_fixtures.json; run python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed. Valid original, single-defect transition refusal, replay-only writer refusal/history acceptance, full-value custody, access/deletion, global coverage/CAS, recovery and withdrawal are required. No admission; native NOT_RUN.
+  Deck-2 exact-family oracle catalog.remove.started: SMPFS-324, own closed payload/checkpoint/context/source schemas and own fixture row in Plans/ds15_deck2_fixtures.json; run python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.started. Valid original, single-defect transition refusal, replay-only writer refusal/history acceptance, full-value custody, access/deletion, global coverage/CAS, recovery and withdrawal are required. No admission; native NOT_RUN.
+  Deck-2 exact-family oracle catalog.update.completed: SMPFS-323, own closed payload/checkpoint/context/source schemas and own fixture row in Plans/ds15_deck2_fixtures.json; run python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.completed. Valid original, single-defect transition refusal, replay-only writer refusal/history acceptance, full-value custody, access/deletion, global coverage/CAS, recovery and withdrawal are required. No admission; native NOT_RUN.
+  Deck-2 exact-family oracle catalog.update.started: SMPFS-322, own closed payload/checkpoint/context/source schemas and own fixture row in Plans/ds15_deck2_fixtures.json; run python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.started. Valid original, single-defect transition refusal, replay-only writer refusal/history acceptance, full-value custody, access/deletion, global coverage/CAS, recovery and withdrawal are required. No admission; native NOT_RUN.
+  Deck-2 exact-family oracle browser.context_share_revoked: SMPFS-321, own closed payload/checkpoint/context/source schemas and own fixture row in Plans/ds15_deck2_fixtures.json; run python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked. Valid original, single-defect transition refusal, replay-only writer refusal/history acceptance, full-value custody, access/deletion, global coverage/CAS, recovery and withdrawal are required. No admission; native NOT_RUN.
+  Deck-2 exact-family oracle browser.context_shared: SMPFS-320, own closed payload/checkpoint/context/source schemas and own fixture row in Plans/ds15_deck2_fixtures.json; run python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared. Valid original, single-defect transition refusal, replay-only writer refusal/history acceptance, full-value custody, access/deletion, global coverage/CAS, recovery and withdrawal are required. No admission; native NOT_RUN.
+  preview.session.started@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.
+
+  preview.session.refreshed@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-316; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.
+
+  preview.session.stopped@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-317; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.
+  Round 2 preview.session.started oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 2 preview.session.refreshed oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 2 preview.session.stopped oracles: the exact family fixture supplies a complete EventRecord, exact eleven-field receipt, shared custody_v2/full-value result and independent selected global source. Execute replay-only append/recovery refusals, current publication permission/deletion/share/owner refusals with retained-receipt recovery positives, initial omitted-row plus rewritten-low refusal, every receipt-field contradiction, original full-value commitment corruption, semantic-only retry comparison and encoded partition/storage joins. Verified zero-match suffix after an existing match must advance and retain that match; no first-match means no checkpoint. Every concrete patterned payload/checkpoint field has a trailing-LF negative. Full-checker failure probes must exit nonzero when a refusal is replaced with success. Native NOT_RUN.
+  Round 3 preview.session.started oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+  Round 3 preview.session.refreshed oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+  Round 3 preview.session.stopped oracles: bind every current and prior SP-278 token root key to the original event Storage instance, its checkpoint_ref to that exact root/generation and its dataset name to that generation; foreign key/reference selectors refuse for checkpoint and rebuild. Eagerly resolve every $ref, including optional properties, unused definitions and all branches, through the retained local schema-resource closure; an unresolved reference makes the full checker fail. Historical reads validate the immutable original transition, full event/receipt custody and current disclosure authorization, independently of later live workflow, source or composer state. Accept history-after-live-state-advances; refuse forged/invalid originals and deny deleted, unauthorized, unshared or withdrawn-reader disclosure. Current publication and new append recovery still require current transition/source joins. Execute all standing checks 1 through 10 and prior-finding mutations through the full checker. Native NOT_RUN.
+  Round 7: independently exercise catalog.install.started under SMPFS-318/SP-657/CV-677 and catalog.install.completed under SMPFS-319/SP-658/CV-678, including existing subsystem start/effective-commit outcomes and queue/admission false-success refusals. Rerun all fourteen earlier families plus both install contracts, F1/F2/F3 source and Storage mutation suites, exact boolean/integer authority sweeps and the whole sequential guard table. All negative fixtures require valid operation-specific parents and observation maintenance only; no guard bypass or native proof. The other seven questions remain held.
+  Sweep 2026-11-08 (parts 2A and 2B numbers), all 23 DS15 families: every refusal of scripts/pm-ds15-event-contracts.py and scripts/pm-ds15-deck2-contracts.py is one named row of a Method B guard table (scripts/pm_ds15_table_*.py, generated by scripts/pm-ds15-table-generate.py), reached only through that table; check 11 is the gated shared tool, run by python3 scripts/pm-ds15-guard-tables.py --out <dir>, which retires scripts/pm-ds15-guard-audit.py. Plans/ds15_p2a_cases.json holds the part 2A single-row witnesses, each checked by the sixteen-family CLI at exactly its own row. Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-339, SP-278, SP-286 and SP-337 owners: python3 scripts/pm_event_numbers.py --self-test --scope numbers, and python3 scripts/pm-ds15-number-corpus.py runs the shared number corpus through six complete DS15 routes of every family. Retained originals keep the frozen ds15-v1 profile. Sweep 2026-11-11 (part 2B): CV-1101 date-time through the shared pm_event_datetime predicate, installed in every DS15 validator with the EventRecord profile at every format: date-time, plus CV-253 storage_utc_z on the Storage-assigned EventRecord observed and persisted times, current and retained; SP-1101 dispatch on every retained read, retry and receipt path: guard table rd_recipe selects the frozen recipe from the sealed write custody in Plans/ds15_original_custody.json before any retained read, and rd_resolve resolves the original once through the shared RetainedDispatcher after the frozen-recipe checks. Plans/ds15_p2b_cases.json holds the part 2B witnesses (timestamp negatives whose validation error carries the shared predicate's refusal, owner-valid lowercase, offset, leap-second and long-fraction positives, retained ds15-v1 positives past 2^53, unavailable, unsupported, unsealed, forged, wrong-family and older-recipe selections, and request-supplied selectors), each checked by the sixteen-family CLI; python3 scripts/pm_ds15_p2b_cases.py --check runs them alone. The shared datetime_validator and the date-time inventory gate run at batch-2 integration, because the gate fails closed on a lane tree whose Plans content changed.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+- python3 scripts/pm-ds15-deck2-contracts.py --family <family>
+- python3 scripts/pm-ds15-guard-tables.py --out <dir>
+- python3 scripts/pm-ds15-number-corpus.py
+- python3 scripts/pm_ds15_p2b_cases.py --check
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- ATS-329
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+### ATS-330 - alert.acknowledged contract oracles
+
+```yaml
+plan_unit_id: ATS-330
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.acknowledged is checked independently by python3 scripts/pm-alert-event-contracts-check.py
+  with Plans/alert_event_contracts/alert_acknowledged.fixtures.json. Positive closed payload/current successor and
+  negative added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered
+  retry payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain
+  NOT_RUN and must prove every SP-660 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
+
+
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-331 - alert.dismissed contract oracles
+
+```yaml
+plan_unit_id: ATS-331
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.dismissed is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_dismissed.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-661 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
+
+
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-332 - alert.rule_muted contract oracles
+
+```yaml
+plan_unit_id: ATS-332
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.rule_muted is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_rule_muted.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-662 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
+
+
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-333 - alert.snoozed contract oracles
+
+```yaml
+plan_unit_id: ATS-333
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.snoozed is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_snoozed.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-663 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
+
+
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-334 - Independent current chat panel event oracles
+
+```yaml
+plan_unit_id: ATS-334
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'panel.redocked is checked independently by python3 scripts/pm-panel-event-contracts-check.py with
+  Plans/panel_event_contracts/panel_redocked.fixtures.json: valid current chat-only 2.0.0 and stored v1 read dispatch;
+  invalid generic panel, saved host, co-emission, wrong command/host, old layout fields, stale host revision, missing/foreign
+  session/scope, original receipt, retry and withdrawal; bounded checkpoint 16384 accepted/16385 refused and 1000-ref
+  source traversal. SP-664/CV-684/F3-704 bind its original settlement, journal, SP-286 recovery and SP-278 History.
+
+
+  panel.undocked is checked independently by the same checker with Plans/panel_event_contracts/panel_undocked.fixtures.json:
+  valid desktop current chat-only 2.0.0 and stored v1 read dispatch; the same listed boundaries are tested with
+  this family''s own command, hosts, window and identity, plus unsupported web/absent-family refusal. SP-665/CV-685/F3-705
+  bind its independent original settlement, journal, SP-286 recovery and SP-278 History.
+
+
+  The checker is a static reference oracle, not a real OS window, source-authorization, first-receipt or crash test.
+  Native settlement/persistence failure, live/ended session recovery, coherent backup, original receipt authentication,
+  permission/deletion/read-fence and SP-278 source/generation/CAS tests remain NOT_RUN separately for both families.
+  No static pass authorizes emission. Retention PENDING_RETENTION_DECISION.
+
+  Both independent panel fixture paths include unchanged-digest settled_at_utc and interaction_transaction_id mutations, command-only digest rejection, changed-command rejection, complete command/payload hash recomputation, application@1:{hex(server_id)}:{hex(owner_operation_id)} current app keys, raw Project partition rejection, replay_only_not_appendable and trailing-LF identifier negatives. Both use their actual complete History response metadata for large valid tokens, exact 16384/16385-byte response boundaries and individually unpageable metadata/ref refusal. Alert ATS-330 through ATS-333 use the same complete-response measurement with each own token; the original ref-only plus 4096-byte allowance is retired.
+
+  concern.created has its own independent python3 scripts/pm-concern-created-contracts-check.py and
+  Plans/concern_created_contracts/concern_created.fixtures.json. Positives cover each of OP-002''s five authorized
+  creator kinds, independent User/External Resource accountable owners, absent -> active revision one and exact
+  record/command/payload/digest/receipt/scope joins. Negatives cover Worker/User/External Resource/Recovery direct
+  creation, absent registry, stale/foreign source/currentness/permission, existing record/subject, changed frozen
+  command/payload/record with original digest, wrong original receipt, LF identifiers, projector_replay_only,
+  polluted checkpoints, large-valid-token complete History byte bounds, unpageable metadata/ref and withdrawal.
+  Native creator/source/permission authentication, atomic original commit/receipt/CAS, recovery, backup/deletion
+  and rebuild remain NOT_RUN. SP-666/CV-686 and OP-004 own this exact prepared family; event membership ABSENT,
+  event/operation/checkpoint retention PENDING_RETENTION_DECISION. This oracle grants no sibling action privilege.'
+
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- SP-664
+- SP-665
+unblocks: []
+acceptance_criteria:
+- ATS-334 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+
+### ATS-380 - Card 2 independent guard oracles
+
+```yaml
+plan_unit_id: ATS-380
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: The six exact DCN families have per-family positive, negative and retained-read oracles in Plans/card2_event_fixtures.json,
+  checked by python3 scripts/pm_card2_events.py. Every negative is derived from a valid base and changes one logical
+  defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10
+  sweep every refusal is one named row of a generated Method B guard table (scripts/pm_card2_table_*.py, generator
+  scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the
+  before or the after record). Check 11 is proved by the shared tool scripts/pm_guard_isolation.py through python3
+  scripts/pm-card2-guard-tables.py. Each row needs a single-defect witness refused first at exactly that row, from
+  the fixtures or the coherent witnesses in Plans/card2_event_p2a_cases.json (python3 scripts/pm-card2-p2a-cases.py);
+  a row that an earlier row always refuses first sits alone in an entailed table with its written proof. The shared
+  number corpus runs through the complete checker (python3 scripts/pm-card2-number-corpus.py). Unresolved schema references fail closed and the command
+  exits nonzero on any failure or exception; failure-oracle testing rejects an exit code of zero. Native execution,
+  source authentication, redb snapshot/CAS, wire durability, first-receipt issuance, crash/restore and actual deletion/access
+  enforcement remain NOT_RUN. Synthetic owner/authenticity observations test contract predicates and cannot admit
+  a writer or establish native proof. No new test file under tests/ is authorized by .gitignore, so this lane keeps
+  its executable oracle in scripts/.
+
+  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join.
+  A foreign-Storage checkpoint negative is internally coherent, including source selection, generation, anchor,
+  key/reference/dataset and both observations; only its join to this event is wrong. Resolve before/after record
+  references and lineage from independent original owner records. Validate Storage original/receipt custody
+  before retry result comparison; reject forged identity, schema, sequence and timestamp observations. Recompute
+  CURRENT/manifest byte hashes and SP-278 binding commitments. Exact memory before/after semantic deltas cover
+  every successful command and automatic mutation; requested/failed/unchanged verifies retain command results only.
+  Retained-read positives include replay-only and other originally valid policies after a changed stop generation
+  or absent live subject. Current policy guards never reach those historical originals. The shared tool cuts each
+  row alone and requires its own witnesses to pass and every other witness to keep its exact refusal, then restores
+  it; unrelated stale copies or post-state contradictions are never accepted as a witness.
+
+  Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with
+  its owner's profile (TIMESTAMP_PROFILES in scripts/pm_card2_events.py), and the checker run itself refuses unless
+  each lane-recorded leak (hour 24, trailing LF, an illegitimate leap second, Feb 29 of a common year, a space
+  separator, a missing zone, offset hour 24, minute 60) is refused at every field with the shared Refusal reason as
+  the validator's error cause. The CV-253 storage_utc_z restriction on observed_at_utc and persisted_at_utc is its own
+  row per view. Retry originals and retained reads resolve through the shared SP-1101 RetainedDispatcher from the
+  sealed custody catalogue Plans/card2_original_custody.json (rows recipe_custody and recipe_installed, and the
+  entailed recipe_resolved); each run also proves that a replaced schema resource, a weakened Storage profile or a
+  caller recipe override installs or selects no verifier. The part 2B witnesses and controls (ids p2b/...) are in
+  Plans/card2_event_p2a_cases.json.
+
+gui_related: false
+gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- All family/scope positives pass, every negative is refused first at its own row with no other non-entailed row,
+  and every guard-table row is proved by the shared tool or entailed with a written proof.
+- Requested/failed/no-change verification emits no history, and changed live state does not invalidate retained
+  genuine history.
+validation_surfaces:
+- python3 scripts/pm_card2_events.py
+- python3 scripts/pm-card2-guard-tables.py --out <dir>
+- python3 scripts/pm-card2-p2a-cases.py --check
+- python3 scripts/pm-card2-number-corpus.py
+- Plans/card2_event_fixtures.json
+- Plans/card2_event_p2a_cases.json
+- Plans/card2_event_payloads.schema.json
+risk_class: duplicate_or_unauthenticated_card2_event_history
+reasoning_tier: high
+context_scope: event_authority_card2_ats-380
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/card2_event_contracts.json
+- Plans/card2_event_payloads.schema.json
+node_compile_hint:
+  mode: prepared_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md
+preserved_exact_tokens: []
+negative_constraints:
+- Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
+- No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
+```
+
+### ATS-280 - FileManager per-family event oracles
+
+Plans/filemanager_event_contract_fixtures.json contains separately named positive and negative cases for each of the twelve exact FileManager families. Run python3 scripts/pm-filemanager-event-contracts.py. The checker validates closed payloads and rejects kind/scope/extra-field and original identity, recovery ordering or replay-effect violations. Added independent negatives keep claimed semantic booleans true while copy result equals source
+or create result equals the existing container. Closed operation/control shapes, physical key/raw
+identity, frozen epoch/payload/path coverage, original full-value request/result and strict v2 witness,
+final selected-row equality, cutoff CAS/revision/reader fences and restore coherence have explicit
+positive/negative model cases. Every added checker rule runs through this full checker; mutation
+cases include internally consistent changed payloads so earlier equality guards cannot mask identity
+failures. Native filesystem, original receipt, crash/restore and shared Storage execution obligations remain NOT_RUN. No admission or retention policy is inferred from a static pass.
+
+Each family's own boundary_cases additionally runs coherent current-writer and retry
+projector_replay_only negatives; 16383/16384/16385-byte canonical MessagePack event-body and both
+physical companion boundaries; packed positive payload/operation/control cases; oversized-inline,
+missing/changed/hash/size/backup/late-referent refusals; exact-original terminal CAS substitutions and
+missing/semantic/wrong full-value proof; trailing-LF identifiers; encoded Project partitions; semantic
+retry changes versus accepted Storage-metadata-only retry changes; and matching versus foreign
+transient SP-278 delivery identities. Failure-oracle verification injects a false success and requires
+the complete checker to fail. These remain static model checks, not native pack/CAS/filesystem proof.
+
+Every product refusal of the checker is one named row of a Method B guard table
+(scripts/pm_filemanager_table_*.py, written from one row spec by scripts/pm-filemanager-table-generate.py,
+whose --check fails on a stale, missing or extra table). python3 scripts/pm-filemanager-guard-tables.py
+--out <dir> replays every witness once and proves each table with the shared guard tool
+scripts/pm_guard_isolation.py: each row is cut alone, its own single-defect negatives must then accept and
+every other case must keep its exact refusal. Each schema occurrence is one verdict row. python3
+scripts/pm-filemanager-number-corpus.py runs the shared CV-1100/SP-1100 number corpus through the complete
+checker, and python3 scripts/pm_event_numbers.py --self-test --scope numbers must pass.
+
+Every instance schema verdict (payload, companion, receipt, EventRecord and Storage registry) passes the
+shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds CV-253's storage_utc_z profile at each EventRecord's observed_at_utc and
+persisted_at_utc, located through the owner schemas' own references. Every retained original is resolved
+through the shared SP-1101 RetainedDispatcher from the fixture's sealed custody record before its frozen
+verifier runs. Plans/filemanager_event_p2a_cases.json also holds these witnesses, written by
+scripts/pm-filemanager-p2a-cases.py: each malformed RFC 3339 form at the family ts with its exact copies;
+owner-valid lowercase, offset, leap-second, long-fraction and year-zero controls on the current and retained
+routes; malformed companion, receipt and settlement timestamps; Storage-profile refusals at the original,
+retry and full-value request EventRecords; and missing, malformed, unknown-edition and replaced-resource
+custody records. The shared date-time suite, python3 scripts/pm_event_numbers.py --self-test and python3
+scripts/pm_event_datetime_inventory.py, validates the whole-Plans timestamp inventory.
+
+```yaml
+plan_unit_id: ATS-280
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  FileManager per-family event oracles: the preceding per-family routes and obligations are prepared without admission.
+  Each family retains its own semantic contract; retention is PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Internal event contract routing and static assurance.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - No registry append, policy selection or native readiness claim.
+validation_surfaces:
+  - python3 scripts/pm-filemanager-event-contracts.py
+  - python3 scripts/pm-filemanager-guard-tables.py --out <dir>
+  - python3 scripts/pm-filemanager-number-corpus.py
+risk_class: file_event_contract_routing
+reasoning_tier: high
+context_scope: filemanager_event_authority
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/filemanager_event_contract_fixtures.json, scripts/pm-filemanager-event-contracts.py]
+node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
+source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]
+negative_constraints:
+  - Do not treat prepared contracts as event admission.
+owner_hints: [Plans/Automated_Testing_System.md]
+```
+
+
+### ATS-300 - Event Authority format.applied positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-300
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  format.applied positive and negative oracles
+  format.applied independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.timestamp against the independently retained original HTE write/edit operation. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. format.applied additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. format.applied checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- FS-075
+- CV-620
+- SP-600
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-301 - Event Authority lsp.server.lifecycle_changed positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-301
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  lsp.server.lifecycle_changed positive and negative oracles
+  lsp.server.lifecycle_changed independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.ts against the independently retained original LspSupervisor Host/server/root/session observation. Require redaction_profile=no_secrets; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. lsp.server.lifecycle_changed additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. lsp.server.lifecycle_changed checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- LSPS-173
+- CV-621
+- SP-601
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-302 - Event Authority model.catalog_refreshed positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-302
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  model.catalog_refreshed positive and negative oracles
+  model.catalog_refreshed independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.completed_at_utc against the independently retained original Models manual or automatic catalog refresh. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. model.catalog_refreshed additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. Its own CV-366 actual-Server UTF-8-hex application key vectors reject the former hash key, foreign/missing Server and normalization; exact 16383/16384/16385-byte and 128-ref fixtures cover SP-337 BLAKE3/size/media-type references, missing/unsynced bytes/index, mismatched descriptors, duplicated bodies and immutable external-result recovery. model.catalog_refreshed checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- MS-199
+- CV-622
+- SP-602
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-303 - Event Authority subagent.context_rehydrated positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-303
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  subagent.context_rehydrated positive and negative oracles
+  subagent.context_rehydrated independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.occurred_at_utc against the independently retained original accepted child-context rehydration operation. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. subagent.context_rehydrated additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. Its own CV-366 actual-Server UTF-8-hex application key vectors reject the former hash key, foreign/missing Server and normalization; exact 16383/16384/16385-byte and 128-ref fixtures cover SP-337 BLAKE3/size/media-type references, missing/unsynced bytes/index, mismatched descriptors, duplicated bodies and immutable external-result recovery. subagent.context_rehydrated checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- PP-151
+- CV-623
+- SP-603
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-304 - Event Authority subagent.context_shrunk positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-304
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  subagent.context_shrunk positive and negative oracles
+  subagent.context_shrunk independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.occurred_at_utc against the independently retained original accepted child-context shrink operation. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. subagent.context_shrunk additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. Its own CV-366 actual-Server UTF-8-hex application key vectors reject the former hash key, foreign/missing Server and normalization; exact 16383/16384/16385-byte and 128-ref fixtures cover SP-337 BLAKE3/size/media-type references, missing/unsynced bytes/index, mismatched descriptors, duplicated bodies and immutable external-result recovery. subagent.context_shrunk checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- PP-152
+- CV-624
+- SP-604
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+project.added — ATS-304 independent oracle supplement. project.added independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.completed_at_utc against the independently retained original completed Project existing-content registration. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. project.added additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. project.added checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+
+project.created — ATS-304 independent oracle supplement. project.created independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.completed_at_utc against the independently retained original root Project creation composition. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. project.created additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. project.created checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+
+git.clone.completed — ATS-304 independent oracle supplement. git.clone.completed independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.completed_at_utc against the independently retained original ordinary Git clone command operation. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. git.clone.completed additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. git.clone.completed checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+
+## Runtime artifact event contracts prepared without admission — 2026-11-04
+
+### ATS-260 — DR artifact event contract oracles
+
+```yaml
+plan_unit_id: ATS-260
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  For each exact prepared family in Plans/runtime_artifact_event_drafts.json, scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema against its own positive fixture and unknown-field/type/identity negative fixtures. It checks a source-join model with wrong-Project, changed-payload identity conflict, unproven receipt, unauthorized/deleted body, corrupt source, replay and withdrawal oracles. A replay returns the same original receipt and no effects; source/body unavailability never resurrects bytes. These are static contract models, not implementations of SP-278/SP-286. Each of the 19 families has a complete EventRecord fixture, a closed eleven-field AppendReceipt, and full-value custody/result. Independently mutate each envelope field, each receipt field, and every producer-semantic field (actor, accounts, authored time, source sequence, joins, causality, payload/ref, redaction and migration); prove conflict/no append while Storage sequence/observed/persisted changes leave the semantic digest unchanged but invalidate original full-value resolution. Test exact required-null presence, alternate incoming event IDs returning the original result, corrupted full-value commitment, unsupported versions and source/receipt joins. For each family, both inline and SP-337 packed fresh append and retry must refuse projector_replay_only as replay_only_not_appendable before dedupe success, with no changed original event/receipt or new dedupe entry; append_once and dedupe_by_event_id also refuse this family's fixed policy. The replay-policy mutations remain envelope-schema-valid and leave the canonical producer-semantic digest unchanged, including alternate incoming event IDs; never add replay_policy to that digest. Each family tests encoded payload sizes 16,383/16,384/16,385 and a 17,000-ASCII-byte summary; oversized-inline and reference digest/size/media/bytes/custody/authorization/withdrawal defects must refuse. A schema-valid payload alone is never dispatch proof. BLAKE3 and RFC 8785 use pinned checker dependencies in scripts/requirements-runtime-artifact-drafts.txt; install into an isolated virtual environment before running the checker. Restore_point additionally tests consecutive original observation revisions for unchanged point/artifact, same-revision semantic conflicts, original lost-ack recovery, stale/missing predecessor, unproven source, cross-point joins, no refresh-only revision and unavailable action states, without extra artifact rows or actions. Recompute the exact four-member ra1 grouping key for every restore observation: reject a wrong first correlation, another artifact group's otherwise valid key, wrong later correlations and matching wrong predecessor/candidate correlations; predecessor equality alone cannot establish the grouping key. Every adopted anchored identifier pattern uses an additional full-match guard, including schema patternProperties keys, without changing historical schema identities. For each family, reject trailing-LF and malformed digests in producer payloads, resolved packed payloads and original stored event/custody/result copies; self-consistent equality or recomputed commitments do not waive lexical validation. Each family has its own concrete SP-278 checkpoint/root/generation, live ten-field read token, complete single-segment selected-source adapter and index dataset joined to its exact EventRecord and original first receipt. Validate the advertised schema file/pointer and root-key template. Reject independent foreign root keys, checkpoint/token/anchor/frontier/source storage identities, source-selection hashes, event/custody identities, raw Project partitions, physical locators, missing datasets, stale frontiers, unresolved generation pointers and wrong live snapshots. The adapter is explicitly synthetic; no token is persisted. Exercise all eleven fix-round standing checks for every Project-edition family, including refusal of an application envelope with either the exact CV-366 application@1 key or malformed keys, the independently encoded project~ partition in both writer output and original custody, rejection of oversized inline bodies in stored copies even with recomputed commitments, Storage-field exclusion from semantic retry comparison, and refusal of exit code zero by the failure oracle. Before instance validation, walk every $ref in each complete payload, envelope, custody/receipt and checkpoint schema and recursively referenced schema document, including optional properties and unused $defs/branches. Resolve declared IDs, repository-local external routes and every fragment; unknown documents or fragments fail closed without network retrieval. Each family supplies unresolved optional-property, unused-definition, external-document, external-fragment and external-unused-definition negatives. cost_usage and tool_llm_trace additionally enforce their separately authored RAP-106/CV-526 and RAP-117/CV-537 exact nullable sha256: provider-hash contracts, with valid/null positives and malformed/trailing-LF schema, inline/packed decode, fresh-append and self-consistent stored-copy negatives. Do not rewrite historical schema files or retained values. For every family a supported authenticated retained event remains inspectable after current live owner state changes or its body is deleted (metadata only for the latter); withdrawn readers and forged source/receipt evidence still refuse. The selected historical-v1-before-provider-hash model decoder validates retained originals against their original schema without the current-writer provider-hash overlay; append cannot select it. Freeze authentic inline and packed originals issued by the preceding model with sha256:usagefixture and sha256:toolllmfixture, preserving their original events, result and custody byte-for-byte after live-state changes; current writes still refuse them and historical withdrawal, authorization and forgery controls still refuse. For check 11, mutate reachable pack bytes while preserving length, canonical encoding and logical schema, and recompute observation keys when testing stale/gapped restore ordinals. Every product refusal of scripts/pm-runtime-artifact-event-drafts.py is one named row of a Method B guard table (one phase per scripts/pm_runtime_artifact_table_*.py module), evaluated in the table's declared order; the checker only derives the observations each row reads and never refuses outside a row. scripts/pm-runtime-artifact-guard-tables.py runs the shared guard-isolation tool scripts/pm_guard_isolation.py on every phase table for every family: every row needs a single-defect negative that only it refuses, built from that family's own valid invocation with every observation watching the changed fact rebound, and the tool cuts each row in turn. A witness that by construction contradicts two rows is kept in the full checker and listed with its reason, never relabelled. scripts/pm-runtime-artifact-standing-checks.py reruns the full checker with each standing-check row cut or each invalid positive input injected, requiring a nonzero failure for every affected family. These are newly authored bounded models, not native authority or admission. Native acceptance must separately inject crashes before/after source commit, append, first receipt and final publication; prove real original receipt resolution after lost acknowledgement, actual SP-278 coherent source/CAS, authorization/deletion/hold races, coherent backup/restore and withdrawal fences for each producer/reader. All native obligations remain NOT_RUN.
+  Current bounded producer inputs across all nineteen families adopt the shared number rule of CV-1100 and SP-1100 through scripts/pm_event_numbers.py, with no lane cap or blanket walk: every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts (an exact integer, never a boolean, runtime float, exponent form or numeric string) within the field owner's own bounds, while untyped values and number slots keep their JSON type. Pack bodies, inline sizes and the producer semantic digest use qualified_jcs and producer_semantic_digest, which refuse before any effect an integer whose binary64 value or emitted RFC 8785 decimal differs from it (2^53+1, 2^60); event, receipt and commitment bytes use storage_value_bytes with the EVENT_VALUE profile and the unchanged CV-339 tuple (full_value_commitment), so an integer outside -2^63..2^64-1 has no physical route and refuses. A 4,400-digit integer reaches a refusal row, never an exception. Packed JSON must already be RFC 8785 canonical, so -0 and leading-zero encodings cannot form a second stored identity. CV-339's canonical MessagePack codec, commitment domain and frozen vector remain unchanged; the writer admission boundary restricts representations rather than re-encoding issued originals. scripts/pm-runtime-artifact-number-corpus.py places every number of the shared corpus's number scope at the Storage sequence, producer ordinal, receipt offset and a payload integer slot and runs the complete append and exact-retry routes against outcomes composed from the shared helpers alone. Retained readers (historical resolution and the restore-point predecessor) obtain the recipe through SP-1101's RetainedDispatcher from the authenticated source adapter's recorded edition, and the frozen verifier re-derives the original's dispatch, joins, identity, commitment and digest; an unknown, absent or caller-supplied recipe and a foreign authenticated binding refuse. Every timestamp field passes the shared CV-1101 check (pm_event_datetime.datetime_validator over a closed preloaded registry), on current and historical validators alike: EventRecord occurred_at_utc and the receipt, checkpoint and restore-point date-time fields at the broad RFC 3339 profile, Storage observed_at_utc and persisted_at_utc at CV-253's uppercase-Z profile; payload timestamp strings that their schemas leave unformatted keep their owner-schema profile. Valid lowercase, offset, long-fraction and real leap-second source times append with their exact spelling; missing zone, space separator, trailing LF, hour 24, invalid calendar dates, false leap seconds, empty fractions, and on Storage fields any offset (including +00:00 and -00:00) or lowercase z refuse. An authentic older original keeps an owner-valid offset or lowercase source time, while a sealed Storage offset or an invalid source date never reads. A selected historical decoder keeps the original numeric/lexical contract for the event, receipt, custody and result together. Freeze 38 unchanged inline/packed integral-float originals genuinely issued by the preceding b96dc768a5cc93f7e0edb82b41a7f51ca02dec7c model, and prove their exact bytes, original receipts and commitments survive historical resolution while current writes refuse them. Retained result/custody/receipt copies and receipt-to-event sequence joins compare exact encoded bytes, even when the original schema accepts integral floats; mathematically equal forged representations still refuse. Checkpoint source-selection, token, manifest/inventory, segment and last-frame copies also compare exact encoded bytes, including causal boolean-as-integer and integral-float source-copy negatives with all other observations rebound. Exact JSON types precede value checks: no string boolean/number, boolean-as-integer, null, array or nested object may satisfy a field with another declared type. Source/admission/pack/observation flags require actual booleans; checkpoint snapshot numeric fields require actual integers and untyped source/dataset copies compare encoded values so Python bool/int equality cannot redeem a forgery. scripts/pm_runtime_artifact_round6_cases.py supplies one-field source contradictions for RAP-103/RAP-106/RAP-117 on schema, inline/packed decode and fresh append; every altered pack is reissued from its actual body with fresh size/digest, not a stale reference. Recompute known provider digests from separately selected synthetic redacted source bytes; unknown digest and missing source are separate controls. Sweep numeric variants and wrong types for all nineteen, and include the deleted-body reference gate in the repository's complete guard-removal table. Native authentication remains NOT_RUN.
+  Sweep part-1 fixture coverage includes quota-present tool_llm_trace controls for each independent source (settlement.quota_artifact_ref and refs.quota_refs), with quota_observed changed alone to false or null on schema, inline/packed decode and fresh-append routes. Each of the nineteen families also tests a selected node generation_id copy differing from its independently correct map key/token/dataset, and anchor.retained_event_count=2 against the verified one-event source. Recompute only the read token's non-target generation_anchor_sha256 for the count case; keep source, coverage and dataset at their correct one-event values. Each negative starts from a valid parent, with fresh pack bytes/references and coherent non-target observations. Sweep part 2A replaces the legacy compound guard-removal table with the guard tables above; sweep part 2B adopts the shared number, recipe and date-time rules described above.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: ["DL-045", "DL-075", "CV-1100", "CV-1101", "SP-1100", "SP-1101"]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+  - python3 scripts/pm-runtime-artifact-standing-checks.py
+  - python3 scripts/pm-runtime-artifact-guard-tables.py --out <evidence directory>
+  - python3 scripts/pm-runtime-artifact-number-corpus.py
+  - python3 scripts/pm_event_numbers.py --self-test --scope numbers
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+  - Plans/Contracts_V0.md#CV-1100
+  - Plans/Contracts_V0.md#CV-1101
+  - Plans/storage-plan.md#SP-1100
+  - Plans/storage-plan.md#SP-1101
+preserved_exact_tokens:
+  - "DR artifact event contract oracles"
+```
+
+### ATS-275 - filesafe.command_denied, filesafe.destructive_override_denied oracles
+
+```yaml
+plan_unit_id: ATS-275
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-550
+- CV-551
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
+- python3 scripts/pm-filesafe-table-generate.py --check
+- python3 scripts/pm-filesafe-p2a-cases.py --check
+- python3 scripts/pm-filesafe-guard-tables.py --out DIR
+- python3 scripts/pm-filesafe-number-corpus.py
+- python3 scripts/pm_event_numbers.py --self-test --scope numbers
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `filesafe.command_denied`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission.
+- `filesafe.destructive_override_denied`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+
+
+**Review round 1 mandatory regressions.**
+
+- `filesafe.command_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `filesafe.destructive_override_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
+
+**Review round 2 mandatory regressions.**
+
+- `filesafe.command_denied`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `filesafe.destructive_override_denied`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+
+
+**Review round 3 SP-337 regressions for `filesafe.command_denied`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 3 SP-337 regressions for `filesafe.destructive_override_denied`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 4 standing checks 9 and 10.**
+
+- `filesafe.command_denied`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+- `filesafe.destructive_override_denied`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+
+
+
+**Review round 7 selected-source regressions (R6-B1).**
+
+- `filesafe.command_denied`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+- `filesafe.destructive_override_denied`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+
+**Card 2 retention oracles for `filesafe.command_denied` (DL-422, review round 7).** The complete authority checker adopts `scripts/pm_filesafe_retention.py` and this family's own `Plans/filesafe_event_retention_fixtures.json` row. Compare its Project binding and decision to the exact pre-existing Storage policy object; refuse a substituted policy, altered expiry/count/overflow object or an inferred application binding. Check the original durable-save anchor at before/exact/after expiry, unchanged by retry, reprocessing or recovery; each investigation/reference/recovery/backup/hold protection independently blocks expiry. Permanent proof never expires by age or count and survives deletion of the described file/chat; Remove project from list retains data, while only authorized explicit Delete Puppet Master project data under existing protections can remove Project proof. Full capacity refuses new entries unless the seven-year policy can expire unprotected entries. Application history remains blocked on exact approved rules. These are static synthetic eligibility oracles; native deletion, protection/authentication and physical storage execution remain NOT_RUN.
+
+
+**Card 2 retention oracles for `filesafe.destructive_override_denied` (DL-423, review round 7).** The complete authority checker adopts `scripts/pm_filesafe_retention.py` and this family's own `Plans/filesafe_event_retention_fixtures.json` row. Compare its Project binding and decision to the exact pre-existing Storage policy object; refuse a substituted policy, altered expiry/count/overflow object or an inferred application binding. Check the original durable-save anchor at before/exact/after expiry, unchanged by retry, reprocessing or recovery; each investigation/reference/recovery/backup/hold protection independently blocks expiry. Permanent proof never expires by age or count and survives deletion of the described file/chat; Remove project from list retains data, while only authorized explicit Delete Puppet Master project data under existing protections can remove Project proof. Full capacity refuses new entries unless the seven-year policy can expire unprotected entries. Application history remains blocked on exact approved rules. These are static synthetic eligibility oracles; native deletion, protection/authentication and physical storage execution remain NOT_RUN.
+
+**Sweep part 1 regressions (R7-B1/R7-B2/S6).** Both FileSafe checker entry points enforce the selected date-time format with an explicit full-string grammar and calendar/range checks, independent of optional format packages. Own payload, materialization, retained-issued and coherently rehashed original-source negatives cover missing zones, wrong separators, invalid calendar/time/offset fields, trailing LF, leap seconds and invalid fractional syntax; valid fractional precision and offset spellings remain unchanged. The exact cycle-7 accepted malformed-source witnesses must refuse. This enforces the declared schema format and does not restamp authentic original bytes or claim the part-2 original-recipe dispatcher. The three seven-year Project suites independently exercise count-only and disk-only refusal and eligible-expiry paths with the peer condition false. Each safe-point suite applies DL-401 G28 Run year with a real run, completion anchor, existing protections and independent run/Project successor controls; application safe points use no fabricated Project count. Application-scope FileSafe security-event retention remains pending and unchanged. Whole-lane guard-table certification and NUMRULE adoption remain part 2.
+
+**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables.py --out DIR` replays every witness of both CLIs under the observation recorder, checks the uncapped lane matrix, and runs the gated shared guard tool once per table; rows no input can refuse first stay as checks in tables of their own and earn no credit. `Plans/filesafe_event_p2a_cases.json` holds the coherent one-defect witnesses for rows the earlier fixtures left without one (`python3 scripts/pm-filesafe-p2a-cases.py --check`); both CLIs check them. `python3 scripts/pm-filesafe-number-corpus.py` runs the shared NUMRULE number corpus and 4,400-digit integers through the complete checkers, and `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must report pass. Limits are unchanged in kind: each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one), date-time formats remain the interim lane grammar pending CV-1101, and native execution stays NOT_RUN.
+
+
+### ATS-276 - filesafe.destructive_override_granted, filesafe.destructive_override_requested oracles
+
+```yaml
+plan_unit_id: ATS-276
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-552
+- CV-553
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
+- python3 scripts/pm-filesafe-table-generate.py --check
+- python3 scripts/pm-filesafe-p2a-cases.py --check
+- python3 scripts/pm-filesafe-guard-tables.py --out DIR
+- python3 scripts/pm-filesafe-number-corpus.py
+- python3 scripts/pm_event_numbers.py --self-test --scope numbers
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `filesafe.destructive_override_granted`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission.
+- `filesafe.destructive_override_requested`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+
+
+**Review round 1 mandatory regressions.**
+
+- `filesafe.destructive_override_granted`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `filesafe.destructive_override_requested`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
+
+**Review round 2 mandatory regressions.**
+
+- `filesafe.destructive_override_granted`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `filesafe.destructive_override_requested`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+
+
+**Review round 3 SP-337 regressions for `filesafe.destructive_override_granted`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 3 SP-337 regressions for `filesafe.destructive_override_requested`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 4 standing checks 9 and 10.**
+
+- `filesafe.destructive_override_granted`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+- `filesafe.destructive_override_requested`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+
+
+
+**Review round 7 selected-source regressions (R6-B1).**
+
+- `filesafe.destructive_override_granted`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+- `filesafe.destructive_override_requested`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+
+**Card 2 retention oracles for `filesafe.destructive_override_requested` (DL-424, review round 7).** The complete authority checker adopts `scripts/pm_filesafe_retention.py` and this family's own `Plans/filesafe_event_retention_fixtures.json` row. Compare its Project binding and decision to the exact pre-existing Storage policy object; refuse a substituted policy, altered expiry/count/overflow object or an inferred application binding. Check the original durable-save anchor at before/exact/after expiry, unchanged by retry, reprocessing or recovery; each investigation/reference/recovery/backup/hold protection independently blocks expiry. Permanent proof never expires by age or count and survives deletion of the described file/chat; Remove project from list retains data, while only authorized explicit Delete Puppet Master project data under existing protections can remove Project proof. Full capacity refuses new entries unless the seven-year policy can expire unprotected entries. Application history remains blocked on exact approved rules. These are static synthetic eligibility oracles; native deletion, protection/authentication and physical storage execution remain NOT_RUN.
+
+**Sweep part 1 regressions (R7-B1/R7-B2/S6).** Both FileSafe checker entry points enforce the selected date-time format with an explicit full-string grammar and calendar/range checks, independent of optional format packages. Own payload, materialization, retained-issued and coherently rehashed original-source negatives cover missing zones, wrong separators, invalid calendar/time/offset fields, trailing LF, leap seconds and invalid fractional syntax; valid fractional precision and offset spellings remain unchanged. The exact cycle-7 accepted malformed-source witnesses must refuse. This enforces the declared schema format and does not restamp authentic original bytes or claim the part-2 original-recipe dispatcher. The three seven-year Project suites independently exercise count-only and disk-only refusal and eligible-expiry paths with the peer condition false. Each safe-point suite applies DL-401 G28 Run year with a real run, completion anchor, existing protections and independent run/Project successor controls; application safe points use no fabricated Project count. Application-scope FileSafe security-event retention remains pending and unchanged. Whole-lane guard-table certification and NUMRULE adoption remain part 2.
+
+**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables.py --out DIR` replays every witness of both CLIs under the observation recorder, checks the uncapped lane matrix, and runs the gated shared guard tool once per table; rows no input can refuse first stay as checks in tables of their own and earn no credit. `Plans/filesafe_event_p2a_cases.json` holds the coherent one-defect witnesses for rows the earlier fixtures left without one (`python3 scripts/pm-filesafe-p2a-cases.py --check`); both CLIs check them. `python3 scripts/pm-filesafe-number-corpus.py` runs the shared NUMRULE number corpus and 4,400-digit integers through the complete checkers, and `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must report pass. Limits are unchanged in kind: each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one), date-time formats remain the interim lane grammar pending CV-1101, and native execution stays NOT_RUN.
+
+
+### ATS-277 - filesafe.guard_init_failed, filesafe.path_denied oracles
+
+```yaml
+plan_unit_id: ATS-277
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-554
+- CV-555
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
+- python3 scripts/pm-filesafe-table-generate.py --check
+- python3 scripts/pm-filesafe-p2a-cases.py --check
+- python3 scripts/pm-filesafe-guard-tables.py --out DIR
+- python3 scripts/pm-filesafe-number-corpus.py
+- python3 scripts/pm_event_numbers.py --self-test --scope numbers
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `filesafe.guard_init_failed`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission.
+- `filesafe.path_denied`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+
+
+**Review round 1 mandatory regressions.**
+
+- `filesafe.guard_init_failed`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `filesafe.path_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
+
+**Review round 2 mandatory regressions.**
+
+- `filesafe.guard_init_failed`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `filesafe.path_denied`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+
+
+**Review round 3 SP-337 regressions for `filesafe.guard_init_failed`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 3 SP-337 regressions for `filesafe.path_denied`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 4 standing checks 9 and 10.**
+
+- `filesafe.guard_init_failed`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+- `filesafe.path_denied`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+
+
+
+**Review round 7 selected-source regressions (R6-B1).**
+
+- `filesafe.guard_init_failed`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+- `filesafe.path_denied`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+
+**Card 2 retention oracles for `filesafe.guard_init_failed` (DL-425, review round 7).** The complete authority checker adopts `scripts/pm_filesafe_retention.py` and this family's own `Plans/filesafe_event_retention_fixtures.json` row. Compare its Project binding and decision to the exact pre-existing Storage policy object; refuse a substituted policy, altered expiry/count/overflow object or an inferred application binding. Check the original durable-save anchor at before/exact/after expiry, unchanged by retry, reprocessing or recovery; each investigation/reference/recovery/backup/hold protection independently blocks expiry. Permanent proof never expires by age or count and survives deletion of the described file/chat; Remove project from list retains data, while only authorized explicit Delete Puppet Master project data under existing protections can remove Project proof. Full capacity refuses new entries unless the seven-year policy can expire unprotected entries. Application history remains blocked on exact approved rules. These are static synthetic eligibility oracles; native deletion, protection/authentication and physical storage execution remain NOT_RUN.
+
+
+**Card 2 retention oracles for `filesafe.path_denied` (DL-426, review round 7).** The complete authority checker adopts `scripts/pm_filesafe_retention.py` and this family's own `Plans/filesafe_event_retention_fixtures.json` row. Compare its Project binding and decision to the exact pre-existing Storage policy object; refuse a substituted policy, altered expiry/count/overflow object or an inferred application binding. Check the original durable-save anchor at before/exact/after expiry, unchanged by retry, reprocessing or recovery; each investigation/reference/recovery/backup/hold protection independently blocks expiry. Permanent proof never expires by age or count and survives deletion of the described file/chat; Remove project from list retains data, while only authorized explicit Delete Puppet Master project data under existing protections can remove Project proof. Full capacity refuses new entries unless the seven-year policy can expire unprotected entries. Application history remains blocked on exact approved rules. These are static synthetic eligibility oracles; native deletion, protection/authentication and physical storage execution remain NOT_RUN.
+
+**Sweep part 1 regressions (R7-B1/R7-B2/S6).** Both FileSafe checker entry points enforce the selected date-time format with an explicit full-string grammar and calendar/range checks, independent of optional format packages. Own payload, materialization, retained-issued and coherently rehashed original-source negatives cover missing zones, wrong separators, invalid calendar/time/offset fields, trailing LF, leap seconds and invalid fractional syntax; valid fractional precision and offset spellings remain unchanged. The exact cycle-7 accepted malformed-source witnesses must refuse. This enforces the declared schema format and does not restamp authentic original bytes or claim the part-2 original-recipe dispatcher. The three seven-year Project suites independently exercise count-only and disk-only refusal and eligible-expiry paths with the peer condition false. Each safe-point suite applies DL-401 G28 Run year with a real run, completion anchor, existing protections and independent run/Project successor controls; application safe points use no fabricated Project count. Application-scope FileSafe security-event retention remains pending and unchanged. Whole-lane guard-table certification and NUMRULE adoption remain part 2.
+
+**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables.py --out DIR` replays every witness of both CLIs under the observation recorder, checks the uncapped lane matrix, and runs the gated shared guard tool once per table; rows no input can refuse first stay as checks in tables of their own and earn no credit. `Plans/filesafe_event_p2a_cases.json` holds the coherent one-defect witnesses for rows the earlier fixtures left without one (`python3 scripts/pm-filesafe-p2a-cases.py --check`); both CLIs check them. `python3 scripts/pm-filesafe-number-corpus.py` runs the shared NUMRULE number corpus and 4,400-digit integers through the complete checkers, and `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must report pass. Limits are unchanged in kind: each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one), date-time formats remain the interim lane grammar pending CV-1101, and native execution stays NOT_RUN.
+
+
+### ATS-278 - filesafe.policy_degraded oracles
+
+```yaml
+plan_unit_id: ATS-278
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-556
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
+- python3 scripts/pm-filesafe-table-generate.py --check
+- python3 scripts/pm-filesafe-p2a-cases.py --check
+- python3 scripts/pm-filesafe-guard-tables.py --out DIR
+- python3 scripts/pm-filesafe-number-corpus.py
+- python3 scripts/pm_event_numbers.py --self-test --scope numbers
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `filesafe.policy_degraded`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+
+
+**Review round 1 mandatory regressions.**
+
+- `filesafe.policy_degraded`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
+
+**Review round 2 mandatory regressions.**
+
+- `filesafe.policy_degraded`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+
+
+**Review round 3 SP-337 regressions for `filesafe.policy_degraded`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 4 standing checks 9 and 10.**
+
+- `filesafe.policy_degraded`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+
+
+
+**Review round 7 selected-source regressions (R6-B1).**
+
+- `filesafe.policy_degraded`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+
+**Sweep part 1 regressions (R7-B1/R7-B2/S6).** Both FileSafe checker entry points enforce the selected date-time format with an explicit full-string grammar and calendar/range checks, independent of optional format packages. Own payload, materialization, retained-issued and coherently rehashed original-source negatives cover missing zones, wrong separators, invalid calendar/time/offset fields, trailing LF, leap seconds and invalid fractional syntax; valid fractional precision and offset spellings remain unchanged. The exact cycle-7 accepted malformed-source witnesses must refuse. This enforces the declared schema format and does not restamp authentic original bytes or claim the part-2 original-recipe dispatcher. The three seven-year Project suites independently exercise count-only and disk-only refusal and eligible-expiry paths with the peer condition false. Each safe-point suite applies DL-401 G28 Run year with a real run, completion anchor, existing protections and independent run/Project successor controls; application safe points use no fabricated Project count. Application-scope FileSafe security-event retention remains pending and unchanged. Whole-lane guard-table certification and NUMRULE adoption remain part 2.
+
+**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables.py --out DIR` replays every witness of both CLIs under the observation recorder, checks the uncapped lane matrix, and runs the gated shared guard tool once per table; rows no input can refuse first stay as checks in tables of their own and earn no credit. `Plans/filesafe_event_p2a_cases.json` holds the coherent one-defect witnesses for rows the earlier fixtures left without one (`python3 scripts/pm-filesafe-p2a-cases.py --check`); both CLIs check them. `python3 scripts/pm-filesafe-number-corpus.py` runs the shared NUMRULE number corpus and 4,400-digit integers through the complete checkers, and `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must report pass. Limits are unchanged in kind: each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one), date-time formats remain the interim lane grammar pending CV-1101, and native execution stays NOT_RUN.
+
+
+### ATS-279 - safe_point.created, safe_point.restored oracles
+
+```yaml
+plan_unit_id: ATS-279
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-557
+- CV-558
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
+- python3 scripts/pm-filesafe-table-generate.py --check
+- python3 scripts/pm-filesafe-p2a-cases.py --check
+- python3 scripts/pm-filesafe-guard-tables.py --out DIR
+- python3 scripts/pm-filesafe-number-corpus.py
+- python3 scripts/pm_event_numbers.py --self-test --scope numbers
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `safe_point.created`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission. Forged BLAKE3 address, swapped bytes and truncated bytes negatives repair every dependent manifest/source/receipt/issued copy; all refuse only the recomputed address predicate. Independent SHA-256 mismatch negatives preserve correct BLAKE3 bytes/address. The body-dependent historical resolver repeats blob verification; event-only history/retry/rebuild remains readable after domain controls are disposed.
+- `safe_point.restored`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission. Round-6 regressions require coherent `1.0`, `1e0` and `-0.0` epoch negatives to refuse before commitment/joins, typed integer `1`/`0` controls to preserve one value and raw `-0` tokens to refuse at the CV-1100 current decoder, and string booleans/numbers, null, arrays, nested objects and boolean epochs to fail their exact typed ingress; Project/application reference descriptors with floating-point byte_size must also refuse after all dependent custody is repaired. Retained application sources verify their original typed commitment recipe without restamping or current-writer epoch admission. Forged BLAKE3 address, swapped bytes and truncated bytes negatives repair every dependent manifest/source/receipt/issued copy; all refuse only the recomputed address predicate. Independent SHA-256 mismatch negatives preserve correct BLAKE3 bytes/address. The body-dependent historical resolver repeats blob verification; event-only history/retry/rebuild remains readable after domain controls are disposed.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+**Review round 1 mandatory regressions.**
+
+- `safe_point.created`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `safe_point.created` application originals: decode closed complete original request/record/manifest/blob compositions and, for restoration, full journal/pre/post manifests/equality. Rehash independently altered genuine synthetic originals, then refuse subject/count/blob/SCM/cursor/lease/hold/outcome mismatches, opaque bodies and wrong payload-store selections. Native authenticity, payload addressing, filesystem equality, durable publication and CAS remain NOT_RUN.
+- `safe_point.restored`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+- `safe_point.restored` application originals: decode closed complete original request/record/manifest/blob compositions and, for restoration, full journal/pre/post manifests/equality. Rehash independently altered genuine synthetic originals, then refuse subject/count/blob/SCM/cursor/lease/hold/outcome mismatches, opaque bodies and wrong payload-store selections. Native authenticity, payload addressing, filesystem equality, durable publication and CAS remain NOT_RUN.
+
+
+**Review round 2 mandatory regressions.**
+
+- `safe_point.created`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `safe_point.restored`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `safe_point.restored` application originals: independently re-encode and rehash each inconsistent result-event pointer and operation-kind/before/target/stage/tombstone composition in the genuine synthetic source bank, then require full-checker refusal. Positive create/delete/metadata journals and the original pre-append null result-event phase remain supported. No journal deletion or hold release follows from replay; native original journal custody remains NOT_RUN.
+
+
+**Review round 3 SP-337 regressions for `safe_point.created`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 3 SP-337 regressions for `safe_point.restored`.** The full payload and authority checkers exercise this family's own Project/application ASCII and multibyte UTF-8 bodies at exactly 16,383 and 16,384 bytes (valid), and 16,385 bytes (refused). Complete original source/body/custody commitments are maintained in each case. Its own large EventRecord semantic-body reference positive resolves exact BLAKE3-addressed canonical JSON, byte size, media type and durable synthetic pack/index selection, with an empty inline payload and no duplicated large stored body; writer, recovery and retry retain the exact issued record and first receipt. Missing/changed/non-durable pack bytes, wrong address/size/media, trailing LF and oversized inline copies with or without a reference refuse. An independently consistent oversized issued EventRecord is rejected as well as the original input; altered retained copies cannot recover, publish or dedupe. The earlier external-file-blob positive is a separate boundary and remains unchanged. All eight standing checks and B1..B7 mutations remain required per family; failure controls require nonzero checker exit. Native pack/checkpoint/CAS execution remains NOT_RUN; admission and the seven owner retention questions remain separate.
+
+**Review round 4 standing checks 9 and 10.**
+
+- `safe_point.created`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+- `safe_point.restored`: the passive historical reader resolves the independently retained original issued EventRecord and unchanged first receipt, including verified SP-337 body custody, after live writer-epoch changes and lawful disposal of original domain controls. It does not reopen original command/grant/snapshot controls or require the current writer epoch to equal the historical epoch. Missing issued/receipt/payload custody, forged candidate or issued bytes, absent retained boundary, wrong Storage identity, a stale reader generation and withdrawn readers refuse; writer acceptance still requires current original-owner selection. The explicit body-dependent `read_body` request still refuses lost original bodies; that refusal does not hide the independently retained EventRecord. Own inline and reference Project/application traces verify zero replay effects and fenced withdrawal followed by verified successor publication. Both full checker entry points resolve every `$ref` in every pinned resource, including unused definitions and nested `$id` scopes; this family's source graph pins the complete dependency closure including the shared integration expansion resource. `Plans/filesafe_schema_graph_fixtures.json` supplies own source/payload/dependency dangling-reference negatives and unselected-dependency/nested-scope negatives. Rehashed external mutations must make both CLIs report failure with a nonzero exit. All ten standing checks and all earlier B1..B8 mutations remain required. Native access/holds, physical pack durability and generic checkpoint/CAS remain NOT_RUN; the seven narrowed retention questions and absent admission are unchanged.
+
+
+**Review round 7 selected-source regressions (R6-B1).**
+
+- `safe_point.created`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+- `safe_point.restored`: own Project and application integer-epoch-1 controls pass full materialization, owner/prepare/append/receipt/terminal and body-read paths. Changing only the selected-bank epoch to boolean, float, string, null, array or object refuses current acceptance and original-body reads while event-only history stays readable. Independently self-committed foreign originals refuse the exact recursive complete-value join; own selected commitment corruption refuses before joining. Original recipes and historical source controls remain unchanged.
+
+**R6-B2 restore isolation.** Preserve the ten historical fix2 case IDs, rebuilding five kind witnesses as metadata operations against unequal before/target content with every subject join true. Rebuild five subject witnesses with presence-compatible replace kind and only expected_before_sha256 wrong. Recompute bodies, manifests, source commitments, issued records and first receipts where affected. Each fails only its intended invariant; cut only the metadata content predicate or tested subject clause with all peers enabled to show it passes. Original skipped-outcome positives remain; unequal-content kind controls use valid clean restores where skipped would be contradictory.
+
+**Sweep part 1 regressions (R7-B1/R7-B2/S6).** Both FileSafe checker entry points enforce the selected date-time format with an explicit full-string grammar and calendar/range checks, independent of optional format packages. Own payload, materialization, retained-issued and coherently rehashed original-source negatives cover missing zones, wrong separators, invalid calendar/time/offset fields, trailing LF, leap seconds and invalid fractional syntax; valid fractional precision and offset spellings remain unchanged. The exact cycle-7 accepted malformed-source witnesses must refuse. This enforces the declared schema format and does not restamp authentic original bytes or claim the part-2 original-recipe dispatcher. The three seven-year Project suites independently exercise count-only and disk-only refusal and eligible-expiry paths with the peer condition false. Each safe-point suite applies DL-401 G28 Run year with a real run, completion anchor, existing protections and independent run/Project successor controls; application safe points use no fabricated Project count. Application-scope FileSafe security-event retention remains pending and unchanged. Whole-lane guard-table certification and NUMRULE adoption remain part 2.
+
+**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables.py --out DIR` replays every witness of both CLIs under the observation recorder, checks the uncapped lane matrix, and runs the gated shared guard tool once per table; rows no input can refuse first stay as checks in tables of their own and earn no credit. `Plans/filesafe_event_p2a_cases.json` holds the coherent one-defect witnesses for rows the earlier fixtures left without one (`python3 scripts/pm-filesafe-p2a-cases.py --check`); both CLIs check them. `python3 scripts/pm-filesafe-number-corpus.py` runs the shared NUMRULE number corpus and 4,400-digit integers through the complete checkers, and `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must report pass. Limits are unchanged in kind: each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one), date-time formats remain the interim lane grammar pending CV-1101, and native execution stays NOT_RUN.

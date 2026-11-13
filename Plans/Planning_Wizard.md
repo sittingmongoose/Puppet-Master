@@ -888,7 +888,7 @@ plan_unit_id: PWIZ-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Planning Wizard uses current Goal Runtime and Auditor-based AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than superseded experimental workflow machinery. Every Topic Plan Draft receives a scoped fidelity audit/repair loop, and the integrated Final Plan Pack receives a separate broad multi-specialist audit/repair loop before user review and approval. Final Plan Pack audit covers PRD and ledger fidelity, exact details, unsupported inventions, owner and consumer placement, cross-topic conflicts, implementation readiness, testing readiness, security/data/permissions consistency, repository currentness, source lineage, schemas, mechanics, and future compile readiness. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all
+canonical_text: 'Planning Wizard workflow and Auditor own AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than Goal Runtime (DL-472, DL-478). Every Topic Plan Draft receives a scoped fidelity audit/repair loop, and the integrated Final Plan Pack receives a separate broad multi-specialist audit/repair loop before user review and approval. Final Plan Pack audit covers PRD and ledger fidelity, exact details, unsupported inventions, owner and consumer placement, cross-topic conflicts, implementation readiness, testing readiness, security/data/permissions consistency, repository currentness, source lineage, schemas, mechanics, and future compile readiness. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all
   findings are durably closed or a true typed blocker remains. Audit findings have stable finding keys, source and artifact hashes, closure status, evidence, reason, repair attempts, and reopen conditions so unchanged closed findings become previously closed rather than recurring forever. Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
@@ -982,7 +982,7 @@ plan_unit_id: PWIZ-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details. A context-aware incomplete-content validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason,
+canonical_text: 'Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details. A context-aware incomplete-content validator runs at Planning Wizard approval, Plan Compile certification, and WorkNode completion (Goal completion carries no check, DL-478) across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason,
   risk, approver, downstream disposition, expiration or reopen condition, and evidence; broad permission to leave TODOs is invalid. Planning is compile-ready only when all required topics are Ready or explicitly excluded, ledgers are synchronized, topic plans compiled and audited, invalidations resolved, final integration and final audit completed, testing requirements captured, project context current, source lineage complete, zero-incomplete gate passed, and immutable ApprovedPlanPack can be created. Implementation readiness requires behavior, actors and identity, data and state transitions, edge and failure cases, permissions, currentness and idempotency, UI commands and states where applicable, adapters and side effects, validation surfaces, acceptance evidence, dependencies, and handoff contracts. Every material plan and compile claim must trace to an Approved PRD Pack, user planning answer, accepted Planning Amendment, repository fact, reference artifact,
   explicit system policy, or recorded assumption; unsupported invented claims are audit defects. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision, requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker. Only product policy with no safe inference, material risk acceptance, destructive or irreversible operations, credentials or permissions, legal/compliance authority, or irreconcilable user preference conflicts may block for user decision.'
 gui_related: false
@@ -1048,7 +1048,6 @@ preserved_exact_tokens:
 - Planning Wizard approval
 - Plan Compile certification
 - WorkNode completion
-- Goal completion
 - context-aware
 - user_approved_incomplete_item
 - compile-ready
@@ -4848,4 +4847,119 @@ command_payload_definitions:
         launch_state: {type: string, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; no value set stated, typed string pending that enum"}
         approval_receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; approval receipt effect; no typed result contract"}
         approval_cas_receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; approval_cas_receipt effect (PWIZ-014 atomic write); no typed result contract"}
+```
+
+### PWIZ-097 - Deferred Intake wizard.opened Observation
+
+```yaml
+plan_unit_id: PWIZ-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: wizard.opened is a newly authored technical event binding under DL-045 for the already specified
+  UCC-032 deferred Planning Wizard intake; it does not revive Chain Wizard or alias another event name. UCC-002/current
+  section 2.1A normalizes cmd.project.chain_wizard_open_deferred as a compatibility command spelling before admission,
+  and PWIZ-001 admits exactly ApprovedPRDPack, normalized_requirements_pack and assistant_chat_handoff_seed. PWIZ-002/SP-216
+  own the real PlanningRun, Named Plan, thread_group_id and actual planning_wizard/intake child identity. Observe
+  the existing successful open result for the real Project and actual current PlanningRun intake child, after owner
+  route/currentness and permission validation. Opening is not proof of seed acceptance; a route click, attempt or
+  failed open emits nothing. predecessor_event_id is null. This event never creates or selects a child on replay.
+  The exact producer is emitter.wizard_opened@1.0.0, the current Planning Wizard deferred-intake owner continuation,
+  never a GUI callback or generic projector. An admitted current command result supplies actual immutable request_id,
+  child, source seed version/hash, parent joins and project-context refs; focus, fabricated Project, raw transcript
+  and old Chain Wizard lifecycle are refused. Source refs preserve warnings, amendments/lineage and all compatible
+  work-intent axes from the current seed; neither this fact nor its reader edits those owners. CV-594 owns the independent
+  closed payload and identity recipe; Plans/storage-plan.md#wizard-opened-original-custody owns its independent
+  original source, SP-286 receipt, SP-278 history and withdrawal contract. Current writes remain disabled pending
+  this exact family's later admission and retention disposition. This observation changes no existing product action
+  or user-visible result boundary. Original custody and restore remain independently required; a successful static
+  fixture never supplies native source authority.
+gui_related: false
+gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
+depends_on:
+- PWIZ-001
+- PWIZ-002
+- UCC-032
+- SP-216
+unblocks: []
+acceptance_criteria:
+- Prepared without family admission; retention remains PENDING_RETENTION_DECISION.
+- The complete positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw_fix1
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- wizard.opened
+negative_constraints:
+- No event admission, retention choice, new UI behavior, native execution claim or governance seal.
+```
+
+
+### PWIZ-098 - Deferred Intake wizard.deferred_payload.loaded Observation
+
+```yaml
+plan_unit_id: PWIZ-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: wizard.deferred_payload.loaded is a newly authored technical event binding under DL-045 for the
+  already specified UCC-032 deferred Planning Wizard intake; it does not revive Chain Wizard or alias another event
+  name. UCC-002/current section 2.1A normalizes cmd.project.chain_wizard_open_deferred as a compatibility command
+  spelling before admission, and PWIZ-001 admits exactly ApprovedPRDPack, normalized_requirements_pack and assistant_chat_handoff_seed.
+  PWIZ-002/SP-216 own the real PlanningRun, Named Plan, thread_group_id and actual planning_wizard/intake child
+  identity. Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual
+  current PlanningRun intake child. The original successful open event and its exact first receipt must already
+  resolve; predecessor_event_id is that wizard.opened event for the same original request, child, Project, Named
+  Plan, seed and context. Loading is distinct from opening; route-open, a stale seed, unsupported raw legacy payload
+  or failed load emits nothing. Receipt-backed acceptance is not a compile/approval/execution grant. The exact producer
+  is emitter.wizard_deferred_payload_loaded@1.0.0, the current Planning Wizard deferred-intake owner continuation,
+  never a GUI callback or generic projector. An admitted current command result supplies actual immutable request_id,
+  child, source seed version/hash, parent joins and project-context refs; focus, fabricated Project, raw transcript
+  and old Chain Wizard lifecycle are refused. Source refs preserve warnings, amendments/lineage and all compatible
+  work-intent axes from the current seed; neither this fact nor its reader edits those owners. CV-595 owns the independent
+  closed payload and identity recipe; Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody owns
+  its independent original source, SP-286 receipt, SP-278 history and withdrawal contract. Current writes remain
+  disabled pending this exact family's later admission and retention disposition. This observation changes no existing
+  product action or user-visible result boundary. Original custody and restore remain independently required; a
+  successful static fixture never supplies native source authority.
+gui_related: false
+gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
+depends_on:
+- PWIZ-001
+- PWIZ-002
+- UCC-032
+- SP-216
+unblocks: []
+acceptance_criteria:
+- Prepared without family admission; retention remains PENDING_RETENTION_DECISION.
+- The complete positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw_fix1
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- wizard.deferred_payload.loaded
+negative_constraints:
+- No event admission, retention choice, new UI behavior, native execution claim or governance seal.
 ```

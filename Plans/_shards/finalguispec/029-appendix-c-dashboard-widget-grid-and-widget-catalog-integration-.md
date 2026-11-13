@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4179-L4271
+Source lines: L4179-L4277
 
-Source SHA256: `faba71dc4ce3fe68b94ea0639e20e448c3f9f3c74a8343e647aa275704933a7a`
+Source SHA256: `50e00d67a61f15d8c93c7d8953f478927de33ec39de9e98ddf8df47e97f610d1`
 
 ---
 
@@ -15,6 +15,8 @@ This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid
 Amended 2026-10-09 (DL-180, DL-184): a dashboard is now a tab kind and several boards may be open (F3-638); a dashboard tab can show every Usage widget, Orchestrator widgets after that page's redesign, so C.4's four-entry named catalogue and C.4.1's limit no longer bind dashboard tabs (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`); C.1's window-width columns yield to the tab's own width (F3-636, F3-638); and the call-to-action cards' accent-left-border is retired (F3-648). The sentences below that said otherwise are amended in place.
 
 Amended 2026-10-10 (DL-186): dashboard tabs run the Usage board engine, one board each (F3-638). The old Home widgets, C.2's run progress, lanes and results among them, have left Home until Orchestrator widgets join after that page's redesign, so C.2's default layout is no board's default and C.1's line that the existing Dashboard card types remain as default widgets no longer holds; each board's contents are kept per project (WS-030), so the key C.5's migration writes is no board's key: `widget_layout:v1:dashboard` stays only a read-only record and rollback backup that nothing writes now (`Plans/Widget_System.md#WS-009`), and C.5's write into it is lineage.
+
+Amended 2026-11-12 (DL-477; Jared: "I believe those would be widgets on the dashboards that the user can put on there. Maybe those ones default to on there and the user can remove them."): the June Dashboard summary of active goals, stuck goals and blocked goals, verification/repair status, certification state, and cost/budget warnings is five widgets of the existing board model, owned by `Plans/Widget_System.md#WS-032`. Active goals (`goals:active`) and Stuck or blocked goals (`goals:stuck`) come from a Goals source, Verification and repair status (`workflows:review-status`) and Certification state (`workflows:certification-state`) from a Workflows source, and Cost and budget warnings is Usage's own `widget.alert_thresholds` (`Plans/usage-feature.md#UF-058`). All five are in the one Add widget catalogue (C.3, WS-030) and in the Home board's (`dashboard:home`) default set, so a Home board with no saved copy in a project shows them; the user removes any of them like any other widget, and Reset widgets brings them back. Verification and repair status and Certification state show the status of workflow-owned reviews and certifications (`Plans/Goal_Runtime_System.md#GRS-049`, `#GRS-065`), never a Goal's; Active goals and Stuck or blocked goals read Goal state (`#GRS-048`, `#GRS-050`, `#GRS-051`). No widget model, board, engine, layout key or command is added. C.2 and C.4 below are amended in place.
 
 ### C.1 Dashboard Upgrade: Card Grid to Widget Grid
 
@@ -42,6 +44,8 @@ The default dashboard layout includes:
 - **widget-active-lanes** (ID: `lanes-view-v1`): Lists active lanes and worktree allocation state.
 - **widget-recent-results** (ID: `results-v1`): Shows recent execution results and artifact links.
 
+Amended 2026-11-12 (DL-477): the three entries above stay on no board (DL-186). The Home board's own default set holds, first and in this order, Active goals, Stuck or blocked goals, Verification and repair status, Certification state, and Cost and budget warnings (`Plans/Widget_System.md#WS-032`), followed by the Usage widgets that `Plans/usage-feature.md` names for Home. A Home board already saved in a project keeps exactly its widgets and is never rewritten to add them.
+
 ### C.3 Add-Widget Flow on Dashboard
 
 Users add widgets via:
@@ -61,6 +65,8 @@ The current **named widget catalog** includes:
 **Core widgets** are Puppet Master-owned and part of the default installation. **Custom widgets** are user-generated and optional.
 
 Widget_System consumes this named catalog directly; it does not invent new widget IDs or synthesize missing entries.
+
+Amended 2026-11-12 (DL-477): the four entries above stay off every dashboard (WS-030). Add widget also offers the Goals source's `goals:active` and `goals:stuck` and the Workflows source's `workflows:review-status` and `workflows:certification-state`, each section under its label after the Usage sections, and Usage's `widget.alert_thresholds` in its Usage place; `Plans/Widget_System.md#WS-032` promotes them under DL-477.
 
 ### C.4.1 Larger Widget Library Compatibility Note
 

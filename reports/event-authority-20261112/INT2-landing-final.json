@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "environment": {
+      "PYTHONINTMAXSTRDIGITS": "0",
+      "TMPDIR": "/home/sittingmongoose/pm-scratch/ea-int2/tmp"
+    },
+    "parser_reason": "Permit the committed 4400-digit valid JSON witness to reach unchanged semantic validators; no gate filtering.",
+    "command": [
+      "python3",
+      "scripts/pm-landing-check.py",
+      "--base",
+      "origin/main",
+      "--json",
+      "--keep-check-reports",
+      "/home/sittingmongoose/pm-scratch/ea-int2/checks/landing-dry-20261112T133710Z/subchecks",
+      "--readiness-audit-root",
+      "/home/sittingmongoose/pm-worktrees/int2/Plans/.audits/event-authority-2026-08-13-currentness"
+    ],
+    "head": "d91213ff98da70921a826362b2cf2c6df9baee06",
+    "base": "2880dfc517a672e5cb18a47f9a8ed45e70a1c3b5",
+    "full_worktree": true,
+    "exit": 2,
+    "seconds": 2432.68,
+    "start_available_GiB": 17.565,
+    "max_child_rss_kb": 963268,
+    "report": "/home/sittingmongoose/pm-scratch/ea-int2/checks/landing-dry-20261112T133710Z/report.json",
+    "stderr": "/home/sittingmongoose/pm-scratch/ea-int2/checks/landing-dry-20261112T133710Z/stderr.log",
+    "report_keys": [
+      "base",
+      "baseline_commit",
+      "baseline_currency",
+      "blocking",
+      "branch_paths",
+      "branch_units",
+      "checks",
+      "commit",
+      "derived_paths_excluded",
+      "excused_by_kind",
+      "exports",
+      "generated_at_utc",
+      "grown_buckets",
+      "grown_subchecks",
+      "infrastructure",
+      "kept_check_reports",
+      "new",
+      "on_branch",
+      "pre_existing",
+      "readiness_audit_inputs",
+      "readiness_audit_source",
+      "rename_excuse_lost",
+      "resolved_buckets",
+      "schema_id",
+      "subcheck_timeout_seconds",
+      "subchecks_compared_by_total_only",
+      "validator_pairs"
+    ]
+  },
+  "baseline_commit": "77e87db4d89b9b04732997152b24831c3667ce9c",
+  "baseline_currency": {
+    "age_days": 0.06,
+    "ancestor": true,
+    "base": "origin/main",
+    "base_commit": "2880dfc517a672e5cb18a47f9a8ed45e70a1c3b5",
+    "baseline_commit": "77e87db4d89b9b04732997152b24831c3667ce9c",
+    "max_age_days": 7,
+    "reason": "its commit 77e87db4d89b is an ancestor of the base origin/main (2880dfc517a6) and 0.06 days older than it, within 7",
+    "rule_two_applies": true
+  },
+  "blocking": 800,
+  "nonstale_on_branch": 800,
+  "remaining_only_inherited_registry": true,
+  "new_registry_diagnostics": 0,
+  "registry_records_per_aggregate": {
+    "run-gates": 399,
+    "audit-governance": 399
+  },
+  "groups": [
+    {
+      "check": "audit-governance",
+      "kind": "implementation_readiness_self_tests_failed",
+      "count": 1
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_required_field_absent_from_value_schema",
+      "count": 57
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_required_fields_schema_mismatch",
+      "count": 23
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_retention_policy_ref_unknown",
+      "count": 86
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_value_schema_id_const_mismatch",
+      "count": 24
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_value_schema_not_closed",
+      "count": 24
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_value_schema_not_object",
+      "count": 19
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_value_schema_required_property_missing",
+      "count": 25
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_value_schema_version_const_mismatch",
+      "count": 24
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_secret_material_field",
+      "count": 50
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_secret_material_key",
+      "count": 67
+    },
+    {
+      "check": "run-gates",
+      "kind": "implementation_readiness_self_tests_failed",
+      "count": 1
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_required_field_absent_from_value_schema",
+      "count": 57
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_required_fields_schema_mismatch",
+      "count": 23
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_retention_policy_ref_unknown",
+      "count": 86
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_value_schema_id_const_mismatch",
+      "count": 24
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_value_schema_not_closed",
+      "count": 24
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_value_schema_not_object",
+      "count": 19
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_value_schema_required_property_missing",
+      "count": 25
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_value_schema_version_const_mismatch",
+      "count": 24
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_secret_material_field",
+      "count": 50
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_secret_material_key",
+      "count": 67
+    }
+  ],
+  "registry_lead_disposition_mail": "1112102945-20bb",
+  "unexpected_blockers": [],
+  "infrastructure": [],
+  "staleness_on_branch": {
+    "stale_hash": 34,
+    "artifact_hash_stale": 120,
+    "buildability_gate_report_stale_or_not_canonical": 2,
+    "pnc019_source_hash_stale": 18,
+    "event_authority_currentness_source_drift": 78,
+    "event_record_spec_lock_hash_stale": 2,
+    "storage_value_registry_spec_lock_hash_stale": 8,
+    "non_executable_closure_spec_lock_hash_stale": 2,
+    "stale_batch_report_sha256_after": 290,
+    "audit_closure_validator_error": 94,
+    "current_snapshot_live_sha256_mismatch": 64,
+    "current_snapshot_live_bytes_mismatch": 64,
+    "current_snapshot_live_line_count_mismatch": 56,
+    "current_snapshot_live_span_metadata_mismatch": 27067,
+    "current_snapshot_span_sha256_mismatch": 2302,
+    "current_snapshot_coverage_not_exact_same_document_planunit_set": 2839,
+    "current_snapshot_batch_doc_invalid": 24
+  },
+  "new_outside_branch": {
+    "storage_value_registry_retention_policy_ref_unknown": 172,
+    "storage_value_registry_value_schema_not_closed": 48,
+    "storage_value_registry_value_schema_required_property_missing": 50,
+    "storage_value_registry_value_schema_id_const_mismatch": 48,
+    "storage_value_registry_value_schema_version_const_mismatch": 48,
+    "storage_value_registry_required_fields_schema_mismatch": 46,
+    "storage_value_secret_material_field": 100,
+    "storage_value_secret_material_key": 134,
+    "storage_value_registry_value_schema_not_object": 38,
+    "storage_value_registry_required_field_absent_from_value_schema": 114,
+    "implementation_readiness_self_tests_failed": 2,
+    "historical_successor_terminal_current_snapshot_invalid": 2
+  },
+  "report_sha256": "26ca2d7e4b4b78ec7a25cecdbc082eea11f85ae7419c78c7a6dab89b9902c231",
+  "gate_filtering": false,
+  "baseline_refreshed": false,
+  "full_blocking_records": "drafts/INT2/landing-final-summary.json",
+  "full_blocking_records_sha256": "9b3358e9bae06d562592b1de682f411aa3981ab5187260c59586da5efcebe41f",
+  "long_job_wait_wrapper_exit": 1,
+  "underlying_checker_exit": 2
+}

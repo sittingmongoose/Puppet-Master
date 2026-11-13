@@ -3179,7 +3179,7 @@
       ],
       "migration_refs": [
         "Plans/Decision_Log.md#DL-041",
-        "Historical settings.agent_rules.dry_method_default_guard.updated remains read-only lineage without automatic aliasing or payload rewrite; future settings.updated emission requires separate Event Authority admission."
+        "DL-408: historical settings.agent_rules.dry_method_default_guard.updated remains read-only lineage without automatic aliasing or payload rewrite; only settings.layer.changed may record future Settings changes under SSYS-060/DL-300 and existing owner-adoption prerequisites. The DRY guard remains disabled with owner_contract_missing until exact setting-ID and writer mapping is owner-proven."
       ],
       "test_refs": [
         "Plans/settings_system_contract_fixtures.json",

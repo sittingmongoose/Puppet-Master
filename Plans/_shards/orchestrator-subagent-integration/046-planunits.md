@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6580-L31225
+Source lines: L6614-L31267
 
-Source SHA256: `e1b57f1eac9ff87964edd227ba9d4de690bc5bb9b49b9da4f591aadd6907d44c`
+Source SHA256: `60d3ef46e9d34adfd5e01d6a25d733f35f7c9bf6280b24227df7618c875cba23`
 
 ---
 
@@ -14709,6 +14709,10 @@ canonical_text: >-
   explicit scope and crew/run/thread/Computer lineage with checked nullable target node/lane when
   inapplicable. Payload limits and BLAKE3 references are OSI-299/440; no second schema copy may silently
   omit these fields.
+  For current application board posts, both producer/consumer descriptions select CV-740/SP-723's
+  AgentMessageApplicationV2@2.0.0 and complete app.coordination_append.v2 source/wrapper graph.
+  It preserves original subject/priority, platform, direct/type/node/lane routing, context, reply/read/resolution
+  and V1 lineage/body fields; original V1 selection remains explicit for supported retained V1 reads.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend record schema fields rather than GUI presentation.
@@ -17595,6 +17599,10 @@ canonical_text: >-
   explicit app/Project scope, actual crew/run/thread and optional-target joins under OSI-440; null Project
   never makes boards cross-readable. Preserve the 16 KiB/BLAKE3 split, original Project history and
   current read permissions.
+  For current application board posts, both producer/consumer descriptions select CV-740/SP-723's
+  AgentMessageApplicationV2@2.0.0 and complete app.coordination_append.v2 source/wrapper graph.
+  It preserves original subject/priority, platform, direct/type/node/lane routing, context, reply/read/resolution
+  and V1 lineage/body fields; original V1 selection remains explicit for supported retained V1 reads.
 gui_related: false
 gui_classification_reason: This unit covers a backend message schema example rather than GUI presentation.
 split_recommended: false

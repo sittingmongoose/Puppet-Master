@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8842-L10973
+Source lines: L8845-L10979
 
-Source SHA256: `23639a3ba83b0aaf6c2697215a0b9787100cbb602fb5195f228070a646e66809`
+Source SHA256: `41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1`
 
 ---
 
@@ -1744,8 +1744,9 @@ command_payload_definition_map:
   - owner_state: dedup_hold_pending
     maps_to: not_configured
     sources:
-    - 'Plans/Decision_Log.md DL-444 and DL-445: the duplicate sweep''s automatic jobs and panel buttons stay unavailable
-      until the answer is applied and all remaining definition, review and recording approvals pass. Mapped as
+    - 'Plans/Decision_Log.md DL-444 and DL-445: the duplicate sweep''s automatic jobs stay unavailable until the answer is
+      applied and all remaining definition, review and recording approvals pass (DL-475 gives the Memory page no
+      upkeep buttons, so this hold covers the built-in upkeep only). Mapped as
       maintenance_cutoffs_pending is (DL-403); a stream C lead proposal recorded in DL-341, not a coordinator resolution'
   - owner_state: dependency_conflict
     maps_to: blocked_state_required
@@ -1827,13 +1828,15 @@ command_payload_definition_map:
   - owner_state: maintenance_cutoffs_pending
     maps_to: not_configured
     sources:
-    - 'Plans/Decision_Log.md DL-403: memory maintenance waits for approved cutoffs, and the two maintenance buttons
-      show as unavailable with the reason until they exist; DL-341 coordinator resolution 3'
+    - 'Plans/Decision_Log.md DL-403: memory maintenance waits for approved cutoffs, and the two maintenance commands
+      stay unavailable with the reason until they exist; DL-341 coordinator resolution 3. DL-475 (2026-11-11) gives the
+      Memory page no upkeep buttons: upkeep is built in, so this owner state holds the built-in maintenance commands'
     - 'Plans/Decision_Log.md DL-446 and DL-447: the cutoffs now exist (monthly summary: 90 idle days and score below
       0.10; prune archive: 180 idle days and score below 0.05), and what still holds the two maintenance commands is
       each card''s "Automatic jobs and panel buttons stay unavailable until your answer is applied and all remaining
-      definition, review and recording approvals pass". The owner state names that hold until it lifts; source added
-      by the stream C lead''s P0d task (DL-341 round_3_changes)'
+      definition, review and recording approvals pass" (DL-475 later removed the panel buttons, so the hold now covers
+      the built-in upkeep only). The owner state names that hold until it lifts; source added by the stream C lead''s
+      P0d task (DL-341 round_3_changes)'
   - owner_state: missing_approver
     maps_to: permission_required
     sources:

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3748-L23077
+Source lines: L3751-L23100
 
-Source SHA256: `ac6d47c2f168f72ac5934188d3f9e2871f2ac7d187534e70b5406c5a75693f1d`
+Source SHA256: `d6a0adb2d473eee030abd7e011b477a4066eeb8754c44d9f942999781fcdb608`
 
 ---
 
@@ -3790,42 +3790,55 @@ plan_unit_id: ACD-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Threads may contain multiple historical investigations, but only one non-terminal investigation may be active for prompt injection and mutation-capable automation at a time.
+canonical_text: Threads may contain multiple historical investigations, but only one non-terminal investigation
+  may be active for prompt injection and mutation-capable automation at a time. DL-428 adds failed as
+  a terminal historical state for exactly the six existing unsuccessful stop reasons; save the specific
+  reason and retain failed_cleanup separately.
 gui_related: false
-gui_classification_reason: Investigation lifecycle and prompt/mutation eligibility are workflow/runtime behavior.
-depends_on: [ACD-071]
-unblocks: [ACD-079, ACD-080, ACD-081, ACD-082, ACD-083]
+gui_classification_reason: Investigation lifecycle and prompt/mutation eligibility are workflow/runtime
+  behavior.
+depends_on:
+- ACD-071
+unblocks:
+- ACD-079
+- ACD-080
+- ACD-081
+- ACD-082
+- ACD-083
 acceptance_criteria:
-  - A thread can retain multiple historical investigations.
-  - Only one active, blocked, attention_required, verifying, or failed_cleanup investigation is eligible for prompt injection and mutation-capable automation at a time.
+- A thread can retain multiple historical investigations.
+- Only one active, blocked, attention_required, verifying, or failed_cleanup investigation is eligible
+  for prompt injection and mutation-capable automation at a time.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: debug_lifecycle
 reasoning_tier: high
 context_scope: debug_investigation
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/storage-plan.md
-  - Plans/Runtime_Artifacts_Panel.md
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
 node_compile_hint:
   mode: debug_investigation_lifecycle
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+- Plans/Decision_Log.md#DL-428
 preserved_exact_tokens:
-  - "active"
-  - "blocked"
-  - "attention_required"
-  - "verifying"
-  - "failed_cleanup"
-  - "resolved"
-  - "cancelled"
-  - "superseded"
+- active
+- blocked
+- attention_required
+- verifying
+- failed_cleanup
+- resolved
+- cancelled
+- superseded
+- failed
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Runtime_Artifacts_Panel.md
+- Plans/assistant-chat-design.md
+- Plans/Runtime_Artifacts_Panel.md
 ```
 
 ### ACD-079 - Debug Reopen And Supersede
@@ -3835,37 +3848,44 @@ plan_unit_id: ACD-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Switching debug targets in a thread with a non-terminal investigation defaults to continuing the current investigation; materially different targets require explicit supersede, and terminal investigations reopen as historical views unless new lineage is created.
+canonical_text: Switching debug targets in a thread with a non-terminal investigation defaults to continuing
+  the current investigation; materially different targets require explicit supersede, and terminal investigations
+  reopen as historical views unless new lineage is created.
 gui_related: false
 gui_classification_reason: Investigation supersession and reopen lineage are workflow/runtime behavior.
-depends_on: [ACD-078]
-unblocks: [ACD-080, ACD-081]
+depends_on:
+- ACD-078
+unblocks:
+- ACD-080
+- ACD-081
 acceptance_criteria:
-  - A materially different debug target requires an explicit supersede action.
-  - resolved, cancelled, and superseded investigations reopen as historical views by default.
-  - New live work from a terminal investigation creates a new investigation lineage linked by supersedes_investigation_id.
+- A materially different debug target requires an explicit supersede action.
+- resolved, failed, cancelled, and superseded investigations reopen as historical views by default; new
+  live work uses the existing linked-investigation rule (DL-428).
+- New live work from a terminal investigation creates a new investigation lineage linked by supersedes_investigation_id.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: debug_reopen
 reasoning_tier: high
 context_scope: debug_investigation
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/storage-plan.md
-  - Plans/Runtime_Artifacts_Panel.md
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
 node_compile_hint:
   mode: debug_reopen_supersede
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
 preserved_exact_tokens:
-  - "supersedes_investigation_id"
+- supersedes_investigation_id
 negative_constraints:
-  - "resolved, cancelled, and superseded investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser/dev sessions."
+- resolved, cancelled, and superseded investigations reopen as historical views by default; they do not
+  silently restart automation, instrumentation, or browser/dev sessions.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
 ```
 
 ### ACD-080 - Debug Restore Context Surface

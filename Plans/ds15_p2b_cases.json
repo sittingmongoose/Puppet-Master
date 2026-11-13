@@ -1,0 +1,1189 @@
+[
+ {
+  "id": "T01-occurred-hour-24",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "2026-09-11T24:00:00Z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_hour"
+   ]
+  }
+ },
+ {
+  "id": "T02-occurred-trailing-LF",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "2026-09-11T21:00:00Z\n"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_syntax"
+   ]
+  }
+ },
+ {
+  "id": "T03-occurred-false-leap-second",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "2015-12-31T23:59:60Z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_leap_second"
+   ]
+  }
+ },
+ {
+  "id": "T04-occurred-space-separator",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "2026-09-11 21:00:00Z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_syntax"
+   ]
+  }
+ },
+ {
+  "id": "T05-occurred-month-13",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "2026-13-11T21:00:00Z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_month"
+   ]
+  }
+ },
+ {
+  "id": "T06-occurred-offset-hour-24",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "2026-09-11T21:00:00+24:00"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_offset_hour"
+   ]
+  }
+ },
+ {
+  "id": "T07-occurred-missing-zone",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "2026-09-11T21:00:00"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_syntax"
+   ]
+  }
+ },
+ {
+  "id": "T08-observed-plus-zero",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/observed_at_utc": "2026-09-11T21:00:01+00:00"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_utc_z"
+   ]
+  }
+ },
+ {
+  "id": "T09-persisted-lowercase-z",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/persisted_at_utc": "2026-09-11T21:00:01z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_utc_z"
+   ]
+  }
+ },
+ {
+  "id": "T10-persisted-minus-zero",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/persisted_at_utc": "2026-09-11T21:00:01-00:00"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_utc_z"
+   ]
+  }
+ },
+ {
+  "id": "T11-observed-nonzero-offset",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/observed_at_utc": "2026-09-11T23:00:01+02:00"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_utc_z"
+   ]
+  }
+ },
+ {
+  "id": "T12-observed-trailing-LF",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/observed_at_utc": "2026-09-11T21:00:01Z\n"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_syntax"
+   ]
+  }
+ },
+ {
+  "id": "T13-retained-original-observed-offset",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/observed_at_utc": "2026-09-11T21:00:01+00:00"
+  },
+  "maintain": [
+   "commitments"
+  ],
+  "expect": {
+   "row": "ORIGINAL_EVENT_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "original_event",
+    "date_time_utc_z"
+   ],
+   "seal": true
+  }
+ },
+ {
+  "id": "T14-retained-original-occurred-hour-24",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/occurred_at_utc": "2026-09-11T24:00:00Z"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "ENVELOPE_V1_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_hour"
+   ],
+   "seal": true
+  }
+ },
+ {
+  "id": "T15-retained-envelope-persisted-lowercase-z",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "envelope/persisted_at_utc": "2026-09-11T21:00:01z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_V1_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_utc_z"
+   ]
+  }
+ },
+ {
+  "id": "T16-receipt-acknowledged-month-13",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "receipt/acknowledged_at_utc": "2026-13-04T18:00:00Z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "RECEIPT_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "receipt",
+    "date_time_month"
+   ]
+  }
+ },
+ {
+  "id": "T17-custody-acknowledged-feb-30",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "custody/first_append_receipt/acknowledged_at_utc": "2026-02-30T18:00:00Z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "CUSTODY_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "custody",
+    "date_time_day"
+   ]
+  }
+ },
+ {
+  "id": "T18-dev-record-created-offset-hour",
+  "family": "shared",
+  "parent": [
+   "value",
+   "Plans/ds15_dev_session_record_v2.schema.json",
+   "workflow-and-real-subordinate-dap"
+  ],
+  "operation": null,
+  "changes": {
+   "value/dap/created_at_utc": "2026-11-04T00:00:00+24:00"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "VALUE_schema",
+   "result": false
+  },
+  "extra": {
+   "cause": [
+    "value",
+    "date_time_offset_hour"
+   ]
+  }
+ },
+ {
+  "id": "T19-dev-record-updated-minute-60",
+  "family": "shared",
+  "parent": [
+   "value",
+   "Plans/ds15_dev_session_record_v2.schema.json",
+   "workflow-and-real-subordinate-dap"
+  ],
+  "operation": null,
+  "changes": {
+   "value/dap/updated_at_utc": "2026-11-04T00:60:02Z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "VALUE_schema",
+   "result": false
+  },
+  "extra": {
+   "cause": [
+    "value",
+    "date_time_minute"
+   ]
+  }
+ },
+ {
+  "id": "T20-deck2-occurred-minute-60",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "envelope/occurred_at_utc": "2026-09-11T21:60:00Z"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_minute"
+   ]
+  }
+ },
+ {
+  "id": "T21-deck2-observed-plus-zero",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "envelope/observed_at_utc": "2026-09-11T21:00:01+00:00"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "ENVELOPE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "cause": [
+    "envelope",
+    "date_time_utc_z"
+   ]
+  }
+ },
+ {
+  "id": "TP01-occurred-lowercase-offset-leap-second",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "2016-12-31t18:59:60.123456789012-05:00"
+  },
+  "maintain": [],
+  "expect": {
+   "result": {
+    "result": "ACCEPT",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "TP02-occurred-lowercase-z-year-0000",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/occurred_at_utc": "0000-01-01T00:00:00z"
+  },
+  "maintain": [],
+  "expect": {
+   "result": {
+    "result": "ACCEPT",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "TP03-observed-leap-second-long-fraction",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/observed_at_utc": "2016-12-31T23:59:60.999999999999Z"
+  },
+  "maintain": [],
+  "expect": {
+   "result": {
+    "result": "ACCEPT",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "TP04-persisted-lowercase-t",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/persisted_at_utc": "2026-09-11t21:00:01Z"
+  },
+  "maintain": [],
+  "expect": {
+   "result": {
+    "result": "ACCEPT",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "TP05-receipt-acknowledged-offset",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "receipt/acknowledged_at_utc": "2026-11-04T13:00:00-05:00",
+   "custody/first_append_receipt/acknowledged_at_utc": "2026-11-04T13:00:00-05:00",
+   "issued_result/first_append_receipt/acknowledged_at_utc": "2026-11-04T13:00:00-05:00"
+  },
+  "maintain": [],
+  "expect": {
+   "result": {
+    "result": "ORIGINAL",
+    "effects": 0,
+    "event_id": "event:live_step_updated:1",
+    "receipt_ref": "receipt:live_step_updated:1"
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "TP06-dev-record-created-offset-fraction",
+  "family": "shared",
+  "parent": [
+   "value",
+   "Plans/ds15_dev_session_record_v2.schema.json",
+   "workflow-and-real-subordinate-dap"
+  ],
+  "operation": null,
+  "changes": {
+   "value/dap/created_at_utc": "2026-11-03T19:00:00.5-05:00"
+  },
+  "maintain": [],
+  "expect": {
+   "result": true
+  },
+  "extra": {}
+ },
+ {
+  "id": "TP07-retained-original-lowercase-offset",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/occurred_at_utc": "2026-09-11t16:00:00.000000000001-05:00"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "result": {
+    "result": "ORIGINAL",
+    "effects": 0,
+    "event_id": "event:live_step_updated:1",
+    "receipt_ref": "receipt:live_step_updated:1"
+   }
+  },
+  "extra": {
+   "seal": true
+  }
+ },
+ {
+  "id": "TP08-retained-original-leap-second-retry",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "original/event/occurred_at_utc": "2016-12-31T23:59:60.5Z"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "result": {
+    "result": "ORIGINAL",
+    "effects": 0,
+    "event_id": "event:live_step_updated:1",
+    "receipt_ref": "receipt:live_step_updated:1"
+   }
+  },
+  "extra": {
+   "seal": true
+  }
+ },
+ {
+  "id": "SXP1-retained-producer-sequence-past-2p53-read",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/producer_sequence_id": 9007199254740993
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "result": {
+    "result": "ORIGINAL",
+    "effects": 0,
+    "event_id": "event:live_step_updated:1",
+    "receipt_ref": "receipt:live_step_updated:1"
+   }
+  },
+  "extra": {
+   "seal": true
+  }
+ },
+ {
+  "id": "SXP2-retained-producer-sequence-past-2p53-retry",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "original/event/producer_sequence_id": 9007199254740993
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "result": {
+    "result": "ORIGINAL",
+    "effects": 0,
+    "event_id": "event:live_step_updated:1",
+    "receipt_ref": "receipt:live_step_updated:1"
+   }
+  },
+  "extra": {
+   "seal": true
+  }
+ },
+ {
+  "id": "SX01-read-store-without-custody",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "storage_instance_id": "33333333-3333-4333-8333-333333333333"
+  },
+  "maintain": [
+   "store"
+  ],
+  "expect": {
+   "row": "SX01_custody_store",
+   "result": {
+    "result": "UNAVAILABLE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX01-recover-store-without-custody",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "storage_instance_id": "33333333-3333-4333-8333-333333333333"
+  },
+  "maintain": [
+   "store"
+  ],
+  "expect": {
+   "row": "SX01_custody_store",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX01-append-recovery-store-without-custody",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "append-recovery"
+  ],
+  "operation": "recover",
+  "changes": {
+   "storage_instance_id": "33333333-3333-4333-8333-333333333333"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "SX01_custody_store",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX03-original-not-held-by-store",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "storage_instance_id": "66666666-6666-4666-8666-666666666666"
+  },
+  "maintain": [
+   "store"
+  ],
+  "expect": {
+   "row": "SX08_receipt_present",
+   "result": {
+    "result": "UNAVAILABLE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX03-append-recovery-original-not-held",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "append-recovery"
+  ],
+  "operation": "recover",
+  "changes": {
+   "storage_instance_id": "66666666-6666-4666-8666-666666666666"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "SX08_receipt_present",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX08-deck2-store-without-receipt",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "read",
+  "changes": {
+   "storage_instance_id": "66666666-6666-4666-8666-666666666666"
+  },
+  "maintain": [
+   "store"
+  ],
+  "expect": {
+   "row": "SX08_receipt_present",
+   "result": {
+    "result": "UNAVAILABLE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX04-coherent-forgery-actor",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/actor_ref": "actor:forged"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX08_receipt_present",
+   "result": {
+    "result": "UNAVAILABLE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX04-coherent-forgery-occurred-at",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "original/event/occurred_at_utc": "2026-09-11T20:59:59Z"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX08_receipt_present",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX04-coherent-forgery-persisted-at",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/persisted_at_utc": "2026-09-11T21:00:02Z"
+  },
+  "maintain": [
+   "commitments"
+  ],
+  "expect": {
+   "row": "SX08_receipt_present",
+   "result": {
+    "result": "UNAVAILABLE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX04-deck2-coherent-forgery",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/actor_ref": "actor:forged"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX08_receipt_present",
+   "result": {
+    "result": "UNAVAILABLE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX05-original-sealed-under-another-family",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/actor_ref": "actor:sealed-wrong-family"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX05_original_verification",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "seal_as": [
+    "live.session.started",
+    "ds15-v1"
+   ]
+  }
+ },
+ {
+  "id": "SX06-original-sealed-under-older-recipe",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/actor_ref": "actor:sealed-v0"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX02_recipe_installed",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "seal_as": [
+    "live.step.updated",
+    "ds15-v0"
+   ]
+  }
+ },
+ {
+  "id": "SX09-original-sealed-twice",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/actor_ref": "actor:sealed-twice"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX09_receipt_unique",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "seal_as": [
+    "live.step.updated",
+    "ds15-v1"
+   ],
+   "seal_also": [
+    [
+     "live.step.updated",
+     "ds15-v0"
+    ]
+   ]
+  }
+ },
+ {
+  "id": "SX09-retry-original-sealed-twice",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "original/event/actor_ref": "actor:sealed-twice-retry"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX09_receipt_unique",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "seal_as": [
+    "live.step.updated",
+    "ds15-v1"
+   ],
+   "seal_also": [
+    [
+     "live.step.updated",
+     "ds15-v0"
+    ]
+   ]
+  }
+ },
+ {
+  "id": "EB05-operation-storage-instance",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "storage_instance_id": "22222222-2222-4222-8222-222222222222"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "EB05_storage_instance",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SXR1-request-selects-current-recipe",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original_recipe": "current"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "EVIDENCE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SXR2-request-recipe-override",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "recipe_override": "ds15-v1"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "EVIDENCE_schema",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ }
+]
