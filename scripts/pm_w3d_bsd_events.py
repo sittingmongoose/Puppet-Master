@@ -1134,7 +1134,7 @@ def obs_receipt(W):
     for i, slot in enumerate(rows_spec.RECEIPT_UINT[1:], 12):
         out[f'RC{i:02d}_receipt_{slot}_uint64'] = uint64_ok(receipt.get(slot))
     out.update({
-        'RC16_ack_clock': clock_ok(receipt.get('acknowledged_at_utc'), STORAGE_UTC_Z),
+        'RC16_ack_clock': clock_ok(receipt.get('acknowledged_at_utc'), EVENT_RECORD),
         'RC17_receipt_durability': (type(receipt.get('durable_end_offset')) is not int
                                     or type(receipt.get('byte_offset')) is not int
                                     or receipt.get('durable_end_offset') >= receipt.get('byte_offset')),
@@ -1582,6 +1582,12 @@ def positives(fam):
              muts={'native': setp('occurred_at_utc', '2026-11-01t10:00:00.123456789-05:00')}),
         dict(id='append/external-payload-route', path='append', muts={'logical_body': _expand_body}),
         dict(id='settle/first-receipt-history-committed', path='settle', muts={}),
+        dict(id='settle/receipt-clock-offset-accepted', path='settle',
+             muts={'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5+00:00')}),
+        dict(id='settle/receipt-clock-lowercase-z-accepted', path='settle',
+             muts={'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5z')}),
+        dict(id='settle/receipt-clock-nonzero-offset-accepted', path='settle',
+             muts={'receipt': setp('acknowledged_at_utc', '2026-11-01T10:00:02.5+02:00')}),
         dict(id='retry/same-body-other-storage-metadata', path='retry', muts={}),
         dict(id='publish/mixed-scan-unrelated-final', path='publish', muts={}),
         dict(id='publish/actual-empty-source', path='publish', muts={}, empty=True),
@@ -1757,7 +1763,8 @@ def shared_negatives_storage(fam):
     add('RC11_receipt_sequence_uint64', 'settle', {'meta': setp('sequence_id', 7.0)}, 'float spelling, Storage copy coherent')
     for i, slot in enumerate(rows_spec.RECEIPT_UINT[1:], 12):
         add(f'RC{i:02d}_receipt_{slot}_uint64', 'settle', {'receipt': setp(slot, 3.0)}, 'float spelling')
-    add('RC16_ack_clock', 'settle', {'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5+00:00')})
+    add('RC16_ack_clock', 'settle', {'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5')}, 'missing zone')
+    add('RC16_ack_clock', 'settle', {'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5Z\n')}, 'trailing LF')
     add('RC17_receipt_durability', 'settle', {'receipt': setp('durable_end_offset', 0)}, 'durable end does not cover the appended range')
     add('RC18_barrier_receipt', 'settle', {'receipt': setp('durability_class', 'ordinary')})
     add('RC19_settlement_ref', 'settle', {'settle': setp('row', 'first_append_receipt_ref', 'pmref:receipt.other')})

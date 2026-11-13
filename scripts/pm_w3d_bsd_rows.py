@@ -204,7 +204,7 @@ SHARED.update({
         (f'receipt_{slot}_uint64', f'The receipt {slot} is an exact Storage uint64 (shared storage_uint64).',
          f'receipt_{slot}_out_of_domain') for slot in RECEIPT_UINT[1:]
     ] + [
-        ('ack_clock', 'The receipt acknowledged_at_utc satisfies the CV-253 storage_utc_z profile (shared date_time).',
+        ('ack_clock', 'The receipt acknowledged_at_utc satisfies the CV-1101 EventRecord profile (shared date_time); CV-253 storage_utc_z binds only envelope observed/persisted.',
          'acknowledged_at_invalid'),
         ('receipt_durability', 'The first receipt durable_end_offset covers the appended byte range at the genuine sync boundary.',
          'receipt_not_durable'),

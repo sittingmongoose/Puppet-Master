@@ -313,11 +313,13 @@ Every timestamp field the lane validates goes through `pm_event_datetime.date_ti
 | envelope.occurred_at_utc | event_record | CV-317/CV-1101 | EN02_occurred_clock |
 | envelope.observed_at_utc | storage_utc_z | CV-253 Storage-assigned | EN03_observed_clock |
 | envelope.persisted_at_utc | storage_utc_z | CV-253 Storage-assigned | EN04_persisted_clock |
-| receipt.acknowledged_at_utc | storage_utc_z | CV-253 Storage-assigned | RC16_ack_clock |
+| receipt.acknowledged_at_utc | event_record | CV-1101 EventRecord (AppendReceipt plain `format: date-time`); CV-253 binds only observed/persisted | RC16_ack_clock |
 | logical source body created_at/updated_at | event_record | existing logical BSD schema | PK10_source_body_clocks |
 
 Negatives cover missing zone, hour 24, trailing LF, Feb 30, space separator, invalid leap second (occurred),
-and +00:00/lowercase-z/-00:00/nonzero-offset (Storage fields). The date-time inventory gate
+and +00:00/lowercase-z/-00:00/nonzero-offset (envelope observed/persisted only). The receipt `acknowledged_at_utc`
+takes the EventRecord profile: positives accept +00:00, lowercase-z and a nonzero offset; negatives are missing zone
+and trailing LF. The date-time inventory gate
 (`scripts/pm_event_datetime_inventory.py`) exits 1 with **85 hash-drift rows** (53 unclassified_mentioning_container,
 30 unreadable_mentioning_container, 2 stale_scan_exclusion; 233 nodes, 0 unclassified nodes; only 1 names a BSD
 file). Per lead addendum 2 this is lane-tree drift from Plans edits; the inventory/exclusions are NUMRULE files
