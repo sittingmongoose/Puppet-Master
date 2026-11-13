@@ -836,12 +836,15 @@
 
 
 /* dialogs, drawers, palette, menus */
-#panel-settings .overlay { position: absolute; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; background: rgba(4,6,13,.62);  animation: overlayIn 200ms ease both; }
+/* FO-176: 16 px at the sides (24 above and below) so the 650 px dialog below still fits a 740 px window's 683 px Settings
+   panel; a wider panel centres the dialog and never shows this gutter. */
+#panel-settings .overlay { position: absolute; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px 16px; background: rgba(4,6,13,.62);  animation: overlayIn 200ms ease both; }
 @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
 /* FO-176: FO-159 set the dialog copy (.dialog-sub, the body's .alert-strip) 10.5 -> 11 px and gave it no room, so a
    confirm whose message filled its line at 10.5 px wrapped at 11 ("Delete all memories?", "Reset Search?" and five
    more). The dialog grows with its type, 620 -> 650 px (11/10.5 of it), so every line keeps the base's breaks: the
-   strip's text box goes 533 -> 563 px and the subtitle's 539 -> 569. Paddings, gaps and the icon column are main's. */
+   strip's text box goes 533 -> 563 px and the subtitle's 539 -> 569. The dialog's own paddings, gaps and icon column
+   are main's. */
 #panel-settings .dialog { width: min(650px, 100%); max-height: min(780px, calc(100% - 48px)); display: flex; flex-direction: column; border: 1px solid rgba(var(--accent-primary-rgb),.25); border-radius: 16px; background: var(--k3-surface-1); box-shadow: var(--k3-shadow-lg); animation: dialogIn 300ms var(--k3-ease-spring) both; overflow: hidden; }
 #panel-settings .dialog.wide { width: min(860px, 100%); }
 @keyframes dialogIn { from { opacity: 0; transform: translateY(12px) scale(.982); } to { opacity: 1; transform: none; } }
