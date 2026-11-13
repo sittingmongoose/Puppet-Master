@@ -1860,6 +1860,15 @@ def other_family(family):
     return FAMILIES[(FAMILIES.index(family) + 1) % len(FAMILIES)]
 
 
+LINKED_SOURCE = {'thread_id': 'thread-w3i-1', 'run_id': 'run-w3i-1', 'node_id': 'node-w3i-1',
+                 'attempt_id': 'attempt-w3i-1', 'requested_account_ref': 'acct-w3i-requested',
+                 'effective_account_ref': 'acct-w3i-effective'}
+# Each copy's witness on the linked control: the envelope carries a sibling source value instead of its own.
+LINKED_SWAPS = (('thread', 'thread_id', 'node_id'), ('run', 'run_id', 'thread_id'), ('node', 'node_id', 'attempt_id'),
+                ('attempt', 'attempt_id', 'node_id'), ('requested_account', 'requested_account_ref', 'effective_account_ref'),
+                ('effective_account', 'effective_account_ref', 'requested_account_ref'))
+
+
 def build_controls():
     controls = []
     for family in FAMILIES:
@@ -1871,6 +1880,12 @@ def build_controls():
         large = copy.deepcopy(base)
         set_source_time(large, LONG_FRACTION_TIME)
         controls.append(('pack-large:' + family, with_pack(resync(large))))
+        # Distinct non-null execution links on the source (build_source leaves them null): each copy row's witness
+        # then tells the exact CV-1600 copy from a copy of a sibling field.
+        linked = copy.deepcopy(base)
+        linked['source'].update(LINKED_SOURCE)
+        linked['event'].update(LINKED_SOURCE)
+        controls.append(('append-linked:' + family, resync(linked)))
         controls.append(('retry:' + family, copy.deepcopy(base)))
         # Standing check 6: Storage-assigned metadata is outside the retry comparison.
         meta = copy.deepcopy(base)
@@ -1903,7 +1918,7 @@ def build_controls():
     return controls
 
 
-CONTROL_BOUNDARY.update({'retry-storage-meta': 'retry', 'retained-offset': 'retained'})
+CONTROL_BOUNDARY.update({'retry-storage-meta': 'retry', 'retained-offset': 'retained', 'append-linked': 'append'})
 
 
 # ---- Negatives: one defect each, built from a named control ---------------------------------------------------------
@@ -2077,6 +2092,10 @@ def build_negatives(controls):
         for name, field, _src in COPIES:
             A_('append_copy_' + name, _value(('event', field), COPY_DEFECTS[name]), 'full', field + ' not copied')
         A_('append_copy_run', _value(('event', 'run_id'), None), 'full', 'run_id nulled (source has one)')
+        for name, field, sibling in LINKED_SWAPS:
+            A_('append_copy_' + name, (lambda f, sib: lambda c: c['event'].update({f: c['source'][sib]}))(field, sibling),
+               'full', field + ' carries the source ' + sibling + ' (linked source, all links distinct and non-null)',
+               control='append-linked:' + family)
         # append: the family's own source fact
         if family == FAM_ACTOR:
             A_('append_fact_actor_ref', _value(('event', 'payload', 'actor_ref'), 'user:other'), 'full', 'actor_ref')
@@ -2428,6 +2447,9 @@ def build_negatives(controls):
         T_('retained_query', _value(('event', 'schema_version'), '1.0.0'), 'none',
            'the request names another envelope edition (the shared full-value commitment refuses it)')
         T_('retained_receipt_present', _value(('sealed_store',), []), 'none', 'missing receipt')
+        T_('retained_receipt_present',
+           lambda c, fam=other: c.update(sealed_store=[copy.deepcopy(build_case(fam, 'other-original')['sealed_store'][0])]),
+           'none', 'missing receipt: the store holds only another original\'s receipt, under that original\'s own ref')
         T_('retained_receipt_unique', lambda c: c['sealed_store'].append(copy.deepcopy(c['sealed_store'][0])), 'none',
            'ambiguous receipt')
         T_('retained_receipt_wellformed', _value(('sealed_store', 0, 'record_hex'), 'zz'), 'none',
@@ -2593,14 +2615,40 @@ def timestamp_inventory():
 
 # ---- Running the complete checker -----------------------------------------------------------------------------------
 
+FROZEN_ROW_IDS = frozenset(r[0] for r in FROZEN_ROWS)
+VERIFIER_REACHED = (None, 'original_verification', 'current_disclosure')
+
+
+def frozen_dispatch_failures(boundary, refusals, memo, where):
+    """The installed frozen verifier, as the shared RetainedDispatcher ran it, must agree with the frozen rows: once
+    the dispatcher reaches verify_original (scripts/pm_event_numbers.py:541; its reason is then None,
+    original_verification or the later current_disclosure), it refuses original_verification exactly when a frozen_*
+    row refuses. The rows read their own recomputation (frozen), so this observes the verifier the dispatcher
+    actually called."""
+    if boundary != 'retained':
+        return []
+    frozen_refused = any(rid in FROZEN_ROW_IDS for rid, _code in refusals)
+    dispatcher = memo.get('retained')['reason']
+    if dispatcher not in VERIFIER_REACHED:
+        return []
+    if frozen_refused != (dispatcher == 'original_verification'):
+        return [dict(where, frozen_dispatch={'dispatcher_reason': dispatcher, 'frozen_row_refused': frozen_refused})]
+    return []
+
+
 def check_controls_and_negatives(controls, negatives):
     failures, refused_rows = [], {}
     for cid, case in controls:
-        refusals, _ = evaluate(case, case_boundary(cid))
+        memo = Memo(case)
+        refusals, _ = evaluate(case, case_boundary(cid), memo)
         if refusals:
             failures.append({'control': cid, 'refusals': refusals})
+        failures += frozen_dispatch_failures(case_boundary(cid), refusals, memo, {'control': cid})
     for n in negatives:
-        refusals, _ = evaluate(n['case'], n['boundary'])
+        memo = Memo(n['case'])
+        refusals, _ = evaluate(n['case'], n['boundary'], memo)
+        failures += frozen_dispatch_failures(n['boundary'], refusals, memo,
+                                             {'negative': n['row'], 'family': n['family'], 'defect': n['defect']})
         want = [(n['row'], ROW_BY_ID[n['row']]['code'])]
         for rid, _code in refusals:
             refused_rows[rid] = refused_rows.get(rid, 0) + 1
