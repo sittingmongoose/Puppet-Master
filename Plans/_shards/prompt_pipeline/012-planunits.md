@@ -4,7 +4,7 @@ Source: `Plans/Prompt_Pipeline.md`
 
 Source lines: L679-L3546
 
-Source SHA256: `e06820f39984155b76fbf5b529767c6b2fc416edbdc50469b1909fe8f248050f`
+Source SHA256: `4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174`
 
 ---
 
@@ -1613,7 +1613,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Provider/runtime resolution preserves requested_platform, effective_platform, provider_family_id, effective account rows, effective connection_profile_id, and billing/entity bucket semantics while keeping provider examples distinct by runtime surface and auth family.
+  Provider/runtime resolution preserves requested_platform, effective_platform, provider_family_id, effective account rows, effective connection_profile_id, and billing/entity bucket semantics while keeping provider examples distinct by runtime surface and auth family. Gemini Direct and Antigravity stay live; Gemini CLI is retired from active family-pool resolution by DL-332 (UF-019, UF-021), reaffirmed by DL-478.
 gui_related: false
 gui_classification_reason: This unit defines runtime/account/profile resolver fields rather than visual presentation.
 split_recommended: false

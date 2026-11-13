@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23323-L23648
+Source lines: L23323-L23649
 
-Source SHA256: `8086b31b97cf95f027d1bff2e2707c2d1424ab3520f50bbbc06cd64ffea726cf`
+Source SHA256: `d6a0adb2d473eee030abd7e011b477a4066eeb8754c44d9f942999781fcdb608`
 
 ---
 
@@ -141,7 +141,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit defines visible task tracker, TODO state, replan feedback, and blocked-state presentation.
 depends_on:
-  - GRS-007
+  - GRS-054
   - GRS-019
 unblocks: []
 acceptance_criteria:
@@ -215,8 +215,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit defines user-visible evidence, activity, metadata, thread summary, and completion-report displays.
 depends_on:
-  - GRS-012
-  - GRS-014
+  - GRS-050
 unblocks: []
 acceptance_criteria:
   - "Evidence and completion come from authentic owner refs and remain scoped to the real thread/Computer."
@@ -281,9 +280,11 @@ owner_hints:
 ```yaml
 plan_unit_id: ACD-419
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/assistant-chat-design.md
+superseded_by: GRS-052
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Independent Goals without parent links replace the parent/child Goal display under GRS-052 (DL-478); the old text below is retained for lineage only.
   Assistant Chat shows the parent goal by default and summarizes child goals by default. Child goals are expandable when the user wants details or when a child is blocked or failed. The compact summary may present states like "Goal running", "8/14 tasks", and "3 child goals active", with expanded child-goal status rows that preserve child status, assigned agent/persona/model, current task, blockers, result availability, and result artifacts without weakening parent/child runtime authority.
 gui_related: true
 gui_classification_reason: This unit defines collapsible user-visible child-goal and subgoal tree displays.

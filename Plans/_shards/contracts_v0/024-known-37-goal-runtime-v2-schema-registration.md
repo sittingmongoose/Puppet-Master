@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L5113-L19082
 
-Source SHA256: `ceebca4211052885a0bc5796d5cd888f7ebf7e9a5f7e60b2a0cc7927f29a8d8f`
+Source SHA256: `e91c8b29fb8a1eb9c2c6c5a5e4f3b96f44d02552c3b0358d0decce4b7b5c0900`
 
 ---
 
@@ -6107,7 +6107,7 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   AuthPolicy defines ProviderAuthMethod and RequestedAuthMode enum contracts and
   deterministic auth method defaults for Cursor, Claude Code, Codex, GitHub
-  Copilot, Gemini Direct, Gemini CLI, OpenCode, and Anthropic Console/API setup.
+  Copilot, Gemini Direct, OpenCode, and Anthropic Console/API setup.
 gui_related: false
 gui_classification_reason: This unit defines auth policy enum and provider-default contracts.
 split_recommended: true

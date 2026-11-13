@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L650-L756
+Source lines: L651-L755
 
-Source SHA256: `a133f042952f4fcc9a3c09116e3be09aedb89fb31b629307226749b368332653`
+Source SHA256: `60d3ef46e9d34adfd5e01d6a25d733f35f7c9bf6280b24227df7618c875cba23`
 
 ---
 
@@ -96,9 +96,7 @@ subagentConfig:
 
 ### SubagentPolicy runtime defaults and compatibility aliases
 
-`SubagentPolicy` with `schema_id = pm.subagent_policy.v1` is the canonical runtime policy record for delegated
-SubagentWave admission. It is evaluated before any child_goal, bounded_work_unit,
-or delegated thread is spawned and is recorded in the parent GoalRun receipt.
+The GoalRun/SubagentWave admission and parent GoalRun receipt passage is retired by DL-478. Ordinary delegated-agent policy remains subject to its existing owners.
 
 Field contract:
 - `schema_id`: string const `pm.subagent_policy.v1`.
@@ -106,7 +104,7 @@ Field contract:
 - `enabled`: boolean, default `true`; compatibility alias `enable_tier_subagents`.
 - `mandatory_when`: booleans for `broad_stage`, `high_risk`, `audit_or_closure`, `owner_conflict`, and `user_requested`; all default `true`.
 - `fanout_thresholds`: integer thresholds `min_plan_units_for_wave = 8`, `min_owner_docs_for_wave = 3`, `min_independent_lanes_for_wave = 2`, `min_changed_files_for_wave = 6`, and enum `min_risk_class_for_wave = high`.
-- `limits`: `max_parallel_subagents = 4` with hard limit `8`; `max_subagents_per_wave = 8` with hard limit `12`; `max_waves_per_goal = 3`; `max_estimated_cost_microusd_per_wave = 2000000` with hard limit `10000000`; `max_estimated_tokens_per_wave = 16000` with hard limit `20000`; `max_input_refs_per_subagent = 12` with hard limit `24`; `max_input_bytes_per_subagent = 200000` with hard limit `1000000`; `max_prompt_tokens_per_subagent = 6000` with hard limit `12000`; `max_result_tokens_per_subagent = 2000` with hard limit `4000`; `max_write_targets_per_subagent = 0` for read-only waves with hard limit `1` unless parent write policy explicitly grants more; `max_wall_clock_ms_per_child = 900000` with hard limit `3600000`; `max_tool_rounds_per_child = 12` with hard limit `30`.
+- `limits`: `max_parallel_subagents = 4` with hard limit `8`; `max_subagents_per_wave = 8` with hard limit `12`; `max_estimated_cost_microusd_per_wave = 2000000` with hard limit `10000000`; `max_estimated_tokens_per_wave = 16000` with hard limit `20000`; `max_input_refs_per_subagent = 12` with hard limit `24`; `max_input_bytes_per_subagent = 200000` with hard limit `1000000`; `max_prompt_tokens_per_subagent = 6000` with hard limit `12000`; `max_result_tokens_per_subagent = 2000` with hard limit `4000`; `max_write_targets_per_subagent = 0` for read-only waves with hard limit `1` unless parent write policy explicitly grants more; `max_wall_clock_ms_per_child = 900000` with hard limit `3600000`; `max_tool_rounds_per_child = 12` with hard limit `30`.
 - `parent_budget_ceiling`: every numeric limit must be less than or equal to the parent run envelope from `Plans/Run_Modes.md`; narrower parent remaining budget wins over the defaults above.
 - `retry_policy`: retry only `provider_transient`, `rate_limit`, `tool_timeout`, and `coordination_conflict`; default `max_retry_attempts_per_child = 2`, `max_retry_attempts_per_wave = 1`, and `retry_backoff_ms = 30000`; never retry `permission_denied`, `filesafe_denied`, `authority_scope_denied`, `validation_failed`, `scope_mismatch`, or `repeated_same_read`.
 - `write_policy`: child units default to `read_only` or `proposal_only`; live canonical writes require an explicit parent-owned `leased_writer` or `parent_writer` grant.

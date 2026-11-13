@@ -3547,7 +3547,7 @@ command_payload_definitions:
         default: none
         provenance: canon
         source: 'UI_Command_Catalog.md:1133 { project_id, gist_id }; UCC-230 identity_aliases: gist_id stands for
-          the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8857; DL-341 resolution 4);
+          the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8875; DL-341 resolution 4);
           MemoryGist id (assistant-memory-subsystem.md §3.1)'
     owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
     result:
@@ -4345,7 +4345,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: gap
-          gap_note: maintenance operations report explicit success/failure status (assistant-memory-subsystem.md:412);
+          gap_note: internal operations retain truthful success/failure status (AMS-023);
             canon names neither the field nor its values
         receipt_ref:
           type: ref

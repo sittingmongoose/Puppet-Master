@@ -32282,3 +32282,175 @@ preserved_exact_tokens: ["Accept all (Recommended)", "RP-MEMORY-MAINTENANCE-APPL
 negative_constraints:
 - No policy definition, family admission, native execution claim or governance seal is created.
 ```
+
+### DL-477 - Lost June Rules: Agents Reliability, Dashboard Summary Widgets And Goal Risk Retirement
+
+```yaml
+plan_unit_id: DL-477
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-12, at about 10:25 AM EST, Jared ruled on three June rules from pldg-20260616-002-orchestrator-goal-runtime-flow that the closure re-audit found lost. pm7-build relayed the rulings verbatim (1112155957-694d):
+  1. Agents-page per-agent reliability metric (atom-0069): "Restore it".
+  2. Dashboard summary (atom-0068): "I believe those would be widgets on the dashboards that the user can put on there. Maybe those ones default to on there and the user can remove them."
+  3. GoalRun risk classification at run start (atom-0040, its risk element): "Retire it. Also I wasn't aware of any of this. The goal system was simplified about 2 months ago and replaced a lot of what was there... The goal runs on the model the user had chosen, there shouldn't be checks or anything. That's not how other platforms handle it."
+  Where each lands. Item 1: Plans/FinalGUISpec.md#F3-395 restores the reliability metrics. The Agents page, which is the Agents panel of F3-452 and F3-477, shows for each agent how many of its recorded operations completed, how many failed, crashed or were aborted, how many were retried, and the share that completed, from the OSI-432 coordination records beside its per-agent economics; nothing recorded shows n/a, and the metrics never route, rank, admit, block or choose a model. Only the reliability metric is restored: atom-0069's capability lanes, active assignments, low-end versus high-end role usage and subagent wave participation are not restored by this decision.
+  Item 2: the five June items, active goals, stuck/blocked goals, verification/repair status, certification state and cost/budget warnings, become widgets of the existing board model (DL-186, WS-030). Plans/Widget_System.md#WS-032 adds a Goals source with Active goals and Stuck or blocked goals and a Workflows source with Verification and repair status and Certification state, uses Usage's own widget.alert_thresholds as Cost and budget warnings, and puts all five in the Home board's default set, where the user removes any of them like any other widget; FinalGUISpec Appendix C (C.2, C.4) and F3-395 point to it. Under the current Goal system Goals have no verification, repair or certification, so those two widgets show the status of workflow-owned reviews and certifications (GRS-049, GRS-065), never a Goal's; the Goals widgets read Goal state (GRS-048, GRS-050, GRS-051). Home is the board because it is the default, pinned dashboard where the June rule's project-level summary belongs; Metrics, Monitoring, custom dashboards and Agents are unchanged, and a Home board already saved is not rewritten.
+  Item 3: the pre-run classification of a GoalRun's risk by a high-end Goal Controller is retired on purpose, not lost. No risk tier, risk rating, risk register or pre-run classification is restored for Goals: a Goal runs on the model of the chat that started it, with no Goal-owned checks (GRS-049, DL-475), and the closure re-audit's not_supported rows for atom-0040's risk element close as retired by this decision. The atom's GoalRun owner, GRS-026, is retired with the Goal-leftover sweep (DL-478); this decision edits no GRS unit.
+  This decision adds no widget model, board, engine, layout key, command or event, does not reseal governance and claims no native implementation.
+gui_related: true
+gui_classification_reason: Records the restored Agents reliability metric, the default-on removable Dashboard summary widgets, and the retirement of Goal risk classification.
+depends_on: [GRS-048, GRS-049, WS-030]
+unblocks: [F3-395, WS-032]
+acceptance_criteria:
+  - "The three rulings are preserved verbatim as relayed, with the ellipsis of ruling 3 as relayed."
+  - "F3-395 shows per-agent reliability metrics on the Agents page as display only, and restores no other atom-0069 element."
+  - "WS-032 places the five widgets in the existing catalogue and the Home board's default set, removable, with verification/repair status and certification state shown as workflow-owned, never a Goal's."
+  - "No risk tier, rating, register or pre-run risk classification exists for Goals, and atom-0040's risk element is recorded as retired on purpose."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: lost_rule_restoration_and_goal_check_drift
+reasoning_tier: high
+context_scope: lost_rules_dl477_20261112
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Widget_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/lost-rules/BRIEF.md
+  - "pm7-build 1112155957-694d (Jared, 2026-11-12, about 10:25 AM EST)"
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0040
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0068
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0069
+preserved_exact_tokens:
+  - "Restore it"
+  - "I believe those would be widgets on the dashboards that the user can put on there. Maybe those ones default to on there and the user can remove them."
+  - "Retire it."
+  - "The goal runs on the model the user had chosen, there shouldn't be checks or anything. That's not how other platforms handle it."
+  - "reliability metrics"
+  - "active goals"
+  - "certification state"
+negative_constraints:
+  - Do not restore a Goal risk tier, risk rating, risk register or pre-run classification.
+  - Do not show verification, repair or certification state as a Goal's.
+  - Do not add a widget model, board, engine, layout key, command or event for the Dashboard summary.
+  - Do not let reliability metrics route, rank, admit, block or choose a model.
+owner_hints: [Plans/FinalGUISpec.md, Plans/Widget_System.md, Plans/Goal_Runtime_System.md]
+```
+
+### DL-478 - Goal V2 Leftover Sweep And Gemini CLI Retirement Sweep
+
+```yaml
+plan_unit_id: DL-478
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-12, at about 11:05 AM EST, Jared ruled on the Goal V2 leftovers that the Ember goal sweep verified (VERIFIED.md R1-R51, U1-U12), relayed by pm7-build 1112161328: "Sweep and retire all". The rule the sweep applies is his ruling of the same day, recorded in DL-477: "The goal runs on the model the user had chosen, there shouldn't be checks or anything. That's not how other platforms handle it." pm7-build 1112163308 gave GO for the Gemini CLI retirement sweep, applying DL-332 and CBP-019. This entry records what the sweep changed; every retirement it made cites DL-478.
+  Superseded, with the old text kept under the compatibility banner:
+  - GRS-005 by GRS-048; GRS-007 by GRS-054; GRS-011 by GRS-049; GRS-012 by GRS-050; ACD-419 by GRS-052.
+  Retired, with the old text kept and no acceptance obligation:
+  - Goal Runtime: GRS-018 (goal-class task templates), GRS-022 (runtime certification as risk mitigation), GRS-026 (the GoalRun envelope) and GRS-030 (GoalCompletionReceipt plans-to-code completion; no Workflow-owned replacement is made).
+  - Runtime owners: SP-215, EP-098, OP-022, RGV-012 and OSI-428 (GoalRun, SubagentWave and VerificationCycle persistence, decomposition, projection and supervision).
+  Live edges into these units, and into the already superseded GRS-010, GRS-014, GRS-015, GRS-017 and GRS-027, were re-pointed to GRS-048 through GRS-054 or dropped. DL-336 and DL-337 keep theirs as decision history.
+  Passages retired in units that stay accepted:
+  - Goal Runtime: GRS-002 (the Orchestrator Goal runtime projection of GoalRun and WorkGraph state under one Goal lifecycle; its three integration labels, Orchestrator goals and Executor boundary stay), GRS-019 (verifier and model-tier recovery), GRS-024 (plan_graph_build template), GRS-031 (GoalRun activation), GRS-032 (child goals, Goal completion certification), the pm_current_coverage lines of GRS-035, GRS-036 and GRS-037, GRS-041 (Goal Runtime as semantic owner of CertificationReceipt, AuditCycle, AuditFinding and AuditClosure, which the owning workflow and Auditor own; the field names stay), GRS-042 (the old certification; GRS-050 evidence stays), and the section 3 data shapes, lineage prose and section 4 and 5 bullets. PWIZ-011's topic-audit records belong to the Planning Wizard workflow and Auditor. GRS-038 and the section 3 ChildAgentLease minimum also narrow: child_goal_id is dropped and parent_goal_id names only the one independent Goal a subagent serves, never a Goal-to-Goal edge (GRS-052).
+  - Goal-completion checks and Goal phases: PWIZ-012 and PG-059 drop Goal completion from the incomplete-content validator boundaries (Planning Wizard approval, Plan Compile certification and WorkNode completion stay); Shared_Integration_Runtime and Run_Modes replace the Goal-phase rule and instrumentation dimension with workflow state or stage.
+  - Contracts, storage and compile: SP-214 (child-goal state, goal_child_index), CV-286 (parent_goal_id), CV-289 and CV-290 (the GoalCompletionReceipt envelope, GoalRun activation), PNC-007, PNC-009, PNC-014 and PNC-017 (Goal Runtime certifier, GoalRun family, Goal completion validation), EP-105, CV-290 and SP-216 (certified-graph acceptance and the goal_run_id WorkNodeRecord field; CV-290 and SP-216 also drop GoalRun from their plans-to-code runtime-record identity), ATS-010 and POA-049 (GoalRun as a link of typed test receipts), WM-038 and Plans/prd_planning_runtime_contracts.json (GoalRun creation at build activation, the goal_run_id build binding, and the orchestrator_projection stage's GoalRun input and GoalRun identity reconciliation; that stage keeps its PlanCompileRun input and projection semantics).
+  - Runtime surfaces: PS-115 (GoalRun write modes, parent_writer), OP-025, RGV-013, RAP-027, RAP-029, POA-047, POA-048, W-071, MS-128 (only its pm_current_coverage claim of Goal Runtime model-role policy; the general model-selection router keeps its verifier/adjudicator risk-tier floor and certification-policy rules unchanged, because it is not Goal-scoped), MA-060 (the Goal role cast; account identity follows ordinary Assistant selection), CWR-004 (child Goals), the orchestrator-subagent-integration status, routing and parent-Goal lineage prose, and the Orchestrator notebook's OP-022 reference.
+  - Index, GUI and Settings: 0PI-055, 0PI-056, 0PI-058, the index owner map (including Assistant Chat's child-goal details), owner table and handoff prose (the 2026-09-28 history entry is marked superseded), F3-394 (GoalRun policy controls; its Default models text stays), SSYS-042 and the Settings_System Goals passages, and Prompt_Pipeline's Goal phase rule key. F3-395's GoalRun, SubagentWave, VerificationCycle and Goal certification surfaces were retired by the DL-477 writer, citing DL-478.
+  - Settings: planning.verification.goal-template, certification-level, receipt-type, goal-replan-behavior and goal-replan-events become retired inputs with compatibility reads, and certification-level and the two replan IDs leave the settings snapshot enums. planning.verification.goal-write-mode stays live as the Goal's own write ceiling (default read_only; read_only, proposal_only, patch_only, isolated_worktree, leased_writer) and keeps its id; only its parent_writer option and child goals search term are retired, and SSYS-042 and the Settings_System Goals passages list it with the new-Goal defaults. planning.verification.completion-receipts stays, worded as GRS-050 evidence; branching.subagents.child-agent-lease names a parent agent, not a parent Goal.
+  - Schemas: Plans/goal_runtime_lineage.schema.json makes parent_goal_id null-only and requires root_goal_id to equal goal_id. Draft 2020-12 cannot express that equality, so the schema's description names its owner validator, scripts/pm-goal-runtime-lineage.py, which rejects a lineage record (root_goal_id_must_equal_goal_id) or either side of a transition whose root_goal_id differs from its goal_id; Plans/goal_runtime_lineage_fixtures.json holds the negative fixture root_goal_must_be_its_own_root. Plans/runtime_integration_disposition.json's AGT-001 and PRM-001 reasons cite the current Goal owners.
+  H-018: the Goal V2 handoff "All terminal receipts to GoalCompletionReceipt" (Goal Runtime certifier) is retired, so the handoff matrix holds H-001 through H-017: 18 rows become 17 in PNC-014's matrix and in Plans/plans_to_code_handoff.schema.json's row bound and handoff_row_id enum. H-016 and H-017 now hand to the Runtime Artifacts / Project_Output_Artifacts projection. The goal_completion_receipt def itself stays live, strict and byte-identical to the base, because the Original Standard route reads it: GRS-064 keeps it unchanged at its pointer, CV-340 hashes the resolved receipt, and the v3 and v4 Original Standard source schemas reference it.
+  Kept live on purpose:
+  - CV-288 is narrowed, not retired: the GoalRun/SubagentWave/VerificationCycle family is retired as current product flow and its envelope grammar remains only as historical receipt grammar for GRS-065 and Event Authority custody.
+  - CV-287 qualifies goal.scheduled, goal.child_status_changed and goal.verification_decided as historical_only under CV-366; goal_run.certified is unchanged, because stream E's open work holds its successor.
+  - GRS-064 and GRS-065 are unchanged: Original Standard certification belongs to the owning workflow, not to a Goal. GRS-079 and GRS-080 keep their text and drop only their GRS-026 edge.
+  - The Original Standard route: its frozen inputs, predecessors and digests are untouched, and the goal_completion_receipt def in its pinned copy equals the live one.
+  Gemini CLI: four places still treated it as live and now state its retirement (DL-332, CBP-019, UF-019, UF-021): CV-131's auth-default list; Prompt_Pipeline section 6.2.2 and PP-033's family pool; the rewrite-tie-in-memo provider entry, its auth surfaces and quota planes, and RTIM-009; and the feature-list media summary and FL-004. Gemini Direct and Antigravity stay live.
+  Validators: scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema expects H-001 through H-017 in the document matrix (handoff_matrix_rows_not_h001_to_h017_in_order) and a 17-row schema bound (handoff_matrix_rows_not_exactly_h001_h017), and keeps every goal_completion_receipt strictness check. The first fix round's retired-kind rule and its scripts/pm-implementation-readiness.py change were reverted; that script is unchanged.
+  Excluded: Event Authority vocabulary, machine contracts and registries owned by stream E, as the sweep's EXCLUDED.txt lists them (including Plans/goal_runtime_events.schema.json, Plans/event_family_registry.json, Plans/storage_value_registry.json and the goal certification custody schema and fixtures), and Plans/auto_decisions.jsonl. One exception: stream E approved (pm-ea-lead, 2026-11-12) re-materializing only this sweep's goal_runtime_lineage_record row in Plans/storage_value_registry.json from Plans/goal_runtime_lineage.schema.json with scripts/pm-shared-runtime-storage-materialize.py apply, so that row's root_goal_id description and null-only parent_goal_id match the owner schema. No other row of that file and no other file named in EXCLUDED.txt changes.
+  Not decided here: no Goal check, role, tier, template, child Goal or Workflow-owned replacement receipt is added, and the retired GoalRun build flow is left for Jared's redesign. The parent_goal_id clone in Plans/application_workflow_contracts.schema.json, POA-048's heading, node_compile_hint and token, and the readiness artifacts that still name GoalCompletionReceipt are left as found. This decision edits no earlier Decision_Log row, does not reseal governance and claims no native implementation.
+gui_related: true
+gui_classification_reason: Records the retirement of Goal settings, GoalRun GUI controls and child-Goal display, and of Gemini CLI as a live provider route.
+depends_on:
+- GRS-048
+- GRS-049
+- GRS-050
+- GRS-052
+- GRS-053
+- GRS-054
+- GRS-064
+- GRS-065
+- CV-287
+- CV-288
+- CV-366
+- PNC-014
+- CBP-019
+- DL-332
+- DL-477
+unblocks: []
+acceptance_criteria:
+  - "The three owner decisions are preserved verbatim as relayed: \"Sweep and retire all\", Jared's Goal model ruling, and pm7-build's GO for the Gemini CLI retirement sweep."
+  - "GRS-005, GRS-007, GRS-011, GRS-012 and ACD-419 are superseded by GRS-048, GRS-054, GRS-049, GRS-050 and GRS-052; GRS-018, GRS-022, GRS-026, GRS-030, SP-215, EP-098, OP-022, RGV-012 and OSI-428 are retired; no live unit outside Decision_Log history depends on any of them."
+  - "CV-287, CV-288, GRS-064, GRS-065, GRS-079 and GRS-080 stay accepted; the goal_completion_receipt def stays strict and unchanged while the handoff matrix holds H-001 through H-017."
+  - "No live place offers Gemini CLI as an active provider, auth default, family-pool member or media route; Gemini Direct and Antigravity stay live."
+  - "No Goal check, role, tier, template, child Goal or Goal-owned certification is restored, and no Event Authority file named in EXCLUDED.txt is changed by this sweep except the stream E-approved goal_runtime_lineage_record row of Plans/storage_value_registry.json."
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+  - python3 scripts/pm-goal-runtime-lineage.py --self-test
+  - python3 scripts/pm-plans-verify.py validate-settings-layering
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: goal_leftover_retirement_and_provider_drift
+reasoning_tier: high
+context_scope: goal_sweep_dl478_20261112
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/plans_to_code_handoff.schema.json
+  - Plans/settings_inventory.json
+  - Plans/00-plans-index.md
+  - Plans/FinalGUISpec.md
+  - scripts/pm-plans-verify.py
+  - scripts/pm-goal-runtime-lineage.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "pm7-build 1112161328 (Jared, 2026-11-12, about 11:05 AM EST): Sweep and retire all"
+  - "DL-477; pm7-build 1112155957-694d (Jared, 2026-11-12): the Goal model ruling"
+  - "pm7-build 1112163308: GO for the Gemini CLI retirement sweep, applying DL-332 and CBP-019"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/goal-sweep/PLAN.md; SHA-256 65406fbfcb8d6b8d8a1d444b11bce04722aea6b69e71700a885412d0386b25ce"
+  - "/mnt/Cursor/share/puppet-master/2026-11-12-ember-goal-sweep/VERIFIED.md; SHA-256 957fefa501e8f0d34f880b980de7edfa487be021fc4d35b5e2d7a42e988b0f00"
+  - "/mnt/Cursor/share/puppet-master/2026-11-12-ember-goal-sweep/EXCLUDED.txt; SHA-256 a58f16bbc9b16ff24ae255b4bf21cdead9ac655dd7a8cfd6b62708653be6c8d2"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/goal-sweep/w1/REPORT.md, w2/REPORT.md, w3/REPORT.md, w4a/REPORT.md, w4b/REPORT.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/goal-sweep/FIX-DRY-REPORT.md; SHA-256 65e2fce673486d00dade756ffaaaa77676055949c16fefa945b11bb881105be8"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/goal-sweep/FIX-DRY2-REPORT.md; SHA-256 5e152acffd71f5764d718d1dfb3257cd87d493410b9906360c7e14443f654841"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/goal-sweep/review-r1.md; SHA-256 b32262666e631cae7e7bf49180d6b206540904f509c172b74db08b5f6e4762bb"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/goal-sweep/FIX-R1-BRIEF.md; SHA-256 4d280f9a3dc352909d2e80628bf1b8c673f210305f9e87c5f5197815350d126b"
+  - "git diff 6dc484f6e8..b052df0cb5 -- Plans scripts (excluding Plans/_shards and Plans/.plan_index)"
+preserved_exact_tokens:
+  - "Sweep and retire all"
+  - "The goal runs on the model the user had chosen, there shouldn't be checks or anything. That's not how other platforms handle it."
+  - "H-018"
+  - "goal_completion_receipt"
+  - "historical_only"
+  - "Gemini CLI"
+  - "handoff_matrix_rows_not_exactly_h001_h017"
+negative_constraints:
+  - Do not restore a Goal-owned check, verifier, adjudicator, certifier, model-role tier, template, child Goal or GoalRun build flow.
+  - Do not retire or loosen the goal_completion_receipt def while the Original Standard route (GRS-064, GRS-065, CV-340) reads it.
+  - Do not change Event Authority vocabulary, machine contracts or registries named in EXCLUDED.txt under this decision, beyond the stream E-approved goal_runtime_lineage_record row of Plans/storage_value_registry.json.
+  - Do not offer Gemini CLI as an active provider, auth default, family-pool member or media route.
+  - Do not infer native implementation, readiness or a governance seal from this decision.
+owner_hints: [Plans/Goal_Runtime_System.md, Plans/Contracts_V0.md, Plans/Plan_To_Node_Compilation.md, Plans/CLI_Bridged_Providers.md]
+```

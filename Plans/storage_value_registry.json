@@ -31738,10 +31738,12 @@
             "$ref": "#/$defs/non_empty_string"
           },
           "root_goal_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/non_empty_string",
+            "description": "GRS-052 / DL-478: root_goal_id must equal goal_id. Draft 2020-12 cannot express this cross-property equality, so the owner validator scripts/pm-goal-runtime-lineage.py enforces it (failure root_goal_id_must_equal_goal_id)."
           },
           "parent_goal_id": {
-            "$ref": "#/$defs/nullable_non_empty_string"
+            "type": "null",
+            "description": "GRS-052 / DL-478: Goals have no parent Goal."
           },
           "plan_id": {
             "$ref": "#/$defs/nullable_non_empty_string"

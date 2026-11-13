@@ -4842,7 +4842,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Multi-Account owns requested/effective account identity for Goal Runtime worker, planner, evaluator, verifier, and adjudicator provider use. Goal Runtime consumes account identity and role scope, but does not redefine account stickiness, failover, quota pressure, or provider-account policy.
+  The Goal Runtime worker/planner/evaluator/verifier/adjudicator role cast is retired by DL-478. Goals use ordinary Assistant account selection. Multi-Account owns requested/effective account identity, account stickiness, failover, quota pressure, and provider-account policy; the old role words remain compatibility/source-lineage only and cannot restore Goal-owned account policy.
 gui_related: false
 gui_classification_reason: Requested/effective account identity and role-scoped provider-account policy are backend account-resolution behavior; F3-393 owns visible Settings placement.
 depends_on:
@@ -4852,9 +4852,9 @@ depends_on:
   - MS-108
 unblocks: []
 acceptance_criteria:
-  - Goal Runtime role execution can carry requested and effective account identity for worker, planner, evaluator, verifier, and adjudicator provider use.
+  - Goals use ordinary Assistant account selection and carry requested and effective account identity.
   - Multi-Account keeps ownership of account stickiness, failover, quota pressure, and provider-account policy.
-  - Goal Runtime consumes role-scoped account identity without redefining provider-account behavior.
+  - Goal Runtime consumes ordinary account identity without redefining provider-account behavior or restoring retired roles.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Goal Runtime account-identity resolver review

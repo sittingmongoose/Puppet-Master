@@ -1,45 +1,45 @@
 # Shard Index: Plans/Progression_Gates.md
 
-Generated: 2026-11-05T06:45:46Z
+Generated: 2026-11-13T15:35:54Z
 
-Source SHA256: `cab7a281fc9dcf122b17aae5fca87691bfb7c1709166166bec3afc024e7f3dca`
+Source SHA256: `72df37706b4be279175bd902815fa3c1e190d8ed0cc4ee16755ec08299d8f855`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `6e4055525406c7dff7d1072f1700fe22441fe559366d1454532c59f8406b45eb`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L20 `f199b157e1fe73717db30489200e62541869ef8d8f6fca5a0bcf254792bd5a67`
-- [003 - 0. Scope](003-0.-scope.md) L22-L82 `5bd7f45aefe0b2b191a81e32ff425df9c189064af542027f2c60f0870085806b`
-- [004 - Route-aware progression and packet verification gates](004-route-aware-progression-and-packet-verification-gates.md) L84-L124 `147b9c6565847e93b29b3ce9186eca32c786c2960079df0edda8d3d969961d40`
-- [005 - 1. Verifier role (AI-only; deterministic)](005-1.-verifier-role-ai-only-deterministic.md) L126-L183 `83c5cddc5a711364441ab79b0b3684cbc81b2206c74e4ed2160c5dbd4485a409`
-- [006 - Runtime node-model progression gate definitions](006-runtime-node-model-progression-gate-definitions.md) L185-L219 `13b03c8737a73cb97e313de9e743407555b066d275722c803db6bec1e79d0f66`
-- [007 - GATE-001 -- Schema validation (anti-drift core)](007-gate-001-schema-validation-anti-drift-core.md) L220-L235 `63b151efe4be444b9e388e6f1f3c82d2f3aabc179618fbbf4184ef64c3dbde76`
-- [008 - GATE-002 -- Spec Lock integrity](008-gate-002-spec-lock-integrity.md) L236-L251 `b69a827e1b6ce9f9976e9b19375293eb12afbe08f744556aed304b8a9e3b9ab2`
-- [009 - GATE-003 -- Architecture invariants](009-gate-003-architecture-invariants.md) L252-L269 `0b86600820e4dbe88a7309edc48a8573a825dec24b7b2dee40c42822aea2ac06`
-- [010 - GATE-004 -- Forbidden deps + drift phrases](010-gate-004-forbidden-deps-drift-phrases.md) L270-L283 `ec4ec5218228338ce36e7a87eb9bfc94a8873295f2d5e663e6d966088e96b0d5`
-- [011 - GATE-005 -- Evidence required for completion](011-gate-005-evidence-required-for-completion.md) L284-L293 `975c7abdcc78c5cfe6a2fcf2c8d0a9fe39684b28acd96d8a81dfdf3e83d39ed3`
-- [012 - GATE-006 -- Change budget enforcement](012-gate-006-change-budget-enforcement.md) L294-L303 `b183e70f9a80645f3bf0a67f49e074df00626f6a859110e15c7619acf251ac34`
-- [013 - GATE-007 -- Reserved tombstone](013-gate-007-reserved-tombstone.md) L304-L319 `53dadd4888362a1dcf7e49dc36358eb357adc7d83c21d6a0df87defbfb072bc2`
-- [014 - GATE-008 -- Reserved tombstone](014-gate-008-reserved-tombstone.md) L320-L335 `f9993e2b5e4ca3dc2c2a1c6886ac1525c53afe5efc93264d8b4ff59bf9f38a21`
-- [015 - GATE-009 -- ContractRef coverage](015-gate-009-contractref-coverage.md) L336-L349 `be270f39598f28040fc4da7c7e307cc621a0f4d21b311af268e44b8385e3b003`
-- [016 - GATE-010 -- Wiring matrix validation](016-gate-010-wiring-matrix-validation.md) L350-L381 `b640b92f2df9219081d73fd12601df2c105e2f3bb34ccaa5375687dab9d0f641`
-- [017 - GATE-011 -- Requirements traceability coverage](017-gate-011-requirements-traceability-coverage.md) L382-L426 `d05803dc6979174304910856176e2071d156512caf06abe086fe623e0606c768`
-- [018 - GATE-012 -- Requirements quality](018-gate-012-requirements-quality.md) L427-L481 `e5bdc080d2825d16f388a386436c099367675062d46bbe57796fc986e600bffd`
-- [019 - GATE-013 -- Ambiguity marker resolution](019-gate-013-ambiguity-marker-resolution.md) L482-L524 `52fa89daf7be4c12666233b4700d202f8b6d68612ee8f67d5756a7f085e49ab8`
-- [020 - GATE-014 -- Document Set packaging verification](020-gate-014-document-set-packaging-verification.md) L525-L548 `ec56d97a8d8f796eb70ab4b2b3fcc5c4d495412ca0ca246ac29c947bc77cbb1b`
-- [021 - References](021-references.md) L549-L561 `fecfc057291e045abc14bdb0823cb7720deea85a37d6f3ec4da289e646b5a9fa`
-- [022 - Runtime Integrity and Recovery Gates Addendum (2026-03-08)](022-runtime-integrity-and-recovery-gates-addendum-2026-03-08.md) L563-L605 `833f6c380c2b8d08c5fff03619cd27579404068b2439729da0b255cb75fb09e6`
-- [023 - Post-Edit Verification Sweep Addendum (2026-03-08)](023-post-edit-verification-sweep-addendum-2026-03-08.md) L607-L623 `6d973313c255824315751252a1a701a4b1c74c7b442904273a6716b54e27d00a`
-- [024 - Runtime Packet Verification Gate Addendum (2026-03-09)](024-runtime-packet-verification-gate-addendum-2026-03-09.md) L624-L638 `7f19649acf6e33356ab0dc5a86893c5480fae946560b871b2427a21f01885b9d`
-- [025 - Runtime Scheduler Packet Verification Canonical Alignment (2026-03-09)](025-runtime-scheduler-packet-verification-canonical-alignment-2026-0.md) L639-L648 `b61d67ea567800aa1dbd8ceaef4570d9ce42f8b93aac034ebd25192a46973127`
-- [026 - Runtime Packet Contradiction-Fail Verification Consolidation Addendum (2026-03-09)](026-runtime-packet-contradiction-fail-verification-consolidation-add.md) L649-L659 `75d312e7dc845c6b0e3be8e9ca1a6b1a4643792437c12076fb92962aa90b0a14`
-- [027 - Field Name Verification Gate Update Addendum](027-field-name-verification-gate-update-addendum.md) L661-L673 `9335e8947b7a457901a72f91fa882608f27a0856be1034d59e7681ab0fcd912d`
-- [028 - Runtime Recovery Canonicalization Gate Addendum](028-runtime-recovery-canonicalization-gate-addendum.md) L675-L685 `547a9496c46fd2fd322569d5ab681ee98685d97b6178b613db820586c482573c`
-- [029 - Owner / Consumer Map](029-owner-consumer-map.md) L687-L691 `c71f45a9f6f6f58b876a322fdaa289f171f7e5472615bf4b26ab770d7ad67f6a`
-- [030 - PlanUnits](030-planunits.md) L693-L3414 `3a15e9b665827ab736f38bb1e5f2a0c93bb65005f4a5b9f7075d1965f92652e2`
-- [031 - Migration Coverage](031-migration-coverage.md) L3416-L3426 `06ee9af04ac92b4173e9c50bd00901fade479d2a63fcaa565ad8fe13fd9e8fd8`
-- [032 - Ledger Compile Addendum - pldg-20260614-002](032-ledger-compile-addendum-pldg-20260614-002.md) L3428-L3472 `b66cb5eac4ab124efdae59bba94b6068803f5328286dfded50a1f71da5adb507`
-- [033 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](033-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3475-L3558 `31551da2d99e7045b2d987e2e56ed733cd54d8882d5cf7b34049919a37dc213c`
-- [034 - Implementation Readiness Gate Addendum - 2026-07-05](034-implementation-readiness-gate-addendum-2026-07-05.md) L3560-L3632 `4cd6da1d6fa56f8d154fbdd7f973a979bc6b75507a6f197986fcbaad1e89765d`
-- [035 - FABLE Gate Registry Repair Addendum - 2026-07-07](035-fable-gate-registry-repair-addendum-2026-07-07.md) L3634-L3696 `b62f5fa581c238c0d0f946203edb2f60fc3563fb0354aa234dc9cbabb2145cca`
+- [001 - Preamble](001-preamble.md) L1-L1 `8c95c4a5c2cb64e5feed1461a6da5a41830373cf65dc5db780c62730c0dd4c2f`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L20 `cfb3dc2b4861f9f3e32707a9148d174f3ff3247322d2fd1cf05e5d731445c28f`
+- [003 - 0. Scope](003-0.-scope.md) L22-L82 `7922aa4f156eb8b6e91c70852da54570a8fac31de2e871cf5cf8028ceb6d0baf`
+- [004 - Route-aware progression and packet verification gates](004-route-aware-progression-and-packet-verification-gates.md) L84-L124 `1166168dd648c238208d9e56de21cf3a5f291c78ab0d3a8d0cb027f895d9d55b`
+- [005 - 1. Verifier role (AI-only; deterministic)](005-1.-verifier-role-ai-only-deterministic.md) L126-L183 `67808edb2d6982328befb76aa7aea3833a98a0244e1340d7530de239e5c8ed7f`
+- [006 - Runtime node-model progression gate definitions](006-runtime-node-model-progression-gate-definitions.md) L185-L219 `2bf12dd04cbc593ded6358aa0613949aa16e7b1d81742d6b1de2b90226a732f9`
+- [007 - GATE-001 -- Schema validation (anti-drift core)](007-gate-001-schema-validation-anti-drift-core.md) L220-L235 `e836ce1d37ecaf3371eaed168595b3b489cb14a248dfd11a8452c602baa18213`
+- [008 - GATE-002 -- Spec Lock integrity](008-gate-002-spec-lock-integrity.md) L236-L251 `cf7bd0f7899c50023b12f028bc79f5a2aedf8b8fdd20076e0650f8b2449f6fe9`
+- [009 - GATE-003 -- Architecture invariants](009-gate-003-architecture-invariants.md) L252-L269 `53f12aead21dee1255f7d070879155401cc5cbf59c3d4ae2f88cde7244b43f98`
+- [010 - GATE-004 -- Forbidden deps + drift phrases](010-gate-004-forbidden-deps-drift-phrases.md) L270-L283 `ae02164c7e7dd475d64234eb657ffd4f2c65334f6df28ef68315a02925c27838`
+- [011 - GATE-005 -- Evidence required for completion](011-gate-005-evidence-required-for-completion.md) L284-L293 `6100fb036c875503458fbd3175a9541a26acd0f8730b1940cd389ee5d46bcec8`
+- [012 - GATE-006 -- Change budget enforcement](012-gate-006-change-budget-enforcement.md) L294-L303 `6a7b42fbd401ecd8cd852cb3be17f563ee653ba91f172e87e6f2cfc34de61e3f`
+- [013 - GATE-007 -- Reserved tombstone](013-gate-007-reserved-tombstone.md) L304-L319 `ec97452a925319660f671317ca80d000afc86eed4bf1e89b8f308ef902c449c0`
+- [014 - GATE-008 -- Reserved tombstone](014-gate-008-reserved-tombstone.md) L320-L335 `6ca37ec5b707978b2e2abcb6551bff8e0bcde9d582d632e64adb424e1780f7fd`
+- [015 - GATE-009 -- ContractRef coverage](015-gate-009-contractref-coverage.md) L336-L349 `28a2c242e3343e6dda5afaa1e33958f1e9cab59bd33447f5435678646928bcd7`
+- [016 - GATE-010 -- Wiring matrix validation](016-gate-010-wiring-matrix-validation.md) L350-L381 `a71203886c6f43ce3ef268208037c9302f1a1b1217f0f7fe9c9105554ecd2390`
+- [017 - GATE-011 -- Requirements traceability coverage](017-gate-011-requirements-traceability-coverage.md) L382-L426 `d1adb46d8173f10a7d22f423058942bb19ab493767685937e8a4fbfe2313082e`
+- [018 - GATE-012 -- Requirements quality](018-gate-012-requirements-quality.md) L427-L481 `7046150b4e5db4c9375cc511ab162d9e520ca7deed5213a46090f04afb924c71`
+- [019 - GATE-013 -- Ambiguity marker resolution](019-gate-013-ambiguity-marker-resolution.md) L482-L524 `709ccd4d7d621b6fb5c14f6c46bfe28c50b84992328b60e79c7de01455fbf18f`
+- [020 - GATE-014 -- Document Set packaging verification](020-gate-014-document-set-packaging-verification.md) L525-L548 `7dff9ad8306841fe734a73a97f5b7fc385825ba3c6fc6b6828177393bb6d8cf3`
+- [021 - References](021-references.md) L549-L561 `49b1ad130a77b3625f7e0466ac353827234fe57474f051934538db55b8103a01`
+- [022 - Runtime Integrity and Recovery Gates Addendum (2026-03-08)](022-runtime-integrity-and-recovery-gates-addendum-2026-03-08.md) L563-L605 `149f06d1ab0417b0de4cf43db87cc62fda7a6067a21d9ede238868acdb04494e`
+- [023 - Post-Edit Verification Sweep Addendum (2026-03-08)](023-post-edit-verification-sweep-addendum-2026-03-08.md) L607-L623 `b27abf5bc9e59d3c95ffffd6e2ad35fbce604deeb9b7e534cd74220991dcaeaa`
+- [024 - Runtime Packet Verification Gate Addendum (2026-03-09)](024-runtime-packet-verification-gate-addendum-2026-03-09.md) L624-L638 `d01f85ecb6c2ffb693679eda343024ea96a7b3444b6fb2443a616d3bf82ced4b`
+- [025 - Runtime Scheduler Packet Verification Canonical Alignment (2026-03-09)](025-runtime-scheduler-packet-verification-canonical-alignment-2026-0.md) L639-L648 `1ce6c53546908dec8e26457edf8343dbc42ab7f22135ca66cb4c52a2c8dbbb83`
+- [026 - Runtime Packet Contradiction-Fail Verification Consolidation Addendum (2026-03-09)](026-runtime-packet-contradiction-fail-verification-consolidation-add.md) L649-L659 `55c099f9509053eb403518341cb4f797368de8a25bf20617a9d731e9be841b84`
+- [027 - Field Name Verification Gate Update Addendum](027-field-name-verification-gate-update-addendum.md) L661-L673 `dc74be1b04603bf9d3bd89e51ac899178309007ddbdcbe5e55cbdd97fb881d4b`
+- [028 - Runtime Recovery Canonicalization Gate Addendum](028-runtime-recovery-canonicalization-gate-addendum.md) L675-L685 `b038a274789c815f6a48809ed6f98aee58bed73316a263477b5602547c1f7248`
+- [029 - Owner / Consumer Map](029-owner-consumer-map.md) L687-L691 `16d21b581552d30957c89b7801676b753ab4c3a82cdd85a3b3a04e3e2ad00370`
+- [030 - PlanUnits](030-planunits.md) L693-L3414 `c6baeb33dce0696167e00d24f35797bab80866181261a907b681af6339e685f2`
+- [031 - Migration Coverage](031-migration-coverage.md) L3416-L3426 `8a40026e112d372ad2face90c9dd0be60a87dec5a03db677fb1bd49cb992a5f9`
+- [032 - Ledger Compile Addendum - pldg-20260614-002](032-ledger-compile-addendum-pldg-20260614-002.md) L3428-L3472 `1014454e64cfc98e9c2b319b138e760c85cc368489489dba770bc098cae4d298`
+- [033 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](033-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3475-L3557 `50d271a3e60c41c4c8f0035904084f00729c32f6f4ed28628c3ca28bb26529bf`
+- [034 - Implementation Readiness Gate Addendum - 2026-07-05](034-implementation-readiness-gate-addendum-2026-07-05.md) L3559-L3631 `58c566d92125e893e46886f467b0403b86fea13dd681b13b1c476e898f0264e1`
+- [035 - FABLE Gate Registry Repair Addendum - 2026-07-07](035-fable-gate-registry-repair-addendum-2026-07-07.md) L3633-L3695 `31b4447944c9ac62e66faca56e3666e07a8acf60ec0457e088ae4110a0edd803`

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L50501-L53082
+Source lines: L50475-L53056
 
-Source SHA256: `ba630d2b72c90b75de4bb712459b497deeba44040730302e1e590e8b279a96ad`
+Source SHA256: `50e00d67a61f15d8c93c7d8953f478927de33ec39de9e98ddf8df47e97f610d1`
 
 ---
 
@@ -229,8 +229,8 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row (UI_Command_Catalog.md:1169) and the UCC-084..UCC-088 row-group optional identity
-            (UCC-230 row_groups; overlay cell UI_Command_Catalog.md:8857) name replacement? but no canon types
+            The row (UI_Command_Catalog.md:1174) and the UCC-084..UCC-088 row-group optional identity
+            (UCC-230 row_groups; overlay cell UI_Command_Catalog.md:8875) name replacement? but no canon types
             it or bounds its length. JUDGMENT: string, the literal replacement text.
         mode:
           type: enum
@@ -487,7 +487,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The UCC-084..UCC-088 row-group optional identity names index_scope? (UCC-230 row_groups; overlay
-            cell UI_Command_Catalog.md:8857), but no catalog row or FinalGUISpec prose types its values, and
+            cell UI_Command_Catalog.md:8875), but no catalog row or FinalGUISpec prose types its values, and
             the row's own args are { project_id } only. JUDGMENT: opaque string placeholder; alternatives: an
             enum of index kinds once the Search owner fixes them, or omitting the arg.
       owner_request: none

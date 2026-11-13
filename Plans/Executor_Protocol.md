@@ -6084,9 +6084,10 @@ owner_hints:
 ```yaml
 plan_unit_id: EP-098
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun decomposition, verification, repair, and certification dispatch flow is retired; the old text is retained only for source lineage.
   Executor/runtime scheduler owns concrete runnable WorkNode dispatch for Orchestrator GoalRuns. Goal Runtime and Orchestrator may define objectives, WorkGraph shape, WorkNode requests, verification requirements, receipts, and projections, but Executor remains authoritative for readiness, dependency, blocked-state, retry/backoff, wakeups, capacity-aware parallel dispatch, and failure-class recovery. High-end controller/planner decomposition may decompose objectives into a WorkGraph and bounded WorkNodes as runnable work requests, but concrete dispatch remains gated by Executor readiness and scheduler policy. WorkNode execution success is provisional until verification and receipt certification complete.
   A failed VerificationCycle yields typed VerificationFinding records grouped in a DefectBundle; Executor schedules bounded RepairWorkNodes under its intake, readiness, write-authority, and retry policies, then verification reruns against the affected target plus regression scope after each repair. The loop continues until zero findings remain or a true blocker or authority boundary is reached; a failed verification cannot be reported as successful completion.
 gui_related: false
@@ -6094,12 +6095,7 @@ gui_classification_reason: Scheduler ownership, dispatch, retry/backoff, capacit
 depends_on: [GRS-026, GRS-027, PNC-009, PS-115, W-071]
 unblocks: [OP-022, RGV-012, RAP-027]
 acceptance_criteria:
-  - Goal Runtime does not dispatch concrete graph nodes directly.
-  - Executor scheduler readiness, blocked/backoff, retry, capacity, wakeup, and failure-class semantics remain canonical for WorkNodes.
-  - RepairWorkNodes and WorkNode retries remain bounded by scheduler and write-surface policy.
-  - Failed VerificationCycles produce VerificationFindings in a DefectBundle, bounded RepairWorkNodes, and verification reruns against the affected target and regression scope until zero findings remain or a true blocker or authority boundary is reached.
-  - Controller/planner decomposition can produce WorkGraph and bounded WorkNode runnable work requests without bypassing Executor readiness or scheduler authority.
-  - WorkNode success alone does not certify parent GoalRun or final completion.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Executor WorkNode scheduler integration tests
@@ -6160,7 +6156,7 @@ canonical_text: >-
     WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. The strict runtime contract packet defines non-executable WorkGraph draft and WorkNodeRequest shapes before dispatch; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery after explicit runtime enablement and accepted intake.
 gui_related: false
 gui_classification_reason: Intake, scheduling, retry, and blocked recovery are runtime protocol behavior, not visual presentation.
-depends_on: [EP-098, PNC-013]
+depends_on: [PNC-013]
 unblocks: [EP-100, EP-101, EP-102, GRS-030]
 acceptance_criteria:
   - WorkNodeRequest records cannot bypass Executor intake.
@@ -6585,8 +6581,8 @@ plan_unit_id: EP-105
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: 'After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point refs, evidence, currentness, cancellation, invalidation, and replan generation. Existing project_plan_node schema remains an import or compatibility contract with an explicit adapter and must not silently become the canonical runtime WorkNodeRecord. Work dispatch, change, test, retry, and completion receipts use worknode_id and attempt_id plus source_request_id and graph revision; a WorkNodeRequest reference alone is not sufficient runtime identity. A context-aware incomplete-content
-  validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, certifies a complete WorkGraph and WorkNodeRequests, passes Executor intake/provisioning, atomically creates GoalRun and WorkNodes, queues an entrypoint, and appears in Orchestrator. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH, optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'
+canonical_text: 'After Activation Decision accepts the graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point refs, evidence, currentness, cancellation, invalidation, and replan generation. Existing project_plan_node schema remains an import or compatibility contract with an explicit adapter and must not silently become the canonical runtime WorkNodeRecord. Work dispatch, change, test, retry, and completion receipts use worknode_id and attempt_id plus source_request_id and graph revision; a WorkNodeRequest reference alone is not sufficient runtime identity. A context-aware incomplete-content
+  validator runs at Planning Wizard approval, Plan Compile certification, and WorkNode completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, prepares a complete WorkGraph and WorkNodeRequests, passes Executor intake/provisioning, atomically creates WorkNodes, queues an entrypoint, and appears in Orchestrator. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH, optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
 depends_on: []
@@ -6641,7 +6637,6 @@ preserved_exact_tokens:
 - WorkNodeRecord
 - WorkNodeMaterializationReceipt
 - worknode_id
-- goal_run_id
 - workgraph_revision
 - attempt_id
 - replan generation
@@ -6650,7 +6645,6 @@ preserved_exact_tokens:
 - Planning Wizard approval
 - Plan Compile certification
 - WorkNode completion
-- Goal completion
 - clean-room fixture
 - exactly one PlanCompileRun
 - entrypoint queued
@@ -7208,7 +7202,7 @@ canonical_text: >-
   transport_decision_receipt.
 gui_related: false
 gui_classification_reason: This unit defines runtime scheduling and transport behavior, not visual presentation.
-depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-098, EP-110, EP-111, EP-112, EP-113, CV-313]
+depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-110, EP-111, EP-112, EP-113, CV-313]
 unblocks: []
 acceptance_criteria:
   - "`scheduler.pass` uses the closed wake_reason set shared with Contracts_V0."

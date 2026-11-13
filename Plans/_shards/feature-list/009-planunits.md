@@ -4,7 +4,7 @@ Source: `Plans/feature-list.md`
 
 Source lines: L219-L1571
 
-Source SHA256: `43393f020659076aa039e640a3d41e20fa898a64ff4161ee881b359889bc5d43`
+Source SHA256: `1e3c076e3e5d6450aa86dc05bbe33cfbd128a43087e206006648c977104238bc`
 
 ---
 
@@ -109,7 +109,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/feature-list.md
 canonical_text: >-
-  Feature-list reference anchors route summaries to Crosswalk, storage-plan, assistant-chat-design, and Media Generation owner docs, and media-account capability summaries must defer Gemini wording to those owners rather than using stale shorthand.
+  Feature-list reference anchors route summaries to Crosswalk, storage-plan, assistant-chat-design, and Media Generation owner docs, and media-account capability summaries must defer Gemini wording to those owners rather than using stale shorthand. Gemini Direct remains key-only/API-key-backed and Antigravity stays live; the Gemini CLI media route and its OAuth/API-key/Google-credential rows are retired by DL-332 and DL-478.
 gui_related: false
 gui_classification_reason: This unit preserves reference anchors and owner routing constraints, not GUI presentation.
 split_recommended: false
