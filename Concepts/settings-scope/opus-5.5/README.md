@@ -156,7 +156,10 @@ run, new run and mode switch, reading what each row shows. Since the Sol max fix
 host-dependent spellings the review found, tries the save guard with each, keeps portable controls offering Everywhere,
 checks that a place the pattern no longer allows is cleared with a reason, and reads the one path reader through broad
 detection, folder matching and the home read; `copy` walks Keep them fixed, an unticked row and kind, then the
-computer's values, through the ticks, the counts, the preview and the write, and the other order.
+computer's values, through the ticks, the counts, the preview and the write, and the other order. Since the S1 fix,
+`where` and `always` read Plans' inventory layering (`Plans/settings_inventory.json`, or `--set inventory=<path>`): every
+row whose value is an absolute path follows it first, so an owner-held row stays with its owner, with no ordinary level
+and its owner's panel; an ordinary one still goes to each computer.
 
 ## Jared's review fixes (2026-11-10)
 
@@ -355,10 +358,19 @@ check before it was fixed, and the same checks pass now. `CONCEPT-FIX-REPORT-A.m
   takes the line away. The same weakness elsewhere, each now on the same reader: broad detection (a program named past
   `NAME=value` or `env`, so `NODE_ENV=production npm *` is broad), folder-rule matching (a trailing separator, quotes or
   a doubled separator still name the same folder), the home read (PS-145's exception needs a home-folder path), and
-  Settings rows whose value is an absolute path (`feed.js`: Rule Storage Location, `~/.config/puppet-master/permissions.toml`,
-  was a text row offered as an everywhere value; it is now each computer's own, "a path names a place on one computer",
-  as the Projects folder already was. The reference gives it global and project scope; the reviewed classification
-  stays a Plans task).
+  Settings rows whose value is an absolute path (`feed.js`: such a row is each computer's own, "a path names a place on
+  one computer", but only after the reviewed owner-held rows; see the S1 fix below).
+- **S1 (the Sol-high recheck of these fixes), the Rules file belongs to Permissions.** The fixes above first made Rule
+  Storage Location (`safety.rules.storage-format`, `~/.config/puppet-master/permissions.toml`) an ordinary Computer
+  value. Plans' inventory layering, which SSYS-059 makes the per-row authority, keeps it inside its owner (`home: thing`,
+  every ordinary level `set_inside_a_thing`), and Permissions_System §9 with PS-144 make that file a read-only projection
+  of the Everywhere rules, never a second writer. It is now on the reviewed owner-held list (`REVIEWED.thing`), which
+  `classify()` reads before any host-path rule, as SSYS-059 orders it: it is off the ladder, the guard refuses it at
+  everywhere, a computer, a device and a project, and its panel keeps its owner's words, in the same three parts and
+  with no Change: "Your rules are kept by Permissions. This file is a read-only copy of your everywhere rules: change a
+  rule in Permissions, never in the file", a computer's own rules stay with that computer's rules, a project's are in
+  its own `.puppet-master/permissions.toml`. It was the only row the path rule reached; Plans' inventory has no other
+  row with an absolute-path value. The old global/project ladder is not back.
 - **F2, Copy what it gets from its computer restored a setting you had unticked.** The plan added the computer's values
   after the source's own values and before Keep them fixed's filter, so they skipped every kind and row exclusion:
   Profile in use, unticked and showing "Stays as usual", came back in the plan and the preview. Now the copy has one

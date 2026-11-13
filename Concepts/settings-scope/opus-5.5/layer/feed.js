@@ -40,7 +40,16 @@
     project: ['code.execution.build-context', 'safety.protection.custom-patterns-path'],
     thing: ['system.mcp.remote-url', 'system.mcp.transport', 'system.mcp.server-scope', 'system.mcp.server-enabled', 'system.mcp.tool-toggle', 'extensions.commands.command-scope', 'extensions.commands.command-mode',
       'extensions.commands.command-model', 'extensions.commands.command-persona', 'extensions.commands.command-permissions', 'ai.accounts.gcp-project-id', 'safety.rules.rule-editor', 'safety.rules.per-tool-permissions',
-      'safety.protection.web-tool-permissions'],
+      'safety.protection.web-tool-permissions',
+      /* review S1 (Sol-high recheck of the Sol max fixes): the Rules file is the Permissions owner's own. Plans'
+         inventory layering, which SSYS-059 makes the per-row authority, gives it home: thing with every ordinary level
+         not offered (set_inside_a_thing), and Permissions_System §9 with PS-144 make ~/.config/puppet-master/
+         permissions.toml a read-only projection of the Everywhere rules, never a second writer. SSYS-059 classifies
+         owner-held rows before host paths, and so does classify(): this list is read first, so the path branch below
+         never reaches it */
+      'safety.rules.storage-format'],
+    /* owner-held rows whose panel says what their owner does with them (panel.js ownerWhere), by view */
+    ownerView: { 'safety.rules.storage-format': 'permissions_projection' },
     computerOnly: ['system.advanced.auto-update', 'system.advanced.update-frequency', 'system.advanced.release-channel', 'system.advanced.catalog-updates'],
     /* Jared #8: libraries were on the device rule, which offered "Set for a device" on rows that are not about a screen.
        A library (your own themes, your sounds) is the same everywhere, kept with your settings */
@@ -81,7 +90,8 @@
     if (s.control === 'path' || /(cli-path|binary-path|-binary$|executable|terminal\.shell$|launch-config|docker-host|socket-path)/.test(id)) return { home: 'computer', host: true, reason: /(dir|folder|location)$/.test(id) && !/cli|binary/.test(id) ? 'names_a_folder' : 'names_a_program' };
     /* review Sol max F1, the same weakness here: a row whose value is a place on one computer (an absolute path, read by
        the layer's one path reader: /, ~, a drive, a UNC share, file:) is each computer's own, whatever its control.
-       A value is one word, never a command line, so "anthropic/claude-sonnet-4" stays a model's name */
+       A value is one word, never a command line, so "anthropic/claude-sonnet-4" stays a model's name. Review S1: it
+       runs only after the reviewed owner-held rows (REVIEWED.thing, read first above), as SSYS-059 orders it */
     if (typeof s.value === 'string' && (() => { const f = PSX.paths.word(s.value.trim(), false); return !!f && /^(root|home|drive|unc|file)$/.test(f.root); })()) return { home: 'computer', host: true, reason: 'names_a_path' };
     if (/^general\.visual\./.test(id) || /^general\.interaction\.(sound|submit-key|haptic)/.test(id) || /^general\.startup\.window/.test(id) || /(keyboard-shortcuts|font-family|ui-scale|zoom-level)/.test(id)) return { may: ['device'], screen: true };
     // a safety row: the more careful of a computer's and a project's own (1.4)
@@ -474,5 +484,5 @@
   };
 
   PSX.on('world', () => { if (!feeding) PSX.emit('redraw'); });
-  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: REVIEWED.thing, library: REVIEWED.libraryAction }, feed: { full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
+  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: REVIEWED.thing, owned: REVIEWED.ownerView, library: REVIEWED.libraryAction }, feed: { classify, full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
 })(window);

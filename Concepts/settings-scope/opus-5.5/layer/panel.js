@@ -250,6 +250,8 @@
     const look = off.look && off.look.test(id), cred = !look && off.credential && off.credential.test(id);
     const lib = (off.library || []).includes(id);
     if (lib) { libraryWhere(body, now, id); return; }
+    const own = OWNER_VIEWS[(off.owned || {})[id]];
+    if (own) { ownerWhere(body, now, own); return; }
     if (!look && !cred) {
       // a row that belongs to one thing but is drawn as a plain row: the same three parts as an account's own rows
       const eng = [...body.querySelectorAll(':scope > section.o55-insp-block')].find((x) => /^Where it applies$/i.test(((x.querySelector('h4') || {}).textContent || '').trim()));
@@ -300,6 +302,40 @@
     slot('Everywhere', 'everywhere', 'One library for every project and computer: it’s kept with your settings.', true);
     slot('Computers', 'computer', 'Not per computer: every computer uses the same library.');
     slot('Projects', 'project', 'Not per project, for the same reason.');
+    if (now) now.after(sec); else body.insertBefore(sec, body.firstChild);
+  }
+
+  /* review S1: a row kept inside its owner keeps its owner's own words: where the owner keeps what it is about, with the
+     same three parts as every panel (Jared #8) and no Change anywhere, since no ordinary level takes it (Plans'
+     inventory home: thing, every level set_inside_a_thing; SSYS-059). The Rules file: Permissions keeps your rules in
+     their owner homes, and ~/.config/puppet-master/permissions.toml is a read-only projection of the Everywhere rules,
+     never a second writer; a Computer's rules stay with that Computer's own rules, and a Project's are in the
+     project's own .puppet-master/permissions.toml (Permissions_System §9 and PS-144) */
+  const OWNER_VIEWS = {
+    permissions_projection: {
+      now: 'Kept by Permissions · a read-only copy',
+      sentence: 'Your rules are kept by Permissions. This file is a read-only copy of your everywhere rules: change a rule in Permissions, never in the file.',
+      everywhere: 'Your everywhere rules are kept with your settings, and only there. Puppet Master keeps this file in step with them so tools that read TOML can see them; it is never a second place to change them.',
+      computer: 'Not per computer: a computer’s own rules stay with that computer’s rules in Permissions, not in this file.',
+      project: 'Not per project: a project’s own rules are in that project’s own .puppet-master/permissions.toml.'
+    }
+  };
+  function ownerWhere(body, now, v) {
+    body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
+    hideEngineWhere(body);
+    if (now) {
+      const l = now.querySelector('.o55-insp-now-label'), f = now.querySelector('.o55-insp-now-foot');
+      if (l) l.textContent = v.now;
+      if (f && !f.hasAttribute('data-psx-hidden')) { f.hidden = true; f.setAttribute('data-psx-hidden', ''); }
+      now.classList.remove('is-changed');
+    }
+    const sec = D.createElement('section');
+    sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where'); sec.setAttribute('data-psx-owner', '');
+    sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">${esc(v.sentence)}</p>`;
+    const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
+    slot('Everywhere', 'everywhere', v.everywhere, true);
+    slot('Computers', 'computer', v.computer);
+    slot('Projects', 'project', v.project);
     if (now) now.after(sec); else body.insertBefore(sec, body.firstChild);
   }
 
