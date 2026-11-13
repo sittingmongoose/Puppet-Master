@@ -1,5 +1,5 @@
 /* send-stop.css — the composer's Send / Stop control, "solid-living" (step SS, 2026-10-02; Jared's pick of three).
- * OWNER: Send/Stop (step SS). Markup, one-shots and the cadence switch: send-stop.js. Loaded in CSS_LAST right after
+ * OWNER: Send/Stop (step SS). Markup, one-shots and the pace change: send-stop.js. Loaded in CSS_LAST right after
  * neon-icons.css (build.py), so it settles ties with composer.css and the neon grammar; it replaces the composer.css
  * send block, the styles.css .send-button hover lift (that rule now skips .sendstop) and nier.css's send rules.
  *
@@ -19,10 +19,11 @@
  * Retro and NieR drain in one step 40 ms in, never at the drain's first instant: a run that ends and a queued message
  * that sends itself flip the chip Stop -> Send -> Stop inside one task (turn-stream.js renders, then flushes the
  * queue), and a step at the start would leave the chip on the accent until the flood's way back has run.
- * The run: the square breathes ~1 px (scale .88) at the activity bar's 2.2 s working cadence while words arrive, and
- * .92 at 3.2 s while the model thinks or a tool runs; the danger backlight breathes .30/.18 (.10/.06 on light themes),
- * .30/.20 (.10/.067) in the waiting cadence. Final review (2026-10-03): at .95 and .30/.24 the 69 s of waiting in a long
- * agent turn read as a still red button, not as running; the deeper slow pulse stays well under the flowing cadence.
+ * The run: the square breathes ~1 px (scale .88) and the danger backlight .30/.18 (.10/.06 on light themes), at the
+ * activity bar's 2.2 s working cadence while words arrive and at 3.2 s while the model thinks or a tool runs; the pace
+ * changes at once and smoothly (PERF-STOP2 = A, 2026-11-13; see the Stop section). Final review (2026-10-03): at .95
+ * and .30/.24 the 69 s of waiting in a long agent turn read as a still red button, not as running (the waiting pulse
+ * was then .92 and .30/.20 until 2026-11-13, when one pulse at two paces replaced the two pulses).
  * Both loops animate transform or opacity on a box (the svg root, the backlight's gradient), so they run on the
  * compositor.
  *
@@ -253,23 +254,24 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scal
 
 /* ------------------------------------------------------------------ Stop: breathing with the stream */
 /* One loop on the glyph (transform on the svg root, a box, so the compositor runs it) and one on the danger
-   backlight's gradient (opacity, .ss-bl::before), same period. Flowing (words arriving): 2200 ms, the activity bar's working breathe, ~1 px;
-   waiting (thinking, a tool running): 3200 ms, the attention cadence, shallower. send-stop.js switches the mode only
-   at an iteration boundary (scale 1), and once it has switched the next loop starts at once (data-flowed). */
+   backlight's gradient (opacity, .ss-bl::before), same period. ONE pulse at two paces (Jared's choice PERF-STOP2 = A,
+   2026-11-13): flowing (words arriving) 2200 ms, the activity bar's working breathe, ~1 px; waiting (thinking, a tool
+   running) 3200 ms, the attention cadence. The pace changes the moment the cadence does, and the loop keeps its place:
+   data-flow changes only the length here (never the keyframes, which would start a new loop), and send-stop.js puts
+   the running loop back at the same point of the new length in the same task (pace()). Until 2026-11-13 the waiting
+   pulse was also shallower (scale .92, backlight .30/.20; .10/.067 on light themes) and the change waited for a loop's
+   end, learnt from an animationiteration listener that cost the whole page about 23 main frames a second. */
 .sendstop[data-ss="stop"] .ss-g { animation: ss-breathe 2200ms var(--ss-le) var(--ss-ld) infinite; }
 .sendstop[data-ss="stop"] .ss-bl::before { animation: ss-glow 2200ms var(--ss-gle) var(--ss-ld) infinite; }
-.sendstop[data-ss="stop"][data-flow="waiting"] .ss-g { animation-name: ss-breathe-w; animation-duration: 3200ms; }
-.sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-name: ss-glow-w; animation-duration: 3200ms; }
-.sendstop[data-ss="stop"][data-flowed] .ss-g, .sendstop[data-ss="stop"][data-flowed] .ss-bl::before { animation-delay: 0ms; }
+.sendstop[data-ss="stop"][data-flow="waiting"] .ss-g, .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-duration: 3200ms; }
+/* THE PULSE'S DEPTH, the one place it is set (both cadences): the square's scale at the loop's middle and the
+   backlight's opacity there, dark themes and light. Literal values per theme brightness (no var() inside a loop's
+   keyframes, so the compositor runs it); a light/dark change swaps the backlight's keyframes, so its loop starts again
+   at the cadence's length, as it always has. */
 @keyframes ss-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(.88); } }
-@keyframes ss-breathe-w { 0%, 100% { transform: scale(1); } 50% { transform: scale(.92); } }
-/* literal values per theme brightness (no var() inside a loop's keyframes, so the compositor runs it) */
 @keyframes ss-glow { 0%, 100% { opacity: .3; } 50% { opacity: .18; } }
-@keyframes ss-glow-w { 0%, 100% { opacity: .3; } 50% { opacity: .2; } }
 @keyframes ss-glow-l { 0%, 100% { opacity: .1; } 50% { opacity: .06; } }
-@keyframes ss-glow-wl { 0%, 100% { opacity: .1; } 50% { opacity: .067; } }
 body[data-theme$="-light"] .sendstop[data-ss="stop"] .ss-bl::before { animation-name: ss-glow-l; }
-body[data-theme$="-light"] .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-name: ss-glow-wl; }
 
 /* ------------------------------------------------------------------ the launch (Send or Queue click) */
 /* 0-320 ms the plane lifts off along its heading and fades as it crosses the chip edge (the face clips it); from
