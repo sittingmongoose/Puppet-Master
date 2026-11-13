@@ -696,7 +696,8 @@ def compound_cases():
         if len(cohort) > 1:
             neg('cohort-missing-component', 'CP01_members_derived', drop_member)
         else:
-            neg('cohort-claims-extra-component', 'CP01_members_derived', lambda cw: cw['after']['todo-2'].update(display_order=7))
+            neg('cohort-missing-derived-reorder', 'CP01_members_derived',
+                lambda cw: (cw['after']['todo-2'].update(display_order=7), cw['admitted'].__setitem__('todo.reordered', True)))
         neg('member-not-admitted', 'CP02_members_admitted', lambda cw, f=cohort[-1]: cw['admitted'].__setitem__(f, False))
         neg('member-other-transaction', 'CP03_members_atomic', lambda cw: cw['txn'].__setitem__(sorted(cw['txn'])[0], 'txn-2'))
         neg('group-missing-member', 'CP04_group_complete', lambda cw: cw['group']['members'].pop())
