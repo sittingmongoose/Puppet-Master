@@ -1,0 +1,56 @@
+// Real input; visible text only. No live DNS or proxy deployment is claimed.
+import {paintedText} from '../helpers/painted-text.mjs';
+import {ink} from '../helpers/text-ink.mjs';
+// FO-169 round 2: the no-match line's painted contrast in every look (--set look= picks some; the recheck's R1 was
+// Basic Dark at 2.76-2.85:1 peak ink on afa5e7582b). 11.5 px text paints no fully covered pixel in most looks, so the
+// four-paint reader (painted-text.mjs) finds 0 stems there. The gate is text-ink.mjs's peak: the line photographed with
+// and without its text, the strongest changed pixel against the same pixel without the text, at the 4.5:1 normal-text
+// bar. Antialiasing only blends ink toward its ground, so the peak is a lower bound on the ink colour's contrast. Where
+// the four-paint reader does find stems (Retro's face), they must reach 4.5 too. The p90 reading is logged, not gated:
+// the roster's own help text, whose colour this line now takes, reads 3.9-4.1 by it in Friendly and NieR Light.
+const LOOKS=['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark']);
+const list=(v,all)=>v?String(v).split(','):all;
+const W = '.o55g-win .o55g-layer:not(.o55g-out)';
+const pause = f => f.waitForTimeout(450);
+async function settings(t) { await t.viewport(1440,900); const f=await t.app.open({settleMs:1500}); await f.locator('#tab-settings').click(); await f.waitForTimeout(1500); return f; }
+async function next(f) { await f.locator(`.o55g-win .o55g-primary`).click(); await pause(f); }
+export const tests = {
+ async 'FO-169 services no-match and clear'(t) {
+  const f=await settings(t); await f.evaluate(()=>PM51.go('ai','providers')); await pause(f);
+  const input=f.locator('input[placeholder="Filter services"]'); await input.waitFor();
+  const roster=f.locator('#provider-roster'), before=await roster.locator('.resource-row:visible').count();
+  await input.fill('zzzz-no-provider');
+  await t.equal('all service rows hidden',await roster.locator('.resource-row:visible').count(),0);
+  await t.equal('exactly one visible empty line',await roster.getByText('No services match. Clear the filter to see everything.',{exact:true}).locator('visible=true').count(),1);
+  await t.equal('no heading claims hidden rows',await roster.locator('.roster-title:visible,.o55-roster-group:visible').count(),0);
+  for (const look of ['basic-dark','glass-light','nier-dark']) { await t.app.look(look); await t.shot(`fo169-${look}`,'Filter no-match line: spacing, contrast and placement under filter'); }
+  const line=roster.locator('.pm51-filter-empty:visible');
+  for (const look of list(t.args.look,LOOKS)) {
+   await t.app.look(look);
+   const k=await ink(line.first()), p=await paintedText(line.first());
+   t.log('FO169-INK '+JSON.stringify({look,ink:k,stems:p.count,stemMin:p.count?p.minimum:null,lowest:p.lowest[0]||null}));
+   if (['basic-dark','basic-light','glass-dark','nier-dark'].includes(look)) await t.crop(`fo169-line-${look}`,line.first(),`No-match line ink in ${look}: peak ${k.peak.contrast}:1 measured`);
+   await t.check(`${look} no-match line painted ink >=4.5`,k.n>=30&&k.peak.contrast>=4.5,JSON.stringify(k));
+   if (p.count>=3) await t.check(`${look} no-match line fully covered stems >=4.5`,p.minimum>=4.5,`${p.minimum.toFixed(3)}:1 (${p.count} stems; ink ${p.lowest[0].ink} on ${p.lowest[0].ground})`);
+  }
+  await input.fill(''); await t.equal('clearing restores every row',await roster.locator('.resource-row:visible').count(),before);
+  await t.equal('empty line removed',await roster.locator('.pm51-filter-empty:visible').count(),0);
+  await t.equal('heading restored',await roster.locator('.roster-title:visible').count(),1);
+ },
+ ...Object.fromEntries(['Caddy','NGINX','Traefik'].map(proxy=>[`FO-170 ${proxy} wizard save Details regenerate`,async t=>{
+  const f=await settings(t); await f.evaluate(()=>PM51.go('system','servers')); await pause(f);
+  await f.locator('.workspace-block[data-workspace-block="servers"] [data-action="pm51-tab"][data-manager="servers"][data-tab="away"]').first().click(); await pause(f);
+  await f.locator('.pm51-servers-route[data-route="domain"] [data-action="pm51-servers-remote"]').first().click(); await pause(f);
+  await f.locator(`${W} .o55-aw-dom`).fill('pm.example.com'); await f.locator(`${W} .o55-aw-proxy`).locator('..').locator('.pm51-dd-trigger').click(); await f.locator('.pm51-dd-list .pm51-popout-item').filter({hasText:new RegExp('^'+proxy+'$')}).click(); await pause(f);
+  await f.locator(`${W} [data-key="forwarded"]`).click(); await next(f);
+  const correct=s=>s.includes('pm.example.com') && (proxy==='Caddy' ? s.includes('reverse_proxy')&&!s.includes('server_name') : proxy==='NGINX' ? s.includes('server_name')&&!s.includes('reverse_proxy') : s.includes('certResolver')&&!s.includes('server_name')&&!s.includes('reverse_proxy'));
+  await t.check(`${proxy} wizard output`,correct(await f.locator(`${W} .o55g-main`).innerText()));
+  await f.locator(`${W} [data-key="added"]`).click(); await next(f);
+  await f.locator(`${W} [data-action="pm51-servers-key-check"]`).click(); await f.waitForTimeout(1200); await next(f); await next(f);
+  await f.locator('.workspace-block[data-workspace-block="servers"] .pm51-servers-route[data-route="domain"] button').filter({has:f.locator('svg')}).last().click(); await pause(f);
+  await f.locator('.pm51-menu-item').filter({hasText:'Details'}).click(); await pause(f);
+  await t.check(`${proxy} saved Details output`,correct(await f.locator('[data-domain-config]').innerText()));
+  await f.locator('[data-action="pm51-servers-domain-generate"]').click();
+  await t.check(`${proxy} regenerated output`,correct(await f.locator('[data-domain-config]').innerText()));
+ }]))
+};
