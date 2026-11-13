@@ -21,9 +21,11 @@ export default async function(t){
     },state);
     const toggle=f.locator(HEAD+' [data-action="work-demo-menu"]');
     if(await toggle.getAttribute('aria-expanded')==='true')await toggle.click();
+    await f.locator(HEAD).evaluate(h=>h.scrollIntoView({block:'center',inline:'nearest'}));
     await f.waitForTimeout(250);
     const read=()=>f.locator(HEAD).evaluate(h=>{
-     const box=e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height,client:e.clientWidth,scroll:e.scrollWidth};};
+     const origin=h.getBoundingClientRect();
+     const box=e=>{const r=e.getBoundingClientRect();return {x:r.x-origin.x,y:r.y-origin.y,w:r.width,h:r.height,client:e.clientWidth,scroll:e.scrollWidth};};
      return {head:box(h),status:box(h.querySelector('strong')),caption:h.querySelector('.orbit-caption')?box(h.querySelector('.orbit-caption')):null,time:box(h.querySelector('.sub')),controls:box(h.querySelector('.working-controls')),icon:box(h.querySelector('.work-phase-icon'))};
     });
     const key=[look,width,state].join('/'), closed=await read();geometry[key]=closed;
