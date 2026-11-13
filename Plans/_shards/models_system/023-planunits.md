@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L1400-L7586
 
-Source SHA256: `69f5bed57cd7eee0df3580a8811a098140d306bb4f3005759bb3304512d08765`
+Source SHA256: `2450820e22840f1cea0189821d2b80ceedad9d92513f96b75d38c7647161aaf0`
 
 ---
 
@@ -2882,7 +2882,7 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: |-
   The default media alias registry includes canonical image, video, and TTS aliases that resolve per the alias normalization rules and may be extended or overridden by users.
-  DL-479: users MAY add or override aliases in the one Model nicknames list, ai.models.model-alias, on Settings › Models › Presets and nicknames, for chat and media models; Media has no nickname setting of its own. A line is a nickname and its canonical provider_id/model_id, with no depth (presets hold depth), chosen with the shared chat model picker as an overlay; an exact typed name passes one small call before saving. The built-ins are listed in the same list, marked built in; a line whose normalized nickname matches one replaces it for lookup, and removing that line brings it back. The stored value holds only the person's own lines, default {}. A second nickname that normalizes the same as one already at that level, or one equal to an exact model id, is refused with the reason. A nickname never proves availability. Everywhere is home with optional This project lines and no Computer or Device value; each nickname resolves on its own, so a project's line wins for that nickname and Everywhere-only nicknames still apply in the project. The retired media.image.model-aliases box is a compatibility read: own entries merge at the same level, entries equal to a built-in drop, a Computer-level entry is shown once for review and never applied silently, and on a clash the Model nicknames entry is kept and the other listed.
+  DL-479: users MAY add or override aliases in the one Model nicknames list, ai.models.model-alias, on Settings › Models › Presets and nicknames, for chat and media models; Media has no nickname setting of its own. A line is a nickname and its canonical provider_id/model_id, with no depth (presets hold depth), chosen with the shared chat model picker as an overlay; an exact typed name passes one small call before saving. The built-ins are listed in the same list, marked built in; a line whose normalized nickname matches one replaces it for lookup, and removing that line brings it back. The stored value holds only the person's own lines, default {}. A second nickname that normalizes the same as one already at that level, or one equal to an exact model id, is refused with the reason. A nickname never proves availability. Everywhere is home with optional This project lines and no Computer or Device value; each nickname resolves on its own, so a project's line wins for that nickname and Everywhere-only nicknames still apply in the project. The retired media.image.model-aliases box is a compatibility read: own entries merge at the same level; an entry drops only when its normalized nickname and resolved canonical model both equal a shipped built-in pair (the same nickname with another model is the person's override and merges, and an unresolvable model is listed for review); a Computer-level entry is shown once for review and never applied silently, and on a clash the Model nicknames entry is kept and the other listed.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.

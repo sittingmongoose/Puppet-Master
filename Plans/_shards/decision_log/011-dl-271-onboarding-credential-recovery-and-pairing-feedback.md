@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L32521
+Source lines: L28747-L32522
 
-Source SHA256: `a545b1397fef3aca16d88f231659062f5d7233ee8e10515c4392973b0934d8fb`
+Source SHA256: `9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f`
 
 ---
 
@@ -3732,7 +3732,7 @@ canonical_text: |-
   Jared answered "One nickname list (Recommended)". The option read, verbatim: "One "Model nicknames" list for chat and media models. Each line is a nickname plus the model it means, chosen with the shared model picker. Typing a nickname in chat still works. Replaces both current rows."
   The accepted design is one row, ai.models.model-alias, "Model nicknames", on Settings › Models › Presets and nicknames, for chat and media models. A line is a nickname and the model it means, stored as the canonical provider_id/model_id with no depth; presets, not nicknames, hold a model plus depth (Models_System §6.7). The model is chosen with the shared chat model picker as an overlay under the same rules as a model row: an exact typed name passes one small call before saving. The Models_System §6.8 built-ins are listed in the same list, marked built in; a line whose normalized nickname matches one replaces it for lookup, and removing that line brings the built-in back. The stored value holds only the person's own lines; the default is {}.
   Behaviour: nicknames normalize per §6.7. A second nickname that normalizes the same as one already in the list at that level is refused with the reason, and so is a nickname that equals an exact model id, because it would hide that model. A nickname never proves the model is available (§6.8). Everywhere is home and a project may differ; Computer is not offered (same_for_you) and Device is not offered (not_about_the_screen). Each nickname resolves on its own, expressed with the existing per_item combine keyed by the normalized nickname under SSYS-059: a project's line wins for that nickname, and nicknames set only Everywhere still apply in the project. Typing a nickname in chat still works. A value saved in the row's former shape (one nickname kept inside a model's record) reads as that model's line Everywhere, under the same refusals.
-  Behaviour: media.image.model-aliases retires into retired_input_ids and compatibility_reads in settings_inventory.json, replacement ai.models.model-alias, with omit_retired_key, explain_retirement and omit_with_notice. Its read rule merges the person's own entries at the same level (Everywhere or This project), drops entries equal to a built-in, shows a Computer-level entry once for review and never applies it silently, and on a clash keeps the Model nicknames entry and lists the other. The six settings snapshot enums swap media.image.model-aliases for ai.models.model-alias. Search, All Settings, transfer, Reset and census derive their active admission from the inventory.
+  Behaviour: media.image.model-aliases retires into retired_input_ids and compatibility_reads in settings_inventory.json, replacement ai.models.model-alias, with omit_retired_key, explain_retirement and omit_with_notice. Its read rule merges the person's own entries at the same level (Everywhere or This project), drops an entry only when its normalized nickname and resolved canonical model both equal a shipped built-in pair (the same nickname with another model is the person's override and merges, and an unresolvable model is listed for review), shows a Computer-level entry once for review and never applies it silently, and on a clash keeps the Model nicknames entry and lists the other. The six settings snapshot enums swap media.image.model-aliases for ai.models.model-alias. Search, All Settings, transfer, Reset and census derive their active admission from the inventory.
   Wording: this entry records Jared's batch 4 answer; it does not reseal governance or claim native runtime proof.
 gui_related: true
 gui_classification_reason: Owns the visible Model nicknames list, its refusals, levels, compatibility disclosure, Settings
@@ -3747,6 +3747,7 @@ acceptance_criteria:
 - Jared's item 4 words, the lead's question, his answer and the option text are preserved verbatim.
 - Exactly one active Model nicknames row exists, ai.models.model-alias, Everywhere with optional This project lines, resolved per nickname, default {}.
 - media.image.model-aliases is retired with a compatibility read whose replacement is ai.models.model-alias; it gains no new writer.
+- The compatibility read drops only an exact built-in pair, so nano banana naming gemini-2.5-flash-image drops as redundant while nano banana naming another model is the person's override and merges.
 - A nickname never proves availability; duplicates after normalization and nicknames equal to an exact model id are refused with the reason.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py validate-settings-layering

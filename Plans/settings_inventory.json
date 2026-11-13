@@ -40833,7 +40833,7 @@
       "replacement_ids": [
         "ai.models.model-alias"
       ],
-      "read_rule": "DL-479 folds the Media Model nicknames box into the one Model nicknames list, ai.models.model-alias. Merge the person's own entries into that list at the same level (Everywhere or This project), normalizing nicknames per Models §6.7, and drop entries equal to a built-in nickname. A Computer-level entry has no level in the new list: show it once for review and never apply it silently. On a clash (the same normalized nickname naming a different model), keep the Model nicknames entry and list the other. An entry the list would refuse is listed with the reason, never applied.",
+      "read_rule": "DL-479 folds the Media Model nicknames box into the one Model nicknames list, ai.models.model-alias. Merge the person's own entries into that list at the same level (Everywhere or This project), normalizing nicknames per Models §6.7, and drop an entry only when its normalized nickname and its resolved canonical model both equal a shipped built-in pair (Models §6.8); the same nickname naming another model is the person's own override and merges like any other entry, and an entry whose model can't be resolved unambiguously is listed for review, never dropped or applied silently. A Computer-level entry has no level in the new list: show it once for review and never apply it silently. On a clash (the same normalized nickname naming a different model), keep the Model nicknames entry and list the other. An entry the list would refuse is listed with the reason, never applied.",
       "write_policy": "omit_retired_key",
       "search_policy": "explain_retirement",
       "transfer_policy": "omit_with_notice",
