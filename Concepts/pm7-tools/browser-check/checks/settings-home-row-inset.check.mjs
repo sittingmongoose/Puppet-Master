@@ -130,6 +130,27 @@ async function sized(t, f, w, h) {
 	return Math.abs(vp.iw - w) <= 2 && Math.abs(vp.ih - h) <= 2 ? null : `inner ${vp.iw}x${vp.ih}`;
 }
 
+/* Notifications intentionally cover controls below the bell (Jared, 2026-10-30). Dismiss showing cards through
+   their own close buttons before aiming at Page options: hovering a covered target otherwise holds the toast's
+   timer. Keep the drawer and row assertions unchanged; this is ordinary visible setup, not a product override. */
+async function clearShowingNotifications(t, f, cell) {
+	for (let n = 0; n < 10; n++) {
+		await f.waitForFunction(() => !document.querySelector('#rsStage .pmn-toast.pmn-entering'), null, { timeout: 5000 });
+		const card = await f.evaluate(() => {
+			const c = [...document.querySelectorAll('#rsStage .pmn-toast:not(.pmn-leaving):not(.pmn-flying)')]
+				.find((e) => e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true }));
+			return c ? { id: c.getAttribute('data-pmn-id'), title: c.querySelector('.pmn-title')?.textContent || '' } : null;
+		});
+		if (!card) return;
+		const selector = `#rsStage .pmn-toast[data-pmn-id=${JSON.stringify(card.id)}]`;
+		await f.locator(`${selector} .pmn-x`).click({ timeout: 5000 });
+		t.log(`${cell}: dismissed showing notification through its close control: ${card.title}`);
+		await f.waitForFunction((id) => ![...document.querySelectorAll('#rsStage .pmn-toast')]
+			.some((c) => c.getAttribute('data-pmn-id') === id && !c.classList.contains('pmn-leaving') && !c.classList.contains('pmn-flying')), card.id, { timeout: 5000 });
+	}
+	throw new Error(`${cell}: notifications kept arriving while preparing Page options`);
+}
+
 /* General › page options › "Show all explanations". Up to three tries, each logged: in one of about 80 drawer steps
    on 076e30eda7 (sandbox, Basic Light, after the 1280 -> 1920 resize) General's page options never showed within 18 s
    and the step threw before measuring. Returns the try that opened the drawer, or 0. */
@@ -137,6 +158,7 @@ async function openExplanations(t, f, cell) {
 	const rowsShown = () => f.waitForFunction(() => [...document.querySelectorAll('#panel-settings .panel-card > .setup-row')].some((r) => r.checkVisibility()), null, { timeout: 8000 }).then(() => true).catch(() => false);
 	for (let n = 1; n <= 3; n++) {
 		await f.evaluate(() => window.PM51.go('general', 'app-input'));
+		await clearShowingNotifications(t, f, cell);
 		const opt = f.locator('#pm-settings-root [data-action="page-options"]').first();
 		const item = f.getByText('Show all explanations', { exact: true }).first();
 		const ok = await opt.waitFor({ state: 'visible', timeout: 6000 }).then(() => opt.click({ timeout: 5000 }))
