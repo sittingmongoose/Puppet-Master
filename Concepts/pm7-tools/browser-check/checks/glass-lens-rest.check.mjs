@@ -3,11 +3,10 @@
 // only while it moves or is pressed. Its live SVG backdrop filter (url(#lgf..) saturate(..), glass.js mount) was kept
 // while it rested, the largest single Glass cost (lane E, 2026-11-11). Read in the page, per animation frame (a probe:
 // the pixel proof of the hand-over is separate, see the lane G report):
-//   rest     every lens with a box, after the page has settled and every lens animation has ended, computes no
-//            url() backdrop filter, and none in the page keeps one inline; the only resting backdrop filter is the
-//            Activity bar icon lens's plain saturate(1.12) and, while it shows, the hover bead's plain saturate(1.1)
-//            (the lead's R2, 2026-11-13: each keeps the tint its filter gave it, so it comes to rest with no tint
-//            step), and every other lens computes none;
+//   rest     every lens with a box, after the page has settled and every lens animation has ended, has exactly the
+//            plain saturate its live filter carries (1.1; the Activity icon lens 1.12; the bead only while it shows)
+//            and no url() filter, computed or inline: today's tint without the bend, on any host and wallpaper (the
+//            lead's round 2 ruling, 2026-11-13; R2 had begun it for the icon lens and the bead);
 //   press    for every laid-out lens whose strip takes a press: the pointer goes down on the nearest other item and is
 //            held 1.1 s, then moves off the item (across the strip, so no scrub starts) and is released, which abandons
 //            the press: the lens travels there and back. Every frame of either travel, and every frame the press is held,
@@ -55,11 +54,13 @@ const PROBE = () => {
 		{ sel: '#pm-settings-root nav.page-index-card', items: '.pm51-index-group > .index-link', vertical: true },
 		{ sel: '#pm-settings-root nav.manager-tabs', items: '.manager-tab' }
 	];
-	/* the coloured hosts (the lead's round 2, C, from lane G's measurement over the default print and over Prism at the
-	   0.35 transparency floor): strips whose lens keeps a plain saturate(1.1) at rest, so it comes to rest with no tint
-	   step (STRIPS restSat in glass.js) */
-	const TINT_STRIPS = ['#sidePanelSlot .pm-segtab', '#pmuNav', '#pm-o55-onboarding .o55-seg', '#themeMenu .pm6-tt-modes', '#pm-settings-root .rail-scroll', '#pm-settings-root nav.workspace-tabs'];
+	/* round 2, C, made uniform (the lead, 2026-11-13 20:04Z: which host steps depends on the wallpaper and the
+	   transparency): at rest every lens keeps the plain saturate its live filter carries (1.1; the icon lens 1.12) and
+	   drops only the url() bend; the bead keeps its tint while it shows; a chip drawn under its labels (Settings'
+	   segmented choices) never has a filter */
 	const STRIP_REST = 'saturate(1.1)';
+	const restWant = (l) => l.classList.contains('lg-bead') ? (l.classList.contains('on') ? BEAD_REST : 'none')
+		: l.closest('lg-under, .lg-lenses-under') ? 'none' : l.getAttribute('data-lg-lens') === 'lensIcon' ? ICON_REST : STRIP_REST;
 	const box = (e) => { const r = e.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; };
 	const shown = (e) => { const r = e.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return false; try { return e.checkVisibility({ visibilityProperty: true }); } catch (x) { return true; } };
 	/* the strip whose item lies under a lens's centre (null for none) */
@@ -102,15 +103,14 @@ const PROBE = () => {
 						if (this.laid(l)) {
 							laid++;
 							const f = getComputedStyle(l).backdropFilter, icon = l.getAttribute('data-lg-lens') === 'lensIcon';
-							const beadOn = l.classList.contains('lg-bead') && l.classList.contains('on'), st = l.classList.contains('lg-bead') ? null : stripOf(l), tinted = !!st && TINT_STRIPS.includes(st);
-							if (f && f !== 'none' && !mv && (/url\(/.test(f) || !((icon && f === ICON_REST) || (beadOn && f === BEAD_REST) || (tinted && f === STRIP_REST)))) bad.set(l, { ...desc(l, i), filter: f, strip: st, opacity: getComputedStyle(l).opacity });
-							const seen = !mv && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden';
+							const want = restWant(l), seen = !mv && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden';
+							if (!mv && (f || 'none') !== want) bad.set(l, { ...desc(l, i), filter: f, want, strip: stripOf(l), opacity: getComputedStyle(l).opacity });
 							if (icon && seen) icons.set(l, { ...desc(l, i), filter: f });
-							if (tinted && seen) tints.set(l, { ...desc(l, i), strip: st, filter: f });
+							if (seen && want === STRIP_REST) tints.set(l, { ...desc(l, i), strip: stripOf(l), filter: f });
 						}
 						const s = l.style.getPropertyValue('backdrop-filter'), sv = s.replace(/\s/g, '');
-						const stI = s && !l.classList.contains('lg-bead') ? stripOf(l) : null;
-						if (s && !mv && (/url\(/.test(s) || !((l.getAttribute('data-lg-lens') === 'lensIcon' && sv === ICON_REST) || (stI && TINT_STRIPS.includes(stI) && sv === STRIP_REST)))) inl.set(l, { ...desc(l, i), inline: s });
+						/* inline: never a url() at rest; a plain saturate only where the rest wants one (the bead's comes from CSS) */
+						if (s && !mv && (/url\(/.test(s) || l.classList.contains('lg-bead') || sv !== restWant(l))) inl.set(l, { ...desc(l, i), inline: s });
 					});
 					if (++n < frames) requestAnimationFrame(tick);
 					else resolve({ lenses: all.length, laid, movers, bent: [...bad.values()], inline: [...inl.values()], icons: [...icons.values()], tints: [...tints.values()] });
@@ -243,11 +243,11 @@ async function restCheck(t, f, tag, { W, H }) {
 	const s = await f.evaluate(() => window.__g.settle());
 	const r = await f.evaluate(() => window.__g.rest());
 	await t.check(`rest: the page has settled and shows a lens ${tag}`, s.settled && r.laid >= 1, JSON.stringify({ ...s, lenses: r.lenses, laid: r.laid, movers: r.movers }));
-	await t.check(`rest: no laid-out lens bends what is under it, and only the Activity icon lens keeps a plain saturate ${tag}`, r.bent.length === 0, JSON.stringify({ laid: r.laid, bent: r.bent.length, eg: r.bent.slice(0, 4) }));
-	await t.check(`rest: no lens in the page keeps a url() filter, nor any filter but the icon lens's saturate, while still ${tag}`, r.inline.length === 0, JSON.stringify({ lenses: r.lenses, inline: r.inline.length, eg: r.inline.slice(0, 3) }));
+	await t.check(`rest: every laid-out resting lens has exactly its plain saturate and no url() (1.1, the icon lens 1.12, the bead only while it shows) ${tag}`, r.bent.length === 0, JSON.stringify({ laid: r.laid, wrong: r.bent.length, eg: r.bent.slice(0, 4) }));
+	await t.check(`rest: no lens in the page keeps a url() filter inline, nor a tint other than its own, while still ${tag}`, r.inline.length === 0, JSON.stringify({ lenses: r.lenses, inline: r.inline.length, eg: r.inline.slice(0, 3) }));
 	if (r.icons.length) await t.check(`rest: the Activity icon lens rests with its saturate(1.12) and no url() filter ${tag}`, r.icons.every((x) => x.filter === 'saturate(1.12)'), JSON.stringify(r.icons));
-	/* C: a lens on a coloured host rests with its plain saturate(1.1), today's tint, so it comes to rest with no step */
-	if (r.tints.length) await t.check(`rest: a lens on a coloured host (${[...new Set(r.tints.map((x) => x.strip))].join(', ')}) rests with its plain saturate(1.1) ${tag}`, r.tints.every((x) => x.filter === 'saturate(1.1)'), JSON.stringify(r.tints.map((x) => ({ strip: x.strip, filter: x.filter }))));
+	/* C: a shown lens rests with its plain saturate(1.1), today's tint without the bend, on any host and any wallpaper */
+	if (r.tints.length) await t.check(`rest: every shown lens (${[...new Set(r.tints.map((x) => x.strip || 'unlisted'))].join(', ')}) rests with its plain saturate(1.1) ${tag}`, r.tints.every((x) => x.filter === 'saturate(1.1)'), JSON.stringify(r.tints.map((x) => ({ strip: x.strip, filter: x.filter }))));
 	return r;
 }
 
@@ -557,7 +557,8 @@ async function appPart(t, surface, W, H) {
 		await t.app.look('basic-dark'); await t.page.waitForTimeout(1500);
 		const basic = await f.evaluate(() => window.__g.rest());
 		const anyF = await f.evaluate(() => window.__g.all().filter((l) => window.__g.laid(l) && getComputedStyle(l).backdropFilter !== 'none').length);
-		await t.check(`look: no lens carries any backdrop filter in Basic Dark ${look} ${surface}`, anyF === 0 && basic.inline.length === 0 && basic.bent.length === 0, JSON.stringify({ anyF, bent: basic.bent.slice(0, 3), inline: basic.inline.slice(0, 3) }));
+		const anyI = await f.evaluate(() => window.__g.all().filter((l) => l.style.getPropertyValue('backdrop-filter')).length);
+		await t.check(`look: no lens carries any backdrop filter in Basic Dark ${look} ${surface}`, anyF === 0 && anyI === 0, JSON.stringify({ anyF, anyI }));
 		await t.app.look(look); await t.page.waitForTimeout(2500);
 		await restCheck(t, f, `${look} back from Basic Dark ${surface}`, { W, H });
 	}
