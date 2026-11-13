@@ -2065,6 +2065,8 @@
   function syncStrip(cfg, strip, m) {
     syncStripNow(cfg, strip, m);
     if (cfg.under) { var L = lenses.get(strip); if (L) ownRest(L); }
+    /* PERF-4: a sync can end a press (the app chose, or it was abandoned) with nothing else moving the lens */
+    var LL = lenses.get(strip); if (LL && LL.lens.__lgLive) lensLive(LL);
   }
   /* B6 packet 1 (2026-10-16): a sync of many strips read each one after the previous one's lens writes (a new lens, its
      strip's mark, its box, its optics), so every strip paid a style and a layout pass of its own: 23 style + 22 layout
@@ -2493,8 +2495,10 @@
     });
   }, true);
   document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { pressMark(L.pending, false); L.pending = null; queueSync(L.strip); } }); }, true);
-  /* PERF-4: a held press is over (after the two listeners above): a lens resting where it was sent stops bending */
-  function pressOver() { lenses.forEach(function (L) { if (L.lens.__lgLive) lensLive(L); }); }
+  /* PERF-4: a held press is over (after the two listeners above): a lens resting where it was sent stops bending. One
+     released off its item (away) stays live into the sync queued above, which sends it back (dropping the bend here
+     would leave it unbent for the frame or two between the two moves); that sync re-reads it (syncStrip) */
+  function pressOver() { lenses.forEach(function (L) { if (L.lens.__lgLive && !(L.pending && L.pending.away)) lensLive(L); }); }
   document.addEventListener('pointerup', pressOver, true);
   document.addEventListener('pointercancel', pressOver, true);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
