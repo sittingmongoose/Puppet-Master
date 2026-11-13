@@ -44,9 +44,13 @@ from pm_coordination_numbers import (
     decimal_integer,
     epoch_token,
     integer_slot_code,
+    retained_binding,
     retained_override_refused,
     retained_record_verifies,
+    retained_refusal,
     retained_retry_matches,
+    seal_original,
+    sealed_custody,
     timestamp_accepted,
 )
 from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z
@@ -1951,12 +1955,6 @@ def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     failures.extend(projection_timestamp_probe_failures(fixtures, accepts, profile_refuses, _Subclass, root))
     retained_good = json.dumps({"started_at_utc": leap, "date_time_profile": "event_record"}).encode()
     retained_bad = json.dumps({"observed_at_utc": "2026-09-25T24:00:00Z", "date_time_profile": "event_record"}).encode()
-    if not retained_record_verifies(retained_good) or retained_record_verifies(retained_bad) or not retained_override_refused():
-        fail("retained-profile", {
-            "good": retained_record_verifies(retained_good),
-            "bad": retained_record_verifies(retained_bad),
-            "override": retained_override_refused(),
-        })
     # The frozen verifier on a full EventRecord also checks the envelope times (DCO-N2).
     whole = json.dumps(record).encode()
     envelope_bad = {
@@ -1965,11 +1963,37 @@ def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         "occurred-feb-30": dict(record, occurred_at_utc="2026-02-30T04:00:00Z"),
         "occurred-missing": {key: item for key, item in record.items() if key != "occurred_at_utc"},
     }
-    if not retained_record_verifies(whole):
-        fail("retained-envelope-good", "the valid fixture record did not verify")
-    for name, changed in envelope_bad.items():
-        if retained_record_verifies(json.dumps(changed).encode()):
-            fail("retained-envelope/" + name, "the frozen verifier accepted a bad envelope time")
+    with sealed_custody():
+        # Composition, before any read (SP-1101, batch 2 fix 1): Storage sealed each of these originals with the
+        # SP-320 recipe it was written under. The bad ones are owner-invalid originals the frozen verifier refuses.
+        for sealed in [retained_good, retained_bad, whole] + [json.dumps(changed).encode() for changed in envelope_bad.values()]:
+            seal_original(sealed)
+        if not retained_record_verifies(retained_good) or retained_record_verifies(retained_bad) or not retained_override_refused():
+            fail("retained-profile", {
+                "good": retained_record_verifies(retained_good),
+                "bad": retained_record_verifies(retained_bad),
+                "override": retained_override_refused(),
+            })
+        if not retained_record_verifies(whole):
+            fail("retained-envelope-good", "the valid fixture record did not verify")
+        for name, changed in envelope_bad.items():
+            if retained_record_verifies(json.dumps(changed).encode()):
+                fail("retained-envelope/" + name, "the frozen verifier accepted a bad envelope time")
+        # The recipe comes only from the exact original's own sealed receipt: a valid SP-320 original with no
+        # receipt is unavailable, two receipts are ambiguous, and a receipt bound to another original refuses.
+        unsealed = json.dumps(dict(record, persisted_at_utc="2026-09-25T04:00:00.300000Z")).encode()
+        twice = json.dumps(dict(record, persisted_at_utc="2026-09-25T04:00:00.400000Z")).encode()
+        other = json.dumps(dict(record, persisted_at_utc="2026-09-25T04:00:00.500000Z")).encode()
+        seal_original(twice)
+        seal_original(twice, "coordination-sp320-string-array-v0")
+        seal_original(other, binding=retained_binding(hashlib.sha256(whole).hexdigest()))
+        expected = {"missing-receipt": (unsealed, "original_unavailable"), "ambiguous-receipt": (twice, "recipe_ambiguous"),
+                    "receipt-for-other-original": (other, "original_binding")}
+        for name, (original, reason) in expected.items():
+            if retained_refusal(original) != reason:
+                fail("retained-receipt/" + name, {"expected": reason, "got": retained_refusal(original)})
+    if retained_record_verifies(whole):
+        fail("retained-receipt/no-receipt-after-scope", "an original stayed sealed after its check")
     if not retained_retry_matches("coordination-sp320-string-array-v1", "ab" * 32, "ab" * 32):
         fail("retained-retry", "exact digest retry no longer resolves")
     if retained_retry_matches("forged-recipe", "ab" * 32, "ab" * 32):

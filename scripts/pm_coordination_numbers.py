@@ -229,7 +229,7 @@ def timestamps_match_sealed_profile(record_bytes: bytes) -> bool:
     return True
 
 
-def _retained_binding(digest: str) -> OriginalBinding:
+def retained_binding(digest: str) -> OriginalBinding:
     return OriginalBinding(
         storage_instance_id="coordination-retained",
         scope_kind="project",
@@ -243,48 +243,92 @@ def _retained_binding(digest: str) -> OriginalBinding:
     )
 
 
-def _retained_dispatcher(recipe: RecipeTuple, custody: OriginalCustody) -> RetainedDispatcher:
+# SP-1101 (batch 2 fix 1): the static stand-in for Storage's sealed write custody of retained coordination
+# originals. Each entry is the receipt Storage sealed with one exact original (keyed by the SHA-256 of its bytes):
+# that original's binding and the recipe it was written under. The writer or the composition seals an original
+# (seal_original) before any read of it; a read only looks it up and never adds to it. No receipt is
+# original_unavailable and more than one is recipe_ambiguous; neither falls back to the SP-320 recipe.
+SEALED_ORIGINALS: dict[str, list[tuple[OriginalBinding, str]]] = {}
+
+
+def seal_original(record_bytes: bytes, recipe_id: str = RECIPE_ID, binding: OriginalBinding | None = None) -> None:
+    """Writer/composition side: Storage seals an original with the recipe it was written under."""
+    digest = hashlib.sha256(record_bytes).hexdigest()
+    SEALED_ORIGINALS.setdefault(digest, []).append((binding or retained_binding(digest), recipe_id))
+
+
+class sealed_custody:
+    """Restore SEALED_ORIGINALS on exit, so originals a check seals never stay sealed for a later read."""
+
+    def __enter__(self) -> None:
+        self._saved = {digest: list(entries) for digest, entries in SEALED_ORIGINALS.items()}
+
+    def __exit__(self, *exc: object) -> None:
+        SEALED_ORIGINALS.clear()
+        SEALED_ORIGINALS.update(self._saved)
+
+
+class _SealedOwner:
+    """The original owner over SEALED_ORIGINALS: the sealed binding and recipe of the exact original read."""
+
+    def __init__(self, record_bytes: bytes) -> None:
+        self.record_bytes = record_bytes
+
+    def authenticated_original(self, original_ref: str) -> OriginalCustody:
+        if original_ref != "coordination-retained":
+            raise Refusal("original_query")
+        receipts = SEALED_ORIGINALS.get(hashlib.sha256(self.record_bytes).hexdigest(), [])
+        if not receipts:
+            raise Refusal("original_unavailable")
+        if len(receipts) != 1:
+            raise Refusal("recipe_ambiguous")
+        binding, recipe_id = receipts[0]
+        body = self.record_bytes
+        return OriginalCustody(binding, recipe_tuple(resource_sha256(recipe_id.encode("utf-8"))), body, body, body)
+
+
+def _installed_recipe() -> RecipeTuple:
+    return recipe_tuple(resource_sha256(RECIPE_ID.encode("ascii")))
+
+
+def _retained_dispatcher(record_bytes: bytes) -> RetainedDispatcher:
+    recipe = _installed_recipe()
+
     def verify(item: OriginalCustody) -> bool:
-        if item.recipe is not recipe:
+        if item.recipe != recipe:
             return False
         if SEALED_TIMESTAMP_PROFILE != COORDINATION_UTC_Z:
             return False
         return timestamps_match_sealed_profile(item.record_bytes)
 
-    class _Owner:
-        def authenticated_original(self, original_ref: str) -> OriginalCustody:
-            if original_ref != "coordination-retained":
-                raise Refusal("original_query")
-            return custody
+    return RetainedDispatcher(_SealedOwner(record_bytes), {recipe: FrozenRecipe(verify)})
 
-    return RetainedDispatcher(_Owner(), {recipe: FrozenRecipe(verify)})
+
+def retained_refusal(record_bytes: bytes) -> str | None:
+    """SP-1101: the sealed receipt of this exact original selects the frozen SP-320 recipe, whose verifier checks
+    the timestamp fields with coordination_utc_z; None when it resolves, else the refusal reason."""
+    if type(record_bytes) is not bytes:
+        return "original_query"
+    try:
+        _retained_dispatcher(record_bytes).resolve(
+            "coordination-retained", retained_binding(hashlib.sha256(record_bytes).hexdigest()),
+            disclose=lambda _binding: True)
+    except Refusal as refusal:
+        return refusal.reason
+    return None
 
 
 def retained_record_verifies(record_bytes: bytes) -> bool:
-    """SP-1101: one frozen recipe verifies timestamp fields with coordination_utc_z."""
-    if type(record_bytes) is not bytes:
-        return False
-    recipe = recipe_tuple(resource_sha256(RECIPE_ID.encode("ascii")))
-    digest = hashlib.sha256(record_bytes).hexdigest()
-    binding = _retained_binding(digest)
-    custody = OriginalCustody(binding, recipe, record_bytes, record_bytes, record_bytes)
-    try:
-        _retained_dispatcher(recipe, custody).resolve(
-            "coordination-retained", binding, disclose=lambda _binding: True)
-    except Refusal:
-        return False
-    return True
+    """SP-1101: True only when the original's own sealed receipt selects the frozen recipe and it verifies."""
+    return retained_refusal(record_bytes) is None
 
 
 def retained_override_refused() -> bool:
     """A caller profile or recipe override is not a selector."""
-    recipe = recipe_tuple(resource_sha256(RECIPE_ID.encode("ascii")))
     body = b"{}"
-    binding = _retained_binding("a" * 64)
-    custody = OriginalCustody(binding, recipe, body, body, body)
     try:
-        _retained_dispatcher(recipe, custody).resolve(
-            "coordination-retained", binding, disclose=lambda _binding: True,
+        _retained_dispatcher(body).resolve(
+            "coordination-retained", retained_binding(hashlib.sha256(body).hexdigest()), disclose=lambda _binding: True,
             recipe_override=SEALED_TIMESTAMP_PROFILE)
     except Refusal as refusal:
         return refusal.reason == "caller_recipe_override"
@@ -292,19 +336,30 @@ def retained_override_refused() -> bool:
 
 
 def retained_retry_matches(recipe_id: str | None, stored_digest: str, presented_digest: str) -> bool:
-    """SP-1101 lookup: only the frozen SP-320 recipe can replay an exact original digest."""
+    """SP-1101 retry: the dedupe record the writer stored with the original at append is that original's sealed
+    receipt, and its recipe_id is the only selector. Only the frozen SP-320 recipe can replay an exact original
+    digest; a missing or other recipe id refuses, never falling back to SP-320."""
     if recipe_id != RECIPE_ID or type(stored_digest) is not str or stored_digest != presented_digest:
         return False
     if len(stored_digest) != 64:
         return False
-    recipe = recipe_tuple(resource_sha256(RECIPE_ID.encode("ascii")))
-    binding = _retained_binding(stored_digest)
+    recipe = _installed_recipe()
+    binding = retained_binding(stored_digest)
     # No timestamp fields: the digest match is the retry. The same verifier
     # refuses a record whose timestamp fields miss the sealed profile.
     body = b"{}"
-    custody = OriginalCustody(binding, recipe, body, body, body)
+
+    class _ReceiptOwner:
+        def authenticated_original(self, original_ref: str) -> OriginalCustody:
+            if original_ref != "coordination-retained":
+                raise Refusal("original_query")
+            return OriginalCustody(binding, recipe_tuple(resource_sha256(recipe_id.encode("utf-8"))), body, body, body)
+
+    def verify(item: OriginalCustody) -> bool:
+        return item.recipe == recipe and timestamps_match_sealed_profile(item.record_bytes)
+
     try:
-        _retained_dispatcher(recipe, custody).resolve(
+        RetainedDispatcher(_ReceiptOwner(), {recipe: FrozenRecipe(verify)}).resolve(
             "coordination-retained", binding, disclose=lambda _binding: True)
     except Refusal:
         return False
