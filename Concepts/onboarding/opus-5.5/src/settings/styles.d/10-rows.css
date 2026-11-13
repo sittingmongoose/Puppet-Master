@@ -14,7 +14,9 @@
 #panel-settings .setting-row.o55-row .setting-description { margin-top: 3px; font-size: 12px; line-height: 1.45; color: var(--k3-text-3); max-width: 68ch; }
 #panel-settings .setting-row.o55-row .setting-control { display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; max-width: min(420px, 52vw); }
 #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) 30px; }
-#panel-settings .setting-row.o55-row.is-wide .setting-control { grid-column: 1 / 2; grid-row: 2; justify-content: flex-start; max-width: none; }
+/* FO-173 round 4: a control under its label takes the whole row, the About column too (its About sits on the label's
+   line; scoped rows built without one leave that cell empty), as .pm51-settings-inline already does. */
+#panel-settings .setting-row.o55-row.is-wide .setting-control { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; max-width: none; }
 #panel-settings .setting-row.o55-row.is-wide .o55-about { grid-column: 2; grid-row: 1; }
 #panel-settings .o55-changed { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 650; letter-spacing: .02em; color: var(--k3-accent-ink); }
 #panel-settings .o55-changed i { width: 6px; height: 6px; border-radius: 50%; background: var(--k3-accent); box-shadow: 0 0 0 3px var(--k3-accent-soft); }
@@ -112,7 +114,7 @@
 /* ---- narrow hosts ---------------------------------------------------------------------------------------------- */
 @container settings-host (max-width: 760px) {
   #panel-settings .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) 30px; }
-  #panel-settings .setting-row.o55-row .setting-control { grid-column: 1 / 2; grid-row: 2; justify-content: flex-start; max-width: none; }
+  #panel-settings .setting-row.o55-row .setting-control { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; max-width: none; }
   #panel-settings .setting-row.o55-row .o55-about { grid-column: 2; grid-row: 1; }
   #panel-settings .o55-chips { justify-content: flex-start; }
   #panel-settings .o55-row .pm51-dd-trigger { min-width: 0; width: 100%; max-width: 100%; }
@@ -180,6 +182,13 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
    value breaks inside a word only when its own cap is narrower than the word. */
 #panel-settings .setting-control > .o55-value-with { display: flex; flex-wrap: wrap; align-items: center; justify-content: inherit; gap: 8px; min-width: 0; max-width: 100%; }
 #panel-settings .o55-value-with > .pm51-row-value { overflow-wrap: break-word; }
+/* FO-173 round 4: a one-word value (PM51.rows and PM51.valueWith mark it pm51-row-word: a path, an address) is placed by
+   its whole width, never by its last soft break: a path breaks after its hyphen ('.puppet-' / 'master/artifacts/
+   exports', Linux mono at 860), so its least width is shorter than the word. Its 40ch cap goes too (Retro's
+   'node_modules/.bin/typescript-language-server' is 330px against 300px), so it breaks inside only where the whole
+   control is narrower. */
+#panel-settings .pm51-row-value.pm51-row-word { max-width: 100%; }
+#panel-settings .pm51-detail .pm51-row-control > .pm51-row-value.pm51-row-word { flex-basis: auto; }
 /* FO-173: once a row puts its control under its label, nothing sits beside the value but its own button, so the value's
    40ch cap (there so a value beside its label leaves the label room) gives way to the row: in Retro's monospace at 740px
    Pyright's "node_modules/.bin/typescript-language-server" is 330px, 40ch is 300px and the row is 596px. */
