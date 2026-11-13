@@ -851,7 +851,8 @@ def py_spec(f):
             out += [('scope_ref', k), ('scope_kind_const', k)]
         if '$ref' in prop:
             out.append(('ref', k))
-        if 'type' in prop:
+        if 'type' in prop and not ('enum' in prop and all(type(x) is str for x in prop['enum']) and prop['type'] == 'string'):
+            # (a string enum already refuses every non-string, so its type site is implied by the enum row: IMPLIED_SITES)
             out.append(('type', k))
             for kw in ('maxLength', 'pattern', 'minimum', 'enum', 'minItems', 'uniqueItems'):
                 if kw in prop:

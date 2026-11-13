@@ -13,6 +13,7 @@ the 19 retention cells against the decisions on main; and the shared NUMRULE cor
 (scripts/pm_w3g_numbers.py). Exit 0 only when everything agrees.
 """
 import argparse
+import collections
 import json
 import re
 import subprocess
@@ -75,6 +76,8 @@ IMPLIED = {
                       'every string the minLength 1 site refuses (the empty string) the pattern row refuses first'),
     'minLength_hex': ('pattern', 'the pattern ^[0-9a-f]{64}$ requires 64 hex characters before the end, so every string '
                       'shorter than 64 (the minLength 64 site) the pattern row refuses first'),
+    'type_enum': ('enum', 'every value of the string enum is a string, so every non-string the type site refuses the enum row refuses '
+                  'too; the type site has no single-defect witness and is not a separate row'),
     'anyOf_null': ('anyOf_type', 'the null branch type site is one alternative of the anyOf type union row (string or '
                    'integer, or null); jsonschema refuses only when every branch refuses'),
 }
@@ -105,6 +108,8 @@ def schema_site_map():
                 prop = m.SCHEMAS[f]['$defs'][mt.group(1)]['properties'][k]
                 if tail == 'minLength':
                     target = ('implied', 'minLength_hex' if prop.get('minLength') == 64 else 'minLength_ref')
+                elif tail == 'type' and f'type.{k}' not in rows and 'enum' in prop:
+                    target = ('implied', 'type_enum')
                 elif tail in ('type', 'const', 'maxLength', 'pattern', 'minimum', 'enum', 'minItems', 'uniqueItems'):
                     target = rows.get(f'{tail}.{k}')
                 elif tail == 'anyOf/0/type':
@@ -232,6 +237,128 @@ def resolver_checks():
     return out
 
 
+def _line_of(path, start, *keys):
+    """Line of the first `"key"` after `start`, following keys in order (the payload schemas are pretty-printed)."""
+    lines = (ROOT / path).read_text().split('\n')
+    i = start
+    for key in keys:
+        while i < len(lines) and f'"{key}"' not in lines[i]:
+            i += 1
+        if i == len(lines):
+            raise AssertionError((path, keys))
+        i += 1
+    return i
+
+
+def _code_line(path, text):
+    lines = (ROOT / path).read_text().split('\n')
+    hits = [n for n, line in enumerate(lines, 1) if text in line]
+    assert len(hits) == 1, (path, text, hits)
+    return hits[0]
+
+
+def implied_sites(sites):
+    """Every schema site not credited as a row: its keyword and field, the row that always refuses first and the proof
+    with path:line (schema site and checker evaluation)."""
+    ev = 'scripts/pm_w3g_events.py'
+    code = dict(form=_code_line(ev, "obs['form_exclusive'] = inline or external"),
+                decodes=_code_line(ev, "obs['pack_decodes'] = not p_ok or"),
+                kw=_code_line(ev, "if kw in ('const', 'type', 'maxLength', 'pattern', 'minimum', 'enum', 'minItems', 'uniqueItems', 'minLength'):"),
+                anyof=_code_line(ev, "elif kw == 'anyOf_type':"), items=_code_line(ev, "elif kw == 'items_pattern':"),
+                enumskip=_code_line(ev, "if 'type' in prop and not ('enum' in prop"))
+    out = []
+    for s in sites:
+        if not s['implied']:
+            continue
+        f = s['family']
+        path = m.FAM[f]['payload_path']
+        mt = re.fullmatch(r'#/\$defs/(\w+)/(.*)', s['site'])
+        sel, rest = mt.group(1), mt.group(2)
+        sel_line = _line_of(path, 0, sel)
+        rows = {r[1]: r for r in m.py_rows(f)}
+        kind = s['implied']
+        if kind == 'root_type':
+            line = _line_of(path, sel_line - 1, 'type')
+            out.append(dict(family=f, selector=sel, site=s['site'], keyword='type: object', field='(payload root)',
+                            row='pf PF01_form_exclusive (inline) / PF07_pack_decodes (SP-337)', kind=kind,
+                            proof=f'{path}:{line} requires an object; {ev}:{code["form"]} admits only an inline object body or a '
+                                  f'payload:v1 reference and {ev}:{code["decodes"]} requires the decoded pack body to be an object, '
+                                  'so no non-object payload reaches the selector'))
+            continue
+        k = rest.split('/')[1]
+        tail = '/'.join(rest.split('/')[2:])
+        prop_line = _line_of(path, sel_line, 'properties', k)
+        prop = m.SCHEMAS[f]['$defs'][sel]['properties'][k]
+        if kind in ('minLength_ref', 'minLength_hex'):
+            branch = prop['anyOf'][0] if tail.startswith('anyOf') else prop['items'] if tail.startswith('items') else prop
+            keys = ('anyOf',) if tail.startswith('anyOf') else ('items',) if tail.startswith('items') else ()
+            ml = _line_of(path, prop_line - 1, *keys, 'minLength')
+            pl = _line_of(path, prop_line - 1, *keys, 'pattern')
+            target = rows.get(f'anyOf_pattern.{k}' if tail.startswith('anyOf') else f'items_pattern.{k}' if tail.startswith('items')
+                              else f'pattern.{k}')
+            out.append(dict(family=f, selector=sel, site=s['site'], keyword=f'minLength: {branch["minLength"]}', field=k,
+                            row=target[0], kind=kind,
+                            proof=f'{path}:{ml} minLength {branch["minLength"]} is implied by {path}:{pl} pattern '
+                                  f'{branch["pattern"]} (it needs at least {branch["minLength"]} characters before the end); the '
+                                  f'pattern row runs at {ev}:{code["items"] if tail.startswith("items") else code["kw"] if not tail.startswith("anyOf") else code["anyof"]}'))
+        elif kind == 'anyOf_null':
+            nl = _line_of(path, prop_line - 1, 'anyOf', 'null')
+            out.append(dict(family=f, selector=sel, site=s['site'], keyword='anyOf[1] type: null', field=k,
+                            row=rows[f'anyOf_type.{k}'][0], kind=kind,
+                            proof=f'{path}:{nl} is one alternative of the anyOf; the anyOf type row ({ev}:{code["anyof"]}) '
+                                  'requires the value to be of some branch type (string/integer or null), the only way the '
+                                  'null alternative can contribute to a refusal'))
+        elif kind == 'type_enum':
+            tl = _line_of(path, prop_line - 1, 'type')
+            el = _line_of(path, prop_line - 1, 'enum')
+            out.append(dict(family=f, selector=sel, site=s['site'], keyword='type: string', field=k, row=rows[f'enum.{k}'][0],
+                            kind=kind,
+                            proof=f'{path}:{tl} type string is implied by {path}:{el} enum, whose values are all strings, so '
+                                  f'every non-string the type site refuses the enum row refuses ({ev}:{code["kw"]}); the type '
+                                  f'row is not generated for string enums ({ev}:{code["enumskip"]})'))
+        else:
+            raise AssertionError(kind)
+    return out
+
+
+def implied_witnesses():
+    """One complete-checker case per implied kind: the implied keyword is enforced, refused first at its covering row."""
+    def pedit(changes):
+        return c._payload_edit(changes)
+
+    def bad_root_pack(w):
+        raw = m.storage_value_bytes([1], profile=m.EVENT_VALUE)
+        digest = m.blake3(raw).hexdigest()
+        w['storage']['packs'] = {digest: dict(bytes=raw, media_type=m.MEDIA, pack_synced=True, index_synced=True)}
+        w['stored']['payload_ref'] = 'payload:v1:' + digest
+
+    def root_inline(w):
+        w['stored']['payload'] = ['not', 'an', 'object']
+    gp = 'goal.paused'
+    cases = [
+        ('root_type (inline)', c.case('implied/root_type/inline', gp, 'project', m.A, c._row('pf', 'form_exclusive'), mut=root_inline)),
+        ('root_type (SP-337)', c.case('implied/root_type/ref', gp, 'project', m.A, c._row('pf', 'pack_decodes'), mut=bad_root_pack, form='ref')),
+        ('minLength_ref', c.case('implied/minLength_ref', gp, 'project', m.A, c._row('py_goal_paused', 'pattern.goal_id'),
+                                 mut=pedit({'goal_id': ''}))),
+        ('minLength_ref (anyOf branch)', c.case('implied/minLength_ref/anyOf', gp, 'project', m.A,
+                                                c._row('py_goal_paused', 'anyOf_pattern.active_run_ref'), mut=pedit({'active_run_ref': ''}))),
+        ('minLength_ref (items)', c.case('implied/minLength_ref/items', 'assistant_plan.completed', 'project', m.A,
+                                         c._row('py_assistant_plan_completed', 'items_pattern.completion_evidence_refs'),
+                                         mut=pedit({'completion_evidence_refs': ['']}))),
+        ('minLength_hex', c.case('implied/minLength_hex', gp, 'project', m.A, c._row('py_goal_paused', 'pattern.currentness_hash'),
+                                 mut=pedit({'currentness_hash': 'a' * 63}))),
+        ('anyOf_null', c.case('implied/anyOf_null', gp, 'project', m.A, c._row('py_goal_paused', 'anyOf_type.active_run_ref'),
+                              mut=pedit({'active_run_ref': 7.5}))),
+        ('type_enum', c.case('implied/type_enum', gp, 'project', m.A, c._row('py_goal_paused', 'enum.before_state'),
+                             mut=pedit({'before_state': 7}))),
+    ]
+    out = []
+    for kind, x in cases:
+        got, _w = c.run(x)
+        out.append(dict(kind=kind, case=x['id'], expected=x['expect'], got=got, ok=got is not None and tuple(got) == tuple(x['expect'])))
+    return out
+
+
 def git_show(rev, path):
     return subprocess.run(['git', '-C', str(ROOT), 'show', f'{rev}:{path}'], capture_output=True, text=True, check=True).stdout
 
@@ -304,10 +431,16 @@ def main():
     cells, bad_cells = retention_cells()
     guard_map, bad_guards = plan_guard_map()
     resolver = resolver_checks()
+    implied = implied_sites(sites)
+    implied_wit = implied_witnesses()
+    bad_implied = [w for w in implied_wit if not w['ok']] + ([] if len(implied) == sum(1 for x in sites if x['implied']) else ['count'])
     bad_resolver = [k for k, v in resolver.items() if v is False]
     phases = m.all_phases()
     result = dict(
-        status='pass' if not (failures or missing or unmapped or bad_cells or bad_guards or bad_resolver or tables.returncode) else 'fail',
+        status='pass' if not (failures or missing or unmapped or bad_cells or bad_guards or bad_resolver or bad_implied
+                              or tables.returncode) else 'fail',
+        implied_sites=implied, implied_site_count=len(implied), implied_witnesses=implied_wit,
+        implied_by_kind=dict(collections.Counter(x['kind'] for x in implied)),
         resolver_checks=resolver,
         plan_guards=len(guard_map), plan_guard_problems=bad_guards,
         tables_current=tables.returncode == 0, tables=tables.stdout.strip(),
@@ -330,7 +463,7 @@ def main():
     text = json.dumps(result, indent=1, sort_keys=True, default=str)
     if args.json:
         args.json.write_text(text + '\n')
-    brief = {k: v for k, v in result.items() if k not in ('per_family', 'failures', 'retention_cells', 'entailed_proofs',
+    brief = {k: v for k, v in result.items() if k not in ('per_family', 'failures', 'retention_cells', 'entailed_proofs', 'implied_sites',
                                                           'family_row_not_applicable', 'implied_reasons', 'timestamp_fields')}
     if 'numbers' in brief:
         brief['numbers'] = {k: v for k, v in result['numbers'].items() if k in ('status', 'counts', 'mismatch_count', 'crash_count')}

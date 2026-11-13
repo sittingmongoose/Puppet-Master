@@ -79,7 +79,9 @@ def collect(progress=None):
             if not refused:
                 slot['controls'].setdefault(key, dict(id=f'control/{table}/{len(slot["controls"])}', value=observed,
                                                       boundary=boundary, source=x['id']))
-            elif first is not None and first[0] == table:
+            elif first is not None and first[0] == table and x['id'].startswith('neg/'):
+                # only the per-row single-defect witnesses are tool negatives; extra and entailment-demonstration cases
+                # are complete-checker expectations (pm-w3g-event-contracts), not single-row witnesses
                 row, code = refused[0]
                 slot['negatives'].setdefault(key, dict(id=f'negative/{table}/{len(slot["negatives"])}', value=observed,
                                                        target=row, code=code, rows=[n for n, _ in refused],
