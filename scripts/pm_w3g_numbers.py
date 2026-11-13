@@ -8,7 +8,7 @@ lane owns:
 
 - payload/<slot>: each payload integer slot of the selected selector, written into the stored payload and
   its native fact together (refinish re-derives every copy and commitment); checked through every table
-  except the family owner tables (fx_/en_<family>), whose before/after owner relations are fixed to the base
+  except the family owner tables (fx_<family>_<n> and en_<family>_*), whose before/after owner relations are fixed to the base
   value and carry their own witnesses;
 - producer_sequence/append, /retry: EventRecord producer_sequence_id in the native source and the event,
   through the complete current append and an exact retry;
@@ -109,7 +109,7 @@ def route(w, exclude_family_tables=False):
         obs, _ = m.observe(w)
         slug = m.FAM[w['family']]['slug']
         for phase in m.order(w):
-            if exclude_family_tables and (phase == f'fx_{slug}' or phase.startswith(f'en_{slug}_')):
+            if exclude_family_tables and (phase.startswith(f'fx_{slug}_') or phase.startswith(f'en_{slug}_')):
                 continue
             first = m.refusal(phase, obs)
             if first is not None:

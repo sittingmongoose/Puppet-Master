@@ -900,12 +900,29 @@ def fx_rows(f):
     return rows
 
 
+CHUNK = 8   # rows per family table: the gated tool's proof cost grows with the cube of table size
+
+
+def chunked(prefix, rows):
+    """Consecutive chunks of at most CHUNK rows, in row order: <prefix>_1, <prefix>_2, ... The complete checker visits
+    them in this order, so the first-refusal order of the rows is unchanged."""
+    return [(f'{prefix}_{i + 1}', rows[i * CHUNK:(i + 1) * CHUNK]) for i in range((len(rows) + CHUNK - 1) // CHUNK)]
+
+
+def family_tables(f, kind):
+    slug = FAM[f]['slug']
+    rows = py_rows(f) if kind == 'py' else fx_rows(f)
+    return chunked(f'{kind}_{slug}', rows)
+
+
 def all_phases():
     phases = {k: (v[0], None, v[1]) for k, v in ROWS.items()}
     for f in FAMILIES:
         slug = FAM[f]['slug']
-        phases[f'py_{slug}'] = (f'{f} closed payload selector keywords ({FAM[f]["cv"]})', None, py_rows(f))
-        phases[f'fx_{slug}'] = (f'{f} native joins and owner predicates ({FAM[f]["owner_unit"]})', None, fx_rows(f))
+        for name, rows in family_tables(f, 'py'):
+            phases[name] = (f'{f} closed payload selector keywords ({FAM[f]["cv"]}), part {name.rsplit("_", 1)[1]}', None, rows)
+        for name, rows in family_tables(f, 'fx'):
+            phases[name] = (f'{f} native joins and owner predicates ({FAM[f]["owner_unit"]}), part {name.rsplit("_", 1)[1]}', None, rows)
         for n, r in enumerate(spec.DOMAIN[f], 1):
             if r.get('entailed'):
                 phases[entailed_phase(f, r)] = (f'Entailed: {f}:{r["suffix"]}', None, [
@@ -1364,15 +1381,16 @@ COMMON_ORDER = ('ad', 'sc', 'pf')
 
 
 def order(w):
-    slug = FAM[w['family']]['slug']
     b = w['boundary']
-    seq = COMMON_ORDER + (f'py_{slug}', 'en', 'nm', 'tm', 'src', 'pj', 'ej', 'en_scope_kind', 'sj')
+    seq = COMMON_ORDER + tuple(n for n, _ in family_tables(w['family'], 'py')) + ('en', 'nm', 'tm', 'src', 'pj', 'ej',
+                                                                                  'en_scope_kind', 'sj')
     if b in CUR:
         seq += ('wr',)
     seq += ('id', 'st')
     if b == RT:
         seq += ('ry',)
-    seq += (f'fx_{slug}',) + tuple(entailed_phase(w['family'], r) for r in spec.DOMAIN[w['family']] if r.get('entailed'))
+    seq += tuple(n for n, _ in family_tables(w['family'], 'fx')) + tuple(
+        entailed_phase(w['family'], r) for r in spec.DOMAIN[w['family']] if r.get('entailed'))
     if b in (HI, RS):
         seq += ('rr', 'en_original_verified', 'rd')
     if b == RS:

@@ -22,12 +22,31 @@ g = suites.g
 m = suites.m
 
 
+def reused(report_path, module_path, suite):
+    """The previous tool report of this table, if it still proves exactly this suite; otherwise None."""
+    if not report_path.exists():
+        return None
+    with gzip.open(report_path, 'rt') as handle:
+        report = json.load(handle)
+    source = hashlib.sha256(module_path.read_text().encode()).hexdigest()
+    files = report.get('static', {}).get('files', [])
+    same_module = [f['sha256'] for f in files] == [source]
+    same_cases = ([(c['id'], c['sha256']) for c in report.get('controls', [])] == [(c.id, g.digest(c.value)) for c in suite.controls]
+                  and [(n['id'], n['sha256']) for n in report.get('negatives', [])] ==
+                  [(n.id, g.digest(n.value)) for n in suite.negatives])
+    if report.get('status') == 'PASS' and same_module and same_cases:
+        return report
+    return None
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--table', action='append')
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--collect-only', action='store_true')
-    parser.add_argument('--resume', action='store_true', help='keep the tables a previous run in --out already finished')
+    parser.add_argument('--resume', action='store_true',
+                        help='reuse a finished table report in --out only if it is PASS, its table module SHA-256 is unchanged '
+                             'and every control and negative (id, tool digest) equals the current suite')
     parser.add_argument('--negative-limit', type=int, default=2)
     parser.add_argument('--control-limit', type=int, default=4)
     parser.add_argument('--max-rss', type=int, default=1900)
@@ -48,18 +67,8 @@ def main():
                    negative_limit=args.negative_limit, control_limit=args.control_limit, suites=[])
     gate = g.MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, 30, 2700)
     bad = bool(findings)
-    done = {}
-    if args.resume and (args.out / 'summary.json').exists():
-        previous = json.loads((args.out / 'summary.json').read_text())
-        if previous.get('source_sha256') == inputs:
-            done = {e['table']: e for e in previous['suites'] if 'tool_status' in e or e['negatives'] == 0}
     for table in m.all_phases():
         if args.table and table not in args.table:
-            continue
-        if table in done:
-            summary['suites'].append(done[table])
-            bad = bad or done[table].get('tool_status', 'PASS') != 'PASS' or bool(done[table]['lane_matrix'])
-            print(f'{table} kept from the previous run', file=sys.stderr, flush=True)
             continue
         slot = collected[table]
         rows = [name for name, _, _ in suites.table_rows(table)]
@@ -76,12 +85,15 @@ def main():
         suite = suites.suite_for(table, slot, args.negative_limit, args.control_limit) if negatives and controls else None
         if not args.collect_only and suite is not None:
             path = root / f'scripts/{suites.TABLE_PREFIX}{table}.py'
-            stops = [e for e in g.prescan_sources(path) if e['kind'] in g.STATIC_STOP_KINDS]
-            t = time.monotonic()
-            report = g.run(suite, memory=gate) if not stops else g.prescan_report(stops)
             name = f'{table}.json.gz'
-            with gzip.open(args.out / name, 'wt') as handle:
-                handle.write(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+            t = time.monotonic()
+            report = reused(args.out / name, path, suite) if args.resume else None
+            entry['reused_previous_report'] = report is not None
+            if report is None:
+                stops = [e for e in g.prescan_sources(path) if e['kind'] in g.STATIC_STOP_KINDS]
+                report = g.run(suite, memory=gate) if not stops else g.prescan_report(stops)
+                with gzip.open(args.out / name, 'wt') as handle:
+                    handle.write(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
             rows_report = report.get('rows', [])
             entry.update(tool_status=report['status'], seconds=round(time.monotonic() - t, 1),
                          evaluations=report.get('evaluations'), tool_controls=len(suite.controls),

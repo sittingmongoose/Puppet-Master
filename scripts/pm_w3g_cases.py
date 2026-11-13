@@ -17,9 +17,13 @@ A, RT, HI, RS = m.A, m.RT, m.HI, m.RS
 
 
 def _row(phase, field):
-    for r in m.all_phases()[phase][2]:
-        if r[1] == field:
-            return (phase, r[0], r[3])
+    """(table, row, code) of an observation field in a common phase, or in one chunk of a family prefix py_/fx_<slug>."""
+    phases = m.all_phases()
+    names = [phase] if phase in phases else [n for n in phases if n.startswith(phase + '_') and n[len(phase) + 1:].isdigit()]
+    for name in names:
+        for r in phases[name][2]:
+            if r[1] == field:
+                return (name, r[0], r[3])
     raise KeyError((phase, field))
 
 
@@ -184,7 +188,7 @@ def py_negatives(f, scope):
     for row, field, *_ in m.py_rows(f):
         kw, _, k = field.partition('.')
         k = k or None
-        expect = (phase, row, m.PY_CODE)
+        expect = _row(phase, field)
         if kw == 'closed':
             mut = _payload_edit({'unexpected_member': 'x'})
         elif kw == 'required':
@@ -446,7 +450,7 @@ def fx_negatives(f, scope):
                 'enum' in m.SCHEMAS[f]['$defs']['ProjectPayloadV1']['properties'][k]:
             alt = next(x for x in m.SCHEMAS[f]['$defs']['ProjectPayloadV1']['properties'][k]['enum'] if x != payload[k])
         for b in (A, HI):
-            out.append(case(f'neg/{f}/{scope}/{b}/join.{k}', f, scope, b, (phase, r[0], r[3]), mut=_payload_edit({k: alt})))
+            out.append(case(f'neg/{f}/{scope}/{b}/join.{k}', f, scope, b, _row(phase, f'join.{k}'), mut=_payload_edit({k: alt})))
     for d in spec.DOMAIN[f]:
         variant, kind, changes = d['neg']
         if d.get('entailed'):
@@ -455,7 +459,7 @@ def fx_negatives(f, scope):
             kwd = 'enum' if d['kind'] == 'inn' else 'const'
             prow = next(r for r in m.py_rows(f) if r[1] == f'{kwd}.{field}')
             out.append(case(f'entailed/{f}/{scope}/append/dom.{d["suffix"]}', f, scope, A,
-                            (f'py_{m.FAM[f]["slug"]}', prow[0], prow[3]), variant=variant, neg=(kind, changes)))
+                            _row(f'py_{m.FAM[f]["slug"]}', prow[1]), variant=variant, neg=(kind, changes)))
             continue
         r = rows[f'dom.{d["suffix"]}']
         if (f, variant) in spec.HISTORY_ONLY_VARIANTS:
@@ -472,7 +476,7 @@ def fx_negatives(f, scope):
             elif kind == 'payload_jcs':
                 from pm_event_numbers import qualified_jcs
                 mut = _payload_edit({k: hashlib.sha256(qualified_jcs(v)).hexdigest() for k, v in changes.items()})
-            out.append(case(f'neg/{f}/{scope}/{b}/dom.{d["suffix"]}', f, scope, b, (phase, r[0], r[3]), mut=mut, **kw))
+            out.append(case(f'neg/{f}/{scope}/{b}/dom.{d["suffix"]}', f, scope, b, _row(phase, f'dom.{d["suffix"]}'), mut=mut, **kw))
     return out
 
 
