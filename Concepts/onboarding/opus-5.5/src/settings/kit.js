@@ -186,7 +186,9 @@ PM51.empty = (title, copy, action) => `<div class="empty-state pm51-empty"><div>
    line, so the value keeps room for its longest word (FO-173). The row's control itself does not wrap, so a dropdown
    and its neighbour elsewhere keep their one line. */
 PM51.valueWith = (text, btn, cls) => `<span class="o55-value-with"><span class="pm51-row-value${cls ? ' ' + a(cls) : ''}">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}</span>`;
-PM51.kv = pairs => `<div class="pm51-kv">${pairs.filter(Boolean).map(([k, v]) => `<div class="pm51-kv-row"><span>${h(k)}</span><span>${v == null ? '—' : h(String(v))}</span></div>`).join('')}</div>`;
+/* A value with no space in it (a path, an address, a fingerprint) is one word: it goes beside its key whole or takes a
+   line of its own (FO-173: "Backups/Puppet-Master" broke after its hyphen in a 131px column with a 263px row). */
+PM51.kv = pairs => `<div class="pm51-kv">${pairs.filter(Boolean).map(([k, v]) => { const t = v == null ? '—' : String(v); return `<div class="pm51-kv-row"><span>${h(k)}</span><span${/\s/.test(t.trim()) ? '' : ' class="pm51-kv-word"'}>${h(t)}</span></div>`; }).join('')}</div>`;
 PM51.note = (text, tone) => `<p class="pm51-note${tone ? ' tone-' + a(tone) : ''}">${icon(tone === 'attention' ? 'alert' : 'info')}<span>${h(text)}</span></p>`;
 PM51.field = (label, control, help) => `<label class="pm51-field"><span class="pm51-field-label">${h(label)}</span>${control}${help ? `<span class="pm51-field-help">${h(help)}</span>` : ''}</label>`;
 PM51.initials = name => String(name || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
