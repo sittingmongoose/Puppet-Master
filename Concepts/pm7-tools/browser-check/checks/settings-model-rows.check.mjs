@@ -52,8 +52,10 @@ const TOKEN = /^(inherit|default|none|auto|null|undefined)$/i;
 const SIZES = '1920x1080,740x900';
 
 /* ---------- reaching a row ---------------------------------------------------------------------------------------- */
+let SIZE = [1920, 1080];   // the cell's size, set by the matrix (a narrow cell picks an ability where its list shows)
 async function press(t, f, sel, what) {
-	const loc = f.locator(sel).first();
+	/* the first one shown; a link a narrow Settings folds away (the chapter rail) is not pressed: the page is there */
+	const loc = f.locator(sel).filter({ visible: true }).first();
 	if (!(await loc.count())) return false;
 	await loc.scrollIntoViewIfNeeded().catch(() => {});
 	await loc.click({ timeout: 8000 }).catch((e) => t.log(`press ${what || sel}: ${e.message.split('\n')[0]}`));
@@ -119,13 +121,13 @@ async function reach(t, f, id) {
 	if (place.startsWith('media:') || place === 'vision') {
 		const route = place === 'vision' ? 'image-understanding' : place.slice(6);
 		await goPage(t, f, 'ai', 'media', 'abilities');
-		/* a narrow Settings folds the abilities' list away: Show list first */
+		/* a narrow Settings folds the abilities' list into a drawer: the ability is picked where the list shows (1920),
+		   then the cell's own size is back before its model field is opened and judged */
 		const rowSel = `#pm-settings-root .pm51-roster .resource-row[data-id="${route}"]`;
-		if (!(await f.locator(rowSel).first().isVisible().catch(() => false))) {
-			const toggle = f.locator('#pm-settings-root .pm51-roster-toggle:visible').first();
-			if (await toggle.count()) { await toggle.click().catch(() => {}); await t.settle(); }
-		}
+		const narrow = !(await f.locator(rowSel).first().isVisible().catch(() => false));
+		if (narrow) { await t.viewport(1920, 1080); await t.page.waitForTimeout(400); }
 		await press(t, f, rowSel, route);
+		if (narrow) { await t.viewport(SIZE[0], SIZE[1]); await t.page.waitForTimeout(500); }
 		if (place === 'vision') {
 			await press(t, f, `#pm-settings-root [data-action="pm51-media-fallbacks"][data-route="${route}"]`, 'If that fails, use › Edit');
 			const mine = f.locator('#panel-settings .pm51-panel [data-action="pm51-media-vision-mode"][data-value="choose a specific model"]').first();
@@ -266,6 +268,7 @@ export const tests = {
 			for (const [w, h] of sizes) {
 				const cell = `${look} ${w}x${h}`;
 				await t.step(cell, async () => {
+					SIZE = [w, h];
 					await settingsAt(t, f, w, h);
 					await guardPaintedLook(t, f, look, cell);
 					for (const id of ROWS(t)) {
