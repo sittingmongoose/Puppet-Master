@@ -314,6 +314,8 @@ function chatPageUrl(t) {
 		p = path.join(t.run.dir, 'chat56-fo128.html');
 		if (!fs.existsSync(p)) execFileSync('python3', [fileURLToPath(new URL('../../../chat-assistant-concepts/5.6 Pro/build.py', import.meta.url)), '--out', p], { stdio: 'pipe' });
 	}
+	// An http(s) chat page (a --host run serving the build) passes through as-is; only a local path becomes file://
+	if (/^https?:/i.test(p)) return p + (p.includes('?') ? '&' : '?') + 'cb=' + Date.now();
 	return pathToFileURL(path.resolve(p)).href + '?cb=' + Date.now();
 }
 async function captureCase(t, surface) {

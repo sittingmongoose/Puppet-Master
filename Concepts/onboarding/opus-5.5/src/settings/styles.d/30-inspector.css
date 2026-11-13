@@ -108,7 +108,7 @@
 .pm51-popout-item.o55-pick-item.has-dot { grid-template-columns: 16px minmax(0, 1fr) 16px; }
 .pm51-popout-item.o55-pick-item[hidden], .o55-pick-group[hidden] { display: none; }
 .o55-pick-item .o55-pick-copy strong { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; font-size: 12px; font-weight: 650; line-height: 1.3; color: inherit; }
-.o55-pick-item .o55-pick-copy small { font-size: 10.5px; font-weight: 500; color: var(--text-muted, #8f8ab0); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.o55-pick-item .o55-pick-copy small { font-size: 11px; font-weight: 500; color: var(--text-muted, #8f8ab0); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .o55-pick-item.has-why .o55-pick-copy small { white-space: normal; }
 .o55-pick-tick { display: grid; place-items: center; color: var(--accent-primary); }
 .o55-pick-tick .icon { width: auto; height: auto; }

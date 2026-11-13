@@ -49,6 +49,22 @@ async function reveal(t, f, id) {
 	await t.page.waitForTimeout(400);
 	return f.locator(`[id="setting-${id}"]`).first();
 }
+// true when the page's own build-validated placement retires this row (the public
+// PM51.placement.audit().retiredIds; the raw PM51_PLACEMENT constant is private to the page's closure):
+// such a row is drawn nowhere. A row that exists is never skipped; it runs every original assertion.
+async function retired(f, id) {
+	return f.evaluate((i) => {
+		const a = window.PM51 && PM51.placement && typeof PM51.placement.audit === 'function' ? PM51.placement.audit() : null;
+		const ids = a && Array.isArray(a.retiredIds) ? a.retiredIds : null;
+		const live = !!(window.PM51 && PM51.placement && PM51.placement.byId && PM51.placement.byId[i]);
+		return !!(ids && ids.includes(i) && !live);
+	}, id);
+}
+async function notRetired(t, f, id) {
+	if (!(await retired(f, id))) return true;
+	await t.check(`${id} is retired by the build's placement (retire_ids), so this case is not applicable`, true, 'retired: drawn nowhere');
+	return false;
+}
 async function tab(t, f, ws, label) {
 	const b = f.locator(`${BODY(ws)} .pm51-tabs .manager-tab`, { hasText: new RegExp(`^\\s*${label}\\s*$`) }).first();
 	await b.scrollIntoViewIfNeeded();
@@ -485,8 +501,7 @@ for (const surface of ['normal', 'sandbox']) {
 	T('memory 7 fade times name each kind', async (t) => {
 		const f = await settings(t, surface);
 		// FO-167: the row waits in Advanced Settings until Plans retires it; once retired it is drawn nowhere
-		const placed = await f.evaluate(() => !!(PM51.placement.byId && PM51.placement.byId['memory.retention.half-life-by-kind']));
-		if (!placed) { await t.check('the fade-time row is retired (drawn nowhere, as the quiet Memory design asks)', true); return; }
+		if (!(await notRetired(t, f, 'memory.retention.half-life-by-kind'))) return;
 		const row = await reveal(t, f, 'memory.retention.half-life-by-kind');
 		const btn = row.locator('.o55-struct, button').first();
 		await btn.scrollIntoViewIfNeeded();
@@ -504,8 +519,8 @@ for (const surface of ['normal', 'sandbox']) {
 		// FO-167 (2026-11-12): upkeep runs on its own (PACKET: no rebuild, merge, recheck or prune workbench), so the
 		// memory.retention.maintenance row's button, drawn in Advanced Settings until Plans retires it, explains that
 		const f = await settings(t, surface);
-		const placed = await f.evaluate(() => !!(PM51.placement.byId && PM51.placement.byId['memory.retention.maintenance']));
-		if (!placed) { await t.check('the Tidy up row is retired (drawn nowhere, as the quiet Memory design asks)', true); return; }
+		// "Tidy up memories" is the memory.retention.maintenance row's own button; once retired it is drawn nowhere
+		if (!(await notRetired(t, f, 'memory.retention.maintenance'))) return;
 		const row = await reveal(t, f, 'memory.retention.maintenance');
 		const open = row.locator('button', { hasText: /Tidy up memories/ }).first();
 		await open.scrollIntoViewIfNeeded();

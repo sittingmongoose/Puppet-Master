@@ -1004,11 +1004,29 @@
       requestAnimationFrame(function () { moveInk(false); });
     });
   }
+  /* The live counters on the Artifacts and Tests shelves keep counting, but write only while their row is drawn. A
+     shelf that is not open has no box, and the write into it still restyled the page once a second each, woke the
+     page's DOM watchers and drew a frame at rest (lane A, 2026-11-10: 2 of the 35-55 main frames a second at rest on
+     Home and Settings). The row's ResizeObserver hears it get a box again and writes the count before that frame is
+     painted, so a counter never shows a stale value. It starts unshown: the observer reports a row that is drawn at
+     once and stays silent for one that is not. */
+  function liveCounter(el, n) {
+    var row = el.closest('div') || el.parentElement, shown = false, stale = true;
+    function put() { stale = false; var v = n.toFixed(1) + 's'; if (el.textContent !== v) el.textContent = v; }
+    if (window.ResizeObserver && row) {
+      new ResizeObserver(function (en) {
+        var r = en[en.length - 1].contentRect;
+        shown = r.width > 0 || r.height > 0;
+        if (shown && stale) put();
+      }).observe(row);
+    } else shown = true;
+    setInterval(function () { if (document.hidden) return; n += 1; if (shown) put(); else stale = true; }, 1000);
+  }
   function wireTickers() {
     var art = byId('artLiveElapsed');
-    if (art) { var s1 = 18; setInterval(function () { if (document.hidden) return; s1 += 1; art.textContent = s1.toFixed(1) + 's'; }, 1000); }
+    if (art) liveCounter(art, 18);
     var tst = byId('tstLiveElapsed');
-    if (tst) { var s2 = 41; setInterval(function () { if (document.hidden) return; s2 += 1; tst.textContent = s2.toFixed(1) + 's'; }, 1000); }
+    if (tst) liveCounter(tst, 41);
   }
 
   /* ================= 6. File Manager machinery ================= */

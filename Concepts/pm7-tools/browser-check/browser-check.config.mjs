@@ -37,7 +37,7 @@ export default (ctx) => {
 				const silent = window.__bcSilent = { routed: 0 };
 				const AN = window.AudioNode && window.AudioNode.prototype;
 				if (AN && window.AudioDestinationNode) {
-					const connect = AN.connect, quiet = new WeakMap();
+					const connect = AN.connect, disconnect = AN.disconnect, quiet = new WeakMap();
 					AN.connect = function (dest, ...rest) {
 						if (dest instanceof window.AudioDestinationNode && dest.context && !(window.OfflineAudioContext && dest.context instanceof window.OfflineAudioContext)) {
 							let g = quiet.get(dest);
@@ -48,9 +48,21 @@ export default (ctx) => {
 						}
 						return connect.call(this, dest, ...rest);
 					};
+					// The reroute must keep disconnect's own semantics: disconnect(destination) translates to the
+					// quiet gain it actually went through (ASTRA-L1C-K1), so it neither throws InvalidAccessError
+					// nor leaks the direct wire back in; the index forms pass through the same way.
+					AN.disconnect = function (dest, ...rest) {
+						if (dest instanceof window.AudioDestinationNode && quiet.has(dest)) return disconnect.call(this, quiet.get(dest), ...rest);
+						return disconnect.call(this, dest, ...rest);
+					};
 				}
 				const ME = window.HTMLMediaElement && window.HTMLMediaElement.prototype;
-				if (ME) { const play = ME.play; ME.play = function (...a) { this.muted = true; return play.apply(this, a); }; }
+				if (ME) {
+					const play = ME.play; ME.play = function (...a) { this.muted = true; return play.apply(this, a); };
+					// A native start (the autoplay attribute) never calls play(): catch it as it begins, on the
+					// capture-phase play event every media element fires, and mute it there too (ASTRA-L1C-K2).
+					document.addEventListener('play', (e) => { if (e.target instanceof window.HTMLMediaElement) e.target.muted = true; }, true);
+				}
 			});
 	};
 	return {
@@ -61,8 +73,8 @@ export default (ctx) => {
 		failedRequests: { fail: false },
 		// Silent by default (Jared, 2026-11-10: test runs on his PC played the onboarding sounds). Every frame of every
 		// context, sandboxed ones included, routes live Web Audio output (not offline renders) through a gain of 0 just before the speakers and
-		// mutes media elements. The audio engine itself still runs: contexts, unlock, logs, taps and analysers ahead of
-		// the destination behave as before, so sound checks keep measuring. `--set audible=1` restores the speakers.
+		// mutes media elements (a JS play() at the call, a native autoplay start at its play event). The audio engine itself still runs: contexts, unlock, logs, taps and analysers
+		// ahead of the destination behave as before, so sound checks keep measuring. `--set audible=1` restores the speakers.
 		prepareContext: async (t, context) => { await silence(context); },
 		beforeEach: async (t) => { await silence(t.context); },
 		helpers: {
@@ -103,10 +115,19 @@ export default (ctx) => {
 				const ok = family === 'nier' ? got.nier && got.theme.endsWith('-' + mode) : !got.nier && got.theme === name;
 				return t.check(`look ${name} applied`, ok, `data-theme ${got.theme}, NieR ${got.nier ? 'on' : 'off'}`);
 			},
-			// Home panels write localStorage on unload: block that and clear, so the next load starts from defaults (the
-			// sandbox has no storage to clear)
+			// Home panels write localStorage as the page goes away (pagehide, which fires once the document is already
+			// hidden): clear what they wrote and drop only the going-away window's writes, so saves the rest of the
+			// page's life still work (OPUS-FO163-T1: with setItem a no-op for good, the FO-163 reset flows could not
+			// verify a single write). The sandbox has no storage to clear.
 			async resetLayout(t) {
-				await t.root.evaluate(() => { Storage.prototype.setItem = () => {}; try { localStorage.clear(); } catch (e) { /* the sandbox: no storage */ } });
+				await t.root.evaluate(() => {
+					const proto = Storage.prototype, orig = proto.setItem;
+					if (typeof orig === 'function' && !orig.__pmResetLayout) {
+						proto.setItem = function (k, v) { return document.visibilityState === 'hidden' ? undefined : orig.call(this, k, v); };
+						proto.setItem.__pmResetLayout = true;
+					}
+					try { localStorage.clear(); } catch (e) { /* the sandbox: no storage */ }
+				});
 			}
 		}
 	};

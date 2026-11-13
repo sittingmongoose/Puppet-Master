@@ -2648,10 +2648,17 @@
 /* Rounds 9-11: the ring lies in a frame laid on the bar's scroll box, which clips it there (clip-path: inset(0)) as the
    bar clips the tiles, on the compositor while the bar scrolls (opus-recheck-f96i F3: round 9's script clip trailed a fast
    wheel by 1 to 19 frames). The frame is the bar's border box less the bar's top and bottom borders: none, but Liquid
-   Glass's 1 px sheet border (glass.css). The ring never reaches the bar's sides. */
+   Glass's 1 px sheet border (glass.css). The ring never reaches the bar's sides.
+   The bar names the frame's anchor only while the focus is inside it (2026-11-10, performance): a frame anchored at
+   all times was laid out again after every whole-document layout and asked for one more frame each time, and a glyph
+   ticking anywhere on the page causes a whole-document layout, so at rest the two kept the main thread rendering a
+   frame on every refresh in every look (Chrome names it: layout invalidation of #d-abclip, 'Anchor positioning', once
+   a frame). Without its anchor the frame falls back to an empty box off the page, as the ring does without a
+   key-focused tile; :focus-within turns true in the style pass that gives the tile its own anchor name, so the frame
+   and the ring are placed in the same layout. */
 .d-abring, .d-abclip { display: none; }
 @supports (anchor-name: --d-abfocus) {
-  [data-rail-skin="d"] #activityBar { anchor-name: --d-abbar; }
+  [data-rail-skin="d"] #activityBar:focus-within { anchor-name: --d-abbar; }
   [data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]) .d-abclip {
     display: block; position: fixed; z-index: 2147483100; pointer-events: none; margin: 0; padding: 0; border: 0;
     position-anchor: --d-abbar; left: anchor(left, -99px); right: anchor(right, 100vw);

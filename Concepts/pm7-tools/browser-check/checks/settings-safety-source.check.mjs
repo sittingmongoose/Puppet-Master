@@ -326,6 +326,51 @@ for (const surface of ['normal', 'sandbox']) {
 		await closeAll(t, f);
 	};
 
+	tests[`source FO-168: default access follows the remaining account (${surface})`] = async (t) => {
+		if (await skip(t)) return;
+		const f = await settings(t, surface);
+		await go(t, f, 'source', 'source-manager', 'services');
+		const B = body('source-manager');
+		await f.locator(`${B} .resource-row[data-id="github"]`).first().click().catch(() => {});
+		await t.page.waitForTimeout(300);
+		const gh = () => state(f, () => { const g = (PM12_KIMI.getState().sourceControl.forges || []).find((x) => x.id === 'github'); return JSON.parse(JSON.stringify({ status: g.status, accounts: g.accountNames, scopes: g.scopes, ssh: g.ssh, pushAccess: g.pushAccess, pushVia: g.pushVia ?? null, pushKeyId: g.pushKeyId ?? null })); });
+		const g0 = await gh();
+		// Add another account: the set-up window, by its own buttons (account-flows' recipe: a token, HTTPS, check, add)
+		const opened = await press(t, f, `${B} [data-action="pm51-source-connect"]`);
+		if (!(await t.check('Add another account opens its set-up', opened && (await f.locator('.o55g-primary').count()) > 0))) return;
+		await t.page.waitForTimeout(600);
+		await f.locator('[data-action="pm51-source-cw-how"][data-how="token"]').first().click();
+		await t.page.waitForTimeout(400);
+		await f.locator('.o55-cw-acct').fill('lab-review-switch');
+		await f.locator('.o55-cw-token').fill('ghp_exampleExampleExample0000');
+		await f.locator('.o55g-primary').click();
+		await t.page.waitForTimeout(800);
+		await f.locator('[data-action="pm51-source-cw-via"][data-via="https"]').first().click();
+		await t.page.waitForTimeout(800);
+		await f.locator('.o55g-primary').click();
+		await t.page.waitForTimeout(800);
+		await f.locator('[data-action="pm51-servers-key-check"]').first().click();
+		await t.page.waitForTimeout(800);
+		await f.locator('.o55g-primary').click();
+		await t.page.waitForTimeout(1400);
+		const g1 = await gh();
+		await t.check('the account was added', (g1.accounts || []).length === (g0.accounts || []).length + 1, `${(g0.accounts || []).join(', ')} → ${(g1.accounts || []).join(', ')}`);
+
+		// FO-168 / SOL-L2A-1: remove the original accounts individually, leaving the HTTPS account.
+		const originals = await f.locator(`${B} [data-action="pm51-source-account-disconnect"]`).evaluateAll(els => els.map(el => el.dataset.name).filter(n => n !== 'lab-review-switch'));
+		for (const name of originals) {
+			await f.locator(`${B} [data-action="pm51-source-account-disconnect"]`).filter({ hasText: 'Disconnect' }).and(f.locator(`[data-name="${name}"]`)).first().click();
+			await t.settle();
+		}
+		const remaining = await state(f, () => { const g = PM12_KIMI.getState().sourceControl.forges.find(x => x.id === 'github'); return { name: g.defaultAccount, accounts: g.accountNames, via: g.pushVia, key: g.pushKeyId, access: g.accountAccess }; });
+		await t.equal('FO-168 remaining HTTPS account is default', remaining.name, 'lab-review-switch');
+		await t.equal('FO-168 default uses remaining account access', remaining.via, 'https');
+		await go(t, f, 'source', 'source-manager', 'defaults');
+		const accessRow = f.locator(`${B} .pm51-row`).filter({ hasText: 'How Git signs in' });
+		const accessText = await accessRow.allTextContents();
+		await t.check('FO-168 Defaults & Safety shows HTTPS without the old SSH key', /HTTPS/.test(accessText.join(' ')) && !/SSH key/.test(accessText.join(' ')), JSON.stringify(accessText));
+	};
+
 	tests[`doctor: findings about other pages say what those pages say (${surface})`] = async (t) => {
 		if (await skip(t)) return;
 		const f = await settings(t, surface);

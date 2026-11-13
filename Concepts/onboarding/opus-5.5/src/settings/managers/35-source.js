@@ -85,6 +85,24 @@
     }
     return out.slice();
   };
+  /* Keep the service's access as a projection of its default account. Legacy accounts get a
+     snapshot before another account can become default; an unknown replacement never borrows its key. */
+  const rememberDefaultAccess = f => {
+    if (!connected(f) || !f.defaultAccount || f.defaultAccount === 'None') return;
+    f.accountAccess = f.accountAccess || {};
+    f.accountAccess[f.defaultAccount] = {
+      via: f.pushVia || 'ssh', keyId: f.pushKeyId || '', ssh: f.ssh,
+      checked: f.lastCheck, lastTest: f.lastTest, pushAccess: f.pushAccess, scopes: (f.scopes || []).slice()
+    };
+  };
+  const restoreDefaultAccess = f => {
+    const access = (f.accountAccess || {})[f.defaultAccount];
+    Object.assign(f, access ? {
+      pushVia: access.via, pushKeyId: access.keyId || '', ssh: access.ssh,
+      lastCheck: access.checked || '', lastTest: access.lastTest || 'Passed',
+      pushAccess: access.pushAccess || 'Ready', scopes: (access.scopes || []).slice()
+    } : { pushVia: '', pushKeyId: '', ssh: 'Not tested', lastCheck: '', lastTest: 'Not run', pushAccess: 'Not set up', scopes: [] });
+  };
   const statusLabel = f => connected(f) ? 'Connected' : f.status === 'needs-signin' ? 'Needs sign-in' : 'Not connected';
   const statusTone = f => connected(f) ? 'ready' : f.status === 'needs-signin' ? 'attention' : 'off';
   const hasSignIn = f => /oauth|sign-in|entra|app/i.test(f.auth || '');
@@ -212,7 +230,7 @@
     PM51.confirm(`Disconnect ${f.name}?`, `Puppet Master forgets the ${accs.length > 1 ? `${accs.length} accounts` : `${f.defaultAccount} account`} signed in here. Your repositories on ${f.name} are not touched.`, 'Disconnect', () => {
       /* the repositories stay where they are: keep each one's address before the account that named it is forgotten */
       repos().forEach(r => { if (!r.address && r.forge === f.name && r.forge !== 'Local') r.address = repoAddress(r); });
-      Object.assign(f, { status: 'not-connected', accounts: 0, accountNames: [], defaultAccount: 'None', scopes: [], ssh: 'Not tested', lastTest: 'Not run', pushAccess: 'Not set up', lastCheck: '' });
+      Object.assign(f, { status: 'not-connected', accounts: 0, accountNames: [], defaultAccount: 'None', accountAccess: {}, pushVia: '', pushKeyId: '', scopes: [], ssh: 'Not tested', lastTest: 'Not run', pushAccess: 'Not set up', lastCheck: '' });
       if (cfg().service === f.name) cfg().service = 'None';
       saveState(); refresh(); PM51.toast('Disconnected', f.name, 'warning');
     }, true);
@@ -478,10 +496,13 @@
   PM51.on('source-account-disconnect', el => {
     const f = byId(ds(el, 'id')), name = ds(el, 'name');
     if (!f || !name) return;
+    rememberDefaultAccess(f);
+    const previousDefault = f.defaultAccount;
     const names = accountList(f).filter(x => x !== name);
     if (!names.length) { disconnect(f); return; }
     Object.assign(f, { accountNames: names, accounts: names.length, defaultAccount: f.defaultAccount === name ? names[0] : f.defaultAccount });
     if (f.accountAccess) delete f.accountAccess[name];
+    if (previousDefault !== f.defaultAccount) restoreDefaultAccess(f);
     saveState(); refresh();
     PM51.toast('Account disconnected', `${name} is signed out of ${f.name}. ${names.length} account${names.length === 1 ? '' : 's'} left.`, 'warning');
   });
@@ -553,7 +574,7 @@
   function gitAccess(f) {
     if (!sys()) { PM51.toast('SSH keys are not available', 'Open Server & Project Location once, then try again.', 'info'); return; }
     sys().keyWizard({ target: gitTarget(f), keyId: pushKey(f) ? pushKey(f).id : '', refreshWith: () => { saveState(); refresh(); },
-      onDone: id => { Object.assign(f, { pushAccess: 'Ready', pushKeyId: id, pushVia: 'ssh', ssh: 'Healthy', lastTest: 'Passed' }); } });
+      onDone: id => { Object.assign(f, { pushAccess: 'Ready', pushKeyId: id, pushVia: 'ssh', ssh: 'Healthy', lastTest: 'Passed' }); rememberDefaultAccess(f); } });
   }
   function connectWizard(f, reauth) {
     const S = sys(), on = connected(f), browser = hasSignIn(f);
@@ -583,13 +604,14 @@
            starts it — and the count is drawn from the list, so the count and the names can never disagree.
            A legacy count (accounts: 2, no accountNames) already shows a placeholder slot; the add starts from
            those slots and appends. It never replaces them with defaultAccount alone, and never lowers the count. */
+        if (on) rememberDefaultAccess(f);
         const prior = on ? accountList(f) : [];
         const names = !on ? (d.account ? [d.account] : []) : (d.account && !prior.includes(d.account) ? prior.concat(d.account) : prior.slice());
         /* An added account joins the list and keeps its own Git access (accountAccess); the service's permissions,
            SSH state and push access stay the default account's, so adding one never rewrites them. A first connect or
            a reauthorize sets them, since that account is then the one used by default. */
         const adding = on && !reauth;
-        const access = { via: d.via, keyId, ssh: d.via === 'ssh' ? 'Healthy' : 'Not used', checked: 'Just now' };
+        const access = { via: d.via, keyId, ssh: d.via === 'ssh' ? 'Healthy' : 'Not used', checked: 'Just now', lastTest: 'Passed', pushAccess: 'Ready', scopes: ['Repository', 'Reviews', 'Automation'] };
         if (adding) {
           Object.assign(f, { status: 'active', accountNames: names, accounts: names.length, defaultAccount: names.includes(f.defaultAccount) && f.defaultAccount ? f.defaultAccount : names[0] });
           if (d.account) f.accountAccess = Object.assign({}, f.accountAccess || {}, { [d.account]: access });

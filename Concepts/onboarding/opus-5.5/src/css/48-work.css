@@ -26,8 +26,11 @@
 #pm7-work :is([data-tone="idle"], [data-tone="paused"]), [data-work-detail] :is([data-tone="idle"], [data-tone="paused"]), .wk-list :is([data-tone="idle"], [data-tone="paused"]) { --wk-t: var(--wk-idle); }
 
 /* ---- the category marks (X1): lit by status like the Activity bar's, the backlight a soft tail on the host ---- */
-.wk-g { position: relative; display: inline-grid; place-items: center; flex: none; isolation: isolate; }
-.wk-g > svg { width: 13px; height: 13px; color: var(--wk-idle); --nx-stroke-base: 2.2; --nx-tone-k: 1; --nx-hiv: visible; --nx-hi-a: var(--nx-h-quiet-i, .1); }
+/* an inline-block round one block svg: the box the inline-grid gave (shrink-wrapped to the svg, so the centring had
+   nothing to do; baseline the svg's bottom), but the svg is no longer a grid item, so the live mark's moving parts lay
+   out only the svg instead of the whole document from the top on every frame (lane A, 2026-11-10) */
+.wk-g { position: relative; display: inline-block; flex: none; isolation: isolate; }
+.wk-g > svg { display: block; width: 13px; height: 13px; color: var(--wk-idle); --nx-stroke-base: 2.2; --nx-tone-k: 1; --nx-hiv: visible; --nx-hi-a: var(--nx-h-quiet-i, .1); }
 .wk-g::before { content: ""; position: absolute; left: 50%; top: 50%; width: 220%; height: 220%; translate: -50% -50%; border-radius: 50%; z-index: -1;
   pointer-events: none; background: radial-gradient(closest-side, var(--wk-work), transparent); opacity: 0; }
 .wk-g[data-tone="working"] > svg { color: var(--wk-work); --nx-hi-a: var(--nx-h-working-i, .2); }

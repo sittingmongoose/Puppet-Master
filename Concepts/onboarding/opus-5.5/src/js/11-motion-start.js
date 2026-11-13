@@ -269,7 +269,10 @@
        judged: by the two rAF intervals after the step's frame (the first is where a GPU compile holds the next frame)
          and, for a GPU step, every interval of its watch, until 300 ms after its frame, since on the P1000 its programs
          link 100-350 ms after its frame, when the tiles raster (frameMs [d1, d2, worst later]); the next admission waits
-         for the watch, so links never stack across steps. Late (v3.9) is any of them over 100 ms, the acceptance bar;
+         for the watch, so links never stack across steps. The watch runs while a computer shows it is needed (pm7-perf
+         lane B): from the start and after any interval over the slow bar; after 16 watched steps in a row with every
+         interval on time (25 ms) a GPU step is judged by its two intervals, logged watched: false, until a slow
+         interval comes again. Late (v3.9) is any of them over 100 ms, the acceptance bar;
          slow is one over max(40 ms, 3x the median refresh) but not over 100 ms, logged 'slow': one program linked (45-84
          ms on the P1000) is warm then, so a slow step takes the clean path, and only ends a light chain and holds light
          steps to one a frame pair for 2 s. A cpu step (it makes no GPU work) keeps two intervals: in a long slot the two
@@ -279,7 +282,8 @@
        light (one kind, <= 2 ms of JS): judged by the one interval after it; the owner's next step, if light, may go in
          the next frame (one per frame) while that interval is under the slow bar, every gate holds, no frame was slow or
          late in the last 2 s and the chain is under
-         100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch.
+         100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch (while it is needed; else
+         the interval after its own).
        late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
          goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
          after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
@@ -293,9 +297,10 @@
      add({ owner, name, run, near, later, light, cpu, until, onLate }) -> id; cancel(id), cancelOwner(owner), state(owner?)
      { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
      last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also PM_WARM.log): the last 200
-     { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome }. 'pm-warm-done' on window when the queue
-     empties, at the session stop, and after an add skipped with nothing queued (warming off), so an owner that waits
-     for it never waits on a software-rendered computer */
+     { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome, watched: false on a GPU step judged without
+     its watch, watchReset: true on the first row after an interval that no row shows set the count of steady watches
+     back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
+     nothing queued (warming off), so an owner that waits for it never waits on a software-rendered computer */
   const warmFlag = (v) => { try { return new RegExp('(?:^|[?&])pm-warm=' + v + '(?:&|$)').test(location.search); } catch (_) { return false; } };
   const warmOff = warmFlag('0'), warmForce = warmFlag('force');
   /* softwareRendered() says false until its worker has answered, so only a known answer is kept (landing review IW-1) */
@@ -314,7 +319,8 @@
   let warmSeq = 0, warmLastOwner = '', warmTimer = 0, warmIdle = 0, warmBusy = false, warmRunning = null,
     warmBackoff = 0, warmUntil = 0, warmClean = 0, warmLateRun = 0, warmLateCount = 0, warmLateAt = -1e9,
     warmStops = 0, warmStopped = false, warmSession = false, warmStopTimer = 0, warmDoneTimer = 0,
-    warmInput = -1e9, warmWaitMs = 0, warmQuietSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '';
+    warmInput = -1e9, warmWaitMs = 0, warmQuietSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '',
+    watchClean = 0, watchResets = 0, watchUnseen = false;
   const listen = (t, fn) => window.addEventListener(t, fn, { capture: true, passive: true });
   ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => listen(t, () => { warmInput = performance.now(); }));
   /* shown again: the quiet clock starts again (review WQ5-3) */
@@ -394,7 +400,8 @@
   const lateMs = () => Math.max(40, 3 * median());
   const onTime = (d) => d <= 1.5 * median();
   const note = (d) => {
-    if (d > lateMs()) warmLateAt = performance.now();
+    /* over the slow bar: the watch is needed again (watchClean, below) */
+    if (d > lateMs()) { warmLateAt = performance.now(); watchClean = 0; watchResets++; }
     warmD1 = warmD2; warmD2 = d;
     warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
   };
@@ -416,7 +423,12 @@
   const LASTING = { hidden: 1, busy: 1, input: 1, pending: 1 };
   const quiet = () => { warmWhy = blocked(); if (LASTING[warmWhy]) warmQuietSince = performance.now(); return !warmWhy; };
   const logStep = (st, cpuMs, frameMs, late, outcome) => {
-    warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
+    const row = { owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome };
+    /* a GPU step judged without its watch (watching(), below) */
+    if (st.unwatched) row.watched = false;
+    /* the count of steady watches set back to zero by an interval no row shows (watchUnseen, at WATCH_KEEP below) */
+    if (watchUnseen) { row.watchReset = true; watchUnseen = false; }
+    warmLog.push(row);
     if (warmLog.length > 200) warmLog.shift();
   };
   const tell = (st, late, dropped) => {
@@ -500,7 +512,9 @@
     const vis = warmVis;
     requestAnimationFrame((tA) => requestAnimationFrame((tB) => requestAnimationFrame((tC) => {
       if (vis !== warmVis) { warmBusy = false; retry(); return; }
+      const r0 = watchResets;
       note(tB - tA); note(tC - tB);
+      if (watchResets !== r0) watchUnseen = true;   /* (no row shows these two: watchUnseen, at WATCH_KEEP below) */
       /* a frame off time is momentary: tried again in 250 ms, the wait not grown (v3.5 item 3) */
       if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; warmWake(250); return; }
       if (!quiet()) { warmBusy = false; if (!lookUp()) retry(); return; }
@@ -518,9 +532,32 @@
     return { cpu: performance.now() - c0, cleanup: typeof cleanup === 'function' ? cleanup : null };
   };
   const clean = (r) => { if (r.cleanup) { try { r.cleanup(); } catch (_) { /* none */ } } };
+  const WATCH_MS = 300, LATE_MS = 100;
+  /* the watch while a computer shows it is needed (pm7-perf lane B, 2026-11-11). Its frame loop makes the page draw a
+     main frame on every refresh for as long as GPU steps are queued, and they are queued for minutes after a load
+     (Usage's pass, then Glass's catalog: on the 3090 1,124 steps from +6 s to +317 s, 38 frames a step, 33 of them the
+     watch's; on the P1000 1,141 steps to +370 s). Where links land late (the P1000: 104 of 856 watched steps had a
+     40-100 ms interval only the watch saw) it spaces the steps, so their links never stack; where they do not, it only
+     costs frames. So it runs from the start, and again whenever the queue notes an interval over the slow bar (a step's
+     two, its watch's, the two admission frames'); once WATCH_KEEP watched GPU steps in a row came back with every
+     interval on time (STEADY_MS, or 1.5x the refresh on a slower display), a GPU step is judged by its two intervals
+     (a light chain's last by the two after it) and logged watched: false, until such a slow interval comes again. On
+     the P1000 the longest run of steady watches was 11 steps (three idle runs, 1,855 watched steps), so its watch stays;
+     on the 3090 812 of 838 watches were steady (runs up to 181), on the M3 all 772.
+     What the log says of it (for perf-warm-watch's replay; lane C3, the R1 review): a GPU step's row shows its own
+     intervals (frameMs; a watch by its worst), and two kinds of interval that also set watchClean back to zero show in
+     no row: the two frames looked at before a step is admitted (an admission attempt, admitted or not, writes no row),
+     and those of a step whose judging the page's hiding cut short (its row has frameMs null). When one of them was over
+     the slow bar, the next row logged, whatever it is (a step, or one 'skipped' or 'dropped' without frameMs), carries
+     watchReset: true: since the row before it, an interval over the slow bar that no row's frameMs shows set the count
+     of steady watches back to zero. Without it a replay of the log believed 16 steady watches still stood and called
+     the next, rightly watched, step needless. Only the log changes: watchResets counts every such reset, watchUnseen
+     holds the word until the next row */
+  const WATCH_KEEP = 16, STEADY_MS = 25;
+  const watching = () => watchClean < WATCH_KEEP;
+  const watched = (frameMs) => { watchClean = Math.max.apply(null, frameMs) <= Math.max(STEADY_MS, 1.5 * median()) ? watchClean + 1 : 0; };
   /* the watch after a GPU step (v3.5 item 1): the frames from the one at 'from' until 300 ms after the step's frame t;
      done(the worst of those intervals), or done(-1) when the page was hidden meanwhile */
-  const WATCH_MS = 300, LATE_MS = 100;
   const warmWatch = (t, from, vis, done) => {
     let prev = from, worst = 0;
     const tick = (x) => {
@@ -550,7 +587,7 @@
   /* a GPU step, in the frame at t */
   const runStep = (st, t) => {
     const vis = warmVis, limit = lateMs(), r = run(st);
-    st.at = t;
+    st.at = t; st.unwatched = false; st.resets0 = watchResets;
     requestAnimationFrame((a) => {
       clean(r);
       const d1 = a - t;
@@ -565,10 +602,13 @@
           if (judge(st, r.cpu, [Math.round(d1)], limit)) return;
           nx.chain0 = c0; runStep(nx, a); return;
         }
-        /* the chain's last step: the watch */
+        /* the chain's last step: the watch, or while it is not needed the interval after this one */
+        if (!watching()) { unwatched(st, r.cpu, a, d1, vis, limit); return; }
         warmWatch(t, a, vis, (w) => {
           if (w < 0) { judge(st, r.cpu, null, limit); after(); return; }
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(w)], limit)) after();
+          const fm = [Math.round(d1), Math.round(w)];
+          watched(fm);
+          if (!judge(st, r.cpu, fm, limit)) after();
         });
         return;
       }
@@ -576,11 +616,27 @@
         const d2 = b - a;
         if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
         note(d2);
+        /* the watch not needed: judged by the two (a d1 or d2 over the slow bar has just made it needed, so this step
+           keeps it) */
+        if (!watching()) { st.unwatched = true; if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after(); return; }
         warmWatch(t, b, vis, (w) => {
           if (w < 0) { judge(st, r.cpu, null, limit); after(); return; }
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2), Math.round(w)], limit)) after();
+          const fm = [Math.round(d1), Math.round(d2), Math.round(w)];
+          watched(fm);
+          if (!judge(st, r.cpu, fm, limit)) after();
         });
       });
+    });
+  };
+  /* a light chain's last step while the watch is not needed: judged by d1 and the interval after it (d2); one of them
+     over the slow bar makes it needed again (note) for the next steps */
+  const unwatched = (st, cpuMs, a, d1, vis, limit) => {
+    requestAnimationFrame((b) => {
+      const d2 = b - a;
+      if (vis !== warmVis) { judge(st, cpuMs, null, limit); after(); return; }
+      note(d2);
+      st.unwatched = true;
+      if (!judge(st, cpuMs, [Math.round(d1), Math.round(d2)], limit)) after();
     });
   };
   /* a cpu step, inside an idle callback, given its deadline. In a long slot it is judged by the two intervals after the
@@ -588,7 +644,7 @@
      pending a frame loop (1 s at most) keeps tLast, and it is judged by tLast -> a and a -> b, so its overrun of the
      ambient loop's frame counts; it goes back to the head of the line only when no idle callback comes within 1 s */
   const cpuStep = (st, tC) => {
-    warmRunning = st; st.at = tC;
+    warmRunning = st; st.at = tC; st.resets0 = watchResets;
     const vis = warmVis, limit = lateMs();
     let tLast = tC, waiting = true;
     const loop = (t) => { if (!waiting) return; tLast = t; if (t - tC < 1000) requestAnimationFrame(loop); };
@@ -631,6 +687,8 @@
      takes the clean path, logged 'slow'; it ends a light chain and holds light steps to one a frame pair for 2 s */
   const judge = (st, cpuMs, frameMs, limit) => {
     warmRunning = null;
+    /* left unjudged by the page's hiding: its intervals show in no row (watchUnseen, at WATCH_KEEP above) */
+    if (!frameMs && st.resets0 != null && watchResets !== st.resets0) watchUnseen = true;
     const worst = frameMs ? Math.max.apply(null, frameMs) : 0, late = worst > LATE_MS;
     if (!late) {
       const slow = worst > limit;

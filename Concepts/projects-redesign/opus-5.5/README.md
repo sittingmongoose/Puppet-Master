@@ -10,6 +10,122 @@ onboarding wizard without its theatrics; account for every way a project can be 
 control. The review behind these concepts (Opus 5.5, GPT-6 Astra, Muse Wonder Full) is in
 `/mnt/Cursor/share/puppet-master/2026-10-30-projects-refresh/`.
 
+## Split v3 (2026-11-10): Split, set for reading. It replaces Split v2
+
+Jared, 2026-11-10: "I like the new split design it made. However, one issue I have with it is its a little hard to
+read, my eyes tend to glaze over when i look at it. So I think it needs some mild adjustments to make it easier to
+parse ... The content is good and the layout is pretty good, its just the details, spacing, etc that need help."
+
+Jared, 2026-11-11, after the first build ("Yes that looks better") and a night of both being tested side by side:
+"why are you running against both v2 and v3? We are replacing v2 with v3. Why waste the time and tokens?" So Split v3
+is the Split concept now. The strip has one **C · Split v3** button on key 3; the v2 button, key 4 and `?split=v2` are
+gone, and the kit runs once.
+
+Split v3 is Split v2 with the same parts, the same words and the same layout, set differently. It is not a second
+renderer: `concepts/c.js` and `concepts/c.css` are Split's as they were, `concepts/c-v3.css` restyles the page while
+`<html>` carries `data-pjx-read="v3"`, and `concepts/c-v3.js` sets that attribute when it loads (and marks long values,
+below). So every fix made to Split is in v3, and nothing under `Concepts/` was removed to make the change.
+
+What made v2 tiring, and what v3 changes:
+
+| In v2 | In v3 |
+|---|---|
+| Every value was bold and sat at the far right of its plate, a long way from its label. | Each value sits beside its label, left-aligned on one edge per plate. Labels are quiet, values are regular weight, and only a value that says something is wrong keeps weight and colour. |
+| A sentence or a long path wrapped into a narrow right-hand column, three to five lines deep. | A value that would need more than two lines beside its label goes under the label, the plate wide (`data-v3-long`). A plate where most values would wrap (Backup, Where work runs at half width) puts every label above its value, so it reads one way (`data-v3-stack`). `c-v3.js` sets both by measuring the text against the plate's own width. |
+| A dashed rule under every row. | Rows are separated by space; a rule is kept for groups. |
+| A list of choices (folders, what happened, likely places) was a stack of bordered boxes. | One ruled list, the chosen row filled with a hairline ring. |
+| The same distance between everything. | More room between plates and between the library's machines than inside them; each machine's group is ruled off. |
+| Small capital labels in the code face on every field of New Project. | Kept for dividers (the library's machines, the Review's groups, the repair plate's groups); a field's own label is in the text face. |
+| Nine underlined "Change" links down the Review; answered questions as loud as the open one. | "Change" stays, quiet, underlined when pointed at; answered questions fold to a lighter line, ruled apart. |
+| "What's in it" in a box of its own, inside the question's box, inside the card. | Its lines sit under their label with no box. |
+
+Two things v3 also repairs because they are about reading: on the chosen library row in Basic Light the second line
+was dark blue on the blue fill (it now takes the row's ink), and Retro and NieR, which rule their group heads
+themselves, get no second rule.
+
+The 2026-11-10 fix pass's parts follow the same rules in v3. In Where work runs, where each piece of work went is a
+value (regular weight; a Computer somebody chose keeps its weight and colour), the rows are one lightly ruled list, and
+"Run this on…" and "Why this computer", which are on every row, keep their link colour and take their underline when
+pointed at or focused (an off "Run this on…" still reads as off). A sync paused on a clash is a status on the Online
+copy plate, like any other. The dialogs Split opens (Settle the clash, Why this computer, Start a run, From a chat,
+Move a chat) are the one place v3 reaches outside the page: their lists of choices are ruled like the page's, their
+fact lines read at the page's size and their fields' labels are in the text face. Menus, the chat, its History and
+the History row's menu are not v3's and are the same in both.
+
+Its checks are `tools/checks/split-v3.check.mjs` in this folder's kit: that Split opens as v3 from the strip and by
+key, how each plate's facts are set, the fix pass's parts (the Settle the clash dialog in all ten looks), and
+browser-check's audit (overflow, clipped text, covered controls) on every demo Project, New Project and its moments,
+at 1280, 1024, 860 and 640 px, and in all ten looks with the demo set, on first run and with 40 projects. On each of
+those states it also measures v3 against Split's base layout (what `c.css` alone lays out; `PJX.read.set('v2')` shows
+it for the measure, no control does) for what the audit cannot see: v3 cuts off no text the base layout shows whole,
+every plate's glyph stays beside its title, an open question's answers start on the question's own edge, and the
+questions' card and an open question's answers are exactly as wide. The kit's other checks run on the same page, which
+is v3.
+
+Review r2 (2026-11-11, `REVIEW-concept-B-r2-opus-high.md`) found two places where v3's own gaps broke a layout v2
+sizes for its gaps: at 860 px every plate head put its glyph on a line of its own (N4), and in Retro the chosen
+library row's second line was cut off (N5). The measures above were added for them (they fail on the build before the
+fix and pass after it), and they found two more of the same family: v3's wider page sides made the guided page's
+questions card 18 px narrower than v2's, so `np.css`'s narrow step applied at full width; and a folder path was
+shortened in the middle where v2 shows it whole. The rule v3 now keeps, written at the top of `c-v3.css`: it changes
+no side padding and no column gap along the widths Split's layout steps are measured on (`pjxcpage`, `pjxcsteps`,
+`pjxcsec`), and no gap an offset in `c.css` or `np.css` is worked out from. So every step of v2's layout falls at the
+same window width in v3. A path that does not fit beside its label goes under it, the plate wide.
+
+### Sol max fixes (2026-11-12)
+
+The Sol max review (`REVIEW-concept-B-max-sol.md` in the share folder) found five should-fix defects. Each has a check in
+this kit, named "(Sol max S1)" to "(Sol max S5)", that fails on `2a42d02f16` and passes after the fix.
+
+- **S1, Auto at Only when I choose it** (SIR-056, SSYS-059; `layer/work.js`). Auto picks only among the allowed Computers
+  it may pick, and the default Computer only breaks ties. When none is left, `PJX.work.autoPick` returns null and new
+  work waits, visibly: the summary says "Auto · waits: no Computer it may pick". The queued row and Why this waits give
+  each Computer's reason. Start a run offers "Run it on Studio Mac, this run only" and "Allow another Computer…", and
+  its button is Queue it. The form warns before Save. Nothing runs, and nothing says it started.
+- **S2, the chosen recovery point** (PWIZ-025, BRS-019; `layer/np.js`). `PJX.np.restorePoint` is the copy chosen, and it
+  reaches every later step: the folded section, the Review (Begins as, and a Copy row with what it covers), the steps,
+  `toPlan().restore_point`, the restored Project (`restored`) and its notice. A change of source clears it, and nothing
+  falls back to the newest copy.
+- **S3, the backup's time zone** (BRS-015). The created policy, its later edits and `toPlan().backup_schedule` keep
+  `backup.tz`. The section, the summary, the Review and the Backup plate say "2:00 AM UTC". Only with the default does
+  the Review name the Computer's own clock ("This computer’s time (America/New_York)").
+- **S4, a setting ticked again under a cleared category** (`layer/np-ui.js`). That setting is copied: the category comes
+  back in for that one setting, and the category's other settings and fixed values stay out. The category's box and
+  count, the total and the copy all read the same selection, fixed values included ("1 of 1 kept fixed").
+- **S5, the library at 1920 × 1080** (R5.4; `concepts/c-v3.css`). In Basic, the base layout fills the library exactly,
+  so v3's room is moved, not added. Groups are 18 px apart with their rule (base 12). Rows are 42 px with 2 px between
+  them (base 44 and 1). The list keeps 8 px under Archived. Every group through Archived shows with no scrolling, and
+  every word, action and type size is kept.
+
+### Astra max fixes (2026-11-12)
+
+The Astra max review (`REVIEW-concept-B-max-astra.md` in the share folder) found four should-fix defects. Each has checks
+in `tools/checks/astra.check.mjs`, named "(Astra max A1)" to "(Astra max A4)", that fail on `751805fd5f` and pass after the
+fix. Every entry point in them is a real press.
+
+- **A1, Try that file again** (ACD-511; `layer/np.js`, `concepts/c.js`). The move's operation record holds every file by its
+  own name and what happened to it: moved, didn't move (with its reason and how many tries), skipped because the same file
+  is already there, skipped by choice, or not picked. `PJX.np.moveRetry` retries the failed names, and `PJX.np.moveReport`
+  derives the report (Moved, Stayed, Held, Didn't move), the title, the summary line and the notice from that record each
+  time the page is drawn, so nothing patches a report's words any more. A file still open in the other app (the report's
+  concept demo "the file is still open in the other app") fails again and keeps its reason, with Try again still offered.
+- **A2, new work ends conversion Undo** (ACD-511; `layer/work.js`, `layer/np.js`, `concepts/c.js`). `PJX.np.workAccepted` ends
+  Undo for every conversion into a Project the moment Start a run is accepted there (started or queued, under Auto, the
+  Project's choice or a run pin), for a Project made from a chat and for a chat moved into one. The report and the moved
+  chat say why ("Undo has ended: new work started in harbor (Run the tests)"), as a message and the 7 days do. Undo is
+  checked again when its confirmation runs and again before it changes anything, so an Undo dialog opened before the work
+  was accepted changes nothing and says why.
+- **A3, Undo's preview counts what moved** (ACD-511; `concepts/c.js`, `layer/np.js`). Undo making a Project from a chat counts
+  the files that were picked and moved (`fromChatRec.files`), names the ones left out as never moved, and its steps and
+  result say the same count. Undo move names the files that never moved, each with why (didn't move, already the same in
+  the Project, skipped, not picked).
+- **A4, the records home, the files and the default Computer stay apart** (SRV-006, SIR-056; `layer/np.js`, `layer/np-ui.js`,
+  `concepts/c.js`). `PJX.np.filesHolder` is the place that holds the files, named from the Computer or device it is.
+  `makeProject` records the files there, `toPlan()` says `server_ref` (the records home it was given) and `files_holder`
+  apart from `default_computer`, the Where it lives plate says that place and its own room, the library groups the Project
+  under it, and Where work runs names the records home and the default Computer apart. No Home NAS or This computer is
+  filled in by default on that path: with Studio Mac as records home the Project is on Studio Mac (640 GB free).
+
 ## Split v2 (pass 2, 2026-11-02): the chosen concept
 
 Jared chose C: "I am leaning towards the Split option. Lets just focus on that for future passes." Split v2 keeps the
@@ -57,6 +173,57 @@ New layer files: `layer/words.js` (every word), `layer/rules.js` (the service an
 engine, no DOM), `layer/np-ui.js` (the section renderers, shared with the Project page's in-place forms) and
 `layer/np.css`. A and B are frozen: they keep pass 1's `layer/flow.js` and still load with no console errors.
 
+## Fix pass 3 (2026-11-10): Jared's #12 and #13, and the guided-flows check
+
+Jared reviewed Split v2 on 2026-11-09 (`/mnt/Cursor/share/puppet-master/2026-11-09-settings-feedback/FEEDBACK.md`), and
+pm7-build checked every guided flow against current onboarding and canon (`GUIDED-FLOWS-CHECK.md` there, "Changes for P").
+The report is `CONCEPT-FIX-REPORT-B.md` in the same folder.
+
+- **#13, chats with no project, inside the app** (ACD-508, ACD-510, ACD-511 on main; the settled N2, N20 and N27 are not
+  reopened). New is a split on Home's board bar and beside the chat's New thread (this Project, With no project, another
+  Project). The title-bar switcher has its fixed No project row. History has a No project group with New chat with no
+  project and each row's More. A no-project chat says "No project · This computer"; its Where chip and its More menu offer
+  **Make a project from this chat** and **Move this chat into a project**, its header **Make this a project…** (the
+  chooser, neither preselected), and the three workflows that still need a project (Planning Wizard, PRD Builder,
+  Orchestrator) say Needs a project with the same two choices. A first message mints a new no-project chat.
+- **Both conversions, complete** (GUIDED-FLOWS 7.02 to 7.05, 7.09 to 7.11, 7.13, 7.15): picked files on the new path, a
+  waiting approval settled first, a live preview family by family (settings, AI accounts, permissions, active work,
+  online, Undo), blockers settled in place (unsaved work in the destination, Git without a name on its Computer, a history
+  graft), a report for every result (moved, stayed, held, didn't move, with Try again), and an Undo that ends at the first
+  new message, work or changed moved file, or 7 days, and says so when it has ended.
+- **#12, where work runs** (SIR-056, F3-668, F3-664, SRV-006 and SSYS-059 on `plans/where-work-runs-20261109`, not on
+  `main` yet): the Project page's **Where work runs** plate names the records home, the work choice (Auto by default, or
+  "Chosen: Studio Mac by Jared"), the default Computer, the allowed Computers and the ones working now; each work row says
+  "Auto → Home NAS" or "Chosen: Studio Mac by Jared" with **Why this computer** (the measures, their age, and why the
+  others were left out or ranked lower). New Project › Where it lives offers the work choice, the default Computer and
+  the allowed set, apart from where the files go. Auto's presets and each Computer's level are linked to Settings, not
+  built. Nothing says "<Project> works on <one Computer>" any more.
+- **Guided flows**: one place world with onboarding (Home NAS is a Synology DS920+ at home-nas.local; Media server is a
+  TrueNAS SCALE with SSH off, reached over NFS; each Computer resolves its own home and Projects folder); NAS pairing
+  instead of SSH, SSH-off guidance by brand, username first and each key's state on the device (works already, locked,
+  needs adding), a changed identity shown side by side, an uncertain key install checked before retrying; partial and
+  unknown looks inside, and a native look after an online copy; an unfinished setup kept out of the Project rows; restore
+  in dependency order (Kit or no Kit, reach and sign in, unlock, Project, recovery point and coverage); Notifications &
+  limits, fixed values that obey the picked kinds, a device-bound account that can't move, and a re-check at copy time;
+  token permissions for making versus reaching a Project per service, each service's code lifetime, Open the page and
+  Copy address, sign-up turned off; Public and Private as the real Forgejo and Gitea choice; README, ignore list and
+  licence in the online copy's Advanced; a backup's time zone, NAS identity checked by the owner, the pairing reused at
+  Protect, a real sign-in or access step there, a protected Kit handoff, and "on" kept apart from a completed backup; an
+  uncertain fork checked before Continue setup, and the original's changes fetched and brought in here before a separate
+  send to your fork.
+
+Fix round B-r1 (review `REVIEW-concept-B-r1-opus-high.md`): History's row More opens its own menu inside the flyout;
+the first no-project message is kept in state, cleared before any redraw and sent once; Chosen has its own Computer,
+apart from the default Computer; another Project switches and opens an empty chat; a message in the moved chat or the
+concept's clock passing the deadline ends Undo; "Get the latest from the original" can pause on a clash with its
+resolution path; Why this computer names the preset, weights and policy version; account rows check every allowed
+Computer.
+
+New files: `layer/chat.js` (the no-project chat surfaces), `layer/work.js` (where work runs), `layer/fix.css`, and
+`tools/checks/` (browser-check: `noproject.check.mjs`, `work.check.mjs`; run them with
+`browser-check run Concepts/projects-redesign/opus-5.5/tools/checks --set page=<dir>/projects-concepts.html` after
+`python3 tools/build_standalone.py <dir>`).
+
 ## The concepts
 
 | | Concept | Idea |
@@ -90,14 +257,14 @@ differ only in layout and presentation:
 
 The strip under PMConcept7 is for reviewing and is not part of the design.
 
-- **Concept**: C · Split v2 and Today; A and B (pass 1, frozen) sit behind **More concepts** (keys 1, 2, 3 and 0 still work).
-  The strip opens on C.
+- **Concept**: C · Split v3 and Today; A and B (pass 1, frozen) sit behind **More concepts** (keys 1, 2, 3 and 0 still
+  work). The strip opens on C.
 - **Look**: all ten, switched through PMConcept7's own theme menu.
 - **Projects**: the demo set, first run with none yet, or 40 projects.
 - **Window width**: full, 1280, 1024, 860 or 640 px.
 - **New Project**, **Folder missing**, **Setup didn't finish**: jump to those moments.
 - **Run mode**: Regular or YOLO (C's yes-points say what YOLO does instead).
-- **More moments (C)**: From a chat (the chooser), From a chat › Move it into a project I have, An agent sets up a
+- **More moments (C)**: A chat with no project (in the chat), Home: New chat with no project, Where work runs (tastebook), From a chat (the chooser), From a chat › Move it into a project I have, An agent sets up a
   Project (Regular asks, YOLO goes ahead), Contribute, Found online copy, Submodules and Git LFS, Jujutsu limits, Same
   online copy as loom, Connect a new device, Backup setup, A fork (photo-sorter), Found not linked (legacy-app), Waiting
   for Media NAS (garden-notes). Disabled for A, B and Today.
@@ -113,7 +280,7 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 ## How it reaches PMConcept7
 
 `index.html` adds, in order: `layer/core.css`, `layer/np.css`, `layer/core.js`, `layer/words.js`, `layer/rules.js`,
-`layer/flow.js`, `layer/np.js`, `layer/parts.js`, `layer/np-ui.js`, each concept's CSS and JS, and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` (`{source: 'pjx-host', cmd}` in,
+`layer/flow.js`, `layer/np.js`, `layer/parts.js`, `layer/np-ui.js`, `layer/work.js`, `layer/chat.js`, `layer/fix.css`, each concept's CSS and JS (Split v3's after Split's), and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` (`{source: 'pjx-host', cmd}` in,
 `{source: 'pjx', type, state}` out), so the strip also works in a sandboxed preview.
 
 | File | What |
@@ -127,7 +294,11 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 | `layer/np.js` | `PJX.np`: the Split v2 engine (no DOM): the draft, sections and their problems, `set()` with the FO-22 clearing, cached simulated owner results, the Review, the steps and the commit, `detect()`, `toPlan()`, and the settings adapter `PJX.np.SETTINGS`. |
 | `layer/np-ui.js` | `PJX.npui`: one renderer per guided section and the parts they share (the look inside, connect a device, sign in, the service cards, copy settings, backup, protect steps), also drawn inside the Project page's plates. |
 | `layer/np.css` | The guided sections and their parts, in Usage's and Home's material. |
-| `concepts/a|b|c.*` | Each concept's layout (C is Split v2). |
+| `layer/work.js` | `PJX.work`: where work runs (records home, work choice, default and allowed Computers, work rows, Why this computer, the change form, New Project's block). |
+| `layer/chat.js` | `PJX.chat`: chats with no project inside PMConcept7 (Home's and the chat's New split, the title-bar row, History's No project group, the no-project chat view) and the hand-off to both conversions. |
+| `layer/fix.css` | The fix pass's parts, in the chat's, Home's and Usage's own material. |
+| `concepts/a|b|c.*` | Each concept's layout (C is Split; with `c-v3.*` below it shows as Split v3). |
+| `concepts/c-v3.css`, `concepts/c-v3.js` | Split v3: the stylesheet that sets Split's page for reading, and the script that turns it on at load and marks long values. `PJX.read.get()`; `PJX.read.set('v2' \| 'v3')` shows Split's base layout or v3 again, for the checks only. |
 
 ## What it would touch in Plans
 

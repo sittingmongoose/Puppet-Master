@@ -496,10 +496,14 @@
    position: every stroke painted soft and none reached its ink (orbit-verify (ii), NieR 0-1 px against 33 before
    FO-120; 27-34 against 42-53 glyph px in the other looks). The end keyframe is the wrapper's own rest style. */
 .orbit-node-symbol {
-  display: grid; place-items: center; width: 14px; height: 14px;
+  /* a block, not a grid: its glyph (or the status mark's .nx-st wrapper round it) fills it at 100%, so nothing
+     needed centring, and an svg that is not a grid item lays out alone when the live subject's parts move instead of
+     the whole document from the top (pm7-perf lane F2: the same box) */
+  display: block; width: 14px; height: 14px;
   animation: orbit-symbol-in var(--pm-t-icon) var(--pm-ease-pop) backwards;
 }
-.orbit-node-symbol > .nx-st { width: 100%; height: 100%; display: grid; place-items: center; }
+.orbit-node-symbol > .nx-st { width: 100%; height: 100%; display: block; }
+.orbit-node-symbol > svg, .orbit-node-symbol > .nx-st > svg { display: block; }
 .orbit-node-symbol svg { width: 100%; height: 100%; --nx-u: 1.7143; --nx-stroke-base: 2.3; }
 @keyframes orbit-symbol-in {
   from { opacity: .35; transform: scale(.78); }
@@ -1003,6 +1007,11 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
    reference and receipt tiles are keyed by step). A finished history step is
    lit green. The card head's tile is neon-icons.css section 12's; a finished
    card's tiles are turn-stage.css's. */
+/* Every phase tile (styles.css: 28 px, a grid centring its glyph) is a block centring its one block glyph instead, so
+   the breathing status mark in a working card's head is not a grid item: its ticks lay out the glyph alone, not the
+   whole document. The same box and offset (pm7-perf lane F2, as the Orbit ring's symbol, .orbit-node-symbol). */
+.work-phase-icon { display: block; align-content: center; }
+.work-phase-icon > svg { display: block; margin-inline: auto; }
 .working-card .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
 .working-variant-0 .reference-stage .work-phase-icon, .receipt-building .work-phase-icon, .stack-card.current .work-phase-icon {
   background: var(--nx-disc); color: var(--pm-step, var(--accent));

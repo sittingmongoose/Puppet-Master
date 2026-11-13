@@ -68,7 +68,7 @@
         probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;overflow:hidden;visibility:hidden;contain:strict;pointer-events:none';
         document.body.appendChild(probe);
       }
-      probe.setAttribute('data-theme', to.theme);
+      if (probe.getAttribute('data-theme') !== to.theme) probe.setAttribute('data-theme', to.theme);
       probe.toggleAttribute('data-o55-nier', to.nier);
       if (to.nier) probe.setAttribute('data-o55-nier-preview', to.mode); else probe.removeAttribute('data-o55-nier-preview');
       const cs = getComputedStyle(probe);
@@ -108,7 +108,7 @@
         v.setAttribute('data-fx', FX[fx] ? fx : 'basic');
       }
     } catch (_) { /* the fallbacks */ }
-    v.setAttribute('data-ready', '');
+    if (v.getAttribute('data-ready') !== '') v.setAttribute('data-ready', '');
     return v;
   }
   /* Painted ahead is not rastered ahead: a cover at opacity 0 is never drawn, so its motion parts were rastered on
