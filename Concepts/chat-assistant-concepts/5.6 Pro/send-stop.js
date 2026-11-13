@@ -11,6 +11,7 @@
  *                                                     text -> ready; else idle)
  *   data-q      0 | 1 | 2                           messages already waiting in the follow-up queue
  *   data-flow   flowing | waiting                   Stop only: words arriving, or the model thinking / a tool running
+ *   style       --ss-speed: <factor>               Settings' Animation speed as the chip shows it (the loop length is the chip's own)
  *   data-launch send | queue                        with ss-launch: what the click did
  *   data-hold                                       a pointer that just sent is still on the chip (NieR's rust hover
  *                                                   waits until it leaves and comes back)
@@ -29,7 +30,7 @@
  * place in the loop, so the square speeds up or slows down without a jump. It used to change only at a loop's end,
  * learnt from an animationiteration listener on the document: one such listener makes Chrome wake the main thread at
  * every loop end of every CSS animation on the page for the rest of its life (Windows, 120 Hz, at rest: about 35 main
- * frames a second with it, 12 without, every look). See pace() below.
+ * frames a second with it, 12 without, every look). See apply() below.
  * Glyph geometry (chip pixels, viewBox 0 0 24 24): the registry's `send` drawing scaled .58 about the centre for the
  * plane, .5 for the queue's two planes; every shape that morphs is M + 4x(L Q) + Z so CSS `d` interpolates point by
  * point (the same strings are in send-stop.css, which drives the morph; these d attributes are the static fallback).
@@ -61,10 +62,11 @@
   var fx = null, fxT = 0;          // the one-shot riding in the markup: {cls, until, only, launch}
   var flow = 'flowing', lastTok = -1e9;
   var tid0, snap = false, hold = false, lastSs = null, shownQ = 0;
-  /* the pace (below): send-stop.css's two loop lengths and its --ss-ld at Animation speed 1, the loops' names, how
-     recent a word must be for "flowing"; the quiet timer, the <head> observer and the speed the loops were last seen at */
-  var BEAT = { flowing: 2200, waiting: 3200 }, LEAD = 800, LOOPS = ['ss-breathe', 'ss-glow', 'ss-glow-l'], QUIET = 900;
-  var quietH = null, watch = null, speed = 0, olds = null;
+  /* the pace (below): the loops' names and how recent a word must be for "flowing"; what the chip shows (flow, its
+     cadence, and k, its Animation speed: written on the live chip by apply() alone, repeated by the markup) and what
+     is wanted (want, kWant); the quiet timer, the speed listener and the pending frame callback */
+  var LOOPS = ['ss-breathe', 'ss-glow', 'ss-glow-l'], QUIET = 900;
+  var want = 'flowing', k = 1, kWant = 1, quietH = null, listening = false, pend = 0;
 
   function stateOf(o) {
     var text = String(o.text || '').trim();
@@ -83,10 +85,12 @@
     /* a thread switch: the new thread's state as a jump, and a one-shot still pending (a launch, halt or ignite armed
        on the thread we left) is dropped, so it never replays on a chip where nothing happened */
     if (o.tid !== tid0) { if (tid0 !== undefined) { armSnap(); fx = null; clearTimeout(fxT); } tid0 = o.tid; }
-    /* Stop starts: the cadence it starts in (the loops come with the markup, at that cadence's length); the pace is
-       watched only while Stop shows (paceOn), and nothing is left armed once it has gone (paceOff) */
-    if (s === 'stop' && lastSs !== 'stop') { flow = (now() - lastTok < QUIET || streaming(o.tid)) ? 'flowing' : 'waiting'; paceOn(); }
-    else if (s === 'stop') paceKeep();   // a chip that went missing for a moment switched both off (quiet, the observer)
+    /* Stop starts: the cadence and the speed it should run at. The markup keeps what the chip shows (flow, k), so a
+       loop that survived a Stop -> Send -> Stop flip inside one task keeps its length; apply() moves it, and fresh loops
+       (still in their delay then), in the next frame. The pace is watched only while Stop shows (paceOn), and nothing is
+       left armed once it has gone (paceOff). */
+    if (s === 'stop' && lastSs !== 'stop') { want = (now() - lastTok < QUIET || streaming(o.tid)) ? 'flowing' : 'waiting'; kWant = speedNow(); paceOn(); }
+    else if (s === 'stop') paceKeep();   // a chip that went missing for a moment switched the quiet timer and the listener off
     if (s !== 'stop') paceOff();
     if (s === 'queue' || s === 'full') { if (q) shownQ = q; }
     lastSs = s;
@@ -97,7 +101,7 @@
     if (s === 'stop') cls += ' is-stop';
     var label = LABEL[s];
     return '<button class="send-button sendstop' + cls + '" data-k="send-btn" data-action="' + (s === 'stop' ? 'stop-run' : 'send') + '"' +
-      ' data-ss="' + s + '" data-q="' + q + '" data-flow="' + flow + '"' +
+      ' data-ss="' + s + '" data-q="' + q + '" data-flow="' + flow + '" style="--ss-speed:' + k + '"' +
       (fx && fx.launch && cls.indexOf('ss-launch') >= 0 ? ' data-launch="' + fx.launch + '"' : '') +
       (hold ? ' data-hold=""' : '') + (s === 'full' ? ' aria-disabled="true"' : '') +
       (hover ? hover('send-btn', label) : ' aria-label="' + label + '"') + '>' +
@@ -144,105 +148,70 @@
   }
 
   /* ------------------------------------------------------------------ the pace (PERF-STOP2 = A)
-     One loop on the glyph (ss-breathe) and one on the danger backlight (ss-glow; ss-glow-l on light themes), and
-     send-stop.css gives both their length from data-flow: 2200 ms flowing, 3200 ms waiting, each times Settings'
-     Animation speed. So every loop the browser makes afresh starts at the right pace with no script: Stop shown again,
-     a re-render that rebuilds the chip, a thread switch's snap, Reduced Motion turned off, NieR Mode turned off (it
-     hides the backlight), a light/dark change (it swaps the backlight's keyframes, as before). Script acts only where a
-     RUNNING loop is retimed, and puts it back at the same point of its loop, in the same task, so no frame shows it
-     anywhere else:
-       - the cadence changes (pace): a word while waiting turns it to flowing at once (token); 900 ms without a word
-         while flowing turns it to waiting (quiet: a timer on the last word's age, armed only while words reach a Stop
-         chip, never a guess at where a loop is);
-       - Settings' Animation speed rewrites the loops' length and delay (the #o55-look-scale sheet in <head>): retime,
-         from an observer of <head> that is connected only while Stop shows.
-     A loop the onboarding window holds (animation-play-state) is re-placed the same way and carries on from there when
-     it is let go. No listener for any animation event, nothing per frame, nothing armed once Stop has gone (paceOff).
+     One loop on the glyph (ss-breathe) and one on the danger backlight (ss-glow; ss-glow-l on light themes). Their
+     length is the chip's own (send-stop.css): --ss-beat from data-flow (2200 ms flowing, 3200 ms waiting) times
+     --ss-speed, Settings' Animation speed, which the chip keeps itself as Usage keeps --pmu-speed, so Settings' look
+     scale sheet never retimes a running loop. Both are written on the live chip by apply() ALONE: the markup repeats
+     what apply() wrote, so every loop the browser makes afresh (Stop shown again, a rebuilt chip, a thread switch's
+     snap, Reduced Motion off, NieR Mode off, a light/dark change that swaps the backlight's keyframes) starts at the
+     length the chip shows, and a loop that survives a re-render keeps its length.
+     A change is wanted (want, kWant) by a word (token: flowing), by 900 ms without one (quiet: a timer on the last
+     word's age, armed only while words reach a Stop chip), by Settings' Animation speed ('pm-animation-speed', the
+     event Settings sends owners that keep the speed themselves; heard only while Stop shows), or by Stop starting.
+     It is made in the chip's next frame callback (schedule, apply), which reads each loop's timing from the loop itself
+     (nothing stored), writes the new length and puts each loop at the same point of it by the compositor's clock, in
+     that one callback: Chrome hands a retimed loop to the compositor only with the frame, and until then the compositor
+     keeps moving the square on the old timing by the wall clock, also through a long task. So the old timing read there
+     is what the square shows at that moment, and the frame that follows hands over the new length and the place
+     together. Words arrive from turn-stream's and thought-stream's own frame callbacks; a change wanted there is made
+     in the frame after (R32 F2: making it at once and again a frame later stepped the square back after a long task).
+     No listener for any animation event, nothing per frame, no timer that guesses where a loop is, nothing armed once
+     Stop has gone (paceOff).
      Why not Animation.updatePlaybackRate: a rate lives in one Animation object, so every loop the browser rebuilds
      would come back at rate 1, and nothing tells the page that it did without the kind of listener this replaces. */
   function stopChip() { var b = live(); return b && b.getAttribute('data-ss') === 'stop' ? b : null; }
-  /* the chip's loops; Element.getAnimations brings style up to date first, so a length CSS has just changed is in
-     their timing */
+  /* the chip's loops; Element.getAnimations brings style up to date first, so a length just written is in their timing */
   function loops(b) {
     try { return b.getAnimations({ subtree: true }).filter(function (a) { return LOOPS.indexOf(a.animationName) >= 0; }); } catch (e) { return []; }
   }
-  function seen(runs) {
-    var d = runs.length ? +runs[0].effect.getTiming().duration : 0;
-    if (d > 0) speed = d / BEAT[flow];
+  /* Settings' Animation speed as Element.animate has it (17-look.js scales what a script plays, as Usage reads it);
+     1 in the chat alone */
+  function speedNow() {
+    try { var p = document.createElement('i').animate(null, { duration: 1000 }), d = +p.effect.getTiming().duration; p.cancel(); return d > 0 ? d / 1000 : 1; } catch (e) { return 1; }
   }
-  /* Where the square actually is. Chrome hands a retimed loop to the compositor only with the next frame, and until
-     then the compositor keeps moving the square on the OLD timing by its own clock, also through a long task: Settings'
-     save is one (about 260 ms on the Windows PC, the speed sheet written at its end), and a loop re-placed by the last
-     frame's time then showed a jump of 0.07 of a loop when the frame came (film, 2026-11-13). So each loop's old timing
-     is taken before the first retime since the last frame (olds), the loop is put where that timing has it NOW on the
-     wall clock, and once more at the next frame, just before that frame hands it over. A held loop (the onboarding
-     window) does not move, so its place is its current time on the old timing. */
-  function wall() {
-    var p = performance.now(), t = document.timeline ? document.timeline.currentTime : null;
-    return t == null || Math.abs(p - t) < 2000 ? p : t;   // a film tool's slowed timeline: its own clock
+  /* The compositor's clock: the wall clock. A film tool that slows the page's timeline (CDP Animation.setPlaybackRate)
+     slows PM56_CLOCK by the same factor (motion.js); the compositor then runs by the timeline's time. (R32 F6: the
+     choice used to switch to the timeline after any task of 2 s or more.) */
+  function clockNow() {
+    var C = window.PM56_CLOCK, t = document.timeline ? document.timeline.currentTime : null;
+    return C && C.scale !== 1 && t != null ? t : performance.now();
   }
-  function timingOf(a) { var t = a.effect.getTiming(); return { a: a, s: a.startTime, c: a.currentTime, h: a.playState === 'paused', d: +t.duration, l: +t.delay || 0 }; }
-  function remember(runs, taken) {
-    if (!olds) {
-      olds = [];
-      requestAnimationFrame(function () { var b = stopChip(); if (b && olds) place(loops(b), true); olds = null; });
-    }
-    runs.forEach(function (a) { if (!olds.some(function (o) { return o.a === a; })) olds.push(taken(a)); });
-  }
-  function place(runs, framed) {
-    var w = wall();
-    runs.forEach(function (a) {
-      var o = (olds || []).filter(function (x) { return x.a === a; })[0];
-      if (!o) return;
-      var t = a.effect.getTiming(), d = +t.duration, l = +t.delay || 0;
-      var held = a.playState === 'paused' || o.s == null;
+  function schedule() { if (!pend) pend = requestAnimationFrame(apply); }
+  function apply() {
+    pend = 0;
+    var b = stopChip();
+    if (!b || (want === flow && kWant === k)) return;
+    /* each loop's timing as it runs now, read from the loop: start time, length, delay; its current time if held (the
+       onboarding window) or not yet started */
+    var olds = loops(b).map(function (a) { var t = a.effect.getTiming(); return { a: a, s: a.startTime, c: a.currentTime, held: a.playState === 'paused' || a.startTime == null, d: +t.duration, l: +t.delay || 0 }; });
+    flow = want; k = kWant;
+    b.setAttribute('data-flow', flow);
+    b.setAttribute('style', '--ss-speed:' + k);
+    var runs = loops(b), w = clockNow();
+    olds.forEach(function (o) {
+      if (runs.indexOf(o.a) < 0) return;
+      var t = o.a.effect.getTiming(), d = +t.duration, l = +t.delay || 0, rate = o.a.playbackRate || 1;
       if (!(d > 0) || !(o.d > 0)) return;
-      if (Math.abs(d - o.d) < 0.5 && Math.abs(l - o.l) < 0.5) {   // back to the timing it had (two changes in one frame)
-        if (held) { if (o.c != null && a.currentTime !== o.c) a.currentTime = o.c; } else if (a.startTime !== o.s) a.startTime = o.s;
-        return;
-      }
-      if (held && framed) return;                          // nothing moved since it was placed
-      var c = held ? (o.h ? o.c : a.currentTime) : (w - o.s) * (a.playbackRate || 1);
+      var c = o.held ? o.c : (w - o.s) * rate;            // where the old timing has it now
       if (c == null) return;
-      var n = c < o.l ? (o.l > 0 ? c * l / o.l : c) : l + (c - o.l) * d / o.d;
-      if (held) a.currentTime = n; else a.startTime = w - n / (a.playbackRate || 1);
+      var n = c < o.l ? (o.l > 0 ? c * l / o.l : c) : l + (c - o.l) * d / o.d;   // the same point of the new timing
+      if (o.held) o.a.currentTime = n; else o.a.startTime = w - n / rate;
     });
   }
-  /* The cadence changes now: data-flow gives each loop the other length, and each is put at the same point of it. */
-  function pace(b, to) {
-    remember(loops(b), timingOf);
-    flow = to;
-    b.setAttribute('data-flow', to);
-    var runs = loops(b);
-    place(runs, false);
-    seen(runs);
-  }
-  /* Settings' Animation speed has rewritten the loops' length and delay (FO-153 scales the delay too): each loop goes
-     back to where it was. What it had is the cadence's length and --ss-ld at the speed the loops were last seen at;
-     the start time is the sheet's to leave alone. */
-  function retime(b) {
-    var runs = loops(b);
-    if (!speed) { seen(runs); return; }
-    var d0 = BEAT[flow] * speed, l0 = LEAD * speed;
-    var moved = runs.filter(function (a) { var t = a.effect.getTiming(); return Math.abs(+t.duration - d0) >= 0.5 || Math.abs((+t.delay || 0) - l0) >= 0.5; });
-    if (moved.length) {
-      remember(moved, function (a) { return { a: a, s: a.startTime, c: a.currentTime, h: a.playState === 'paused', d: d0, l: l0 }; });
-      place(moved, false);
-    }
-    seen(runs);
-  }
-  function sheetNode(n) { return !!n && (n.nodeName === 'STYLE' || n.nodeName === 'LINK' || (n.nodeType === 3 && !!n.parentNode && n.parentNode.nodeName === 'STYLE')); }
-  function sheetChange(r) {
-    return sheetNode(r.target) || Array.prototype.some.call(r.addedNodes || [], sheetNode) || Array.prototype.some.call(r.removedNodes || [], sheetNode);
-  }
-  function watchOn() {
-    if (watch || typeof MutationObserver !== 'function' || !document.head) return;
-    watch = new MutationObserver(function (recs) {
-      var b = stopChip();
-      if (!b) { paceOff(); return; }
-      if (recs.some(sheetChange)) retime(b);
-    });
-    watch.observe(document.head, { childList: true, subtree: true, characterData: true });
+  function onSpeed(e) {
+    var f = e && e.detail ? +e.detail.factor : NaN;
+    kWant = f > 0 ? f : speedNow();
+    if (stopChip()) schedule(); else paceOff();
   }
   function armQuiet() {
     if (quietH) return;
@@ -251,25 +220,23 @@
   }
   function quiet() {
     quietH = null;
-    var b = stopChip();
-    if (!b) { paceOff(); return; }
-    if (flow !== 'flowing') return;
+    if (!stopChip()) { paceOff(); return; }
+    if (want !== 'flowing') return;
     if (now() - lastTok < QUIET) { armQuiet(); return; }
-    pace(b, 'waiting');
+    want = 'waiting'; schedule();
   }
-  /* Stop has started: watch for Settings' speed, start the quiet timer if words are arriving, and once the new loops
-     exist (the markup is patched in after html() returns) note the speed they run at */
-  function paceOn() {
-    paceKeep();
-    requestAnimationFrame(function () { var b = stopChip(); if (b) seen(loops(b)); });
-  }
+  /* Stop has started: hear Settings' speed, start the quiet timer if words are arriving, and make the wanted pace in
+     the next frame */
+  function paceOn() { paceKeep(); schedule(); }
   function paceKeep() {
-    watchOn();
-    if (flow === 'flowing') armQuiet();
+    if (!listening) { listening = true; window.addEventListener('pm-animation-speed', onSpeed); }
+    if (want === 'flowing') armQuiet();
+    if (want !== flow || kWant !== k) schedule();
   }
   function paceOff() {
     if (quietH) { var C = window.PM56_CLOCK; if (typeof quietH === 'object' && C && C.cancel) C.cancel(quietH); else clearTimeout(quietH); quietH = null; }
-    if (watch) { watch.disconnect(); watch = null; }
+    if (listening) { listening = false; window.removeEventListener('pm-animation-speed', onSpeed); }
+    if (pend) { cancelAnimationFrame(pend); pend = 0; }
   }
 
   /* A pointer that sends stays over the chip as it turns into Stop; NieR's rust hover waits until that pointer has
@@ -295,16 +262,16 @@
     ignite: function () { fire('ss-ignite', ['ready']); },
     sputter: function () { fire('ss-sputter', ['idle', 'full']); },
     fail: function () { fire(reduced() ? 'ss-fail-static' : 'ss-fail'); },
-    /* turn-stream: a word was released into the reply of thread tid; on a Stop chip that was waiting the pace turns to
-       flowing at once */
+    /* turn-stream and thought-stream: a word was released into the reply of thread tid (from their frame callbacks);
+       on a Stop chip that was waiting the pace turns to flowing by the next frame */
     token: function (tid) {
       if (tid !== undefined && tid !== tid0) return;
       lastTok = now();
       var b = stopChip();
       if (!b) return;
-      if (flow !== 'flowing') pace(b, 'flowing');
-      watchOn(); armQuiet();
+      if (want !== 'flowing') { want = 'flowing'; schedule(); }
+      paceKeep();
     },
-    debug: function () { return { fx: fx && fx.cls, flow: flow, snap: snap, hold: hold, lastTokAgo: Math.round(now() - lastTok), quiet: !!quietH, watching: !!watch, speed: speed }; }
+    debug: function () { return { fx: fx && fx.cls, flow: flow, want: want, speed: k, speedWant: kWant, snap: snap, hold: hold, lastTokAgo: Math.round(now() - lastTok), quiet: !!quietH, watching: listening, pending: !!pend }; }
   };
 })();

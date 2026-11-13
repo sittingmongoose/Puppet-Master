@@ -28,7 +28,6 @@ const SRC = read('send-stop.js');
 const CSS = read('send-stop.css');
 
 /* ---------------------------------------------------------------- the CSS, read from the file */
-const LD = Number((/--ss-ld:\s*(\d+)ms/.exec(CSS) || [])[1]);
 const RULES = [];
 // top-level rules only: the @media (Reduced Motion) and @keyframes blocks are left out (the model has its own Reduced Motion)
 const FLAT = CSS.replace(/\/\*[\s\S]*?\*\//g, '').replace(/@[\w-]+[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, '');
@@ -40,7 +39,7 @@ for (const m of FLAT.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
 // which loop layer a selector styles, and whether it matches the chip's state ({ss, flow, flowed, light, nier, snap})
 const layerOf = (s) => (/\.ss-g$/.test(s) ? 'g' : /\.ss-bl::before$/.test(s) ? 'bl' : null);
 function matches(s, st) {
-	if (!/^(body\[data-theme\$="-light"\] )?\.sendstop/.test(s)) return false;           // NieR, Reduced Motion: below
+	if (!/^(body\[data-theme\$="-light"\] )?(\.send-button)?\.sendstop/.test(s)) return false;     // NieR, Reduced Motion: below
 	if (/^body\[data-theme\$="-light"\]/.test(s) && !st.light) return false;
 	if (/\.sendstop\.ss-|:hover|:active|\[data-launch|\[data-hold/.test(s)) return false;
 	for (const [, k, v] of s.matchAll(/\[(data-[\w-]+)(?:="([^"]*)")?\]/g)) {
@@ -51,36 +50,66 @@ function matches(s, st) {
 	}
 	return true;
 }
-const ms = (v) => (/^var\(--ss-ld\)$/.test(v) ? LD : /^-?[\d.]+ms$/.test(v) ? parseFloat(v) : /^-?[\d.]+s$/.test(v) ? parseFloat(v) * 1000 : NaN);
-function loopSpec(layer, st, k) {
+// the chip's own custom properties (rules on the chip itself, by its attributes) and its inline style
+const chipSel = (s) => /^(body\[data-theme\$="-light"\] )?(\.send-button)?\.sendstop(\[[^\]]+\])*$/.test(s);
+function varsOf(st, inline) {
+	const v = {};
+	for (const r of RULES) if (r.sels.some((s) => chipSel(s) && matches(s, st))) for (const [k, x] of Object.entries(r.decl)) if (k.startsWith('--')) v[k] = x;
+	return Object.assign(v, inline);
+}
+// a value with var() and calc() of times and numbers: ms for a time
+function evalv(x, vars) {
+	let s = String(x).trim(), prev;
+	for (let n = 0; n < 20 && s !== prev; n++) { prev = s; s = s.replace(/var\(\s*(--[\w-]+)\s*(?:,\s*([^()]*))?\)/, (m, name, fb) => (vars[name] != null ? vars[name] : fb != null ? fb : 'NaN')); }
+	const e = s.replace(/calc\(/g, '(').replace(/(-?[\d.]+)ms\b/g, '$1').replace(/(-?[\d.]+)s\b/g, (m, n) => String(parseFloat(n) * 1000));
+	return /^[\d.\s*+\-/()]+$/.test(e) ? Function(`return (${e})`)() : NaN;
+}
+// Settings' look scale sheet (17-look.js, FO-153) at Animation speed k: in an animation shorthand a time and a var()
+// or calc() that holds one are scaled, one that carries a *speed var is left alone; animation-duration always scales
+const TIME_VARS = new Set(RULES.flatMap((r) => Object.entries(r.decl).filter(([n, v]) => n.startsWith('--') && /^-?[\d.]+m?s$/.test(v)).map(([n]) => n)));
+function sheetWord(w, k, vars) {
+	const v = evalv(w, vars);
+	if (k === 1 || !(v > 0)) return v;
+	if (/^-?[\d.]+m?s$/.test(w)) return v * k;
+	if (!/^(?:var|calc)\(/.test(w) || /--[\w-]*speed\b/.test(w)) return v;
+	const timed = (w.match(/var\(\s*--[\w-]+/g) || []).some((x) => TIME_VARS.has(x.replace(/^var\(\s*/, ''))) || /(?:^|[\s(,])-?(?:\d+\.?\d*|\.\d+)m?s\b/.test(w.replace(/^var\(\s*--[\w-]+\s*,?/, ''));
+	return timed ? v * k : v;
+}
+// a shorthand's words, split at white space outside parentheses (as 17-look.js o55Words)
+const words = (v) => { const out = []; let depth = 0, cur = ''; for (const ch of v) { if (ch === '(') depth++; if (ch === ')') depth--; if (/\s/.test(ch) && !depth) { if (cur) out.push(cur); cur = ''; } else cur += ch; } if (cur) out.push(cur); return out; };
+function loopSpec(layer, st, k, inline) {
 	if (st.ss !== 'stop' || st.reduced || st.snap || !st.shown) return null;
 	if (layer === 'bl' && st.nier) return null;                                             // NieR: .ss-bl { display: none }
+	const vars = varsOf(st, inline);
 	let name = null, duration = NaN, delay = 0;
 	for (const r of RULES) {
 		if (!r.sels.some((s) => layerOf(s) === layer && matches(s, st))) continue;
 		if (r.decl.animation) {
-			const w = r.decl.animation.split(/\s+(?![^(]*\))/);
-			name = w[0]; duration = ms(w[1]); delay = ms(w[3]);
+			const w = words(r.decl.animation);
+			name = w[0]; duration = sheetWord(w[1], k, vars); delay = sheetWord(w[3], k, vars);
 		}
 		if (r.decl['animation-name']) name = r.decl['animation-name'];
-		if (r.decl['animation-duration']) duration = ms(r.decl['animation-duration']);
-		if (r.decl['animation-delay']) delay = ms(r.decl['animation-delay']);
+		if (r.decl['animation-duration']) duration = evalv(r.decl['animation-duration'], vars) * k;
+		if (r.decl['animation-delay']) delay = evalv(r.decl['animation-delay'], vars);
 	}
-	return name && duration > 0 ? { name, duration: duration * k, delay: delay * k } : null;
+	return name && duration > 0 ? { name, duration, delay } : null;
 }
+const LD = evalv('var(--ss-ld)', varsOf({ ss: 'stop', flow: 'flowing' }, {}));
 
 /* ---------------------------------------------------------------- the browser */
 const FRAME = 1000 / 120;
 function world({ clockApi = true } = {}) {
 	// clock: the wall clock (performance.now, timers, the compositor); ft: the last frame's time, which the document
 	// timeline and every Animation's current time read during a task (Chrome's frame clock)
-	const W = { clock: 0, ft: 0, k: 1, listeners: [], restarts: [], log: [], jumps: [], shown: new Map() };
+	const W = { clock: 0, ft: 0, k: 1, kAnim: 1, listeners: [], restarts: [], log: [], jumps: [], shown: new Map() };
 	let seq = 0;
 	const timers = new Map();
 	let rafs = [];
 	const setTimeout = (cb, t) => { const id = ++seq; timers.set(id, { at: W.clock + Math.max(0, +t || 0), cb }); return id; };
 	const clearTimeout = (id) => { timers.delete(id); };
-	const requestAnimationFrame = (cb) => { rafs.push(cb); return rafs.length; };
+	let rafId = 0;
+	const requestAnimationFrame = (cb) => { rafs.push({ id: ++rafId, cb }); return rafId; };
+	const cancelAnimationFrame = (id) => { rafs = rafs.filter((x) => x.id !== id); };
 	const st = { ss: null, flow: null, flowed: false, light: false, nier: false, reduced: false, snap: false, shown: true, held: false };
 	const attrs = new Map(), cls = new Set();
 	let anims = [];
@@ -105,7 +134,7 @@ function world({ clockApi = true } = {}) {
 	// style: what the rules say now, applied to the running loops (same name: retimed in place; new name: a new loop)
 	function flush() {
 		for (const layer of ['g', 'bl']) {
-			const spec = loopSpec(layer, st, W.k), a = anims.find((x) => x.layer === layer);
+			const spec = loopSpec(layer, st, W.k, inlineVars()), a = anims.find((x) => x.layer === layer);
 			if (!spec) { if (a) anims = anims.filter((x) => x !== a); continue; }
 			if (a && a.animationName === spec.name) { a.t.duration = spec.duration; a.t.delay = spec.delay; continue; }
 			if (a) anims = anims.filter((x) => x !== a);
@@ -113,6 +142,7 @@ function world({ clockApi = true } = {}) {
 			W.restarts.push({ at: W.clock, layer, name: spec.name, duration: spec.duration });
 		}
 	}
+	const inlineVars = () => Object.fromEntries(String(attrs.get('style') || '').split(';').map((d) => d.split(':')).filter((p) => p.length === 2 && p[0].trim().startsWith('--')).map(([n, v]) => [n.trim(), v.trim()]));
 	const syncState = () => { st.ss = attrs.get('data-ss') ?? null; st.flow = attrs.get('data-flow') ?? null; st.flowed = attrs.has('data-flowed'); st.snap = cls.has('ss-snap'); };
 	const chip = {
 		classList: { contains: (c) => cls.has(c), remove: (c) => { cls.delete(c); syncState(); }, add: (c) => { cls.add(c); syncState(); } },
@@ -136,19 +166,23 @@ function world({ clockApi = true } = {}) {
 		documentElement: { getAttribute: (n) => (n === 'data-motion' && st.reduced ? 'reduced' : null) },
 		timeline: { get currentTime() { return W.ft; } },
 		querySelector: () => (st.shown ? chip : null),
-		addEventListener: (type) => W.listeners.push(type)
+		addEventListener: (type) => W.listeners.push(type),
+		// Element.animate as 17-look.js patches it: a script's duration times Animation speed (the module's speed probe)
+		createElement: () => ({ animate: (kf, o) => ({ effect: { getTiming: () => ({ duration: o.duration * W.kAnim }) }, cancel() {} }) })
 	};
+	const handlers = [];
 	const window = {
 		matchMedia: () => ({ matches: false }),
-		addEventListener: (type) => W.listeners.push(type),
-		PM56_STREAM: { active: () => [] }
+		addEventListener: (type, fn) => { W.listeners.push(type); handlers.push({ type, fn }); },
+		removeEventListener: (type, fn) => { const i = handlers.findIndex((h) => h.type === type && h.fn === fn); if (i >= 0) handlers.splice(i, 1); },
+		PM56_STREAM: { active: () => W.streams || [] }
 	};
 	if (clockApi) window.PM56_CLOCK = {
 		now: () => W.clock, ms: (x) => x,
 		after(t, fn) { const h = { done: false, t: 0 }; h.t = setTimeout(() => { if (!h.done) { h.done = true; fn(); } }, t); return h; },
 		cancel(h) { if (h) { h.done = true; clearTimeout(h.t); } }
 	};
-	vm.runInNewContext(SRC, { window, document, performance: { now: () => W.clock }, setTimeout, clearTimeout, requestAnimationFrame, MutationObserver });
+	vm.runInNewContext(SRC, { window, document, performance: { now: () => W.clock }, setTimeout, clearTimeout, requestAnimationFrame, cancelAnimationFrame, MutationObserver });
 	const api = window.PM56_SENDSTOP;
 	assert.ok(api && typeof api.html === 'function', 'the module defines PM56_SENDSTOP');
 
@@ -156,8 +190,8 @@ function world({ clockApi = true } = {}) {
 	W.render = (o) => {
 		const html = api.html({ busy: false, text: '', qlen: 0, tid: 'one', ...o });
 		const tag = /<button([^>]*)>/.exec(html)[1];
-		for (const k of [...attrs.keys()]) if (k.startsWith('data-')) attrs.delete(k);
-		for (const m of tag.matchAll(/(data-[\w-]+)="([^"]*)"/g)) attrs.set(m[1], m[2]);
+		for (const k of [...attrs.keys()]) if (k.startsWith('data-') || k === 'style') attrs.delete(k);
+		for (const m of tag.matchAll(/(data-[\w-]+|style)="([^"]*)"/g)) attrs.set(m[1], m[2]);
 		cls.clear(); for (const c of (/class="([^"]*)"/.exec(tag) || [, ''])[1].split(/\s+/).filter(Boolean)) cls.add(c);
 		syncState();
 	};
@@ -180,7 +214,7 @@ function world({ clockApi = true } = {}) {
 		W.advance(W.clock + FRAME);
 		W.ft = W.clock;
 		flush();
-		const cbs = rafs; rafs = []; for (const cb of cbs) cb(W.ft);
+		const cbs = rafs; rafs = []; for (const x of cbs) x.cb(W.ft);
 		flush();
 		// the commit: what the square showed just before and shows just after, at this moment
 		for (const a of anims) {
@@ -195,6 +229,7 @@ function world({ clockApi = true } = {}) {
 	W.until = (pred, limit = 30000) => { const end = W.clock + limit; while (!pred()) { if (W.clock > end) throw new Error('model: waited too long'); W.frame(); } };
 	// Settings' Animation speed: #o55-look-scale is rewritten, then the observers hear of it (a microtask, before any frame)
 	W.speed = (k) => {
+		if (k !== W.k) { W.kAnim = k; for (const h of handlers.filter((x) => x.type === 'pm-animation-speed')) h.fn({ type: 'pm-animation-speed', detail: { factor: k } }); }
 		W.k = k;
 		for (const o of observers) if (o.on) o.cb([{ type: 'childList', target: { nodeName: 'STYLE', id: 'o55-look-scale' }, addedNodes: [{ nodeType: 3, nodeName: '#text', parentNode: { nodeName: 'STYLE' } }], removedNodes: [] }], o);
 	};
@@ -206,9 +241,9 @@ function world({ clockApi = true } = {}) {
 	W.task = (ms, fn) => { W.clock += ms; if (fn) fn(); };
 	// run fn inside the next frame's callbacks, as turn-stream.js and thought-stream.js release their words (a frame
 	// callback that the module registers from there runs in the frame after, as in the browser)
-	W.inFrame = (fn) => { rafs.push(() => fn()); };
+	W.inFrame = (fn) => { rafs.push({ id: ++rafId, cb: () => fn() }); };
 	W.set = (k, v) => { st[k] = v; };
-	W.armed = () => ({ timers: timers.size, rafs: rafs.length, observing: observers.filter((o) => o.on).length });
+	W.armed = () => ({ timers: timers.size, rafs: rafs.length, observing: observers.filter((o) => o.on).length + handlers.filter((h) => h.type === 'pm-animation-speed').length });
 	W.api = api; W.attrs = attrs; W.st = st;
 	return W;
 }
@@ -256,16 +291,16 @@ const CASES = {
 		const out = [];
 		for (const target of [0.1, 0.5, 0.97]) {
 			const W = start({}, false);
+			W.frame();                                                       // the cadence Stop starts in shows by its first frame
 			assert.equal(W.attrs.get('data-flow'), 'waiting', 'starts waiting with no word');
 			W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1 + target; });
 			const before = W.glyph().place(), i0 = W.frames.length;
 			W.advance(W.clock + 3);                                          // between two frames
-			const seenBefore = W.shownNow(W.glyph());
 			W.api.token('one');
+			W.frame();                                                       // the next frame makes the change
 			const g = W.glyph();
-			assert.equal(W.attrs.get('data-flow'), 'flowing', 'the word turns it to flowing in the same task');
-			assert.equal(g.t.duration, 2200, 'the loop is at the flowing length at once');
-			assert.ok(Math.abs(W.handedNow(g) - seenBefore) < 1e-9, `the loop keeps the place it is shown at: ${W.handedNow(g)} vs ${seenBefore}`);
+			assert.equal(W.attrs.get('data-flow'), 'flowing', 'the word turns it to flowing by the next frame');
+			assert.equal(g.t.duration, 2200, 'the loop is at the flowing length by the next frame');
 			W.run(400);
 			const w = smooth(W, i0 - 1); smooth(W, i0 - 1, 'b');
 			out.push(`${target}: kept ${before.toFixed(4)}, worst step ${(w * 100).toFixed(0)}% of a frame at 2200 ms`);
@@ -282,7 +317,7 @@ const CASES = {
 			const i0 = W.frames.length;
 			W.until(() => W.attrs.get('data-flow') === 'waiting', 3000);
 			const sw = W.log.find((x) => x.set === 'g' && x.at > last);    // the first re-placement after the last word
-			assert.ok(sw && Math.abs(sw.at - (last + 901)) < 1e-6, `the change came 901 ms after the last word: ${sw && sw.at - last}`);
+			assert.ok(sw && sw.at - (last + 901) >= -1e-6 && sw.at - (last + 901) <= FRAME + 1e-6, `the change came in the first frame after 901 ms without a word: ${sw && sw.at - last}`);
 			assert.equal(W.glyph().t.duration, 3200, 'the loop is at the waiting length');
 			W.run(400);
 			const w = smooth(W, i0); smooth(W, i0, 'b');
@@ -299,9 +334,10 @@ const CASES = {
 			W.until(() => { keep(); const g = W.glyph(); return g && g.place() != null && g.place() >= 1.37; });
 			const before = W.glyph().place(), i0 = W.frames.length;
 			W.speed(k);
+			W.frame();                                                       // the next frame makes the change
 			const g = W.glyph();
-			assert.ok(Math.abs(g.t.duration - (flowing ? 2200 : 3200) * k) < 1e-9, 'the new length applies');
-			assert.ok(Math.abs(g.place() - before) < 1e-9, `the speed change kept the loop's place: ${g.place()} vs ${before}`);
+			assert.ok(Math.abs(g.t.duration - (flowing ? 2200 : 3200) * k) < 1e-9, `the new length applies by the next frame: ${g.t.duration}`);
+			assert.ok(Math.abs(g.place() - before) <= FRAME / Math.min(g.t.duration, (flowing ? 2200 : 3200)) + 1e-9, `the speed change kept the loop's place to within a frame: ${g.place()} vs ${before}`);
 			assert.ok(Math.abs(W.glow().place() - W.glyph().place()) < 1e-9, 'the backlight stays with the glyph');
 			assert.ok(Math.abs(W.api.debug().speed - k) < 1e-9, `the module reads the speed from the loop: ${W.api.debug().speed}`);
 			W.run(200, keep);
@@ -375,7 +411,7 @@ const CASES = {
 		assert.equal(W.glyph(), null, 'no loop under Reduced Motion');
 		W.run(1000);
 		assert.equal(W.attrs.get('data-flow'), 'waiting', 'the cadence still follows the words');
-		W.api.token('one');
+		W.api.token('one'); W.frame();
 		assert.equal(W.attrs.get('data-flow'), 'flowing');
 		W.set('reduced', false); W.run(50);
 		assert.equal(pace(W), 2200, 'off again: the loop at the flowing length');
@@ -481,6 +517,29 @@ const CASES = {
 		assert.ok(out.every((x) => /: ok$/.test(x)), out.join('; '));
 		return out.join('; ');
 	},
+	'a Stop -> Send -> Stop flip inside one task with the loops surviving it: the markup never changes their length (R32 F5)': () => {
+		// R32 F5: Stop starting again recomputed the cadence into the markup, so loops that survived a flip inside one task
+		// (no style flush between) got the other length from CSS with no re-place
+		const W = start({}, false);
+		W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1.3; });
+		const i0 = W.frames.length;
+		W.streams = [{ tid: 'one' }];                                    // a stream is active: Stop starts again "flowing"
+		W.render({ busy: false }); W.render({ busy: true });             // one task, no style flush between
+		W.run(400);
+		smooth(W, i0); smooth(W, i0, 'b');
+		assert.equal(W.restarts.filter((r) => r.at > W.frames[i0].t - 1).length, 0, 'the loops survived the flip');
+		return `cadence after the flip: ${W.attrs.get('data-flow')}`;
+	},
+	"Settings' speed changed at the end of a 2.5 s task: placed by the wall clock still (R32 F6)": () => {
+		// R32 F6: after a task of 2 s or more the clock choice switched to the timeline's time, from before the task
+		const W = start({}, false);
+		W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1.3; });
+		const i0 = W.frames.length;
+		W.task(2500, () => W.speed(0.6));
+		W.run(400);
+		smooth(W, i0); smooth(W, i0, 'b');
+		return 'ok';
+	},
 	"another thread's words do not change the pace": () => {
 		const W = start({}, false);
 		W.run(1500);
@@ -501,7 +560,7 @@ const CASES = {
 let failed = 0;
 console.log(`send-stop pace model: ${ref ? `files at ${ref}` : 'this tree'}; --ss-ld ${LD} ms`);
 for (const [name, fn] of Object.entries(CASES)) {
-	try { console.log(`PASS ${name}: ${fn()}`); } catch (e) { failed++; console.log(`FAIL ${name}: ${e.message.split('\n')[0]}`); }
+	try { console.log(`PASS ${name}: ${fn()}`); } catch (e) { failed++; console.log(`FAIL ${name}: ${e.message.split("\n")[0]}`); if (process.env.TRACE) console.log(e.stack); }
 }
 console.log(failed ? `${failed} of ${Object.keys(CASES).length} failed` : `all ${Object.keys(CASES).length} passed`);
 process.exit(failed ? 1 : 0);

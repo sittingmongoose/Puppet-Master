@@ -256,14 +256,18 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scal
 /* One loop on the glyph (transform on the svg root, a box, so the compositor runs it) and one on the danger
    backlight's gradient (opacity, .ss-bl::before), same period. ONE pulse at two paces (Jared's choice PERF-STOP2 = A,
    2026-11-13): flowing (words arriving) 2200 ms, the activity bar's working breathe, ~1 px; waiting (thinking, a tool
-   running) 3200 ms, the attention cadence. The pace changes the moment the cadence does, and the loop keeps its place:
-   data-flow changes only the length here (never the keyframes, which would start a new loop), and send-stop.js puts
-   the running loop back at the same point of the new length in the same task (pace()). Until 2026-11-13 the waiting
+   running) 3200 ms, the attention cadence. The pace changes the moment the cadence does, and the loop keeps its place.
+   The loop's length is the chip's own: --ss-beat (from data-flow) times --ss-speed (Settings' Animation speed, which
+   the chip keeps itself, as Usage keeps --pmu-speed: a time that carries a *speed var is one the look scale sheet
+   leaves alone, 17-look.js). send-stop.js writes both data-flow and --ss-speed on the live chip itself, in one frame
+   callback, and puts the running loop at the same point of its new length there (apply()); the markup only repeats
+   what it has written. Never another keyframes name, which would start a new loop. Until 2026-11-13 the waiting
    pulse was also shallower (scale .92, backlight .30/.20; .10/.067 on light themes) and the change waited for a loop's
    end, learnt from an animationiteration listener that cost the whole page about 23 main frames a second. */
-.sendstop[data-ss="stop"] .ss-g { animation: ss-breathe 2200ms var(--ss-le) var(--ss-ld) infinite; }
-.sendstop[data-ss="stop"] .ss-bl::before { animation: ss-glow 2200ms var(--ss-gle) var(--ss-ld) infinite; }
-.sendstop[data-ss="stop"][data-flow="waiting"] .ss-g, .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-duration: 3200ms; }
+.sendstop[data-ss="stop"] { --ss-beat: 2200ms; }
+.sendstop[data-ss="stop"][data-flow="waiting"] { --ss-beat: 3200ms; }
+.sendstop[data-ss="stop"] .ss-g { animation: ss-breathe calc(var(--ss-beat) * var(--ss-speed, 1)) var(--ss-le) calc(var(--ss-ld) * var(--ss-speed, 1)) infinite; }
+.sendstop[data-ss="stop"] .ss-bl::before { animation: ss-glow calc(var(--ss-beat) * var(--ss-speed, 1)) var(--ss-gle) calc(var(--ss-ld) * var(--ss-speed, 1)) infinite; }
 /* THE PULSE'S DEPTH, the one place it is set (both cadences): the square's scale at the loop's middle and the
    backlight's opacity there, dark themes and light. Literal values per theme brightness (no var() inside a loop's
    keyframes, so the compositor runs it); a light/dark change swaps the backlight's keyframes, so its loop starts again
