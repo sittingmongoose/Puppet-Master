@@ -1,0 +1,70 @@
+{
+ "recipes": {
+  "w3c@1": {
+   "envelope_schema_id": "pm.event.v0",
+   "envelope_schema_version": "2.0.0",
+   "full_value_profile": "CV-339 original_event_value_commitment.v1",
+   "identity_recipe": {
+    "application": "w3c@1:event_id+application@1:key",
+    "project": "w3c@1:event_id+<event_type>@1:key"
+   },
+   "local_source_profile": "SP-236 sha256",
+   "owner_edition": "W3C-phase2",
+   "payload_profile": "SP-337 blake3",
+   "payload_schema_version": "1.0.0",
+   "physical_profile": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+   "producer_recipe": "CV-317 producer_semantic_digest",
+   "registry_revision": "unadmitted-proposal",
+   "resources": [
+    "Plans/w3c_test_capture_event_contracts.schema.json",
+    "Plans/test_capture_application_records.schema.json",
+    "Plans/event_record.schema.json",
+    "Plans/event_append_receipt_contracts.schema.json",
+    "Plans/shared_integration_runtime.schema.json"
+   ]
+  }
+ },
+ "stores": [
+  "6c3e2a10-0000-4c7d-9a1b-00005eed0000",
+  "6c3e2a10-0001-4c7d-9a1b-00005eed0001",
+  "6c3e2a10-0002-4c7d-9a1b-00005eed0002",
+  "6c3e2a10-0003-4c7d-9a1b-00005eed0003",
+  "6c3e2a10-0004-4c7d-9a1b-00005eed0004",
+  "6c3e2a10-0005-4c7d-9a1b-00005eed0005",
+  "6c3e2a10-0006-4c7d-9a1b-00005eed0006",
+  "6c3e2a10-0007-4c7d-9a1b-00005eed0007",
+  "6c3e2a10-0008-4c7d-9a1b-00005eed0008",
+  "6c3e2a10-0009-4c7d-9a1b-00005eed0009",
+  "6c3e2a10-000a-4c7d-9a1b-00005eed000a",
+  "6c3e2a10-000b-4c7d-9a1b-00005eed000b",
+  "6c3e2a10-000c-4c7d-9a1b-00005eed000c",
+  "6c3e2a10-000d-4c7d-9a1b-00005eed000d",
+  "6c3e2a10-000e-4c7d-9a1b-00005eed000e",
+  "6c3e2a10-000f-4c7d-9a1b-00005eed000f",
+  "6c3e2a10-0010-4c7d-9a1b-00005eed0010",
+  "6c3e2a10-0011-4c7d-9a1b-00005eed0011",
+  "6c3e2a10-0012-4c7d-9a1b-00005eed0012",
+  "6c3e2a10-0013-4c7d-9a1b-00005eed0013",
+  "6c3e2a10-0014-4c7d-9a1b-00005eed0014",
+  "6c3e2a10-0015-4c7d-9a1b-00005eed0015",
+  "6c3e2a10-0016-4c7d-9a1b-00005eed0016",
+  "6c3e2a10-0017-4c7d-9a1b-00005eed0017",
+  "6c3e2a10-0018-4c7d-9a1b-00005eed0018",
+  "6c3e2a10-0019-4c7d-9a1b-00005eed0019",
+  "6c3e2a10-001a-4c7d-9a1b-00005eed001a",
+  "6c3e2a10-001b-4c7d-9a1b-00005eed001b",
+  "6c3e2a10-001c-4c7d-9a1b-00005eed001c",
+  "6c3e2a10-001d-4c7d-9a1b-00005eed001d",
+  "6c3e2a10-001e-4c7d-9a1b-00005eed001e",
+  "6c3e2a10-001f-4c7d-9a1b-00005eed001f",
+  "6c3e2a10-0020-4c7d-9a1b-00005eed0020",
+  "6c3e2a10-0021-4c7d-9a1b-00005eed0021",
+  "6c3e2a10-0022-4c7d-9a1b-00005eed0022",
+  "6c3e2a10-0023-4c7d-9a1b-00005eed0023",
+  "6c3e2a10-0024-4c7d-9a1b-00005eed0024",
+  "6c3e2a10-0025-4c7d-9a1b-00005eed0025",
+  "6c3e2a10-0026-4c7d-9a1b-00005eed0026",
+  "6c3e2a10-0027-4c7d-9a1b-00005eed0027",
+  "6c3e2a10-0028-4c7d-9a1b-00005eed0028"
+ ]
+}
