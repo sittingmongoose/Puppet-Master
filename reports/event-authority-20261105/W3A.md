@@ -300,3 +300,142 @@ All command metadata and logs are under `/mnt/Cursor/PuppetMaster-Evidence/event
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/p1fix1/run_check.py` | `08dbd769e7d67adec0164aabd791610e4f0c137745ed914defe83cce51e79b7b` |
 
 **Stopped:** none. No disputed findings and no new DL-045 question. Remaining work is the unchanged retention pass, independent phase-1 re-review, and phase-2 oracle implementation/proof after the reviewed foundations. Governance staleness remains for the separately assigned reseal; no reseal was attempted.
+
+## Wave 3 phase 2: findings and responses
+
+**Branch** `plans/ea-w3-forge-20261105`, phase-1 head `1e57a68b0a`. **Merges:** the gated guard tool `004bdedd63` as `af5efa3c81` (its 11 files only) and the gated NUMRULE head `58c2816ff3` as `19d337b52f` (conflicts only in `Plans/_shards/**` and `Plans/.plan_index/**`, regenerated; every NUMRULE and guard-tool file is byte-identical to its gated commit). No rebase, no `main` push, no admission, no registry append, no Decision Log entry. Native execution NOT_RUN throughout.
+
+### What phase 2 adds
+
+| Path | What it is |
+|---|---|
+| `scripts/pm_w3a_forge_events.py` | Complete checker: builds each family world (native owner authority, capture, payload, EventRecord, SP-337 pending pack, source row, SP-286/CV-339 custody, checkpoint root with three generations, durable/live token, canonical source log, sealed SP-1101 receipts) and runs the append, settle, retry, publish, stage, read, replay and withdraw paths. It derives one observation per row and refuses only through the generated tables. |
+| `scripts/pm_w3a_forge_spec.py` | The 35 families, read from `W3A-contracts.json` and each closed payload schema; the three FGI conjuncts per family as exact-type predicates over the native result; the retention bindings. |
+| `scripts/pm_w3a_forge_rows.py`, `scripts/pm-w3a-table-generate.py`, `scripts/pm_w3a_forge_table_*.py` | Row inventory and generator; 592 tables, 2,101 rows (194 shared rows applied to every family, 1,907 family rows: one payload table per payload member, source/conjunct tables per family). At most four rows per table, because the gated tool's cost grows with rows times cases. `--check` confirms the modules are current. |
+| `scripts/pm_w3a_guard_suites.py`, `scripts/pm_w3a_guard_lean.py`, `scripts/pm-w3a-guard-tables.py` | Witness collection, lean per-table suites and the driver: collect once, then lean worker processes import only the engine and their tables and call `g.run`. Credit is copied from each table's own tool report. |
+| `scripts/pm-w3a-number-corpus.py` | The shared number corpus through W3A's integer slots and complete paths. |
+| `reports/event-authority-20261105/W3A-phase2-guard-map.json` | Every one of the 3,272 plan guards in `W3A-oracle-plan.json` mapped to the rows that realize it (3,272 realized, 0 unrealized). |
+
+### Items
+
+| # | Item | Outcome | Commit, location | How to verify |
+|---:|---|---|---|---|
+| 1 | Guard tables (step 1) | Done: 592 tables, 2,101 rows; 2,100 proved; 1 entailed row alone in its own table with its proof | `e681f236ab`, `af7e60d919`, `a84e8ecb91`; `scripts/pm_w3a_forge_rows.py:1`, `scripts/pm_w3a_forge_events.py:1146` (refusal only through table rows), `:1164` | `python3 scripts/pm-w3a-table-generate.py --check`; `python3 scripts/pm-w3a-guard-tables.py --collect S`, `--run S --out D`, `--summary D` |
+| 2 | Numbers (step 2) | Done: shared calls at every integer slot; corpus 140/140 and 1,624/1,624; self-test pass; no 4,400-digit crash | `e681f236ab`, `bf0f3d73db`; `scripts/pm_w3a_forge_events.py:138` (`uint64_ok`), `:558`, `:745`, `:825`; `scripts/pm-w3a-number-corpus.py` | `python3 scripts/pm-w3a-number-corpus.py`; `python3 scripts/pm_event_numbers.py --self-test --scope numbers` |
+| 3 | Timestamps (step 3) | Done: every W3A timestamp field through CV-1101 `date_time` with its owner profile; inventory gate recorded (lane drift only) | `e681f236ab`; `scripts/pm_w3a_forge_events.py:142` (`clock_ok`), `:558`, `:745`, `:825` | `python3 scripts/pm_w3a_forge_events.py`; `python3 scripts/pm_event_datetime_inventory.py` (recorded failure rows) |
+| 4 | Retained reads (step 4) | Done from the start: recipe only from the one sealed per-original receipt; missing, ambiguous and other-original negatives; no receipt created while reading | `e681f236ab`, `bf0f3d73db`; `scripts/pm_w3a_forge_events.py:1003` (`SealedOwner`), `:1024`, `:1051`; `Plans/storage-plan.md:29694` (SP-1200 paragraph, one per SP-12xx) | HI01-HI07 negatives in the complete checker; dispatcher agreement on every read world |
+| 5 | Retention (step 5) | Done: 34 cells bound (DL-453 15, DL-454 14, DL-455 5); review.approved unchanged; none pending | `bf0f3d73db`; `Plans/Forge_Integrations.md:741` (FGI-1200, one per FGI-12xx), `reports/event-authority-20261105/W3A-contracts.json` | Compare each name with main `a27594279e` `Plans/storage-plan.md:17644-17690` |
+| 6 | Carried items (step 6) | None listed for W3A; the review's phase-2 notes are closed (below) | - | `reviews/W3A-sol/REVIEW-phase1-recheck.md` |
+| 7 | Standing check 5 in the lane schema | Fixed: ten `^...$` patterns in `DurableGenericToken` accepted a trailing LF; now `(?![\s\S])`, with two CP01 negatives | `9821d74155`; `Plans/forge_event_storage_contracts.schema.json` | `trailing LF on a durable token hash` negatives refuse at CP01 |
+| 8 | Standing check 8 | Added: the oracle flags an accepted negative, a refused positive and a wrong row | `9821d74155`; `scripts/pm_w3a_forge_events.py:1662` | `oracle_self_check: true` in the checker output |
+| 9 | ATS-1200 preserved tokens | Fixed: `projector_replay_only`, `SP-286` and `SP-278` were preserved tokens absent from its text (pre-existing); the phase-2 paragraph now carries them | `bf0f3d73db`; `Plans/Automated_Testing_System.md:7263` | Every preserved token of FGI/CV/SP-1200..1234 and ATS-1200 occurs in its own unit text |
+| 10 | Re-grade (step 7) | Done: retention 34 PARTIAL to PASS, criterion 12 35 PARTIAL to PASS; every quote re-checked | report commit; `reports/event-authority-20261105/W3A-self-grade.json` | Each evidence quote occurs at its line |
+
+### Complete checker
+
+`python3 scripts/pm_w3a_forge_events.py --json <out>` exit 0, status `pass`: 35 families x two scopes, **980 positives** accepted and **21,829 negatives** refused at exactly their expected table, row and code. 21,409 negatives fail only their own row in their whole phase observation; 420 are labelled multi-defect (wrong-type and out-of-range number forms, an absent member, 4,400-digit integers) and refuse first at the earlier schema row their label names. Every reachable row of every table on each family's paths has a single-defect witness in that family (240 to 258 rows per family). Every `$ref` in the lane schemas resolves eagerly (0 unresolved). The oracle self-check (standing check 8) flags an accepted negative, a refused positive and a wrong refusing row. Run time 93 s at bf0f3d73db (first full run 1m33s at 9821d74155, same result).
+
+Positive paths per family and scope: fresh append after a separate (synthetic) admission; broad `event_record` occurred time; settlement; restart after the receipt was issued (no second receipt); same-key retry with different Storage metadata; publication over a mixed scan whose final record is unrelated, with three protected generations; actual empty source; staging into a free slot; lawful cleanup of a retired node after 604,800 s; retained read; retained read after the live capability was revoked; retained `projector_replay_only` original (the same original is refused by AD03 on the current-writer path); replay with no effect; consumer withdrawal.
+
+### Guard tables on the gated tool (`004bdedd63`)
+
+Tool `scripts/pm_guard_isolation.py` SHA-256 `e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8` (byte-identical to `004bdedd63` and to `main`). Runs: `--max-rss 2048`, one lean process per batch of 20 tables, each under `MemoryMax=2G`, `MemorySwapMax=0`; the tool's memory gate paused below 12 GiB and resumed at 13 for the first 300 tables, then (after a restart that skipped finished tables) paused below 10 and resumed at 12, because other streams held the VM near 11 GiB.
+
+| Result | Count |
+|---|---:|
+| Tables | 592 |
+| Rows | 2,101 |
+| Proved (credited by the tool) | 2,100 |
+| Unproved | 1 |
+| Tool status FAIL | 1 |
+| Tool status PASS | 591 |
+| Tool failure kinds | unproved_guards |
+| Lane-matrix findings (a control refused or a negative failing more than its own row inside its table) | 0 |
+| Masked negatives reported by the tool | 0 |
+| Tool seconds (sum over tables) | 3337.2 |
+
+**Unproved rows, each with its proof (each sits alone in its own table):**
+
+- `pack_media_entailed/PM01_pack_media`: entailed, no single-defect input reaches it. The append path runs `source_row` before `pack` and `pack_media_entailed` (`scripts/pm_w3a_forge_rows.py:225`), and SR01 validates `pending_intent_ref` against `^pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack(?![\s\S])` (`Plans/forge_event_storage_contracts.schema.json:236` and `:263` for SP-1200; the same pattern in all 35 source definitions, 70 sites). Any ref reaching PM01 therefore ends in exactly `application/vnd.msgpack`; a null ref is refused first by PK01. The complete checker's `pack media json` negative refuses at SR01, as labelled.
+
+**Cut results.** For every proved row the tool cut that row alone, ran every control and negative of its table, saw its own negatives flip to accepted and every other case keep its exact result, then restored the row and saw the baseline again, with matching guard-call traces (`noncausal_flip` and `guard_trace_changed` never occurred). Per-table reports (gzip) and `summary.json` are in the evidence folder with SHA-256 sums.
+
+**What this proof covers, and what it does not.** As in DM's and DCH's accepted adoption, each predicate reads one observation the checker derives from the complete boundary input. The tool proves the table rows are independent and causal over those recorded observations; the derivation code is checked by the complete checker's own positives and single-defect negatives above, family by family, not by the tool. Cross-phase duplicates are defense in depth (for example a payload ref's grammar in the payload table and again in the source-row schema): the complete checker refuses at the first, and each table proves its own rows.
+
+### Numbers (shared calls at every integer slot)
+
+| Slot | Shared call | Row |
+|---|---|---|
+| EventRecord `sequence_id` (Storage-assigned) | `storage_uint64` | EN05; join to Storage's own record EN27 |
+| EventRecord `producer_sequence_id` | `current_integer(minimum=0)` or null | EN06 |
+| Producer projection | `producer_semantic_digest` (CV-317/CV-1100 route) | EN07, source digest SR06, custody digest RC06, retry RT05 |
+| First receipt `sequence_id`, `segment_generation`, `byte_offset`, `durable_end_offset`, `manifest_generation` | `storage_uint64` | RC11-RC15 |
+| Checkpoint node `publication_revision`, `matched_count`, cursor `sequence_id`, token `frontier_revision`, selection `selected_segment_generation`, `manifest_generation`, `recovery_epoch` | `storage_uint64` (every node) | CP05-CP11 |
+| Cleanup elapsed seconds | `storage_uint64` | SL05 |
+| SP-337 pack size token | `current_integer_token(minimum=1)` | PK03 |
+| EventRecord value, pack bytes, full value | `storage_value_bytes(EVENT_VALUE)`, `decode_storage_value`, `full_value_commitment` | PK05, RC08, cursor value hash SC04 |
+| Generation id, root value hash | `storage_value_bytes(INDEX_BINDING)` (SP-278 codec) | GN06, CS03/CS04, CP14 |
+| Retained originals | `RetainedDispatcher`, `OriginalBinding`, `OriginalCustody`, `RecipeTuple`, `FrozenRecipe` | HI01-HI05 (cross-checked against the dispatcher on every read) |
+
+- **Shared corpus through the complete checker:** `python3 scripts/pm-w3a-number-corpus.py` exit 0, status `pass`. Part A: 140 corpus integer cases through the shared calls as W3A uses them, 140 agree, 0 disagree, 0 untracked. Part B: 1,624 routes (every corpus integer value plus a 4,400-digit integer and its negative, in seven W3A slots, both scopes, through the complete append, settle, publish and stage paths): 1,624 agree, 0 disagree, 0 untracked exceptions.
+- **Self-test:** `python3 scripts/pm_event_numbers.py --self-test --scope numbers` exit 0, printed `"status": "pass"`.
+- **4,400-digit integer (the crash DX, DS15, DF, DM and DCO found):** no crash on any path. A valid 4,400-digit `sequence_id` refuses at EN05 (`integer_range`); a valid 4,400-digit `producer_sequence_id` refuses at EN07 (`jcs_binary64`); in the first receipt it refuses at RC08 (no CV-339 preimage; RC11 also fails); as `matched_count` it refuses at CP01 (schema maximum; CP06 also fails). Each is a committed negative, and Part B places it in every slot. The checker renders integers exactly under `exact_integer_digits()` and never swallows an exception: a refusal is the shared `Refusal`, anything else propagates and fails the run.
+- **Fixture expectations the shared rule changed:** none. W3A had no executed fixture before phase 2, so no recorded expectation existed to change. Where the shared rule decides a refusal, the refusing row and reason are: `7.0` and `True` at a uint64 slot `integer_type` (EN05/RC11/CP05-CP11/SL05; `True` also fails the schema first); `2^64` and the 4,400-digit integer `integer_range` (EN05); `3.0` producer sequence `integer_type` (EN06); `-1` producer sequence `integer_range` (EN01 first); `2^53+1` and 4,400 digits `jcs_binary64`, `2^60` `jcs_decimal` (EN07); pack size off by one (PK03).
+
+### Timestamps (CV-1101 `date_time`, owner profile per field)
+
+| Field | Owner | Profile | Row |
+|---|---|---|---|
+| EventRecord `occurred_at_utc` | EventRecord / CV-317 (from the original source) | `event_record` (broad: offsets, lowercase, any fraction) | EN02; join EN17 |
+| EventRecord `observed_at_utc` | Storage (CV-253) | `storage_utc_z` | EN03; join EN28 |
+| EventRecord `persisted_at_utc` | Storage (CV-253) | `storage_utc_z` | EN04; join EN29 |
+| First receipt `acknowledged_at_utc` | Storage (SP-286/SP-347) | `storage_utc_z` | RC16 |
+| Checkpoint node `activated_at_utc` | Storage (refs EventRecord `persisted_at_utc`) | `storage_utc_z` | CP12; anchor GN11 |
+| Checkpoint node `retired_at_utc` | Storage (refs EventRecord `persisted_at_utc`) | `storage_utc_z` | CP13; anchor GN10 |
+
+W3A payloads and source rows carry no timestamp. The envelope schema is validated without a format checker and each timestamp has its own row, so the profile is enforced exactly once and never by an unenforced `format`. Negatives per field: missing zone, hour 24, trailing LF, February 30, space separator and a non-leap 60th second (occurred); `+00:00`, lowercase `z`, `-00:00` and a nonzero offset (Storage fields). The timestamp review is **no longer interim** for these fields: the shared `date_time` predicate checks each with the named profile.
+
+**Inventory gate in this lane tree** (Addendum 2): `python3 scripts/pm_event_datetime_inventory.py` exit 1: fails closed on lane-tree drift only: 187 rows (110 `unreadable_mentioning_container`, 72 `unclassified_mentioning_container`, 5 `stale_scan_exclusion`) in `Plans/_shards/**`, `Plans/.plan_index/**`, `Plans/.plan_migration/**`, `Plans/Contracts_V0.md` and the ignored currentness copy; 233 nodes, **0 unclassified nodes, no row in a W3A or Forge file**. As Addendum 2 directs, `datetime_validator` and the gate are not used here and the NUMRULE inventory and exclusions files are not edited; they run at batch-3 integration, where the two new W3A Storage timestamp nodes per family (`activated_at_utc`, `retired_at_utc` in `Plans/forge_event_storage_contracts.schema.json`) need classification under CV-1101. The combined self-test (`pm_event_numbers.py --self-test`, scope all) refuses before any case (`case_execution: NOT_RUN_ADMISSION_REFUSED`, exit 1) because the inventory is stale in this tree, as Addendum 2 states.
+
+### Retained reads (built as batch 2 fix 1 requires)
+
+- **Selection only from the sealed receipt:** `SealedOwner.authenticated_original` returns custody only from the one receipt Storage sealed for that exact original ref; it has no default recipe, does not recognise a Store, and does not read identifiers the recipes share. The read rows HI01-HI05 judge presence, uniqueness, binding, installed recipe and frozen verification; the shared `RetainedDispatcher` runs on every read world and must agree with them (it did on every case).
+- **Missing or ambiguous:** no receipt or one bound to another original refuses `original_unavailable` (HI01, HI03); two refuse `recipe_unsupported` (HI02); an unknown recipe tuple `recipe_unsupported` (HI04). The stored bytes stay untouched (HI06), and a reader that seals a receipt while reading refuses (HI07).
+- **New writes stay separate:** the append path never reads a receipt; current-writer admission (AD01-AD09) never runs on a retained original, so a retained `projector_replay_only` original and an original read after the live capability was revoked are both accepted.
+- **Owner text:** each SP-1200..1234 now carries a "Retained reads (SP-1101)" paragraph stating this rule, and depends on SP-1101.
+
+### Retention cells
+
+| Decision | Families | Project | Application | Anchor |
+|---|---:|---|---|---|
+| DL-453 (E-CARDS-3 1.a) | 15 | `RP-AUTHORITY-INDEFINITE@1.0.0` | same, no new count allowance | none |
+| DL-454 (E-CARDS-3 2.a) | 14 | `RP-TELEMETRY-90D@1.0.0` | `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (`app:routine_observation`) | first save that survives a restart (DL-415), 7,776,000 s |
+| DL-455 (E-CARDS-3 3.a) | 5 | `RP-OPERATIONAL-2555D@1.0.0` with Storage's Project first-save anchor adapter | `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (`app:operational_security`) | 220,752,000 s; start (`pipeline.started`), finish (`pipeline.cancelled`, `pipeline.completed`), retry (`pipeline.retried`), change (`connection.reauthorized`) |
+| Case L-3 Approval class (phase 1; E-CARDS-3 Appendix B settled) | 1 (`review.approved`) | `RP-AUTHORITY-INDEFINITE@1.0.0` | same | none |
+
+Every name is listed by exact spelling in the landed Storage text at `main` `a27594279e`, `Plans/storage-plan.md:17644-17690` ("Third-sitting retention assignments (DL-453 through DL-464)"); the two application policy objects are `Plans/storage_value_registry.json:686` and `:702` there. Those passages and objects are on `main`, not yet on this branch; batch-3 integration brings them together. **No cell stays `PENDING_RETENTION_DECISION`; no question for Jared.** Each FGI-12xx retention paragraph, its preserved token and `W3A-contracts.json` now carry the binding; source rows and checkpoints keep their SP-bound policies.
+
+### Carried items
+
+The latest review (`reviews/W3A-sol/REVIEW-phase1-recheck.md`, LANDING_READY_WITH_NOTES, no blocking findings) lists only phase-2 work, now done: adopt the number and date-time helpers and the guard tool (above); implement and prove the per-family cases including the R1 constructions (GN02 A,B,B membership; GN07 unissued staged seed U; GN06 substituted id X with the selector repaired; GN03 nonmember selector) and the R2 count-only case (SC05 `matched_count` 2 against an inclusive resume that publishes 1 over M then unrelated U); preserve authenticated historical recipes and the current-writer replay-only refusal (HI rows, AD03, RT01); complete the separate retention pass (above). W3-P2 names no extra item for W3A.
+
+### Grades
+
+Before (phase-1 fix 1): ABSENT 35, PASS 316, PARTIAL 69 (34 retention, 35 criterion 12). After: ABSENT 35, PASS 385, PARTIAL 0. Retention moved PARTIAL to PASS in 34 families; criterion 12 moved PARTIAL to PASS in all 35 (executed static oracles with a single-defect witness for every reachable row in every family and 2,100 of 2,101 rows proved by the gated tool; native execution NOT_RUN, as DM and DCH grade the same level). Membership stays ABSENT (no admission). Every other cell is carried; its quote was re-checked at its current line (456 quotes relocated and re-checked, 0 missing; 70 new retention quotes and 35 new criterion-12 quotes checked at their lines).
+
+### Checks
+
+- `python3 scripts/pm_w3a_forge_events.py --json` at `bf0f3d73db`: exit 0, status pass (numbers above).
+- `python3 scripts/pm-w3a-table-generate.py --check`: exit 0, 592 tables, 2,101 rows, none stale.
+- `pm-w3a-guard-tables.py --run` then `--summary`: 591 tables PASS, 1 FAIL (`unproved_guards`, the entailed table only); summary exit 1 for that reason only.
+- `python3 scripts/pm-w3a-number-corpus.py`: exit 0, pass. `python3 scripts/pm_event_numbers.py --self-test --scope numbers`: exit 0, `"status": "pass"`.
+- `python3 scripts/pm_event_datetime_inventory.py`: exit 1, lane-tree drift only (above). `python3 scripts/pm_event_numbers.py --self-test` (all): exit 1, refused before any case.
+- `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json`: exit 0, pass, 99 sources. Regeneration changed only `Plans/_shards/storage-plan/**`, `Plans/_shards/automated_testing_system/**` and the index (Forge_Integrations is not sharded; Contracts_V0 was not edited).
+- `python3 scripts/pm-plan-index.py validate` at `origin/main` `f8b2098608`: exit 1 with 760 rows, all for units `main` gained after this unrebased branch's base (739 `plan_unit_removed_without_ledger_decision`, 21 `plan_unit_removal_ledger_invalid` in old ledgers). None names a W3A unit; none of the 739 existed at the phase-1 head; this branch lost no unit since then and gained only CV-1100/1101 and SP-1100/1101 from the NUMRULE merge. Batch-3 integration rebases the lane.
+- Every `$ref` in the lane schemas resolves (0 unresolved). The currentness edition was copied in before `pm-plan-index.py generate` (tree SHA-256 `69e5e402...`, identical to the shared checkout).
+- Memory: heavy runs ran under `MemoryMax=2G`, `MemorySwapMax=0` and started at 12 GiB or more available, except one: the final 93-second checker rerun started at 8 GiB available. The guard driver paused itself while other streams held memory.
+
+### Stopped for Jared
+
+None. The retention cells are decided by landed decisions; nothing here needs a DL-045 choice.
+
