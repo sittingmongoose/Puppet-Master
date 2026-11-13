@@ -4,7 +4,7 @@
 (a) git archive HEAD Concepts -> a Concepts-only checkout: build.py must exit 1 with exactly
     "BUILD FAILED: this build needs Plans/settings_inventory.json (a full repository checkout)" on stderr.
 (b) git archive HEAD Concepts Plans/settings_inventory.json -> build.py must exit 0 and its --out page
-    must be byte-identical to the committed Concepts/PMConcept7.html at HEAD.
+    must be byte-identical to an independent build from the full checkout of the same HEAD.
 
 Run from anywhere inside the repository (each build takes about a minute):
   python3 -B Concepts/onboarding/opus-5.5/tools/build_clean_checkout.test.py
@@ -52,7 +52,7 @@ def case_a(root: Path) -> str | None:
 
 
 def case_b(root: Path) -> str | None:
-    """Concepts plus the inventory: the build must reproduce the committed page. None on pass, else the reason."""
+    """Concepts plus inventory must match a full-checkout build. None on pass, else the reason."""
     extract_head(['Concepts', 'Plans/settings_inventory.json'], root)
     proc = run_build(root, 'b.html')
     if proc.returncode != 0:
@@ -60,18 +60,20 @@ def case_b(root: Path) -> str | None:
     out = root / 'b.html'
     if not out.is_file():
         return 'build exited 0 but wrote no b.html'
-    committed = subprocess.run(['git', 'show', 'HEAD:Concepts/PMConcept7.html'], cwd=REPO,
-                               capture_output=True, check=True).stdout
+    reference = root / 'full-checkout.html'
+    full = run_build(REPO, str(reference))
+    if full.returncode != 0 or not reference.is_file():
+        return f'full-checkout reference build failed (exit {full.returncode}); stderr: {full.stderr.strip()!r}'
     got = hashlib.sha256(out.read_bytes()).hexdigest()
-    want = hashlib.sha256(committed).hexdigest()
+    want = hashlib.sha256(reference.read_bytes()).hexdigest()
     if got != want:
-        return f'b.html sha256 {got} != committed PMConcept7.html sha256 {want}'
+        return f'b.html sha256 {got} != full-checkout build sha256 {want}'
     return None
 
 
 def main() -> int:
-    tmp_a = Path(tempfile.mkdtemp(prefix='pm7-clean-checkout-a-'))
-    tmp_b = Path(tempfile.mkdtemp(prefix='pm7-clean-checkout-b-'))
+    tmp_a = Path(tempfile.mkdtemp(prefix='pm7-clean-checkout-a-', dir=REPO.parent))
+    tmp_b = Path(tempfile.mkdtemp(prefix='pm7-clean-checkout-b-', dir=REPO.parent))
     failed = False
     try:
         for label, root, case in (('a', tmp_a, case_a), ('b', tmp_b, case_b)):
