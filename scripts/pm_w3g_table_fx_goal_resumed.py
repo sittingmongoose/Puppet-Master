@@ -88,7 +88,7 @@ def FD16_history_decoder(value, context):
     return 'invalid_history_edition' if value['dom.history_decoder'] is not True else None
 
 def FD17_revision_successor(value, context):
-    return 'pause_state_refused' if value['dom.revision_successor'] is not True else None
+    return 'resume_blocker_refused' if value['dom.revision_successor'] is not True else None
 
 def FD18_join_before_revision(value, context):
     return 'source_join_mismatch' if value['dom.join_before_revision'] is not True else None
@@ -146,7 +146,7 @@ def case(value):
         g.Guard('FD14_control_body', g.Invariant('/dom.control_body', "goal.resumed:control_body (eq ('control.body_sha256', 'after.body_sha256'))"), 'control_mismatch', FD14_control_body),
         g.Guard('FD15_control_epoch', g.Invariant('/dom.control_epoch', "goal.resumed:control_epoch (eq ('control.cas_epoch', 'control.epoch'))"), 'cas_conflict', FD15_control_epoch),
         g.Guard('FD16_history_decoder', g.Invariant('/dom.history_decoder', "goal.resumed:history_decoder (imp ('control.edition', 'v1', 'control.install_evidence', 'v1'))"), 'invalid_history_edition', FD16_history_decoder),
-        g.Guard('FD17_revision_successor', g.Invariant('/dom.revision_successor', "goal.resumed:revision_successor (succ ('receipt.before_revision', 'receipt.after_revision'))"), 'pause_state_refused', FD17_revision_successor),
+        g.Guard('FD17_revision_successor', g.Invariant('/dom.revision_successor', "goal.resumed:revision_successor (succ ('receipt.before_revision', 'receipt.after_revision'))"), 'resume_blocker_refused', FD17_revision_successor),
         g.Guard('FD18_join_before_revision', g.Invariant('/dom.join_before_revision', "goal.resumed:join_before_revision (eq ('expect.before_revision', 'receipt.before_revision'))"), 'source_join_mismatch', FD18_join_before_revision),
         g.Guard('FD19_join_after_revision', g.Invariant('/dom.join_after_revision', "goal.resumed:join_after_revision (eq ('expect.after_revision', 'receipt.after_revision'))"), 'source_join_mismatch', FD19_join_after_revision),
         g.Guard('FD20_join_before_currentness_hash', g.Invariant('/dom.join_before_currentness_hash', "goal.resumed:join_before_currentness_hash (eq ('expect.before_currentness_hash', 'receipt.before_currentness_hash'))"), 'source_join_mismatch', FD20_join_before_currentness_hash),

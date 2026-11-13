@@ -27,6 +27,7 @@ def main():
     parser.add_argument('--table', action='append')
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--collect-only', action='store_true')
+    parser.add_argument('--resume', action='store_true', help='keep the tables a previous run in --out already finished')
     parser.add_argument('--negative-limit', type=int, default=2)
     parser.add_argument('--control-limit', type=int, default=4)
     parser.add_argument('--max-rss', type=int, default=1900)
@@ -47,8 +48,18 @@ def main():
                    negative_limit=args.negative_limit, control_limit=args.control_limit, suites=[])
     gate = g.MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, 30, 2700)
     bad = bool(findings)
+    done = {}
+    if args.resume and (args.out / 'summary.json').exists():
+        previous = json.loads((args.out / 'summary.json').read_text())
+        if previous.get('source_sha256') == inputs:
+            done = {e['table']: e for e in previous['suites'] if 'tool_status' in e or e['negatives'] == 0}
     for table in m.all_phases():
         if args.table and table not in args.table:
+            continue
+        if table in done:
+            summary['suites'].append(done[table])
+            bad = bad or done[table].get('tool_status', 'PASS') != 'PASS' or bool(done[table]['lane_matrix'])
+            print(f'{table} kept from the previous run', file=sys.stderr, flush=True)
             continue
         slot = collected[table]
         rows = [name for name, _, _ in suites.table_rows(table)]

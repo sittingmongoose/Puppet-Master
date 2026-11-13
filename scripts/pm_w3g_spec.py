@@ -595,7 +595,7 @@ DOMAIN = {
           {'after.objective_sha': H('objective-2')}),
         R('resume_body_history', 'eq', ('after.history_head', 'before.history_head'), 'resume_blocker_refused',
           {'after.history_head': 'hist-6'}),
-    ] + GOAL_SHARED,
+    ] + [dict(r, code='resume_blocker_refused') if r['suffix'] == 'revision_successor' else r for r in GOAL_SHARED],
     'notebook.checkpoint_committed': [
         R('checkpoint_required_set', 'sub', ('required.entry_revisions', 'supplied.entry_revisions'),
           'checkpoint_required_set_refused', {'supplied.entry_revisions': ['entry-1@2']}),

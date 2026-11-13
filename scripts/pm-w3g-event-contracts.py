@@ -130,6 +130,108 @@ def schema_site_map():
     return out, unmapped
 
 
+# Phase-1 plan guard suffix -> the common row observation field that implements it (family guards map by suffix to
+# pm_w3g_spec.DOMAIN rows; closed_schema maps to the per-keyword py_<family> rows; timestamp_profile and numeric_recipe
+# are split into the TM and NM rows, listed by their first row).
+PLAN_COMMON = {
+    'membership': 'membership', 'membership_selector': 'membership_selector', 'retention': 'retention', 'withdrawal': 'withdrawal',
+    'reference_closure': 'reference_closure', 'exact_types': 'exact_types', 'identifier_fullmatch': 'identifier_fullmatch',
+    'identifier_spelling': 'identifier_spelling', 'source_custody': 'source_custody', 'source_custody_receipt_issued': 'source_receipt_issued',
+    'source_digest': 'source_digest', 'scope': 'req_scope_kind', 'scope_scope_partition': 'req_scope_partition',
+    'scope_project_id': 'req_project_id', 'scope_server_id': 'req_server_id', 'scope_computer_id': 'req_computer_id',
+    'subject': 'req_subject_id', 'subject_thread_id': 'req_thread_id', 'subject_run_id': 'req_run_id',
+    'writer_currentness': 'writer_currentness', 'identity_recipe': 'identity_recipe', 'identity_recipe_idempotency': 'identity_idempotency',
+    'retry_conflict': 'retry_conflict', 'no_second_effect': 'no_second_effect', 'storage_metadata': 'sequence_issued',
+    'storage_metadata_observed_at_utc': 'observed_issued', 'storage_metadata_persisted_at_utc': 'persisted_issued',
+    'replay_only_writer': 'replay_only_writer', 'payload_form': 'payload_form', 'payload_form_exclusive': 'form_exclusive',
+    'value_size': 'value_size', 'numeric_recipe': 'producer_route', 'timestamp_profile': 'occurred_clock',
+    'receipt_custody': 'receipt_custody', 'receipt_custody_event': 'receipt_event', 'receipt_custody_group': 'receipt_group',
+    'coverage': 'coverage', 'coverage_current': 'coverage_current', 'checkpoint_identity': 'ckpt_instance',
+    'checkpoint_identity_generation': 'ckpt_generation', 'checkpoint_identity_frontier': 'ckpt_frontier',
+    'checkpoint_identity_scope': 'ckpt_scope', 'durable_token': 'durable_token', 'durable_token_snapshot': 'token_snapshot',
+    'historical_recipe': 'recipe_edition', 'historical_recipe_admission': 'original_admission', 'read_visibility': 'read_permission',
+    'read_visibility_deletion': 'not_deleted', 'read_visibility_restriction': 'restriction_ok', 'reader_passivity': 'passive_domain',
+    'reader_passivity_external request': 'passive_external', 'reader_passivity_notification': 'passive_notification',
+    'reader_passivity_charge': 'passive_charge', 'coherent_restore': 'restore_native', 'coherent_restore_operation result': 'restore_result',
+    'coherent_restore_first receipt group': 'restore_group', 'coherent_restore_referenced payload': 'restore_payload',
+    'coherent_restore_identity custody': 'restore_identity', 'coherent_restore_tombstones': 'restore_tombstones',
+    'payload_dispatch': 'dispatch_event_type', 'payload_dispatch_payload_schema_id': 'dispatch_schema_id',
+    'payload_dispatch_payload_scope': 'dispatch_scope', 'payload_dispatch_payload_edition': 'dispatch_edition',
+    'write_lease': 'write_lease', 'write_permission': 'write_permission', 'writer_owner': 'writer_owner', 'writer_epoch': 'writer_epoch',
+    'writer_cas': 'writer_cas', 'writer_intent': 'writer_intent', 'writer_stop_epoch': 'writer_stop_epoch',
+    'writer_final_fence': 'writer_final_fence', 'retry_original_result': 'retry_original_result',
+    'retry_first_receipt': 'retry_first_receipt', 'write_lease_scope': 'write_lease_scope', 'writer_stop_blocked': 'writer_stop_blocked',
+    'application_key': 'application_key', 'closed_schema': None,
+}
+
+
+def plan_guard_map():
+    """Every guard of the plan -> (row, code agreement). closed_schema maps to the py_<family> keyword rows."""
+    import pm_w3g_spec as spec
+    plan = json.loads((ROOT / 'Plans/event_authority_w3g/oracle_plan.json').read_text())
+    common = {r[1]: (r[0], r[3]) for ph, (_t, _a, rows) in m.all_phases().items() if ph in m.ROWS for r in rows}
+    out, bad = [], []
+    for fam in plan['families']:
+        f = fam['event_type']
+        for g in fam['guards']:
+            suffix = g['guard_id'].split(':', 1)[1]
+            code = g['negative']['expected_refusal']
+            if suffix in PLAN_COMMON:
+                field = PLAN_COMMON[suffix]
+                row, rcode = (('py_' + m.FAM[f]['slug'] + ' keyword rows', m.PY_CODE) if field is None else common[field])
+            else:
+                hits = [(n, r) for n, r in enumerate(spec.DOMAIN[f], 1) if r['suffix'] == suffix]
+                if len(hits) != 1:
+                    bad.append(dict(guard=g['guard_id'], problem='no row'))
+                    continue
+                n, r = hits[0]
+                row, rcode = f'FD{n:02d}_{m._sanitize(suffix)}', r['code']
+            ok = field is None if suffix in PLAN_COMMON and PLAN_COMMON[suffix] is None else rcode == code
+            if suffix == 'closed_schema':
+                ok = code == 'invalid_payload'
+            out.append(dict(guard=g['guard_id'], row=row, plan_refusal=code, row_refusal=rcode, agrees=ok))
+            if not ok:
+                bad.append(out[-1])
+    return out, bad
+
+
+def resolver_checks():
+    """N1/N2 (phase-1 review notes, implemented here): offline discovery refuses an ambiguous URI that no owner pin
+    disambiguates and a reachable resource that is missing; the symbolic value-schema notation resolves only by an exact
+    unique family_id and refuses a missing or duplicated id."""
+    out = {}
+    out['shipped_closure_resolves'] = m.closure(())[0] is True
+    out['missing_resource_refused'] = m.closure(m.CLOSURE_NEGATIVE_EXCLUSION)[0] is False
+    uri = 'https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json'
+    saved = m.OWNER_PINS.pop(uri)
+    m._CLOSURE.clear()
+    try:
+        out['ambiguous_uri_without_pin_refused'] = m.closure(())[0] is False
+    finally:
+        m.OWNER_PINS[uri] = saved
+        m._CLOSURE.clear()
+    out['ambiguous_uri_with_one_pin_resolves'] = m.closure(())[0] is True
+    registry = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
+    fid = registry['families'][0]['family_id']
+    out['symbolic_exact_id_resolves'] = m.resolve_symbolic(f'Plans/storage_value_registry.json#/families/{fid}/value_schema',
+                                                            registry) == registry['families'][0]['value_schema']
+    for name, doc in (('symbolic_missing_id_refused', dict(families=[r for r in registry['families'] if r['family_id'] != fid])),
+                      ('symbolic_duplicate_id_refused', dict(families=registry['families'] + [registry['families'][0]]))):
+        try:
+            m.resolve_symbolic(f'Plans/storage_value_registry.json#/families/{fid}/value_schema', doc)
+            out[name] = False
+        except m.ClosureRefused:
+            out[name] = True
+    try:
+        m.resolve_symbolic('Plans/storage_value_registry.json#/families/0/value_schema', dict(families=registry['families']))
+        out['symbolic_array_position_refused'] = False
+    except m.ClosureRefused:
+        out['symbolic_array_position_refused'] = True
+    contracts_text = (ROOT / 'Plans/event_authority_w3g/contracts.json').read_text()
+    out['symbolic_refs_in_w3g_selections'] = contracts_text.count('storage_value_registry.json#/families/')
+    return out
+
+
 def git_show(rev, path):
     return subprocess.run(['git', '-C', str(ROOT), 'show', f'{rev}:{path}'], capture_output=True, text=True, check=True).stdout
 
@@ -177,6 +279,7 @@ def retention_cells():
                         policies[pid].get('anchor_kind') == 'creation'
                     decision, cite = 'DL-455 (E-CARDS-3 item 3.a A), application allowance app:operational_security', \
                         f'Plans/storage-plan.md:{head},{n}'
+            ok = ok and m.FAM[f].get('retention_by_scope', {}).get(scope) == ref   # the contract records the same cell
             cell = dict(family=f, scope=scope, retention_policy_ref=ref, decision=decision, main=MAIN_PIN, cite=cite,
                         policy_object_on_main=pid in policies, status='bound' if ok else 'mismatch')
             out.append(cell)
@@ -199,9 +302,14 @@ def main():
     missing, na, ent = coverage(witness)
     sites, unmapped = schema_site_map()
     cells, bad_cells = retention_cells()
+    guard_map, bad_guards = plan_guard_map()
+    resolver = resolver_checks()
+    bad_resolver = [k for k, v in resolver.items() if v is False]
     phases = m.all_phases()
     result = dict(
-        status='pass' if not (failures or missing or unmapped or bad_cells or tables.returncode) else 'fail',
+        status='pass' if not (failures or missing or unmapped or bad_cells or bad_guards or bad_resolver or tables.returncode) else 'fail',
+        resolver_checks=resolver,
+        plan_guards=len(guard_map), plan_guard_problems=bad_guards,
         tables_current=tables.returncode == 0, tables=tables.stdout.strip(),
         schema_closure_resources=resources, owner_pin_drift=m.pin_drift(), timestamp_fields=clocks,
         cases=len(cases), positives=sum(1 for x in cases if x['expect'] is None),
