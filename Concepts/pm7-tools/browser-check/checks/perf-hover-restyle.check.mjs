@@ -4,8 +4,8 @@
 // below an element whose state changes. A few rules (mostly NieR cursor rules, which cost in every look) made the
 // :hover, .pmh-on, .active, aria-selected, :active and :has() sets "whole subtree" or put bare tags (svg, span, b, path)
 // into them, so a pointer moving from one Usage card to the next restyled about 750 elements (12.8 ms of style on a
-// 120 Hz screen whose whole frame is 8.3 ms; lane I). Those rules are keyed on classes now, and build.py's lint
-// (tools/invalidation_sets.py) fails a build that brings one back.
+// 120 Hz screen whose whole frame is 8.3 ms; lane I). Bounded component rules remain keyed on classes. PERF-R5
+// restores main tag arms for generic rules 0/1/2/6; the build lint records only those exact approved exceptions.
 //
 // Here, in each look, for real input: the pointer moving between two Usage cards, two Files rows, two rows of a rail
 // menu, onto and off a title-bar control; a Home panel tab switch (click); a notification arriving; and, with the
@@ -18,9 +18,9 @@
 // DevTools holds the animation clock at playback rate 0 during each trace,
 // then restores 1: existing loader/icon animation work cannot answer a question about this input. The input's selector
 // changes and a transition's first restyle still happen at the held time (perf-hover-hold proves both). This never
-// calls WAAPI pause/play, which would override the still page's CSS play state on Chrome 157. The median must stay under the bound,
-// which sits between what main does and what the change does (counts, not milliseconds). A cell that could not be
-// judged fails: ALL n intended changes must have finite, nonnegative element counts. Missing marks/counts are logged;
+// calls WAAPI pause/play, which would override the still page's CSS play state on Chrome 157. Usage cells listed below must stay at or below
+// their measured main ceiling (PERF-R5); every other cell keeps its original strict bound (counts, not milliseconds).
+// An unjudgeable cell fails: ALL n intended changes must have finite, nonnegative element counts. Missing marks/counts are logged;
 // the same complete-coverage rule applies to presses.
 // Attribution only: --set traceDir=<folder> retains gzip traces; --set track=1 adds invalidation tracking + state.
 // Both surfaces.   --set looks=<a,b>  --set scen=<a,b>  --set n=<triggers>  --set report=1 (no bounds: numbers only)
@@ -31,6 +31,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 
+// Historical class-only budget before PERF-R5 (the 20 Usage entries below supersede only that budget):
 // Ten looks x both surfaces, Windows 120 Hz, medians of 4, origin/main's page (main5) -> this branch (j-6):
 //   Usage card to card   main 216-297 in every cell -> 62-160                         bound 190 (bites in all 20)
 //   Files row to row     main 81-179 -> 78-150 (main over 160 in 7 cells)             bound 160 (bites in those)
@@ -40,6 +41,39 @@ import { join, dirname } from 'node:path';
 // So the change is measured where whole subtrees are big (a Usage card's charts); rows, whose subtrees are small, move
 // little. A bound sits above the change's worst cell and below main's worst; where the builds match it is a guard.
 const BOUND = { usage: 190, files: 160, rail: 180, titlebar: 180, tab: 400, notify: 300, press: 150 };
+
+// PERF-R5 (2026-11-13): the restore of rules 0/1/2/6 is the cause of each Usage increase below.
+// The old 190 budget assumed those generic cursor lists were class-only. On Windows 2.0.56 all 20 restored
+// cells exceed 190 but remain below main; all three builds were measured with the same input/clock/trace code.
+// Only these cells get "no worse than main" (inclusive main ceiling). Every other cell keeps its original bound.
+// Each entry records the measured median triple {main, before:385f155c8c, restored}; before was refreshed on 2.0.56.
+// Full count arrays, input trace paths and matched-tool control files are in m/m7/usage-bound-evidence.json.
+const RESTORED_USAGE_MAIN = {
+  normal: {
+    "basic-dark": { main: 371, before: 128, restored: 242 },
+    "basic-light": { main: 371, before: 128, restored: 242 },
+    "friendly-dark": { main: 361, before: 122, restored: 237 },
+    "friendly-light": { main: 361, before: 122, restored: 237 },
+    "retro-dark": { main: 346, before: 109, restored: 215 },
+    "retro-light": { main: 346, before: 109, restored: 215 },
+    "glass-dark": { main: 370, before: 130, restored: 246 },
+    "glass-light": { main: 370, before: 130, restored: 246 },
+    "nier-dark": { main: 357, before: 128, restored: 216 },
+    "nier-light": { main: 357, before: 128, restored: 224 },
+  },
+  sandbox: {
+    "basic-dark": { main: 371, before: 128, restored: 242 },
+    "basic-light": { main: 371, before: 128, restored: 242 },
+    "friendly-dark": { main: 359, before: 122, restored: 236 },
+    "friendly-light": { main: 360, before: 122, restored: 236 },
+    "retro-dark": { main: 346, before: 109, restored: 221 },
+    "retro-light": { main: 346, before: 109, restored: 215 },
+    "glass-dark": { main: 371, before: 130, restored: 246 },
+    "glass-light": { main: 371, before: 130, restored: 246 },
+    "nier-dark": { main: 375, before: 128, restored: 240 },
+    "nier-light": { main: 375, before: 128, restored: 240 },
+  },
+};
 
 const CATS = ['devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink.user_timing'].join(',');
 
@@ -237,9 +271,11 @@ export default async function (t) {
 				for (const name of app) {
 					const r = await runScenario(t, f, cdp, animationCdp, name, n, S).catch((e) => ({ name, judged: false, why: String(e.message).slice(0, 120) }));
 					rows.push({ surface, look, pmlFlip4, lookState, ...r });
-					const b = BOUND[name];
+					const restoredUsage = name === 'usage' ? RESTORED_USAGE_MAIN[surface]?.[look] : null;
+					const b = restoredUsage ? restoredUsage.main : BOUND[name];
 					if (report) { t.log(`${S}${look} ${name}: median ${r.med} (${r.why})`); continue; }
-					await t.check(`${S}${look} ${name}: restyled by the change under ${b}`, r.judged && r.med < b, r.judged ? `median ${r.med}; ${r.why}` : `could not judge: ${r.why || 'no marks'}`);
+					const within = restoredUsage ? r.med <= b : r.med < b;
+					await t.check(`${S}${look} ${name}: restyled by the change ${restoredUsage ? 'no worse than main ' : 'under '}${b}`, r.judged && within, r.judged ? `median ${r.med}; ${r.why}` : `could not judge: ${r.why || 'no marks'}`);
 				}
 			}
 			await cdp.detach().catch(() => {});
