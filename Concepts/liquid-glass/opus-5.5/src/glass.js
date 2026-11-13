@@ -2635,7 +2635,7 @@
   var bead = null, beadOn = null, beadAt = null, beadRect = null, beadAnim = null, beadHide = 0;
   function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } beadBend(false); }
   /* PERF-4: the bead bends what is under it only while it flows to a neighbour (lensBend); resting, lifting in or
-     fading out it draws its baked rim alone */
+     fading out it draws its baked rim, and while it shows its plain saturate (glass.css .lg-bead.on, the lead's R2) */
   function beadBend(on) { if (bead) { bead.__lgLive = on; lensBend(bead); } }
   function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; beadAt = null; }
   function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
