@@ -180,6 +180,17 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
    value breaks inside a word only when its own cap is narrower than the word. */
 #panel-settings .setting-control > .o55-value-with { display: flex; flex-wrap: wrap; align-items: center; justify-content: inherit; gap: 8px; min-width: 0; max-width: 100%; }
 #panel-settings .o55-value-with > .pm51-row-value { overflow-wrap: break-word; }
+/* FO-173: once a row puts its control under its label, nothing sits beside the value but its own button, so the value's
+   40ch cap (there so a value beside its label leaves the label room) gives way to the row: in Retro's monospace at 740px
+   Pyright's "node_modules/.bin/typescript-language-server" is 330px, 40ch is 300px and the row is 596px. */
+@container pm51-detail (max-width: 540px) {
+  #panel-settings .pm51-detail .pm51-row-control > .pm51-row-value,
+  #panel-settings .pm51-detail .o55-value-with > .pm51-row-value { max-width: 100%; }
+}
+@container settings-host (max-width: 760px) {
+  #panel-settings .pm51-detail .pm51-row-control > .pm51-row-value,
+  #panel-settings .o55-value-with > .pm51-row-value { max-width: 100%; }
+}
 #panel-settings .settings-section.o55-group.o55-sec-off { display: none; }
 /* The owner line a placed group names (placement `owner`): one quiet sentence and its buttons, drawn like a row
    inside the group, not as a boxed strip across its edges. */
