@@ -42,16 +42,22 @@ MAX_SAFE_JSON_INTEGER = 2**53 - 1
 # selected only for retained originals in resolve_original, never from
 # request data and never for current admission.
 RETAINED_RECIPE_ID = 'dm-retained-producer-v1'
+# SP-1101 (batch 2 fix 1): a retained original's write-time recipe comes only from the write receipt Storage
+# sealed with that exact original in its protected authority (write_recipe_receipts: the original's event id and
+# event type, and the recipe id), never by default and never from request data. The earlier writer's frozen
+# dm-retained-producer-v1 and the current writer's CV-1100 producer recipe are the two recipes.
+CURRENT_RECIPE_ID = 'dm-cv1100-producer-v1'
 
 
 def bound_profile(recipe_id, kind):
-    """SP-1101 profile bound to dm-retained-producer-v1, or None.
+    """SP-1101 profile bound to the selected DM recipe, or None.
 
     source is the broad EventRecord profile. storage and ack are CV-253 /
-    SP-347 UTC: terminal uppercase Z, any fraction, no new digit cap.
-    A recipe id taken from request data is not this tuple and returns None.
+    SP-347 UTC: terminal uppercase Z, any fraction, no new digit cap. Both DM
+    recipes bind the same profiles. A recipe id taken from request data is not
+    a sealed selection and returns None.
     """
-    if recipe_id != RETAINED_RECIPE_ID:
+    if recipe_id not in (RETAINED_RECIPE_ID, CURRENT_RECIPE_ID):
         return None
     if kind == 'source':
         return EVENT_RECORD
@@ -489,6 +495,26 @@ def retained_producer_digest(event):
         return hashlib.sha256(json.dumps(selected, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
 
 
+def recipe_digest(recipe_id):
+    """The producer digest of a sealed DM recipe, or None for any other recipe id."""
+    return {RETAINED_RECIPE_ID: retained_producer_digest, CURRENT_RECIPE_ID: producer_digest}.get(recipe_id)
+
+
+def seal_write_receipt(authority, event, recipe_id):
+    """Writer side: Storage records the write receipt of the original it seals in this protected authority."""
+    authority['write_recipe_receipts'] = [{'event_id': event['event_id'], 'event_type': event['event_type'],
+                                           'recipe_id': recipe_id}]
+
+
+def sealed_write_receipts(authority, stored):
+    """Every sealed write receipt in the authority for the exact stored original (its event id and type)."""
+    receipts = authority.get('write_recipe_receipts') if isinstance(authority, dict) else None
+    if type(receipts) is not list or not isinstance(stored, dict):
+        return []
+    return [r for r in receipts if isinstance(r, dict) and r.get('event_id') == stored.get('event_id')
+            and r.get('event_type') == stored.get('event_type')]
+
+
 def scope_partition(event):
     if event['scope_kind'] == 'application':
         return 'app'
@@ -652,6 +678,12 @@ def resolve_original(row, incoming, authority):
     custody = authority.get('stored_custody') if isinstance(authority, dict) else None
     receipt = custody.get('first_append_receipt') if isinstance(custody, dict) else None
     result = authority.get('original_append_result') if isinstance(authority, dict) else None
+    receipts = sealed_write_receipts(authority, stored)
+    recipe = receipts[0].get('recipe_id') if len(receipts) == 1 else None
+    # Only the one sealed receipt selects. Without it the write-receipt rows refuse first; the frozen recipe
+    # below only parameterizes the other observations and is never returned or used to accept.
+    digest_of = recipe_digest(recipe) or retained_producer_digest
+    profile_recipe = recipe if recipe_digest(recipe) else RETAINED_RECIPE_ID
 
     def sequences():
         # Storage-assigned sequence identity is an exact SP-1100 uint64 at every join.
@@ -660,6 +692,9 @@ def resolve_original(row, incoming, authority):
         storage_uint64(result['sequence_id'])
         return True
     facts = {
+        'write_receipt_present': bool(receipts),
+        'write_receipt_unique': len(receipts) <= 1,
+        'write_recipe_known': not receipts or len(receipts) != 1 or recipe_digest(recipe) is not None,
         'custody_schema': _fact(lambda: custody_valid(custody)),
         'protected_current': _fact(lambda: authority['protected_authority_current'] is True),
         'authority_integer': _fact(lambda: integer_tree(authority)),
@@ -671,20 +706,20 @@ def resolve_original(row, incoming, authority):
         'identity_partition': _fact(lambda: custody['scope_partition'] == scope_partition(stored)),
         'identity_type': _fact(lambda: custody['event_type'] == stored['event_type']),
         'identity_key': _fact(lambda: custody['idempotency_key'] == stored['idempotency_key']),
-        'identity_digest': _fact(lambda: custody['producer_semantic_digest'] == retained_producer_digest(stored)),
+        'identity_digest': _fact(lambda: custody['producer_semantic_digest'] == digest_of(stored)),
         'identity_instance': _fact(lambda: custody['storage_instance_id'] == authority['storage_instance_id']),
         'incoming_event': _fact(lambda: incoming['event_id'] == stored['event_id']),
         'incoming_type': _fact(lambda: incoming['event_type'] == stored['event_type']),
         'incoming_key': _fact(lambda: incoming['idempotency_key'] == stored['idempotency_key']),
-        'incoming_digest': _fact(lambda: incoming['event_id'] != stored['event_id'] or incoming['event_type'] != stored['event_type'] or incoming['idempotency_key'] != stored['idempotency_key'] or retained_producer_digest(incoming) == retained_producer_digest(stored)),
+        'incoming_digest': _fact(lambda: incoming['event_id'] != stored['event_id'] or incoming['event_type'] != stored['event_type'] or incoming['idempotency_key'] != stored['idempotency_key'] or digest_of(incoming) == digest_of(stored)),
         'result_exact': _fact(lambda: not _fact(sequences) or exact_value(result, {'event_id': stored['event_id'], 'sequence_id': stored['sequence_id'], 'segment_ref': custody['original_segment_ref'], 'byte_offset': receipt['byte_offset']})),
         'receipt_event': _fact(lambda: receipt['event_id'] == stored['event_id']),
         'receipt_sequence': _fact(lambda: receipt['sequence_id'] == stored['sequence_id']),
         'receipt_exact': _fact(lambda: exact_value(authority['first_append_receipt'], receipt)),
-        # Retained profiles come only from dm-retained-producer-v1. authority
+        # Retained profiles come only from the sealed recipe. authority
         # keys such as datetime_profile are not read.
-        'storage_clocks': _fact(lambda: storage_clocks_ok(stored, bound_profile(RETAINED_RECIPE_ID, 'storage'))),
-        'ack_clock': _fact(lambda: ack_clock_ok(custody, bound_profile(RETAINED_RECIPE_ID, 'ack'))),
+        'storage_clocks': _fact(lambda: storage_clocks_ok(stored, bound_profile(profile_recipe, 'storage'))),
+        'ack_clock': _fact(lambda: ack_clock_ok(custody, bound_profile(profile_recipe, 'ack'))),
     }
     if refusal('resolve', facts) is not None:
         return None
@@ -877,6 +912,7 @@ def boundary_state(row, case):
     custody = authority['stored_custody']
     custody['producer_semantic_digest'] = producer_digest(state['event'])
     custody['original_event_value_commitment']['sha256'] = hashlib.sha256(full_value_preimage(state['event'])).hexdigest()
+    seal_write_receipt(authority, state['event'], CURRENT_RECIPE_ID)
     return patched(state, case.get('patches', []))
 
 
@@ -890,6 +926,7 @@ def upstream_sequence_state(row, sequence):
     authority['source_selection'] = copy.deepcopy(row['reader_positive']['retained_authority']['source_selection'])
     authority['stored_custody']['producer_semantic_digest'] = retained_producer_digest(state['event'])
     authority['stored_custody']['original_event_value_commitment']['sha256'] = hashlib.sha256(full_value_preimage(state['event'])).hexdigest()
+    seal_write_receipt(authority, state['event'], RETAINED_RECIPE_ID)
     return state
 
 
@@ -1218,6 +1255,7 @@ def timestamp_state(row, value, field='occurred_at_utc'):
     authority['stored_event'] = copy.deepcopy(event)
     authority['stored_custody']['producer_semantic_digest'] = retained_producer_digest(event)
     authority['stored_custody']['original_event_value_commitment']['sha256'] = hashlib.sha256(full_value_preimage(event)).hexdigest()
+    seal_write_receipt(authority, event, RETAINED_RECIPE_ID)
     return state
 
 
