@@ -143,7 +143,7 @@
   const fire = (type, data) => (subs[type] || []).forEach((f) => { try { f(data); } catch (e) { PS.errors.push(String((e && e.stack) || e)); } });
   const audible = () => !S.muted && S.unlocked && S.concept !== 'orig';
   function ensure() {
-    if (E) { if (E.ctx.state === 'suspended') E.ctx.resume(); return E; }
+    if (E) { if (E.ctx.state !== 'running' && E.ctx.state !== 'closed') { try { const p = E.ctx.resume(); if (p && p.catch) p.catch(() => {}); } catch (e) { /* closed */ } } return E; }
     const AC = G.AudioContext || G.webkitAudioContext; if (!AC) return null;
     E = new PS.Engine(new AC({ latencyHint: 'interactive' }), { room: 'felt' });
     Object.keys(S.vol).forEach((n) => E.setVolume(n, S.vol[n]));
@@ -152,6 +152,42 @@
     sess.flags.work = S.want.work > 0; sess.flags.power = S.want.power > 0;
     return E;
   }
+  /* iPhone and iPad differ from a computer in two ways. The ring/silent switch mutes everything Web Audio plays unless
+     the page asks for the "playback" session, or an <audio> element is playing (kept here, silent, for where the
+     session cannot be asked for). And a context may only start in touchend, pointerup, mousedown, click or keydown,
+     never in touchstart or pointerdown, which is where the first touch arrives. */
+  const APPLE_TOUCH = /iP(hone|ad|od)/.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  let keep = null, wakeAt = 0;
+  function silentWav(rate) {   // a quarter second of 8-bit silence at the context's own rate, so nothing is resampled to it
+    const n = Math.round(rate / 4), b = new Uint8Array(44 + n).fill(128), v = new DataView(b.buffer), put = (o, s) => { for (let i = 0; i < s.length; i++) b[o + i] = s.charCodeAt(i); };
+    put(0, 'RIFF'); v.setUint32(4, 36 + n, true); put(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, rate, true); v.setUint32(28, rate, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); put(36, 'data'); v.setUint32(40, n, true);
+    let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+    return 'data:audio/wav;base64,' + btoa(s);
+  }
+  function keepAwake() {
+    try { const a = navigator.audioSession; if (a && a.type !== 'playback') a.type = 'playback'; } catch (e) { /* not offered here */ }
+    if (!APPLE_TOUCH) return;
+    try {
+      const on = S.unlocked && !S.muted && !document.hidden;
+      if (!keep) { if (!on) return; keep = new Audio(); keep.setAttribute('x-webkit-airplay', 'deny'); keep.disableRemotePlayback = true; keep.preload = 'auto'; keep.loop = true; keep.src = silentWav((E && E.sr) || 48000); }
+      if (!on) { if (!keep.paused) keep.pause(); } else if (keep.paused) { const p = keep.play(); if (p && p.catch) p.catch(() => {}); }
+    } catch (e) { /* a frame that may not play media: the session type above is what is left */ }
+  }
+  function wake(gesture) {
+    if (!S.unlocked) return;
+    keepAwake();
+    if (!E || E.ctx.state === 'running' || E.ctx.state === 'closed') return;
+    const ua = navigator.userActivation;
+    if (!gesture || (ua && !ua.isActive)) return;
+    wakeAt = performance.now();
+    try {
+      const c = E.ctx, s = c.createBufferSource(); s.buffer = c.createBuffer(1, 1, c.sampleRate); s.connect(c.destination); s.start(0);
+      const p = c.resume(); if (p && p.then) p.then(() => { wakeAt = 0; }, () => {});
+    } catch (e) { /* closed */ }
+  }
+  // running, or about to be: what is asked for in the tap that starts the context is kept and heard as it starts
+  const ready = () => E.ctx.state === 'running' || (wakeAt > 0 && performance.now() - wakeAt < 1200);
   function tick() { if (sess && sess.player && sess.player.playing) sess.player.schedule(E.now() + 0.24); }
   function startMusic() {
     if (!audible() || !(S.want.bed > 0.001) || !ensure()) return;
@@ -212,7 +248,7 @@
     get ctx() { return E && E.ctx; }, get engine() { return E; }, get session() { return sess; },
     setConcept(id) { if (!(PS.concepts[id] || id === 'orig') || id === S.concept) return; S.concept = id; if (sess) sess.last = {}; refresh(); fire('concept', { id }); },
     setTheme(t) { const k = kitOf(t), was = S.kit; S.theme = String(t || S.theme); S.kit = k; if (S.concept === 'orig') { origSync(); return; } if (k !== was) { refresh(); if (audible() && sess && S.sigOnLook) sess.play('sig', { kit: k }); } },
-    setMuted(m) { S.muted = !!m; refresh(); fire('mute', { muted: S.muted }); try { G.dispatchEvent(new CustomEvent('pipsound')); } catch (e) { /* old browser */ } },
+    setMuted(m) { S.muted = !!m; refresh(); keepAwake(); fire('mute', { muted: S.muted }); try { G.dispatchEvent(new CustomEvent('pipsound')); } catch (e) { /* old browser */ } },
     toggle() { API.setMuted(!S.muted); return S.muted; },
     setReduced(r) { S.reduced = !!r; if (sess) sess.reduced = S.reduced; if (S.reduced) swingLoop(0); if (S.concept === 'orig' && ORIG) try { ORIG.setReduced(S.reduced); } catch (e) { /* fine */ } },
     volume(name, v) { if (v == null) return S.vol[name]; S.vol[name] = clamp(+v, 0, 1.5); if (E) E.setVolume(name, S.vol[name]); return S.vol[name]; },
@@ -222,14 +258,14 @@
       if (op.chapter != null) S.chapter = clamp(op.chapter | 0, 0, 4);
       if (S.concept === 'orig') { if (ORIG && !S.muted) try { return ORIG.play(name, op); } catch (e) { return false; } return false; }
       if (!audible() || !ensure()) return false;
-      if (E.ctx.state !== 'running') return false;
+      if (!ready()) return false;
       try { return sess.play(name, op); } catch (e) { PS.errors.push(name + ': ' + String((e && e.stack) || e)); return false; }
     },
     say(text, o) {
       o = o || {};
       if (S.concept === 'orig') { if (ORIG) try { return S.muted ? ORIG.sayTiming(text, o) : ORIG.say(text, o); } catch (e) { /* fall through */ } return { ms: String(text || '').length * 32, cps: 31 }; }
       const kit = o.kit ? kitOf(o.kit) : S.kit, C = PS.concepts[S.concept], L = C.looks[kit], V = Object.assign({}, PS.voice.VOX[kit], L.voxKind || {}, L.vox || {});
-      if (!audible() || !ensure() || E.ctx.state !== 'running') { if (sess) sess.hush(); return PS.voice.timing(V, text, o.mood, o.crew); }
+      if (!audible() || !ensure() || !ready()) { if (sess) sess.hush(); return PS.voice.timing(V, text, o.mood, o.crew); }
       return sess.say(text, o);
     },
     hush() { if (S.concept === 'orig' && ORIG) { try { ORIG.hush(); } catch (e) { /* fine */ } return; } if (sess) sess.hush(); },
@@ -302,7 +338,25 @@
   API.wavBase64 = function (buf) { const u = API.wav(buf); let s = ''; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); };
 
   // nothing sounds before the person's first click or key
-  ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => G.addEventListener(ev, (e) => { if (e.isTrusted !== false) API.unlock(); }, { capture: true, passive: true }));
-  document.addEventListener('visibilitychange', () => { if (!sess) return; if (document.hidden) { if (sess.player) { sess.music(false); S.paused = true; } } else if (S.paused) { S.paused = false; startMusic(); } });
+  const STARTS = { pointerup: 1, touchend: 1, mousedown: 1, click: 1, keydown: 1 };   // where iOS lets a context start
+  ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown', 'click', 'keydown'].forEach((ev) => G.addEventListener(ev, (e) => { if (e.isTrusted === false) return; API.unlock(); wake(!!STARTS[ev]); }, { capture: true, passive: true }));
+
+  // what the sound is doing, for a device that stays silent: PipSound.health(), and ?audiodebug=1 writes it on the page
+  API.health = function () {
+    let peak = 0;
+    try { if (E && E.analyser) { const d = new Float32Array(E.analyser.fftSize); E.analyser.getFloatTimeDomainData(d); for (let i = 0; i < d.length; i++) peak = Math.max(peak, Math.abs(d[i])); } } catch (e) { /* no analyser */ }
+    return { state: E ? E.ctx.state : 'none', rate: E ? E.sr : 0, time: E ? +E.ctx.currentTime.toFixed(1) : 0, peak: +peak.toFixed(3), unlocked: S.unlocked, muted: S.muted, session: (navigator.audioSession && navigator.audioSession.type) || 'none', keep: keep ? (keep.paused ? 'paused' : 'playing') : 'none', errors: PS.errors.slice(-2) };
+  };
+  if (G.PIP_AUDIO_DEBUG || /[?&#]audiodebug/.test(String(location.href))) {
+    let top = 0, last = '';
+    G.addEventListener('error', (e) => PS.errors.push('page: ' + e.message + ' @' + String(e.filename || '').split('/').pop() + ':' + e.lineno));
+    ['touchend', 'click', 'keydown'].forEach((ev) => G.addEventListener(ev, () => { last = ev + (navigator.userActivation ? ' active=' + navigator.userActivation.isActive : ''); }, true));
+    const el = document.createElement('pre'); el.id = 'audioDebug';
+    el.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99999;margin:0;padding:6px 8px;font:11px/1.35 ui-monospace,Menlo,monospace;background:rgba(0,0,0,.8);color:#7f7;white-space:pre-wrap;pointer-events:none';
+    const show = () => { const h = API.health(); top = Math.max(top, h.peak); el.textContent = 'audio ' + h.state + ' @' + h.rate + ' t=' + h.time + ' peak=' + h.peak + ' max=' + top.toFixed(3) + '\nunlocked=' + h.unlocked + ' muted=' + h.muted + ' session=' + h.session + ' keep=' + h.keep + ' last=' + last + '\n' + h.errors.join(' | ').slice(0, 300); };
+    const mount = () => { document.body.appendChild(el); setInterval(show, 250); };
+    if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
+  }
+  document.addEventListener('visibilitychange', () => { keepAwake(); if (!sess) return; if (document.hidden) { if (sess.player) { sess.music(false); S.paused = true; } } else if (S.paused) { S.paused = false; startMusic(); } });
   G.PipSound = API;
 })(window);

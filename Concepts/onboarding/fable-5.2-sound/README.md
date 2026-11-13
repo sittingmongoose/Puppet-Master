@@ -136,6 +136,11 @@ Kept from earlier listening, as rules: nothing is held (no hum), no two tones a 
 on and off fast (no buzz), no low thump on a page change, no moaning vowels in NieR. Nothing sounds before the first
 click or key. Hovering is silent outside NieR.
 
+On an iPhone or iPad the page asks for the playback audio session and keeps a silent `<audio>` element playing while
+the sound is on, because the ring/silent switch otherwise mutes everything Web Audio plays; and the context is started
+in the touch's release or the click, the only moments iOS allows. `?audiodebug=1` writes the context's state, the level
+and the last errors on the page (`PipSound.health()`).
+
 ## Checked by measurement
 
 The model that made this cannot hear, so it was checked the ways it could be:
