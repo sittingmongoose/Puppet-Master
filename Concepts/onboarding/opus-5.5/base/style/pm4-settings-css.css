@@ -466,7 +466,9 @@
 #panel-settings .home-panel-header { display: flex; align-items: center; gap: 10px; min-height: 45px; padding: 0 14px; border-bottom: 1px solid var(--k3-line); }
 #panel-settings .home-panel-title { font-size: 11px; font-weight: 700; }
 #panel-settings .home-panel-meta { margin-left: auto; color: var(--k3-text-3); font-size: 11px; }
-#panel-settings .setup-row, #panel-settings .attention-row { display: flex; align-items: center; gap: 11px; width: 100%; padding: 12px 14px; border: 0; border-bottom: 1px solid var(--k3-line); background: transparent; color: var(--k3-text-2); text-align: left; cursor: pointer; transition: background-color var(--k3-dur-fast) var(--k3-ease-out), border-color var(--k3-dur-fast) var(--k3-ease-out), color var(--k3-dur-fast) var(--k3-ease-out), transform var(--k3-dur-fast) var(--k3-ease-out), box-shadow var(--k3-dur-fast) var(--k3-ease-out); }
+/* FO-159 round 3: the row's copy column keeps an 11 px line at every app state, the narrower Settings pane
+   (another panel open at 1280) included: the row's own inset and gaps give it the room, nothing else moves. */
+#panel-settings .setup-row, #panel-settings .attention-row { display: flex; align-items: center; gap: 9px; width: 100%; padding: 12px 8px; border: 0; border-bottom: 1px solid var(--k3-line); background: transparent; color: var(--k3-text-2); text-align: left; cursor: pointer; transition: background-color var(--k3-dur-fast) var(--k3-ease-out), border-color var(--k3-dur-fast) var(--k3-ease-out), color var(--k3-dur-fast) var(--k3-ease-out), transform var(--k3-dur-fast) var(--k3-ease-out), box-shadow var(--k3-dur-fast) var(--k3-ease-out); }
 #panel-settings .setup-row:last-child, #panel-settings .attention-row:last-child { border-bottom: 0; }
 #panel-settings .setup-row:hover, #panel-settings .attention-row:hover { background: rgba(var(--accent-primary-rgb),.065); }
 #panel-settings .setup-icon { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid rgba(var(--accent-primary-rgb),.20); border-radius: var(--k3-radius-md); background: var(--k3-accent-soft); color: var(--k3-accent); }
@@ -951,7 +953,6 @@
    width, which put "Sign in with Google to refresh its model list." on a second line at 11 px. The row's own
    inset gives it back: no card, column or control moves. */
 @container settings-host (max-width: 900px) {
-  #panel-settings .setup-row, #panel-settings .attention-row { padding-left: 10px; padding-right: 10px; gap: 9px; }
 }
 
 @container settings-host (max-width: 720px) {
