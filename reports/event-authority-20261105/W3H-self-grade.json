@@ -1,20 +1,20 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "W3H-PHASE1-REVIEW1-SELF-GRADE-20261105",
-  "assessment_kind": "phase1_self_grade_prepared_without_admission",
+  "assessment_id": "W3H-WAVE3-PHASE2-SELF-GRADE-20261113",
+  "assessment_kind": "wave3_phase2_self_grade_prepared_without_admission",
   "assessed_tree": {
     "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
     "branch": "plans/ea-w3-4b-names-20261105",
-    "read_method": "current worktree; cited exact line substrings verified separately",
+    "read_method": "wave-3 phase-2 worktree; every evidence quote re-checked at its cited line",
     "source_sha256": {
       "Plans/Assistant_Plan_Runtime.md": "724b8c47c69ef147b406529f0332784a98460e08c6e9e0e88f8a4bc63275bb93",
-      "Plans/Automated_Testing_System.md": "32befd703e9f7e54af6198b9d50f60d4c83da7f86f6387e4edecb890414e97a7",
+      "Plans/Automated_Testing_System.md": "91877043645a72e56262bfaf252a66dce468933dfe1e6cdd86ee0bd7f1f26058",
       "Plans/Containers_Registry_and_Unraid.md": "017d00a9d32fd7a56596c71e0270222672b27b3d13f034f227704a22049e358c",
-      "Plans/Contracts_V0.md": "67663bc57c0a767a2900ab15187553143b4e89cf15b13821b056dde0c8e0224a",
+      "Plans/Contracts_V0.md": "7347303a5ee0210d1243b890f116058533264778aa679d97ff183863948f39d1",
       "Plans/Goal_Runtime_System.md": "8a85011fe902e0bb60980977e693a4ed35145e88eb13c85c44a70432dfd858a3",
       "Plans/Named_Plan_System.md": "eea6ea90189ab543f93877934057d48fa1b02e7daf0f8a2088f73ddddd269887",
       "Plans/Scheduling_and_Quota_Resume.md": "9bd618ac1b28f904f526b05e6e799b20381b6afd7842515fc4276071b763e4bc",
-      "Plans/ToDo_Runtime.md": "d2701fabb1208daa38d7e4fc1cf87910810eab35feb10d466fea1b133d422b89",
+      "Plans/ToDo_Runtime.md": "77cb5a8305f29942bdf0c81695764f4f51578189649d4dd30995c2858ad17d2a",
       "Plans/event_family_registry.json": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
       "Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json": "fbc1cb9bd79eed1662e0df1efb8f2d77ca5e22c2668bb23905656a7716b52ae3",
       "Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json": "7f2364c0520b7b45a066f343f01321f9ec4da0e0b292be14b9b184e3a4d17cc4",
@@ -48,10 +48,13 @@
       "Plans/event_payloads/w3h/todo_status_changed.schema.json": "3aa91b1b0506f48301699d0f14169afc5350a8eb08ba77d702c575a1f32a2dda",
       "Plans/event_payloads/w3h/todo_updated.schema.json": "e45433de5c3bfe41baea4bf4eb01e6c65e518a973c561a0b1d13c2f09dd6014c",
       "Plans/event_payloads/w3h/todo_work_bound.schema.json": "58342fe97b74fefac10a114e2d28176b29c5e9f825b86508c93783275648fa0f",
-      "Plans/storage-plan.md": "01289a0415563a6f19b93fd2a9ec51339a31c42853763f5da4928ef090ad1480",
-      "Plans/storage_value_registry.json": "fec43a6995f90b9d4dcb985fd3468ae30a2e450f0ad198a4b41b778140c22474"
+      "Plans/storage-plan.md": "6df8ff750931cf0b103c5e990287d3b329626cfb17eefcc0e51dae45078fc0ce",
+      "Plans/storage_value_registry.json": "f24e34a1fff75c33a5501da85ede5c3556f2aee8ae19824b29f1a78a6cd74a66",
+      "scripts/pm_w3h_events.py": "1c54c9fcd0c9315179fa368d7becb67245c704a14edadd886889ddc535ae7105",
+      "scripts/pm_w3h_cases.py": "2704adfbaed29cf1573ca32dcd3f3984d3bd8c042f910c8796f56b461c4d0c7a"
     },
-    "reviewed_parent_sha": "b7786180e4b2c5f53440cd3820f0f3ad13cf8bac"
+    "reviewed_parent_sha": "b7786180e4b2c5f53440cd3820f0f3ad13cf8bac",
+    "phase2_parent": "66441f9726"
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -125,15 +128,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1550",
-              "line_start": 24520,
-              "line_end": 24520,
+              "line_start": 24644,
+              "line_end": 24644,
               "quote": "`assistant_plan.schedule_invalidated` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1550",
-              "line_start": 24520,
-              "line_end": 24520,
+              "line_start": 24644,
+              "line_end": 24644,
               "quote": "`assistant_plan.schedule_invalidated` has closed required fields"
             }
           ],
@@ -214,15 +217,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1550",
-              "line_start": 29532,
-              "line_end": 29532,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "| `ea_w3h_assistant_plan_schedule_invalidated_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1550",
-              "line_start": 29532,
-              "line_end": 29532,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "| `ea_w3h_assistant_plan_schedule_invalidated_publication` |"
             }
           ],
@@ -299,30 +302,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Assistant_Plan_Runtime.md",
-              "unit": "APR-1550",
-              "line_start": 2295,
-              "line_end": 2295,
-              "quote": "12. **Oracles.** `assistant_plan.schedule_invalidated` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/eve"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -332,13 +339,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "docker.compose.scenario.deleted",
@@ -410,15 +418,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1551",
-              "line_start": 24578,
-              "line_end": 24578,
+              "line_start": 24702,
+              "line_end": 24702,
               "quote": "`docker.compose.scenario.deleted` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1551",
-              "line_start": 24578,
-              "line_end": 24578,
+              "line_start": 24702,
+              "line_end": 24702,
               "quote": "`docker.compose.scenario.deleted` has closed required fields"
             }
           ],
@@ -499,15 +507,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1551",
-              "line_start": 29602,
-              "line_end": 29602,
+              "line_start": 29728,
+              "line_end": 29728,
               "quote": "| `ea_w3h_docker_compose_scenario_deleted_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1551",
-              "line_start": 29602,
-              "line_end": 29602,
+              "line_start": 29728,
+              "line_end": 29728,
               "quote": "| `ea_w3h_docker_compose_scenario_deleted_publication` |"
             }
           ],
@@ -584,30 +592,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Containers_Registry_and_Unraid.md",
-              "unit": "CRAU-1551",
-              "line_start": 7041,
-              "line_end": 7041,
-              "quote": "12. **Oracles.** `docker.compose.scenario.deleted` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-a"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -617,13 +629,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "docker.compose.scenario.edited",
@@ -695,15 +708,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1552",
-              "line_start": 24636,
-              "line_end": 24636,
+              "line_start": 24760,
+              "line_end": 24760,
               "quote": "`docker.compose.scenario.edited` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1552",
-              "line_start": 24636,
-              "line_end": 24636,
+              "line_start": 24760,
+              "line_end": 24760,
               "quote": "`docker.compose.scenario.edited` has closed required fields"
             }
           ],
@@ -784,15 +797,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1552",
-              "line_start": 29672,
-              "line_end": 29672,
+              "line_start": 29798,
+              "line_end": 29798,
               "quote": "| `ea_w3h_docker_compose_scenario_edited_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1552",
-              "line_start": 29672,
-              "line_end": 29672,
+              "line_start": 29798,
+              "line_end": 29798,
               "quote": "| `ea_w3h_docker_compose_scenario_edited_publication` |"
             }
           ],
@@ -869,30 +882,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Containers_Registry_and_Unraid.md",
-              "unit": "CRAU-1552",
-              "line_start": 7108,
-              "line_end": 7108,
-              "quote": "12. **Oracles.** `docker.compose.scenario.edited` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-au"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -902,13 +919,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "docker.compose.scenario.run",
@@ -980,15 +998,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1553",
-              "line_start": 24694,
-              "line_end": 24694,
+              "line_start": 24818,
+              "line_end": 24818,
               "quote": "`docker.compose.scenario.run` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1553",
-              "line_start": 24694,
-              "line_end": 24694,
+              "line_start": 24818,
+              "line_end": 24818,
               "quote": "`docker.compose.scenario.run` has closed required fields"
             }
           ],
@@ -1069,15 +1087,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1553",
-              "line_start": 29742,
-              "line_end": 29742,
+              "line_start": 29868,
+              "line_end": 29868,
               "quote": "| `ea_w3h_docker_compose_scenario_run_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1553",
-              "line_start": 29742,
-              "line_end": 29742,
+              "line_start": 29868,
+              "line_end": 29868,
               "quote": "| `ea_w3h_docker_compose_scenario_run_publication` |"
             }
           ],
@@ -1154,30 +1172,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Containers_Registry_and_Unraid.md",
-              "unit": "CRAU-1553",
-              "line_start": 7175,
-              "line_end": 7175,
-              "quote": "12. **Oracles.** `docker.compose.scenario.run` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-autho"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -1187,13 +1209,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "docker.compose.scenario.saved",
@@ -1265,15 +1288,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1554",
-              "line_start": 24752,
-              "line_end": 24752,
+              "line_start": 24876,
+              "line_end": 24876,
               "quote": "`docker.compose.scenario.saved` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1554",
-              "line_start": 24752,
-              "line_end": 24752,
+              "line_start": 24876,
+              "line_end": 24876,
               "quote": "`docker.compose.scenario.saved` has closed required fields"
             }
           ],
@@ -1354,15 +1377,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1554",
-              "line_start": 29812,
-              "line_end": 29812,
+              "line_start": 29938,
+              "line_end": 29938,
               "quote": "| `ea_w3h_docker_compose_scenario_saved_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1554",
-              "line_start": 29812,
-              "line_end": 29812,
+              "line_start": 29938,
+              "line_end": 29938,
               "quote": "| `ea_w3h_docker_compose_scenario_saved_publication` |"
             }
           ],
@@ -1439,30 +1462,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Containers_Registry_and_Unraid.md",
-              "unit": "CRAU-1554",
-              "line_start": 7241,
-              "line_end": 7241,
-              "quote": "12. **Oracles.** `docker.compose.scenario.saved` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-aut"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -1472,13 +1499,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "execution_window.created",
@@ -1550,15 +1578,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1555",
-              "line_start": 24810,
-              "line_end": 24810,
+              "line_start": 24934,
+              "line_end": 24934,
               "quote": "`execution_window.created` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1555",
-              "line_start": 24810,
-              "line_end": 24810,
+              "line_start": 24934,
+              "line_end": 24934,
               "quote": "`execution_window.created` has closed required fields"
             }
           ],
@@ -1639,15 +1667,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1555",
-              "line_start": 29882,
-              "line_end": 29882,
+              "line_start": 30008,
+              "line_end": 30008,
               "quote": "| `ea_w3h_execution_window_created_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1555",
-              "line_start": 29882,
-              "line_end": 29882,
+              "line_start": 30008,
+              "line_end": 30008,
               "quote": "| `ea_w3h_execution_window_created_publication` |"
             }
           ],
@@ -1724,30 +1752,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1555",
-              "line_start": 2163,
-              "line_end": 2163,
-              "quote": "12. **Oracles.** `execution_window.created` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authorit"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -1757,13 +1789,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "execution_window.invalidated",
@@ -1835,15 +1868,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1556",
-              "line_start": 24868,
-              "line_end": 24868,
+              "line_start": 24992,
+              "line_end": 24992,
               "quote": "`execution_window.invalidated` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1556",
-              "line_start": 24868,
-              "line_end": 24868,
+              "line_start": 24992,
+              "line_end": 24992,
               "quote": "`execution_window.invalidated` has closed required fields"
             }
           ],
@@ -1924,15 +1957,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1556",
-              "line_start": 29952,
-              "line_end": 29952,
+              "line_start": 30078,
+              "line_end": 30078,
               "quote": "| `ea_w3h_execution_window_invalidated_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1556",
-              "line_start": 29952,
-              "line_end": 29952,
+              "line_start": 30078,
+              "line_end": 30078,
               "quote": "| `ea_w3h_execution_window_invalidated_publication` |"
             }
           ],
@@ -2009,30 +2042,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1556",
-              "line_start": 2232,
-              "line_end": 2232,
-              "quote": "12. **Oracles.** `execution_window.invalidated` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-auth"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -2042,13 +2079,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "execution_window.updated",
@@ -2120,15 +2158,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1557",
-              "line_start": 24926,
-              "line_end": 24926,
+              "line_start": 25050,
+              "line_end": 25050,
               "quote": "`execution_window.updated` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1557",
-              "line_start": 24926,
-              "line_end": 24926,
+              "line_start": 25050,
+              "line_end": 25050,
               "quote": "`execution_window.updated` has closed required fields"
             }
           ],
@@ -2209,15 +2247,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1557",
-              "line_start": 30022,
-              "line_end": 30022,
+              "line_start": 30148,
+              "line_end": 30148,
               "quote": "| `ea_w3h_execution_window_updated_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1557",
-              "line_start": 30022,
-              "line_end": 30022,
+              "line_start": 30148,
+              "line_end": 30148,
               "quote": "| `ea_w3h_execution_window_updated_publication` |"
             }
           ],
@@ -2294,30 +2332,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1557",
-              "line_start": 2299,
-              "line_end": 2299,
-              "quote": "12. **Oracles.** `execution_window.updated` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authorit"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -2327,13 +2369,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "goal.continuation_evaluated",
@@ -2405,15 +2448,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1558",
-              "line_start": 24984,
-              "line_end": 24984,
+              "line_start": 25108,
+              "line_end": 25108,
               "quote": "`goal.continuation_evaluated` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1558",
-              "line_start": 24984,
-              "line_end": 24984,
+              "line_start": 25108,
+              "line_end": 25108,
               "quote": "`goal.continuation_evaluated` has closed required fields"
             }
           ],
@@ -2494,29 +2537,29 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1558",
-              "line_start": 30098,
-              "line_end": 30098,
+              "line_start": 30224,
+              "line_end": 30224,
               "quote": "Bind this exact event to `RP-GOAL-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G29` (DL-401)."
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1558",
-              "line_start": 30092,
-              "line_end": 30092,
+              "line_start": 30218,
+              "line_end": 30218,
               "quote": "| `ea_w3h_goal_continuation_evaluated_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1558",
-              "line_start": 30098,
-              "line_end": 30098,
+              "line_start": 30224,
+              "line_end": 30224,
               "quote": "Bind this exact event to `RP-GOAL-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G29` (DL-401)."
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1558",
-              "line_start": 30092,
-              "line_end": 30092,
+              "line_start": 30218,
+              "line_end": 30218,
               "quote": "| `ea_w3h_goal_continuation_evaluated_publication` |"
             }
           ],
@@ -2593,30 +2636,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Goal_Runtime_System.md",
-              "unit": "GRS-1558",
-              "line_start": 8423,
-              "line_end": 8423,
-              "quote": "12. **Oracles.** `goal.continuation_evaluated` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-autho"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -2626,13 +2673,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "named_plan.archived",
@@ -2704,15 +2752,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1559",
-              "line_start": 25042,
-              "line_end": 25042,
+              "line_start": 25166,
+              "line_end": 25166,
               "quote": "`named_plan.archived` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1559",
-              "line_start": 25042,
-              "line_end": 25042,
+              "line_start": 25166,
+              "line_end": 25166,
               "quote": "`named_plan.archived` has closed required fields"
             }
           ],
@@ -2793,15 +2841,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1559",
-              "line_start": 30162,
-              "line_end": 30162,
+              "line_start": 30288,
+              "line_end": 30288,
               "quote": "| `ea_w3h_named_plan_archived_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1559",
-              "line_start": 30162,
-              "line_end": 30162,
+              "line_start": 30288,
+              "line_end": 30288,
               "quote": "| `ea_w3h_named_plan_archived_publication` |"
             }
           ],
@@ -2878,30 +2926,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Named_Plan_System.md",
-              "unit": "NPLAN-1559",
-              "line_start": 538,
-              "line_end": 538,
-              "quote": "12. **Oracles.** `named_plan.archived` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-202"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -2911,13 +2963,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "named_plan.child_refs_changed",
@@ -2989,15 +3042,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1560",
-              "line_start": 25100,
-              "line_end": 25100,
+              "line_start": 25224,
+              "line_end": 25224,
               "quote": "`named_plan.child_refs_changed` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1560",
-              "line_start": 25100,
-              "line_end": 25100,
+              "line_start": 25224,
+              "line_end": 25224,
               "quote": "`named_plan.child_refs_changed` has closed required fields"
             }
           ],
@@ -3078,15 +3131,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1560",
-              "line_start": 30232,
-              "line_end": 30232,
+              "line_start": 30358,
+              "line_end": 30358,
               "quote": "| `ea_w3h_named_plan_child_refs_changed_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1560",
-              "line_start": 30232,
-              "line_end": 30232,
+              "line_start": 30358,
+              "line_end": 30358,
               "quote": "| `ea_w3h_named_plan_child_refs_changed_publication` |"
             }
           ],
@@ -3163,30 +3216,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Named_Plan_System.md",
-              "unit": "NPLAN-1560",
-              "line_start": 606,
-              "line_end": 606,
-              "quote": "12. **Oracles.** `named_plan.child_refs_changed` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-aut"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -3196,13 +3253,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "named_plan.created",
@@ -3274,15 +3332,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1561",
-              "line_start": 25158,
-              "line_end": 25158,
+              "line_start": 25282,
+              "line_end": 25282,
               "quote": "`named_plan.created` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1561",
-              "line_start": 25158,
-              "line_end": 25158,
+              "line_start": 25282,
+              "line_end": 25282,
               "quote": "`named_plan.created` has closed required fields"
             }
           ],
@@ -3363,15 +3421,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1561",
-              "line_start": 30302,
-              "line_end": 30302,
+              "line_start": 30428,
+              "line_end": 30428,
               "quote": "| `ea_w3h_named_plan_created_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1561",
-              "line_start": 30302,
-              "line_end": 30302,
+              "line_start": 30428,
+              "line_end": 30428,
               "quote": "| `ea_w3h_named_plan_created_publication` |"
             }
           ],
@@ -3448,30 +3506,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Named_Plan_System.md",
-              "unit": "NPLAN-1561",
-              "line_start": 672,
-              "line_end": 672,
-              "quote": "12. **Oracles.** `named_plan.created` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-2026"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -3481,13 +3543,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "named_plan.priority_changed",
@@ -3559,15 +3622,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1562",
-              "line_start": 25216,
-              "line_end": 25216,
+              "line_start": 25340,
+              "line_end": 25340,
               "quote": "`named_plan.priority_changed` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1562",
-              "line_start": 25216,
-              "line_end": 25216,
+              "line_start": 25340,
+              "line_end": 25340,
               "quote": "`named_plan.priority_changed` has closed required fields"
             }
           ],
@@ -3648,15 +3711,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1562",
-              "line_start": 30372,
-              "line_end": 30372,
+              "line_start": 30498,
+              "line_end": 30498,
               "quote": "| `ea_w3h_named_plan_priority_changed_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1562",
-              "line_start": 30372,
-              "line_end": 30372,
+              "line_start": 30498,
+              "line_end": 30498,
               "quote": "| `ea_w3h_named_plan_priority_changed_publication` |"
             }
           ],
@@ -3733,30 +3796,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Named_Plan_System.md",
-              "unit": "NPLAN-1562",
-              "line_start": 738,
-              "line_end": 738,
-              "quote": "12. **Oracles.** `named_plan.priority_changed` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-autho"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -3766,13 +3833,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "named_plan.renamed",
@@ -3844,15 +3912,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1563",
-              "line_start": 25274,
-              "line_end": 25274,
+              "line_start": 25398,
+              "line_end": 25398,
               "quote": "`named_plan.renamed` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1563",
-              "line_start": 25274,
-              "line_end": 25274,
+              "line_start": 25398,
+              "line_end": 25398,
               "quote": "`named_plan.renamed` has closed required fields"
             }
           ],
@@ -3933,15 +4001,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1563",
-              "line_start": 30442,
-              "line_end": 30442,
+              "line_start": 30568,
+              "line_end": 30568,
               "quote": "| `ea_w3h_named_plan_renamed_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1563",
-              "line_start": 30442,
-              "line_end": 30442,
+              "line_start": 30568,
+              "line_end": 30568,
               "quote": "| `ea_w3h_named_plan_renamed_publication` |"
             }
           ],
@@ -4018,30 +4086,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Named_Plan_System.md",
-              "unit": "NPLAN-1563",
-              "line_start": 804,
-              "line_end": 804,
-              "quote": "12. **Oracles.** `named_plan.renamed` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-2026"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -4051,13 +4123,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "named_plan.restored",
@@ -4129,15 +4202,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1564",
-              "line_start": 25332,
-              "line_end": 25332,
+              "line_start": 25456,
+              "line_end": 25456,
               "quote": "`named_plan.restored` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1564",
-              "line_start": 25332,
-              "line_end": 25332,
+              "line_start": 25456,
+              "line_end": 25456,
               "quote": "`named_plan.restored` has closed required fields"
             }
           ],
@@ -4218,15 +4291,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1564",
-              "line_start": 30512,
-              "line_end": 30512,
+              "line_start": 30638,
+              "line_end": 30638,
               "quote": "| `ea_w3h_named_plan_restored_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1564",
-              "line_start": 30512,
-              "line_end": 30512,
+              "line_start": 30638,
+              "line_end": 30638,
               "quote": "| `ea_w3h_named_plan_restored_publication` |"
             }
           ],
@@ -4303,30 +4376,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Named_Plan_System.md",
-              "unit": "NPLAN-1564",
-              "line_start": 870,
-              "line_end": 870,
-              "quote": "12. **Oracles.** `named_plan.restored` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-202"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -4336,13 +4413,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "runtime.automation_pause_changed",
@@ -4414,15 +4492,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1565",
-              "line_start": 25390,
-              "line_end": 25390,
+              "line_start": 25514,
+              "line_end": 25514,
               "quote": "`runtime.automation_pause_changed` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1565",
-              "line_start": 25390,
-              "line_end": 25390,
+              "line_start": 25514,
+              "line_end": 25514,
               "quote": "`runtime.automation_pause_changed` has closed required fields"
             }
           ],
@@ -4503,15 +4581,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1565",
-              "line_start": 30582,
-              "line_end": 30582,
+              "line_start": 30708,
+              "line_end": 30708,
               "quote": "| `ea_w3h_runtime_automation_pause_changed_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1565",
-              "line_start": 30582,
-              "line_end": 30582,
+              "line_start": 30708,
+              "line_end": 30708,
               "quote": "| `ea_w3h_runtime_automation_pause_changed_publication` |"
             }
           ],
@@ -4588,30 +4666,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1565",
-              "line_start": 2981,
-              "line_end": 2981,
-              "quote": "12. **Oracles.** `runtime.automation_pause_changed` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -4621,13 +4703,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "runtime.quota_resume_attempted",
@@ -4699,15 +4782,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1566",
-              "line_start": 25448,
-              "line_end": 25448,
+              "line_start": 25572,
+              "line_end": 25572,
               "quote": "`runtime.quota_resume_attempted` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1566",
-              "line_start": 25448,
-              "line_end": 25448,
+              "line_start": 25572,
+              "line_end": 25572,
               "quote": "`runtime.quota_resume_attempted` has closed required fields"
             }
           ],
@@ -4788,15 +4871,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1566",
-              "line_start": 30652,
-              "line_end": 30652,
+              "line_start": 30778,
+              "line_end": 30778,
               "quote": "| `ea_w3h_runtime_quota_resume_attempted_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1566",
-              "line_start": 30652,
-              "line_end": 30652,
+              "line_start": 30778,
+              "line_end": 30778,
               "quote": "| `ea_w3h_runtime_quota_resume_attempted_publication` |"
             }
           ],
@@ -4873,30 +4956,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1566",
-              "line_start": 2367,
-              "line_end": 2367,
-              "quote": "12. **Oracles.** `runtime.quota_resume_attempted` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-au"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -4906,13 +4993,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "runtime.quota_resume_consent_changed",
@@ -4984,15 +5072,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1567",
-              "line_start": 25506,
-              "line_end": 25506,
+              "line_start": 25630,
+              "line_end": 25630,
               "quote": "`runtime.quota_resume_consent_changed` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1567",
-              "line_start": 25506,
-              "line_end": 25506,
+              "line_start": 25630,
+              "line_end": 25630,
               "quote": "`runtime.quota_resume_consent_changed` has closed required fields"
             }
           ],
@@ -5073,15 +5161,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1567",
-              "line_start": 30722,
-              "line_end": 30722,
+              "line_start": 30848,
+              "line_end": 30848,
               "quote": "| `ea_w3h_runtime_quota_resume_consent_changed_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1567",
-              "line_start": 30722,
-              "line_end": 30722,
+              "line_start": 30848,
+              "line_end": 30848,
               "quote": "| `ea_w3h_runtime_quota_resume_consent_changed_publication` |"
             }
           ],
@@ -5158,30 +5246,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1567",
-              "line_start": 2434,
-              "line_end": 2434,
-              "quote": "12. **Oracles.** `runtime.quota_resume_consent_changed` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/ev"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -5191,13 +5283,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "runtime.quota_wait_started",
@@ -5269,15 +5362,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1568",
-              "line_start": 25564,
-              "line_end": 25564,
+              "line_start": 25688,
+              "line_end": 25688,
               "quote": "`runtime.quota_wait_started` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1568",
-              "line_start": 25564,
-              "line_end": 25564,
+              "line_start": 25688,
+              "line_end": 25688,
               "quote": "`runtime.quota_wait_started` has closed required fields"
             }
           ],
@@ -5358,15 +5451,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1568",
-              "line_start": 30792,
-              "line_end": 30792,
+              "line_start": 30918,
+              "line_end": 30918,
               "quote": "| `ea_w3h_runtime_quota_wait_started_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1568",
-              "line_start": 30792,
-              "line_end": 30792,
+              "line_start": 30918,
+              "line_end": 30918,
               "quote": "| `ea_w3h_runtime_quota_wait_started_publication` |"
             }
           ],
@@ -5443,30 +5536,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1568",
-              "line_start": 2501,
-              "line_end": 2501,
-              "quote": "12. **Oracles.** `runtime.quota_wait_started` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-author"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -5476,13 +5573,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "scheduled_dispatch.cancelled",
@@ -5554,15 +5652,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1569",
-              "line_start": 25622,
-              "line_end": 25622,
+              "line_start": 25746,
+              "line_end": 25746,
               "quote": "`scheduled_dispatch.cancelled` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1569",
-              "line_start": 25622,
-              "line_end": 25622,
+              "line_start": 25746,
+              "line_end": 25746,
               "quote": "`scheduled_dispatch.cancelled` has closed required fields"
             }
           ],
@@ -5643,15 +5741,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1569",
-              "line_start": 30862,
-              "line_end": 30862,
+              "line_start": 30988,
+              "line_end": 30988,
               "quote": "| `ea_w3h_scheduled_dispatch_cancelled_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1569",
-              "line_start": 30862,
-              "line_end": 30862,
+              "line_start": 30988,
+              "line_end": 30988,
               "quote": "| `ea_w3h_scheduled_dispatch_cancelled_publication` |"
             }
           ],
@@ -5728,30 +5826,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1569",
-              "line_start": 2568,
-              "line_end": 2568,
-              "quote": "12. **Oracles.** `scheduled_dispatch.cancelled` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-auth"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -5761,13 +5863,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "scheduled_dispatch.created",
@@ -5839,15 +5942,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1570",
-              "line_start": 25680,
-              "line_end": 25680,
+              "line_start": 25804,
+              "line_end": 25804,
               "quote": "`scheduled_dispatch.created` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1570",
-              "line_start": 25680,
-              "line_end": 25680,
+              "line_start": 25804,
+              "line_end": 25804,
               "quote": "`scheduled_dispatch.created` has closed required fields"
             }
           ],
@@ -5928,15 +6031,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1570",
-              "line_start": 30932,
-              "line_end": 30932,
+              "line_start": 31058,
+              "line_end": 31058,
               "quote": "| `ea_w3h_scheduled_dispatch_created_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1570",
-              "line_start": 30932,
-              "line_end": 30932,
+              "line_start": 31058,
+              "line_end": 31058,
               "quote": "| `ea_w3h_scheduled_dispatch_created_publication` |"
             }
           ],
@@ -6013,30 +6116,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1570",
-              "line_start": 2636,
-              "line_end": 2636,
-              "quote": "12. **Oracles.** `scheduled_dispatch.created` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-author"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -6046,13 +6153,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "scheduled_dispatch.dispatched",
@@ -6124,15 +6232,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1571",
-              "line_start": 25738,
-              "line_end": 25738,
+              "line_start": 25862,
+              "line_end": 25862,
               "quote": "`scheduled_dispatch.dispatched` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1571",
-              "line_start": 25738,
-              "line_end": 25738,
+              "line_start": 25862,
+              "line_end": 25862,
               "quote": "`scheduled_dispatch.dispatched` has closed required fields"
             }
           ],
@@ -6213,15 +6321,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1571",
-              "line_start": 31002,
-              "line_end": 31002,
+              "line_start": 31128,
+              "line_end": 31128,
               "quote": "| `ea_w3h_scheduled_dispatch_dispatched_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1571",
-              "line_start": 31002,
-              "line_end": 31002,
+              "line_start": 31128,
+              "line_end": 31128,
               "quote": "| `ea_w3h_scheduled_dispatch_dispatched_publication` |"
             }
           ],
@@ -6298,30 +6406,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1571",
-              "line_start": 2704,
-              "line_end": 2704,
-              "quote": "12. **Oracles.** `scheduled_dispatch.dispatched` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-aut"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -6331,13 +6443,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "scheduled_dispatch.failed",
@@ -6409,15 +6522,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1572",
-              "line_start": 25796,
-              "line_end": 25796,
+              "line_start": 25920,
+              "line_end": 25920,
               "quote": "`scheduled_dispatch.failed` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1572",
-              "line_start": 25796,
-              "line_end": 25796,
+              "line_start": 25920,
+              "line_end": 25920,
               "quote": "`scheduled_dispatch.failed` has closed required fields"
             }
           ],
@@ -6498,15 +6611,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1572",
-              "line_start": 31072,
-              "line_end": 31072,
+              "line_start": 31198,
+              "line_end": 31198,
               "quote": "| `ea_w3h_scheduled_dispatch_failed_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1572",
-              "line_start": 31072,
-              "line_end": 31072,
+              "line_start": 31198,
+              "line_end": 31198,
               "quote": "| `ea_w3h_scheduled_dispatch_failed_publication` |"
             }
           ],
@@ -6583,30 +6696,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1572",
-              "line_start": 2772,
-              "line_end": 2772,
-              "quote": "12. **Oracles.** `scheduled_dispatch.failed` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authori"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -6616,13 +6733,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "scheduled_dispatch.held",
@@ -6694,15 +6812,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1573",
-              "line_start": 25854,
-              "line_end": 25854,
+              "line_start": 25978,
+              "line_end": 25978,
               "quote": "`scheduled_dispatch.held` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1573",
-              "line_start": 25854,
-              "line_end": 25854,
+              "line_start": 25978,
+              "line_end": 25978,
               "quote": "`scheduled_dispatch.held` has closed required fields"
             }
           ],
@@ -6783,15 +6901,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1573",
-              "line_start": 31142,
-              "line_end": 31142,
+              "line_start": 31268,
+              "line_end": 31268,
               "quote": "| `ea_w3h_scheduled_dispatch_held_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1573",
-              "line_start": 31142,
-              "line_end": 31142,
+              "line_start": 31268,
+              "line_end": 31268,
               "quote": "| `ea_w3h_scheduled_dispatch_held_publication` |"
             }
           ],
@@ -6868,30 +6986,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1573",
-              "line_start": 2840,
-              "line_end": 2840,
-              "quote": "12. **Oracles.** `scheduled_dispatch.held` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -6901,13 +7023,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "scheduled_dispatch.updated",
@@ -6979,15 +7102,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1574",
-              "line_start": 25912,
-              "line_end": 25912,
+              "line_start": 26036,
+              "line_end": 26036,
               "quote": "`scheduled_dispatch.updated` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1574",
-              "line_start": 25912,
-              "line_end": 25912,
+              "line_start": 26036,
+              "line_end": 26036,
               "quote": "`scheduled_dispatch.updated` has closed required fields"
             }
           ],
@@ -7068,15 +7191,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1574",
-              "line_start": 31212,
-              "line_end": 31212,
+              "line_start": 31338,
+              "line_end": 31338,
               "quote": "| `ea_w3h_scheduled_dispatch_updated_publication` |"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1574",
-              "line_start": 31212,
-              "line_end": 31212,
+              "line_start": 31338,
+              "line_end": 31338,
               "quote": "| `ea_w3h_scheduled_dispatch_updated_publication` |"
             }
           ],
@@ -7153,30 +7276,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/Scheduling_and_Quota_Resume.md",
-              "unit": "SQR-1574",
-              "line_start": 2908,
-              "line_end": 2908,
-              "quote": "12. **Oracles.** `scheduled_dispatch.updated` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-author"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -7186,13 +7313,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 10
+      "pass_count": 11
     },
     {
       "event_type": "todo.created",
@@ -7264,15 +7392,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1575",
-              "line_start": 25970,
-              "line_end": 25970,
+              "line_start": 26094,
+              "line_end": 26094,
               "quote": "`todo.created` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1575",
-              "line_start": 25970,
-              "line_end": 25970,
+              "line_start": 26094,
+              "line_end": 26094,
               "quote": "`todo.created` has closed required fields"
             }
           ],
@@ -7339,30 +7467,28 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2: canonical non-rebuildable publication binds RP-CHAT-THREAD-LIFETIME@1.0.0 under approved Card 1 G20, with original pending/result/receipt/recovery/live-reference/hold/backup cleanup fences; no disposable-index rebuild or independent clock. Approved G20 policy object remains absent at this head and must be carried at integration; no new Jared question.",
+          "finding": "Bound to RP-CHAT-THREAD-LIFETIME@1.0.0 under DL-401 Card 1 G20; the approved object is carried in the lane registry byte-identical to main 26cd8a3aeb and the reviewed 2663667e14 object; retention_cell rows RT01-RT06 verify the row, object and exact terms.",
           "evidence": [
             {
               "path": "Plans/ToDo_Runtime.md",
               "unit": "TDR-1575",
               "line_start": 1082,
               "line_end": 1082,
-              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are o"
+              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME@1.0.0 object landed on main in 26cd8a3aeb, byte-ide"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1575",
-              "line_start": 31282,
-              "line_end": 31282,
-              "quote": "| `ea_w3h_todo_created_publication` |"
+              "path": "Plans/storage_value_registry.json",
+              "line_start": 558,
+              "line_end": 558,
+              "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\","
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1575",
-              "line_start": 31282,
-              "line_end": 31282,
-              "quote": "| `ea_w3h_todo_created_publication` |"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1536,
+              "line_end": 1536,
+              "quote": "def retention_facts(f, registry):"
             }
           ],
           "prior": "PARTIAL (review-confirmed B1/B2 across all 32, with G20 already PARTIAL)",
@@ -7438,30 +7564,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/ToDo_Runtime.md",
-              "unit": "TDR-1575",
-              "line_start": 1087,
-              "line_end": 1087,
-              "quote": "12. **Oracles.** `todo.created` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-20261105/W"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -7471,14 +7601,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation.",
-        "Exact approved chat policy object is an integration dependency."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 9
+      "pass_count": 11
     },
     {
       "event_type": "todo.dependency_changed",
@@ -7550,15 +7680,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1576",
-              "line_start": 26028,
-              "line_end": 26028,
+              "line_start": 26152,
+              "line_end": 26152,
               "quote": "`todo.dependency_changed` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1576",
-              "line_start": 26028,
-              "line_end": 26028,
+              "line_start": 26152,
+              "line_end": 26152,
               "quote": "`todo.dependency_changed` has closed required fields"
             }
           ],
@@ -7625,30 +7755,28 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2: canonical non-rebuildable publication binds RP-CHAT-THREAD-LIFETIME@1.0.0 under approved Card 1 G20, with original pending/result/receipt/recovery/live-reference/hold/backup cleanup fences; no disposable-index rebuild or independent clock. Approved G20 policy object remains absent at this head and must be carried at integration; no new Jared question.",
+          "finding": "Bound to RP-CHAT-THREAD-LIFETIME@1.0.0 under DL-401 Card 1 G20; the approved object is carried in the lane registry byte-identical to main 26cd8a3aeb and the reviewed 2663667e14 object; retention_cell rows RT01-RT06 verify the row, object and exact terms.",
           "evidence": [
             {
               "path": "Plans/ToDo_Runtime.md",
               "unit": "TDR-1576",
               "line_start": 1152,
               "line_end": 1152,
-              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are o"
+              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME@1.0.0 object landed on main in 26cd8a3aeb, byte-ide"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1576",
-              "line_start": 31352,
-              "line_end": 31352,
-              "quote": "| `ea_w3h_todo_dependency_changed_publication` |"
+              "path": "Plans/storage_value_registry.json",
+              "line_start": 558,
+              "line_end": 558,
+              "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\","
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1576",
-              "line_start": 31352,
-              "line_end": 31352,
-              "quote": "| `ea_w3h_todo_dependency_changed_publication` |"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1536,
+              "line_end": 1536,
+              "quote": "def retention_facts(f, registry):"
             }
           ],
           "prior": "PARTIAL (review-confirmed B1/B2 across all 32, with G20 already PARTIAL)",
@@ -7724,30 +7852,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/ToDo_Runtime.md",
-              "unit": "TDR-1576",
-              "line_start": 1157,
-              "line_end": 1157,
-              "quote": "12. **Oracles.** `todo.dependency_changed` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -7757,14 +7889,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation.",
-        "Exact approved chat policy object is an integration dependency."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 9
+      "pass_count": 11
     },
     {
       "event_type": "todo.removed_from_current_list",
@@ -7836,15 +7968,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1577",
-              "line_start": 26086,
-              "line_end": 26086,
+              "line_start": 26210,
+              "line_end": 26210,
               "quote": "`todo.removed_from_current_list` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1577",
-              "line_start": 26086,
-              "line_end": 26086,
+              "line_start": 26210,
+              "line_end": 26210,
               "quote": "`todo.removed_from_current_list` has closed required fields"
             }
           ],
@@ -7911,30 +8043,28 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2: canonical non-rebuildable publication binds RP-CHAT-THREAD-LIFETIME@1.0.0 under approved Card 1 G20, with original pending/result/receipt/recovery/live-reference/hold/backup cleanup fences; no disposable-index rebuild or independent clock. Approved G20 policy object remains absent at this head and must be carried at integration; no new Jared question.",
+          "finding": "Bound to RP-CHAT-THREAD-LIFETIME@1.0.0 under DL-401 Card 1 G20; the approved object is carried in the lane registry byte-identical to main 26cd8a3aeb and the reviewed 2663667e14 object; retention_cell rows RT01-RT06 verify the row, object and exact terms.",
           "evidence": [
             {
               "path": "Plans/ToDo_Runtime.md",
               "unit": "TDR-1577",
               "line_start": 1222,
               "line_end": 1222,
-              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are o"
+              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME@1.0.0 object landed on main in 26cd8a3aeb, byte-ide"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1577",
-              "line_start": 31422,
-              "line_end": 31422,
-              "quote": "| `ea_w3h_todo_removed_from_current_list_publication` |"
+              "path": "Plans/storage_value_registry.json",
+              "line_start": 558,
+              "line_end": 558,
+              "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\","
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1577",
-              "line_start": 31422,
-              "line_end": 31422,
-              "quote": "| `ea_w3h_todo_removed_from_current_list_publication` |"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1536,
+              "line_end": 1536,
+              "quote": "def retention_facts(f, registry):"
             }
           ],
           "prior": "PARTIAL (review-confirmed B1/B2 across all 32, with G20 already PARTIAL)",
@@ -8010,30 +8140,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/ToDo_Runtime.md",
-              "unit": "TDR-1577",
-              "line_start": 1227,
-              "line_end": 1227,
-              "quote": "12. **Oracles.** `todo.removed_from_current_list` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-au"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -8043,14 +8177,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation.",
-        "Exact approved chat policy object is an integration dependency."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 9
+      "pass_count": 11
     },
     {
       "event_type": "todo.reordered",
@@ -8122,15 +8256,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1578",
-              "line_start": 26144,
-              "line_end": 26144,
+              "line_start": 26268,
+              "line_end": 26268,
               "quote": "`todo.reordered` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1578",
-              "line_start": 26144,
-              "line_end": 26144,
+              "line_start": 26268,
+              "line_end": 26268,
               "quote": "`todo.reordered` has closed required fields"
             }
           ],
@@ -8197,30 +8331,28 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2: canonical non-rebuildable publication binds RP-CHAT-THREAD-LIFETIME@1.0.0 under approved Card 1 G20, with original pending/result/receipt/recovery/live-reference/hold/backup cleanup fences; no disposable-index rebuild or independent clock. Approved G20 policy object remains absent at this head and must be carried at integration; no new Jared question.",
+          "finding": "Bound to RP-CHAT-THREAD-LIFETIME@1.0.0 under DL-401 Card 1 G20; the approved object is carried in the lane registry byte-identical to main 26cd8a3aeb and the reviewed 2663667e14 object; retention_cell rows RT01-RT06 verify the row, object and exact terms.",
           "evidence": [
             {
               "path": "Plans/ToDo_Runtime.md",
               "unit": "TDR-1578",
               "line_start": 1291,
               "line_end": 1291,
-              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are o"
+              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME@1.0.0 object landed on main in 26cd8a3aeb, byte-ide"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1578",
-              "line_start": 31492,
-              "line_end": 31492,
-              "quote": "| `ea_w3h_todo_reordered_publication` |"
+              "path": "Plans/storage_value_registry.json",
+              "line_start": 558,
+              "line_end": 558,
+              "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\","
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1578",
-              "line_start": 31492,
-              "line_end": 31492,
-              "quote": "| `ea_w3h_todo_reordered_publication` |"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1536,
+              "line_end": 1536,
+              "quote": "def retention_facts(f, registry):"
             }
           ],
           "prior": "PARTIAL (review-confirmed B1/B2 across all 32, with G20 already PARTIAL)",
@@ -8296,30 +8428,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/ToDo_Runtime.md",
-              "unit": "TDR-1578",
-              "line_start": 1296,
-              "line_end": 1296,
-              "quote": "12. **Oracles.** `todo.reordered` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-20261105"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -8329,14 +8465,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation.",
-        "Exact approved chat policy object is an integration dependency."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 9
+      "pass_count": 11
     },
     {
       "event_type": "todo.status_changed",
@@ -8408,15 +8544,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1579",
-              "line_start": 26202,
-              "line_end": 26202,
+              "line_start": 26326,
+              "line_end": 26326,
               "quote": "`todo.status_changed` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1579",
-              "line_start": 26202,
-              "line_end": 26202,
+              "line_start": 26326,
+              "line_end": 26326,
               "quote": "`todo.status_changed` has closed required fields"
             }
           ],
@@ -8483,30 +8619,28 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2: canonical non-rebuildable publication binds RP-CHAT-THREAD-LIFETIME@1.0.0 under approved Card 1 G20, with original pending/result/receipt/recovery/live-reference/hold/backup cleanup fences; no disposable-index rebuild or independent clock. Approved G20 policy object remains absent at this head and must be carried at integration; no new Jared question.",
+          "finding": "Bound to RP-CHAT-THREAD-LIFETIME@1.0.0 under DL-401 Card 1 G20; the approved object is carried in the lane registry byte-identical to main 26cd8a3aeb and the reviewed 2663667e14 object; retention_cell rows RT01-RT06 verify the row, object and exact terms.",
           "evidence": [
             {
               "path": "Plans/ToDo_Runtime.md",
               "unit": "TDR-1579",
               "line_start": 1363,
               "line_end": 1363,
-              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are o"
+              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME@1.0.0 object landed on main in 26cd8a3aeb, byte-ide"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1579",
-              "line_start": 31562,
-              "line_end": 31562,
-              "quote": "| `ea_w3h_todo_status_changed_publication` |"
+              "path": "Plans/storage_value_registry.json",
+              "line_start": 558,
+              "line_end": 558,
+              "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\","
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1579",
-              "line_start": 31562,
-              "line_end": 31562,
-              "quote": "| `ea_w3h_todo_status_changed_publication` |"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1536,
+              "line_end": 1536,
+              "quote": "def retention_facts(f, registry):"
             }
           ],
           "prior": "PARTIAL (review-confirmed B1/B2 across all 32, with G20 already PARTIAL)",
@@ -8582,30 +8716,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/ToDo_Runtime.md",
-              "unit": "TDR-1579",
-              "line_start": 1368,
-              "line_end": 1368,
-              "quote": "12. **Oracles.** `todo.status_changed` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-202"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -8615,14 +8753,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation.",
-        "Exact approved chat policy object is an integration dependency."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 9
+      "pass_count": 11
     },
     {
       "event_type": "todo.updated",
@@ -8694,15 +8832,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1580",
-              "line_start": 26260,
-              "line_end": 26260,
+              "line_start": 26384,
+              "line_end": 26384,
               "quote": "`todo.updated` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1580",
-              "line_start": 26260,
-              "line_end": 26260,
+              "line_start": 26384,
+              "line_end": 26384,
               "quote": "`todo.updated` has closed required fields"
             }
           ],
@@ -8769,30 +8907,28 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2: canonical non-rebuildable publication binds RP-CHAT-THREAD-LIFETIME@1.0.0 under approved Card 1 G20, with original pending/result/receipt/recovery/live-reference/hold/backup cleanup fences; no disposable-index rebuild or independent clock. Approved G20 policy object remains absent at this head and must be carried at integration; no new Jared question.",
+          "finding": "Bound to RP-CHAT-THREAD-LIFETIME@1.0.0 under DL-401 Card 1 G20; the approved object is carried in the lane registry byte-identical to main 26cd8a3aeb and the reviewed 2663667e14 object; retention_cell rows RT01-RT06 verify the row, object and exact terms.",
           "evidence": [
             {
               "path": "Plans/ToDo_Runtime.md",
               "unit": "TDR-1580",
               "line_start": 1433,
               "line_end": 1433,
-              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are o"
+              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME@1.0.0 object landed on main in 26cd8a3aeb, byte-ide"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1580",
-              "line_start": 31632,
-              "line_end": 31632,
-              "quote": "| `ea_w3h_todo_updated_publication` |"
+              "path": "Plans/storage_value_registry.json",
+              "line_start": 558,
+              "line_end": 558,
+              "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\","
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1580",
-              "line_start": 31632,
-              "line_end": 31632,
-              "quote": "| `ea_w3h_todo_updated_publication` |"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1536,
+              "line_end": 1536,
+              "quote": "def retention_facts(f, registry):"
             }
           ],
           "prior": "PARTIAL (review-confirmed B1/B2 across all 32, with G20 already PARTIAL)",
@@ -8868,30 +9004,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/ToDo_Runtime.md",
-              "unit": "TDR-1580",
-              "line_start": 1438,
-              "line_end": 1438,
-              "quote": "12. **Oracles.** `todo.updated` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-20261105/W"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -8901,14 +9041,14 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation.",
-        "Exact approved chat policy object is an integration dependency."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 9
+      "pass_count": 11
     },
     {
       "event_type": "todo.work_bound",
@@ -8980,15 +9120,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1581",
-              "line_start": 26318,
-              "line_end": 26318,
+              "line_start": 26442,
+              "line_end": 26442,
               "quote": "`todo.work_bound` has closed required fields"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1581",
-              "line_start": 26318,
-              "line_end": 26318,
+              "line_start": 26442,
+              "line_end": 26442,
               "quote": "`todo.work_bound` has closed required fields"
             }
           ],
@@ -9055,30 +9195,28 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2: canonical non-rebuildable publication binds RP-CHAT-THREAD-LIFETIME@1.0.0 under approved Card 1 G20, with original pending/result/receipt/recovery/live-reference/hold/backup cleanup fences; no disposable-index rebuild or independent clock. Approved G20 policy object remains absent at this head and must be carried at integration; no new Jared question.",
+          "finding": "Bound to RP-CHAT-THREAD-LIFETIME@1.0.0 under DL-401 Card 1 G20; the approved object is carried in the lane registry byte-identical to main 26cd8a3aeb and the reviewed 2663667e14 object; retention_cell rows RT01-RT06 verify the row, object and exact terms.",
           "evidence": [
             {
               "path": "Plans/ToDo_Runtime.md",
               "unit": "TDR-1581",
               "line_start": 1503,
               "line_end": 1503,
-              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME object and thread deletion contract are o"
+              "quote": "7. **Retention.** Bind this exact event to `RP-CHAT-THREAD-LIFETIME@1.0.0`, approved deck-1 Card 1 `G20` (DL-401). The exact RP-CHAT-THREAD-LIFETIME@1.0.0 object landed on main in 26cd8a3aeb, byte-ide"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1581",
-              "line_start": 31702,
-              "line_end": 31702,
-              "quote": "| `ea_w3h_todo_work_bound_publication` |"
+              "path": "Plans/storage_value_registry.json",
+              "line_start": 558,
+              "line_end": 558,
+              "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\","
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-1581",
-              "line_start": 31702,
-              "line_end": 31702,
-              "quote": "| `ea_w3h_todo_work_bound_publication` |"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1536,
+              "line_end": 1536,
+              "quote": "def retention_facts(f, registry):"
             }
           ],
           "prior": "PARTIAL (review-confirmed B1/B2 across all 32, with G20 already PARTIAL)",
@@ -9154,30 +9292,34 @@
           "change_reason": "Newly authored under the bounded deck-1 4b A grant, not a carry-forward depth pass."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B3: explicit per-family publication/envelope/descriptor/receipt guard plan and all 16 absent/prepared/appended/settled pairs, with crash/retry/history/pending-withdrawal/cleanup positives and isolated planned negatives. Schema probes only; executable oracles and shared-tool check-11 proof are phase 2, NOT_RUN.",
+          "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
           "evidence": [
             {
-              "path": "Plans/ToDo_Runtime.md",
-              "unit": "TDR-1581",
-              "line_start": 1508,
-              "line_end": 1508,
-              "quote": "12. **Oracles.** `todo.work_bound` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-2026110"
-            },
-            {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "line_start": 7357,
+              "line_end": 7357,
+              "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-1270",
-              "line_start": 7355,
-              "line_end": 7355,
-              "quote": "Phase-1 review round 1 adds each exact family"
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1238,
+              "line_end": 1238,
+              "quote": "def verify_publication(w, mode='current'):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1483,
+              "line_end": 1483,
+              "quote": "def retained_read(w, read):"
+            },
+            {
+              "path": "scripts/pm_w3h_events.py",
+              "line_start": 1212,
+              "line_end": 1212,
+              "quote": "ENTAILED = {"
             }
           ],
           "prior": "PARTIAL",
@@ -9187,20 +9329,19 @@
       },
       "remaining_gaps": [
         "Registry membership intentionally ABSENT until separate admission.",
-        "Criterion 12 PARTIAL until reviewed shared foundations, executable oracles and guard isolation.",
-        "Exact approved chat policy object is an integration dependency."
+        "Native execution NOT_RUN; the oracle is a static reference model of the owner contract.",
+        "datetime_validator and the date-time inventory gate run at batch-3 integration (SWEEP-P2B addendum 2)."
       ],
       "native_execution": "NOT_RUN",
       "normative_depth_complete": false,
-      "notes": "This is a phase-1 self-grade, no independent review, native proof, admission or readiness claim.",
+      "notes": "Wave 3 phase 2 self-grade; no independent review, native proof, admission or readiness claim.",
       "registry_pointer": null,
-      "pass_count": 9
+      "pass_count": 11
     }
   ],
   "status_counts": {
     "ABSENT": 32,
-    "PASS": 313,
-    "PARTIAL": 39
+    "PASS": 352
   },
   "phase1_review_round": 1,
   "review_affected_before_fix_counts": {
@@ -9210,13 +9351,35 @@
     "basis": "Apply review-confirmed lane-wide B1 producer and B2 canonical-journal retention defects to all 32; this is a derived full-lane baseline, not a claim that the reviewer sampled all 32."
   },
   "retention_cells_changed": 32,
-  "pending_policy_integration_families": [
-    "todo.created",
-    "todo.dependency_changed",
-    "todo.removed_from_current_list",
-    "todo.reordered",
-    "todo.status_changed",
-    "todo.updated",
-    "todo.work_bound"
-  ]
+  "pending_policy_integration_families": [],
+  "phase2": {
+    "before": {
+      "ABSENT": 32,
+      "PARTIAL": 39,
+      "PASS": 313
+    },
+    "after": {
+      "ABSENT": 32,
+      "PASS": 352
+    },
+    "quotes_reanchored": 130,
+    "regraded": {
+      "positive_negative_oracles": 32,
+      "retention": 7
+    }
+  },
+  "policy_object_carried": {
+    "policy": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+    "main_commit": "26cd8a3aeb",
+    "reviewed_object_commit": "2663667e14",
+    "families": [
+      "todo.created",
+      "todo.dependency_changed",
+      "todo.removed_from_current_list",
+      "todo.reordered",
+      "todo.status_changed",
+      "todo.updated",
+      "todo.work_bound"
+    ]
+  }
 }

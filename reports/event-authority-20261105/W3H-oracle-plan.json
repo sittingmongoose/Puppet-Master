@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.event_authority.w3h.oracle_plan.v1",
   "phase": 1,
-  "implementation_status": "NOT_IMPLEMENTED",
+  "implementation_status": "PHASE2_STATIC_ORACLE_IMPLEMENTED: scripts/pm_w3h_events.py and scripts/pm_w3h_cases.py (see W3H.md, Wave 3 phase 2); this file stays the phase-1 planning inventory",
   "families": [
     {
       "event_type": "assistant_plan.schedule_invalidated",
@@ -13,7 +13,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -9341,7 +9341,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -18355,7 +18355,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -27450,7 +27450,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -36545,7 +36545,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -45559,7 +45559,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/execution_window_created.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -54753,7 +54753,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/execution_window_invalidated.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -64020,7 +64020,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/execution_window_updated.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -73214,7 +73214,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -82723,7 +82723,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/named_plan_archived.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -91944,7 +91944,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -101246,7 +101246,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/named_plan_created.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -110485,7 +110485,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/named_plan_priority_changed.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -119706,7 +119706,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/named_plan_renamed.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -128945,7 +128945,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/named_plan_restored.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -138166,7 +138166,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -147271,7 +147271,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -156727,7 +156727,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -166111,7 +166111,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -175423,7 +175423,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -184438,7 +184438,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -193453,7 +193453,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -202792,7 +202792,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -211970,7 +211970,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -221138,7 +221138,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -230153,7 +230153,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/todo_created.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -239277,7 +239277,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/todo_dependency_changed.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -248491,7 +248491,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -257696,7 +257696,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/todo_reordered.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -266911,7 +266911,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/todo_status_changed.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -276449,7 +276449,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/todo_updated.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",
@@ -285654,7 +285654,7 @@
         "ATS-1270"
       ],
       "payload_schema_ref": "Plans/event_payloads/w3h/todo_work_bound.schema.json#/$defs/payload",
-      "criterion_12": "PARTIAL",
+      "criterion_12": "PASS (wave 3 phase 2 static oracle; native NOT_RUN)",
       "native_execution": "NOT_RUN",
       "phase2_dependencies": [
         "reviewed plans/ea-numrule-20261105 foundation",

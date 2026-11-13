@@ -268,3 +268,168 @@ Evidence custody (absolute path and SHA-256):
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/p1fix1/final-scope-result.json` — SHA-256 `dd979b6d47ce15f5933fe2f2e57893004be1caf1686207f5c22ba1a0dfef0484`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/p1fix1/currentness-copy-sha256.json` — SHA-256 `eaa91ddf784ccf60e7f54e56dee4dd763db8c2bdb076fd563349fddcea4e4fd9`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/W3H-checks.json` — SHA-256 `d2a277fcbe654d22f515abc76d3a52b6fe9248b86188ace30f9113836024fa9c`.
+
+## Wave 3 phase 2: findings and responses
+
+Brief: `lanes/W3-P2.md` (stream E, 2026-11-13). Start `df28f1c4f6`; head is the commit carrying this section. Merges, exactly as briefed: the gated guard tool `004bdedd63` as `eddf42e208`, then the gated NUMRULE head `58c2816ff3` as `5d9535470f` (conflicts only in `Plans/_shards/**` and `Plans/.plan_index/**`, resolved by regenerating with the ignored currentness edition present, 15 files SHA-256-matched). Both merged file sets are byte-identical to their gated commits (checked blob by blob). No rebase. Native execution, admission and registry membership are unchanged: NOT_RUN and ABSENT.
+
+| Commit | What |
+|---|---|
+| `eddf42e208` | merge the gated guard tool 004bdedd63 (11 files, unchanged) |
+| `5d9535470f` | merge the gated NUMRULE head 58c2816ff3 (derived conflicts regenerated) |
+| `e88d2cbafb` | complete checker on Method B guard tables, witnesses, table generator, CLI |
+| `1c596e29c5` | carry the approved G20 Chat policy object; TDR/SP-1575..1581 item 7 and seven journal rows updated; shards and index regenerated |
+| `a54d4cd1a7` | number-corpus routes, guard-tool adapter and runner, per-family owner tables, remaining illegal edges, type-confusion witnesses |
+| `65969c3d36` | compound cohorts for all seven ToDo families (CP03 compares with the owner body transaction); created TD08 witness |
+| `66441f9726` | single-member cohort CP01 witness keeps the derived member admitted |
+| `(this head)` | ATS-1270 phase-2 paragraph with regenerated shards and index; self-grade; W3H-oracle-plan.json implementation_status and the 32 criterion_12 fields updated (the plan body is unchanged); this report section |
+
+Verify everything with `python3 scripts/pm-w3h-event-contracts.py` (exit 0) and `python3 scripts/pm-w3h-guard-tables.py --out <dir>` (exit 0); tables regenerate byte-identically with `python3 scripts/pm-w3h-table-generate.py --check`.
+
+### What the oracle is
+
+W3H had no executable checker after phase 1, so phase 2 writes one: `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input and refuses only through the generated tables `scripts/pm_w3h_table_<phase>.py` (spec `ROWS`, `scripts/pm_w3h_events.py:339`; family rows `FX`, `scripts/pm_w3h_events.py:493`). Boundaries: publication verification of a journal value with its authentic source and Storage custody (`scripts/pm_w3h_events.py:1238`), exact retry (`scripts/pm_w3h_events.py:1335`), journal CAS (`scripts/pm_w3h_events.py:1383`), canonical cleanup (`scripts/pm_w3h_events.py:1378`), SP-1101 retained read (`scripts/pm_w3h_events.py:1483`), compound ToDo cohort (`scripts/pm_w3h_events.py:1521`) and retention cell (`scripts/pm_w3h_events.py:1536`). Fixtures are coherent synthetic originals built once per family, scope and variant (`scripts/pm_w3h_events.py:938`); every negative changes one input invariant of one of them (`scripts/pm_w3h_cases.py`). ATS-1270 now names the oracle (`Plans/Automated_Testing_System.md:7357`).
+
+Complete checker: **8186 cases pass** (1181 positives, 7005 single-defect negatives; a negative passes only when its first refusal is its own row). 278 rows: 276 witnessed, 2 entailed with proofs, 0 unwitnessed. Every `$ref` of the lane's closure resolves eagerly (1179 references).
+
+### Guard tables (gated tool `004bdedd63`, credit copied from its reports)
+
+Tool status per table is the tool's own `status`; `proved` is the list of rows the tool reports proved. Collection: 8186 cases, 51505 phase records (44335 accepted, 7170 refused). Lane matrix (every row on every distinct collected observation): 0 problems. Negatives per row given to the tool: up to 4; controls up to 6 (boolean observations collapse identical vectors, so most rows have one distinct witness vector).
+
+| Table | Rows | Tool | Proved | Distinct negatives | Families witnessing |
+|---|---:|---|---:|---:|---|
+| `ad` | 6 | PASS | 6 | 6 | 32 |
+| `jr` | 8 | PASS | 8 | 8 | 32 |
+| `ev` | 16 | PASS | 16 | 16 | 32 |
+| `lg` | 15 | PASS | 15 | 15 | 32 |
+| `id` | 13 | PASS | 13 | 13 | 32 |
+| `sj` | 22 | PASS | 22 | 22 | 32 |
+| `en_event_scope` | 1 | NO_REACHABLE_WITNESS | 0 | 0 | 0 |
+| `en_payload_scope` | 1 | NO_REACHABLE_WITNESS | 0 | 0 | 0 |
+| `st` | 8 | PASS | 8 | 8 | 32 |
+| `fx_plan` | 7 | PASS | 7 | 7 | 1 |
+| `fx_window` | 9 | PASS | 9 | 9 | 3 |
+| `fx_dispatch` | 16 | PASS | 16 | 16 | 6 |
+| `fx_quota` | 12 | PASS | 12 | 12 | 3 |
+| `fx_pause` | 10 | PASS | 10 | 10 | 1 |
+| `fx_named` | 10 | PASS | 10 | 10 | 6 |
+| `fx_named_archived` | 1 | PASS | 1 | 1 | 1 |
+| `fx_named_child_refs_changed` | 3 | PASS | 3 | 3 | 1 |
+| `fx_named_priority_changed` | 1 | PASS | 1 | 1 | 1 |
+| `fx_named_renamed` | 1 | PASS | 1 | 1 | 1 |
+| `fx_named_created` | 1 | PASS | 1 | 1 | 1 |
+| `fx_compose` | 10 | PASS | 10 | 10 | 4 |
+| `fx_goal` | 11 | PASS | 11 | 11 | 1 |
+| `fx_todo` | 17 | PASS | 17 | 17 | 7 |
+| `fx_todo_created` | 2 | PASS | 2 | 2 | 1 |
+| `fx_todo_dependency_changed` | 2 | PASS | 2 | 2 | 1 |
+| `fx_todo_removed_from_current_list` | 3 | PASS | 3 | 3 | 1 |
+| `fx_todo_reordered` | 5 | PASS | 5 | 5 | 1 |
+| `fx_todo_status_changed` | 8 | PASS | 8 | 8 | 1 |
+| `fx_todo_updated` | 3 | PASS | 3 | 3 | 1 |
+| `fx_todo_work_bound` | 4 | PASS | 4 | 4 | 1 |
+| `ry` | 7 | PASS | 7 | 7 | 32 |
+| `tr` | 6 | PASS | 6 | 6 | 32 |
+| `cl` | 12 | PASS | 12 | 12 | 32 |
+| `rr` | 6 | PASS | 6 | 6 | 32 |
+| `rd` | 9 | PASS | 9 | 9 | 32 |
+| `cp` | 6 | PASS | 6 | 6 | 4 |
+| `rt` | 6 | PASS | 6 | 6 | 32 |
+
+**Totals: 278 rows, 276 proved by the tool, 2 unproved with proof, 0 unproved without proof; tool failures: none.**
+
+Unproved rows, each alone in its own table, with the proof that an earlier row or schema clause always refuses first:
+
+- **SJ01_scope_kind** (`scripts/pm_w3h_events.py:1213`): Always refused first by LG01, ID00 or SJ02. LG01 validates the event against EventRecord 2.0.0, whose root allOf (Plans/event_record.schema.json:144-183, the two if/then clauses) makes scope_kind=application require project_id=null and scope_kind=project require a nonempty project_id string; ID00 (pm_w3h_events.observe_publication) requires the same pairing of the authentic source scope_kind/project_id; SJ02 requires event project_id == source project_id. With all three holding, a null project_id forces both scopes to application and a nonempty one forces both to project, so the scopes are equal and SJ01 cannot be the first refusal.
+- **SJ16_payload_scope** (`scripts/pm_w3h_events.py:1220`): Always refused first by LG04, ID00 or SJ17. LG04 validates the payload against the family closed payload, whose allOf if/then (Plans/event_payloads/w3h/<family>.schema.json, $defs/payload/allOf/0; Project-only families pin scope_kind const project and a nonempty project_id) makes scope_kind=application require project_id=null and otherwise a nonempty project_id; ID00 requires the same of the source; SJ17 requires payload project_id == source project_id. Hence payload scope_kind == source scope_kind whenever those hold.
+
+Per-family witness coverage (from `row_families` in the tool summary): every row is witnessed for every family it applies to, except:
+
+- **AD02_edition_admitted** (10 families): the ten Project-only families (Named Plans, Compose) have no application edition.
+- **LG10_payload_integers** (4 families): the four Compose payloads declare no integer slot.
+- **TD03_item_thread** (1 family): todo.dependency_changed: its payload edge set fixes the item's edges, so moving the item to another thread also crosses TD12; the other six ToDo families witness the row.
+- **TD16_claim_evidence** (4 families): todo.created, todo.dependency_changed, todo.reordered and todo.updated carry no status, work, outcome or replacement claim, so the row is vacuous for them.
+
+The compound rows CP01-CP06 apply to ToDo mutations only and are witnessed by five cohorts covering all seven ToDo families (dependency+reorder, work binding+status, update+reorder, created alone, removed alone). Family-specific owner rows apply to the families named in `FX`. Per-family case counts are in `checker-result.json` `per_family`.
+
+Crosswalk from the phase-1 planned inventory (19,359 guard entries, 34,304 planned variants) to implemented rows. The plan listed each schema keyword variant separately; the oracle checks each schema definition as one stock verdict row (JR02, JR05, JR06, EV02, LG01, LG04) with field witnesses (missing, unknown, wrong type, string booleans, null, arrays, objects, trailing LF, out-of-enum), as the landed DM/DCN tables do. Per-keyword cuts through the tool's SchemaCatalog are not claimed.
+
+| Planned class | Rows |
+|---|---|
+| membership, edition | AD01, AD02 |
+| publication gates (permission, Stop, writer, dedupe) | AD03-AD06 |
+| publication shape, closure, receipt/commitment presence and shape | JR01-JR08 |
+| payload_external, route/id/size/media/durability, inline and wrapper limits | EV01-EV16 |
+| payload/envelope schema, closed_unknown, wrong types | LG01-LG04 (+ JR02, EV02) |
+| format_time | LG05-LG07, JR08 |
+| numeric_representation | LG08-LG11, JR07, EV03, EV13, EV15 |
+| replay_only | LG12, RY01 |
+| event_id, idempotency, physical key, partition, copied journal joins | ID00-ID12 |
+| source_custody (envelope and payload joins, owner, component, result) | SJ02-SJ24 (SJ01, SJ16 entailed) |
+| storage_metadata, receipt_custody, full-value commitment | ST01-ST08 |
+| source_snapshot and every family-specific predicate | fx_* tables (AP, EW, DS, QT, PA, NP, CO, GO, TD rows) |
+| semantic_conflict, dedupe_unavailable on retry, original custody on retry | RY02-RY07 |
+| journal_cas and all 16 publication-state pairs | TR01-TR06 (8 illegal edges per family, legal edges and same-state reads as positives) |
+| retention_early, backup_closure, cleanup dependencies | CL01-CL12 |
+| recipe_selection | RR01-RR06 |
+| withdrawn_reader, access, deletion, read_only, token_instance/frontier/snapshot, source_gap | RD01-RD09 |
+| withdrawn_writer | AD03, and TR05 (pending drain after withdrawal) |
+| compound_admission, compound_completeness, todo_atomic cohort | CP01-CP06, TD17 |
+| retention binding | RT01-RT06 |
+
+### Numbers (CV-1100, SP-1100, SP-1101)
+
+- **Shared calls at every integer slot:** payload slots `current_integer` with the schema owner bounds (`scripts/pm_w3h_events.py:1026`, slots read from each schema by `integer_slots`, `scripts/pm_w3h_events.py:186`); EventRecord `sequence_id` and every AppendReceipt slot `storage_uint64`; `producer_sequence_id` and the SP-337 `byte_size` `current_integer(minimum=0)`; the CV-317 projection `producer_semantic_bytes`/`_digest` (LG11, retry RY07); SP-236 encodability and the 16 KiB limits `storage_value_bytes`/`decode_storage_value` (EV12-EV16); CV-339 `full_value_commitment` (ST07); SP-337 byte arithmetic cross-checked with `verify_payload_bytes`; retained reads compose `RetainedDispatcher` with the sealed-receipt owner. No lane cap, codec or serializer.
+- **Shared corpus through the complete checker:** `scripts/pm_w3h_numbers.py` writes every number spelling of the corpus (82, including a 4,400-digit integer) into a coherent original of every family at every lane integer slot: payload slots, producer_sequence_id (append and exact retry), Storage sequence_id (append and retained read), the four other receipt uint64 slots and the descriptor byte_size. 16495 routes; 5595 accepted, 10900 refused, 19 spellings refused at the shared ingress; **0 mismatches** against expectations composed from the shared helpers alone.
+- **Self-test:** `python3 scripts/pm_event_numbers.py --self-test --scope numbers` exits 0 and prints `"status": "pass"` (276 positives, 304 negatives, 0 failures).
+- **4,400-digit integer:** at a payload slot it passes `current_integer` (no global cap) and is refused at EV13 (SP-236 cannot encode it); at producer_sequence_id it is refused at EV15; at sequence_id at LG08; in a receipt at JR07; as a descriptor byte_size at EV09; an exact retry carrying it conflicts at RY07. No crash: every observation runs under exact integer digits and an exception never counts as a refusal.
+- **Fixture expectations the shared rule sets** (W3H had no earlier executable fixture, so none changed; these are the outcomes a schema-only reading would get wrong): `2^53+1` in an unbounded payload slot or producer_sequence_id is schema-valid but refused at LG11 (`jcs_binary64`, CV-317 producer route); `2^64` at a payload slot is refused at EV13, at producer_sequence_id at EV15, at sequence_id at LG08 and in a receipt at JR07; integral floats (`41.0`, `7.0`, `8.0`, `4096.0`) that stock 2020-12 schemas admit are refused at LG08/LG09/LG10/JR07/EV03; `-0`, `01` and fraction/exponent spellings are refused at the shared ingress or at the slot.
+
+### Timestamps (CV-1101, CV-253)
+
+| Field | Profile | Shared check | Row |
+|---|---|---|---|
+| `first_append_receipt/acknowledged_at_utc` | `storage_utc_z` | `pm_event_datetime.date_time(value, profile=...)` returns the string unchanged | JR08_ack_clock |
+| `prepared_event/observed_at_utc` | `storage_utc_z` | `pm_event_datetime.date_time(value, profile=...)` returns the string unchanged | LG06_observed_clock |
+| `prepared_event/occurred_at_utc` | `event_record` | `pm_event_datetime.date_time(value, profile=...)` returns the string unchanged | LG05_occurred_clock |
+| `prepared_event/persisted_at_utc` | `storage_utc_z` | `pm_event_datetime.date_time(value, profile=...)` returns the string unchanged | LG07_persisted_clock |
+
+The inventory is derived from the schemas, not listed by hand: `timestamp_inventory` (`scripts/pm_w3h_events.py:168`) walks every reference of each publication definition and asserts these four are the only formatted fields (no payload declares a timestamp). Witnesses per field: trailing LF, `+00:00`, `-00:00`, lowercase `z`, nonzero offset, missing zone, hour 24, 30 February, slash date and a non-leap `:60` second, each changed coherently in the source or Storage copy so only the clock row refuses. The stock schemas run without a format checker; the four clock rows are the format enforcement.
+
+**Inventory gate:** `python3 scripts/pm_event_datetime_inventory.py` in this lane tree: exit 1, status fail, 148 failure rows: 41 stale_scan_exclusion (Plans/.plan_index and Plans/_shards); 38 unreadable_mentioning_container (Plans/.plan_index and Plans/_shards); 32 unclassified_schema_node ({"error": "unclassified_schema_node", "node": {"path": "Plan); 19 unclassified_mentioning_container (Plans/.plan_migration/pds-20261105-002-current-planunit-snapshot/span_map.jsonl); 14 unclassified_mentioning_container (Plans/.plan_index and Plans/_shards); 4 unclassified_mentioning_container (Plans/.audits currentness edition (ignored copy)). The 32 unclassified_schema_node rows are exactly the new W3H resources' #/$defs/external_prepared_event observed_at_utc/persisted_at_utc declarations (one per family schema), which need their Storage classification under CV-1101 at batch-3 integration (SWEEP-P2B addendum 2, point 4); the checker already enforces storage_utc_z there (LG06, LG07). The other rows are hash drift and generated-index containers from Plans edits, and four rows in the ignored currentness edition copy. As SWEEP-P2B addendum 2 rules, `datetime_validator` and the inventory gate run at batch-3 integration; the inventory and exclusion files are NUMRULE's and are not edited here.
+
+### Retained reads (SP-1101, batch 2 fix 1 rule)
+
+A retained read selects its recipe only from the write receipt Storage sealed for that exact original at its journal locator (`seal_write_receipt`, `scripts/pm_w3h_events.py:1416`, called only on the writer side; `sealed_at`, `scripts/pm_w3h_events.py:1424`). Rows RR01-RR06: none → `original_unavailable`; several → `recipe_ambiguous` (unsupported); a receipt whose binding names another original → `original_unavailable`; an uninstalled recipe or another family/edition's recipe → `recipe_unsupported`; then the frozen verifier. After the tables accept, the shared `RetainedDispatcher` resolves through `W3HOriginalOwner` (`scripts/pm_w3h_events.py:1428`), which answers only from that one receipt. Negatives per family: missing receipt, receipt at another locator, ambiguous receipts, receipt for another original, unknown recipe, sibling-family recipe, application recipe for a Project original. The checker asserts after every read that no receipt was created and the custody bytes are unchanged. New-write selection is separate: only writers seal, with their own recipe tuple. Retained positives include reads after the writer is withdrawn, admission revoked and live state changed.
+
+### Retention cells
+
+All 32 cells are bound to landed decisions; none is PENDING_RETENTION_DECISION. DL-401 Card 1 decides every population: G18 (14) and G19 (6) and G21 (4) → `RP-AUTHORITY-INDEFINITE@1.0.0`; G29 (1) → `RP-GOAL-THREAD-LIFETIME@1.0.0`; G20 (7) → `RP-CHAT-THREAD-LIFETIME@1.0.0`. Deck 2 (DL-415..DL-452), deck 3 (DL-453..DL-464) and deck 4 (DL-500..DL-509) were read on `main` `a27594279e`: none names any of the 32 families or changes these groups (the only later Decision Log mention, DL-341, is a command alias). The retention table rows RT01-RT06 check each cell against the registry the checker runs on.
+
+**Carried item closed (the seven ToDo rows that needed the approved Chat policy object):** commit `1c596e29c5` applies exactly the registry hunk of main's `26cd8a3aeb`, so `RP-CHAT-THREAD-LIFETIME@1.0.0` sits after `RP-COMPACTION-DETAIL-7D` (`Plans/storage_value_registry.json:558`), equal to main's object and to the reviewed `2663667e14` object. TDR-1575..1581 and SP-1575..1581 item 7 and the seven journal rows now say the object is carried. The object's Case L-3 owner text (main `Plans/storage-plan.md`) and the readiness policy count arrive with the batch-3 rebase; at that rebase the registry hunk meets main's own copy of the same lines and resolves to main's version.
+
+### Grades
+
+Before (phase-1 final): 313 PASS, 39 PARTIAL, 32 ABSENT. After: **352 PASS, 0 PARTIAL, 32 ABSENT** (`reports/event-authority-20261105/W3H-self-grade.json`, `phase2`). Changed: criterion 12 PARTIAL → PASS for all 32 (static oracle, tool-credited rows, witnesses per family; native NOT_RUN and the whole-definition schema rows are stated in each cell); criterion 7 PARTIAL → PASS for the seven G20 families (object carried and checked by RT01-RT06). Membership stays ABSENT for all 32. Every self-grade quote was re-checked at its line: 130 had moved with the NUMRULE merge's CV/SP insertions and were re-anchored; 0 quotes fail.
+
+### Checks
+
+| Check | Exit | Result |
+|---|---:|---|
+| python3 scripts/pm-w3h-event-contracts.py | 0 | pass: 8186 cases (1181 positives, 7005 negatives), 16495 number routes, 0 mismatches |
+| python3 scripts/pm-w3h-guard-tables.py --out <dir> | 0 | 276/278 rows proved; 2 entailed with proofs; tool failures none; lane matrix 0 |
+| python3 scripts/pm-w3h-table-generate.py --check | 0 | tables match ROWS |
+| python3 scripts/pm_event_numbers.py --self-test --scope numbers | 0 | "status": "pass" (276 positives, 304 negatives, 0 failures) |
+| python3 scripts/pm_event_datetime_inventory.py | 1 | fails in the lane tree as addendum 2 expects; rows above |
+| python3 scripts/pm-shard-plans.py --generate / --check | 0 | pass; only the edited documents' shards changed |
+| python3 scripts/pm-plan-index.py generate | 0 | 7,524 PlanUnits |
+| python3 scripts/pm-plan-index.py validate | 1 | against origin/main f8b2098608: 739 plan_unit_removed_without_ledger_decision rows, every one a unit on main absent from this un-rebased branch (none removed by it, none a W3H unit), and 21 removal-ledger rows from the same comparison; resolved by the batch-3 rebase |
+| git diff --check df28f1c4f6 (non-generated paths) | 0 | clean |
+
+### Items for Jared
+
+None. No owner decision was needed; no id was minted (no new PlanUnit: ATS-1270 gains a paragraph).
+
+### Evidence
+
+Copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/phase2/` with `SHA256SUMS`: this report, the self-grade, `checker-result.json`, the guard-tool `summary.json` and per-table reports (gzipped), the numbers self-test output and the date-time inventory output.
