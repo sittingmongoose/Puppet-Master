@@ -204,6 +204,9 @@ function world({ clockApi = true } = {}) {
 	W.handedNow = (a) => shown({ start: a._start, hold: a.hold, d: a.t.duration, l: a.t.delay }, W.clock);
 	// a long task: the wall clock moves on with no frame and no timer (the compositor keeps drawing what it was handed)
 	W.task = (ms, fn) => { W.clock += ms; if (fn) fn(); };
+	// run fn inside the next frame's callbacks, as turn-stream.js and thought-stream.js release their words (a frame
+	// callback that the module registers from there runs in the frame after, as in the browser)
+	W.inFrame = (fn) => { rafs.push(() => fn()); };
 	W.set = (k, v) => { st[k] = v; };
 	W.armed = () => ({ timers: timers.size, rafs: rafs.length, observing: observers.filter((o) => o.on).length });
 	W.api = api; W.attrs = attrs; W.st = st;
@@ -432,6 +435,25 @@ const CASES = {
 		W.run(400);
 		smooth(W, i0); smooth(W, i0, 'b');
 		return 'ok';
+	},
+	'a word released inside a frame callback (the app\'s word path), with 0, 50 and 300 ms of long task before the next frame: no jump at any hand-over': () => {
+		// R32 F2: the cadence change made inside frame N's callbacks was handed over by frame N, then re-placed again in
+		// frame N+1 by the old timing: the square stepped back by the time between the two frames times the change of rate
+		const out = [];
+		for (const gap of [0, 50, 300]) {
+			const W = start({}, false);
+			W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1.3; });
+			const i0 = W.frames.length;
+			W.inFrame(() => W.api.token('one'));
+			W.frame();                                                   // the frame that releases the word
+			W.task(gap);                                                 // a long task before the next frame
+			W.run(400);
+			assert.equal(W.attrs.get('data-flow'), 'flowing', 'the word turned it to flowing');
+			smooth(W, i0); smooth(W, i0, 'b');
+			const j = W.jumps.filter((x) => x.i >= i0 && x.layer === 'g').map((x) => x.after - x.before);
+			out.push(`${gap} ms: largest hand-over step ${Math.max(...j.map(Math.abs)).toFixed(5)}`);
+		}
+		return out.join('; ');
 	},
 	"another thread's words do not change the pace": () => {
 		const W = start({}, false);
