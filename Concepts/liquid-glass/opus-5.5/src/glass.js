@@ -1159,6 +1159,8 @@
     var bf = null;
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
     else if (gpu() && k.lens) { var f = lf.f; e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
+    /* a lens keeps its filter here and wears it only while it moves or is pressed (lensBend, PERF-4) */
+    if (k.lens) { e.__lgBf = bf; lensBend(e); return e.__lgF; }
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
@@ -1789,6 +1791,28 @@
     stopMagnify(L); stopRide(L); stopHop(L);
     if (L.glintAnim) { var g = L.glintAnim; L.glintAnim = null; g.cancel(); }
     if (L.anim) { var an = L.anim; L.anim = null; an.onfinish = null; an.cancel(); } L.reducedAnim = false;
+    lensLive(L);
+  }
+  /* PERF-4 (Jared, 2026-11-12, choice B after before/after pictures): a lens bends what is under it only while it moves
+     or is pressed. Its live SVG backdrop filter was kept while it rested, and Chrome runs that filter again for every
+     frame anything under the lens draws: the largest single cost of the Glass look (Glass Dark Home 94 ms a second of
+     the main and GPU threads at rest and 122 scrolling, Usage 126 / 140 / 123, Glass Light Home 172 / 143 / 148, lane E,
+     2026-11-11). At rest a lens draws the rim and tint it bakes (--lg-spec) with no backdrop filter; its bend there is
+     at most 1.4 px (buildLensMaps). Live while its travel runs (not the Reduce Motion fade), while it is scrubbed, and
+     while a press that sent it is held; each moment that changes one of those asks here, so nothing runs at rest. */
+  function lensLive(L) {
+    L.lens.__lgLive = !!((L.anim && !L.reducedAnim) || L.dragging || (L.pending && !L.pending.up));
+    lensBend(L.lens);
+  }
+  function lensBend(e) {
+    /* the filter mount() keeps (__lgBf), worn while live in a mounted Glass lens; unmount and unmountAll take an inline
+       filter off by themselves, so one found gone is forgotten here */
+    var want = (e.__lgLive && e.__lgSig && isGlass() && e.__lgBf) || null;
+    if (e.__lgBfOn && !e.style.getPropertyValue('backdrop-filter')) e.__lgBfOn = null;
+    if (want === (e.__lgBfOn || null)) return;
+    e.__lgBfOn = want;
+    if (want) { e.style.setProperty('backdrop-filter', want, 'important'); e.style.setProperty('-webkit-backdrop-filter', want, 'important'); }
+    else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
   }
   function removeLensElement(e) {
     if (typeof unmount === 'function') unmount(e);
@@ -1956,7 +1980,8 @@
     var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an; L.path = { t0: performance.now(), dur: dur, rects: rects };
     try { L.glintAnim = L.lens.animate(glint, { duration: dur, easing: 'linear', pseudoElement: '::after' }); } catch (e) { L.glintAnim = null; }
     magnifyAlong(L, track, dur, o);
-    an.onfinish = function () { if (L.anim === an) L.anim = null; ownRest(L); };
+    lensLive(L);
+    an.onfinish = function () { if (L.anim === an) L.anim = null; ownRest(L); lensLive(L); };
   }
   /* A strip that is still arriving (its rows sliding in, its bar fading in: Usage's first arrival, a page's entrance)
      shows its lens as it lands, never ahead of it over a blank bar (Jared #2, 2026-10-14). The arrival is whatever
@@ -2458,6 +2483,7 @@
     if (L.pending) pressMark(L.pending, false);
     L.pending = { el: hit.item, from: cur, up: 0, away: false }; pressMark(L.pending, true);
     syncStrip(hit.cfg, hit.strip);
+    lensLive(L);   /* held: live until the release (below), whether or not the press sent it anywhere */
   }, true);
   document.addEventListener('pointerup', function (e) {
     lenses.forEach(function (L) {
@@ -2467,6 +2493,10 @@
     });
   }, true);
   document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { pressMark(L.pending, false); L.pending = null; queueSync(L.strip); } }); }, true);
+  /* PERF-4: a held press is over (after the two listeners above): a lens resting where it was sent stops bending */
+  function pressOver() { lenses.forEach(function (L) { if (L.lens.__lgLive) lensLive(L); }); }
+  document.addEventListener('pointerup', pressOver, true);
+  document.addEventListener('pointercancel', pressOver, true);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
@@ -2494,7 +2524,7 @@
         if (L.scrubCleanup === cleanup) L.scrubCleanup = null;
       };
       var cleanup = function () {
-        removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false;
+        removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false; lensLive(L);
         if (labs) labs.forEach(function (lab) { lab.el.style.removeProperty('scale'); lab.el.style.removeProperty('translate'); });
       };
       var onUp = function (ev) {
@@ -2594,7 +2624,10 @@
      further fades out and lifts in at the new place. In the films a quick pointer crossing the side panel sent it flying
      across the panel and diving past the rail's edge on the old spring's overshoot. */
   var bead = null, beadOn = null, beadAt = null, beadRect = null, beadAnim = null, beadHide = 0;
-  function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } }
+  function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } beadBend(false); }
+  /* PERF-4: the bead bends what is under it only while it flows to a neighbour (lensBend); resting, lifting in or
+     fading out it draws its baked rim alone */
+  function beadBend(on) { if (bead) { bead.__lgLive = on; lensBend(bead); } }
   function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; beadAt = null; }
   function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
   function beadTo(t) {
@@ -2610,12 +2643,12 @@
       for (var i = 0; i < S.length; i++) { var p = S[i].x, over = (p - 1) * dist; if (over > 0) p = 1 + 2 * Math.tanh(over / 2) / Math.max(1, dist);
         var sp = Math.min(1, Math.abs(S[i].v) * dist / 2400);
         fr.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (dx * (1 - p)).toFixed(2) + 'px,' + (dy * (1 - p)).toFixed(2) + 'px,0) scale(' + (vert ? 1 - sp * 0.1 : 1 + sp * 0.25).toFixed(3) + ',' + (vert ? 1 + sp * 0.25 : 1 - sp * 0.1).toFixed(3) + ')' }); }
-      beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' });
+      beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' }); beadBend(true);
     } else {
       b.classList.add('on');
       beadAnim = b.animate([{ transform: 'scale(.82)', opacity: 0 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.65 }, { transform: 'scale(1)', opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.3,1.1,.5,1)' });
     }
-    var an = beadAnim; an.onfinish = function () { if (beadAnim === an) beadAnim = null; };
+    var an = beadAnim; an.onfinish = function () { if (beadAnim === an) { beadAnim = null; beadBend(false); } };
     beadRect = R; beadAt = t;
   }
   function beadFade(ms) {
