@@ -3,9 +3,25 @@ async function go(t,f,d,w){await f.evaluate(([d,w])=>PM51.go(d,w),[d,w]);await f
 const body=(f,w)=>f.locator(`[data-continuous-workspace-body="${w}"]`);
 async function tab(t,f,w,label){const b=body(f,w).locator('.manager-tab',{hasText:new RegExp('^\\s*'+label+'\\s*$')}).first();await b.scrollIntoViewIfNeeded();await b.click();await t.settle();await t.page.waitForTimeout(400);}
 const activePage=(f)=>f.evaluate(()=>document.querySelector('.page-tabs .page-tab.active')?.id);
-async function shut(t,f){await t.page.keyboard.press('Escape');await t.page.waitForTimeout(450);}
+async function shut(t,f){
+ // A resize can put a scheme tile under the pointer; leave its hover preview before testing close.
+ const head=f.locator('.pmt-cz:not(.pmed-cz):not(.pmt-cz-parked):not([aria-hidden="true"]) .pmt-cz-head').first();
+ if(await head.isVisible())await head.hover();
+ await t.page.keyboard.press('Escape');await t.page.waitForTimeout(450);
+}
 export default async function(t){
  t.log('Chrome '+t.context.browser().version());
+ const noCloseBite=String(t.args.noCloseBite||'')==='1';
+ if(noCloseBite)await t.context.addInitScript(()=>{
+  // Negative fixture: real Escape reaches the app, but the broken close handler does nothing.
+  window.addEventListener('keydown',e=>{
+   if(e.key!=='Escape')return;
+   const open=[...document.querySelectorAll('.pmt-cz:not(.pmed-cz):not(.pmt-cz-parked):not([aria-hidden="true"])')].some(el=>el.getBoundingClientRect().height>0);
+   if(!open)return;
+   window.__fo171NoCloseEscape=(window.__fo171NoCloseEscape||0)+1;
+   e.preventDefault();e.stopImmediatePropagation();
+  },true);
+ });
  const sizes=[[860,900],[1024,768],[1280,900],[1390,900],[1920,1080],[740,900],[1280,500]];
  for(const look of (t.args.looks||'basic-light,friendly-dark,glass-dark,nier-dark').split(',')){
   await t.step(look,async()=>{
@@ -93,4 +109,5 @@ export default async function(t){
    await t.app.resetLayout();
   });
  }
+ if(noCloseBite)await t.check('no-close bite: real Escape reached the open Customize sheet',await t.root.evaluate(()=>Number(window.__fo171NoCloseEscape||0)>0));
 }
