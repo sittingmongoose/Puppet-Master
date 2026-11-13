@@ -1160,7 +1160,7 @@
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
     else if (gpu() && k.lens) { var f = lf.f; e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
     /* a lens keeps its filter here and wears it only while it moves or is pressed (lensBend, PERF-4); restSat: its tint at rest */
-    if (k.lens) { e.__lgBf = bf; e.__lgRest = bf && k.restSat ? 'saturate(' + k.sat + ')' : null; lensBend(e); return e.__lgF; }
+    if (k.lens) { e.__lgBf = bf; e.__lgRest = bf && (k.restSat || e.__lgRestSat) ? 'saturate(' + k.sat + ')' : null; lensBend(e); return e.__lgF; }
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
@@ -1404,13 +1404,18 @@
      about a tenth of a second before the click starts that work. Targets are measured where they are laid out,
      ignoring transforms, so a press flex or the rail's bump can no longer give the lens a wrong size that it then
      corrects with a twitch. */
+  /* restSat (round 2, C; lane G's measurement over the default print and over Prism at the 0.35 transparency floor): a
+     strip whose lens sits over a coloured ground keeps a plain saturate() at rest, as R2 gave the Activity icon lens, so
+     it comes to rest with no tint step: the rail tabs (Prism, Glass Dark: 62% of the lens interior 5 levels or more),
+     Usage's nav (54%), the onboarding window's segments (70%), the theme menu's modes (74% / 98%), Settings' left bar
+     (54%) and section tabs (97% on the default print). The other strips step at most about 3 levels and stay unbent */
   var STRIPS = [
     { sel: 'nav.page-tabs', items: '.page-tab', scrub: true, kind: 'lens' },
     { sel: '#pmuRange', items: ':scope > button', scrub: true, kind: 'lens' },
-    { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow' },
+    { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow', restSat: true },
     /* tag: the rail's tab strips' lenses carry data-lg-for="rail-tabs", so the rail skin can shape them (concept D,
        22-tabs.src.css: the chosen tab's own box, rounded to its track's inner radius) */
-    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', tag: 'rail-tabs' },
+    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', restSat: true, tag: 'rail-tabs' },
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, tag: 'rail-icons',
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
@@ -1427,7 +1432,7 @@
       twin: function (i) { return i.querySelector('.o55-raillabel'); },
       /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
       follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
-    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true,
+    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', restSat: true, active: '.o55-on', magRest: 1, mark: true,
       label: function (i) { return i.querySelector('.o55-segface'); },
       /* in the pane's content, centred in its scroller (margin-block: auto): a change of the content's height (a device
          card's note, M6) or of the scroller's re-centres it */
@@ -1441,13 +1446,13 @@
     /* 2026-10-14: the Planning Wizard's work-type choice (pm7-wizard-orch); its own .sel fill steps aside under data-lg-lensed */
     { sel: '#panel-wizard .pm6-wiz-intent-row', items: '.pm6-wiz-intent-chip', kind: 'lens', active: '.sel', magRest: 1, mark: true },
     /* Jared #14 (2026-10-14): the theme menu's Light / Dark / Auto, drawn inside the menu (LENS_HOSTS) */
-    { sel: '#themeMenu .pm6-tt-modes', items: '.pm6-tt-mode', kind: 'lens', active: '[aria-checked="true"]', magRest: 1, mark: true },
+    { sel: '#themeMenu .pm6-tt-modes', items: '.pm6-tt-mode', kind: 'lens', restSat: true, active: '[aria-checked="true"]', magRest: 1, mark: true },
     /* Jared #22 (2026-10-15): Settings' selectors are the same switcher. The left bar (Settings Home and the chapters),
        the chapter's section tabs, the page index beside them and each manager's tabs carry the lens; their own fills,
        bars, dots, underlines and inks step aside (glass.css section 6). Segmented choices and the service lists live in
        content that scrolls under Settings' sticky bars, so they take the lens's material in place instead. */
-    { sel: '#pm-settings-root .rail-scroll', items: ':is(.side-link[data-action="home"], .domain-link)', vertical: true, kind: 'lensRow', mark: true },
-    { sel: '#pm-settings-root nav.workspace-tabs', items: '.workspace-tab', many: true, kind: 'lens', active: '.is-current', magRest: 1, mark: true },
+    { sel: '#pm-settings-root .rail-scroll', items: ':is(.side-link[data-action="home"], .domain-link)', vertical: true, kind: 'lensRow', restSat: true, mark: true },
+    { sel: '#pm-settings-root nav.workspace-tabs', items: '.workspace-tab', many: true, kind: 'lens', restSat: true, active: '.is-current', magRest: 1, mark: true },
     /* the index's own rows: a manager's pages, or a page's sections where it has no manager (their current row follows
        the scroll); the sections under an open page are words only */
     { sel: '#pm-settings-root nav.page-index-card', items: '.pm51-index-group > .index-link', many: true, vertical: true, kind: 'lensRow', active: '.is-active', mark: true },
@@ -1624,6 +1629,7 @@
     var lensAttrs = { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind };
     if (cfg.tag) lensAttrs['data-lg-for'] = cfg.tag;   /* a lens in the shared layer, styled for its strip (STRIPS tag) */
     var lens = el('i', lensAttrs), own = lensLayer(strip);
+    if (cfg.restSat) lens.__lgRestSat = true;   /* its strip's resting tint (STRIPS restSat), read by mount */
     own.appendChild(lens);
     L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: preread(strip) ? preread(strip).scroller : scrollerOf(strip) }; lenses.set(strip, L); strip.__lgPre = null;
     /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar

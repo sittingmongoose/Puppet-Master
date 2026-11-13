@@ -578,8 +578,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
 /* PERF-4, the lead's R2 for the bead (2026-11-13): a resting bead bends nothing (glass.js lensBend) but keeps its
    saturate(1.1) (KINDS.bead.sat) while it shows, a plain backdrop pass only then: a flow ending over the Activity bar's
    blue stepped the whole bead's tint when its filter came off (Glass Dark: the median pixel inside it 5 levels of blue,
-   81% of them 5 or more; lane G). The flow's inline filter wins over this while it runs. */
-html[data-lg="on"][data-theme^="glass"][data-lg-tier="gpu"]:not(#lgz) .lg-bead.on { -webkit-backdrop-filter: saturate(1.1); backdrop-filter: saturate(1.1); }
+   81% of them 5 or more; lane G). The flow's inline filter wins over this while it runs. The tier test is glass.js's own
+   (gpu(): any tier but cpu), so the bead and the icon lens keep or drop their tint together (round 2, R30 Finding 6) */
+html[data-lg="on"][data-theme^="glass"]:not([data-lg-tier="cpu"]):not(#lgz) .lg-bead.on { -webkit-backdrop-filter: saturate(1.1); backdrop-filter: saturate(1.1); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }
 /* the bead is Glass's alone: a look that adopts the switcher would paint it as its chip (glass.js drops it on leaving
    Glass; this keeps any bead from showing outside Glass) */
