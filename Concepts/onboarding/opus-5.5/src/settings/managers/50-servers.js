@@ -527,9 +527,7 @@
   const proxyOf = dom => dom && GENERATES.includes(dom.proxy) ? dom.proxy : 'Caddy';
   /* (addr: the Server the file sends visitors to; the onboarding wizard passes the new Server's own address, RV-4) */
   function awayConfig(d, addr) {
-    const at = addr || homeServer().address;
-    if (d.proxy === 'Traefik' || d.proxy === 'NGINX') return proxyConfig(d.domain, d.proxy, at);
-    return `# Caddyfile (example)\n${d.domain} {\n  reverse_proxy ${at}:8443\n}`;
+    return proxyConfig(d.domain, d.proxy, addr);
   }
   /* ---- Tailscale and Headscale: the owner's steps, one answer each (onboarding's plan(), RAS-009/015) ---- */
   const TS_FAIL = {
@@ -1249,6 +1247,7 @@
     });
   }
   function proxyConfig(name, proxy, addr) {
+    if (proxy === 'Caddy') return `# Caddyfile (example)\n${name} {\n  reverse_proxy ${addr || homeServer().address}:8443\n}`;
     return proxy === 'Traefik'
       ? `# Traefik dynamic config (example)\nhttp:\n  routers:\n    puppet-master:\n      rule: "Host(\`${name}\`)"\n      service: puppet-master\n      tls:\n        certResolver: letsencrypt   # your own certificate resolver\n  services:\n    puppet-master:\n      loadBalancer:\n        servers:\n          - url: "http://${addr || homeServer().address}:8443"`
       : `# NGINX server block (example)\nserver {\n  server_name ${name};\n  listen 443 ssl http2;\n  ssl_certificate     /path/to/your/fullchain.pem;   # your certificate\n  ssl_certificate_key /path/to/your/privkey.pem;     # its key\n  location / {\n    proxy_pass http://${addr || homeServer().address}:8443;\n    proxy_set_header Host $host;\n    proxy_set_header Upgrade $http_upgrade;\n    proxy_set_header Connection "upgrade";\n  }\n}`;

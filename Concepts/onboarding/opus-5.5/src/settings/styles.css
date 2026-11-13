@@ -386,6 +386,9 @@ html[data-density="compact"] #panel-settings .pm51-all .all-settings-window .set
 .pm51-popout-search svg { width: 13px; height: 13px; color: var(--text-muted, #8f8ab0); flex: 0 0 auto; }
 .pm51-popout-search input { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text-primary, #f4f2ff); font: 600 12px/1.3 var(--body-font, Inter, system-ui, sans-serif); }
 .pm51-popout-empty { padding: 10px; font-size: 11.5px; color: var(--text-muted, #8f8ab0); }
+/* FO-169: a roster's no-match line reads in the roster's own help-text ink (its rows' second line, --k3-text-3), not the
+   popout's muted token, which painted 2.8:1 in Basic Dark */
+#panel-settings .pm51-roster .pm51-filter-empty { color: var(--k3-text-3); }
 .pm51-menu { min-width: 210px; max-width: calc(100vw - 16px); padding: 4px 0; }
 .pm51-menu .pm51-popout-item { padding: 8px 12px; font-size: 11px; letter-spacing: .02em; border-radius: 0; }
 /* FO-123: a menu item's own words stay whole. The box grows to the line (kit.js); a line wider than the

@@ -97,7 +97,7 @@ export default async function (t) {
 		await t.equal('opens on Settings', () => run(t, () => window.PM_PAGES.current), 'settings');
 		await t.equal('the feed reads the supplied snapshots', () => run(t, () => window.PM12_KIMI.getState().settingsProjectionSource), 'supplied_concept_fixture');
 		await t.check('Everyday model reads Changed · Varies', () => run(t, () => { const r = document.getElementById('setting-ai.models.default-model'); return !!r && r.classList.contains('is-changed') && /Varies/.test(r.querySelector('.o55-about').textContent); }));
-		await t.check('Thinking depth reads Changed · This project', () => run(t, () => { const r = document.getElementById('setting-ai.models.reasoning-effort'); return !!r && r.classList.contains('is-changed') && /This project/.test(r.querySelector('.o55-about').textContent); }));
+		await t.check('Everyday building reads Changed · This project', () => run(t, () => { const r = document.getElementById('setting-ai.models.worker-model'); return !!r && r.classList.contains('is-changed') && /This project/.test(r.querySelector('.o55-about').textContent); }));
 		await t.check('the Changed word is at least 11px', () => run(t, () => { const m = document.querySelector('#pm-settings-root .o55-changed'); return !!m && parseFloat(getComputedStyle(m).fontSize) >= 11; }));
 		await t.check('the engine’s dead changed bar stays unpainted', () => run(t, () => { const r = document.querySelector('#pm-settings-root .setting-row.is-changed'); const c = r ? getComputedStyle(r, '::before').content : 'none'; return c === 'none' || c === 'normal'; }));
 		await t.check('the layer’s CSS has no viewport @media but prefers-*', () => run(t, () => {
@@ -160,8 +160,8 @@ export default async function (t) {
 		await t.equal('and gives tastebook its own', b.own, 'openai/gpt-5');
 		await t.equal('the row’s word becomes This project', b.word, 'This project');
 		await t.equal('a project-owned row writes the project', await run(t, async () => {
-			const sel = document.querySelector('#setting-ai\\.models\\.reasoning-effort select.pm51-dd-native');
-			sel.value = 'low'; sel.dispatchEvent(new Event('change', { bubbles: true }));
+			const sel = document.querySelector('#setting-ai\\.models\\.worker-model select.pm51-dd-native');
+			sel.value = 'claude-code/claude-sonnet'; sel.dispatchEvent(new Event('change', { bubbles: true }));
 			await new Promise((r) => setTimeout(r, 800));
 			return window.PSX.lastNote.title;
 		}), 'Saved for tastebook.');
@@ -171,14 +171,16 @@ export default async function (t) {
 			const P = window.PSX;
 			await P.command({ cmd: 'ctx', homenas: 'down' });
 			await new Promise((r) => setTimeout(r, 400));
-			const sel = document.querySelector('#setting-ai\\.models\\.default-variant select.pm51-dd-native');
-			const was = P.W.everywhere['ai.models.default-variant'];
-			sel.value = 'fast'; sel.dispatchEvent(new Event('change', { bubbles: true }));
+			// main's one-model design (Settings batch 3) retired Faster or smarter edition (ai.models.default-variant);
+			// Service tried first is an everywhere choice main's Models page draws
+			const sel = document.querySelector('#setting-ai\\.models\\.default-provider select.pm51-dd-native');
+			const was = P.W.everywhere['ai.models.default-provider'];
+			sel.value = 'codex'; sel.dispatchEvent(new Event('change', { bubbles: true }));
 			await new Promise((r) => setTimeout(r, 900));
-			const engine = window.PM12_KIMI.getState().settings['ai.models.default-variant'];
-			return { was, now: P.W.everywhere['ai.models.default-variant'], engine, note: P.lastNote, head: (document.querySelector('.psx-head') || {}).innerText || '' };
+			const engine = window.PM12_KIMI.getState().settings['ai.models.default-provider'];
+			return { was, now: P.W.everywhere['ai.models.default-provider'], engine, note: P.lastNote, head: (document.querySelector('.psx-head') || {}).innerText || '' };
 		});
-		await t.check('with Home NAS away an everywhere change is not made', c.now === c.was && c.engine !== 'fast', JSON.stringify(c));
+		await t.check('with Home NAS away an everywhere change is not made', c.now === c.was && c.engine !== 'codex', JSON.stringify(c));
 		await t.check('it offers Just this computer for now, and queues nothing', c.note && c.note.actions.includes('Just this computer for now') && /Nothing was saved or queued/.test(c.note.body), JSON.stringify(c.note));
 		await t.check('the head says what you are seeing, and as of when', /Can’t reach Home NAS, which keeps your settings/.test(c.head), c.head);
 		await rules(t, 'Home NAS away');
@@ -204,12 +206,15 @@ export default async function (t) {
 		await t.equal('the panel stays right through five changes in a row', five, 5);
 		await pic(t, 'panel-helpers-1920', 'The panel for Helpers at once in tastebook, 1920 wide', '#pm-settings-root .detail-inspector');
 		await rules(t, 'the panel');
-		// focus, from a row on screen (Thinking depth on the Models page): the end word opens the panel, Change on a line
-		// opens its control, Esc puts focus back on Change, Esc again closes the panel onto the row's end word
-		await run(t, async () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); await new Promise((r) => setTimeout(r, 500)); window.PM12_KIMI.navigate('ai', 'providers'); await new Promise((r) => setTimeout(r, 400)); window.PM12_KIMI.dispatchAction('pm51-tab', { manager: 'providers', tab: 'models' }); await new Promise((r) => setTimeout(r, 600)); });
-		await t.root.locator('#setting-ai\\.models\\.reasoning-effort > .o55-about').click();
+		/* focus, from a row on screen: the end word opens the panel, Change on a line opens its control, Esc puts focus back
+		   on Change, Esc again closes the panel onto the row's end word. Main's one-model design (Settings batch 3) retired
+		   Thinking depth, and its model pickers have no choices in the panel (so no "Choosing here changes"), so this runs
+		   on New chats get their own worktree, a choice row tastebook owns */
+		const FR = 'branching.worktrees.auto-worktree-new-threads', FRS = '#setting-branching\\.worktrees\\.auto-worktree-new-threads';
+		await run(t, async (id) => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); await new Promise((r) => setTimeout(r, 500)); window.PM51.revealSetting(id); await new Promise((r) => setTimeout(r, 900)); const row = document.getElementById('setting-' + id); if (row) window.__psxScroll ? window.__psxScroll(row) : row.scrollIntoView({ block: 'center' }); await new Promise((r) => setTimeout(r, 400)); }, FR);
+		await t.root.locator(`${FRS} > .o55-about`).click();
 		await t.until('the end word opens the panel', () => !!document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"] [data-psx-block="where"]'), null, { timeout: 6000 });
-		await t.check('the end word says the panel is open', () => run(t, () => document.querySelector('#setting-ai\\.models\\.reasoning-effort > .o55-about').getAttribute('aria-expanded') === 'true'));
+		await t.check('the end word says the panel is open', () => run(t, (sel) => document.querySelector(`${sel} > .o55-about`).getAttribute('aria-expanded') === 'true', FRS));
 		await t.check('Choosing here changes names this project', () => run(t, () => /tastebook/.test((document.querySelector('#pm-settings-root .detail-inspector .psx-target-btn') || {}).textContent || '')));
 		const ch = t.root.locator('#pm-settings-root .detail-inspector [data-psx-key="project:tastebook:change"]');
 		await ch.click();
@@ -217,7 +222,7 @@ export default async function (t) {
 		await t.page.keyboard.press('Escape');
 		await t.until('Esc puts focus back on Change', () => !!document.activeElement && document.activeElement.getAttribute('data-psx-key') === 'project:tastebook:change', null, { timeout: 4000 });
 		await t.page.keyboard.press('Escape');
-		await t.until('Esc closes the panel and focus lands on the row’s end word', () => !!document.activeElement && document.activeElement.classList.contains('o55-about') && document.activeElement.getAttribute('data-setting') === 'ai.models.reasoning-effort', null, { timeout: 5000 });
+		await t.until('Esc closes the panel and focus lands on the row’s end word', () => !!document.activeElement && document.activeElement.classList.contains('o55-about') && document.activeElement.getAttribute('data-setting') === 'branching.worktrees.auto-worktree-new-threads', null, { timeout: 5000 });
 
 		// the copy sheet: the totals match the ticks, Tab stays inside, Esc returns to the opener
 		await reset(t);
@@ -272,14 +277,14 @@ export default async function (t) {
 			P.setCtx({ device: 'here' }); out.viewKeepsActor = P.S.actor;
 			P.reset(); await wait(500);
 			// first start: the panel's write refused too
-			P.S.firstStart = true; out.first = P.setOwn('ai.models.reasoning-effort', { level: 'everywhere', key: null }, 'low', { quiet: true }) ? 'saved' : 'refused'; P.S.firstStart = false;
+			P.S.firstStart = true; out.first = P.setOwn('ai.models.worker-model', { level: 'everywhere', key: null }, 'claude-code/claude-sonnet', { quiet: true }) ? 'saved' : 'refused'; P.S.firstStart = false;
 			// the settings home away: bulk promotion, Undo and copy into a Home NAS project refused; no fallback for garden-notes
 			const tx = P.setOwn('ai.models.default-model', { level: 'everywhere', key: null }, 'openai/gpt-5', { quiet: true });
 			P.moments.homenas(false); await wait(200);
 			out.everyWhileAway = P.write([{ level: 'everywhere', key: null, id: 'ai.models.default-model', value: 'x' }], {}, { silent: true }) ? 'saved' : 'refused';
 			P.undoTx(tx.id); out.undoWhileAway = P.W.everywhere['ai.models.default-model'];
 			P.setCtx({ project: 'garden-notes' }); await wait(300);
-			P.route('ai.models.reasoning-effort', 'low', 'medium', 'row'); await wait(100);
+			P.route('ai.models.worker-model', 'claude-code/claude-sonnet', 'inherit', 'row'); await wait(100);
 			out.gardenFallback = P.lastNote && P.lastNote.actions;
 			P.reset(); await wait(500);
 			// the inline editor: a value outside the range is kept unsaved, a list stays a list, a draft survives a redraw
@@ -358,14 +363,14 @@ export default async function (t) {
 			document.querySelector('.psx-sheet.psx-copy .psx-sheet-foot .btn.primary').click(); await wait(300);
 			out.previewFocus = document.activeElement && document.activeElement.getAttribute('data-k');
 			// the source changes after the preview: Copy shows it again instead of copying blind
-			P.W.project.tastebook['ai.models.reasoning-effort'] = 'low';
+			P.W.project.tastebook['ai.models.worker-model'] = 'claude-code/claude-sonnet';
 			[...document.querySelectorAll('.psx-sheet.psx-copy .psx-sheet-foot .btn')].find((b) => b.textContent === 'Copy').click(); await wait(300);
 			out.stale = !!document.querySelector('.psx-sheet.psx-copy') && /changed since this preview/.test(document.querySelector('.psx-sheet.psx-copy').innerText);
 			const revBefore = P.W.rev;
 			[...document.querySelectorAll('.psx-sheet.psx-copy .psx-sheet-foot .btn')].find((b) => b.textContent === 'Copy').click(); await wait(1400);
 			out.wrote = P.W.rev > revBefore;
 			const h = P.W.project.harbor;
-			out.harborThinking = h['ai.models.reasoning-effort'];
+			out.harborBuilding = h['ai.models.worker-model'];
 			out.harborBranch = h['branching.worktrees.default-branch'];
 			out.harborModelOwn = Object.prototype.hasOwnProperty.call(h, 'ai.models.default-model');
 			out.uses = P.W.uses.harbor;
@@ -378,7 +383,7 @@ export default async function (t) {
 			// one Undo puts all of it back: values, accounts, things
 			const btx = Object.values(P.W.batches).reverse().find((x) => x.meta && x.meta.batch === 'copy');
 			P.undoTx(btx.id); await wait(200);
-			out.afterUndo = { thinking: P.W.project.harbor['ai.models.reasoning-effort'], uses: P.W.uses.harbor, fs: !!P.W.things.mcp['filesystem-mcp-harbor'], reviewer: P.W.things.personas.reviewer.versions.length };
+			out.afterUndo = { building: P.W.project.harbor['ai.models.worker-model'], uses: P.W.uses.harbor, fs: !!P.W.things.mcp['filesystem-mcp-harbor'], reviewer: P.W.things.personas.reviewer.versions.length };
 			return out;
 		});
 		Object.assign(c, c2);
@@ -389,14 +394,14 @@ export default async function (t) {
 		await t.check('Keep them fixed: the button counts what is copied', new RegExp(`^Copy ${c.T.n} settings`).test(c.label) && c.T.n > 11, JSON.stringify({ label: c.label, T: c.T }));
 		await t.equal('Preview moves focus to its heading', c.previewFocus, 'step');
 		await t.check('a source changed after the preview is shown again, not copied blind', c.stale);
-		await t.check('then the copy commits the new preview', c.wrote && c.harborThinking === 'low', JSON.stringify(c));
+		await t.check('then the copy commits the new preview', c.wrote && c.harborBuilding === 'claude-code/claude-sonnet', JSON.stringify(c));
 		await t.equal('a clash kept as harbor’s own stays harbor’s', c.harborBranch, 'develop');
 		await t.check('Keep them fixed gives harbor its own Everyday model', c.harborModelOwn);
 		await t.check('the AI accounts are chosen for harbor', JSON.stringify(c.uses) === JSON.stringify(['work-claude', 'codex', 'openrouter']), JSON.stringify(c.uses));
 		await t.check('Filesystem MCP becomes harbor’s own copy, not ready by copying', c.fsCopy);
 		await t.check('the Reviewer persona gets harbor’s version, Figma is available in harbor', c.reviewer.includes('harbor') && c.figma.includes('harbor'), JSON.stringify(c));
 		await t.check('the receipt counts the kept clash apart', /kept as harbor’s own/.test(c.note || ''), c.note);
-		await t.check('one Undo puts the values, the accounts and the things back', c.afterUndo.thinking === undefined && c.afterUndo.uses === undefined && !c.afterUndo.fs && c.afterUndo.reviewer === 1, JSON.stringify(c.afterUndo));
+		await t.check('one Undo puts the values, the accounts and the things back', c.afterUndo.building === undefined && c.afterUndo.uses === undefined && !c.afterUndo.fs && c.afterUndo.reviewer === 1, JSON.stringify(c.afterUndo));
 
 		// no project: the destination is chosen, never invented; New Project starts on your usual settings
 		await reset(t);
@@ -442,17 +447,17 @@ export default async function (t) {
 			const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms));
 			await P.command({ cmd: 'moment', id: '11.17' }); await wait(500);
 			[...document.querySelectorAll('.psx-sheet .psx-sheet-foot .btn')].find((b) => /Copy into/.test(b.textContent)).click(); await wait(1600);
-			const first = P.W.project['lighting-rig']['ai.models.reasoning-effort'];
-			P.W.project.tastebook['ai.models.reasoning-effort'] = 'low';
+			const first = P.W.project['lighting-rig']['ai.models.worker-model'];
+			P.W.project.tastebook['ai.models.worker-model'] = 'claude-code/claude-sonnet';
 			P.moments.studio(true); P.history.open(); await wait(300);
 			const fin = document.querySelector('.psx-sheet [data-finish]'); if (fin) fin.click(); await wait(1200);
-			const finished = P.W.project['lighting-rig']['ai.models.reasoning-effort'];
+			const finished = P.W.project['lighting-rig']['ai.models.worker-model'];
 			const e = P.W.history.find((x) => x.batch === 'copy-many');
 			P.undoTx(e.tx); await wait(300);
-			return { first, finished, after: P.W.project['lighting-rig']['ai.models.reasoning-effort'], harbor: P.W.project.harbor['ai.models.reasoning-effort'] };
+			return { first, finished, after: P.W.project['lighting-rig']['ai.models.worker-model'], harbor: P.W.project.harbor['ai.models.worker-model'] };
 		});
 		await t.check('the part whose computer is off is not changed', bt.first === undefined, JSON.stringify(bt));
-		await t.equal('Finish brings the value the batch copied, not today’s', bt.finished, 'high');
+		await t.equal('Finish brings the value the batch copied, not today’s', bt.finished, 'openai/gpt-5');
 		await t.check('Undo all of it undoes the finished part too', bt.after === undefined && bt.harbor === undefined, JSON.stringify(bt));
 
 		// the settings home: Join with Studio Mac as keeper moves it; every surface names it
@@ -577,7 +582,7 @@ export default async function (t) {
 			P.reset(); await wait(400); P.setCtx({ project: 'harbor' }); await wait(300);
 			P.copy.open({ mode: 'settings', src: 'tastebook' }); await wait(300);
 			document.querySelector('.psx-sheet.psx-copy .psx-sheet-foot .btn.primary').click(); await wait(1400);
-			out.copyDone = !!sheet() && /Copied without asking \(YOLO\)/.test(sheet().innerText); out.copyWrote = P.W.project.harbor['ai.models.reasoning-effort'];
+			out.copyDone = !!sheet() && /Copied without asking \(YOLO\)/.test(sheet().innerText); out.copyWrote = P.W.project.harbor['ai.models.worker-model'];
 			P.closeSheets(); await wait(200);
 			// YOLO: Always allow and push/publish
 			await P.command({ cmd: 'moment', id: '11.18' }); await wait(400);
@@ -598,7 +603,7 @@ export default async function (t) {
 		await t.check('YOLO still asks before FileSafe goes off', y.fsGuard);
 		await t.check('YOLO: a project that can’t take a change still refuses it', y.refuse);
 		await t.check('YOLO still asks which computer keeps your settings', y.join);
-		await t.check('YOLO: Copy applies without the Copy yes and shows its preview as the report', y.copyDone && y.copyWrote === 'high', JSON.stringify(y));
+		await t.check('YOLO: Copy applies without the Copy yes and shows its preview as the report', y.copyDone && y.copyWrote === 'openai/gpt-5', JSON.stringify(y));
 		await t.check('YOLO: git push and publish run without asking, and are reported', y.pushRan);
 		await t.check('YOLO still asks for a path outside the project, and makes no Always rule', y.outsideAsks && y.noAlways);
 		await t.check('Regular asks, and offers Always allow', y.regularAsks && y.alwaysOffered);
