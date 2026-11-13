@@ -1735,7 +1735,7 @@
         kf.push(o);
       });
       if (!any || kf.length < 2) return;
-      out.push({ kf: kf, opts: { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }, startTime: a.startTime, currentTime: a.currentTime });
+      out.push({ kf: kf, opts: { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }, startTime: a.startTime, currentTime: a.currentTime, moves: props === RIDE_MOVE });
     }
     for (var n = target; n && n !== stop && n !== document.documentElement; n = n.parentElement) {
       n.getAnimations().forEach(function (a) {
@@ -1753,10 +1753,15 @@
       var m;
       try { m = L.lens.animate(sp.kf, sp.opts); } catch (e) { return; }
       if (sp.startTime != null) m.startTime = sp.startTime; else if (sp.currentTime != null) m.currentTime = sp.currentTime;
+      /* PERF-4 round 2 (R31 F3, R30 Finding 2): a ride that moves the lens (a mirrored transform, not the opacity one)
+         bends it while it runs; its own finish or cancel asks again */
+      if (sp.moves) { m.__lgMoves = true; m.onfinish = m.oncancel = function () { lensLive(L); }; }
       out.push(m);
     });
     L.ride = out.length ? out : null;
+    lensLive(L);
   }
+  function rideMoves(L) { return !!(L.ride && L.ride.some(function (m) { return m.__lgMoves && m.playState !== 'finished' && m.playState !== 'idle'; })); }
   /* a lens first shown in a page or window is measured while that page is still coming in, and content above a strip can
      still grow by a layout animation (a Settings manager page eases its height as its tab changes, moving every strip
      below it; no mutation or event says so). It is measured once more when entrances are over, and follows if its
@@ -1798,13 +1803,14 @@
      frame anything under the lens draws: the largest single cost of the Glass look (lane E, 2026-11-11). At rest a lens
      draws the rim and tint it bakes (--lg-spec) with no backdrop filter; its bend there is at most 1.4 px
      (buildLensMaps). Live while it moves or is pressed (Jared's words, held literally since round 2): while its travel
-     runs (not the Reduce Motion fade), while it is scrubbed, and while a pointer is down on its strip; each moment that
+     runs (not the Reduce Motion fade), while it rides its strip's entrance (a mirrored transform, not the opacity
+     mirror or the arrival fade), while it is scrubbed, and while a pointer is down on its strip; each moment that
      changes one of those asks here, so nothing runs at rest. Measured (lane G,
      A-B-B-A against main, Windows RTX 3090, 2026-11-13): the GPU thread 64 to 77 ms a second less at rest in Glass Dark
      and Light (Home 85 / 81, Usage 124 / 73, Settings 84 / 72), 99 to 115 less under a pointer sweep, 95 to 108 less
      scrolling; Basic Dark unchanged. */
   function lensLive(L) {
-    L.lens.__lgLive = !!((L.anim && !L.reducedAnim) || L.dragging || L.held);
+    L.lens.__lgLive = !!((L.anim && !L.reducedAnim) || L.dragging || L.held || rideMoves(L));
     lensBend(L.lens);
   }
   /* The Activity bar's icon lens (KINDS.lensIcon.restSat) keeps its saturate() at rest, a plain CSS backdrop pass with no
@@ -2658,8 +2664,9 @@
      across the panel and diving past the rail's edge on the old spring's overshoot. */
   var bead = null, beadOn = null, beadAt = null, beadRect = null, beadAnim = null, beadHide = 0;
   function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } beadBend(false); }
-  /* PERF-4: the bead bends what is under it only while it flows to a neighbour (lensBend); resting, lifting in or
-     fading out it draws its baked rim, and while it shows its plain saturate (glass.css .lg-bead.on, the lead's R2) */
+  /* PERF-4: the bead bends what is under it only while it moves (lensBend): flowing to a neighbour, or lifting in (its
+     240 ms swell; round 2, R31 F4, R30 Finding 1); resting or fading out in place it draws its baked rim, and while it
+     shows its plain saturate (glass.css .lg-bead.on, the lead's R2) */
   function beadBend(on) { if (bead) { bead.__lgLive = on; lensBend(bead); } }
   function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; beadAt = null; }
   function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
@@ -2679,7 +2686,7 @@
       beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' }); beadBend(true);
     } else {
       b.classList.add('on');
-      beadAnim = b.animate([{ transform: 'scale(.82)', opacity: 0 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.65 }, { transform: 'scale(1)', opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.3,1.1,.5,1)' });
+      beadAnim = b.animate([{ transform: 'scale(.82)', opacity: 0 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.65 }, { transform: 'scale(1)', opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.3,1.1,.5,1)' }); beadBend(true);
     }
     var an = beadAnim; an.onfinish = function () { if (beadAnim === an) { beadAnim = null; beadBend(false); } };
     beadRect = R; beadAt = t;
