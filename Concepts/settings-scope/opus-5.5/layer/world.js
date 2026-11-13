@@ -229,6 +229,7 @@
     names_a_program: ['Each computer has its own, because a program can be in a different place on each computer.', 'Programs differ per computer'],
     names_a_folder: ['Each computer has its own, because a folder is in a different place on each computer.', 'Folders differ per computer'],
     names_a_path: ['Each computer has its own, because a path names a place on one computer.', 'Paths differ per computer'],
+    kept_by_owner: ['Kept inside its owner, so it isn’t set for everywhere, a computer, a device or a project.', 'Kept by its owner'],
     about_hardware: ['Each computer has its own, because it depends on what that computer can do.', 'Depends on the computer'],
     about_the_network: ['Each computer has its own, because each one reaches the internet its own way.', 'Network differs per computer'],
     about_this_project: ['Each project has its own, because it’s about that project’s own files.', 'Belongs to one project'],

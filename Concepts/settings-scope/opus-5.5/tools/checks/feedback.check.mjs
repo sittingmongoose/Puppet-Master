@@ -9,9 +9,22 @@
 // `strip` opens the page with the review strip (settings-scope.html beside the app page, or --set strip=<path>); the
 // account switch in `shake` is compared with bare PMConcept7 (Concepts/PMConcept7.html, or --set bare=<path>).
 // "Full" is a 2560-wide window (the review strip's Full width is whatever window holds the frame).
+import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 const want = (t, part) => !t.args.only || String(t.args.only).split(',').includes(part);
+/* review S1: Plans' inventory layering is the per-row authority (SSYS-059). The checks read it from the repository
+   (--set inventory=<path> to read another copy) and pass each row's layering in: { id: { home, value } } */
+let INVENTORY;
+const inventory = (t) => {
+	if (INVENTORY !== undefined) return INVENTORY;
+	try {
+		const out = {}, walk = (o) => { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') { if (typeof o.id === 'string' && o.layering) out[o.id] = { home: o.layering.home, value: o.default }; Object.values(o).forEach(walk); } };
+		walk(JSON.parse(fs.readFileSync(path.resolve(t.args.inventory || 'Plans/settings_inventory.json'), 'utf8')));
+		INVENTORY = Object.keys(out).length ? out : null;
+	} catch (e) { INVENTORY = null; }
+	return INVENTORY;
+};
 const fileUrl = (p) => (/^[a-z][a-z0-9+.-]+:/i.test(p) ? p : pathToFileURL(path.resolve(p)).href);
 /* review A-r1 tool note E: move a row into view by scrolling the Settings scroller that holds it, never with
    scrollIntoView (that also scrolls overflow-hidden ancestors and left the whole root 67px up, a state no one reaches) */
@@ -654,6 +667,49 @@ export default async function (t) {
 			if (id === 'general.visual.manage-custom-themes') await pic(t, 'where-library', 'Your own themes: Your library, kept with your settings; the three parts with their reasons, no value and no Change', '#pm-settings-root .detail-inspector');
 		}
 		await run(t, () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); });
+		/* review S1 (Sol-high recheck of the Sol max fixes): every row whose value is an absolute path follows Plans'
+		   inventory layering, the per-row authority (SSYS-059: owner-held rows are classified before host paths). The
+		   Rules file is home: thing there, with every ordinary level set_inside_a_thing, and Permissions_System §9 / PS-144
+		   make ~/.config/puppet-master/permissions.toml a read-only projection of the Everywhere rules. So it stays off
+		   the ladder, no ordinary level takes a write, and its panel says where the rules are kept and that the file is a
+		   read-only copy, with the same three parts and no Change. 620fd69052 made it an ordinary Computer value */
+		const INV = inventory(t);
+		const ABS_INV = INV ? Object.keys(INV).filter((i) => typeof INV[i].value === 'string' && /^(\/|~[\w.-]*([\\/]|$)|[A-Za-z]:[\\/]|\\\\|file:)/i.test(INV[i].value.trim())) : [];
+		await t.check(`S1: Plans’ inventory is read (${INV ? Object.keys(INV).length : 0} rows; ${ABS_INV.length} with an absolute-path value: ${ABS_INV.join(', ')})`, !!INV && ABS_INV.length > 0, String(t.args.inventory || 'Plans/settings_inventory.json'));
+		for (const i of ABS_INV) {
+			const s1 = await run(t, async ([id, home]) => {
+				const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), out = { id, home };
+				out.def = P.DEF[id] ? { home: P.DEF[id].home || null, may: P.DEF[id].may || null, reason: P.DEF[id].reason || null } : null;
+				out.ownerHeld = ((P.offLadder || {}).thing || []).includes(id);
+				out.levels = Object.fromEntries(['everywhere', 'computer', 'device', 'project'].map((l) => [l, !P.guard.why({ level: l, key: l === 'project' ? 'tastebook' : l === 'everywhere' ? null : 'here', id, value: '/tmp/elsewhere.toml' })]));
+				window.PM51.revealSetting(id, { detail: true });
+				for (let k = 0; k < 30; k++) { await wait(150); const c = document.querySelector('#pm-settings-root .detail-inspector .o55-insp-tech code'); if (c && c.textContent.trim() === id && document.querySelector('#pm-settings-root .detail-inspector [data-psx-block="where"] [data-psx-slot]')) break; }
+				const insp = document.querySelector('#pm-settings-root .detail-inspector'), w = insp && insp.querySelector('[data-psx-block="where"]');
+				out.code = insp && (insp.querySelector('.o55-insp-tech code') || {}).textContent;
+				out.heads = insp ? [...insp.querySelectorAll('.o55-insp-block h4')].filter((h) => h.offsetParent && /^Where it applies$/.test(h.textContent.trim())).length : 0;
+				out.slots = w ? [...w.querySelectorAll(':scope > [data-psx-slot]')].map((g) => g.getAttribute('data-psx-slot')) : [];
+				out.where = w ? w.innerText.replace(/\s+/g, ' ').trim() : '';
+				out.now = insp ? ((insp.querySelector('.o55-insp-now') || {}).innerText || '').replace(/\s+/g, ' ').trim() : '';
+				// every button the panel shows but Close: an owner-held row offers no Change, no Set for, no Same as everywhere
+				out.buttons = insp ? [...insp.querySelectorAll('button')].filter((b) => b.getClientRects().length && !b.closest('.pm51-panel-head') && !/^Close$/.test(b.textContent.trim())).map((b) => b.textContent.trim()) : [];
+				return out;
+			}, [i, INV[i].home]);
+			if (INV[i].home === 'thing') {
+				await t.check(`S1: ${i} is ${INV[i].home} in the inventory: off the ladder, no ordinary level takes a write, and its panel says where the rules are kept and that the file is a read-only copy, in three parts with no Change`,
+					!s1.def && s1.ownerHeld && Object.values(s1.levels).every((x) => !x) && s1.code === i && s1.heads === 1 && JSON.stringify(s1.slots) === JSON.stringify(['everywhere', 'computer', 'project']) && /read-only copy/.test(s1.where) && /kept by Permissions/i.test(s1.where) && !/Each computer has its own/.test(s1.where + ' ' + s1.now) && /Kept by Permissions/.test(s1.now) && !s1.buttons.some((b) => /^(Change|Set for|Same as everywhere|\+)/.test(b)),
+					JSON.stringify(s1));
+				await pic(t, 'where-rules-file', `S1: ${i}, kept by Permissions: the three parts say where the rules are kept and that the file is a read-only copy; no Change`, '#pm-settings-root .detail-inspector');
+			} else await t.check(`S1: ${i} is ${INV[i].home} in the inventory, and so it is here`, !!s1.def && (s1.def.home || 'everywhere') === INV[i].home, JSON.stringify(s1));
+		}
+		await run(t, () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); });
+		// the control: an ordinary row (not owner-held) whose value is an absolute path is still each computer's own
+		const ctl = await run(t, () => {
+			const f = window.PSX.feed && window.PSX.feed.classify; if (!f) return { exposed: false };
+			const r = f({ id: 'psx.check.ordinary-file', scope: ['global', 'project'] }, { id: 'psx.check.ordinary-file', control: 'text', value: '/opt/tools/settings.toml' });
+			const own = f({ id: 'safety.rules.storage-format', scope: ['global', 'project'] }, { id: 'safety.rules.storage-format', control: 'text', value: '~/.config/puppet-master/permissions.toml' });
+			return { exposed: true, ordinary: r, owner: own };
+		});
+		await t.check('S1 control: an ordinary row whose value is an absolute path still goes to each computer (names_a_path); the owner-held one is never classified onto the ladder', ctl.exposed && !!ctl.ordinary && ctl.ordinary.home === 'computer' && ctl.ordinary.reason === 'names_a_path' && ctl.owner === null, JSON.stringify(ctl));
 		// the base page's own scope words where the layer has its block: MCP servers
 		const mcp = await run(t, async () => {
 			const p = window.PM51.placement.byId['system.mcp.server-scope']; window.PM12_KIMI.navigate(p.domain, p.workspace); await new Promise((r) => setTimeout(r, 1000));
@@ -1163,18 +1219,24 @@ export default async function (t) {
 		await t.check('F1: folder-rule matching reads paths the same way: a trailing separator, quotes or a doubled separator still cover the folder, and nothing wider or other', !reader.foldMissed.length && !reader.foldWrong.length, JSON.stringify(reader));
 		await t.check('F1: the home read takes PS-145’s exception only for a home-folder path, read by the same reader', JSON.stringify(reader.homeRead) === '[true,false,false]', JSON.stringify(reader.homeRead));
 		/* the same weakness in Settings: a row whose value is a place on one computer must be that computer's own (or the
-		   project's), whatever its control. The check's own oracle, not the page's reader: an absolute path */
-		const valuePaths = await run(t, () => {
+		   project's), whatever its control. The check's own oracle, not the page's reader: an absolute path. Review S1 (the
+		   recheck's tool note): Plans' inventory layering comes first (SSYS-059), so a row the inventory keeps inside its
+		   owner (home: thing) must stay off the ladder, held by its owner; the old oracle passed the Rules file as Computer.
+		   Every Settings row is read, not only the adopted ones, so an owner-held row can't drop out of the count */
+		const INV1 = inventory(t);
+		const valuePaths = await run(t, (inv) => {
 			const P = window.PSX, ABS = /^(\/|~[\w.-]*([\\/]|$)|[A-Za-z]:[\\/]|\\\\|file:)/i, out = { rows: [], bad: [] };
-			for (const id of Object.keys(P.DEF)) {
+			const ids = [...new Set(Object.keys(P.DEF).concat(Object.keys((window.PM51.placement || {}).byId || {})))];
+			for (const id of ids) {
 				const s = window.PM51.setting(id), v = s && typeof s.value === 'string' ? s.value.trim() : '';
 				if (!ABS.test(v)) continue;
-				const d = P.DEF[id]; out.rows.push(id);
-				if (d.home !== 'computer' && d.home !== 'project') out.bad.push(`${id} = ${v} (${d.home || (d.may || []).join('+')})`);
+				const d = P.DEF[id], home = inv && inv[id] ? inv[id].home : null; out.rows.push(`${id}${home ? ` (inventory: ${home})` : ''}`);
+				if (home === 'thing') { if (d || !((P.offLadder || {}).thing || []).includes(id)) out.bad.push(`${id} = ${v}: the inventory keeps it inside its owner, here ${d ? d.home || (d.may || []).join('+') : 'not held by its owner'}`); }
+				else if (!d || (d.home !== 'computer' && d.home !== 'project')) out.bad.push(`${id} = ${v} (${d ? d.home || (d.may || []).join('+') : 'off the ladder'})`);
 			}
 			return out;
-		});
-		await t.check(`F1, the same weakness in Settings: each of the ${valuePaths.rows.length} rows whose value is an absolute path belongs to each computer (or to the project), never an everywhere value`, valuePaths.rows.length > 0 && !valuePaths.bad.length, JSON.stringify(valuePaths));
+		}, INV1);
+		await t.check(`F1, the same weakness in Settings: each of the ${valuePaths.rows.length} rows whose value is an absolute path follows Plans’ inventory first (owner-held stays with its owner), and otherwise belongs to each computer or the project, never an everywhere value`, !!INV1 && valuePaths.rows.length > 0 && !valuePaths.bad.length, JSON.stringify(valuePaths));
 		// F (broad) and E (host-dependent), on the page's own functions with its own steps
 		const units = await run(t, () => {
 			const A = window.PSX.approvals;

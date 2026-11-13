@@ -67,7 +67,11 @@
     return null;
   }
   function offeredAt(x) {
-    const def = DEF[x.id]; if (!def || x.value === undefined) return null;
+    const def = DEF[x.id];
+    /* review S1: a row kept inside its owner (feed.js REVIEWED.thing; Plans' inventory home: thing, every ordinary level
+       set_inside_a_thing) takes no write at everywhere, a computer, a device or a project */
+    if (!def) return ((PSX.offLadder || {}).thing || []).includes(x.id) ? PSX.REASONS.kept_by_owner[0] : null;
+    if (x.value === undefined) return null;
     const off = PSX.offered(def);
     if (x.level === 'everywhere' && !off.everywhere) return PSX.REASONS[def.reason || 'about_this_project'][0];
     if (x.level === 'computer' && !off.computer) return PSX.REASONS[def.screen ? 'about_the_screen' : (def.reason || 'same_for_you')][0];
