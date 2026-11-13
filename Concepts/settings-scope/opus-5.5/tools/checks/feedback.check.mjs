@@ -196,7 +196,9 @@ const SHAKE_ALLOW = {
 	'general.visual.reduce-animations': [['below'], 'it shows or hides Animation speed under it; bare PMConcept7 moves the rows below by the same amount'],
 	'general.interaction.activity-bar-labels': [['switch', 'end', 'row', 'below', 'header'], 'names beside the activity-bar icons narrow the whole Settings page, so every row reflows; bare PMConcept7 moves the page too'],
 	'general.interaction.scope-labels': [['switch', 'end', 'row', 'below'], 'it writes where each setting comes from into every row’s end word, so the end column and the rows change'],
-	'general.interaction.eli5-default': [['row', 'below'], 'Explain technical terms rewrites the descriptions on purpose']
+	'general.interaction.eli5-default': [['row', 'below'], 'Explain technical terms rewrites the descriptions on purpose'],
+	// main's notification page (after the rebase onto main, 2026-11-13): measured at 1920, the note is 44.5px with its margin
+	'general.interaction.notifications-enabled': [['below'], 'turning Notifications off shows the base page’s own note under it (“Notifications are off. Nothing alerts you until you turn them back on…”) and turning it on takes it away; the layer’s routed change redraws the section at once, so the rows below move by the note’s height (bare PMConcept7 shows the note only at its next redraw)']
 };
 const shakeBad = (r, allow) => {
 	if (r.missing) return ['not found'];
