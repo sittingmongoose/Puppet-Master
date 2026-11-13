@@ -509,8 +509,8 @@ async function astraWhere(t) {
    The check's own copy of the README's table E2 (when a command pattern is host-dependent), never the page's: each row
    with the examples the README gives, the review's five patterns that were saved Everywhere on 7150f6c5bc, every earlier
    spelling (Sol max F1's seven, the reader's fourteen, the review's six controls), the words that are not paths (a web
-   address, an image or registry reference, a git ref: the lead's canon call on PS-144, the same day), and the portable
-   controls. Every case is typed as your own pattern on npm test (a portable step, so
+   address, an image or registry reference, a git ref: the lead's canon call on PS-144, the same day), the narrow
+   recheck's R1 and R2 witnesses with the two docker controls, and the portable controls. Every case is typed as your own pattern on npm test (a portable step, so
    only the pattern decides), and asserts the places offered, the line saying why, and the save: a host-dependent
    pattern offers no Everywhere, the save guard keeps no Everywhere rule even when Everywhere is forced, and This computer
    is kept; a portable one offers Everywhere and keeps it */
@@ -539,8 +539,14 @@ const E2 = {
 	notAPath: [['git push origin feature/tags', 'a git ref'], ['docker push ghcr.io/jared/loom:1.4.0', 'an image reference'], ['npm publish --registry=https://registry.npmjs.org', 'a web address'], ['curl -fsSL https://bun.sh/install', 'a web address'],
 		['curl https://example.com/a/b?c=d/e', 'a web address'], ['curl https://example.com/install.sh', 'a web address'], ['docker pull localhost:5000/app:dev', 'an image reference'], ['docker pull quay.io/org/app:1.0', 'an image reference'],
 		['git push -f origin feature/tags', 'a git ref'], ['git rebase origin/main', 'a git ref'], ['git diff main..feature/tags', 'a git ref'], ['git checkout -b feature/x', 'a git ref'], ['git -c core.pager=less log feature/tags', 'a git ref'], ['git push origin HEAD:refs/heads/feature/x', 'a git ref']],
-	// the page's own reading of single words: [word, kind or null]
-	kinds: [['https://bun.sh/install', 'web'], ['ghcr.io/jared/loom:1.4.0', 'image'], ['localhost:5000/app', 'image'], ['file:///etc/hosts', null], ['jared/loom:1.4.0', null], ['.venv/bin/tool', null], ['scripts.d/release', null], ['@types/node', null]],
+	// the page's own reading of single words: [word, read where an image is taken, kind or null]
+	kinds: [['https://bun.sh/install', false, 'web'], ['https://registry.example.com:8443/npm/', false, 'web'], ['ghcr.io/jared/loom:1.4.0', true, 'image'], ['localhost:5000/app', true, 'image'], ['ghcr.io/jared/loom:1.4.0', false, null], ['scripts.dev/release.js', false, null], ['file:///etc/hosts', false, null], ['jared/loom:1.4.0', true, null], ['.venv/bin/tool', true, null], ['scripts.d/release', true, null], ['@types/node', false, null]],
+	/* the narrow recheck (REVIEW-concept-A-astrafix-sol-high.md): R1, a host-shaped local folder was read as a registry
+	   and saved Everywhere; R2, a web address with a port was split at the port. [pattern, kind, label, row, word] */
+	recheck: [['node scripts.dev/release.js', 'host', 'recheck R1 witness', 4, 'scripts.dev/release.js'], ['node scripts.dev/release', 'host', 'recheck R1 witness', 4, 'scripts.dev/release'],
+		['node registry.example.com/org/app.js', 'host', 'recheck R1: a registry spelling outside an image argument', 4, 'registry.example.com/org/app.js'], ['node localhost:5000/org/app', 'host', 'recheck R1: a registry spelling outside an image argument', 4, 'localhost:5000/org/app'],
+		['npm publish --registry=https://registry.example.com:8443/npm/', 'portable', 'recheck R2 witness', null, null],
+		['docker push registry.example.com/org/app:tag', 'portable', 'recheck R1 docker control', null, null], ['docker push localhost:5000/org/app:tag', 'portable', 'recheck R1 docker control', null, null]],
 	// portable: the brief's four, then the earlier controls with no / or \, and git's -C after a subcommand
 	portable: ['npm test *', 'git status', 'cargo build', 'pytest -q', 'npm test', 'git push origin *', 'npm run build', 'NODE_ENV=production npm test', 'make -j8 test', 'cargo build --profile release', 'pytest -p no:cacheprovider', 'cargo test -p mycrate', 'git commit -C HEAD']
 };
@@ -554,13 +560,15 @@ async function astraAlways(t, h) {
 			rows: P.paths && P.paths.rows ? P.paths.rows.map((r) => [r.row, r.why]) : null,
 			table: T.table.map(([p, row, word]) => { const x = host(p); return { p, want: [row, word], got: x ? [x.row, x.word] : null, editor: !!A && A.hostDependent(p, S.test) }; }).filter((x) => !x.got || x.got[0] !== x.want[0] || x.got[1] !== x.want[1] || !x.editor),
 			notAPath: T.notAPath.map(([p]) => p).filter((p) => !!host(p) || !A || A.hostDependent(p, S.test)),
-			kinds: T.kinds.filter(([w, k]) => !(P.paths && P.paths.notAPath) || P.paths.notAPath(w) !== k),
+			kinds: T.kinds.filter(([w, image, k]) => !(P.paths && P.paths.notAPath) || P.paths.notAPath(w, image) !== k),
+			recheck: T.recheck.map(([p, kind, , row, word]) => { const x = host(p); return { p, kind, got: x ? [x.row, x.word] : null, want: row ? [row, word] : null, editor: !!A && A.hostDependent(p, S.test) }; }).filter((x) => JSON.stringify(x.got) !== JSON.stringify(x.want) || x.editor !== (x.kind === 'host')),
 			portable: T.portable.filter((p) => !!host(p) || (A && A.hostDependent(p, S.test)))
 		};
 	}, E2);
 	await t.check('Astra A2: the page’s one rule (PSX.paths.host) holds table E2’s eight rows, in the table’s order', JSON.stringify(unit.rows) === JSON.stringify(E2.rows), JSON.stringify(unit.rows));
 	await t.check(`Astra A2: each of table E2’s ${E2.table.length} examples is host-dependent by its own row, naming its word, and the editor’s classifier agrees (git ref positions still take rows 2, 3 and 6)`, !unit.table.length, JSON.stringify(unit.table));
 	await t.check(`Follow-up (not a path, PS-144): the ${E2.notAPath.length} patterns naming a web address, an image or registry reference or a git ref are host-dependent by no row, and the page reads each kind of word as the table says (${E2.kinds.length} words)`, !unit.notAPath.length && !unit.kinds.length, JSON.stringify({ notAPath: unit.notAPath, kinds: unit.kinds }));
+	await t.check(`Recheck R1/R2: the page’s rule names the two R1 witnesses and their registry-spelled siblings as relative paths (row 4), and reads the R2 web address and the two docker image controls as no path (${E2.recheck.length} patterns)`, !unit.recheck.length, JSON.stringify(unit.recheck));
 	await t.check(`Astra A2: the ${E2.portable.length} portable controls (npm test *, git status, cargo build, pytest -q and the earlier ones) are host-dependent by no row`, !unit.portable.length, JSON.stringify(unit.portable));
 	// broad detection reads the same words: a directory flag's value counts with its flag
 	const broad = await run(t, () => { const A = window.PSX.approvals, S = Object.fromEntries(A.ASKS.map((x) => [x.id, x])); return { flagThenStar: A.isBroad('git -C repo *', S.test), subcommand: A.isBroad('git -C repo status *', S.test), script: A.isBroad('node scripts/release *', S.test) }; });
@@ -571,6 +579,7 @@ async function astraAlways(t, h) {
 	E2.witnesses.forEach((p) => add(p, 'host', 'the review’s saved witness'));
 	E2.table.forEach(([p, row]) => add(p, 'host', `table E2 row ${row}`));
 	E2.earlier.forEach((p) => add(p, 'host', 'an earlier spelling'));
+	E2.recheck.forEach(([p, kind, label]) => add(p, kind, label));
 	E2.notAPath.forEach(([p, kind]) => add(p, 'portable', `not a path: ${kind}`));
 	E2.portable.forEach((p) => add(p, 'portable', 'a portable control'));
 	let shot = false;
@@ -601,7 +610,7 @@ async function astraAlways(t, h) {
 			await t.check(`Astra A2 (${why}): ${pat} offers This project, This computer and Everywhere with no line against it, and is kept Everywhere`, !!e && JSON.stringify(places) === JSON.stringify(['project', 'computer', 'everywhere']) && !e.note && kept.includes(`${pat} @ everywhere`), JSON.stringify({ places, line: e && e.noteText, kept }));
 		}
 	}
-	await t.check(`Astra A2: ${cases.length} cases walked through the editor and the save (${cases.filter((c) => c[1] === 'host').length} host-dependent, ${cases.filter((c) => c[1] === 'portable').length} portable)`, cases.length === new Set([...E2.witnesses, ...E2.table.map((x) => x[0]), ...E2.earlier, ...E2.notAPath.map((x) => x[0]), ...E2.portable]).size && cases.length >= 60, String(cases.length));
+	await t.check(`Astra A2: ${cases.length} cases walked through the editor and the save (${cases.filter((c) => c[1] === 'host').length} host-dependent, ${cases.filter((c) => c[1] === 'portable').length} portable)`, cases.length === new Set([...E2.witnesses, ...E2.recheck.map((x) => x[0]), ...E2.table.map((x) => x[0]), ...E2.earlier, ...E2.notAPath.map((x) => x[0]), ...E2.portable]).size && cases.length >= 60, String(cases.length));
 }
 
 /* ------------------------------------------------------------------ Astra max A3 (2026-11-13): Keep them fixed and screens

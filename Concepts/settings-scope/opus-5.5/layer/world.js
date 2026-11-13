@@ -83,8 +83,12 @@
      segment is a host name, and a git ref (an argument of a ref-taking git subcommand, before --) are not paths. They
      lift row 4, the bare relative path, and nothing else: NOT_A_PATH below */
   const PATH_EXT = /\.(sh|bash|zsh|fish|ps1|psm1|bat|cmd|exe|py|js|mjs|cjs|ts|rb|pl|php|lua)$/i;
-  // the parts of a NAME=value or --flag=value value: a , ; or : list (a drive's C: and a web address's :// stay whole)
-  const PATH_LIST = /[,;]|(?<!(?:^|[,;])[A-Za-z]):(?!\/\/)/;
+  /* the parts of a NAME=value or --flag=value value: a , or ; list, each piece then a : list (a drive's C: stays whole).
+     Recheck R2: a piece that is a whole web address (scheme://, port and path included) is never split, so
+     --registry=https://registry.example.com:8443/npm/ stays one address; nor is an image or registry flag's value */
+  const WEB = /^[a-z][a-z0-9+.-]*:\/\//i;
+  const PATH_COLON = /(?<!^[A-Za-z]):(?!\/\/)/;
+  const listParts = (v, whole) => (whole ? [v] : v.split(/[,;]/).flatMap((piece) => (WEB.test(piece) ? [piece] : piece.split(PATH_COLON)))).filter(Boolean);
   const FILE_CMDS = /^(read|write|edit|list|open|cat|less|head|tail|ls|cp|mv|rm|rmdir|mkdir|touch|chmod|chown|find|grep|tar|zip|unzip)$/i;
   /* row 5: the flags whose value is a folder or a file. -p only after tsc or vue-tsc (elsewhere it names a package, a
      port or a plugin); any other long flag whose name ends in dir, directory, path, folder or root, or in -file or _file
@@ -98,15 +102,25 @@
   const GIT_REF_CMDS = /^(push|pull|fetch|checkout|switch|merge|rebase|branch|tag|log|diff|reset|cherry-pick)$/;
   const GIT_VALUE_OPTS = ['-c', '-C', '--git-dir', '--work-tree', '--namespace', '--exec-path', '--super-prefix', '--config-env'];
   const pathFlag = (name, seen, git) => (git && (name === '-f' || (name === '-C' && git.sub))) ? false : DIR_FLAGS.includes(name) || FLAG_NAME.test(name) || (!!FLAG_AFTER[name] && seen.some((w) => FLAG_AFTER[name].test(baseName(w))));
-  /* not a path (the README's "Not a path" table): a web address (a scheme then ://; file: is a file, row 2), and an image
-     or registry reference whose first segment is a host name (dot-separated labels ending in two or more letters, or a
-     name or address with a port). A git ref is decided by its place in the pattern (read(), x.ref) */
+  /* not a path (the README's "Not a path" table): a web address (a scheme then ://; file: is a file, row 2), anywhere;
+     and an image or registry reference whose first segment is a host name (dot-separated labels ending in two or more
+     letters, or a name or address with a port), but only where the argument takes one (read(), x.image). Recheck R1:
+     the spelling alone isn't enough, since scripts.dev/release.js is a host-shaped local folder. A git ref is decided
+     by its place in the pattern too (read(), x.ref) */
   const HOST_NAME = /^(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}(?::\d+)?|[A-Za-z0-9.-]+:\d+)$/;
-  const NOT_A_PATH = [
-    { kind: 'web', test: (p) => /^[a-z][a-z0-9+.-]*:\/\//i.test(p) && !/^file:/i.test(p) },
-    { kind: 'image', test: (p) => { const i = p.indexOf('/'); return i > 0 && !/\\/.test(p.slice(0, i)) && HOST_NAME.test(p.slice(0, i)); } }
-  ];
-  const notAPath = (p) => NOT_A_PATH.find((n) => n.test(p)) || null;
+  const isWeb = (p) => WEB.test(p) && !/^file:/i.test(p);
+  const isImageRef = (p) => { const i = p.indexOf('/'); return i > 0 && !/\\/.test(p.slice(0, i)) && HOST_NAME.test(p.slice(0, i)); };
+  // a part one row would read as a path, that isn't one: a web address anywhere, an image reference where one is taken
+  const notAPath = (p, image) => (isWeb(p) ? 'web' : image && isImageRef(p) ? 'image' : null);
+  /* where an argument takes an image or registry reference (recheck R1). docker, podman and nerdctl: every argument of
+     push, pull and tag; the image of run and create (the first argument; the rest is the command run inside); the value
+     of build's -t or --tag; every argument after image's own subcommand. oras, skopeo and crane: every argument after
+     the subcommand (only the first for oras push and attach, whose others are files). Any program: the value of a
+     registry or image flag. The value flags of docker's run, create and build are listed so their values are never
+     taken for the image */
+  const CONTAINER_CLIS = /^(docker|podman|nerdctl)$/i, OCI_CLIS = /^(oras|skopeo|crane)$/i;
+  const IMAGE_FLAG = /^--(?:[\w-]*registry[\w-]*|image)$/i;
+  const DOCKER_VALUE_FLAGS = ['--context', '-c', '-H', '--host', '-l', '--log-level', '-w', '-a', '--attach', '-e', '--env', '-v', '--volume', '-p', '--publish', '--name', '-u', '--user', '--network', '--net', '--entrypoint', '--platform', '--mount', '--label', '--hostname', '-h', '--restart', '--cpus', '-m', '--memory', '--add-host', '--device', '--gpus', '--pull', '--ulimit', '--log-driver', '--log-opt', '--cap-add', '--cap-drop', '--security-opt', '--tmpfs', '--dns', '--ip', '--expose', '--runtime', '--shm-size', '--stop-signal', '--volumes-from', '--build-arg', '--target', '--cache-from', '--cache-to', '--secret', '--ssh', '--output', '-o', '--progress'];
   // where a word starts: a root, the home folder, a drive, a UNC share, a variable then a separator, file:, or dots
   const ROOTS = [
     ['unc', /^(\\\\|\/\/)[^\\/]/],
@@ -144,10 +158,10 @@
   /* what rows 2, 3, 4 and 6 read in one argument: the value of NAME=value or --flag=value (each part of its list), the
      rest of a one-letter flag written against its value (-I/usr/include), then the word itself. The first part a row
      holds for is the one it names */
-  function partsOf(w) {
+  function partsOf(w, whole) {
     const out = [], eq = w.indexOf('=');
     // a NAME=value or --flag=value is read by its value alone: its name holds no separator (--registry=https://… is a web address)
-    if (eq > 0 && !/[\\/]/.test(w.slice(0, eq))) return w.slice(eq + 1).split(PATH_LIST).filter(Boolean);
+    if (eq > 0 && !/[\\/]/.test(w.slice(0, eq))) return listParts(w.slice(eq + 1), whole);
     const glued = /^-[A-Za-z]([^=].*)$/.exec(w); if (glued && !w.startsWith('--')) out.push(glued[1]);
     out.push(w);
     return out;
@@ -156,26 +170,44 @@
   function read(text) {
     const ws = shellWords(text), at = programAt(ws), words = [];
     // git: its subcommand (the first argument after its own options) and, for a ref-taking one, its ref arguments
-    const git = at < ws.length && /^git(\.exe)?$/i.test(baseName(ws[at])) ? { sub: null } : null;
-    let ended = false, takes = null, skip = false;
+    const prog = at < ws.length ? baseName(ws[at]).replace(/\.exe$/i, '') : '';
+    const git = /^git$/i.test(prog) ? { sub: null } : null;
+    // recheck R1: a container or registry tool, its subcommand(s), and whether its image argument has been read
+    const oci = CONTAINER_CLIS.test(prog) ? { kind: 'container', sub: null, sub2: null, image: false } : OCI_CLIS.test(prog) ? { kind: 'oci', sub: null, image: false } : null;
+    const eff = () => (oci && (oci.sub === 'image' || oci.sub === 'buildx') ? oci.sub2 : oci && oci.sub);
+    let ended = false, takes = null, skip = null;
     ws.forEach((w, i) => {
-      const x = { word: w, at: i, role: i === at ? 'program' : 'arg', program: i === at, parts: i === at ? [w] : partsOf(w), value: null };
+      const x = { word: w, at: i, role: i === at ? 'program' : 'arg', program: i === at, value: null };
       if (i > at) {
         if (takes) { x.role = 'value'; x.value = { flag: takes, word: w }; takes = null; }
-        else if (skip) { x.role = 'value'; skip = false; }
+        else if (skip) { x.role = 'value'; if (skip === 'image') x.image = true; skip = null; }
         else if (!ended && w === '--') { x.role = 'end'; ended = true; }
         else if (!ended && /^-./.test(w)) {
           x.role = 'flag';
           const eq = w.indexOf('='), name = eq > 0 ? w.slice(0, eq) : w, seen = ws.slice(at, i);
           const next = i + 1 < ws.length && !/^-/.test(ws[i + 1]);
+          const imageFlag = IMAGE_FLAG.test(name) || (oci && oci.kind === 'container' && eff() === 'build' && (name === '-t' || name === '--tag'));
           if (pathFlag(name, seen, git)) { if (eq > 0) x.value = { flag: name, word: w.slice(eq + 1) }; else if (next) takes = name; }
-          else if (git && !git.sub && eq < 0 && next && GIT_VALUE_OPTS.includes(name)) skip = true;
+          else if (imageFlag) { if (eq > 0) x.image = true; else if (next) skip = 'image'; }
+          else if (git && !git.sub && eq < 0 && next && GIT_VALUE_OPTS.includes(name)) skip = 'value';
+          else if (oci && oci.kind === 'container' && eq < 0 && next && DOCKER_VALUE_FLAGS.includes(name)) skip = 'value';
         } else if (git && !git.sub) { git.sub = w; x.sub = true; }
         else if (git && GIT_REF_CMDS.test(git.sub) && !ended) x.ref = true;
+        else if (oci && !oci.sub) { oci.sub = w; x.sub = true; }
+        else if (oci && (oci.sub === 'image' || oci.sub === 'buildx') && !oci.sub2) { oci.sub2 = w; x.sub = true; }
+        else if (oci && !ended) {
+          const e = eff();
+          if (oci.kind === 'container') {
+            if (/^(push|pull|tag)$/.test(e) || oci.sub === 'image') x.image = true;
+            else if (/^(run|create)$/.test(e) && !oci.image) { x.image = true; oci.image = true; }
+          } else if (!(/^(push|attach)$/.test(e) && oci.image)) { x.image = true; oci.image = true; }
+        }
       }
       words.push(x);
     });
-    return { words, at, program: at < ws.length ? ws[at] : '', git };
+    // the parts each row reads; an image or registry value is never split at its port
+    words.forEach((x) => { x.parts = x.program ? [x.word] : partsOf(x.word, !!x.image); });
+    return { words, at, program: at < ws.length ? ws[at] : '', git, oci };
   }
   const first = (parts, ok) => parts.find((p) => ok(p)) || null;
   const homeWord = (p) => /^~/.test(p) || /^(\$HOME|\$\{HOME\}|%USERPROFILE%|%HOMEPATH%|\$env:USERPROFILE|\$env:HOME)$/i.test(p);
@@ -186,10 +218,10 @@
     { row: 2, why: 'root', test: (x) => (x.program ? null : first(x.parts, atRoot)) },
     { row: 3, why: 'relative', test: (x) => (x.program ? null : first(x.parts, (p) => /^\.{1,2}([\\/]|$)/.test(p))) },
     // the bare relative path: lifted for a git ref, a web address and an image or registry reference (NOT_A_PATH)
-    { row: 4, why: 'separator', test: (x) => (x.program || x.ref ? null : first(x.parts, (p) => /[\\/]/.test(p) && !notAPath(p))) },
+    { row: 4, why: 'separator', test: (x) => (x.program || x.ref ? null : first(x.parts, (p) => /[\\/]/.test(p) && !notAPath(p, x.image))) },
     { row: 5, why: 'flag', test: (x) => (x.value && x.value.word !== '' ? x.value.word : null) },
     // a web address or an image reference that ends like a script is still not a local file
-    { row: 6, why: 'file', test: (x) => first(x.parts, (p) => PATH_EXT.test(p) && !notAPath(p)) },
+    { row: 6, why: 'file', test: (x) => first(x.parts, (p) => PATH_EXT.test(p) && !notAPath(p, x.image)) },
     { row: 7, why: 'filecmd', test: (x) => (x.program && FILE_CMDS.test(x.word) ? x.word : null) },
     { row: 8, why: 'wildcard', test: (x) => (x.program && x.word.includes('*') ? x.word : null) }
   ];
@@ -206,7 +238,8 @@
     words: shellWords,
     programAt,
     rows: HOST_ROWS.map((R) => ({ row: R.row, why: R.why })),
-    notAPath: (p) => { const n = notAPath(String(p || '')); return n ? n.kind : null; },
+    // a word that isn't a path: 'web' anywhere, 'image' only where the argument takes an image (`image` true)
+    notAPath: (p, image) => notAPath(String(p || ''), !!image),
     program(text) { const ws = shellWords(text), i = programAt(ws); return i < ws.length ? ws[i] : ''; },
     rootOf,
     // a pattern's words with their roles, each with the first row that holds for it (host) or null
