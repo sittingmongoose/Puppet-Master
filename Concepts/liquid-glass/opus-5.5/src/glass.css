@@ -575,10 +575,11 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-cur
 /* the hover bead: lighter than a lens, gone the moment a press lands or a menu opens */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), 0 3px 8px -3px var(--lg-shadow); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
-/* PERF-4, the lead's R2 for the bead (2026-11-13): a resting bead bends nothing (glass.js lensBend) but keeps its
-   saturate(1.1) (KINDS.bead.sat) while it shows, a plain backdrop pass only then: a flow ending over the Activity bar's
-   blue stepped the whole bead's tint when its filter came off (Glass Dark: the median pixel inside it 5 levels of blue,
-   81% of them 5 or more; lane G). The flow's inline filter wins over this while it runs. The tier test is glass.js's own
+/* PERF-4, the bead's share of the resting tint (2026-11-13; every other lens kind keeps its saturate inline, glass.js
+   KINDS restSat): a resting bead bends nothing (glass.js lensBend) but keeps its saturate(1.1) (KINDS.bead.sat) while it
+   shows, a plain backdrop pass only then: a flow ending over the Activity bar's blue stepped the whole bead's tint when
+   its filter came off (Glass Dark: the median pixel inside it 5 levels of blue, 81% of them 5 or more; lane G). The
+   flow's and the lift's inline filter wins over this while they run. The tier test is glass.js's own
    (gpu(): any tier but cpu), so the bead and the icon lens keep or drop their tint together (round 2, R30 Finding 6) */
 html[data-lg="on"][data-theme^="glass"]:not([data-lg-tier="cpu"]):not(#lgz) .lg-bead.on { -webkit-backdrop-filter: saturate(1.1); backdrop-filter: saturate(1.1); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }

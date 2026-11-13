@@ -313,8 +313,8 @@
     bar:     { bezel: 14, thick: 34, frost: 'light', sat: 1.6,  ca: 0.04, mag: 1,    light: 0.95, bake: true, ring: [2, 5] },
     /* lenses: no colour split and no magnifying map (the labels magnify themselves); magRest is the chosen label's
        size under the lens at rest, magLift its size while the lens is lifted and moving */
-    lens:    { bezel: 4,  thick: 10, sat: 1.1,  mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.04, magLift: 1.13 },
-    lensRow: { bezel: 5,  thick: 11, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true, magRest: 1,    magLift: 1.03 },
+    lens:    { bezel: 4,  thick: 10, sat: 1.1,  mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.04, magLift: 1.13, restSat: true },
+    lensRow: { bezel: 5,  thick: 11, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true, magRest: 1,    magLift: 1.03, restSat: true },
     lensIcon:{ bezel: 5,  thick: 12, sat: 1.12, mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.08, magLift: 1.2, restSat: true },
     bead:    { bezel: 5,  thick: 12, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true },
     menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95, css: true },
@@ -1160,7 +1160,7 @@
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
     else if (gpu() && k.lens) { var f = lf.f; e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
     /* a lens keeps its filter here and wears it only while it moves or is pressed (lensBend, PERF-4); restSat: its tint at rest */
-    if (k.lens) { e.__lgBf = bf; e.__lgRest = bf && (k.restSat || e.__lgRestSat) ? 'saturate(' + k.sat + ')' : null; lensBend(e); return e.__lgF; }
+    if (k.lens) { e.__lgBf = bf; e.__lgRest = bf && k.restSat ? 'saturate(' + k.sat + ')' : null; lensBend(e); return e.__lgF; }
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
@@ -1404,18 +1404,13 @@
      about a tenth of a second before the click starts that work. Targets are measured where they are laid out,
      ignoring transforms, so a press flex or the rail's bump can no longer give the lens a wrong size that it then
      corrects with a twitch. */
-  /* restSat (round 2, C; lane G's measurement over the default print and over Prism at the 0.35 transparency floor): a
-     strip whose lens sits over a coloured ground keeps a plain saturate() at rest, as R2 gave the Activity icon lens, so
-     it comes to rest with no tint step: the rail tabs (Prism, Glass Dark: 62% of the lens interior 5 levels or more),
-     Usage's nav (54%), the onboarding window's segments (70%), the theme menu's modes (74% / 98%), Settings' left bar
-     (54%) and section tabs (97% on the default print). The other strips step at most about 3 levels and stay unbent */
   var STRIPS = [
     { sel: 'nav.page-tabs', items: '.page-tab', scrub: true, kind: 'lens' },
     { sel: '#pmuRange', items: ':scope > button', scrub: true, kind: 'lens' },
-    { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow', restSat: true },
+    { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow' },
     /* tag: the rail's tab strips' lenses carry data-lg-for="rail-tabs", so the rail skin can shape them (concept D,
        22-tabs.src.css: the chosen tab's own box, rounded to its track's inner radius) */
-    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', restSat: true, tag: 'rail-tabs' },
+    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', tag: 'rail-tabs' },
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, tag: 'rail-icons',
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
@@ -1432,7 +1427,7 @@
       twin: function (i) { return i.querySelector('.o55-raillabel'); },
       /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
       follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
-    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', restSat: true, active: '.o55-on', magRest: 1, mark: true,
+    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true,
       label: function (i) { return i.querySelector('.o55-segface'); },
       /* in the pane's content, centred in its scroller (margin-block: auto): a change of the content's height (a device
          card's note, M6) or of the scroller's re-centres it */
@@ -1446,13 +1441,13 @@
     /* 2026-10-14: the Planning Wizard's work-type choice (pm7-wizard-orch); its own .sel fill steps aside under data-lg-lensed */
     { sel: '#panel-wizard .pm6-wiz-intent-row', items: '.pm6-wiz-intent-chip', kind: 'lens', active: '.sel', magRest: 1, mark: true },
     /* Jared #14 (2026-10-14): the theme menu's Light / Dark / Auto, drawn inside the menu (LENS_HOSTS) */
-    { sel: '#themeMenu .pm6-tt-modes', items: '.pm6-tt-mode', kind: 'lens', restSat: true, active: '[aria-checked="true"]', magRest: 1, mark: true },
+    { sel: '#themeMenu .pm6-tt-modes', items: '.pm6-tt-mode', kind: 'lens', active: '[aria-checked="true"]', magRest: 1, mark: true },
     /* Jared #22 (2026-10-15): Settings' selectors are the same switcher. The left bar (Settings Home and the chapters),
        the chapter's section tabs, the page index beside them and each manager's tabs carry the lens; their own fills,
        bars, dots, underlines and inks step aside (glass.css section 6). Segmented choices and the service lists live in
        content that scrolls under Settings' sticky bars, so they take the lens's material in place instead. */
-    { sel: '#pm-settings-root .rail-scroll', items: ':is(.side-link[data-action="home"], .domain-link)', vertical: true, kind: 'lensRow', restSat: true, mark: true },
-    { sel: '#pm-settings-root nav.workspace-tabs', items: '.workspace-tab', many: true, kind: 'lens', restSat: true, active: '.is-current', magRest: 1, mark: true },
+    { sel: '#pm-settings-root .rail-scroll', items: ':is(.side-link[data-action="home"], .domain-link)', vertical: true, kind: 'lensRow', mark: true },
+    { sel: '#pm-settings-root nav.workspace-tabs', items: '.workspace-tab', many: true, kind: 'lens', active: '.is-current', magRest: 1, mark: true },
     /* the index's own rows: a manager's pages, or a page's sections where it has no manager (their current row follows
        the scroll); the sections under an open page are words only */
     { sel: '#pm-settings-root nav.page-index-card', items: '.pm51-index-group > .index-link', many: true, vertical: true, kind: 'lensRow', active: '.is-active', mark: true },
@@ -1629,7 +1624,6 @@
     var lensAttrs = { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind };
     if (cfg.tag) lensAttrs['data-lg-for'] = cfg.tag;   /* a lens in the shared layer, styled for its strip (STRIPS tag) */
     var lens = el('i', lensAttrs), own = lensLayer(strip);
-    if (cfg.restSat) lens.__lgRestSat = true;   /* its strip's resting tint (STRIPS restSat), read by mount */
     own.appendChild(lens);
     L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: preread(strip) ? preread(strip).scroller : scrollerOf(strip) }; lenses.set(strip, L); strip.__lgPre = null;
     /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar
@@ -1816,15 +1810,20 @@
      and Light (Home 85 / 81, Usage 124 / 73, Settings 84 / 72), 99 to 115 less under a pointer sweep, 95 to 108 less
      scrolling; Basic Dark unchanged. */
   function lensLive(L) {
-    L.lens.__lgLive = !!((L.anim && !L.reducedAnim) || L.dragging || L.held || rideMoves(L));
+    L.lens.__lgLive = !!((L.anim && !L.reducedAnim && L.anim !== L.hopHide) || L.dragging || L.held || rideMoves(L));
     lensBend(L.lens);
   }
-  /* The Activity bar's icon lens (KINDS.lensIcon.restSat) keeps its saturate() at rest, a plain CSS backdrop pass with no
-     SVG filter: over the bar's saturated blue its filter's saturate(1.12) is most of what the filter changes, and taking
-     it off when the lens came to rest stepped the whole lens's tint in one frame (Glass Dark median (29,48,115) to
-     (30,47,108), Glass Light red +3; lane G pixels, 2026-11-13; the lead's choice R2). At rest it then differs from the
-     moving lens only at its rim, by the bend (at most 3 levels). Its price, Home at rest in one page load: 5.5 / 4.5 ms a
-     second of the GPU thread (Glass Dark / Light, paired medians of 6 rounds that swing by 20 to 30). */
+  /* At rest every lens kind keeps the plain saturate() its live filter carries (KINDS restSat: 1.1, the icon lens 1.12), a
+     plain CSS backdrop pass with no SVG filter, and drops only the url() bend; the bead keeps its tint in CSS while it
+     shows. Over a coloured ground the saturate is most of what the filter changes: taking it off when a lens came to
+     rest stepped the whole lens's tint in one frame (the icon lens over the Activity bar's blue, Glass Dark median
+     (29,48,115) to (30,47,108); Settings' section tabs 97% of the lens interior 5 levels or more; over Prism at the 0.35
+     transparency floor the rail tabs, Usage's nav, Settings' left bar and the onboarding segments too; lane G pixels,
+     2026-11-13), and which lens steps depends on the wallpaper and the transparency (stream F's reviewer: atrium, orbs,
+     facets, bloom, channels), so the rule is uniform (the lead's ruling, round 2). At rest a lens then differs from
+     the moving lens only at its rim, by the bend: at most 3 levels in lane G's pairs, up to 7 in stream F's (the bead
+     8). The icon lens's resting pass cost 5.5 / 4.5 ms a second of the GPU thread on Home (Glass Dark / Light, paired
+     medians of 6 rounds that swing by 20 to 30). */
   function lensBend(e) {
     /* the filter mount() keeps (__lgBf), worn while live in a mounted Glass lens, else its resting tint (__lgRest);
        unmount and unmountAll take an inline filter off by themselves, so one found gone is forgotten here */
