@@ -476,8 +476,9 @@
 #panel-settings .setup-row:hover, #panel-settings .attention-row:hover { background: rgba(var(--accent-primary-rgb),.065); }
 /* FO-174: the "Show all explanations" drawer's section cards take the home headers' 8 px inline inset and their rows
    keep main's 14 px, so each label still starts 14 px right of its section title as on main, and the copy keeps the
-   room FO-159 round 3 gave it (the drawer draws main's line count at 11 px). */
-#panel-settings .drawer-body > .panel-card:has(> .setup-row) { padding-inline: 8px; }
+   room FO-159 round 3 gave it (the drawer draws main's line count at 11 px). The drawer is pm51's (its body is
+   .pm51-panel-body, not .drawer-body); only this drawer puts setup rows straight into a .panel-card. */
+#panel-settings .drawer .panel-card:has(> .setup-row) { padding-inline: 8px; }
 #panel-settings .panel-card > .setup-row { padding-inline: 14px; }
 #panel-settings .setup-icon { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid rgba(var(--accent-primary-rgb),.20); border-radius: var(--k3-radius-md); background: var(--k3-accent-soft); color: var(--k3-accent); }
 #panel-settings .setup-copy { min-width: 0; flex: 1; }
