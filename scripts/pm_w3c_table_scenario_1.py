@@ -13,7 +13,7 @@ def scenario_path(value, context):
     v = value["scenario_path"]
     if v is True:
         return None
-    return "scenario_path" if v[0] not in ("install", "append", "retry", "history", "operation", "checkpoint") else None
+    return "scenario_path" if v[0] not in ("install", "append", "retry", "history", "operation", "checkpoint", "records") else None
 
 
 def scenario_family(value, context):

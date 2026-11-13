@@ -567,6 +567,28 @@ def build_cases(families=None):
             sc = L.build(fam, scope, 'install', 'append', (), man)
             positives.append({'id': pid(fam, scope, 'install'), 'expect': 'accept', 'scenario': sc})
             cache[(fam, scope, 'install')] = sc
+    if families is None:
+        rec_defs = json.loads((ROOT / RECORDS).read_text())['$defs']
+        owners = {f['source_record_definition']: f['event_type'] for f in reversed(json.loads(
+            (ROOT / 'reports/event-authority-20261105/W3C-contracts.json').read_text())['families'])}
+        for name in [n for n in rec_defs if '#/$defs/timestamp' in json.dumps(rec_defs[n])]:
+            fam = owners.get(name, 'testing.capture.started')
+            base = L.build(fam, 'application', 'records', 'records/' + name, (), man)
+            rid = 'w3c/records/' + name
+            positives.append({'id': rid, 'expect': 'accept', 'scenario': base})
+            pointers = L.timestamp_pointers(rec_defs, name, base['record'])
+            for tag, value in (('offset', '2026-11-05T12:00:00+02:00'), ('lowercase_t_z', '2026-11-05t10:00:00z')):
+                sc = L.build(fam, 'application', 'records', 'records/' + name, [('final', '/record' + pointers[0], value)], man)
+                positives.append({'id': rid + '/time-' + tag, 'expect': 'accept', 'scenario': sc})
+            for ptr in pointers:
+                for tag, value in BAD_TIMES:
+                    neg = L.build(fam, 'application', 'records', 'records/' + name, [('final', '/record' + ptr, value)], man)
+                    negatives.append({'id': rid + '/neg/records_schema' + ptr.replace('/', ':') + ':' + tag, 'base': rid,
+                                      'expect': {'row': 'records_schema', 'code': ROW_BY_ID['records_schema']['code']}, 'witness_of': 'records_schema',
+                                      'family': fam, 'scope': 'application', 'path': 'records', 'changes': L.diff(base, neg)})
+            neg = L.build(fam, 'application', 'records', 'records/' + name, [('final', '/record/record_kind', 'other_kind')], man)
+            negatives.append({'id': rid + '/neg/records_schema:record_kind', 'base': rid, 'expect': {'row': 'records_schema', 'code': ROW_BY_ID['records_schema']['code']},
+                              'witness_of': 'records_schema', 'family': fam, 'scope': 'application', 'path': 'records', 'changes': L.diff(base, neg)})
     witnesses = (append_witnesses() + join_witnesses() + clause_witnesses() + schema_leaf_witnesses() + retry_history_witnesses() +
                  operation_witnesses() + checkpoint_witnesses())
     counter = {}
@@ -687,7 +709,7 @@ CATEGORY_ROWS = {
                   'projection_pack_body'],
     'numbers': ['envelope_numbers', 'sequence_u64', 'producer_route', 'receipt_numbers', 'receipt_u64_byte_offset', 'op_numbers',
                 'op_receipt_u64_byte_offset', 'ck_numbers', 'ck_last_sequence_u64'],
-    'formats': ['envelope_schema', 'storage_utc_observed_at_utc', 'storage_utc_persisted_at_utc', 'receipt_schema', 'ck_schema'],
+    'formats': ['envelope_schema', 'storage_utc_observed_at_utc', 'storage_utc_persisted_at_utc', 'receipt_schema', 'ck_schema', 'records_schema'],
     'read_identity': ['recipe_override', 'original_query', 'original_custody', 'original_other_receipt', 'recipe_unique', 'recipe_installed',
                       'original_admission', 'original_binding', 'original_resolution', 'read_no_receipt_created', 'frozen_envelope', 'frozen_payload',
                       'frozen_storage_times', 'frozen_event_identity', 'frozen_key', 'frozen_full_value', 'frozen_producer', 'frozen_custody_event'],

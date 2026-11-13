@@ -64,7 +64,7 @@ FIXTURES = 'w3c_event_fixtures.json'
 CUSTODY_FILE = 'w3c_original_custody.json'
 CONTRACTS = 'Plans/w3c_test_capture_event_contracts.schema.json'
 RECORDS = 'Plans/test_capture_application_records.schema.json'
-PATHS = ('install', 'append', 'retry', 'history', 'operation', 'checkpoint')
+PATHS = ('install', 'append', 'retry', 'history', 'operation', 'checkpoint', 'records')
 CAUGHT = (KeyError, TypeError, ValueError, IndexError, AttributeError, OverflowError, StopIteration)
 INLINE_LIMIT = 16384
 PACK_MEDIA = 'application/vnd.puppetmaster.event-payload+msgpack'
@@ -90,7 +90,10 @@ TIMESTAMP_FIELDS = (
     ('CV-1320 payload enabled_at_utc (Project payload, inline projection)', EVENT_RECORD, 'format_checker(EVENT_RECORD) in payload_schema / ck_schema'),
     ('adapter_readiness_source enabled_at_utc', EVENT_RECORD, 'format_checker(EVENT_RECORD) in rdy_source_schema'),
     ('checkpoint first_retired_at_utc', EVENT_RECORD, 'format_checker(EVENT_RECORD) in ck_schema'),
+    ('test_capture_application_records $defs/timestamp (every created/started/ended/observed time of the 11 record definitions)',
+     EVENT_RECORD, 'format_checker(EVENT_RECORD) in records_schema'),
 )
+RECORDS_ID = 'https://puppetmaster.local/schemas/test_capture_application_records/1.0.0/schema.json'
 
 
 def date_time_ok(value, profile):
@@ -834,6 +837,11 @@ row('install', 'install_metaschema', 'schema_install', '/resources', 'every inst
 row('install', 'install_refs', 'schema_reference', '/resources',
     'every $ref in every installed resource resolves eagerly through the unchanged Corpus registry, including unvisited branches',
     'ok', lambda c, m: install_refs_resolve(c['resources']) if metaschema_ok(c['resources']) else NA, 'install')
+
+# application capture source records (the lane's application sibling records schema) ------------------------------
+row('records', 'records_schema', 'record_schema', '/record',
+    'the application source record validates its exact test_capture_application_records definition (shared date-time checker at every timestamp)',
+    'ok', gate('r0')(lambda c, m: valid(RECORDS_ID + '#/$defs/' + c['record_def'], c['record'])), 'records')
 
 # admission and writer (current writer only: append and effectful operation transitions) -----------------------
 EFFECT = 'append operation'

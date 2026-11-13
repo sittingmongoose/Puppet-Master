@@ -104,6 +104,8 @@ def make_pack(body):
 # Pointers and staged edits
 # ---------------------------------------------------------------------------------------------
 def resolve_pointer(pointer, sc):
+    if not pointer.startswith('@'):
+        return pointer
     o = sc['owner']
     if pointer.startswith('@src/'):
         return '/owner/records/' + o['source_ref'] + pointer[4:]
@@ -419,6 +421,15 @@ def build_inner(fam, scope, path, variant, edits, manifest):
     apply_edits(sc, edits, 'request_instance')
     sc['commit_check'] = {'writer_generation': o['writer']['generation'], 'stop_generation': o['writer']['stop_generation'],
                           'permission_generation': o['permission']['generation'], 'target_generation': o['target']['generation']}
+    if path == 'records':
+        import json
+        defs = json.loads((Path(__file__).resolve().parents[1] / 'Plans/test_capture_application_records.schema.json').read_text())['$defs']
+        name = variant.split('/', 1)[1]
+        for k in [k for k in list(sc) if k not in ('path', 'family', 'scope')]:
+            sc.pop(k)
+        sc.update(record_def=name, record=minimal_record(defs, name))
+        apply_edits(sc, edits, 'final')
+        return sc
     if path == 'install':
         sc.pop('commit_check')
         sc['resources'] = 'repository'
@@ -626,6 +637,107 @@ def build_checkpoint(sc, fam, scope, o, variant, payload, appended, edits):
         'effects': [], 'reader_withdrawn': False})
     apply_edits(sc, edits, 'final')
     return sc
+
+
+def minimal_record(defs, name):
+    """A minimal valid instance of one application record definition, with every optional timestamp property filled."""
+    def gen(schema, top=False):
+        if '$ref' in schema:
+            ref = schema['$ref'].split('/')[-1]
+            if ref == 'timestamp':
+                return '2026-11-05T10:00:00Z'
+            return gen(defs[ref])
+        if 'const' in schema:
+            return copy.deepcopy(schema['const'])
+        if 'enum' in schema:
+            return schema['enum'][0]
+        for key in ('anyOf', 'oneOf'):
+            if key in schema:
+                options = [o for o in schema[key] if o.get('type') != 'null'] or schema[key]
+                return gen(options[0])
+        t = schema.get('type')
+        if type(t) is list:
+            t = [x for x in t if x != 'null'][0]
+        if t == 'object' or 'properties' in schema:
+            props = schema.get('properties', {})
+            keys = list(schema.get('required', [])) + [k for k, v in props.items() if k not in schema.get('required', []) and
+                                                         json_text(v).endswith('/timestamp"}')]
+            return {k: gen(props[k]) for k in keys}
+        if t == 'array':
+            item = gen(schema.get('items', {}))
+            return [item] if schema.get('minItems', 0) >= 1 else []
+        if t == 'string':
+            pat = schema.get('pattern', '')
+            if '0-9a-f]{64}' in pat:
+                return 'a' * 64
+            if pat.startswith('^[A-Za-z][') :
+                return 'ref:rec'
+            return 'rec-1' if pat else 'x' * max(1, schema.get('minLength', 1))
+        if t == 'integer':
+            return max(0, schema.get('minimum', 0))
+        if t == 'number':
+            return schema['exclusiveMinimum'] + 1 if 'exclusiveMinimum' in schema else max(0, schema.get('minimum', 0))
+        if t == 'boolean':
+            return False
+        return None
+    return repair(gen(defs[name]), name)
+
+
+def repair(instance, name):
+    """Fill conditional requirements (if/then, contains, const) the minimal generator cannot see, guided by the
+    validator's own errors, until the instance is valid. Raises if it cannot converge."""
+    import re as _re
+    from pm_w3c_event_oracles import RECORDS_ID, validator
+    v = validator(RECORDS_ID + '#/$defs/' + name)
+    for _ in range(40):
+        errors = list(v.iter_errors(instance))
+        if not errors:
+            return instance
+        e = errors[0]
+        parent = instance
+        for part in list(e.path)[:-1]:
+            parent = parent[part]
+        last = list(e.path)[-1] if e.path else None
+        here = parent[last] if last is not None else instance
+        if e.validator == 'required':
+            missing = _re.match(r"'(.+)' is a required property", e.message).group(1)
+            here[missing] = 'rec-1'
+        elif e.validator == 'const':
+            parent[last] = copy.deepcopy(e.validator_value)
+        elif e.validator == 'contains':
+            here.append(copy.deepcopy(e.validator_value.get('const')))
+        elif e.validator == 'type':
+            parent[last] = {'integer': 0, 'number': 1, 'string': 'rec-1', 'boolean': False, 'array': [], 'object': {}}[
+                e.validator_value if type(e.validator_value) is str else e.validator_value[0]]
+        else:
+            raise ValueError('cannot repair %s: %s' % (name, e.message[:120]))
+    raise ValueError('record did not converge: ' + name)
+
+
+def json_text(v):
+    import json
+    return json.dumps(v)
+
+
+def timestamp_pointers(defs, name, instance):
+    """JSON pointers of every timestamp value in a generated instance (walking the definition beside it)."""
+    out = []
+
+    def walk(schema, value, ptr):
+        if '$ref' in schema:
+            ref = schema['$ref'].split('/')[-1]
+            if ref == 'timestamp':
+                out.append(ptr)
+                return
+            return walk(defs[ref], value, ptr)
+        if type(value) is dict:
+            for k, v in value.items():
+                walk(schema.get('properties', {}).get(k, {}), v, ptr + '/' + k)
+        elif type(value) is list:
+            for i, v in enumerate(value):
+                walk(schema.get('items', {}), v, ptr + '/' + str(i))
+    walk(defs[name], instance, '')
+    return out
 
 
 def diff(base, new, pointer=''):
