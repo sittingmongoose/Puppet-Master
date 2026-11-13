@@ -40,7 +40,7 @@ async function checkLook(t,look){
   }});
   const page=new Proxy(t.page,{get(o,k){if(k==='keyboard')return keyboard;const v=Reflect.get(o,k,o);return typeof v==='function'?v.bind(o):v;}});
   const args={...t.args,looks:look,bite:'1'};const rt=new Proxy(t,{get(o,k){if(k==='args')return args;if(k==='page')return page;const v=Reflect.get(o,k,o);return typeof v==='function'?v.bind(o):v;}});await route(rt);
-  const f=t.root;await f.evaluate(()=>PM51.go('general','notifications'));await f.waitForSelector('[data-continuous-workspace-body="notifications"][data-workspace-mounted="true"]');await t.settle();
+  const f=t.root===t.page?t.page.mainFrame():t.root;await f.evaluate(()=>PM51.go('general','notifications'));await f.waitForSelector('[data-continuous-workspace-body="notifications"][data-workspace-mounted="true"]');await t.settle();
   const n=f.locator('[data-continuous-workspace-body="notifications"]');
   const tab=async label=>{await press(t,n.locator('.manager-tab',{hasText:new RegExp('^\\s*'+label+'\\s*$')}).first());};
   const action=name=>n.locator(`[data-action="pm51-notifications-${name}"]`).first();
