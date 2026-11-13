@@ -2,7 +2,7 @@
 """Run the shared NUMRULE number corpus through the W3A complete checker's integer slots.
 
 Part A runs the corpus integer cases (token, integer, slot, uint64, current_json,
-current_json_slot) through the shared calls exactly as the W3A checker uses them.
+current_json_slot) through the shared calls with each case's own bounds.
 Part B places every corpus integer value, plus a 4,400-digit integer, into each
 W3A integer slot of a complete world (EventRecord sequence_id and
 producer_sequence_id, the five first-receipt uint64 slots, checkpoint node
@@ -63,7 +63,7 @@ def part_a(corpus):
         elif op == 'uint64':
             outcome = classify(lambda: numbers.storage_uint64(typed(case['value'])))
         elif op == 'slot':
-            outcome = classify(lambda: numbers.storage_uint64(numbers.loads_current_json(case['raw'])))
+            outcome = classify(lambda: numbers.current_integer(numbers.loads_current_json(case['raw']), **bounds))
         elif op == 'current_json':
             outcome = classify(lambda: numbers.loads_current_json(case['raw']))
         else:
@@ -99,7 +99,7 @@ def slot_values(corpus):
                 values.append((case['id'], outcome[1]))
     with w3a.exact_integer_digits():
         values.append(('w3a-4400-digit-integer', int('9' * 4400)))
-    values.append(('w3a-4400-digit-negative', -int('9' * 4400)))
+        values.append(('w3a-4400-digit-negative', -int('9' * 4400)))
     return values
 
 
@@ -108,7 +108,7 @@ SLOTS = (
     ('envelope.sequence_id', 'append', lambda v: {'meta': w3a.setp('sequence_id', v)}, numbers.storage_uint64,
      {'EN01_envelope_schema', 'EN05_sequence_uint64'}, set()),
     ('envelope.producer_sequence_id', 'append', lambda v: {'envelope': w3a.setp('producer_sequence_id', v)},
-     lambda v: numbers.current_integer(v, minimum=0), {'EN01_envelope_schema', 'EN06_producer_sequence'},
+     lambda v: None if v is None else numbers.current_integer(v, minimum=0), {'EN01_envelope_schema', 'EN06_producer_sequence'},
      {'EN07_producer_qualified'}),
     ('receipt.segment_generation', 'settle', lambda v: {'receipt': w3a.setp('segment_generation', v)}, numbers.storage_uint64,
      {'RC01_custody_schema', 'RC12_receipt_segment_generation_uint64'}, set()),
@@ -157,8 +157,9 @@ def part_b(corpus):
 
 def main():
     corpus = json.loads((ROOT / 'Plans/event_number_recipe_corpus.json').read_text())
-    a_counts, a_bad = part_a(corpus)
-    b_counts, b_bad = part_b(corpus)
+    with w3a.exact_integer_digits():  # corpus expectations include integers above Python's default digit limit
+        a_counts, a_bad = part_a(corpus)
+        b_counts, b_bad = part_b(corpus)
     status = 'pass' if not (a_bad or b_bad) else 'fail'
     result = dict(status=status, part_a=a_counts, part_b=b_counts, failures=(a_bad + b_bad)[:50])
     text = json.dumps(result, indent=1, default=str)

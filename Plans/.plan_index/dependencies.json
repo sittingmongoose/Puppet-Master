@@ -6844,6 +6844,41 @@
     "C-046",
     "ACD-508",
     "SP-1100",
+    "CV-368",
+    "SP-351",
+    "SMPFS-035",
+    "SMPFS-139",
+    "SMPFS-140",
+    "SMPFS-141",
+    "SP-350",
+    "UCC-211",
+    "F3-406",
+    "WM-049",
+    "CS-073",
+    "UCC-149",
+    "WM-047",
+    "C-047",
+    "APR-073",
+    "CWR-045",
+    "GRS-086",
+    "OSI-439",
+    "SQR-019",
+    "SP-1101",
+    "SMPFS-001",
+    "SMPFS-144",
+    "SP-352",
+    "ATS-018",
+    "CS-077",
+    "UCC-151",
+    "WM-048",
+    "C-048",
+    "OSI-440",
+    "GRS-087",
+    "ACD-509",
+    "EP-132",
+    "OP-038",
+    "SQR-020",
+    "CV-1101",
     "SP-1200",
     "SP-1201",
     "SP-1202",
@@ -6879,26 +6914,21 @@
     "SP-1232",
     "SP-1233",
     "SP-1234",
-    "CV-368",
-    "SP-351",
-    "SMPFS-035",
-    "SMPFS-139",
-    "SMPFS-140",
-    "SMPFS-141",
-    "SP-350",
-    "UCC-211",
-    "F3-406",
-    "WM-049",
-    "CS-073",
-    "UCC-149",
-    "WM-047",
-    "C-047",
-    "APR-073",
-    "CWR-045",
-    "GRS-086",
-    "OSI-439",
-    "SQR-019",
-    "SP-1101",
+    "RAP-012",
+    "RTIM-019",
+    "RTIM-024",
+    "RTIM-030",
+    "RTIM-031",
+    "RTIM-037",
+    "F3-509",
+    "SMPFS-148",
+    "SMPFS-149",
+    "UCC-155",
+    "WM-050",
+    "N2-154",
+    "APR-074",
+    "CS-113",
+    "F3-672",
     "FGI-1200",
     "FGI-1201",
     "FGI-1202",
@@ -6930,37 +6960,6 @@
     "FGI-1232",
     "FGI-1233",
     "FGI-1234",
-    "SMPFS-001",
-    "SMPFS-144",
-    "SP-352",
-    "ATS-018",
-    "CS-077",
-    "UCC-151",
-    "WM-048",
-    "C-048",
-    "OSI-440",
-    "GRS-087",
-    "ACD-509",
-    "EP-132",
-    "OP-038",
-    "SQR-020",
-    "CV-1101",
-    "ATS-1200",
-    "RAP-012",
-    "RTIM-019",
-    "RTIM-024",
-    "RTIM-030",
-    "RTIM-031",
-    "RTIM-037",
-    "F3-509",
-    "SMPFS-148",
-    "SMPFS-149",
-    "UCC-155",
-    "WM-050",
-    "N2-154",
-    "APR-074",
-    "CS-113",
-    "F3-672",
     "F3-512",
     "SMPFS-150",
     "SMPFS-154",
@@ -6971,6 +6970,7 @@
     "CS-114",
     "F3-674",
     "UCC-218",
+    "ATS-1200",
     "RAP-021",
     "SMPFS-151",
     "SIR-023",
@@ -78641,6 +78641,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1200",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1200",
       "to": "SP-278"
     },
     {
@@ -78657,6 +78662,11 @@
       "edge_type": "depends_on",
       "from": "SP-1201",
       "to": "CV-1201"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1201",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -78681,6 +78691,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1202",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1202",
       "to": "SP-278"
     },
     {
@@ -78697,6 +78712,11 @@
       "edge_type": "depends_on",
       "from": "SP-1203",
       "to": "CV-1203"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1203",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -78721,6 +78741,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1204",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1204",
       "to": "SP-278"
     },
     {
@@ -78737,6 +78762,11 @@
       "edge_type": "depends_on",
       "from": "SP-1205",
       "to": "CV-1205"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1205",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -78761,6 +78791,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1206",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1206",
       "to": "SP-278"
     },
     {
@@ -78777,6 +78812,11 @@
       "edge_type": "depends_on",
       "from": "SP-1207",
       "to": "CV-1207"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1207",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -78801,6 +78841,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1208",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1208",
       "to": "SP-278"
     },
     {
@@ -78817,6 +78862,11 @@
       "edge_type": "depends_on",
       "from": "SP-1209",
       "to": "CV-1209"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1209",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -78861,6 +78911,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1210",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1210",
       "to": "SP-278"
     },
     {
@@ -78877,6 +78932,11 @@
       "edge_type": "depends_on",
       "from": "SP-1211",
       "to": "CV-1211"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1211",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -78901,6 +78961,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1212",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1212",
       "to": "SP-278"
     },
     {
@@ -78917,6 +78982,11 @@
       "edge_type": "depends_on",
       "from": "SP-1213",
       "to": "CV-1213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1213",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -78941,6 +79011,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1214",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1214",
       "to": "SP-278"
     },
     {
@@ -78957,6 +79032,11 @@
       "edge_type": "depends_on",
       "from": "SP-1215",
       "to": "CV-1215"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1215",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -78981,6 +79061,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1216",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1216",
       "to": "SP-278"
     },
     {
@@ -78997,6 +79082,11 @@
       "edge_type": "depends_on",
       "from": "SP-1217",
       "to": "CV-1217"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1217",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -79021,6 +79111,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1218",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1218",
       "to": "SP-278"
     },
     {
@@ -79037,6 +79132,11 @@
       "edge_type": "depends_on",
       "from": "SP-1219",
       "to": "CV-1219"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1219",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -79086,6 +79186,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1220",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1220",
       "to": "SP-278"
     },
     {
@@ -79102,6 +79207,11 @@
       "edge_type": "depends_on",
       "from": "SP-1221",
       "to": "CV-1221"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1221",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -79126,6 +79236,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1222",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1222",
       "to": "SP-278"
     },
     {
@@ -79142,6 +79257,11 @@
       "edge_type": "depends_on",
       "from": "SP-1223",
       "to": "CV-1223"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1223",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -79166,6 +79286,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1224",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1224",
       "to": "SP-278"
     },
     {
@@ -79182,6 +79307,11 @@
       "edge_type": "depends_on",
       "from": "SP-1225",
       "to": "CV-1225"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1225",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -79206,6 +79336,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1226",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1226",
       "to": "SP-278"
     },
     {
@@ -79222,6 +79357,11 @@
       "edge_type": "depends_on",
       "from": "SP-1227",
       "to": "CV-1227"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1227",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -79246,6 +79386,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1228",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1228",
       "to": "SP-278"
     },
     {
@@ -79262,6 +79407,11 @@
       "edge_type": "depends_on",
       "from": "SP-1229",
       "to": "CV-1229"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1229",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -79321,6 +79471,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1230",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1230",
       "to": "SP-278"
     },
     {
@@ -79337,6 +79492,11 @@
       "edge_type": "depends_on",
       "from": "SP-1231",
       "to": "CV-1231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1231",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -79361,6 +79521,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1232",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1232",
       "to": "SP-278"
     },
     {
@@ -79381,6 +79546,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-1233",
+      "to": "SP-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1233",
       "to": "SP-278"
     },
     {
@@ -79397,6 +79567,11 @@
       "edge_type": "depends_on",
       "from": "SP-1234",
       "to": "CV-1234"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1234",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -119154,7 +119329,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-13T15:40:23Z",
+  "generated_at_utc": "2026-11-13T17:38:26Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -176796,8 +176971,8 @@
       "source_location": {
         "heading": "FGI-009 - Forge Repository Create Sole Future Handler",
         "heading_level": 3,
-        "heading_line": 6417,
-        "line": 6419,
+        "heading_line": 6541,
+        "line": 6543,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176813,8 +176988,8 @@
       "source_location": {
         "heading": "FGI-010 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 6502,
-        "line": 6504,
+        "heading_line": 6626,
+        "line": 6628,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176830,8 +177005,8 @@
       "source_location": {
         "heading": "FGI-011 - Verified account and repository binding requirements by forge",
         "heading_level": 3,
-        "heading_line": 6553,
-        "line": 6555,
+        "heading_line": 6677,
+        "line": 6679,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176847,8 +177022,8 @@
       "source_location": {
         "heading": "FGI-012 - Distinct Self-Hosted Providers And Independent Automation Authority",
         "heading_level": 3,
-        "heading_line": 6754,
-        "line": 6756,
+        "heading_line": 6878,
+        "line": 6880,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176864,8 +177039,8 @@
       "source_location": {
         "heading": "FGI-013 - Nine Distinct Event-Silent Forge Command Admissions",
         "heading_level": 3,
-        "heading_line": 6839,
-        "line": 6841,
+        "heading_line": 6963,
+        "line": 6965,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176881,8 +177056,8 @@
       "source_location": {
         "heading": "FGI-014 - Admitted Provider Operation Profiles",
         "heading_level": 3,
-        "heading_line": 6892,
-        "line": 6894,
+        "heading_line": 7016,
+        "line": 7018,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176898,8 +177073,8 @@
       "source_location": {
         "heading": "FGI-015 - Exact Provider Capability, Authentication, Trust, And Administration Matrix",
         "heading_level": 3,
-        "heading_line": 6999,
-        "line": 7001,
+        "heading_line": 7123,
+        "line": 7125,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176915,8 +177090,8 @@
       "source_location": {
         "heading": "FGI-016 - Conditional Ordered Review Stack Workflow",
         "heading_level": 3,
-        "heading_line": 7191,
-        "line": 7193,
+        "heading_line": 7315,
+        "line": 7317,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176932,8 +177107,8 @@
       "source_location": {
         "heading": "FGI-017 - Conditional Additional Review Service Admission",
         "heading_level": 3,
-        "heading_line": 7261,
-        "line": 7263,
+        "heading_line": 7385,
+        "line": 7387,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176949,8 +177124,8 @@
       "source_location": {
         "heading": "FGI-018 - Typed Merge Strategy On The Forge Merge Request",
         "heading_level": 3,
-        "heading_line": 7335,
-        "line": 7337,
+        "heading_line": 7459,
+        "line": 7461,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176966,8 +177141,8 @@
       "source_location": {
         "heading": "FGI-019 - Policy Evaluation Requeue That Degrades Truthfully",
         "heading_level": 3,
-        "heading_line": 7380,
-        "line": 7382,
+        "heading_line": 7504,
+        "line": 7506,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -176983,8 +177158,8 @@
       "source_location": {
         "heading": "FGI-020 - Provider Neutral Vote And Reviewer Carrier",
         "heading_level": 3,
-        "heading_line": 7423,
-        "line": 7425,
+        "heading_line": 7547,
+        "line": 7549,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177000,8 +177175,8 @@
       "source_location": {
         "heading": "FGI-021 - Repository Delete And Hosted CI Command Closure",
         "heading_level": 3,
-        "heading_line": 7496,
-        "line": 7498,
+        "heading_line": 7620,
+        "line": 7622,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177017,8 +177192,8 @@
       "source_location": {
         "heading": "FGI-022 - Review Edit And Runner Read Producer Closure",
         "heading_level": 3,
-        "heading_line": 7564,
-        "line": 7566,
+        "heading_line": 7688,
+        "line": 7690,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177034,8 +177209,8 @@
       "source_location": {
         "heading": "FGI-023 - Typed create options and explicit repository discovery",
         "heading_level": 3,
-        "heading_line": 7617,
-        "line": 7619,
+        "heading_line": 7741,
+        "line": 7743,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177051,8 +177226,8 @@
       "source_location": {
         "heading": "FGI-024 - Contribution fork and team-project change workflow",
         "heading_level": 3,
-        "heading_line": 7705,
-        "line": 7707,
+        "heading_line": 7829,
+        "line": 7831,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177085,8 +177260,8 @@
       "source_location": {
         "heading": "FGI-1201 - forge.connection.capabilities_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 837,
-        "line": 839,
+        "heading_line": 841,
+        "line": 843,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177102,8 +177277,8 @@
       "source_location": {
         "heading": "FGI-1202 - forge.connection.reauthorized prepared contract",
         "heading_level": 3,
-        "heading_line": 999,
-        "line": 1001,
+        "heading_line": 1007,
+        "line": 1009,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177119,8 +177294,8 @@
       "source_location": {
         "heading": "FGI-1203 - forge.connection.validated prepared contract",
         "heading_level": 3,
-        "heading_line": 1162,
-        "line": 1164,
+        "heading_line": 1175,
+        "line": 1177,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177136,8 +177311,8 @@
       "source_location": {
         "heading": "FGI-1204 - forge.mirror.connected prepared contract",
         "heading_level": 3,
-        "heading_line": 1324,
-        "line": 1326,
+        "heading_line": 1341,
+        "line": 1343,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177153,8 +177328,8 @@
       "source_location": {
         "heading": "FGI-1205 - forge.mirror.degraded prepared contract",
         "heading_level": 3,
-        "heading_line": 1486,
-        "line": 1488,
+        "heading_line": 1506,
+        "line": 1508,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177170,8 +177345,8 @@
       "source_location": {
         "heading": "FGI-1206 - forge.mirror.detached prepared contract",
         "heading_level": 3,
-        "heading_line": 1647,
-        "line": 1649,
+        "heading_line": 1671,
+        "line": 1673,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177187,8 +177362,8 @@
       "source_location": {
         "heading": "FGI-1207 - forge.mirror.status_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 1808,
-        "line": 1810,
+        "heading_line": 1834,
+        "line": 1836,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177204,8 +177379,8 @@
       "source_location": {
         "heading": "FGI-1208 - forge.mirror.sync_completed prepared contract",
         "heading_level": 3,
-        "heading_line": 1969,
-        "line": 1971,
+        "heading_line": 1999,
+        "line": 2001,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177221,8 +177396,8 @@
       "source_location": {
         "heading": "FGI-1209 - forge.mirror.sync_started prepared contract",
         "heading_level": 3,
-        "heading_line": 2130,
-        "line": 2132,
+        "heading_line": 2164,
+        "line": 2166,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177238,8 +177413,8 @@
       "source_location": {
         "heading": "FGI-1210 - forge.pipeline.cancelled prepared contract",
         "heading_level": 3,
-        "heading_line": 2292,
-        "line": 2294,
+        "heading_line": 2330,
+        "line": 2332,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177255,8 +177430,8 @@
       "source_location": {
         "heading": "FGI-1211 - forge.pipeline.completed prepared contract",
         "heading_level": 3,
-        "heading_line": 2453,
-        "line": 2455,
+        "heading_line": 2497,
+        "line": 2499,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177272,8 +177447,8 @@
       "source_location": {
         "heading": "FGI-1212 - forge.pipeline.retried prepared contract",
         "heading_level": 3,
-        "heading_line": 2614,
-        "line": 2616,
+        "heading_line": 2664,
+        "line": 2666,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177289,8 +177464,8 @@
       "source_location": {
         "heading": "FGI-1213 - forge.pipeline.started prepared contract",
         "heading_level": 3,
-        "heading_line": 2775,
-        "line": 2777,
+        "heading_line": 2830,
+        "line": 2832,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177306,8 +177481,8 @@
       "source_location": {
         "heading": "FGI-1214 - forge.repository.authority_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 2937,
-        "line": 2939,
+        "heading_line": 2998,
+        "line": 3000,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177323,8 +177498,8 @@
       "source_location": {
         "heading": "FGI-1215 - forge.repository.created prepared contract",
         "heading_level": 3,
-        "heading_line": 3100,
-        "line": 3102,
+        "heading_line": 3163,
+        "line": 3165,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177340,8 +177515,8 @@
       "source_location": {
         "heading": "FGI-1216 - forge.repository.discovered prepared contract",
         "heading_level": 3,
-        "heading_line": 3262,
-        "line": 3264,
+        "heading_line": 3328,
+        "line": 3330,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177357,8 +177532,8 @@
       "source_location": {
         "heading": "FGI-1217 - forge.repository.eligibility_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 3423,
-        "line": 3425,
+        "heading_line": 3493,
+        "line": 3495,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177374,8 +177549,8 @@
       "source_location": {
         "heading": "FGI-1218 - forge.review.approved prepared contract",
         "heading_level": 3,
-        "heading_line": 3586,
-        "line": 3588,
+        "heading_line": 3660,
+        "line": 3662,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177391,8 +177566,8 @@
       "source_location": {
         "heading": "FGI-1219 - forge.review.changes_requested prepared contract",
         "heading_level": 3,
-        "heading_line": 3753,
-        "line": 3755,
+        "heading_line": 3830,
+        "line": 3832,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177408,8 +177583,8 @@
       "source_location": {
         "heading": "FGI-1220 - forge.review.closed prepared contract",
         "heading_level": 3,
-        "heading_line": 3927,
-        "line": 3929,
+        "heading_line": 4008,
+        "line": 4010,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177425,8 +177600,8 @@
       "source_location": {
         "heading": "FGI-1221 - forge.review.created prepared contract",
         "heading_level": 3,
-        "heading_line": 4088,
-        "line": 4090,
+        "heading_line": 4171,
+        "line": 4173,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177442,8 +177617,8 @@
       "source_location": {
         "heading": "FGI-1222 - forge.review.marked_ready prepared contract",
         "heading_level": 3,
-        "heading_line": 4249,
-        "line": 4251,
+        "heading_line": 4335,
+        "line": 4337,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177459,8 +177634,8 @@
       "source_location": {
         "heading": "FGI-1223 - forge.review.merged prepared contract",
         "heading_level": 3,
-        "heading_line": 4410,
-        "line": 4412,
+        "heading_line": 4499,
+        "line": 4501,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177476,8 +177651,8 @@
       "source_location": {
         "heading": "FGI-1224 - forge.review.reopened prepared contract",
         "heading_level": 3,
-        "heading_line": 4572,
-        "line": 4574,
+        "heading_line": 4664,
+        "line": 4666,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177493,8 +177668,8 @@
       "source_location": {
         "heading": "FGI-1225 - forge.review.thread.reopened prepared contract",
         "heading_level": 3,
-        "heading_line": 4732,
-        "line": 4734,
+        "heading_line": 4827,
+        "line": 4829,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177510,8 +177685,8 @@
       "source_location": {
         "heading": "FGI-1226 - forge.review.thread.replied prepared contract",
         "heading_level": 3,
-        "heading_line": 4894,
-        "line": 4896,
+        "heading_line": 4992,
+        "line": 4994,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177527,8 +177702,8 @@
       "source_location": {
         "heading": "FGI-1227 - forge.review.thread.resolved prepared contract",
         "heading_level": 3,
-        "heading_line": 5055,
-        "line": 5057,
+        "heading_line": 5156,
+        "line": 5158,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177544,8 +177719,8 @@
       "source_location": {
         "heading": "FGI-1228 - forge.review.updated prepared contract",
         "heading_level": 3,
-        "heading_line": 5216,
-        "line": 5218,
+        "heading_line": 5319,
+        "line": 5321,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177561,8 +177736,8 @@
       "source_location": {
         "heading": "FGI-1229 - forge.review.version_created prepared contract",
         "heading_level": 3,
-        "heading_line": 5378,
-        "line": 5380,
+        "heading_line": 5483,
+        "line": 5485,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177578,8 +177753,8 @@
       "source_location": {
         "heading": "FGI-1230 - forge.webhook.delivery_failed prepared contract",
         "heading_level": 3,
-        "heading_line": 5540,
-        "line": 5542,
+        "heading_line": 5647,
+        "line": 5649,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177595,8 +177770,8 @@
       "source_location": {
         "heading": "FGI-1231 - forge.webhook.delivery_recovered prepared contract",
         "heading_level": 3,
-        "heading_line": 5702,
-        "line": 5704,
+        "heading_line": 5812,
+        "line": 5814,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177612,8 +177787,8 @@
       "source_location": {
         "heading": "FGI-1232 - forge.webhook.received prepared contract",
         "heading_level": 3,
-        "heading_line": 5864,
-        "line": 5866,
+        "heading_line": 5978,
+        "line": 5980,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177629,8 +177804,8 @@
       "source_location": {
         "heading": "FGI-1233 - forge.webhook.redelivery_queued prepared contract",
         "heading_level": 3,
-        "heading_line": 6027,
-        "line": 6029,
+        "heading_line": 6144,
+        "line": 6146,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -177646,8 +177821,8 @@
       "source_location": {
         "heading": "FGI-1234 - forge.webhook.rejected prepared contract",
         "heading_level": 3,
-        "heading_line": 6189,
-        "line": 6191,
+        "heading_line": 6310,
+        "line": 6312,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -227575,8 +227750,8 @@
       "source_location": {
         "heading": "SP-1201 - forge.connection.capabilities_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 29791,
-        "line": 29793,
+        "heading_line": 29799,
+        "line": 29801,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227592,8 +227767,8 @@
       "source_location": {
         "heading": "SP-1202 - forge.connection.reauthorized prepared contract",
         "heading_level": 3,
-        "heading_line": 29976,
-        "line": 29978,
+        "heading_line": 29992,
+        "line": 29994,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227609,8 +227784,8 @@
       "source_location": {
         "heading": "SP-1203 - forge.connection.validated prepared contract",
         "heading_level": 3,
-        "heading_line": 30160,
-        "line": 30162,
+        "heading_line": 30184,
+        "line": 30186,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227626,8 +227801,8 @@
       "source_location": {
         "heading": "SP-1204 - forge.mirror.connected prepared contract",
         "heading_level": 3,
-        "heading_line": 30342,
-        "line": 30344,
+        "heading_line": 30374,
+        "line": 30376,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227643,8 +227818,8 @@
       "source_location": {
         "heading": "SP-1205 - forge.mirror.degraded prepared contract",
         "heading_level": 3,
-        "heading_line": 30524,
-        "line": 30526,
+        "heading_line": 30564,
+        "line": 30566,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227660,8 +227835,8 @@
       "source_location": {
         "heading": "SP-1206 - forge.mirror.detached prepared contract",
         "heading_level": 3,
-        "heading_line": 30706,
-        "line": 30708,
+        "heading_line": 30754,
+        "line": 30756,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227677,8 +227852,8 @@
       "source_location": {
         "heading": "SP-1207 - forge.mirror.status_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 30888,
-        "line": 30890,
+        "heading_line": 30944,
+        "line": 30946,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227694,8 +227869,8 @@
       "source_location": {
         "heading": "SP-1208 - forge.mirror.sync_completed prepared contract",
         "heading_level": 3,
-        "heading_line": 31071,
-        "line": 31073,
+        "heading_line": 31135,
+        "line": 31137,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227711,8 +227886,8 @@
       "source_location": {
         "heading": "SP-1209 - forge.mirror.sync_started prepared contract",
         "heading_level": 3,
-        "heading_line": 31254,
-        "line": 31256,
+        "heading_line": 31326,
+        "line": 31328,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227745,8 +227920,8 @@
       "source_location": {
         "heading": "SP-1210 - forge.pipeline.cancelled prepared contract",
         "heading_level": 3,
-        "heading_line": 31436,
-        "line": 31438,
+        "heading_line": 31516,
+        "line": 31518,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227762,8 +227937,8 @@
       "source_location": {
         "heading": "SP-1211 - forge.pipeline.completed prepared contract",
         "heading_level": 3,
-        "heading_line": 31618,
-        "line": 31620,
+        "heading_line": 31706,
+        "line": 31708,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227779,8 +227954,8 @@
       "source_location": {
         "heading": "SP-1212 - forge.pipeline.retried prepared contract",
         "heading_level": 3,
-        "heading_line": 31800,
-        "line": 31802,
+        "heading_line": 31896,
+        "line": 31898,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227796,8 +227971,8 @@
       "source_location": {
         "heading": "SP-1213 - forge.pipeline.started prepared contract",
         "heading_level": 3,
-        "heading_line": 31982,
-        "line": 31984,
+        "heading_line": 32086,
+        "line": 32088,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227813,8 +227988,8 @@
       "source_location": {
         "heading": "SP-1214 - forge.repository.authority_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 32164,
-        "line": 32166,
+        "heading_line": 32276,
+        "line": 32278,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227830,8 +228005,8 @@
       "source_location": {
         "heading": "SP-1215 - forge.repository.created prepared contract",
         "heading_level": 3,
-        "heading_line": 32348,
-        "line": 32350,
+        "heading_line": 32468,
+        "line": 32470,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227847,8 +228022,8 @@
       "source_location": {
         "heading": "SP-1216 - forge.repository.discovered prepared contract",
         "heading_level": 3,
-        "heading_line": 32530,
-        "line": 32532,
+        "heading_line": 32658,
+        "line": 32660,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227864,8 +228039,8 @@
       "source_location": {
         "heading": "SP-1217 - forge.repository.eligibility_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 32713,
-        "line": 32715,
+        "heading_line": 32849,
+        "line": 32851,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227881,8 +228056,8 @@
       "source_location": {
         "heading": "SP-1218 - forge.review.approved prepared contract",
         "heading_level": 3,
-        "heading_line": 32899,
-        "line": 32901,
+        "heading_line": 33043,
+        "line": 33045,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227898,8 +228073,8 @@
       "source_location": {
         "heading": "SP-1219 - forge.review.changes_requested prepared contract",
         "heading_level": 3,
-        "heading_line": 33093,
-        "line": 33095,
+        "heading_line": 33245,
+        "line": 33247,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227932,8 +228107,8 @@
       "source_location": {
         "heading": "SP-1220 - forge.review.closed prepared contract",
         "heading_level": 3,
-        "heading_line": 33288,
-        "line": 33290,
+        "heading_line": 33448,
+        "line": 33450,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227949,8 +228124,8 @@
       "source_location": {
         "heading": "SP-1221 - forge.review.created prepared contract",
         "heading_level": 3,
-        "heading_line": 33470,
-        "line": 33472,
+        "heading_line": 33638,
+        "line": 33640,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227966,8 +228141,8 @@
       "source_location": {
         "heading": "SP-1222 - forge.review.marked_ready prepared contract",
         "heading_level": 3,
-        "heading_line": 33652,
-        "line": 33654,
+        "heading_line": 33828,
+        "line": 33830,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -227983,8 +228158,8 @@
       "source_location": {
         "heading": "SP-1223 - forge.review.merged prepared contract",
         "heading_level": 3,
-        "heading_line": 33834,
-        "line": 33836,
+        "heading_line": 34018,
+        "line": 34020,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228000,8 +228175,8 @@
       "source_location": {
         "heading": "SP-1224 - forge.review.reopened prepared contract",
         "heading_level": 3,
-        "heading_line": 34016,
-        "line": 34018,
+        "heading_line": 34208,
+        "line": 34210,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228017,8 +228192,8 @@
       "source_location": {
         "heading": "SP-1225 - forge.review.thread.reopened prepared contract",
         "heading_level": 3,
-        "heading_line": 34198,
-        "line": 34200,
+        "heading_line": 34398,
+        "line": 34400,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228034,8 +228209,8 @@
       "source_location": {
         "heading": "SP-1226 - forge.review.thread.replied prepared contract",
         "heading_level": 3,
-        "heading_line": 34381,
-        "line": 34383,
+        "heading_line": 34589,
+        "line": 34591,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228051,8 +228226,8 @@
       "source_location": {
         "heading": "SP-1227 - forge.review.thread.resolved prepared contract",
         "heading_level": 3,
-        "heading_line": 34564,
-        "line": 34566,
+        "heading_line": 34780,
+        "line": 34782,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228068,8 +228243,8 @@
       "source_location": {
         "heading": "SP-1228 - forge.review.updated prepared contract",
         "heading_level": 3,
-        "heading_line": 34747,
-        "line": 34749,
+        "heading_line": 34971,
+        "line": 34973,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228085,8 +228260,8 @@
       "source_location": {
         "heading": "SP-1229 - forge.review.version_created prepared contract",
         "heading_level": 3,
-        "heading_line": 34929,
-        "line": 34931,
+        "heading_line": 35161,
+        "line": 35163,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228119,8 +228294,8 @@
       "source_location": {
         "heading": "SP-1230 - forge.webhook.delivery_failed prepared contract",
         "heading_level": 3,
-        "heading_line": 35112,
-        "line": 35114,
+        "heading_line": 35352,
+        "line": 35354,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228136,8 +228311,8 @@
       "source_location": {
         "heading": "SP-1231 - forge.webhook.delivery_recovered prepared contract",
         "heading_level": 3,
-        "heading_line": 35296,
-        "line": 35298,
+        "heading_line": 35544,
+        "line": 35546,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228153,8 +228328,8 @@
       "source_location": {
         "heading": "SP-1232 - forge.webhook.received prepared contract",
         "heading_level": 3,
-        "heading_line": 35481,
-        "line": 35483,
+        "heading_line": 35737,
+        "line": 35739,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228170,8 +228345,8 @@
       "source_location": {
         "heading": "SP-1233 - forge.webhook.redelivery_queued prepared contract",
         "heading_level": 3,
-        "heading_line": 35663,
-        "line": 35665,
+        "heading_line": 35927,
+        "line": 35929,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -228187,8 +228362,8 @@
       "source_location": {
         "heading": "SP-1234 - forge.webhook.rejected prepared contract",
         "heading_level": 3,
-        "heading_line": 35847,
-        "line": 35849,
+        "heading_line": 36119,
+        "line": 36121,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -247207,9 +247382,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19115,
+    "depends_on_edge_count": 19150,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22323,
+    "edge_count": 22358,
     "node_count": 7532,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,

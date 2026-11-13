@@ -13,8 +13,11 @@
       "envelope_unit": "CV-1200",
       "storage_unit": "SP-1200",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_api_compatibility_changed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.api.compatibility_changed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-007",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/api_compatibility",
       "bindings": {
@@ -31,7 +34,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.connection.capabilities_changed",
@@ -43,8 +49,11 @@
       "envelope_unit": "CV-1201",
       "storage_unit": "SP-1201",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_connection_capabilities_changed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.connection.capabilities_changed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-003",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
       "bindings": {
@@ -61,7 +70,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.connection.reauthorized",
@@ -73,8 +85,11 @@
       "envelope_unit": "CV-1202",
       "storage_unit": "SP-1202",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_connection_reauthorized.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.connection.reauthorized, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-006",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/app_installation",
       "bindings": {
@@ -91,7 +106,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "change entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.connection.validated",
@@ -103,8 +121,11 @@
       "envelope_unit": "CV-1203",
       "storage_unit": "SP-1203",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_connection_validated.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.connection.validated, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-003",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
       "bindings": {
@@ -121,7 +142,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.mirror.connected",
@@ -133,8 +157,11 @@
       "envelope_unit": "CV-1204",
       "storage_unit": "SP-1204",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_connected.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.mirror.connected, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-002",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
       "bindings": {
@@ -151,7 +178,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.mirror.degraded",
@@ -163,8 +193,11 @@
       "envelope_unit": "CV-1205",
       "storage_unit": "SP-1205",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_degraded.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.mirror.degraded, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-002",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
       "bindings": {
@@ -181,7 +214,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.mirror.detached",
@@ -193,8 +229,11 @@
       "envelope_unit": "CV-1206",
       "storage_unit": "SP-1206",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_detached.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.mirror.detached, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-002",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
       "bindings": {
@@ -211,7 +250,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.mirror.status_changed",
@@ -223,8 +265,11 @@
       "envelope_unit": "CV-1207",
       "storage_unit": "SP-1207",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_status_changed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.mirror.status_changed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-002",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
       "bindings": {
@@ -241,7 +286,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.mirror.sync_completed",
@@ -253,8 +301,11 @@
       "envelope_unit": "CV-1208",
       "storage_unit": "SP-1208",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_sync_completed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.mirror.sync_completed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-002",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
       "bindings": {
@@ -271,7 +322,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.mirror.sync_started",
@@ -283,8 +337,11 @@
       "envelope_unit": "CV-1209",
       "storage_unit": "SP-1209",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_sync_started.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.mirror.sync_started, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-002",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
       "bindings": {
@@ -301,7 +358,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.pipeline.cancelled",
@@ -313,8 +373,11 @@
       "envelope_unit": "CV-1210",
       "storage_unit": "SP-1210",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.pipeline.cancelled, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-005",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
       "bindings": {
@@ -331,7 +394,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "finish entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.pipeline.completed",
@@ -343,8 +409,11 @@
       "envelope_unit": "CV-1211",
       "storage_unit": "SP-1211",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_pipeline_completed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.pipeline.completed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-005",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
       "bindings": {
@@ -361,7 +430,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "finish entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.pipeline.retried",
@@ -373,8 +445,11 @@
       "envelope_unit": "CV-1212",
       "storage_unit": "SP-1212",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_pipeline_retried.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.pipeline.retried, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-005",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
       "bindings": {
@@ -391,7 +466,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "retry entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.pipeline.started",
@@ -403,8 +481,11 @@
       "envelope_unit": "CV-1213",
       "storage_unit": "SP-1213",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_pipeline_started.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.pipeline.started, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-005",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
       "bindings": {
@@ -421,7 +502,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "start entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.repository.authority_changed",
@@ -433,8 +517,11 @@
       "envelope_unit": "CV-1214",
       "storage_unit": "SP-1214",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_repository_authority_changed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.repository.authority_changed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-002",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding",
       "bindings": {
@@ -451,7 +538,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.repository.created",
@@ -463,8 +553,11 @@
       "envelope_unit": "CV-1215",
       "storage_unit": "SP-1215",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_repository_created.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.repository.created, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-023",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding",
       "bindings": {
@@ -481,7 +574,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.repository.discovered",
@@ -493,8 +589,11 @@
       "envelope_unit": "CV-1216",
       "storage_unit": "SP-1216",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_repository_discovered.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.repository.discovered, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-023",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding",
       "bindings": {
@@ -511,7 +610,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.repository.eligibility_changed",
@@ -523,8 +625,11 @@
       "envelope_unit": "CV-1217",
       "storage_unit": "SP-1217",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_repository_eligibility_changed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.repository.eligibility_changed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-003",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
       "bindings": {
@@ -541,7 +646,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.approved",
@@ -571,7 +679,7 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN"
     },
     {
       "event_type": "forge.review.changes_requested",
@@ -583,8 +691,11 @@
       "envelope_unit": "CV-1219",
       "storage_unit": "SP-1219",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_changes_requested.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.changes_requested, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-020",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
       "bindings": {
@@ -601,7 +712,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.closed",
@@ -613,8 +727,11 @@
       "envelope_unit": "CV-1220",
       "storage_unit": "SP-1220",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_closed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.closed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-004",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
       "bindings": {
@@ -631,7 +748,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.created",
@@ -643,8 +763,11 @@
       "envelope_unit": "CV-1221",
       "storage_unit": "SP-1221",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_created.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.created, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-004",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
       "bindings": {
@@ -661,7 +784,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.marked_ready",
@@ -673,8 +799,11 @@
       "envelope_unit": "CV-1222",
       "storage_unit": "SP-1222",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_marked_ready.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.marked_ready, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-022",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
       "bindings": {
@@ -691,7 +820,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.merged",
@@ -703,8 +835,11 @@
       "envelope_unit": "CV-1223",
       "storage_unit": "SP-1223",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_merged.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.merged, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-018",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
       "bindings": {
@@ -721,7 +856,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.reopened",
@@ -733,8 +871,11 @@
       "envelope_unit": "CV-1224",
       "storage_unit": "SP-1224",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_reopened.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.reopened, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-004",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
       "bindings": {
@@ -751,7 +892,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.thread.reopened",
@@ -763,8 +907,11 @@
       "envelope_unit": "CV-1225",
       "storage_unit": "SP-1225",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_thread_reopened.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.thread.reopened, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-004",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_thread",
       "bindings": {
@@ -781,7 +928,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.thread.replied",
@@ -793,8 +943,11 @@
       "envelope_unit": "CV-1226",
       "storage_unit": "SP-1226",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_thread_replied.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.thread.replied, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-004",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_thread",
       "bindings": {
@@ -811,7 +964,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.thread.resolved",
@@ -823,8 +979,11 @@
       "envelope_unit": "CV-1227",
       "storage_unit": "SP-1227",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_thread_resolved.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.thread.resolved, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-004",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_thread",
       "bindings": {
@@ -841,7 +1000,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.updated",
@@ -853,8 +1015,11 @@
       "envelope_unit": "CV-1228",
       "storage_unit": "SP-1228",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_updated.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.updated, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-022",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
       "bindings": {
@@ -871,7 +1036,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.review.version_created",
@@ -883,8 +1051,11 @@
       "envelope_unit": "CV-1229",
       "storage_unit": "SP-1229",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_review_version_created.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.review.version_created, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-004",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
       "bindings": {
@@ -901,7 +1072,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.webhook.delivery_failed",
@@ -913,8 +1087,11 @@
       "envelope_unit": "CV-1230",
       "storage_unit": "SP-1230",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_delivery_failed.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.webhook.delivery_failed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-006",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
       "bindings": {
@@ -931,7 +1108,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.webhook.delivery_recovered",
@@ -943,8 +1123,11 @@
       "envelope_unit": "CV-1231",
       "storage_unit": "SP-1231",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_delivery_recovered.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.webhook.delivery_recovered, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-006",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
       "bindings": {
@@ -961,7 +1144,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.webhook.received",
@@ -973,8 +1159,11 @@
       "envelope_unit": "CV-1232",
       "storage_unit": "SP-1232",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_received.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.webhook.received, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-006",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
       "bindings": {
@@ -991,7 +1180,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.webhook.redelivery_queued",
@@ -1003,8 +1195,11 @@
       "envelope_unit": "CV-1233",
       "storage_unit": "SP-1233",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_redelivery_queued.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.webhook.redelivery_queued, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-006",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
       "bindings": {
@@ -1021,7 +1216,10 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     },
     {
       "event_type": "forge.webhook.rejected",
@@ -1033,8 +1231,11 @@
       "envelope_unit": "CV-1234",
       "storage_unit": "SP-1234",
       "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_rejected.schema.json#",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For forge.webhook.rejected, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
       "reuse_unit": "FGI-006",
       "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
       "bindings": {
@@ -1051,7 +1252,14 @@
       "search_hit": [
         "Plans/Forge_Integrations.md:632-666"
       ],
-      "oracle_status": "PLAN_ONLY_PHASE_2_PENDING"
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
     }
-  ]
+  ],
+  "phase_2": {
+    "retention": "34 pending cells bound to DL-453 (15), DL-454 (14), DL-455 (5); forge.review.approved keeps RP-AUTHORITY-INDEFINITE@1.0.0",
+    "oracle_status": "PHASE_2_EXECUTED_STATIC; native NOT_RUN"
+  }
 }

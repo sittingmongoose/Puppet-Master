@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L29605-L36027
+Source lines: L29605-L36307
 
-Source SHA256: `1b9dbbda826d340876a3b6f50168c57a26b4759ff11c0fc91afb0a54d24b1e2b`
+Source SHA256: `51be707374b0303bdd7f8eb0004c29abd679c00ad886671ede2b4026647d613e`
 
 ---
 
@@ -97,6 +97,13 @@ canonical_text: 'Newly authored Storage binding for forge.api.compatibility_chan
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.api.compatibility_changed original is read under the recipe named by
+  the one write receipt Storage independently sealed for that exact original, never by default, by Store recognition
+  or from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -159,6 +166,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1200
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.api.compatibility_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -282,6 +290,13 @@ canonical_text: 'Newly authored Storage binding for forge.connection.capabilitie
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.connection.capabilities_changed original is read under the recipe named
+  by the one write receipt Storage independently sealed for that exact original, never by default, by Store
+  recognition or from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -344,6 +359,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1201
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.connection.capabilities_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -466,6 +482,13 @@ canonical_text: 'Newly authored Storage binding for forge.connection.reauthorize
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.connection.reauthorized original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -528,6 +551,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1202
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.connection.reauthorized is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -648,6 +672,13 @@ canonical_text: 'Newly authored Storage binding for forge.connection.validated@1
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.connection.validated original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -710,6 +741,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1203
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.connection.validated is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -830,6 +862,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.connected@1.0.0
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.mirror.connected original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -892,6 +931,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1204
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.mirror.connected is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -1012,6 +1052,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.degraded@1.0.0,
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.mirror.degraded original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -1074,6 +1121,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1205
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.mirror.degraded is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -1194,6 +1242,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.detached@1.0.0,
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.mirror.detached original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -1256,6 +1311,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1206
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.mirror.detached is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -1377,6 +1433,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.status_changed@
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.mirror.status_changed original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -1439,6 +1502,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1207
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.mirror.status_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -1560,6 +1624,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.sync_completed@
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.mirror.sync_completed original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -1622,6 +1693,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1208
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.mirror.sync_completed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -1742,6 +1814,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.sync_started@1.
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.mirror.sync_started original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -1804,6 +1883,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1209
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.mirror.sync_started is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -1924,6 +2004,13 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.cancelled@1.0
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.pipeline.cancelled original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -1986,6 +2073,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1210
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.pipeline.cancelled is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -2106,6 +2194,13 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.completed@1.0
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.pipeline.completed original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -2168,6 +2263,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1211
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.pipeline.completed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -2288,6 +2384,13 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.retried@1.0.0
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.pipeline.retried original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -2350,6 +2453,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1212
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.pipeline.retried is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -2470,6 +2574,13 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.started@1.0.0
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.pipeline.started original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -2532,6 +2643,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1213
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.pipeline.started is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -2654,6 +2766,13 @@ canonical_text: 'Newly authored Storage binding for forge.repository.authority_c
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.repository.authority_changed original is read under the recipe named by
+  the one write receipt Storage independently sealed for that exact original, never by default, by Store recognition
+  or from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -2716,6 +2835,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1214
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.repository.authority_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -2836,6 +2956,13 @@ canonical_text: 'Newly authored Storage binding for forge.repository.created@1.0
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.repository.created original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -2898,6 +3025,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1215
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.repository.created is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -3019,6 +3147,13 @@ canonical_text: 'Newly authored Storage binding for forge.repository.discovered@
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.repository.discovered original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -3081,6 +3216,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1216
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.repository.discovered is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -3205,6 +3341,13 @@ canonical_text: 'Newly authored Storage binding for forge.repository.eligibility
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.repository.eligibility_changed original is read under the recipe named
+  by the one write receipt Storage independently sealed for that exact original, never by default, by Store
+  recognition or from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -3267,6 +3410,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1217
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.repository.eligibility_changed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -3387,6 +3531,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.approved@1.0.0,
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.approved original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -3460,6 +3611,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1218
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.approved is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -3583,6 +3735,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.changes_request
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.changes_requested original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -3656,6 +3815,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1219
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.changes_requested is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -3776,6 +3936,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.closed@1.0.0, p
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.closed original is read under the recipe named by the one write
+  receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -3838,6 +4005,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1220
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.closed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -3958,6 +4126,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.created@1.0.0, 
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.created original is read under the recipe named by the one write
+  receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -4020,6 +4195,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1221
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.created is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -4140,6 +4316,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.marked_ready@1.
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.marked_ready original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -4202,6 +4385,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1222
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.marked_ready is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -4322,6 +4506,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.merged@1.0.0, p
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.merged original is read under the recipe named by the one write
+  receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -4384,6 +4575,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1223
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.merged is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -4504,6 +4696,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.reopened@1.0.0,
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.reopened original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -4566,6 +4765,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1224
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.reopened is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -4687,6 +4887,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.reopened
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.thread.reopened original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -4749,6 +4956,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1225
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.thread.reopened is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -4870,6 +5078,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.replied@
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.thread.replied original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -4932,6 +5147,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1226
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.thread.replied is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -5053,6 +5269,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.resolved
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.thread.resolved original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -5115,6 +5338,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1227
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.thread.resolved is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -5235,6 +5459,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.updated@1.0.0, 
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.updated original is read under the recipe named by the one write
+  receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -5297,6 +5528,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1228
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.updated is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -5418,6 +5650,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.version_created
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.review.version_created original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -5480,6 +5719,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1229
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.review.version_created is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -5602,6 +5842,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.delivery_faile
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.webhook.delivery_failed original is read under the recipe named by the
+  one write receipt Storage independently sealed for that exact original, never by default, by Store recognition or
+  from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -5664,6 +5911,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1230
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.webhook.delivery_failed is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -5787,6 +6035,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.delivery_recov
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.webhook.delivery_recovered original is read under the recipe named by
+  the one write receipt Storage independently sealed for that exact original, never by default, by Store recognition
+  or from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -5849,6 +6104,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1231
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.webhook.delivery_recovered is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -5969,6 +6225,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.received@1.0.0
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.webhook.received original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -6031,6 +6294,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1232
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.webhook.received is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -6153,6 +6417,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.redelivery_que
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.webhook.redelivery_queued original is read under the recipe named by
+  the one write receipt Storage independently sealed for that exact original, never by default, by Store recognition
+  or from identifiers the recipes share. No receipt, or a receipt bound to another original, returns
+  original_unavailable; more than one returns recipe_unsupported; either way the stored bytes stay untouched.
+  Reading never creates a receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -6215,6 +6486,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1233
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.webhook.redelivery_queued is separately typed, source-bound, replay-safe and non-emitting before admission.
@@ -6335,6 +6607,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.rejected@1.0.0
   verified retained-source rebuild and never synthesizes expired events.
 
 
+  Retained reads (SP-1101): a retained forge.webhook.rejected original is read under the recipe named by the one
+  write receipt Storage independently sealed for that exact original, never by default, by Store recognition or from
+  identifiers the recipes share. No receipt, or a receipt bound to another original, returns original_unavailable;
+  more than one returns recipe_unsupported; either way the stored bytes stay untouched. Reading never creates a
+  receipt, and new-write recipe selection stays separate.
+
+
   Compatibility/withdrawal: exact original event and receipt schema/recipe readers remain selectable only by authenticated
   issuance provenance. No older Forge payload edition is inferred from a similar shape. Unknown future editions
   stop complete publication before that record. A reviewed writer cutoff is checked before dedupe; consumer withdrawal
@@ -6397,6 +6676,7 @@ depends_on:
 - SP-286
 - SP-337
 - CV-1234
+- SP-1101
 unblocks: []
 acceptance_criteria:
 - forge.webhook.rejected is separately typed, source-bound, replay-safe and non-emitting before admission.

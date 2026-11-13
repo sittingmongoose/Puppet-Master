@@ -1,5 +1,7 @@
 # W3A — Forge phase 1, prepared without admission
 
+**Wave 3 phase 2 (2026-11-13):** oracles executed and guard tables proved; the 34 pending retention cells are bound to DL-453/454/455. The phase-1 text below is kept as written; "Wave 3 phase 2: findings and responses" at the end supersedes its criterion-12 and retention statements.
+
 Branch: `plans/ea-w3-forge-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d` (freshly fetched `origin/main`). Source and evidence are planning-document and test-oracle work. No native execution.
 
 **Outcome:** 35 prepared; 0 merged; 0 excluded; 0 stopped. “Prepared” means the WAVE3 phase-1 deliverable, not complete admission readiness. All 35 have membership **ABSENT** and criterion 12 **PARTIAL**. Thirty-four have the expressly permitted pending-retention cell. No row needs a non-retention DL-045 product decision in this phase. No owner investigation from W3C/F/G/I was assigned to W3A.
@@ -111,6 +113,8 @@ Each SP unit names a real operating reader purpose, distinct consumer/projector 
 All remaining “probe by mutation” requirements are deliberately **NOT_RUN** in phase 1 because WAVE3 explicitly reserves oracle code and check-11 proof for phase 2. This report does not claim those recurring defects have been experimentally ruled out.
 
 ## Pending retention questions (not stopped rows)
+
+_Resolved in wave 3 phase 2: every question below is answered by DL-453, DL-454 or DL-455 (E-CARDS-3); see "Retention cells" in the phase-2 section._
 
 - **`forge.api.compatibility_changed`:** For forge.api.compatibility_changed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
 - **`forge.connection.capabilities_changed`:** For forge.connection.capabilities_changed, is this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?

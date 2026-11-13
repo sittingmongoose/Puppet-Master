@@ -24455,5 +24455,15 @@
     "R1": "REVISED_ALL_35_PENDING_REVIEW",
     "R2": "REVISED_ALL_35_PENDING_REVIEW",
     "executable_isolation": "NOT_RUN_PHASE_2"
+  },
+  "phase_2": {
+    "status": "EXECUTED_STATIC",
+    "native_execution": "NOT_RUN",
+    "checker": "scripts/pm_w3a_forge_events.py",
+    "row_inventory": "scripts/pm_w3a_forge_rows.py",
+    "guard_driver": "scripts/pm-w3a-guard-tables.py (gated tool 004bdedd63)",
+    "plan_guard_map": "reports/event-authority-20261105/W3A-phase2-guard-map.json (3,272 of 3,272 plan guards realized)",
+    "report": "reports/event-authority-20261105/W3A.md, Wave 3 phase 2: findings and responses",
+    "note": "The plan rows above are kept as the phase-1 record; each is realized by the table rows named in the guard map."
   }
 }

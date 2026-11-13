@@ -282,7 +282,7 @@ def source_rows(fam):
     if fam['vote']:
         for field in VOTE_FIELDS:
             n += 1
-            rows.append((f'SJ{n:02d}_vote_{field}', f'vote.{field}', f'source vote_evidence.{field} is the native vote fact', 'source_join_failed', ['source_native']))
+            rows.append((f'SJ{n:02d}_vote_{field}', f'vote.{field}', f'source vote_evidence.{field} is the native vote fact', 'source_join_failed', [f'vote_evidence.{field}', 'source_native']))
     for i, (name, _kind, _args, _neg) in enumerate(fam['semantic']):
         rows.append((f'SM{i + 1:02d}_{name}', f'semantic.{name}', f'FGI conjunct {name} holds on the native result', 'transition_not_emitting', [f'semantic.{name}', 'transition']))
     return rows

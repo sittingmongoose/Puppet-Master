@@ -738,14 +738,16 @@ canonical_text: 'Newly authored owner contract for forge.api.compatibility_chang
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.api.compatibility_changed, is this
-  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
-  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
-  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
-  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
-  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
-  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
-  SP-1200 policies without retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.api.compatibility_changed use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the
+  existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1200 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_api_compatibility_changed_source is canonical non-rebuildable identity/source-lineage,
@@ -775,21 +777,23 @@ canonical_text: 'Newly authored owner contract for forge.api.compatibility_chang
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including An actual compatibility probe replaces
-  a previously committed compatibility assessment and changes at least one endpoint/version/release-state, schema
-  pin, mutation-safety, scope, feature or rate/currentness fact. Oracle code, shared-number adoption and shared
-  guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture
-  also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete
-  original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed
-  payload and original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
-  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
-  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
-  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
-  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
-  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
-  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
-  a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including An actual compatibility probe replaces a
+  previously committed compatibility assessment and changes at least one endpoint/version/release-state, schema pin,
+  mutation-safety, scope, feature or rate/currentness fact. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -827,10 +831,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -901,14 +905,16 @@ canonical_text: 'Newly authored owner contract for forge.connection.capabilities
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.connection.capabilities_changed, is
-  this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry,
-  or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run
-  year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
-  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
-  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
-  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
-  SP-1201 policies without retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.connection.capabilities_changed use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share
+  the existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1201 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_connection_capabilities_changed_source is canonical non-rebuildable identity/source-lineage,
@@ -938,20 +944,22 @@ canonical_text: 'Newly authored owner contract for forge.connection.capabilities
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including A committed capability assessment
-  for the exact connection differs from its previous committed assessment. Oracle code, shared-number adoption and
-  shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending
-  capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the
-  complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact
-  closed payload and original actor/account/time/causality fields), encoded by the existing owner physical codec.
-  Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
-  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
-  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
-  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
-  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
-  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
-  a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including A committed capability assessment for the
+  exact connection differs from its previous committed assessment. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -989,10 +997,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -1063,14 +1071,17 @@ canonical_text: 'Newly authored owner contract for forge.connection.reauthorized
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.connection.reauthorized, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1202 policies without
-  retaining linked content.
+  Retention (DL-455, E-CARDS-3 item 3.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.connection.reauthorized use event retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 and share the
+  existing 2,000,000-entry seven-year Project allowance; Storage''s Project first-save anchor adapter supplies their
+  anchor as a change entry: it records one saved change with its own clock. Application records use
+  RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (count key app:operational_security, creation anchor), the one
+  separate 2,000,000-entry application allowance of that item. The clock is 2,555 days (220,752,000 seconds) from
+  the original saved change this entry records; retrying, reprocessing and restoring never reset it. Only expired
+  unprotected entries are removed; if the allowance is full with nothing eligible to expire, new history writes are
+  refused. Source identity/receipt refs and derived checkpoints keep the independently justified SP-1202 policies
+  without retaining linked content. This binding applies a landed decision; it admits nothing and chooses no other
+  lifetime.
 
 
   Custody/redaction: forge_connection_reauthorized_source is canonical non-rebuildable identity/source-lineage,
@@ -1100,21 +1111,23 @@ canonical_text: 'Newly authored owner contract for forge.connection.reauthorized
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The credential owner has completed
-  a successful reauthorization for the same provider/instance/account connection and returned a new verified non-secret
-  grant/lease result. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution
-  NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337
-  BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent
-  (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
-  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The credential owner has completed a
+  successful reauthorization for the same provider/instance/account connection and returned a new verified
+  non-secret grant/lease result. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py,
+  refusing only through guard tables the gated guard-isolation tool proves, with the shared number
+  (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is
+  claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage,
+  including its exact closed payload and original actor/account/time/causality fields), encoded by the existing
+  owner physical codec. Before source_committed, verify that pack, its exact actual source-derived fields and
+  recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together. This is
+  the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and
+  requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve the original
+  full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in
+  that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent body
+  copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do not
+  accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -1152,10 +1165,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -1226,14 +1239,16 @@ canonical_text: 'Newly authored owner contract for forge.connection.validated@1.
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.connection.validated, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1203 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.connection.validated use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the existing
+  2,000,000-entry 90-day Project allowance; application records use RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
+  (count key app:routine_observation), the one separate 2,000,000-entry application allowance of that item. The
+  clock is 90 days (7,776,000 seconds) from the first successful save that survives a restart (the DL-415 creation
+  anchor); retrying a save, reprocessing old history and restoring a backup never restart it. Only expired entries
+  with no hold, active reference, recovery obligation or protected backup are removed; if the allowance is full with
+  nothing eligible to expire, new history writes are refused. Source identity/receipt refs and derived checkpoints
+  keep the independently justified SP-1203 policies without retaining linked content. This binding applies a landed
+  decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_connection_validated_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -1263,20 +1278,22 @@ canonical_text: 'Newly authored owner contract for forge.connection.validated@1.
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The exact connection test has a
-  settled typed validation result. Oracle code, shared-number adoption and shared guard-isolation proof are phase
-  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
-  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The exact connection test has a settled
+  typed validation result. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py,
+  refusing only through guard tables the gated guard-isolation tool proves, with the shared number
+  (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is
+  claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage,
+  including its exact closed payload and original actor/account/time/causality fields), encoded by the existing
+  owner physical codec. Before source_committed, verify that pack, its exact actual source-derived fields and
+  recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together. This is
+  the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and
+  requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve the original
+  full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in
+  that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent body
+  copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do not
+  accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -1314,10 +1331,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -1387,14 +1404,15 @@ canonical_text: 'Newly authored owner contract for forge.mirror.connected@1.0.0 
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.connected, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1204 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.mirror.connected keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1204 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_mirror_connected_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -1424,21 +1442,23 @@ canonical_text: 'Newly authored owner contract for forge.mirror.connected@1.0.0 
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including An admitted connect/reconnect operation
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including An admitted connect/reconnect operation
   commits a topology with the exact distinct source/destination bindings, authoritative binding, requested/effective
-  mode and revision fence. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native
-  execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory
-  SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic
-  intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
-  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  mode and revision fence. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py,
+  refusing only through guard tables the gated guard-isolation tool proves, with the shared number
+  (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is
+  claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage,
+  including its exact closed payload and original actor/account/time/causality fields), encoded by the existing
+  owner physical codec. Before source_committed, verify that pack, its exact actual source-derived fields and
+  recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together. This is
+  the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and
+  requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve the original
+  full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in
+  that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent body
+  copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do not
+  accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -1476,10 +1496,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -1549,14 +1569,16 @@ canonical_text: 'Newly authored owner contract for forge.mirror.degraded@1.0.0 u
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.degraded, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1205 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.mirror.degraded use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the existing
+  2,000,000-entry 90-day Project allowance; application records use RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
+  (count key app:routine_observation), the one separate 2,000,000-entry application allowance of that item. The
+  clock is 90 days (7,776,000 seconds) from the first successful save that survives a restart (the DL-415 creation
+  anchor); retrying a save, reprocessing old history and restoring a backup never restart it. Only expired entries
+  with no hold, active reference, recovery obligation or protected backup are removed; if the allowance is full with
+  nothing eligible to expire, new history writes are refused. Source identity/receipt refs and derived checkpoints
+  keep the independently justified SP-1205 policies without retaining linked content. This binding applies a landed
+  decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_mirror_degraded_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -1586,20 +1608,22 @@ canonical_text: 'Newly authored owner contract for forge.mirror.degraded@1.0.0 u
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The committed topology first enters
-  degraded service relative to its prior committed state, with exact lag/divergence/health evidence. Oracle code,
-  shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or
-  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
-  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
-  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
-  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
-  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
-  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
-  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
-  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
-  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
-  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The committed topology first enters
+  degraded service relative to its prior committed state, with exact lag/divergence/health evidence. Phase 2
+  executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard tables the
+  gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls;
+  native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns pending_intent_ref: a
+  mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original
+  actor/account/time/causality fields), encoded by the existing owner physical codec. Before source_committed,
+  verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest, and
+  commit the source identity plus pack membership together. This is the restart input for the SAME publication, not
+  a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider state
+  cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If a
+  needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -1637,10 +1661,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -1709,14 +1733,15 @@ canonical_text: 'Newly authored owner contract for forge.mirror.detached@1.0.0 u
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.detached, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1206 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.mirror.detached keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1206 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_mirror_detached_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -1746,21 +1771,22 @@ canonical_text: 'Newly authored owner contract for forge.mirror.detached@1.0.0 u
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including A permitted, disclosed detach completes
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including A permitted, disclosed detach completes
   and commits effective mode detached, preserving the preceding topology and the successful transition receipt.
-  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
-  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
-  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard
+  tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time
+  (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns
+  pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -1798,10 +1824,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -1871,14 +1897,16 @@ canonical_text: 'Newly authored owner contract for forge.mirror.status_changed@1
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.status_changed, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1207 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.mirror.status_changed use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the
+  existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1207 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_mirror_status_changed_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -1908,20 +1936,22 @@ canonical_text: 'Newly authored owner contract for forge.mirror.status_changed@1
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including A committed mirror status changes
-  mode, lag state or health from a particular prior topology snapshot. Oracle code, shared-number adoption and shared
-  guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture
-  also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete
-  original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed
-  payload and original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
-  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
-  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
-  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
-  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
-  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
-  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
-  a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including A committed mirror status changes mode,
+  lag state or health from a particular prior topology snapshot. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -1959,10 +1989,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -2032,14 +2062,16 @@ canonical_text: 'Newly authored owner contract for forge.mirror.sync_completed@1
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.sync_completed, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1208 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.mirror.sync_completed use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the
+  existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1208 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_mirror_sync_completed_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -2069,20 +2101,22 @@ canonical_text: 'Newly authored owner contract for forge.mirror.sync_completed@1
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The exact previously started sync
-  operation settles with a truthful terminal result and source/destination revisions. Oracle code, shared-number
-  adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is
-  claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
-  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
-  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
-  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
-  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
-  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
-  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
-  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
-  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
-  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The exact previously started sync
+  operation settles with a truthful terminal result and source/destination revisions. Phase 2 executes these
+  positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated
+  guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls;
+  native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns pending_intent_ref: a
+  mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original
+  actor/account/time/causality fields), encoded by the existing owner physical codec. Before source_committed,
+  verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest, and
+  commit the source identity plus pack membership together. This is the restart input for the SAME publication, not
+  a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider state
+  cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If a
+  needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -2120,10 +2154,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -2193,14 +2227,16 @@ canonical_text: 'Newly authored owner contract for forge.mirror.sync_started@1.0
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.mirror.sync_started, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1209 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.mirror.sync_started use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the existing
+  2,000,000-entry 90-day Project allowance; application records use RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
+  (count key app:routine_observation), the one separate 2,000,000-entry application allowance of that item. The
+  clock is 90 days (7,776,000 seconds) from the first successful save that survives a restart (the DL-415 creation
+  anchor); retrying a save, reprocessing old history and restoring a backup never restart it. Only expired entries
+  with no hold, active reference, recovery obligation or protected backup are removed; if the allowance is full with
+  nothing eligible to expire, new history writes are refused. Source identity/receipt refs and derived checkpoints
+  keep the independently justified SP-1209 policies without retaining linked content. This binding applies a landed
+  decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_mirror_sync_started_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -2230,21 +2266,23 @@ canonical_text: 'Newly authored owner contract for forge.mirror.sync_started@1.0
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The mirror owner actually admits
-  and starts the specific sync operation after current authority/revision/permission checks, preserving its accepted
-  intent and ObservableWork. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native
-  execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory
-  SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic
-  intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
-  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The mirror owner actually admits and
+  starts the specific sync operation after current authority/revision/permission checks, preserving its accepted
+  intent and ObservableWork. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py,
+  refusing only through guard tables the gated guard-isolation tool proves, with the shared number
+  (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is
+  claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage,
+  including its exact closed payload and original actor/account/time/causality fields), encoded by the existing
+  owner physical codec. Before source_committed, verify that pack, its exact actual source-derived fields and
+  recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together. This is
+  the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and
+  requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve the original
+  full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in
+  that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent body
+  copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do not
+  accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -2282,10 +2320,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -2355,14 +2393,18 @@ canonical_text: 'Newly authored owner contract for forge.pipeline.cancelled@1.0.
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.pipeline.cancelled, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1210 policies without
-  retaining linked content.
+  Retention (DL-455, E-CARDS-3 item 3.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.pipeline.cancelled use event retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 and share the
+  existing 2,000,000-entry seven-year Project allowance; Storage''s Project first-save anchor adapter supplies their
+  anchor as a finish or outcome entry: it records its finish or outcome as its own saved fact with its own clock and
+  never moves the clock of the start entry before it. Application records use
+  RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (count key app:operational_security, creation anchor), the one
+  separate 2,000,000-entry application allowance of that item. The clock is 2,555 days (220,752,000 seconds) from
+  the original saved change this entry records; retrying, reprocessing and restoring never reset it. Only expired
+  unprotected entries are removed; if the allowance is full with nothing eligible to expire, new history writes are
+  refused. Source identity/receipt refs and derived checkpoints keep the independently justified SP-1210 policies
+  without retaining linked content. This binding applies a landed decision; it admits nothing and chooses no other
+  lifetime.
 
 
   Custody/redaction: forge_pipeline_cancelled_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -2392,20 +2434,22 @@ canonical_text: 'Newly authored owner contract for forge.pipeline.cancelled@1.0.
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The exact provider pipeline attempt
-  is observed terminal cancelled. Oracle code, shared-number adoption and shared guard-isolation proof are phase
-  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
-  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The exact provider pipeline attempt is
+  observed terminal cancelled. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py,
+  refusing only through guard tables the gated guard-isolation tool proves, with the shared number
+  (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is
+  claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage,
+  including its exact closed payload and original actor/account/time/causality fields), encoded by the existing
+  owner physical codec. Before source_committed, verify that pack, its exact actual source-derived fields and
+  recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together. This is
+  the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and
+  requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve the original
+  full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in
+  that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent body
+  copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do not
+  accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -2443,10 +2487,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -2516,14 +2560,18 @@ canonical_text: 'Newly authored owner contract for forge.pipeline.completed@1.0.
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.pipeline.completed, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1211 policies without
-  retaining linked content.
+  Retention (DL-455, E-CARDS-3 item 3.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.pipeline.completed use event retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 and share the
+  existing 2,000,000-entry seven-year Project allowance; Storage''s Project first-save anchor adapter supplies their
+  anchor as a finish or outcome entry: it records its finish or outcome as its own saved fact with its own clock and
+  never moves the clock of the start entry before it. Application records use
+  RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (count key app:operational_security, creation anchor), the one
+  separate 2,000,000-entry application allowance of that item. The clock is 2,555 days (220,752,000 seconds) from
+  the original saved change this entry records; retrying, reprocessing and restoring never reset it. Only expired
+  unprotected entries are removed; if the allowance is full with nothing eligible to expire, new history writes are
+  refused. Source identity/receipt refs and derived checkpoints keep the independently justified SP-1211 policies
+  without retaining linked content. This binding applies a landed decision; it admits nothing and chooses no other
+  lifetime.
 
 
   Custody/redaction: forge_pipeline_completed_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -2553,20 +2601,22 @@ canonical_text: 'Newly authored owner contract for forge.pipeline.completed@1.0.
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The provider supplies a terminal
-  succeeded, failed or skipped outcome for the exact started attempt. Oracle code, shared-number adoption and shared
-  guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture
-  also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete
-  original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed
-  payload and original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
-  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
-  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
-  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
-  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
-  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
-  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
-  a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The provider supplies a terminal
+  succeeded, failed or skipped outcome for the exact started attempt. Phase 2 executes these positives and negatives
+  in scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with
+  the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -2604,10 +2654,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -2677,14 +2727,17 @@ canonical_text: 'Newly authored owner contract for forge.pipeline.retried@1.0.0 
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.pipeline.retried, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1212 policies without
-  retaining linked content.
+  Retention (DL-455, E-CARDS-3 item 3.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.pipeline.retried use event retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 and share the existing
+  2,000,000-entry seven-year Project allowance; Storage''s Project first-save anchor adapter supplies their anchor
+  as a retry entry: the recorded retry is its own saved fact with its own clock, and the entries before it keep
+  theirs. Application records use RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (count key
+  app:operational_security, creation anchor), the one separate 2,000,000-entry application allowance of that item.
+  The clock is 2,555 days (220,752,000 seconds) from the original saved change this entry records; retrying,
+  reprocessing and restoring never reset it. Only expired unprotected entries are removed; if the allowance is full
+  with nothing eligible to expire, new history writes are refused. Source identity/receipt refs and derived
+  checkpoints keep the independently justified SP-1212 policies without retaining linked content. This binding
+  applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_pipeline_retried_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -2714,20 +2767,22 @@ canonical_text: 'Newly authored owner contract for forge.pipeline.retried@1.0.0 
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including An authorized retry has actually
-  created or started the provider attempt identified in its retry result, linked to the exact earlier attempt. Oracle
-  code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS
-  or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
-  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
-  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
-  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
-  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
-  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
-  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
-  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
-  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
-  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including An authorized retry has actually created
+  or started the provider attempt identified in its retry result, linked to the exact earlier attempt. Phase 2
+  executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard tables the
+  gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls;
+  native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns pending_intent_ref: a
+  mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original
+  actor/account/time/causality fields), encoded by the existing owner physical codec. Before source_committed,
+  verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest, and
+  commit the source identity plus pack membership together. This is the restart input for the SAME publication, not
+  a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider state
+  cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If a
+  needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -2765,10 +2820,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -2838,14 +2893,18 @@ canonical_text: 'Newly authored owner contract for forge.pipeline.started@1.0.0 
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.pipeline.started, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1213 policies without
-  retaining linked content.
+  Retention (DL-455, E-CARDS-3 item 3.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.pipeline.started use event retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 and share the existing
+  2,000,000-entry seven-year Project allowance; Storage''s Project first-save anchor adapter supplies their anchor
+  as a start entry: the recorded start is the saved fact, so the anchor is this entry''s own first save that
+  survives a restart, even if the pipeline never finishes. Application records use
+  RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (count key app:operational_security, creation anchor), the one
+  separate 2,000,000-entry application allowance of that item. The clock is 2,555 days (220,752,000 seconds) from
+  the original saved change this entry records; retrying, reprocessing and restoring never reset it. Only expired
+  unprotected entries are removed; if the allowance is full with nothing eligible to expire, new history writes are
+  refused. Source identity/receipt refs and derived checkpoints keep the independently justified SP-1213 policies
+  without retaining linked content. This binding applies a landed decision; it admits nothing and chooses no other
+  lifetime.
 
 
   Custody/redaction: forge_pipeline_started_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -2875,21 +2934,23 @@ canonical_text: 'Newly authored owner contract for forge.pipeline.started@1.0.0 
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The provider has actually started
-  the exact automation attempt, as shown by its provider result/current projection; admission or queued ObservableWork
-  alone does not prove a started run. Oracle code, shared-number adoption and shared guard-isolation proof are phase
-  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The provider has actually started the
+  exact automation attempt, as shown by its provider result/current projection; admission or queued ObservableWork
+  alone does not prove a started run. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
   pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -2927,10 +2988,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -3001,14 +3062,15 @@ canonical_text: 'Newly authored owner contract for forge.repository.authority_ch
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.repository.authority_changed, is this
-  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
-  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
-  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
-  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
-  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
-  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
-  SP-1214 policies without retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.repository.authority_changed keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1214 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_repository_authority_changed_source is canonical non-rebuildable identity/source-lineage,
@@ -3038,21 +3100,22 @@ canonical_text: 'Newly authored owner contract for forge.repository.authority_ch
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including A disclosed authorized transfer
-  commits the requested/effective repository-function authority change between the exact prior and next bindings.
-  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
-  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
-  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including A disclosed authorized transfer commits
+  the requested/effective repository-function authority change between the exact prior and next bindings. Phase 2
+  executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard tables the
+  gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls;
+  native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns pending_intent_ref: a
+  mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original
+  actor/account/time/causality fields), encoded by the existing owner physical codec. Before source_committed,
+  verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest, and
+  commit the source identity plus pack membership together. This is the restart input for the SAME publication, not
+  a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider state
+  cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If a
+  needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -3090,10 +3153,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -3163,14 +3226,15 @@ canonical_text: 'Newly authored owner contract for forge.repository.created@1.0.
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.repository.created, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1215 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.repository.created keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1215 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_repository_created_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -3200,21 +3264,23 @@ canonical_text: 'Newly authored owner contract for forge.repository.created@1.0.
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The create owner has verified the
-  remote repository identity after a successful actual create for the exact reviewed provider/variant/instance/account/container/options.
-  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
-  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The create owner has verified the remote
+  repository identity after a successful actual create for the exact reviewed
+  provider/variant/instance/account/container/options. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
   application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -3252,10 +3318,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -3325,14 +3391,16 @@ canonical_text: 'Newly authored owner contract for forge.repository.discovered@1
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.repository.discovered, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1216 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.repository.discovered use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the
+  existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1216 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_repository_discovered_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -3362,20 +3430,22 @@ canonical_text: 'Newly authored owner contract for forge.repository.discovered@1
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including Verified discovery resolves one
-  stable repository identity in the exact admitted account/instance/owner discovery scope and result page. Oracle
-  code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS
-  or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
-  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
-  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
-  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
-  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
-  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
-  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
-  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
-  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
-  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including Verified discovery resolves one stable
+  repository identity in the exact admitted account/instance/owner discovery scope and result page. Phase 2 executes
+  these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated
+  guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls;
+  native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns pending_intent_ref: a
+  mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
+  semantic intent (the EventRecord owner preimage, including its exact closed payload and original
+  actor/account/time/causality fields), encoded by the existing owner physical codec. Before source_committed,
+  verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest, and
+  commit the source identity plus pack membership together. This is the restart input for the SAME publication, not
+  a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider state
+  cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
+  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
+  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If a
+  needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -3413,10 +3483,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -3487,14 +3557,16 @@ canonical_text: 'Newly authored owner contract for forge.repository.eligibility_
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.repository.eligibility_changed, is
-  this separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry,
-  or another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run
-  year is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
-  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
-  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
-  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
-  SP-1217 policies without retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.repository.eligibility_changed use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share
+  the existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1217 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_repository_eligibility_changed_source is canonical non-rebuildable identity/source-lineage,
@@ -3524,21 +3596,23 @@ canonical_text: 'Newly authored owner contract for forge.repository.eligibility_
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including A settled repository eligibility
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including A settled repository eligibility
   assessment for one requested operation changes from its prior assessment under the actual provider admission,
-  access, capability and currentness evidence. Oracle code, shared-number adoption and shared guard-isolation proof
-  are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  access, capability and currentness evidence. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
   pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -3576,10 +3650,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -3681,32 +3755,35 @@ canonical_text: 'Newly authored owner contract for forge.review.approved@1.0.0 u
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including One provider-native approval vote
-  is saved for the exact reviewer and immutable review revision, using provider-asserted revision binding or the
-  explicitly recorded Puppet Master observation binding. Oracle code, shared-number adoption and shared guard-isolation
-  proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including One provider-native approval vote is
+  saved for the exact reviewer and immutable review revision, using provider-asserted revision binding or the
+  explicitly recorded Puppet Master observation binding. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
   pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture. Newly authored exact vote-source closure for this family: its canonical source
-  row also stores the closed vote_evidence object in Plans/forge_event_storage_contracts.schema.json, with provider,
-  reviewer_ref, review_revision_ref, native_vote_ref, vote_value=approved, required_reviewer (exact boolean), revision_binding_kind
-  (provider-asserted or observed_by_puppet_master) and binding_evidence_ref. These original non-content decision
-  scalars are the explicit exception to the source row refs/commitments-only description, not a review text/body
-  copy. All vote and revision fields must join the authenticated original provider result; an observed binding resolves
-  the actual original observation against the full review triple, and a provider-asserted binding resolves the provider-supplied
-  revision. Required-reviewer status is the original source fact, not a present-day policy substitution. Same original
-  native vote identity returns this same source row and never remints history. This is a new per-family source grammar
-  within the approved missing technical definitions, not a claim that FGI-020 already had a materialized generic
-  carrier or a new generic vote family. Source lineage retains these bounded decision facts under Case L-3; it grants
-  no access to referenced content and chooses no separate event lifetime.'
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture. Newly authored exact vote-source closure for this family: its canonical
+  source row also stores the closed vote_evidence object in Plans/forge_event_storage_contracts.schema.json, with
+  provider, reviewer_ref, review_revision_ref, native_vote_ref, vote_value=approved, required_reviewer (exact
+  boolean), revision_binding_kind (provider-asserted or observed_by_puppet_master) and binding_evidence_ref. These
+  original non-content decision scalars are the explicit exception to the source row refs/commitments-only
+  description, not a review text/body copy. All vote and revision fields must join the authenticated original
+  provider result; an observed binding resolves the actual original observation against the full review triple, and
+  a provider-asserted binding resolves the provider-supplied revision. Required-reviewer status is the original
+  source fact, not a present-day policy substitution. Same original native vote identity returns this same source
+  row and never remints history. This is a new per-family source grammar within the approved missing technical
+  definitions, not a claim that FGI-020 already had a materialized generic carrier or a new generic vote family.
+  Source lineage retains these bounded decision facts under Case L-3; it grants no access to referenced content and
+  chooses no separate event lifetime.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -3817,14 +3894,15 @@ canonical_text: 'Newly authored owner contract for forge.review.changes_requeste
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.changes_requested, is this
-  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
-  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
-  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
-  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
-  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
-  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
-  SP-1219 policies without retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.changes_requested keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1219 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_changes_requested_source is canonical non-rebuildable identity/source-lineage,
@@ -3854,32 +3932,35 @@ canonical_text: 'Newly authored owner contract for forge.review.changes_requeste
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including One provider-native changes-requested
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including One provider-native changes-requested
   vote is saved with exact reviewer, immutable revision, required-reviewer fact and provider-asserted or observed
-  revision binding. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution
-  NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337
-  BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent
-  (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
-  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture. Newly authored exact vote-source closure for this family: its canonical source
-  row also stores the closed vote_evidence object in Plans/forge_event_storage_contracts.schema.json, with provider,
-  reviewer_ref, review_revision_ref, native_vote_ref, vote_value=changes_requested, required_reviewer (exact boolean),
+  revision binding. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only
+  through guard tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and
+  date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns
+  pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.
+  Newly authored exact vote-source closure for this family: its canonical source row also stores the closed
+  vote_evidence object in Plans/forge_event_storage_contracts.schema.json, with provider, reviewer_ref,
+  review_revision_ref, native_vote_ref, vote_value=changes_requested, required_reviewer (exact boolean),
   revision_binding_kind (provider-asserted or observed_by_puppet_master) and binding_evidence_ref. These original
-  non-content decision scalars are the explicit exception to the source row refs/commitments-only description, not
-  a review text/body copy. All vote and revision fields must join the authenticated original provider result; an
+  non-content decision scalars are the explicit exception to the source row refs/commitments-only description, not a
+  review text/body copy. All vote and revision fields must join the authenticated original provider result; an
   observed binding resolves the actual original observation against the full review triple, and a provider-asserted
-  binding resolves the provider-supplied revision. Required-reviewer status is the original source fact, not a present-day
-  policy substitution. Same original native vote identity returns this same source row and never remints history.
-  This is a new per-family source grammar within the approved missing technical definitions, not a claim that FGI-020
-  already had a materialized generic carrier or a new generic vote family. Source lineage retains these bounded
-  decision facts under Case L-3; it grants no access to referenced content and chooses no separate event lifetime.'
+  binding resolves the provider-supplied revision. Required-reviewer status is the original source fact, not a
+  present-day policy substitution. Same original native vote identity returns this same source row and never remints
+  history. This is a new per-family source grammar within the approved missing technical definitions, not a claim
+  that FGI-020 already had a materialized generic carrier or a new generic vote family. Source lineage retains these
+  bounded decision facts under Case L-3; it grants no access to referenced content and chooses no separate event
+  lifetime.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -3917,10 +3998,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -3989,14 +4070,15 @@ canonical_text: 'Newly authored owner contract for forge.review.closed@1.0.0 und
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.closed, is this separate Forge
-  history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact
-  policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1220 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.closed keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1220 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_closed_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -4026,21 +4108,22 @@ canonical_text: 'Newly authored owner contract for forge.review.closed@1.0.0 und
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The provider review has actually
-  changed from open to closed without merge, preserving its exact current immutable revision and successful close
-  result/observation. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution
-  NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337
-  BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent
-  (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
-  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The provider review has actually changed
+  from open to closed without merge, preserving its exact current immutable revision and successful close
+  result/observation. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing
+  only through guard tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101)
+  and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also
+  owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -4078,10 +4161,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -4151,14 +4234,15 @@ canonical_text: 'Newly authored owner contract for forge.review.created@1.0.0 un
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.created, is this separate Forge
-  history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact
-  policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1221 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.created keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1221 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_created_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -4188,20 +4272,22 @@ canonical_text: 'Newly authored owner contract for forge.review.created@1.0.0 un
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The provider confirms creation of
-  the exact review, repository/head/base identities and first immutable revision. Oracle code, shared-number adoption
-  and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed.
-  Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack
-  of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
-  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
-  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
-  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
-  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
-  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
-  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
-  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
-  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The provider confirms creation of the
+  exact review, repository/head/base identities and first immutable revision. Phase 2 executes these positives and
+  negatives in scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool
+  proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN
+  and no runtime readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337
+  BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent
+  (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A
+  lost/damaged pending pack fences and requires coherent backup; current provider state cannot replace it. At
+  history_committed CAS, resolve the original full-value first receipt, verify every intent-to-retained-event
+  semantic join, and clear pending_intent_ref in that same transaction. Pending reference protection ends only on
+  that real settlement; no hidden permanent body copy or new expiry policy is created. If a needed original domain
+  proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -4239,10 +4325,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -4312,14 +4398,15 @@ canonical_text: 'Newly authored owner contract for forge.review.marked_ready@1.0
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.marked_ready, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1222 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.marked_ready keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1222 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_marked_ready_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -4349,20 +4436,22 @@ canonical_text: 'Newly authored owner contract for forge.review.marked_ready@1.0
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The separate authorized Mark Ready
-  action has successfully changed this exact review from Draft to non-Draft. Oracle code, shared-number adoption
-  and shared guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed.
-  Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack
-  of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including
-  its exact closed payload and original actor/account/time/causality fields), encoded by the existing owner physical
-  codec. Before source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
-  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
-  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
-  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
-  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction.
-  Pending reference protection ends only on that real settlement; no hidden permanent body copy or new expiry policy
-  is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The separate authorized Mark Ready action
+  has successfully changed this exact review from Draft to non-Draft. Phase 2 executes these positives and negatives
+  in scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with
+  the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -4400,10 +4489,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -4473,14 +4562,15 @@ canonical_text: 'Newly authored owner contract for forge.review.merged@1.0.0 und
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.merged, is this separate Forge
-  history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact
-  policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1223 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.merged keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1223 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_merged_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -4510,21 +4600,23 @@ canonical_text: 'Newly authored owner contract for forge.review.merged@1.0.0 und
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The provider confirms that this
-  exact immutable review revision was merged with the explicitly selected admitted merge strategy and required gate/permission
-  evidence. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN.
-  No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
-  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The provider confirms that this exact
+  immutable review revision was merged with the explicitly selected admitted merge strategy and required
+  gate/permission evidence. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py,
+  refusing only through guard tables the gated guard-isolation tool proves, with the shared number
+  (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is
+  claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack
+  pack of the complete original producer-owned EventRecord semantic intent (the EventRecord owner preimage,
+  including its exact closed payload and original actor/account/time/causality fields), encoded by the existing
+  owner physical codec. Before source_committed, verify that pack, its exact actual source-derived fields and
+  recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together. This is
+  the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and
+  requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve the original
+  full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in
+  that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent body
+  copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do not
+  accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -4562,10 +4654,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -4634,14 +4726,15 @@ canonical_text: 'Newly authored owner contract for forge.review.reopened@1.0.0 u
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.reopened, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1224 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.reopened keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1224 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_reopened_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -4671,20 +4764,22 @@ canonical_text: 'Newly authored owner contract for forge.review.reopened@1.0.0 u
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The provider confirms the same closed,
-  unmerged review has actually reopened. Oracle code, shared-number adoption and shared guard-isolation proof are
-  phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The provider confirms the same closed,
+  unmerged review has actually reopened. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
   pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -4722,10 +4817,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -4795,14 +4890,15 @@ canonical_text: 'Newly authored owner contract for forge.review.thread.reopened@
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.thread.reopened, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1225 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.thread.reopened keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1225 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_thread_reopened_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -4832,21 +4928,23 @@ canonical_text: 'Newly authored owner contract for forge.review.thread.reopened@
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The exact resolved discussion actually
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The exact resolved discussion actually
   becomes unresolved under its permitted thread action, retaining provider thread identity, actor, full immutable
-  revision window and tracking state. Oracle code, shared-number adoption and shared guard-isolation proof are phase
-  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  revision window and tracking state. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
   pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -4884,10 +4982,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -4957,14 +5055,15 @@ canonical_text: 'Newly authored owner contract for forge.review.thread.replied@1
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.thread.replied, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1226 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.thread.replied keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1226 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_thread_replied_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -4994,20 +5093,22 @@ canonical_text: 'Newly authored owner contract for forge.review.thread.replied@1
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The provider confirms one new reply/comment
-  identity in this exact discussion and immutable revision window. Oracle code, shared-number adoption and shared
-  guard-isolation proof are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture
-  also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete
-  original producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed
-  payload and original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
-  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning producer_semantic_digest,
-  and commit the source identity plus pack membership together. This is the restart input for the SAME publication,
-  not a new accepted operation. A lost/damaged pending pack fences and requires coherent backup; current provider
-  state cannot replace it. At history_committed CAS, resolve the original full-value first receipt, verify every
-  intent-to-retained-event semantic join, and clear pending_intent_ref in that same transaction. Pending reference
-  protection ends only on that real settlement; no hidden permanent body copy or new expiry policy is created. If
-  a needed original domain proof is unavailable before capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The provider confirms one new
+  reply/comment identity in this exact discussion and immutable revision window. Phase 2 executes these positives
+  and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool
+  proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN
+  and no runtime readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337
+  BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent
+  (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
+  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
+  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
+  membership together. This is the restart input for the SAME publication, not a new accepted operation. A
+  lost/damaged pending pack fences and requires coherent backup; current provider state cannot replace it. At
+  history_committed CAS, resolve the original full-value first receipt, verify every intent-to-retained-event
+  semantic join, and clear pending_intent_ref in that same transaction. Pending reference protection ends only on
+  that real settlement; no hidden permanent body copy or new expiry policy is created. If a needed original domain
+  proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -5045,10 +5146,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -5117,14 +5218,15 @@ canonical_text: 'Newly authored owner contract for forge.review.thread.resolved@
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.thread.resolved, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1227 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.thread.resolved keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1227 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_thread_resolved_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -5154,21 +5256,22 @@ canonical_text: 'Newly authored owner contract for forge.review.thread.resolved@
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The exact unresolved discussion
-  actually becomes resolved with its authorized resolution actor, complete immutable revision window and successful
-  result. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN.
-  No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
-  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The exact unresolved discussion actually
+  becomes resolved with its authorized resolution actor, complete immutable revision window and successful result.
+  Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard
+  tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time
+  (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns
+  pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -5206,10 +5309,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -5279,14 +5382,15 @@ canonical_text: 'Newly authored owner contract for forge.review.updated@1.0.0 un
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.updated, is this separate Forge
-  history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another exact
-  policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1228 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.updated keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1228 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_updated_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -5316,21 +5420,22 @@ canonical_text: 'Newly authored owner contract for forge.review.updated@1.0.0 un
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including A successful authorized typed nonempty
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including A successful authorized typed nonempty
   review patch changes this review metadata at the expected revision and returns the exact updated provider result.
-  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
-  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
-  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard
+  tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time
+  (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns
+  pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -5368,10 +5473,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -5441,14 +5546,15 @@ canonical_text: 'Newly authored owner contract for forge.review.version_created@
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.review.version_created, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1229 policies without
-  retaining linked content.
+  Retention (DL-453, E-CARDS-3 item 1.a, applied as the landed Storage third-sitting assignment states):
+  forge.review.version_created keeps its Project and application editions under event
+  retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0, with no age or count expiry and no new count allowance.
+  Deleting the described object does not remove this separate history or preserve the deleted content; explicit
+  Delete Puppet Master project data removes Project records under the existing protection rules and Remove project
+  from list does not; application records stay under their existing authorized data-deletion rules; storage pressure
+  refuses new history writes. Source identity/receipt refs and derived checkpoints keep the independently justified
+  SP-1229 policies without retaining linked content. This binding applies a landed decision; it admits nothing and
+  chooses no other lifetime.
 
 
   Custody/redaction: forge_review_version_created_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -5478,21 +5584,22 @@ canonical_text: 'Newly authored owner contract for forge.review.version_created@
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including A new immutable revision is committed
-  because at least one exact base/head/merge-base leg changed, preserving previous/new triples and actual evidence-state
-  cause. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN.
-  No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
-  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including A new immutable revision is committed
+  because at least one exact base/head/merge-base leg changed, preserving previous/new triples and actual
+  evidence-state cause. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing
+  only through guard tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101)
+  and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also
+  owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -5530,10 +5637,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -5603,14 +5710,16 @@ canonical_text: 'Newly authored owner contract for forge.webhook.delivery_failed
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.delivery_failed, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1230 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.webhook.delivery_failed use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the
+  existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1230 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_webhook_delivery_failed_source is canonical non-rebuildable identity/source-lineage,
@@ -5640,21 +5749,22 @@ canonical_text: 'Newly authored owner contract for forge.webhook.delivery_failed
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including Processing the exact previously
-  received verified delivery has failed with an actual failure result and truthful retry/inspection/terminal recovery
-  state. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN.
-  No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
-  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including Processing the exact previously received
+  verified delivery has failed with an actual failure result and truthful retry/inspection/terminal recovery state.
+  Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard
+  tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time
+  (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns
+  pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -5692,10 +5802,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -5765,14 +5875,16 @@ canonical_text: 'Newly authored owner contract for forge.webhook.delivery_recove
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.delivery_recovered, is this
-  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
-  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
-  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
-  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
-  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
-  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
-  SP-1231 policies without retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.webhook.delivery_recovered use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the
+  existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1231 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_webhook_delivery_recovered_source is canonical non-rebuildable identity/source-lineage,
@@ -5802,21 +5914,23 @@ canonical_text: 'Newly authored owner contract for forge.webhook.delivery_recove
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including Recovery of this exact failed delivery
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including Recovery of this exact failed delivery
   processing attempt is verified and recovery_state becomes recovered, linked to its original failure and actual
-  successful reconciliation/result. Oracle code, shared-number adoption and shared guard-isolation proof are phase
-  2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  successful reconciliation/result. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
   pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -5854,10 +5968,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -5928,14 +6042,16 @@ canonical_text: 'Newly authored owner contract for forge.webhook.received@1.0.0 
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.received, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1232 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.webhook.received use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the existing
+  2,000,000-entry 90-day Project allowance; application records use RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
+  (count key app:routine_observation), the one separate 2,000,000-entry application allowance of that item. The
+  clock is 90 days (7,776,000 seconds) from the first successful save that survives a restart (the DL-415 creation
+  anchor); retrying a save, reprocessing old history and restoring a backup never restart it. Only expired entries
+  with no hold, active reference, recovery obligation or protected backup are removed; if the allowance is full with
+  nothing eligible to expire, new history writes are refused. Source identity/receipt refs and derived checkpoints
+  keep the independently justified SP-1232 policies without retaining linked content. This binding applies a landed
+  decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_webhook_received_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -5965,21 +6081,22 @@ canonical_text: 'Newly authored owner contract for forge.webhook.received@1.0.0 
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The configured ingress has received
-  this exact signed delivery and verified its raw-body signature before parsing, then time/context, fresh replay
-  state and new dedupe state. Oracle code, shared-number adoption and shared guard-isolation proof are phase 2;
-  native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
-  pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The configured ingress has received this
+  exact signed delivery and verified its raw-body signature before parsing, then time/context, fresh replay state
+  and new dedupe state. Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing
+  only through guard tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101)
+  and date-time (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also
+  owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -6017,10 +6134,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -6090,14 +6207,16 @@ canonical_text: 'Newly authored owner contract for forge.webhook.redelivery_queu
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.redelivery_queued, is this
-  separate Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or
-  another exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year
-  is selected, which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)?
-  WAVE3 permits this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains
-  materially_incomplete under Case L-3. G01/G05/G26 were checked against the actual answered populations and do
-  not name this Forge family. Source identity/receipt refs and derived checkpoints keep the independently justified
-  SP-1233 policies without retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.webhook.redelivery_queued use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the
+  existing 2,000,000-entry 90-day Project allowance; application records use
+  RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (count key app:routine_observation), the one separate 2,000,000-entry
+  application allowance of that item. The clock is 90 days (7,776,000 seconds) from the first successful save that
+  survives a restart (the DL-415 creation anchor); retrying a save, reprocessing old history and restoring a backup
+  never restart it. Only expired entries with no hold, active reference, recovery obligation or protected backup are
+  removed; if the allowance is full with nothing eligible to expire, new history writes are refused. Source
+  identity/receipt refs and derived checkpoints keep the independently justified SP-1233 policies without retaining
+  linked content. This binding applies a landed decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_webhook_redelivery_queued_source is canonical non-rebuildable identity/source-lineage,
@@ -6127,21 +6246,23 @@ canonical_text: 'Newly authored owner contract for forge.webhook.redelivery_queu
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The exact authorized redelivery
-  has been durably queued by the webhook recovery owner after current signature, time/context, replay, dedupe, delivery
-  identity and redelivery-idempotency checks. Oracle code, shared-number adoption and shared guard-isolation proof
-  are phase 2; native execution NOT_RUN. No test PASS or readiness is claimed. Pending capture also owns pending_intent_ref:
-  a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original producer-owned EventRecord
-  semantic intent (the EventRecord owner preimage, including its exact closed payload and original actor/account/time/causality
-  fields), encoded by the existing owner physical codec. Before source_committed, verify that pack, its exact actual
-  source-derived fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack
-  membership together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged
-  pending pack fences and requires coherent backup; current provider state cannot replace it. At history_committed
-  CAS, resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The exact authorized redelivery has been
+  durably queued by the webhook recovery owner after current signature, time/context, replay, dedupe, delivery
+  identity and redelivery-idempotency checks. Phase 2 executes these positives and negatives in
+  scripts/pm_w3a_forge_events.py, refusing only through guard tables the gated guard-isolation tool proves, with the
+  shared number (CV-1100/SP-1100/SP-1101) and date-time (CV-1101) calls; native execution NOT_RUN and no runtime
+  readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
+  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
+  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded by
+  the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
+  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership
+  together. This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending
+  pack fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS,
+  resolve the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear
   pending_intent_ref in that same transaction. Pending reference protection ends only on that real settlement; no
-  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable before
-  capture, do not accept capture.'
+  hidden permanent body copy or new expiry policy is created. If a needed original domain proof is unavailable
+  before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -6179,10 +6300,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
@@ -6253,14 +6374,16 @@ canonical_text: 'Newly authored owner contract for forge.webhook.rejected@1.0.0 
   mutation, usage charge, canonical source write or other event append.
 
 
-  Retention: event retention_policy_ref=PENDING_RETENTION_DECISION. For forge.webhook.rejected, is this separate
-  Forge history permanent reference-only authority, 2,555-day operational history, 90-day telemetry, or another
-  exact policy; what is its original expiry anchor and Project/no-Project counting bucket (and, if Run year is selected,
-  which real Puppet Master run and approved no-Project counterpart supplies the clock and limits)? WAVE3 permits
-  this one incomplete cell. Until answered, no event admission or destructive policy; unknown remains materially_incomplete
-  under Case L-3. G01/G05/G26 were checked against the actual answered populations and do not name this Forge family.
-  Source identity/receipt refs and derived checkpoints keep the independently justified SP-1234 policies without
-  retaining linked content.
+  Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project
+  records of forge.webhook.rejected use event retention_policy_ref=RP-TELEMETRY-90D@1.0.0 and share the existing
+  2,000,000-entry 90-day Project allowance; application records use RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
+  (count key app:routine_observation), the one separate 2,000,000-entry application allowance of that item. The
+  clock is 90 days (7,776,000 seconds) from the first successful save that survives a restart (the DL-415 creation
+  anchor); retrying a save, reprocessing old history and restoring a backup never restart it. Only expired entries
+  with no hold, active reference, recovery obligation or protected backup are removed; if the allowance is full with
+  nothing eligible to expire, new history writes are refused. Source identity/receipt refs and derived checkpoints
+  keep the independently justified SP-1234 policies without retaining linked content. This binding applies a landed
+  decision; it admits nothing and chooses no other lifetime.
 
 
   Custody/redaction: forge_webhook_rejected_source is canonical non-rebuildable identity/source-lineage, coherently
@@ -6290,21 +6413,22 @@ canonical_text: 'Newly authored owner contract for forge.webhook.rejected@1.0.0 
   or command effect.
 
 
-  Oracle obligation (criterion 12 PARTIAL): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry
-  this family''s positives and single-defect negatives per predicate, including The configured ingress rejects an
+  Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this
+  family''s positives and single-defect negatives per predicate, including The configured ingress rejects an
   incoming delivery for signature, timestamp, context, unknown key, replay-window or conflicting-duplicate failure.
-  Oracle code, shared-number adoption and shared guard-isolation proof are phase 2; native execution NOT_RUN. No
-  test PASS or readiness is claimed. Pending capture also owns pending_intent_ref: a mandatory SP-337 BLAKE3-addressed
-  application/vnd.msgpack pack of the complete original producer-owned EventRecord semantic intent (the EventRecord
-  owner preimage, including its exact closed payload and original actor/account/time/causality fields), encoded
-  by the existing owner physical codec. Before source_committed, verify that pack, its exact actual source-derived
-  fields and recomputed owning producer_semantic_digest, and commit the source identity plus pack membership together.
-  This is the restart input for the SAME publication, not a new accepted operation. A lost/damaged pending pack
-  fences and requires coherent backup; current provider state cannot replace it. At history_committed CAS, resolve
-  the original full-value first receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref
-  in that same transaction. Pending reference protection ends only on that real settlement; no hidden permanent
-  body copy or new expiry policy is created. If a needed original domain proof is unavailable before capture, do
-  not accept capture.'
+  Phase 2 executes these positives and negatives in scripts/pm_w3a_forge_events.py, refusing only through guard
+  tables the gated guard-isolation tool proves, with the shared number (CV-1100/SP-1100/SP-1101) and date-time
+  (CV-1101) calls; native execution NOT_RUN and no runtime readiness is claimed. Pending capture also owns
+  pending_intent_ref: a mandatory SP-337 BLAKE3-addressed application/vnd.msgpack pack of the complete original
+  producer-owned EventRecord semantic intent (the EventRecord owner preimage, including its exact closed payload and
+  original actor/account/time/causality fields), encoded by the existing owner physical codec. Before
+  source_committed, verify that pack, its exact actual source-derived fields and recomputed owning
+  producer_semantic_digest, and commit the source identity plus pack membership together. This is the restart input
+  for the SAME publication, not a new accepted operation. A lost/damaged pending pack fences and requires coherent
+  backup; current provider state cannot replace it. At history_committed CAS, resolve the original full-value first
+  receipt, verify every intent-to-retained-event semantic join, and clear pending_intent_ref in that same
+  transaction. Pending reference protection ends only on that real settlement; no hidden permanent body copy or new
+  expiry policy is created. If a needed original domain proof is unavailable before capture, do not accept capture.'
 gui_related: true
 gui_classification_reason: Defines internal saved-history contracts; existing visible projections remain with their
   GUI owners.
@@ -6342,10 +6466,10 @@ preserved_exact_tokens:
 - CV-339
 - SP-278
 - projector_replay_only
-- PENDING_RETENTION_DECISION
+- RP-TELEMETRY-90D@1.0.0
 negative_constraints:
 - Do not admit an event or enable existing event-silent commands.
-- Do not choose pending event retention or infer authority from another family.
+- Do not change the bound retention policy or infer authority from another family.
 - Do not execute domain effects from history replay.
 ```
 
