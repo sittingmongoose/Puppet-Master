@@ -1496,5 +1496,30 @@
     "tables_pass": "39/39 run (2 entailed tables have no negative)",
     "masked": 0,
     "fixture_items": 1639
+  },
+  "phase_2_fix_2": {
+    "review": "reviews/W3I-p2-recheck2/REVIEW.md (NOT_CLEAN, two REAL findings)",
+    "code_head": "2dee02320a",
+    "rows": 217,
+    "tables": 41,
+    "entailed_rows": [
+      "projection_size",
+      "retained_resolved"
+    ],
+    "retained_resolved_proof": "rewritten in c628ae8854; cites scripts/pm_event_numbers.py:442-485; constructor refusals now sealed_receipt_malformed",
+    "controls": 52,
+    "negatives": 1639,
+    "mutations": {
+      "total": 43,
+      "killed": 43,
+      "recheck_adapted": 14,
+      "own": 13,
+      "recheck2": 16
+    },
+    "criterion_12": "PARTIAL",
+    "criterion_12_change": "none: the fix adds witnesses and corrects a proof; the three stated PARTIAL reasons stand",
+    "membership": "ABSENT",
+    "native_execution": "NOT_RUN",
+    "acknowledged_at_utc_profile": "unchanged (event_record); open question for Jared"
   }
 }

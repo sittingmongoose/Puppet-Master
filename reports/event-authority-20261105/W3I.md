@@ -490,3 +490,125 @@ Run at the final code head `198a635a02`; the report commit adds only `reports/`.
    - **If it bounds the whole record:** the `pack-large` positive becomes a size-refusal case, and these families can never carry an owner-valid externalized body.
 2. **`acknowledged_at_utc` profile.** Does `AppendReceipt.acknowledged_at_utc` keep the broad EventRecord date-time profile its owner schema declares, or does SP-347's "RFC 3339 UTC with milliseconds" make it a stricter Storage profile?
    - **What the checker does now:** it applies the owner schema's profile, as W3F does.
+
+## Wave 3 phase 2, fix 2
+
+**Start:** `origin/plans/ea-w3-continuity-hitl-20261105` at `5d1721e3d83542c9130ffabb17787ae3d81d9f22`.
+
+**Review answered:** `reviews/W3I-p2-recheck2/REVIEW.md` (Opus 5.5 recheck 2, NOT_CLEAN, two REAL findings; code 8/10, tests 7/10).
+
+**Commits:**
+- `29ed1867cd`: finding 2 (witnesses).
+- `c628ae8854`: finding 1 (sealed-row constructor refusals, the rewritten proof, the regenerated entailed table module).
+- `2dee02320a`: the mutation runner now carries recheck 2's 16 mutations, so it runs 43.
+- The report commit that adds this section.
+
+**What did not change:**
+- No rebase or merge, and `main` was never pushed.
+- No guard-tool or NUMRULE file was edited, and no `Plans/` file, so there was no regeneration.
+- `acknowledged_at_utc` keeps its current profile (event_record), because the question to Jared is still open.
+- No admission, registry append or Decision Log entry.
+
+### Findings and responses
+
+| # | Finding | Fix (commit, path:line) | How to verify |
+|---|---|---|---|
+| 1 | The `retained_resolved` proof was false. A sealed row whose recipe or binding member has the wrong type made the shared constructors refuse `recipe_tuple` or `original_scope`, which no row owns, so the catch-all refused first. | `c628ae8854`. `_custody_from_sealed` (`scripts/pm_w3i_continuity_oracles.py:665`) builds `OriginalBinding` and `RecipeTuple` inside a `try`. It re-raises any of their own refusals as `sealed_receipt_malformed` (`:679`), so they reach the existing `retained_receipt_wellformed` row. Those refusals are `recipe_tuple` (`pm_event_numbers.py:460`), `recipe_resource_hash` (`:462`), `original_binding` (`:481`) and `original_scope` (`:484`). There are five new witnesses per family (`:2487`): recheck 2's three cases, plus `recipe.resource_manifest_sha256 = 'zz'` and `binding.server_id = 7`. The proof (`:1789`) is rewritten. It cites `pm_event_numbers.py:442-485` and the lane lines it relies on, and argues that the frozen verifier raises no Refusal. Its "rows that always refuse first" now also names `retained_no_current_gate`, for the negative-only gated verifier. The row stays entailed. | `python3 -B reviews/W3I-p2-recheck2/evidence/r2-entailed.py scripts`: all 12 cases now give dispatcher `sealed_receipt_malformed` and the single refusal `retained_receipt_wellformed` (before: `retained_resolved`). A wider sweep put 14 values at every leaf of the sealed store, `original_ref` and the request event, in every retained control: 17,448 edits, **0 first refusals at `retained_resolved`**. The 80 edits that raised all replace the whole `sealed_store` with a non-list; this is the harness input the recheck's sweep already recorded, and is unchanged. In the complete checker, the "entailed row never refused" test still holds. |
+| 2 | Weak witnesses: Y1, Y2, Y3 and Y14 survived. | `29ed1867cd`. **Copy rows:** the control `append-linked:<family>` (`:1915`) gives the source distinct non-null values (`LINKED_SOURCE`, `:1890`) for `thread_id`, `node_id`, `attempt_id`, `requested_account_ref` and `effective_account_ref`; `build_source` leaves them null. Six swap witnesses (`LINKED_SWAPS`, `:1894`; added at `:2122`) each put a sibling source value in one envelope copy. **Frozen verifier:** `frozen_dispatch_failures` (`:2657`) runs on every retained control and negative (`:2681`, `:2685`). Once the shared `RetainedDispatcher` reaches `verify_original` (reason `None`, `original_verification` or the later `current_disclosure`), it must refuse `original_verification` exactly when a `frozen_*` row refuses. So the verifier the dispatcher actually ran is observed in both directions. **Missing receipt:** a new `retained_receipt_present` witness (`:2477`) has a store that holds only another original's receipt, under that original's own ref. | Mutations Y1, Y2, Y3 and Y14 are killed (table below). Y1 is caught by 60 failures, starting with `frozen_decodes` (dispatcher `None`, frozen row refused). Y2 and Y3 are caught by the `append-linked` control, which is refused at its copy row. Y14 is caught by the new witness, which is refused at `retained_binding` instead. |
+
+**Counts at `2dee02320a`:** 217 rows, 41 tables, 215 witnessed, 2 entailed. Fix 1 had 48 controls; there are now **52** (the 4 `append-linked` controls). Negatives went from 1,591 to **1,639**: 4 × (6 swaps + 5 sealed-type witnesses + 1 foreign-receipt witness) = 48 more. Each negative is refused by exactly its row.
+
+### Mutation table
+
+`python3 -B scripts/pm-w3i-mutations.py --scratch <dir>` ran at `2dee02320a`. Baseline clean, **43/43 killed**:
+- the first recheck's M1-M14 (adapted, unchanged since fix 1);
+- fix 1's X1-X13;
+- recheck 2's Y1-Y16, copied verbatim.
+
+Recheck 2's own runner, unmodified (`reviews/W3I-p2-recheck2/evidence/r2-mutate.py <tree> <scratch> <json>`), also gives **16/16 killed**.
+
+| Id | Clause weakened | Row | Killing case |
+|---|---|---|---|
+| Y1 | installed frozen verifier returns `True` | `retained_resolved` / `FROZEN_MAPS` | **killed (survived fix 1):** every frozen negative; the dispatcher no longer refuses `original_verification` (`frozen_dispatch_failures`) |
+| Y2 | `thread_id` copy reads the source `node_id` | `append_copy_thread` | **killed (survived fix 1):** control `append-linked` refused |
+| Y3 | `effective_account_ref` copy reads `requested_account_ref` | `append_copy_effective_account` | **killed (survived fix 1):** control `append-linked` refused |
+| Y4 | retired dataset name compared with itself | `retired_dataset_name` | its witness accepted |
+| Y5 | projection `publication_id` compared with itself | `projection_publication_id` | its witness accepted |
+| Y6 | checkpoint frontier compared with the token itself | `checkpoint_frontier` | its witness accepted |
+| Y7 | cursor generation compared with itself | `cursor_generation` | its witness accepted |
+| Y8 | frozen source commitment compared with itself | `frozen_source_commitment` | its witness accepted |
+| Y9 | retry semantic comparison never applies | `retry_semantic` | its witnesses accepted |
+| Y10 | `actor_kind` compared with itself | `append_fact_actor_kind` | its witness accepted |
+| Y11 | `group_digest` anchored at the start only | `append_custody_group_digest` | trailing LF accepted |
+| Y12 | frozen recipe family compared with itself | `frozen_recipe_family` | its witness accepted |
+| Y13 | retry returned receipt compared with itself | `retry_custody` | its witness accepted |
+| Y14 | owner ignores `original_ref` | `retained_receipt_present` | **killed (survived fix 1):** foreign-receipt witness refused at `retained_binding` |
+| Y15 | checkpoint size limit doubled | `checkpoint_size` | its witness accepted |
+| Y16 | retired selection instance join dropped | `retired_selection_instance` | its witness accepted |
+
+M1-M14 and X1-X13 are killed by the same cases as in fix 1's table above. The evidence is `mutations.json` and `r2-mutations.json` in the draft copy.
+
+### Guard-table result (gated tool `004bdedd63`, Method B)
+
+**Which suites changed:**
+- `python3 scripts/pm-w3i-guard-proof.py collect` ran at `5d1721e3d8` and at `2dee02320a`.
+- The collected suites (each control and negative projection, by SHA-256 of its pickled value) differ in exactly three tables:
+  - **`append_copies_1`:** two `append-linked` control projections replace two earlier ones.
+  - **`append_copies_2`:** one more control, plus five new swap negatives: `run`, `node`, `attempt`, `requested_account` and `effective_account`.
+  - **`append_custody_3`:** one control projection changes.
+- Both collects pass, with 0 findings and 0 matrix problems. The rows without a negative are exactly the two entailed rows.
+- No other table module changed. The diff since `5d1721e3d8` touches only `pm_w3i_table_entailed_retained_resolved.py`, an entailed table that is never run, and only its docstring proof.
+
+**How the three were re-run:**
+- Command: `python3 scripts/pm-w3i-guard-proof.py run --out D --table append_copies_1 --table append_copies_2 --table append_custody_3`.
+- `append_copies_1`: PASS, 5/5 proved (N 20 / C 6).
+- `append_copies_2`: PASS, 5/5 proved (N 11 / C 3).
+- `append_custody_3`: PASS, 2/2 proved (N 8 / C 6).
+
+**How the rest were reused:**
+- The 36 unchanged run tables keep fix 1's per-table results (`drafts/W3I/phase2-fix1/guard-results`).
+- Each one was reused only after checking two things: its recorded `source_sha256` equals the current table module, and its suite is byte-identical.
+- `run --resume` then aggregated all 41.
+
+**Result: 41 tables, 217 rows; 215 proved, 2 unproved, each with a written proof and alone in its own table; 39/39 run tables PASS; masked: 0.**
+- Tool sha256 `e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8`, unedited.
+
+**Unproved rows:**
+- **`projection_size`:** its proof is unchanged. Recheck 2 confirmed it: the largest owner-valid projection is 1,761 bytes.
+- **`retained_resolved`:** the rewritten proof follows, as `scripts/pm_w3i_table_entailed_retained_resolved.py` carries it.
+  - **Rows that always refuse first:** the 8 dispatch rows, the 16 frozen rows, and `retained_no_current_gate`.
+  - **The proof:**
+
+    > RetainedDispatcher.resolve (scripts/pm_event_numbers.py:523-545) refuses itself only with caller_recipe_override, original_query, original_authority, original_binding, recipe_selection, recipe_unknown, original_bytes_type, original_verification or current_disclosure; any other reason is raised by the owner or by the frozen verifier. (1) Owner: SealedReceiptOwner.authenticated_original (scripts/pm_w3i_continuity_oracles.py:693-699) raises only original_receipt_missing and original_receipt_ambiguous, then _custody_from_sealed (:665-683). That function refuses sealed_receipt_malformed at :675 unless the row has exactly SEALED_KEYS, a binding with exactly BINDING_FIELDS, a recipe with exactly RECIPE_FIELDS and three even-length lowercase-hex strings (so bytes.fromhex cannot raise). The shared constructors refuse a wrong-typed or wrong-valued member by themselves (scripts/pm_event_numbers.py:442-485): RecipeTuple.__post_init__ with recipe_tuple (:460) or recipe_resource_hash (:462), and OriginalBinding.__post_init__ with original_binding (:481) or original_scope (:484). :676-679 catches every such Refusal and re-raises it as sealed_receipt_malformed. So the owner raises only original_receipt_missing, original_receipt_ambiguous and sealed_receipt_malformed, and otherwise returns an OriginalCustody of an OriginalBinding, a RecipeTuple and three bytes values, so original_authority, recipe_selection and original_bytes_type cannot occur. AccessLoggingOwner (:706) raises exactly what its parent raises. (2) Request: retained_request (:808-818) returns an OriginalBinding or None, and None is refused by the dispatcher as original_query. (3) Frozen verifier: _frozen_verify (:774) is the conjunction of frozen_components (:717-761), which raises no Refusal. Decoding refusals are caught (:728); the date-time checks go through reason_of; producer_semantic_digest refusals are caught (:758). full_value_commitment (scripts/pm_event_numbers.py:405-412) runs only on a record that decoded canonically (so its re-encoding cannot refuse) and passed the frozen EventRecord schema (whose schema_id and schema_version consts exclude full_value_edition). identity (:212) runs qualified_jcs on schema-valid payload strings decoded from UTF-8. So the verifier returns True or False, and the dispatcher reports False as original_verification. frozen_dispatch_failures (:2657), run on every retained control and negative, requires that, once verify_original is reached, the dispatcher refuses original_verification exactly when a frozen_* row refuses. The negative-only frozen map current_gated (_current_gated_verify) may raise the current writer gate's own reason. It calls the instrumented gate whenever the verifier runs, so retained_no_current_gate (table retained_effects, ahead of this table) refuses first. Every reason that remains has its own dispatch row (retained_dispatch). So this catch-all never refuses first.
+
+  - **Supersedes:** the fix-1 proof quoted in the guard-table section above.
+
+### Grades
+
+Criterion 12 stays **PARTIAL** for all four families. The fix adds witnesses and corrects one proof. The three stated reasons for PARTIAL still hold: no source-frame relocation or held retention/restore cases; scenario-flag models; one schema row per subject. Recheck 2 also lists the flag-only rows that support PARTIAL. Criteria 1-11, membership (ABSENT) and native execution (NOT_RUN) are unchanged. `W3I-self-grade.json` gains a `phase_2_fix_2` block.
+
+### Verification commands (exit codes)
+
+These ran at code head `2dee02320a`; the report commit adds only `reports/`, and `Plans/` is byte-identical to `5d1721e3d8`.
+
+Heavy commands ran under `systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0`. Each long-job waited for 12 GB available before it started. One exception: a first collect attempt was started at 10 GB and stopped after 4 s; its output was discarded and the collect re-run at 12 GB.
+
+| Command | Exit | Result |
+|---|---:|---|
+| `python3 scripts/pm-w3i-table-generate.py --check` | 0 | 41 tables, 217 rows, 2 entailed, 0 stale, 0 extra |
+| `python3 scripts/pm_w3i_continuity_oracles.py` | 0 | `pass`. 217 rows: 215 witnessed, 2 entailed. 52 controls. 1,639 negatives, each refused by exactly its row. The dispatcher/frozen agreement holds on every retained case. Corpus: 260 checks, 0 disagreements. Eager `$ref`s 71/46/13. |
+| `python3 -B reviews/W3I-p2-recheck2/evidence/r2-entailed.py scripts` | 0 | All 12 counterexamples are refused at `retained_receipt_wellformed` |
+| sealed-store and request leaf sweep (14 values at every leaf, every retained control) | 0 | 17,448 edits; 0 first refusals at `retained_resolved`; 0 dispatcher/frozen disagreements |
+| `python3 scripts/pm-w3i-guard-proof.py collect --out D`, at `5d1721e3d8` and at `2dee02320a` | 0 / 0 | `pass` both. 48 / 52 controls and 1,591 / 1,639 negatives. 0 findings, 0 matrix problems. 3 suites differ. |
+| `python3 scripts/pm-w3i-guard-proof.py run --out D --table append_copies_1 --table append_copies_2 --table append_custody_3` | 1 (by design: the aggregate counts 3 of 39 run tables) | 3/3 PASS, 12/12 proved |
+| `python3 scripts/pm-w3i-guard-proof.py run --out D --resume`, with the 36 unchanged tables' fix-1 results (module sha256 checked) | 0 | 41 tables, 217 rows; **215 proved**, 2 unproved, each with a proof; 39/39 PASS; 0 masked |
+| `python3 scripts/pm-w3i-mutations.py --scratch S` | 0 | baseline clean; **43/43 killed** |
+| `python3 reviews/W3I-p2-recheck2/evidence/r2-mutate.py <tree> S J` (unmodified) | 0 | baseline clean; **16/16 killed** |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass`; 99 docs, 3,104 shards |
+| `python3 scripts/pm-plan-index.py validate`, run in a scratch clone at `2dee02320a` with `origin/main` pinned to `58c2816ff33365384d4039553f5efdb5370930e6` and the ignored currentness edition copied (15 files, sha256 identical) | 0 | `pass`, 0 failures |
+
+**Not re-run:** the numbers self-test and the date-time inventory gate. Neither the shared files nor any number or timestamp slot changed. Fix 1's results stand: `pass`, and the fixture universe `pass`.
+
+### Questions for Jared
+
+There is no new question. **`acknowledged_at_utc`'s profile stays open** (question 2 above, which recheck 2 also raised). The checker keeps the owner schema's event_record profile until Jared picks it.
