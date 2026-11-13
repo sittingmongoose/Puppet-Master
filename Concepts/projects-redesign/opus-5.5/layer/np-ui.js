@@ -831,11 +831,12 @@
         projects: { title: w('np.loc.projects'), sub: NPx.comp(d.runsOn).root, glyph: 'folder', tag: w('np.svc.recommended') },
         custom: { title: w('np.loc.other', { computer: cn }), sub: 'A folder you choose', glyph: 'folder-search' },
         network: { title: w('np.loc.network'), sub: w('np.loc.networkSub'), glyph: 'network' },
-        with_server: { title: w('np.loc.withServer', { server: 'Home NAS' }), sub: w('np.loc.withServerSub'), glyph: 'server', tag: w('np.svc.recommended') },
-        this_computer: { title: w('np.loc.onDevice'), sub: w('np.loc.onDeviceSub', { server: 'Home NAS' }), glyph: 'desktop' }
+        // (Astra max A4) the records home's own name, never a fixed Home NAS
+        with_server: { title: w('np.loc.withServer', { server: cn }), sub: w('np.loc.withServerSub'), glyph: NPx.comp(d.runsOn).glyph || 'server', tag: w('np.svc.recommended') },
+        this_computer: { title: w('np.loc.onDevice'), sub: w('np.loc.onDeviceSub', { server: cn }), glyph: 'desktop' }
       };
       put(loc, h('div.pjx-np-field', null, cap(w('np.loc.files')), choices('where:files', modes.map((x) => Object.assign({ id: x }, W2[x])), m, (v) => NPx.set(s, 'files.mode', v), { label: w('np.loc.files') })));
-      if (m === 'this_computer') put(loc, line('info', w('np.loc.onDeviceWarn', { server: 'Home NAS' })));
+      if (m === 'this_computer') put(loc, line('info', w('np.loc.onDeviceWarn', { server: cn })));
       if (m === 'custom') {
         const p = d.files.parent;
         put(loc, field(w('np.loc.parent'), input('parent', p, '~/Documents', (v) => { d.files.parent = v; d.files.touched = true; s.changed(); }), '', null, { real: true, after: h('div.pjx-row', null, btn(w('np.loc.choose'), () => { d.files.browse = !d.files.browse; s.changed(); }, { key: 'where:choose', icon: 'folder-search', quiet: true })) }));

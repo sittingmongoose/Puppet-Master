@@ -557,30 +557,37 @@
   const filesMode = (s) => s.d.files.mode || filesModes(s)[0];
   /* network places a new Project's files can live in (the 6.3 chooser, purpose storage) */
   function networkPlaces(s) {
-    const c = s.d.runsOn, out = [];
-    if (c === 'here') out.push({ id: 'ssh:nas', route: 'SSH', device: 'nas', title: 'Home NAS · /volume1/projects', sub: 'Over a secure connection (SSH)', root: '/volume1/projects', holder: 'Home NAS', free: '3.1 TB', freeGB: 3100 });
-    out.push({ id: 'ssh:studio', route: 'SSH', device: 'studio', title: 'Studio Mac · ~/Developer', sub: c === 'here' ? 'Over a secure connection (SSH)' : 'Not connected from Home NAS yet', root: '~/Developer', holder: 'Studio Mac', free: '640 GB', freeGB: 640, off: c !== 'here' ? 'Connect Studio Mac from Home NAS first, under Files on another computer' : null });
-    out.push({ id: 'smb:smb-nas', route: 'SMB', device: 'nas', title: '//home-nas.local/projects', sub: 'A shared folder on Home NAS (SMB)', root: '//home-nas.local/projects', holder: 'Home NAS', free: '3.1 TB', freeGB: 3100 });
-    out.push({ id: 'nfs:nfs-nas', route: 'NFS', device: 'nas', title: 'home-nas.local:/volume1/projects', sub: 'An NFS share on Home NAS', root: 'home-nas.local:/volume1/projects', holder: 'Home NAS', free: '3.1 TB', freeGB: 3100 });
-    if (c === 'here') ENV.volumes.forEach((v) => out.push({ id: 'vol:' + v.id, route: 'drive', device: v.device, title: v.path, sub: v.label + ' · ' + v.free + ' free', root: v.path, holder: v.device ? 'Home NAS' : 'This computer', free: v.free, freeGB: v.freeGB }));
-    out.push({ id: 'nfs:media', route: 'NFS', device: 'media', title: 'media.local:/mnt/tank/projects', sub: 'An NFS share on Media server · not answering', root: '/mnt/tank/projects', holder: 'Media server', off: w('np.device.offlineWhy', { device: 'Media server' }) });
-    return out.map((x) => (x.device === 'media' && dev('media').online ? Object.assign(x, { off: null, sub: 'An NFS share on Media server' }) : x));
+    // (Astra max A4) each place is named from the Computer or device it is on, and an SSH place is offered from what the
+    // records home can reach with its own key (ENV.reach); the records home's own folders are "Another folder on …"
+    const c = s.d.runsOn, cn = comp(c).name, own = comp(c).device || null, reach = ENV.reach[c] || [], out = [];
+    const nas = holderOf('nas'), nasC = compOfDev('nas') || {}, media = dev('media');
+    [{ dev: 'nas', root: '/volume1/projects' }, { dev: 'studio', root: '~/Developer' }].forEach((x) => {
+      const hd = holderOf(x.dev), hc = compOfDev(x.dev) || {}, can = reach.indexOf(x.dev) >= 0;
+      if (x.dev === own || (!can && x.dev === 'nas')) return;
+      out.push({ id: 'ssh:' + x.dev, route: 'SSH', device: x.dev, title: hd.name + ' · ' + x.root, sub: can ? 'Over a secure connection (SSH)' : 'Not connected from ' + cn + ' yet', root: x.root, holder: hd.name, free: hc.free, freeGB: hc.freeGB,
+        off: can ? null : 'Connect ' + hd.name + ' from ' + cn + ' first, under Files on another computer' });
+    });
+    out.push({ id: 'smb:smb-nas', route: 'SMB', device: 'nas', title: '//home-nas.local/projects', sub: 'A shared folder on ' + nas.name + ' (SMB)', root: '//home-nas.local/projects', holder: nas.name, free: nasC.free, freeGB: nasC.freeGB });
+    out.push({ id: 'nfs:nfs-nas', route: 'NFS', device: 'nas', title: 'home-nas.local:/volume1/projects', sub: 'An NFS share on ' + nas.name, root: 'home-nas.local:/volume1/projects', holder: nas.name, free: nasC.free, freeGB: nasC.freeGB });
+    if (c === 'here') ENV.volumes.forEach((v) => out.push({ id: 'vol:' + v.id, route: 'drive', device: v.device, title: v.path, sub: v.label + ' · ' + v.free + ' free', root: v.path, holder: v.device ? holderOf(v.device).name : comp('here').name, free: v.free, freeGB: v.freeGB }));
+    out.push({ id: 'nfs:media', route: 'NFS', device: 'media', title: 'media.local:/mnt/tank/projects', sub: 'An NFS share on ' + media.name + ' · not answering', root: '/mnt/tank/projects', holder: media.name, off: w('np.device.offlineWhy', { device: media.name }) });
+    return out.map((x) => (x.device === 'media' && media.online ? Object.assign(x, { off: null, sub: 'An NFS share on ' + media.name }) : x));
   }
   const netPlace = (s) => networkPlaces(s).find((x) => x.id === s.d.files.network) || null;
   /* the folder that will hold it, and its full path */
   function placeRoot(s) {
     const d = s.d, m = filesMode(s), c = comp(d.runsOn);
-    if (m === 'projects') return { root: c.rootFull, holder: c.id === 'here' ? 'This computer' : c.name, free: c.free, freeGB: c.freeGB, short: c.root };
-    if (m === 'this_computer') return { root: comp('here').rootFull, holder: 'This computer', free: comp('here').free, freeGB: comp('here').freeGB, short: comp('here').root };
-    if (m === 'with_server') return { root: comp('homenas').rootFull, holder: 'Home NAS', free: comp('homenas').free, freeGB: comp('homenas').freeGB, short: comp('homenas').root };
+    // (Astra max A4) the records home's own Computer holds them (its Projects folder, or with the Server), or this computer
+    if (m === 'projects' || m === 'with_server') return { root: c.rootFull, holder: c.name, free: c.free, freeGB: c.freeGB, short: c.root };
+    if (m === 'this_computer') return { root: comp('here').rootFull, holder: comp('here').name, free: comp('here').free, freeGB: comp('here').freeGB, short: comp('here').root };
     if (m === 'custom') {
       const p = String(d.files.parent || '').trim().replace(/\/+$/, ''), v = d.runsOn === 'here' ? volOfPath(p) : null, fp0 = full(p, d.runsOn);
       // the free space is the folder's own drive: a connected drive or a Home NAS share has its own room
-      if (v) return { root: fp0, holder: v.device ? 'Home NAS' : 'This computer', free: v.free, freeGB: v.freeGB, custom: p, vol: v };
+      if (v) return { root: fp0, holder: v.device ? holderOf(v.device).name : comp('here').name, free: v.free, freeGB: v.freeGB, custom: p, vol: v };
       return { root: fp0, holder: c.name, free: c.free, freeGB: c.freeGB, custom: p };
     }
     const n = netPlace(s); if (!n) return null;
-    return { root: full(n.root, n.device === 'studio' ? 'studio' : d.runsOn), holder: n.holder, free: n.free, freeGB: n.freeGB, net: n };
+    return { root: full(n.root, (compOfDev(n.device) || {}).id || d.runsOn), holder: n.holder, free: n.free, freeGB: n.freeGB, net: n };
   }
   function fullPath(s) {
     const d = s.d;
@@ -592,14 +599,38 @@
     return fn ? r.root + '/' + fn : null;
   }
   const filesStay = (s) => s.d.way === 'folder' || s.d.way === 'device' || (s.d.way === 'chat' && /useFolder|worked/.test(chatFiles(s)));
-  /* the computer or share that has the files, which can differ from the computer doing the work */
-  function holderName(s) {
+  /* (Astra max A4, 2026-11-12) the place that holds the Project's files: its own identity, apart from the records home
+     (d.runsOn, the Project's Home Server) and the default work Computer (d.work.def). A Computer (This computer, Home NAS,
+     Studio Mac) or a device or share reached from one, always named from what it is: never a Home NAS or This computer
+     fallback. { kind: 'computer'|'device', ref, name, via, reach } */
+  const compOfDev = (devId) => (devId ? ENV.computers.find((c) => c.device === devId) || null : null);
+  const onComputer = (id) => { const c = comp(id); return { kind: 'computer', ref: c.id, name: c.name }; };
+  function holderOf(devId) { const c = compOfDev(devId); if (c) return { kind: 'computer', ref: c.id, name: c.name }; const x = dev(devId); return { kind: 'device', ref: devId, name: x ? x.name : '' }; }
+  const viaPM = (id) => (id === 'here' ? {} : { via: 'Puppet Master' });
+  function filesHolder(s) {
     const d = s.d;
-    if (d.way === 'folder') { const v = d.runsOn === 'here' ? volOfPath(d.folder.path) : null; return d.runsOn !== 'here' ? comp(d.runsOn).name : v && v.device === 'nas' ? 'Home NAS' : 'This computer'; }
-    if (d.way === 'device') { const m = d.device.method; if (m === 'ssh') return (dev(d.device.id) || {}).name || ''; if (m === 'mounted') { const v = vol(d.device.volume); return v && v.device ? 'Home NAS' : 'This computer'; } const sh = resolveShare(s); return sh ? (dev(sh.device) || {}).name : ''; }
-    if (filesStay(s)) return 'This computer';
-    const r = placeRoot(s); return r ? r.holder : '';
+    if (d.way === 'folder') {
+      if (d.runsOn !== 'here') return Object.assign(onComputer(d.runsOn), viaPM(d.runsOn));
+      const v = volOfPath(d.folder.path);
+      return v && v.device ? Object.assign(holderOf(v.device), { via: 'a connected drive' }) : onComputer('here');
+    }
+    if (d.way === 'device') {
+      const m = d.device.method;
+      if (m === 'ssh') return Object.assign(holderOf(d.device.id), { via: d.runsOn !== 'here' ? 'SSH from ' + comp(d.runsOn).name : 'SSH' });
+      if (m === 'mounted') { const v = vol(d.device.volume); return Object.assign(v && v.device ? holderOf(v.device) : onComputer('here'), { via: 'a connected drive' }); }
+      const sh = resolveShare(s); return Object.assign(sh ? holderOf(sh.device) : { kind: 'device', ref: null, name: '' }, { via: m === 'smb' ? 'SMB' : 'NFS' });
+    }
+    if (filesStay(s)) { const c = chatOf(d.chat.id); return onComputer((c && c.runsOn) || 'here'); }
+    const m = filesMode(s);
+    if (m === 'projects' || m === 'with_server') return Object.assign(onComputer(d.runsOn), viaPM(d.runsOn));
+    if (m === 'this_computer') return Object.assign(onComputer('here'), { reach: [d.runsOn] });
+    if (m === 'custom') { const r = placeRoot(s); if (r && r.vol) return r.vol.device ? Object.assign(holderOf(r.vol.device), { via: 'a connected drive' }) : onComputer('here'); return Object.assign(onComputer(d.runsOn), viaPM(d.runsOn)); }
+    const n = netPlace(s); if (!n) return null;
+    if (n.route === 'drive') return Object.assign(n.device ? holderOf(n.device) : onComputer('here'), { via: 'a connected drive' });
+    return Object.assign(holderOf(n.device), { via: n.route });
   }
+  /* the computer or share that has the files, which can differ from the computer doing the work */
+  const holderName = (s) => (filesHolder(s) || {}).name || '';
   const needGB = (s) => { const d = s.d; if (d.way === 'online') { const i = inside(s); return i && i.state === 'done' ? i.result.sizeGB : 0; } if (d.way === 'restore') return 0.2; return 0.001; };
   function whereProblem(s) {
     const d = s.d, n = nameProblem(s);
@@ -1305,22 +1336,16 @@
   function makeProject(s, lifecycle, demo) {
     const d = s.d, name = String(nameOf(s)).trim(), listed = lifecycle === 'listed', info = lookDone(s), fp = fullPath(s);
     const slugId = R().idSlug(name) || 'project';
-    let where;
+    // (Astra max A4) where its files are recorded is the holder's own identity (filesHolder), apart from the records home
+    // (home, below) and the default work Computer (runsOn): files on This computer are local, anything else is the Computer
+    // or device that holds them, by its own name. A records home on Studio Mac no longer falls through to This computer
+    const H = filesHolder(s) || Object.assign(onComputer(d.runsOn), viaPM(d.runsOn)), local = H.kind === 'computer' && H.ref === 'here';
     const vf = d.way === 'folder' && d.runsOn === 'here' ? volOfPath(d.folder.path) : null;
-    if (d.way === 'folder') where = d.runsOn !== 'here' ? { kind: 'device', label: comp(d.runsOn).name, path: d.folder.path, device: comp(d.runsOn).name, via: 'Puppet Master' } : vf && vf.device ? { kind: 'device', label: 'Home NAS', path: full(d.folder.path), device: 'Home NAS', via: 'a connected drive' } : { kind: 'local', label: 'This computer', path: d.folder.path };
-    else if (d.way === 'device') {
-      const hn = holderName(s), via = { ssh: d.runsOn === 'homenas' ? 'SSH from Home NAS' : 'SSH', smb: 'SMB', nfs: 'NFS', mounted: 'a connected drive' }[d.device.method];
-      where = hn === 'This computer' ? { kind: 'local', label: 'This computer', path: d.device.path } : { kind: 'device', label: hn, path: d.device.path, device: hn, via };
-    } else if (filesStay(s)) where = { kind: 'local', label: 'This computer', path: (lookTarget(s) || {}).path || fp };
-    else {
-      const m = filesMode(s), n = netPlace(s);
-      const r0 = placeRoot(s);
-      if (m === 'with_server') where = { kind: 'device', label: 'Home NAS', path: fp, device: 'Home NAS', via: 'Puppet Master' };
-      else if (m === 'network' && n && n.holder !== 'This computer') where = { kind: 'device', label: n.holder, path: fp, device: n.holder, via: n.route === 'drive' ? 'a connected drive' : n.route };
-      else if (m === 'custom' && r0 && r0.vol && r0.vol.device) where = { kind: 'device', label: 'Home NAS', path: fp, device: 'Home NAS', via: 'a connected drive' };
-      // files on this computer that the Server reaches over the network (files.mode this_computer): Home NAS can reach them
-      else where = Object.assign({ kind: 'local', label: 'This computer', path: fp.replace(HOME, '~') }, m === 'this_computer' ? { reach: ['homenas'] } : {});
-    }
+    // a new folder on a Computer is said from that Computer's own home (~ is the home of the Computer the path is on, 2.39)
+    const hh = H.kind === 'computer' ? comp(H.ref).home : null, tilde = (x) => (hh && x && x.indexOf(hh + '/') === 0 ? '~' + x.slice(hh.length) : x);
+    const path0 = d.way === 'folder' ? (vf && vf.device ? full(d.folder.path) : d.folder.path) : d.way === 'device' ? d.device.path : filesStay(s) ? (lookTarget(s) || {}).path || fp : tilde(fp);
+    // files on this computer that the records home reaches over the network (files.mode this_computer): it is named in reach
+    const where = local ? Object.assign({ kind: 'local', label: H.name, path: path0 }, H.reach ? { reach: H.reach.slice() } : {}) : { kind: 'device', label: H.name, path: path0, device: H.name, via: H.via || null };
     if (!listed) where.pending = true;
     const k = histKeeps(s), rh = d.way === 'restore' ? restoredHist(s) : null, backend = k === 'restored' ? rh.backend : k || d.history;
     const m = onlineMode(s), it0 = d.way === 'online' ? intentOf(s) : null;
@@ -1374,7 +1399,8 @@
       copied: src ? { from: src.name, settings: counts.own, things: counts.things, accounts: counts.accounts, headers: counts.headers, files: counts.files, sel: counts.sel } : null,
       needsSignin: listed ? needsAfter(s) : 0,
       fromChat: d.way === 'chat' && c ? c.title : null,
-      fromChatRec: d.way === 'chat' && c ? { chat: c.id, title: c.title, at: nowWord(), untilTs: untilTs(), until: untilWord(), ended: null, files: chatFiles(s) === 'move' ? chatPicked(s) : [], held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) } : null
+      // (Astra max A3) the files picked and moved, and the ones left out by name: Undo's preview and the Undo itself read these
+      fromChatRec: d.way === 'chat' && c ? { chat: c.id, title: c.title, at: nowWord(), untilTs: untilTs(), until: untilWord(), ended: null, files: chatFiles(s) === 'move' ? chatPicked(s) : [], left: chatFiles(s) === 'move' ? (c.fileList || []).filter((f) => chatPicked(s).indexOf(f) < 0) : [], held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) } : null
     };
   }
 
@@ -1384,8 +1410,11 @@
     const sel = likeSrc(s) ? likeSel(s) : null, lt = /link/.test(m) || m === 'again' ? linkTarget(s) : null;
     return {
       project_mode: { new: 'new', chat: 'new', folder: 'existing_local', device: 'existing_local', online: 'existing_online', restore: 'restore' }[d.way] || null,
-      project_transport: d.way === 'device' ? ({ ssh: 'ssh', smb: 'mounted', nfs: 'mounted', mounted: 'mounted' }[d.device.method]) : d.way === 'folder' && d.runsOn === 'homenas' ? 'puppet_master' : null,
-      server_mode: d.runsOn === 'here' ? 'this_device' : 'existing_server', server_ref: d.runsOn === 'here' ? null : 'homenas',
+      // (Astra max A4; SRV-006) the records home is the Project's Home Server (server_ref names the chosen Computer), the place
+      // that holds its files is a Source Location of its own (files_holder), and the default work Computer is below
+      project_transport: d.way === 'device' ? ({ ssh: 'ssh', smb: 'mounted', nfs: 'mounted', mounted: 'mounted' }[d.device.method]) : d.way === 'folder' && d.runsOn !== 'here' ? 'puppet_master' : null,
+      server_mode: d.runsOn === 'here' ? 'this_device' : 'existing_server', server_ref: d.runsOn === 'here' ? null : d.runsOn,
+      files_holder: (() => { const x = filesHolder(s); return x ? { kind: x.kind, ref: x.ref, name: x.name, via: x.via || null } : null; })(),
       project_name: nameOf(s), local_location: fullPath(s), storage_mode: filesMode(s) === 'network' ? 'network_location' : null,
       history_backend: histKeeps(s) === 'restored' ? restoredHist(s).backend : histKeeps(s) || d.history, filesafe: d.filesafe,
       // (Sol max S2; PWIZ-025, BRS-019) the restore binds the chosen copy and says what it covers; null until one is chosen
@@ -1550,32 +1579,106 @@
     const c = moveChat(m), p = PJX.get(m.target);
     // a partial result is still a result: what moved, what stayed, what was held and what didn't move (ACD-511, 7.13)
     const moving = moveMoving(m), failed = m.demoPartial && moving.length > 1 ? [moving.indexOf('label-template.svg') >= 0 ? 'label-template.svg' : moving[moving.length - 1]] : [];
-    const rec = { chat: c.id, title: c.title, into: p.id, files: moving.filter((f) => failed.indexOf(f) < 0), failed, place: movePlace(m), branch: m.branch, folder: moveFolder(m), chatOnly: m.chatOnly, computer: (p.home || 'here') !== c.runsOn ? comp(p.home || 'here').name : null, by: opts.yolo ? 'yolo' : 'you',
-      at: nowWord(), untilTs: untilTs(), until: untilWord(), ended: null, stayed: (c.fileList || []).length - movePicked(m).length + c.outside.length, held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) };
+    // (Astra max A1, A3) the record holds every file by its own name and what happened to it: moved, failed (with its reason),
+    // skipped because the same file is already there, skipped by your choice, or not picked. The report, its counts, Try
+    // again and Undo are all read from it (moveReport, moveRetry, moveUndoStatement); nothing patches a report's words
+    const picked = movePicked(m), why = {};
+    failed.forEach((f) => { why[f] = { reason: 'open', tries: 1 }; });
+    const rec = { chat: c.id, title: c.title, into: p.id, files: moving.filter((f) => failed.indexOf(f) < 0), failed, why, same: m.chatOnly ? [] : moveSame(m), skipped: m.chatOnly ? [] : moveConflicts(m).filter((f) => moving.indexOf(f) < 0),
+      left: (c.fileList || []).filter((f) => picked.indexOf(f) < 0), outside: (c.outside || []).slice(), grants: (c.grants || []).slice(),
+      place: movePlace(m), branch: m.branch, folder: moveFolder(m), chatOnly: m.chatOnly, computer: (p.home || 'here') !== c.runsOn ? comp(p.home || 'here').name : null, by: opts.yolo ? 'yolo' : 'you',
+      at: nowWord(), untilTs: untilTs(), until: untilWord(), ended: null, stayed: (c.fileList || []).length - picked.length + c.outside.length, held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) };
     F().moved = F().moved || {}; F().moved[c.id] = rec;
     return { ok: true, project: p, rec };
   }
-  /* Undo's own statement first (7.7): what goes back, what stays because it changed, what is never deleted */
+  /* Undo's own statement first (7.7): what goes back, what stays because it changed, what is never deleted. (Astra max A3)
+     It counts the files that moved, from the record, and names the ones that never moved apart from them */
   function moveUndoStatement(rec) {
     const p = PJX.get(rec.into) || { name: rec.into };
     const lines = [w('np.mv.u.chat', { chat: rec.title })];
     if (rec.files.length) lines.push(w('np.mv.u.files', { files: plural(rec.files.length, 'file') }));
+    const never = neverMoved(rec, p.name);
+    if (never.length) lines.push(w('cv.u.never', { list: andList(never), n: never.length }));
     if (rec.place === 'draft' && rec.files.length) lines.push(w('np.mv.u.draft', { branch: rec.branch }));
     if (rec.place !== 'draft' && rec.files.length) lines.push(w('np.mv.u.main', { project: p.name }));
     if (rec.computer) lines.push(w('np.mv.u.computer', { computer: rec.computer }));
     lines.push(w('np.mv.u.never'));
     return lines;
   }
+  /* the chat's files that never left its folder, each with why: it didn't move, it was already the same there, you chose to
+     skip it, or you didn't pick it (a long list of unpicked files is counted) */
+  function neverMoved(rec, pn) {
+    const out = (rec.failed || []).map((f) => w('cv.u.failed', { file: f })).concat((rec.same || []).map((f) => w('cv.u.same', { file: f, project: pn })), (rec.skipped || []).map((f) => w('cv.u.skipped', { file: f })));
+    const left = rec.left || [];
+    if (left.length && left.length <= 4) left.forEach((f) => out.push(w('cv.u.left', { file: f })));
+    else if (left.length) out.push(w('cv.u.leftN', { n: left.length }));
+    return out;
+  }
   const moved = (chatId) => ((F().moved || {})[chatId]) || null;
   function moveUndo(chatId) { const r = moved(chatId); if (r) delete F().moved[chatId]; return r; }
+  /* (Astra max A1) Try that file again: the same operation, on the failed files' own names (never on a report's words). A
+     file still open in the other app fails again and keeps its reason, with one more try; one that copies joins the moved
+     files, in the chat's own order. Returns what moved and what failed this time */
+  function moveRetry(rec, o) {
+    o = o || {};
+    const c = chatOf(rec.chat), order = (c && c.fileList) || [], again = rec.failed.slice(), out = { moved: [], failed: [] };
+    again.forEach((f) => {
+      const was = rec.why[f] || { reason: 'open', tries: 1 };
+      if (o.still) { rec.why[f] = { reason: 'still', tries: was.tries + 1 }; out.failed.push(f); return; }
+      rec.failed = rec.failed.filter((x) => x !== f);
+      delete rec.why[f];
+      if (rec.files.indexOf(f) < 0) rec.files = order.filter((x) => x === f || rec.files.indexOf(x) >= 0);
+      out.moved.push(f);
+    });
+    return out;
+  }
+  /* (Astra max A1) the move's report, title, summary and notice, all read from its record: what moved, what stayed (by name
+     where a person needs the name), what was held and resumed, and what didn't move, each with its reason */
+  function moveReport(rec) {
+    const c = chatOf(rec.chat) || { title: rec.title, messages: 0, attachments: 0 }, p = PJX.get(rec.into) || { name: rec.into };
+    const files = rec.files.length ? plural(rec.files.length, 'file') : '';
+    const into = rec.folder + '/' + (rec.place === 'draft' ? ' on the draft ' + rec.branch : '');
+    const moved = [w('cv.rep.chatLine', { chat: c.title, n: c.messages, a: c.attachments })].concat(rec.files.length ? [w('cv.rep.filesLine', { files, into })] : []);
+    const left = rec.left || [], stayed = [];
+    if (left.length && left.length <= 4) stayed.push(w('cv.rep.leftNamed', { list: andList(left), n: left.length }));
+    else if (left.length) stayed.push(w('cv.rep.leftN', { files: plural(left.length, 'file') }));
+    (rec.same || []).forEach((f) => stayed.push(w('cv.rep.same', { file: f, project: p.name })));
+    (rec.skipped || []).forEach((f) => stayed.push(w('cv.rep.skipped', { file: f, project: p.name })));
+    if ((rec.outside || []).length) stayed.push(w('cv.rep.outside', { files: plural(rec.outside.length, 'file') }));
+    (rec.grants || []).forEach((g) => stayed.push(w('cv.rep.grant', { grant: g })));
+    const failed = rec.failed.map((f) => w((rec.why[f] || {}).reason === 'still' ? 'cv.rep.whyStill' : 'cv.rep.whyOpen', { file: f, tries: (rec.why[f] || {}).tries || 1 }));
+    const partial = rec.failed.length;
+    // what the summary line says was left behind: the same families, in a few words
+    const behind = [].concat(left.length ? [plural(left.length, 'file') + ' you didn’t pick'] : [], (rec.same || []).length + (rec.skipped || []).length ? [plural((rec.same || []).length + (rec.skipped || []).length, 'file') + ' skipped in ' + p.name] : [],
+      (rec.outside || []).length ? [plural(rec.outside.length, 'file') + ' outside the chat folder'] : [], (rec.grants || []).map((g) => 'its permission “' + g + '”'));
+    return {
+      report: { moved, stayed, held: (rec.held || []).slice(), failed },
+      title: partial ? w('cv.rep.partial', { project: p.name, n: partial }) : w('np.mv.done', { project: p.name }),
+      text: w('np.mv.doneText', { n: c.messages, a: c.attachments, files: rec.files.length ? w('np.mv.doneFiles', { k: files, folder: rec.folder, onDraft: rec.place === 'draft' ? w('np.mv.onDraft', { branch: rec.branch }) : '' }) : '', left: behind.length ? andList(behind) : 'nothing' }) + (rec.by === 'yolo' ? ' YOLO didn’t ask for a yes.' : ''),
+      notify: w('cv.rep.notify', { chat: c.title, project: p.name, files: plural(rec.files.length, 'file'), stayed: plural(stayed.length, 'thing'), failed: partial ? ' ' + plural(partial, 'file') + ' didn’t move.' : '' }),
+      partial
+    };
+  }
+  /* (Astra max A2; ACD-511) accepted new work, an accepted resume or a dispatch in a Project ends Undo for every conversion
+     into it: the Project made from a chat, and each chat moved into it. It says why, as a message and the 7 days do; an
+     Undo that has already ended keeps its first reason */
+  function workAccepted(pid, what, o) {
+    const p = PJX.get(pid); if (!p) return 0;
+    const reason = w(o && o.queued ? 'cv.undo.newWorkQueued' : 'cv.undo.newWork', { project: p.name, task: what });
+    const recs = [p.fromChatRec].concat(Object.keys(F().moved || {}).map((k) => F().moved[k]).filter((r) => r.into === pid)).filter(Boolean);
+    let n = 0;
+    recs.forEach((r) => { if (!undoEnded(r)) { r.ended = reason; n++; } });
+    if (n) PJX.emit('change', { why: 'undo-ended', id: pid });
+    return n;
+  }
 
   PJX.np = {
     SETTINGS, WAYS, VERB, SECTIONS, start, set, enforce, chooseWay, wayLoss, startOver, sections, problem, summary, state, enter, open, fold, cont, allDone, firstProblem, firstNotDone,
-    moveStart, moveBlocker, chatPicked, waitingApprovals, convEffects, untilWord, nowWord, clockNow, undoEnded, moveTargets, moveMark, moveHist, movePlace, movePicked, moveSame, moveConflicts, moveMoving, moveProblem, moveStatement, moveLabel, movePhases, moveCommit, moveUndoStatement, moveUndo, moved,
+    moveStart, moveBlocker, chatPicked, waitingApprovals, convEffects, untilWord, nowWord, clockNow, undoEnded, workAccepted, moveRetry, moveReport, neverMoved, moveTargets, moveMark, moveHist, movePlace, movePicked, moveSame, moveConflicts, moveMoving, moveProblem, moveStatement, moveLabel, movePhases, moveCommit, moveUndoStatement, moveUndo, moved,
     volOfPath, netCheck, netSignIn, bkHost, bkOnNas, likeSel, takenFor, forkNameCheck, visWord, restoredHist, kindWord, needsAccount, dropUi, onSettled: null,
     op, peek, retry, look, lookDone, lookTarget, limits, inspectAt, trusted, devicesFor, lookFor, addKey, resolveShare, smbShareKey, nfsShareKey, smbOk, nfsOk, volOk, dev, share, vol, comp, chatOf, chatFiles, serverOn,
     forgeRec, signedIn, signIn, signinOp, serverCheck, addrOk, srcRec, repoOf, findAnyone, access, accessDone, inside, gitAddressCheck, gitAddrValid, intentOf, intentDefault, forkName, forkOwner, knownFor,
-    restoreSource, restoreWhere, restoreList, unlock, reach, reachOp, reached, kitOf, kitOpen, restoreUnlocked, restorePoints, restorePoint, lineage, derivedName, nameOf, folderNameOf, nameProblem, filesModes, filesMode, networkPlaces, netPlace, placeRoot, fullPath, filesStay, holderName, filesOnNas,
+    restoreSource, restoreWhere, restoreList, unlock, reach, reachOp, reached, kitOf, kitOpen, restoreUnlocked, restorePoints, restorePoint, lineage, derivedName, nameOf, folderNameOf, nameProblem, filesModes, filesMode, networkPlaces, netPlace, placeRoot, fullPath, filesStay, holderName, filesHolder, filesOnNas,
     likeSrc, settingsOf, likePreview, likeCounts, accountRows, needsAfter, picked, histKeeps, histLimits, jjOn, onlineDefault, onlineMode, onlineRec, onlineKind, owners, ownerOf, projectOf, visOf, onlineName, nameCheck,
     linkTarget, linkRec, linkCheck, bkFamily, bkPlace, bkExisting, bkDestLabel, bkTimeOf, bkTimeWord, keepBad, onlineLine, begins, review, phases, commit, makeProject, toPlan, detect, applyDetected, full, andList, plural, fmtGB, HOME
   };

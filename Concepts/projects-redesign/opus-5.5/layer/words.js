@@ -1106,6 +1106,25 @@
     'cv.rep.notify': '“{chat}” and {files} moved into {project}.{failed} {stayed} stayed behind, as the report lists.',
     'cv.undo.until': 'Undo until {until}', 'cv.undo.ended': 'Undo has ended: {reason}', 'cv.undo.newMsg': 'a new message was sent in “{chat}”', 'cv.undo.changed': '{file} was changed in {project}',
     'cv.undo.demoMsg': 'Send a message in it', 'cv.undo.demoChange': 'Change a moved file', 'cv.undo.demo': 'Concept demo, what ends Undo:',
+    /* (Astra max A1, 2026-11-12) the report, read from the operation's record: each family's lines, and Try again's outcome */
+    'cv.rep.chatLine': '“{chat}” · {n} messages and {a} attachments', 'cv.rep.filesLine': '{files} · into {into}',
+    'cv.rep.leftNamed': '{list} · not picked, so still in the chat folder', 'cv.rep.leftN': '{files} you didn’t pick',
+    'cv.rep.same': '{file} · already the same in {project}, so it stayed in the chat folder', 'cv.rep.skipped': '{file} · different in {project}, and you chose to skip it',
+    'cv.rep.outside': '{files} outside the chat folder', 'cv.rep.grant': 'Its permission “{grant}”',
+    'cv.rep.whyOpen': '{file} · it was open in another app, so it stayed in the chat folder',
+    'cv.rep.whyStill': '{file} · it was still open in another app when you tried again, so it stayed in the chat folder ({tries} tries)',
+    'cv.rep.retryStill': 'Concept demo, the next try: the file is still open in the other app',
+    'cv.rep.retrying': 'Copying {file} into {folder}', 'cv.rep.retryOk': '{file} moved into {project}', 'cv.rep.retryOkText': 'The report now says {files} moved, and nothing is left behind by mistake.',
+    'cv.rep.retryFail': '{file} still didn’t move', 'cv.rep.retryFailText': 'It is still open in another app, so it stayed in the chat folder. Close it there, then try again.',
+    /* (Astra max A3) what Undo leaves alone because it never moved, by name, apart from the files it puts back */
+    'cv.u.never': 'These never moved, so they stay in the chat folder and Undo leaves them alone: {list}.',
+    'cv.u.failed': '{file} (it didn’t move)', 'cv.u.same': '{file} (the same file was already in {project})', 'cv.u.skipped': '{file} (you chose to skip it)',
+    'cv.u.left': '{file} (you didn’t pick it)', 'cv.u.leftN': '{n} files you didn’t pick',
+    'cv.u.leftOne': '{list} never moved (you left it out), so Undo leaves it in the chat folder.', 'cv.u.leftMany': '{list} never moved (you left them out), so Undo leaves them in the chat folder.',
+    'cv.u.putting': 'Putting its {files} back in the chat folder', 'cv.u.back': 'Its {files} are back in the chat folder.',
+    /* (Astra max A2) new work in the Project ends Undo, and an Undo that ended while its dialog was open does nothing */
+    'cv.undo.newWork': 'new work started in {project} ({task})', 'cv.undo.newWorkQueued': 'new work was accepted in {project} ({task}, waiting for a Computer)',
+    'cv.undo.stopped': 'Nothing was undone: {project} and its work stay as they are.',
     /* the place world and sign-ins (GUIDED-FLOWS 2.x, 4.x) */
     'np.look.partial': 'Partial: {reason}', 'np.look.unknownHist': 'History: not known yet. {reason}',
     'np.look.partialOnline': 'A quick look from {service}. It can’t show unsaved changes, hooks or the exact size until the copy is on {computer}, where Puppet Master looks inside again before listing it.',

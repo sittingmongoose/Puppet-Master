@@ -271,12 +271,17 @@
       if (!c) {
         await PJX.run(p.id, 'pin', w('wk.start.queuing'), [{ label: w('wk.start.queuingStep', { task }), ms: 500 }], () => {
           p.workers = (p.workers || []).concat([{ c: null, task, mode: 'auto', queued: true }]);
+          // (Astra max A2; ACD-511) accepted work, even waiting work, ends Undo for every conversion into this Project
+          if (PJX.np && PJX.np.workAccepted) PJX.np.workAccepted(p.id, task, { queued: true });
         }, { cmd: 'cmd.work.start (queued: no eligible Computer)' });
         PJX.toast(w('wk.start.queued', { task }), w('wk.start.queuedText', { project: p.name, reasons: autoNone(policy(p).allowed) }), 'warning');
         return;
       }
       await PJX.run(p.id, 'pin', w('wk.start.doing'), [{ label: w('wk.start.starting', { task, computer: cname(c) }), ms: 600 }], () => {
         p.workers = (p.workers || []).concat([pinned ? { c, task, mode: 'chosen', by: 'Jared' } : k.mode === 'chosen' ? { c, task, mode: 'chosen', by: k.by || 'Jared', project: true, at: choiceWord(p) } : { c, task, mode: 'auto' }]);
+        // (Astra max A2; ACD-511) the run is accepted here (Auto, the Project's choice or a run pin: a dispatch): Undo of a
+        // conversion into this Project ends now, with this work as its reason, and an Undo dialog already open can't undo it
+        if (PJX.np && PJX.np.workAccepted) PJX.np.workAccepted(p.id, task);
       }, { cmd: 'cmd.work.start' });
       PJX.toast(w('wk.start.done', { task, computer: cname(c) }), pinned ? w('wk.pin.doneText', { project: p.name, choice: choiceWord(p) }) : '', 'success');
     };
