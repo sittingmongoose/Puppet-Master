@@ -87,5 +87,7 @@ async function checkLook(t,look){
    await press(t,action('test'));await box(t,f,`${look} ${w} destination test`,w,h);
    await guardPaintedLook(rt,f,look,`${look} ${w} breadth end`);
   }
+  // Breadth actions save the look again; leave a fresh Basic Dark baseline for the next look.
+  await t.app.resetLayout();
 }
 export const tests=Object.fromEntries(['basic-light','friendly-dark','glass-dark','nier-dark'].map(look=>[look,t=>checkLook(t,look)]));
