@@ -20,23 +20,28 @@
 // so the pace turns to waiting while held), closed, then a word. For each change:
 //   - at once: a word changes data-flow and the loop's length before the next frame; the quiet one comes 900 ms after
 //     the last word (the module's timer on the word's age; up to --set late=<ms>, default 150, later on a busy page);
-//   - no jump: across the frame that holds the change, the loop's place (loops run plus the way through this one, in
-//     time) moves forward by no more than one frame's step at the faster pace (dt / the shorter length, 10% and 0.002
-//     slack), and the glyph's scale and the backlight's opacity move by no more than the fastest ordinary frame of the
-//     same look at the flowing pace (per ms, 15% and 0.002 slack). A new loop (a restart) at a change fails.
-// Every frame from the first change on is judged the same way (no new loop, no place step over one frame), not only
-// the frames that hold a change.
-// What this cannot see: the compositor. A retimed loop reaches it only with the next frame and it keeps the old timing
-// until then, also through a long task; the page's samples show the main thread's view. The hand-over is judged in
-// tests/stop-chip-beat-verify.mjs (a model of the frame clock and the compositor) and on pixels in lane S's films
-// (share 2026-11-13-pm7-stop-chip-pace: a Settings save, a 261 ms task, made both main and the first build jump).
+//   - no jump, on what the compositor shows: at the sample after the change (samples are taken after each frame), the
+//     loop's place on the wall clock under the new timing equals its place under the old one to within one frame at
+//     the faster pace (the step the square makes when the frame hands the new timing over); the main thread's own view
+//     too (place within a frame, two right after the chip re-placed its loop; scale and opacity within the fastest
+//     ordinary frame of the same look), except in a frame after a long task, whose time is from before the task.
+//     A new loop (a restart) at a change fails.
+// Every frame from the first change on is judged the same way, not only the frames that hold a change.
+// The onboarding window's open and close make every loop it holds jump by about the window's page-wide restyle (its
+// pause and resume are taken by a late frame's time): the lead's call A (2026-11-13), the window's, not the chip's.
+// The check samples another loop the window holds and, within 3 s of the open and of the close, names a jump of the
+// chip no larger (in time) than that loop's largest, instead of failing on it (windowSpans below).
+// What it cannot see directly is the compositor; the hand-over above is computed from the timings the page reports.
+// The Node model (tests/stop-chip-beat-verify.mjs) and lane S's films (share 2026-11-13-pm7-stop-chip-pace) judge it
+// on a model of the compositor and on pixels.
 // After the run ends nothing of the chip's is armed (PM56_SENDSTOP.debug(): no quiet timer, no observer).
 // Each look is SAVED through Settings before its run: a Settings save (the speed change) repaints the saved look, and
 // with the kit's unsaved look() the page went back to Basic Dark mid-run (first runs: a look change, read as a jump).
 // REDUCED (first look only): with Reduce motion on, the app's (Settings) and then the system's (prefers-reduced-motion),
 // there is no loop and a word still changes data-flow; off again, the loop comes back at that cadence's length.
 // Failed on main 6bd8294726: the listener (document, the chip's script), 41 loop ends dispatched in 3 s at rest, no
-// change before a loop's end, and Settings' speed change moved the loop (place +0.87 of a loop, scale .036 in a frame).
+// change before a loop's end and a new loop at each, and Settings' speed change jumping a whole loop at the hand-over.
+// Failed on lane S's 4bbe9d0551 (loops re-placed by the frame's time): the speed change jumped 0.15 of a loop.
 //
 // --set looks=<a,b>   default basic-dark,glass-dark,retro-dark,nier-dark,friendly-dark,basic-light
 // --set parts=<a,b>   rest,pace,reduced (default all)   --set settle=<ms> (default 30000)   --set late=<ms> (default 150)
@@ -57,16 +62,21 @@ const PACE = async ({ speed, windowPart }) => {
 	const placeOf = (a) => { const c = a.effect.getComputedTiming(); return c.currentIteration == null ? null : c.currentIteration + c.progress; };
 	const read = () => {
 		const b = chip(), host = b && b.closest('[data-theme]');
-		const r = { t: document.timeline.currentTime, ss: b && b.getAttribute('data-ss'), flow: b && b.getAttribute('data-flow'), th: host ? host.getAttribute('data-theme') : null, nier: document.documentElement.getAttribute('data-o55-nier') };
+		const r = { t: document.timeline.currentTime, w: performance.now(), ss: b && b.getAttribute('data-ss'), flow: b && b.getAttribute('data-flow'), th: host ? host.getAttribute('data-theme') : null, nier: document.documentElement.getAttribute('data-o55-nier'), win: document.documentElement.hasAttribute('data-o55-open') };
 		if (!b) return r;
 		const all = b.getAnimations({ subtree: true });
 		const g = all.find((a) => /^ss-breathe/.test(a.animationName)), l = all.find((a) => /^ss-glow/.test(a.animationName));
-		if (g) { const cs = getComputedStyle(b.querySelector('.ss-g')), m = cs.transform; r.ease = cs.animationTimingFunction; r.g = { id: idOf(g), name: g.animationName, dur: +g.effect.getTiming().duration, delay: +g.effect.getTiming().delay, place: placeOf(g), state: g.playState, v: m && m.startsWith('matrix(') ? parseFloat(m.slice(7)) : 1 }; }
-		if (l) r.b = { id: idOf(l), name: l.animationName, dur: +l.effect.getTiming().duration, place: placeOf(l), state: l.playState, v: parseFloat(getComputedStyle(b.querySelector('.ss-bl'), '::before').opacity) };
+		if (g) { const cs = getComputedStyle(b.querySelector('.ss-g')), m = cs.transform; r.ease = cs.animationTimingFunction; r.g = { id: idOf(g), name: g.animationName, dur: +g.effect.getTiming().duration, delay: +g.effect.getTiming().delay, s: g.startTime, c: g.currentTime, rate: g.playbackRate, place: placeOf(g), state: g.playState, v: m && m.startsWith('matrix(') ? parseFloat(m.slice(7)) : 1 }; }
+		if (others.length) r.os = others.map((o) => ({ id: idOf(o), dur: +o.effect.getTiming().duration, delay: +o.effect.getTiming().delay, s: o.startTime, c: o.currentTime, rate: o.playbackRate, place: placeOf(o), state: o.playState, v: 0 }));
+		if (l) r.b = { id: idOf(l), name: l.animationName, dur: +l.effect.getTiming().duration, delay: +l.effect.getTiming().delay, s: l.startTime, c: l.currentTime, rate: l.playbackRate, place: placeOf(l), state: l.playState, v: parseFloat(getComputedStyle(b.querySelector('.ss-bl'), '::before').opacity) };
 		return r;
 	};
-	let sampling = true;
-	const tick = () => { if (!sampling) return; try { rows.push(read()); } catch (e) { errors.push(String(e)); } requestAnimationFrame(tick); };
+	let sampling = true, others = [], otherDesc = 'none';
+	// sampled in a task posted from each frame callback, so after every frame callback of that frame (the chip's own
+	// re-placement among them) and after the frame was handed over
+	const mc = new MessageChannel();
+	mc.port1.onmessage = () => { if (!sampling) return; try { rows.push(read()); } catch (e) { errors.push(String(e)); } };
+	const tick = () => { if (!sampling) return; mc.port2.postMessage(0); requestAnimationFrame(tick); };
 	const mo = new MutationObserver((ms) => { for (const m of ms) { const v = m.target.getAttribute('data-flow'); if (m.attributeName === 'data-flow' && v !== m.oldValue && m.target.getAttribute('data-ss') === 'stop') flips.push({ i: rows.length, now: performance.now(), to: v }); } });
 	const last = () => rows[rows.length - 1] || {};
 	const frac = () => { const g = last().g; return g && g.place != null ? g.place % 1 : null; };
@@ -123,9 +133,22 @@ const PACE = async ({ speed, windowPart }) => {
 			await sleep(500);
 			if (!(await until(() => { const f = frac(); return f != null && f >= 0.3 && f <= 0.45; }))) throw new Error('window: the loop never reached .3-.45');
 			feedOff(); word();                                            // the last word before the window
+			const desc = (el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : '');
+			const loopOf = (state) => (a) => a.animationName && a.playState === state && a.effect && a.effect.getTiming().iterations === Infinity && a.effect.target && !a.effect.pseudoElement && !(a.effect.target.closest && (a.effect.target.closest('.sendstop') || a.effect.target.closest('#pm-o55-onboarding')));
+			// the references: up to 12 running loops of the app, taken BEFORE the window opens so the open's own pause is
+			// sampled; a pair in which a reference's length or delay changed (NieR restyles some as the window opens) is
+			// not counted (windowSpans)
+			// from the chip's own part of the page (the child of <body> it lives in), which the window holds with the chip
+			let top = chip(); while (top && top.parentElement && top.parentElement !== document.body) top = top.parentElement;
+			others = document.getAnimations().filter((a) => loopOf('running')(a) && top && top.contains(a.effect.target)).slice(0, 12);
 			await sleep(2); mark('onboarding window opens (holds the glyph), no more words', { kind: 'window' });
 			window.O55.ui.open();
 			marks.push({ name: 'quiet under the window', i: -1, kind: 'quiet', wordAt: lastWord });
+			// another loop the window holds, sampled with the chip as the page-wide reference for what the window's
+			// close does to every held loop (an infinite CSS loop on an element of the app, not the chip)
+			await until(() => document.documentElement.hasAttribute('data-o55-open'), 3000); await frame(); await frame();
+			const held = others.filter((o) => o.playState === 'paused');
+			otherDesc = `${held.length} of ${others.length} held: ${held.slice(0, 4).map((o) => `${o.animationName} on ${desc(o.effect.target)} (${o.effect.getTiming().duration} ms)`).join(', ')}${held.length > 4 ? ', ...' : ''}`;
 			await until(() => last().flow === 'waiting', 3000);
 			await sleep(1500);
 			await sleep(2); mark('onboarding window closes', { kind: 'window' });
@@ -145,57 +168,135 @@ const PACE = async ({ speed, windowPart }) => {
 	const after = { ss: chip() && chip().getAttribute('data-ss'), debug: SS.debug() };
 	// tie each quiet change to its flip
 	for (const m of marks) if (m.kind === 'quiet') { const fl = flips.find((x) => x.to === 'waiting' && x.now >= m.wordAt); if (fl) { m.i = fl.i; m.flipMs = Math.round(fl.now - m.wordAt); } }
-	return { rows, marks, flips, errors, after };
+	return { rows, marks, flips, errors, after, otherDesc };
 };
 
-// Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew
-// (a restart) and its place never moves more than one frame at the faster pace (a retime that something else did, at a
-// moment no mark names, would show here; the first speed films found one 0.8 s after a Settings save).
+// What a person sees is the compositor's: a retimed loop reaches it only with the next frame, and until then it keeps
+// moving the square on the OLD timing by the wall clock, also through a long task. So at each sample the loop's place
+// is taken on the wall clock (performance.now at the sample) under the timing just sampled and under the timing of
+// the sample before: the difference is the step the square makes when the frame hands the new timing over (0 when
+// nothing was retimed). The main thread's own view (its place by the frame's time, the computed scale and opacity) is
+// judged too, except in a frame that comes after a long task: its time is the frame's BEGINNING, from before the task.
+const shownAt = (x, w) => (x.state === 'paused' || x.s == null ? (x.c - x.delay) / x.dur : ((w - x.s) * (x.rate || 1) - x.delay) / x.dur);
+const medianFrame = (rows) => { const d = []; for (let i = 1; i < rows.length; i++) d.push(rows[i].w - rows[i - 1].w); d.sort((a, b) => a - b); return d[d.length >> 1] || 8.33; };
+function pair(R, i, layer, maxRate, frame) {
+	const r0 = R.rows[i - 1], r1 = R.rows[i], a = r0[layer], b = r1[layer];
+	if (!a || !b) return null;
+	if (a.id !== b.id) return { restart: true };
+	const out = {};
+	// The previous sample may hold a state the compositor never got: one the chip set in a task and replaced in the
+	// next frame's callback before that frame was handed over, or a loop pending its start time. So the step is taken
+	// from the nearer of the two samples before (same loop, a known start time or held) and the smaller one counts.
+	const usable = (x) => x && x.id === b.id && (x.state === 'paused' || x.s != null);
+	const r00 = R.rows[i - 2], prev = [a, r00 && r00[layer]].filter(usable);
+	const h1 = shownAt(b, r1.w), steps = prev.map((x) => { const h0 = shownAt(x, r1.w); return h0 >= 0 || h1 >= 0 ? Math.abs(h1 - h0) : null; }).filter((x) => x != null);
+	if ((b.state === 'paused' || b.s != null) && steps.length) { out.hand = +Math.min(...steps).toFixed(5); out.handBound = +(frame / Math.min(a.dur, b.dur) * 1.1 + 0.002).toFixed(5); }
+	out.stale = r1.w - r0.w > 3 * frame;
+	if (!out.stale && a.place != null && b.place != null) {
+		// a loop the chip has just re-placed is put by the wall clock, which runs up to a frame ahead of the frame's own
+		// time: the main thread's view may then move up to two frames (the hand-over above stays at one)
+		const dt = r1.t - r0.t, k = a.dur !== b.dur || a.delay !== b.delay || (a.s != null && b.s != null && Math.abs(a.s - b.s) > 0.5) ? 2 : 1;
+		out.place = +(b.place - a.place).toFixed(5); out.placeBound = +(k * Math.max(dt, frame) / Math.min(a.dur, b.dur) * 1.1 + 0.002).toFixed(5);
+		out.value = +Math.abs(b.v - a.v).toFixed(5); out.valueBound = +(maxRate * k * Math.max(dt, frame) * 1.15 + 0.002).toFixed(5);
+		// re-placed by the wall clock, the main thread's view may also sit a hair behind (its frame's time began before
+		// the task that re-placed it): within the bound either way then, never backwards otherwise
+		out.floor = k === 2 ? -out.placeBound : -1e-6;
+	}
+	out.ok = (out.hand == null || out.hand <= out.handBound) && (out.place == null || (out.place >= out.floor && out.place <= out.placeBound && out.value <= out.valueBound));
+	return out;
+}
+function rates(R) {
+	const out = {};
+	for (const layer of ['g', 'b']) {
+		const changes = new Set(R.marks.map((m) => m.i).filter((i) => i > 0));
+		let maxRate = 0;
+		for (let i = 1; i < R.rows.length; i++) {
+			const a = R.rows[i - 1][layer], b = R.rows[i][layer];
+			if (!a || !b || a.id !== b.id || changes.has(i) || R.rows[i - 1].flow !== 'flowing' || R.rows[i].flow !== 'flowing' || a.dur !== b.dur || a.place == null || b.place == null) continue;
+			const dt = R.rows[i].t - R.rows[i - 1].t; if (dt <= 0) continue;
+			maxRate = Math.max(maxRate, Math.abs(b.v - a.v) / dt);
+		}
+		out[layer] = maxRate;
+	}
+	return out;
+}
+// The onboarding window pauses the app's loops as it opens and resumes them as it closes, each time with a page-wide
+// restyle (~240 ms on the Windows PC) in the same task: the frame after it is late, and Chrome takes the pause's hold
+// (or the resume's start) by that frame's time, from before the restyle, so EVERY held loop jumps when that frame is
+// handed over (back at the open, forward at the close) by about the restyle's length. The lead's call A (2026-11-13):
+// the window's, not the chip's (main's page shows it for the chip and another held loop alike). So within 3 s of the
+// open and of the close a jump of the chip is named, not failed, when it is no larger (in time) than the largest jump of
+// other held loops sampled in the same run (up to 12, taken before the open; pairs in which a loop's own timing
+// changed are not counted) plus a frame; any
+// other jump of the chip fails.
+function windowSpans(R, frame) {
+	const out = [];
+	for (const name of ['onboarding window opens (holds the glyph), no more words', 'onboarding window closes']) {
+		const m = R.marks.find((x) => x.name === name);
+		if (!m || m.i <= 0) continue;
+		const from = m.i, until = R.rows.findIndex((r, i) => i > from && r.w - R.rows[from].w > 3000);
+		const to = until < 0 ? R.rows.length : until;
+		let other = 0, otherAt = null;
+		// a pause or resume taken by a late frame's time moves a loop by at most the time between the two samples around
+		// it: a reference step past that (its own timing changed: NieR restyles it) is not a measure of the window's jump
+		for (let i = from; i < to; i++) {
+			const r0 = R.rows[i - 1], r1 = R.rows[i];
+			if (!r0.os || !r1.os) continue;
+			for (let k = 0; k < Math.min(r0.os.length, r1.os.length); k++) {
+				const a = r0.os[k], b = r1.os[k];
+				if (a.id !== b.id || a.dur !== b.dur || a.delay !== b.delay || !(b.dur > 0)) continue;
+				const h0 = shownAt(a, r1.w), h1 = shownAt(b, r1.w);
+				if (!(h0 >= 0 || h1 >= 0)) continue;
+				const ms = Math.abs(h1 - h0) * b.dur;
+				if (ms > r1.w - r0.w + frame) continue;
+				if (ms > other) { other = ms; otherAt = Math.round(r1.w - R.rows[from].w); }
+			}
+		}
+		out.push({ what: /opens/.test(name) ? 'open' : 'close', from, to, otherMs: other, otherAt, limitMs: other + frame });
+	}
+	return out;
+}
+const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
+// Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew,
+// never jumps at a hand-over, and (outside the frames after a long task) its place never moves more than one frame at
+// the faster pace (a retime that something else did at a moment no mark names shows here).
 function everyFrame(R) {
-	const out = { worst: 0, where: null, restarts: [] };
+	const out = { worst: 0, where: null, restarts: [], known: [] }, frame = medianFrame(R.rows), mr = rates(R), spans = windowSpans(R, frame);
+	out.spans = spans;
 	const first = Math.max(1, Math.min(...R.marks.map((m) => m.i).filter((i) => i > 0)));
 	for (const layer of ['g', 'b']) {
 		for (let i = first; i < R.rows.length; i++) {
-			const a = R.rows[i - 1][layer], b = R.rows[i][layer];
-			if (!a || !b) continue;
-			const t = Math.round(R.rows[i].t - R.rows[first].t);
-			if (a.id !== b.id) { out.restarts.push(`${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms`); continue; }
-			if (a.place == null || b.place == null) continue;
-			const dt = R.rows[i].t - R.rows[i - 1].t, bound = dt / Math.min(a.dur, b.dur) * 1.1 + 0.002, step = b.place - a.place;
-			const over = step < -1e-6 ? 99 : step / bound;
-			if (over > out.worst) { out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: place ${a.place.toFixed(4)} -> ${b.place.toFixed(4)} (bound ${bound.toFixed(4)}), length ${a.dur} -> ${b.dur}, delay ${a.delay ?? '-'} -> ${b.delay ?? '-'}, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
+			const x = pair(R, i, layer, mr[layer], frame); if (!x) continue;
+			const t = Math.round(R.rows[i].w - R.rows[first].w);
+			if (x.restart) { out.restarts.push(`${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms`); continue; }
+			const wc = spanOf(spans, i);
+			if (wc && x.hand != null && x.hand > x.handBound) {
+				const ms = x.hand * R.rows[i][layer].dur;
+				if (ms <= wc.limitMs && ms <= R.rows[i].w - R.rows[i - 1].w + frame) { out.known.push(`${layer === 'g' ? 'glyph' : 'backlight'} ${Math.round(ms)} ms (${x.hand} of a loop) at +${Math.round(R.rows[i].w - R.rows[wc.from].w)} ms after the ${wc.what}`); continue; }
+			}
+			const over = Math.max(x.hand != null ? x.hand / x.handBound : 0, x.place != null ? (x.place < x.floor ? 99 : Math.abs(x.place) / x.placeBound) : 0);
+			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
 		}
 	}
 	return out;
 }
 
-// Judge one look's samples.
+// Judge one look's samples at its changes.
 function judge(R, look) {
-	const out = [];
-	const rows = R.rows;
+	const out = [], frame = medianFrame(R.rows), mr = rates(R), spans = windowSpans(R, frame);
 	for (const layer of ['g', 'b']) {
-		// the fastest ordinary frame at the flowing pace: same loop, no change in between, both flowing
-		const changes = new Set(R.marks.map((m) => m.i).filter((i) => i > 0));
-		let maxRate = 0;
-		for (let i = 1; i < rows.length; i++) {
-			const a = rows[i - 1][layer], b = rows[i][layer];
-			if (!a || !b || a.id !== b.id || changes.has(i) || rows[i - 1].flow !== 'flowing' || rows[i].flow !== 'flowing' || a.dur !== b.dur || a.place == null || b.place == null) continue;
-			const dt = rows[i].t - rows[i - 1].t; if (dt <= 0) continue;
-			maxRate = Math.max(maxRate, Math.abs(b.v - a.v) / dt);
-		}
 		for (const m of R.marks) {
-			if (m.i <= 0 || m.i >= rows.length) continue;
-			const r0 = rows[m.i - 1], r1 = rows[m.i], a = r0[layer], b = r1[layer];
+			if (m.i <= 0 || m.i >= R.rows.length) continue;
+			const r0 = R.rows[m.i - 1], r1 = R.rows[m.i], a = r0[layer], b = r1[layer];
 			if (!a && !b) continue;
-			const dt = r1.t - r0.t;
-			const themes = [...new Set(rows.slice(Math.max(0, m.i - 2), m.i + 3).map((r) => `${r.th}${r.nier === 'on' ? '+nier' : ''} ${r.ease}`))].join(' > ');
-			const row = { look, layer: layer === 'g' ? 'glyph' : 'backlight', name: m.name, kind: m.kind, themes, frac: a && a.place != null ? +(a.place % 1).toFixed(3) : null, dt: +dt.toFixed(1), from: a && a.dur, to: b && b.dur, flowTo: r1.flow, flipMs: m.flipMs };
-			if (!a || !b || a.id !== b.id) { row.restart = true; out.push(row); continue; }
-			if (a.place == null || b.place == null) { row.held = 'delay'; out.push(row); continue; }
-			const bound = dt / Math.min(a.dur, b.dur);
-			row.place = +(b.place - a.place).toFixed(5); row.placeBound = +(bound * 1.1 + 0.002).toFixed(5);
-			row.value = +Math.abs(b.v - a.v).toFixed(5); row.valueBound = +(maxRate * dt * 1.15 + 0.002).toFixed(5);
-			row.ok = row.place >= -1e-6 && row.place <= row.placeBound && row.value <= row.valueBound;
+			const themes = [...new Set(R.rows.slice(Math.max(0, m.i - 2), m.i + 3).map((r) => `${r.th}${r.nier === 'on' ? '+nier' : ''} ${r.ease}`))].join(' > ');
+			const row = { look, layer: layer === 'g' ? 'glyph' : 'backlight', name: m.name, kind: m.kind, themes, frac: a && a.place != null ? +(a.place % 1).toFixed(3) : null, dt: +(r1.w - r0.w).toFixed(1), from: a && a.dur, to: b && b.dur, flowTo: r1.flow, flipMs: m.flipMs };
+			const x = pair(R, m.i, layer, mr[layer], frame);
+			if (!x || x.restart) { row.restart = true; out.push(row); continue; }
+			Object.assign(row, x);
+			// the page-wide jump around the window's open and close (windowSpans): named, not failed, when the rest is fine
+			const wc = spanOf(spans, m.i);
+			if (!row.ok && wc && row.hand > row.handBound && row.hand * b.dur <= wc.limitMs && row.hand * b.dur <= r1.w - r0.w + frame && (row.place == null || (row.place >= row.floor && row.place <= row.placeBound && row.value <= row.valueBound))) { row.ok = true; row.known = true; }
 			out.push(row);
 		}
 	}
@@ -265,18 +366,20 @@ export default async function (t) {
 			const rows = judge(R, look);
 			for (const e of R.errors) t.log(`${look}: ${e}`);
 			await t.check(`${look}: the run went through every change`, R.errors.length === 0 && R.rows.length > 60, R.errors.join('; ') || `${R.rows.length} frames sampled`);
-			for (const r of rows) t.log(`${look} ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : r.held ? 'in its delay' : `place +${r.place} (bound ${r.placeBound}), value ${r.value} (bound ${r.valueBound})`}, length ${r.from} -> ${r.to}, dt ${r.dt} ms, theme ${r.themes}${r.flipMs != null ? `, ${r.flipMs} ms after the last word` : ''}`);
+			for (const r of rows) t.log(`${look} ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}), ${r.stale ? 'main thread: a frame after a long task, not judged' : `main-thread place +${r.place} (bound ${r.placeBound}), value ${r.value} (bound ${r.valueBound})`}`}, length ${r.from} -> ${r.to}, ${r.dt} ms between samples, theme ${r.themes}${r.flipMs != null ? `, ${r.flipMs} ms after the last word` : ''}`);
 			const bad = rows.filter((r) => r.restart || (r.ok === false));
-			await t.check(`${look}: no change makes the loop jump (place within a frame at the faster pace, scale and opacity within the fastest ordinary frame)`, rows.length > 0 && bad.length === 0,
-				bad.length ? bad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `place ${r.place}/${r.placeBound}, value ${r.value}/${r.valueBound}`}`).join('; ') : `${rows.length} changes judged`);
+			await t.check(`${look}: no change makes the loop jump (at the hand-over within a frame at the faster pace; on the main thread place within a frame, scale and opacity within the fastest ordinary frame)`, rows.length > 0 && bad.length === 0,
+				bad.length ? bad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}, value ${r.value ?? '-'}/${r.valueBound ?? '-'}`}`).join('; ') : `${rows.length} changes judged`);
 			const ev = everyFrame(R);
-			t.log(`${look}: every frame from the first change on: worst place step ${(ev.worst * 100).toFixed(0)}% of its bound${ev.where ? ` (${ev.where})` : ''}; new loops: ${ev.restarts.join(', ') || 'none'}`);
-			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never moves more than one frame at the faster pace`, ev.restarts.length === 0 && ev.worst <= 1,
+			t.log(`${look}: every frame from the first change on: worst step ${(ev.worst * 100).toFixed(0)}% of its bound${ev.where ? ` (${ev.where})` : ''}; new loops: ${ev.restarts.join(', ') || 'none'}`);
+			for (const sp of ev.spans) t.log(`${look}: NOTE the onboarding window's ${sp.what}: the other held loops (${R.otherDesc}) jumped up to ${Math.round(sp.otherMs)} ms at +${sp.otherAt} ms after it (a page-wide jump, the window's: known, not judged); the chip's jumps within 3 s up to ${Math.round(sp.limitMs)} ms are named, not failed`);
+			if (ev.spans.length) t.log(`${look}: NOTE the chip's jumps named as the window's: ${ev.known.join('; ') || 'none'}`);
+			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never jumps (hand-over and main-thread place)`, ev.restarts.length === 0 && ev.worst <= 1,
 				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
 			// at once: a word -> flowing with the flowing length in the next frame; the quiet change on time
 			const words = R.marks.filter((m) => m.kind === 'word' && m.i > 0 && m.i < R.rows.length);
 			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = R.rows[m.i]; if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
-			await t.check(`${look}: a word turns the pace to flowing before the next frame`, words.length >= 3 && slow.length === 0, slow.length ? slow.map((m) => `${m.name}: next frame ${JSON.stringify(R.rows[m.i].flow)} ${R.rows[m.i].g && R.rows[m.i].g.dur}`).join('; ') : `${words.length} words`);
+			await t.check(`${look}: a word turns the pace to flowing before the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => `${m.name}: next frame ${JSON.stringify(R.rows[m.i].flow)} ${R.rows[m.i].g && R.rows[m.i].g.dur}`).join('; ') : `${words.length} words`);
 			const quiet = R.marks.filter((m) => m.kind === 'quiet');
 			const off = quiet.filter((m) => m.flipMs == null || m.flipMs < 880 || m.flipMs > 900 + late);
 			await t.check(`${look}: 900 ms without a word turns it to waiting (within ${late} ms after)`, quiet.length >= 2 && off.length === 0, quiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}`).join('; '));
