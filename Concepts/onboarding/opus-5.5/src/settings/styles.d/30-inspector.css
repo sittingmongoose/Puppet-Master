@@ -120,9 +120,9 @@
 /* FO-178 (Jared's card Q6, answer A: "Pop up over the panel, like the chat picker"): the list pops up over the panel
    (kit.d/30-inspector.js o55PopOpen) instead of unfolding in it. It is a Settings popout in document.body, so these rules
    are not under #panel-settings and read the look's own tokens, as every popout does (the --k3 tokens live on the panel).
-   kit.js's positionPopout gives it the trigger's left edge and width, its top or bottom and its max-height; here it is a
-   column: the maker strip (the chat's rail, laid flat) and the search at the top, and the list, the popup's own scroll
-   box and its rows' offsetParent, taking what is left. */
+   o55PopPlace (the chat picker's placement) gives it the trigger's left edge and width, its top or bottom and its
+   max-height; here it is a column: the maker strip (the chat's rail, laid flat) and the search at the top, and the list,
+   the popup's own scroll box and its rows' offsetParent, taking what is left. */
 .pm51-popout.o55-pick-pop { display: flex; flex-direction: column; min-width: 0; max-width: calc(100vw - 16px); padding: 8px; overflow: hidden; }
 .o55-pick-pop .o55-pick-chips { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 8px; }
 .o55-pick-pop .o55-pick-chip { position: relative; display: inline-grid; place-items: center; width: 32px; height: 30px; padding: 0; border: 1px solid transparent; border-radius: 8px; background: none; color: var(--text-muted, #8f8ab0); font: inherit; cursor: pointer; }
