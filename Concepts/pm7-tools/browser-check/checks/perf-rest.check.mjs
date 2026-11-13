@@ -10,12 +10,8 @@
 //             layout and asks for one more frame. The bar names its anchor only while the focus is inside it.
 //   old chat  The first chat (.pm6-chat-root) stays in the page under the 5.6 chat. Hidden with content-visibility its
 //             14 animations kept ticking on the main thread; it is display: none while it is covered (21-shell-perf.css).
-//   listener  One animationiteration listener on the document (the chat's send/stop chip) makes Chrome wake the main
-//             thread at every loop boundary of every CSS animation on the page (about 10 main frames a second at rest).
-//             It is STILL THERE: the timer that replaced it was taken out of this landing on 2026-11-12 (the owner's
-//             rule after its reviews kept finding edge cases; the work is kept on branch perf/stop-chip-timer-20261112).
-//             Until it returns the listener and the events it hears are LOGGED here, not judged; the frame bound
-//             below is judged with them in.
+//   listener  One animationiteration listener on the document (the chat's send/stop chip) made Chrome wake the main
+//             thread at every loop boundary of every CSS animation on the page. The chip times its own beat now.
 //   glyphs    A moving part inside an svg that is a flex or grid item dirties layout up to the document's root on every
 //             tick; inside a block of the svg's own size the layout stays in the svg.
 //
@@ -26,7 +22,7 @@
 //     so the count does not grow with the refresh rate, and 65% keeps room on a 60 Hz screen too);
 //   - whole-document layouts are at most 10 a second (a count, not a share: before, one a frame in Basic and Glass,
 //     117 to 120 a second, and 14 to 25 a second in Retro and NieR whose glyphs step; after, 0 to 4.2);
-//   - (logged, not judged, while the chip's listener stays: how many animationiteration events reached a listener.)
+//   - no animationiteration event reached a listener.
 //
 // --set looks=<a,b>   default basic-dark,glass-dark,retro-dark,nier-dark; all ten with looks=all
 // --set settle=<ms>   wait after load before the first measurement (default 40000: start-up work and the chat's demo run)
@@ -92,8 +88,8 @@ export default async function (t) {
 			for (const l of listeners) if (l.type === 'animationiteration') heard.push(`${expr} ${l.scriptId}:${l.lineNumber}`);
 		}
 		await cdp.send('Runtime.releaseObjectGroup', { objectGroup: 'perf-rest' }).catch(() => {});
-		t.log(`NOTE animationiteration listeners on the document or the window (the chat's Stop chip keeps one for now; logged, not judged): ${heard.length ? heard.join('; ') : 'none'}`);
-	} else t.log('NOTE sandbox surface: document listeners are not named here; the dispatch count of each trace is logged');
+		await t.check('no animationiteration listener on the document or the window', heard.length === 0, heard.length ? heard.join('; ') : 'none');
+	} else t.log('NOTE sandbox surface: document listeners are not named here; the dispatch count of each trace judges the listener');
 
 	for (const look of looks) {
 		await t.app.look(look);
@@ -129,7 +125,7 @@ export default async function (t) {
 			t.log(`${at}: ${hz.toFixed(0)} Hz, main frames ${fr}/s (${pct.toFixed(0)}%), frame p50 ${x.mainFrames.p50} p95 ${x.mainFrames.p95} ms, main thread ${Math.round(x.cost.main)} ms/s, layouts ${x.layoutPerSec}/s of which whole-document ${lay}/s, drawn ${x.drawn.perSec}/s`);
 			await t.check(`${at}: main-thread frames at rest are at most ${framesPct}% of the refresh rate`, pct <= framesPct, `${fr}/s of ${hz.toFixed(0)} Hz = ${pct.toFixed(0)}%`);
 			await t.check(`${at}: whole-document layouts at rest are at most ${layoutsMax} a second`, lay <= layoutsMax, `${lay}/s (${x.layoutPerSec}/s layouts of any kind)`);
-			t.log(`${at}: NOTE ${it} animationiteration events reached a listener in ${x.secs} s (logged, not judged)`);
+			await t.check(`${at}: no animationiteration event reaches a listener at rest`, it === 0, `${it} dispatched in ${x.secs} s`);
 		}
 
 		// ---- the anchor comes back with the focus, once per look ----
