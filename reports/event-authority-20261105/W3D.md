@@ -242,7 +242,7 @@ custody/receipt, head, retry, publication, retained read, replay, withdrawal) an
 unrelated copy/digest/commitment through the valid builder, so each negative carries exactly one defect.
 
 Complete checker result (`python3 scripts/pm_w3d_bsd_events.py`): **status pass**, 15 families,
-**190 positives, 4203 negatives, 4188 single-row, 15 declared multi-row, 0 mismatches, 0 unresolved refs**.
+**235 positives, 4218 negatives, 4203 single-row, 15 declared multi-row, 0 mismatches, 0 unresolved refs**.
 The 15 multi-row cases are schema/type-confusion witnesses where one wrong-type value legitimately trips
 the type row and a dependent keyword row; each is declared `multi=True`. Every reachable row has a
 single-defect witness in every family; the witness-requirement is asserted by the checker itself.
@@ -353,7 +353,7 @@ override (HI13), incoherent backup (HI14).
 
 | Check | Exit | Result |
 |---|---:|---|
-| complete checker (`pm_w3d_bsd_events.py`) | 0 | pass; 190 pos / 4203 neg / 4188 single / 15 multi / 0 mismatch |
+| complete checker (`pm_w3d_bsd_events.py`) | 0 | pass; 235 pos / 4218 neg / 4203 single / 15 multi / 0 mismatch |
 | number self-test (`--scope numbers`) | 0 | pass, 276 positives |
 | number corpus through checker | 0 | pass, 0 disagreements, 0 untracked |
 | mutation proof (12 guards) | 0 | pass, 12/12 flip+restore |
