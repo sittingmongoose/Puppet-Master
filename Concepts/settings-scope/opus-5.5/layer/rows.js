@@ -78,7 +78,10 @@
     const out = [], c = PSX.ctxFull(S.ctx);
     if (!r || r.notOffered) return out;
     if (r.ceiling) out.push({ key: 'info', text: `Limited to ${vt(id, r.ceiling.value)} on ${placeName('computer', r.ceiling.key)}` });
-    if (r.careful) out.push({ key: 'info', text: `For safety, ${placeName(r.careful.by.level, r.careful.by.key)}’s ${vt(id, r.value)} is used` });
+    // Astra max A1: a per_item row names only the items the careful rule decided ("This computer’s Bash: Block")
+    if (r.careful) out.push({ key: 'info', text: `For safety, ${placeName(r.careful.by.level, r.careful.by.key)}’s ${vt(id, r.careful.used !== undefined ? r.careful.used : r.value)} is used` });
+    // Astra max A4: less motion wins over a more specific request for full motion
+    if (r.motion && r.motion.overruled.length) out.push({ key: 'info', text: `Less motion wins: ${PSX.askerName(r.from)} asks for it` });
     if (r.stale.length) {
       const s = r.stale.find((x) => x.level === 'project') || r.stale.find((x) => x.level === 'computer') || r.stale[0];
       const wr = placeName('computer', PSX.writer(s.level, s.key));

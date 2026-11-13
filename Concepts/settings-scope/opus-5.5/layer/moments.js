@@ -569,7 +569,7 @@
     /* B, the path exception: a home read the task needs (a step marked home), while FileSafe is on. Review Sol max F1:
        the step's target is read by the layer's one path reader too, so a step marked home whose path isn't in the home
        folder never takes the exception */
-    homeRead: (a, fileSafe) => !!a.home && !!fileSafe && PSX.paths.find(a.target).some((f) => f.root === 'home'),
+    homeRead: (a, fileSafe) => !!a.home && !!fileSafe && PSX.paths.find(a.target).some((f) => PSX.paths.rootOf(f.word) === 'home'),
     /* C. how long an answer lasts. step: this step only (§6.1 "Once authorizes one invocation"; §2.3 deny blocks the
        invocation). run: the same request later in this run and this run mode, gone at a new run or a switch of Run
        mode (§6.1 "for session is ephemeral under approval_scope_key"; PS-113; §2 Rules 3). rule: a kept rule, in every
@@ -605,53 +605,58 @@
   ];
   const ruleKind = (a) => MODEL.kinds[a.kind].rule;
   const PATHS = PSX.paths;
-  /* E. host-dependent: what the rule allows depends on one computer. A folder rule always is; a command rule is when
-     its pattern names a path anywhere in it (PSX.paths, the layer's one path reader: behind "=", in quotes, a drive with
-     either separator, backslashes, ~, a UNC share), runs a program by its location, or names a script file; when its
-     program is a file command (read, rm and the like); or when its program is a wildcard (*: programs at every
-     location). Review A-r4 N2: it comes from the pattern, what the rule is about (PS-144), never from the step it was
-     typed on. The file-command and wildcard-program parts are concept choices: a pattern that can match a program by
-     its path is about that location.
+  /* E. host-dependent: what the rule allows depends on one computer. A folder rule always is; a command rule is when a
+     row of the README's table E2 holds for one of its words: the one rule PSX.paths.host (layer/world.js) holds as
+     HOST_ROWS. Rows 1 to 6 are PS-144's host-dependent targets (an executable location, a path, a relative place, the
+     home folder or a drive, a directory or file flag's value, a script file); rows 7 and 8 are concept choices (a file
+     command, a wildcard program). Review A-r4 N2: it comes from the pattern, what the rule is about (PS-144), never from
+     the step it was typed on.
      Review Sol max F1: hostOf() is the one classifier. The editor's places, its line saying why, the line saying a
      chosen place was cleared, and the save guard all call it, so what the editor offers and what Add the rule keeps
-     can never differ. It says why: { why: folder | path | file | program | filecmd | wildcard, word } or null */
-  const FILE_CMDS = /^(read|write|edit|list|open|cat|less|head|tail|ls|cp|mv|rm|rmdir|mkdir|touch|chmod|chown|find|grep|tar|zip|unzip)$/i;
+     can never differ. Astra max A2: it no longer has a reader of its own; it asks PSX.paths.host, row by row.
+     It says why: { why: folder | program | separator | relative | home | root | flag | file | filecmd | wildcard,
+     row, word, flag? } or null */
   const hostOf = (pattern, a) => {
-    if (a && ruleKind(a) === 'path') return { why: 'folder' };
+    if (a && ruleKind(a) === 'path') return { why: 'folder', row: 'folder' };
     const p = String(pattern || '').trim(); if (!p) return null;
-    const f = PATHS.find(p)[0];
-    if (f) return { why: f.program ? 'program' : f.file ? 'file' : 'path', word: f.path };
-    const prog = PATHS.program(p);
-    if (prog && prog.includes('*')) return { why: 'wildcard', word: prog };
-    if (prog && FILE_CMDS.test(prog)) return { why: 'filecmd', word: prog };
-    return null;
+    return PATHS.host(p);
   };
   const hostDependent = (pattern, a) => !!hostOf(pattern, a);
-  // the reason, in the words the editor and the guard show; `code` wraps the word it found
+  // the reason, in the words the editor and the guard show, one per row of E2; `code` wraps the word it found
   const hostWhy = (h, code) => {
     if (!h) return '';
-    const w = code ? `<code>${esc(h.word)}</code>` : h.word;
-    return { folder: 'a folder rule is about a path on one computer', path: `it names ${w}, a path on one computer`, file: `it names the file ${w}, which is on one computer`, program: `it runs ${w} by its location on one computer`, filecmd: `${w} works on the files of one computer`, wildcard: `${w} can match a program by its location on one computer` }[h.why];
+    const c = (x) => (code ? `<code>${esc(x)}</code>` : x), w = c(h.word);
+    return {
+      folder: 'a folder rule is about a path on one computer',
+      program: `it runs ${w} by its location on one computer`,
+      separator: `${w} has a / or a \\, so it reads as a path on one computer`,
+      relative: `${w} is a place relative to the folder it runs in`,
+      home: `${w} is in the home folder of one computer`,
+      root: `${w} names a drive or a file of one computer`,
+      flag: `${c(h.flag)} takes a folder or a file, so ${w} names a place on one computer`,
+      file: `it names the file ${w}, which is on one computer`,
+      filecmd: `${w} works on the files of one computer`,
+      wildcard: `${w} can match a program by its location on one computer`
+    }[h.why];
   };
   /* F. broad: the preview warns, and the rule can still be made. A command rule is broad when its program is a
      wildcard (*, ./scripts/*), when it starts with sudo and has a *, when a shell or interpreter runs * or inline code,
-     or when one program word, with or without flags, is followed by * (npm *, npx *, git *, rm -rf *, read *). A named
-     script or subcommand followed by * is not (./scripts/release.sh *, npm test *, git push origin *). A folder rule
-     is broad when it reaches past the file or folder the step asked for (/mnt/team-share/**). The whole list is a
-     concept choice: canon names none */
+     or when one program word, with or without flags (a directory flag's value counts with its flag), is followed by *
+     (npm *, npx *, git *, rm -rf *, read *, git -C repo *). A named script or subcommand followed by * is not
+     (./scripts/release.sh *, npm test *, git push origin *). A folder rule is broad when it reaches past the file or
+     folder the step asked for (/mnt/team-share/**). The whole list is a concept choice: canon names none.
+     Astra max A2: it reads the same words as E2 (PSX.paths.read): a named script is a word rows 1, 2, 3 or 6 hold for */
   const SHELLS = /^(bash|sh|zsh|fish|dash|ksh|csh|tcsh|pwsh|powershell|cmd(\.exe)?|env|eval|exec|xargs|python[0-9.]*|node|deno|bun|ruby|perl|php|lua|osascript)$/i;
-  // review Sol max F1: a named script is a word the path reader reads as a program by its location or a script file
-  const isScript = (w) => !!PATHS.word(w, true);
-  const words = (p) => { const all = PATHS.words(p); return all.slice(PATHS.programAt(all)); };
+  const isScript = (x) => !!x && !!x.host && [1, 2, 3, 6].includes(x.host.row);
   const isBroad = (pattern, a) => {
     const p = String(pattern || '').trim(); if (!p) return false;
     // a folder rule: its literal start and the step's path, each written one way (quotes off, either separator)
     if (a && ruleKind(a) === 'path') { const lit = PATHS.norm(p.split('*')[0]), tgt = PATHS.norm(a.target); return p.includes('*') && lit !== tgt && !lit.startsWith(tgt + '/'); }
-    const all = PATHS.words(p), w = words(p);
-    if (all[0] === 'sudo' && p.includes('*')) return true;
-    if (!w.length || w[0].includes('*')) return true;
-    if (SHELLS.test(w[0])) { if (!p.includes('*')) return false; const next = w.slice(1).find((x) => !x.startsWith('-')); return !next || !isScript(next); }
-    return /\s\*$/.test(p) && w.slice(1, -1).every((x) => x.startsWith('-')) && !isScript(w[0]);
+    const r = PATHS.read(p), w = r.words.slice(r.at);
+    if (r.words.length && r.words[0].word === 'sudo' && p.includes('*')) return true;
+    if (!w.length || w[0].word.includes('*')) return true;
+    if (SHELLS.test(w[0].word)) { if (!p.includes('*')) return false; return !isScript(w.slice(1).find((x) => x.role === 'arg')); }
+    return /\s\*$/.test(p) && w.slice(1, -1).every((x) => x.role === 'flag' || x.role === 'value' || x.role === 'end') && !isScript(w[0]);
   };
   /* §3.1: * matches zero or more characters and ? exactly one; a trailing " *" makes the rest optional ("git *" matches
      "git"). A folder rule's trailing "/**" (or "/*") covers the folder itself as well as everything in it */

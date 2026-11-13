@@ -128,14 +128,22 @@
     return out;
   }
   /* "Keep them fixed": every other setting the destination may own, as the source has it in use today, so later changes
-     to your usual settings stop reaching it (S9). Screen, program and folder rows, and keys, stay out */
-  function fixedRows(src, dstCtx, have) {
+     to your usual settings stop reaching it (S9). Screen, program and folder rows, and keys, stay out.
+     Astra max A3 (SSYS-062: Keep them fixed "freezes only the previewed portable values"; "computer programs, paths,
+     screen values and secrets are never made portable by freezing"): the source is read on the device in front of you,
+     so a screen row with a project level (Theme, Reduce motion) can be in use from that device's own value. Such a value
+     belongs to the device: it is left out here, before anything counts, ticks, previews or writes it, and `screenHeld`
+     names it for the preview. (The operating system's motion preference is never a setting value: resolve.js keeps it
+     in motion.effective.) The source project's own values come in sourceDiff under their own contract, untouched */
+  const deviceOrigin = (r) => !!r && r.from.level === 'device';
+  function fixedRows(src, dstCtx, have, screenHeld) {
     const p = PSX.projectById(src), srcCtx = { project: src, device: S.ctx.device, on: p ? p.home : null };
     const w = PSX.W, out = [];
     Object.keys(DEF).forEach((id) => {
       const d = DEF[id];
       if (have.has(id) || d.home || d.demoRow || d.owner || !(d.may || []).includes('project')) return;
       const r = PSX.resolve(id, srcCtx); if (!r || r.notOffered) return;
+      if (deviceOrigin(r)) { if (screenHeld) screenHeld.push({ id, value: clone(r.value), device: r.from.key }); return; }
       const v = r.asked !== undefined ? r.asked : r.value;
       /* review Sol max F2, found while proving the write: a setting with no value at all can't be kept fixed (writing
          nothing keeps nothing), so it is never counted, previewed or written as one */
@@ -200,7 +208,8 @@
       const ids = new Set(diff.map((x) => x.id));
       const out = diff.map((x) => Object.assign({ from: x.files ? 'file' : 'own' }, x));
       if (st.fromComp) fromComputer(st.src).forEach((x) => { if (ids.has(x.id)) return; ids.add(x.id); out.push(Object.assign({ from: 'computer', usual: PSX.resolve(x.id, dstCtx()).value, dstOwn: mode !== 'new' && PSX.has(PSX.W.project[st.dst], x.id), same: false, files: false }, x)); });
-      if (st.fixed) fixedRows(st.src, dstCtx(), ids).forEach((x) => { ids.add(x.id); out.push(Object.assign({ from: 'fixed' }, x)); });
+      out.held = [];
+      if (st.fixed) fixedRows(st.src, dstCtx(), ids, out.held).forEach((x) => { ids.add(x.id); out.push(Object.assign({ from: 'fixed' }, x)); });
       return out;
     }
     /* the one tick each row has: a file by About its own files; an AI row never while "Use the same AI accounts" is off;
@@ -212,7 +221,7 @@
        receipt are all made from it. `left` is what an opt-in would bring that you left out, so the preview can say it
        stays as usual */
     function plan() {
-      if (st.src === 'usual' || !st.dst) return { rows: [], things: [], accts: [], copied: [], kept: [], left: [] };
+      if (st.src === 'usual' || !st.dst) return { rows: [], things: [], accts: [], copied: [], kept: [], left: [], held: [] };
       const all = candidates();
       const rows = all.filter(isOn);
       rows.forEach((x) => { if (x.dstOwn && !st.clash[x.id]) st.clash[x.id] = 'keep'; });
@@ -221,7 +230,7 @@
       const kept = rows.filter((x) => x.dstOwn && st.clash[x.id] === 'keep');
       const copied = rows.filter((x) => !kept.includes(x));
       const left = all.filter((x) => (x.from === 'fixed' || x.from === 'computer') && !aiOff(x) && !isOn(x));
-      return { rows, things, accts, copied, kept, left };
+      return { rows, things, accts, copied, kept, left, held: all.held || [] };
     }
     function totals() { const p = plan(); return { n: p.copied.length, kept: p.kept.length, things: p.things.length, accts: p.accts.length }; }
     function primaryLabel() {
@@ -379,6 +388,8 @@
       if (fixed.length) h += `<details class="psx-adv"><summary data-k="fixedlist"><svg class="psx-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Keep them fixed: ${fixed.length} more settings, each as ${esc(st.src)} has it today</span></summary><ul class="psx-list">${fixed.map(rowLi).join('')}</ul></details>`;
       // review Sol max F2: what an opt-in would have brought and you left out is named, so the preview shows it held
       if ((p.left || []).length) h += `<p class="psx-p psx-muted" data-k="leftout">${mark('info')} Stays as usual, as you chose: ${esc(list(p.left.map((x) => label(x.id)), 4))}.</p>`;
+      // Astra max A3: a screen value the source uses from a device is never kept fixed, and the preview names it
+      if ((p.held || []).length) { const devs = [...new Set(p.held.map((x) => placeName('device', x.device)))]; h += `<p class="psx-p psx-muted" data-k="screenheld">${mark('info')} Not kept fixed: ${esc(list(p.held.map((x) => `${label(x.id)} (${vt(x.id, x.value)})`), 4))}. ${p.held.length === 1 ? 'It comes' : 'They come'} from ${esc(list(devs))}’s own screen settings, and screen settings belong to each device.</p>`; }
       h += `<p class="psx-p psx-muted" style="margin-top:10px">Skipped: sign-ins, keys, files and history (never copied); screen settings (they belong to each device); program and folder settings (they belong to each computer).</p>`;
       if (!done) h += `<p class="psx-p psx-muted">${mode === 'new' ? 'Nothing applies before the project is made.' : 'It is one change with one Undo, checked when it is saved.'}</p>`;
       return h;

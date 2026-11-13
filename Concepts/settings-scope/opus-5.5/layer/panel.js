@@ -367,19 +367,101 @@
     const g = PSX.groupOf && PSX.groupOf(id);
     return g ? `its owner in ${g}` : 'its owner';
   };
-  // an action: it runs when you choose it, and keeps nothing, so it has no place
-  const ACTION_VIEW = {
-    kind: 'action', owner: null, now: 'An action, not a setting',
-    sentence: 'An action, not a setting: it runs when you choose it, so it has no place to set.',
-    everywhere: 'Not a value for everywhere: nothing is kept.',
-    computer: 'Not per computer: it runs when you choose it.',
-    project: 'Not per project: it runs when you choose it.'
+  /* an action: it runs when you choose it, and keeps nothing, so it has no place. Astra max N1: it still has an owner,
+     the list, page or thing it acts on, and its panel names it ("It belongs to your company registry list"). Where that
+     owner is a place of its own, the panel opens it: a row to reveal, or the Settings search box. Every action Plans'
+     inventory lists is here by id; a new one falls back to ownerOf (its owner's page). The libraries keep their own view */
+  const ACTION_OWNERS = {
+    // the three libraries are actions too; their panel is libraryWhere's, "your library"
+    'general.visual.manage-custom-themes': ['your library'], 'general.interaction.sound-catalog': ['your library'], 'general.interaction.sound-management': ['your library'],
+    'general.interaction.settings-search': ['the search box at the top of Settings', { search: true, label: 'Go to the search box' }],
+    'general.interaction.history-compare': ['each item in the History timeline'],
+    'general.interaction.history-export': ['your History'],
+    'general.interaction.history-rebuild': ['History’s search'],
+    'general.startup.reset-home-layout': ['the window’s layout'],
+    'ai.accounts.provider-connections': ['your list of AI services'],
+    'ai.accounts.github-connect': ['your GitHub account'],
+    'ai.accounts.set-preferred-account': ['the next run'],
+    'ai.accounts.opencode-add-server': ['your OpenCode servers'],
+    'ai.accounts.switch-history': ['the log of account switches'],
+    'ai.accounts.opencode-server-actions': ['each OpenCode server'],
+    'ai.models.requested-effective-inspector': ['each run'],
+    'ai.usage.provider-health': ['each AI service’s status'],
+    'ai.usage.refresh-models': ['each AI service’s model list'],
+    'ai.usage.quota-management': ['your quota and budget limits'],
+    'ai.usage.pressure-history': ['the log of rate-limit pressure'],
+    'safety.approvals.recovery-actions': ['each blocked action'],
+    'safety.approvals.debug-profile-disclosure': ['the debug automation profile'],
+    'code.terminal.import-scheme': ['your terminal colour schemes'],
+    'code.editing.formatter-custom': ['the formatter list'],
+    'code.editing.lsp-custom-servers': ['the language server list'],
+    'code.editing.lsp-restart': ['the running language servers'],
+    'code.execution.dockerhub-signin': ['your Docker Hub sign-in'],
+    'code.execution.create-repository': ['your Docker Hub account'],
+    'code.execution.registry-credentials': ['your company registry list', { row: 'code.execution.enterprise-registries', label: 'Open your company registry list' }],
+    'code.execution.unraid-repo-setup': ['your Unraid template repository'],
+    'code.execution.unraid-review-state': ['your Unraid template repository'],
+    'code.execution.edit-publisher-xml': ['your publisher profile'],
+    'memory.limits.manual-compact': ['each chat'],
+    'planning.interview.requirements-upload-order': ['this wizard session'],
+    'planning.testing.session-actions': ['each running test session'],
+    'branching.worktrees.clean-workspace-now': ['this project’s workspace'],
+    'branching.worktrees.thread-worktree-binding': ['each chat'],
+    'branching.worktrees.recovery-tools': ['this project’s branches and workspaces'],
+    'branching.worktrees.clean-all-worktrees': ['this project’s workspaces'],
+    'branching.subagents.agent-control-envelope': ['each helper agent'],
+    'branching.subagents.child-agent-lease': ['each running Goal'],
+    'web.providers.web-api-keys': ['each web service'],
+    'web.index.rebuild': ['the project search index'],
+    'web.index.disk-usage': ['the project search index'],
+    'web.index.evict-cache': ['the project search index'],
+    'personas.library.persona-manager': ['the persona list'],
+    'personas.tools.skipped-controls-audit': ['each persona’s recent runs'],
+    'extensions.skills.rescan': ['the skill list'],
+    'extensions.skills.preview': ['each skill'],
+    'extensions.skills.pattern-permissions': ['the skill list'],
+    'extensions.skills.validate': ['the skill list'],
+    'extensions.plugins.add-from-catalog': ['the plugin list'],
+    'extensions.plugins.add-local': ['the plugin list'],
+    'extensions.plugins.remove': ['the plugin list'],
+    'extensions.commands.reset-shortcuts': ['your shortcuts'],
+    'extensions.commands.backup-shortcuts': ['your shortcuts'],
+    'system.health.run-doctor': ['the Doctor'],
+    'system.health.platform-diagnostics': ['the Doctor'],
+    'system.mcp.health-status': ['each MCP server'],
+    'system.mcp.sign-out': ['each MCP server'],
+    'system.mcp.oauth-refresh': ['each MCP server'],
+    'system.mcp.debug-surface': ['each MCP server'],
+    'system.advanced.reset-defaults': ['your settings'],
+    'system.advanced.export-settings': ['your settings'],
+    'system.advanced.import-settings': ['your settings'],
+    'system.advanced.binary-rescan': ['the apps found on each computer'],
+    'system.advanced.chat-history-retention': ['each chat'],
+    'system.advanced.preserved-terminal-runs': ['your History'],
+    'system.advanced.request-storage-compaction': ['the storage service'],
+    'system.advanced.inspect-holds-quarantine': ['the storage service']
   };
+  function actionFacts(id) {
+    const a = ACTION_OWNERS[id], owner = a ? a[0] : ownerOf(id), open = a && a[1] ? a[1] : null;
+    return {
+      kind: 'action', owner, open, now: 'An action, not a setting',
+      sentence: `An action, not a setting: it runs when you choose it, so it has no place to set. It belongs to ${owner}.`,
+      everywhere: 'Not a value for everywhere: nothing is kept.',
+      computer: 'Not per computer: it runs when you choose it.',
+      project: 'Not per project: it runs when you choose it.'
+    };
+  }
+  // the owner's own place, from the panel's link
+  function openOwner(open) {
+    if (!open) return;
+    if (open.search) { const box = [...D.querySelectorAll('#pm-settings-root input[data-global-search]')].find((x) => x.getClientRects().length) || D.querySelector('#pm-settings-root input[data-global-search]'); if (box) { try { box.focus(); box.select(); } catch (e) { /* gone */ } } return; }
+    if (open.row && W.PM51 && W.PM51.revealSetting) W.PM51.revealSetting(open.row, { detail: true });
+  }
   /* what an owner-held row's panel says, without drawing it (the check reads it for every owner-held row) */
   function ownerFacts(id) {
     const special = OWNER_VIEWS[(((PSX.offLadder || {}).owned) || {})[id]]; if (special) return special;
     const type = PSX.layering && PSX.layering.types[id], s = W.PM51 && W.PM51.setting ? W.PM51.setting(id) : null;
-    if (type === 'action' || (!type && s && /^(action|resource)$/.test(String(s.control || '')))) return ACTION_VIEW;
+    if (type === 'action' || (!type && s && /^(action|resource)$/.test(String(s.control || '')))) return actionFacts(id);
     const L = PSX.layerOf(id), owner = ownerOf(id);
     const perProject = !!(L && (L.may_differ_by || []).includes('project'));
     const secret = !!((PSX.offLadder || {}).credential && PSX.offLadder.credential.test(id));
@@ -407,6 +489,13 @@
     sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
     sec.setAttribute('data-psx-owner', v.kind || 'owned'); if (v.owner) sec.setAttribute('data-psx-owner-name', v.owner);
     sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">${esc(v.sentence)}</p>`;
+    // Astra max N1: an owner with a place of its own is one click away
+    if (v.open) {
+      const b = D.createElement('button'); b.type = 'button'; b.className = 'o55-textbtn psx-tb psx-owner-open'; b.setAttribute('data-psx-key', 'owner-open');
+      b.textContent = v.open.label; b.setAttribute('aria-label', `${v.open.label}: ${v.owner}`);
+      b.addEventListener('click', () => openOwner(v.open));
+      sec.appendChild(b);
+    }
     const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
     slot('Everywhere', 'everywhere', v.everywhere, true);
     slot('Computers', 'computer', v.computer);
@@ -430,7 +519,14 @@
     const c = PSX.ctxFull(S.ctx);
     if (r.notOffered) return 'Each project has its own. Choose one below to see or change its value.';
     if (r.ceiling) return `${c.project} asks for ${vt(id, r.asked)}. ${placeName('computer', r.ceiling.key)} allows at most ${vt(id, r.ceiling.value)}.`;
+    if (r.careful && r.careful.items) return `${c.project} asks for ${vt(id, r.careful.asked)}. For safety, ${placeName(r.careful.by.level, r.careful.by.key)}’s own is used: ${vt(id, r.careful.used)}.`;
     if (r.careful) return `${c.project} asks for ${vt(id, r.careful.asked)}. For safety, ${placeName(r.careful.by.level, r.careful.by.key)}’s own is used.`;
+    // Astra max A4: Reduce motion is an OR of your requests here, then the operating system's
+    if (r.motion) {
+      const asker = PSX.askerName, os = r.motion.os && !r.value ? ' Your operating system asks for less motion, so motion is reduced anyway.' : '';
+      if (r.motion.overruled.length) return `${list(r.motion.overruled.map(asker))} ${r.motion.overruled.length === 1 ? 'asks' : 'ask'} for full motion. ${asker(r.from)} asks for less, and less motion wins.${os}`;
+      if (os) return `${r.from.level === 'default' ? 'Puppet Master’s default' : asker(r.from) + ' asks for full motion'}.${os}`;
+    }
     if (r.from.level === 'project') return 'Set for this project';
     if (r.from.level === 'computer') return DEF[id].home === 'computer' ? 'Set by you on this computer' : `From ${placeName('computer', r.from.key)}`;
     if (r.from.level === 'device') return r.from.key === c.device ? 'Set for this screen' : `From ${placeName('device', r.from.key)}`;
@@ -657,6 +753,30 @@
     const off = r.offered;
     const own = (lvl) => r.varies.filter((v) => v.level === lvl);
     const decides = (lvl, key) => r.from.level === lvl && (r.from.key || '') === (key || '');
+    /* Astra max A1: a per_item row is decided item by item, so each own line says which items it decides here, and which
+       of its items a more careful place overrules. Astra max A4: Reduce motion's own requests are ORed, so a request for
+       full motion that less motion overrules says so */
+    const itemName = (k, v) => (r.perItem === 'rules' ? String(k) : String(vt(id, { [k]: v })).replace(/:.*$/, ''));
+    // the Everywhere line shows the default when Everywhere has no value of its own, so what the default decides is its
+    const showsDefault = (lvl) => lvl === 'everywhere' && r.everywhere === undefined;
+    const perStates = (lvl, key, inCtx) => {
+      const out = [];
+      if (r.items) {
+        const mine = r.items.filter((i) => (i.from.level === lvl && (i.from.key || '') === (key || '')) || (showsDefault(lvl) && i.from.level === 'default'));
+        const lost = (r.items || []).filter((i) => i.careful && i.careful.askedBy && i.careful.askedBy.level === lvl && (i.careful.askedBy.key || '') === (key || ''));
+        if (mine.length && mine.length === r.items.length) out.push({ key: 'complete', text: mine.some((i) => i.careful) ? 'In use here, for safety' : 'In use here' });
+        else if (mine.length) out.push({ key: 'complete', text: `In use here for ${list(mine.map((i) => itemName(i.key, i.value)), 3)}${mine.some((i) => i.careful) ? ', for safety' : ''}` });
+        if (lost.length) out.push({ text: `Not used here for ${list(lost.map((i) => itemName(i.key, i.value)), 3)}: for safety ${placeName(lost[0].careful.by.level, lost[0].careful.by.key)}’s own is used.`, muted: true });
+        else if (!mine.length && inCtx) out.push({ text: r.perItem === 'rules' ? 'Not used here: a more specific place has the same rules.' : 'Not used here: a more specific place answers for each of these.', muted: true });
+        return out;
+      }
+      if (r.motion) {
+        if (decides(lvl, key) || (showsDefault(lvl) && r.from.level === 'default')) out.push({ key: 'complete', text: 'In use here' });
+        else if (r.motion.overruled.some((q) => q.level === lvl && (q.key || '') === (key || ''))) out.push({ text: `Not used here: less motion wins, and ${PSX.askerName(r.from)} asks for it.`, muted: true });
+        return out;
+      }
+      return null;
+    };
     const mkGroup = (title, bare) => { const g = D.createElement('div'); g.className = 'psx-group'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', title); g.innerHTML = bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`; sec.appendChild(g); return g; };
 
     // Everywhere
@@ -665,7 +785,9 @@
       const has = r.everywhere !== undefined;
       const why = blockedWrite({ level: 'everywhere' });
       const states = [];
-      if (decides('everywhere') || (!has && r.from.level === 'default')) states.push({ key: 'complete', text: 'In use here' });
+      const ps = perStates('everywhere', null, true);
+      if (ps) states.push(...ps);
+      else if (decides('everywhere') || (!has && r.from.level === 'default')) states.push({ key: 'complete', text: 'In use here' });
       if (why && /back/.test(why) && !PSX.answering(PSX.home())) states.push({ key: 'offline', text: `Kept on ${PSX.homeName()}, which isn’t answering · as of ${PSX.W.asOf}` });
       const ln = line(id, r, { level: 'everywhere', key: null, name: 'Everywhere', value: has ? r.everywhere : DEFAULTS[id], valueText: has ? vt(id, r.everywhere) : `${vt(id, DEFAULTS[id])} · the default`, inUse: decides('everywhere'), states });
       if (why && /back/.test(why)) { const ch = ln.querySelector('[data-psx-key$=":change"]'); if (ch) ch.textContent = `Change it when ${PSX.homeName()} is back`; }
@@ -688,7 +810,9 @@
       shown.forEach((v) => {
         const states = [];
         const here = placeLevel === 'device' ? v.key === c.device : v.key === c.on;
-        if (decides(placeLevel, v.key)) states.push({ key: 'complete', text: r.careful ? 'In use here, for safety' : 'In use here' });
+        const ps = perStates(placeLevel, v.key, here);
+        if (ps) states.push(...ps);
+        else if (decides(placeLevel, v.key)) states.push({ key: 'complete', text: r.careful ? 'In use here, for safety' : 'In use here' });
         else if (here && r.ceiling && r.ceiling.key === v.key) states.push({ key: 'info', text: `The most ${c.project} can use here` });
         else if (here && r.from.level === 'project') states.push({ text: `Not used in ${c.project}: ${c.project} has its own.`, muted: true });
         const wr = PSX.writer(placeLevel, v.key);
@@ -710,7 +834,9 @@
       const pending = editing && editing.id === id && editing.level === 'project' && !list0.find((v) => v.key === editing.key) ? editing : null;
       list0.slice(0, MAX_LINES).forEach((v) => {
         const states = [];
-        if (decides('project', v.key) && r.ceiling) states.push({ key: 'complete', text: `In use here, held to ${vt(id, r.ceiling.value)}` });
+        const ps = perStates('project', v.key, v.key === c.project);
+        if (ps) states.push(...ps);
+        else if (decides('project', v.key) && r.ceiling) states.push({ key: 'complete', text: `In use here, held to ${vt(id, r.ceiling.value)}` });
         else if (decides('project', v.key)) states.push({ key: 'complete', text: 'In use here' });
         else if (v.key === c.project && r.careful) states.push({ text: `Not used here: for safety ${placeName(r.careful.by.level, r.careful.by.key)}’s own is used.`, muted: true });
         const wr = PSX.writer('project', v.key);
@@ -744,7 +870,11 @@
     if (def.safety) sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">For safety, the more careful of a computer’s and a project’s own choice is used.</p>`);
     if (def.combine === 'computer_ceiling') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">For limits, a computer’s own value is the most any project there can use.</p>`);
     if (id === 'general.visual.theme') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">The look and light or dark always come from the same place; a project’s own look beats a device’s.</p>`);
-    if (id === 'general.visual.reduce-animations') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">If your computer, this device or the project asks for less motion, motion is reduced.</p>`);
+    // Astra max A4: the OR, with the operating system's preference as its own input
+    if (id === 'general.visual.reduce-animations') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule" data-psx-rule="motion">Less motion wins: if you ask for it everywhere, on a device or in a project that applies here, or your operating system does, motion is reduced.${r.motion && r.motion.os ? ' Your operating system asks for it now.' : ''}</p>`);
+    // Astra max A1: how a per_item row's items combine, in its owner's words
+    if (r.perItem === 'answers') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule" data-psx-rule="per-item">Each answer is decided on its own. A project’s or a computer’s own answer beats everywhere’s; when both have one for the same tool, the more careful is used: Block, then Ask me first, then Allow.</p>`);
+    if (r.perItem === 'rules') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule" data-psx-rule="per-item">The rules from every place apply together, checked top to bottom: everywhere’s first, then the computer’s, then the project’s. The last matching rule wins, so a project’s own rule beats the same rule from a computer or everywhere.</p>`);
     if (def.chats || (!c.project && off.everywhere && def.home !== 'computer')) {
       const n = PSX.resolve(id, { project: 'none', device: c.device, on: c.on });
       sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">Chats with no project use: ${esc(placeName(n.from.level, n.from.key))} (${esc(vt(id, n.value))}).</p>`);
@@ -1013,5 +1143,5 @@
   PSX.on('redraw', () => rerender());
   PSX.on('fed', () => rerender());
   PSX.on('ctx', () => { editing = null; rerender(); });
-  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, ownerFacts, ownerOf, own: null, ownId: null, focusAfter: null, rerender };
+  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, ownerFacts, ownerOf, ACTION_OWNERS, own: null, ownId: null, focusAfter: null, rerender };
 })(window);

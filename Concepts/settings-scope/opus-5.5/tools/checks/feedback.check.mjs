@@ -22,7 +22,7 @@ const inventory = (t) => {
 	try {
 		const raw = fs.readFileSync(path.resolve(t.args.inventory || 'Plans/settings_inventory.json'));
 		INVENTORY_SHA = crypto.createHash('sha256').update(raw).digest('hex');
-		const out = {}, walk = (o) => { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') { if (typeof o.id === 'string' && o.layering) { const L = o.layering; out[o.id] = { home: L.home, value: o.default, type: o.type || null, may: L.may_differ_by || [], notOffered: L.not_offered || {}, combine: L.combine || 'most_specific', key: L.computer_key || null }; } Object.values(o).forEach(walk); } };
+		const out = {}, walk = (o) => { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') { if (typeof o.id === 'string' && o.layering) { const L = o.layering; out[o.id] = { home: L.home, value: o.default, type: o.type || null, may: L.may_differ_by || [], notOffered: L.not_offered || {}, combine: L.combine || 'most_specific', key: L.computer_key || null, careful: L.careful_order || null }; } Object.values(o).forEach(walk); } };
 		walk(JSON.parse(raw.toString('utf8')));
 		INVENTORY = Object.keys(out).length ? out : null;
 	} catch (e) { INVENTORY = null; }
@@ -360,6 +360,295 @@ const HEAD = () => {
 	};
 };
 
+/* ------------------------------------------------------------------ Astra max fixes (2026-11-13), in `where`
+   A1: the three per_item permission rows resolve item by item by their owner's rule (SSYS-059, PS-144): the review's two
+   witnesses, the rest of PS-144's answer rule, the ordered rules' own §2.4 behaviour, and what the panel, the row and the
+   engine show. A4: Reduce motion is an OR of its own requests here, then the operating system's (SSYS-059): the review's
+   fixture, every combination, and the panel. Found next to them: FileSafe's careful order. N1: an action names its owner,
+   and opens it where it has a place of its own. Every one of these fails on 7150f6c5bc */
+const OPEN_PANEL = async (i) => {
+	window.PM51.revealSetting(i, { detail: true });
+	for (let k = 0; k < 40; k++) { await new Promise((r) => setTimeout(r, 150)); const c = document.querySelector('#pm-settings-root .detail-inspector .o55-insp-tech code'); if (c && c.textContent.trim() === i && document.querySelector('#pm-settings-root .detail-inspector [data-psx-block="where"] [data-psx-slot]')) break; }
+	const insp = document.querySelector('#pm-settings-root .detail-inspector'), w = insp && insp.querySelector('[data-psx-block="where"]');
+	const txt = (e) => (e ? e.innerText.replace(/\s+/g, ' ').trim() : '');
+	return {
+		code: insp && (insp.querySelector('.o55-insp-tech code') || {}).textContent, now: txt(insp && insp.querySelector('.o55-insp-now')), where: txt(w),
+		owner: w && w.getAttribute('data-psx-owner'), name: w && w.getAttribute('data-psx-owner-name'), link: w && w.querySelector('[data-psx-key="owner-open"]') ? w.querySelector('[data-psx-key="owner-open"]').textContent.trim() : null,
+		rules: w ? [...w.querySelectorAll('.psx-wrule')].map((x) => ({ rule: x.getAttribute('data-psx-rule'), text: txt(x) })) : [],
+		change: insp ? [...insp.querySelectorAll('button')].filter((b) => b.getClientRects().length && !b.closest('.pm51-panel-head') && /^(Change|Set for|Same as everywhere|\+)/.test(b.textContent.trim())).map((b) => b.textContent.trim()) : []
+	};
+};
+const CLOSE_PANEL = () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); };
+async function astraWhere(t) {
+	/* A1, on the page's own resolver with a copy of the world: per tool and per web ability, each exact key on its own */
+	const a1 = await run(t, () => {
+		const P = window.PSX, ctx = { project: 'tastebook', device: 'here', on: 'here' }, out = [];
+		const T = 'safety.rules.per-tool-permissions', WEB = 'safety.protection.web-tool-permissions', R = 'safety.rules.rule-editor';
+		const at = (id, set) => {
+			const w = P.clone(P.W); delete w.everywhere[id]; delete w.computer.here[id]; delete w.project.tastebook[id];
+			Object.entries(set).forEach(([l, v]) => { if (l === 'everywhere') w.everywhere[id] = v; else w[l][l === 'computer' ? 'here' : 'tastebook'][id] = v; });
+			return P.resolve(id, ctx, w);
+		};
+		const item = (r, k) => ((r && r.items) || []).find((i) => i.key === k) || null;
+		const C = (name, id, set, k, want, from) => { const r = at(id, set), i = item(r, k); out.push({ name, ok: !!r && r.combine === 'per_item' && !!r.value && r.value[k] === want && !!i && i.from.level === from, got: { combine: r && r.combine, value: r && r.value && r.value[k], item: i && i.from, row: r && r.from } }); };
+		C('the review’s witness 1: bash, This computer Block and tastebook Allow give Block, from This computer', T, { computer: { bash: 'deny' }, project: { bash: 'allow' } }, 'bash', 'deny', 'computer');
+		C('the review’s witness 2: webfetch, This computer Block and tastebook Allow give Block, from This computer', WEB, { computer: { webfetch: 'deny' }, project: { webfetch: 'allow' } }, 'webfetch', 'deny', 'computer');
+		C('bash, This computer Ask me first and tastebook Block give tastebook’s Block', T, { computer: { bash: 'ask' }, project: { bash: 'deny' } }, 'bash', 'deny', 'project');
+		C('bash, This computer Allow and tastebook Ask me first give tastebook’s Ask me first', T, { computer: { bash: 'allow' }, project: { bash: 'ask' } }, 'bash', 'ask', 'project');
+		C('webcrawl, This computer Ask me first and tastebook Block give Block', WEB, { computer: { webcrawl: 'ask' }, project: { webcrawl: 'deny' } }, 'webcrawl', 'deny', 'project');
+		C('bash, tastebook alone: its own Allow', T, { project: { bash: 'allow' } }, 'bash', 'allow', 'project');
+		C('bash, Everywhere Block and tastebook Allow: Everywhere is a fallback, never compared, so tastebook’s Allow', T, { everywhere: { bash: 'deny' }, project: { bash: 'allow' } }, 'bash', 'allow', 'project');
+		C('bash, Everywhere Allow and This computer Block: This computer’s Block', T, { everywhere: { bash: 'allow' }, computer: { bash: 'deny' } }, 'bash', 'deny', 'computer');
+		C('edit, Everywhere alone: its Allow', T, { everywhere: { edit: 'allow' } }, 'edit', 'allow', 'everywhere');
+		C('each key on its own: tastebook’s edit is used while This computer decides bash', T, { computer: { bash: 'deny' }, project: { bash: 'allow', edit: 'allow' } }, 'edit', 'allow', 'project');
+		C('each key on its own: read, which no place sets, keeps its default', T, { computer: { bash: 'deny' }, project: { bash: 'allow' } }, 'read', 'allow', 'default');
+		// the ordered rules keep their own behaviour (Permissions §2.4, §3.1): every place's rules together, the same rule from a more specific place shadowing; no careful reordering
+		{ const r = at(R, { everywhere: ['github_*: allow', 'npm *: ask'], computer: ['github_*: deny', 'rm *: deny'], project: ['github_*: ask'] }), want = ['npm *: ask', 'rm *: deny', 'github_*: ask'];
+		  out.push({ name: 'ordered rules: Everywhere’s, then This computer’s, then tastebook’s, last match winning; tastebook’s github_* shadows the same rule elsewhere, with no careful reordering', ok: !!r && r.combine === 'per_item' && JSON.stringify(r.value) === JSON.stringify(want) && ((r.items || []).map((i) => i.from.level).join(',') === 'everywhere,computer,project'), got: { combine: r && r.combine, value: r && r.value, from: ((r && r.items) || []).map((i) => i.from.level) } }); }
+		{ const r = at(R, { everywhere: ['a_*: allow'], project: ['b_*: deny'] });
+		  out.push({ name: 'ordered rules: different rules from two places both apply, the more specific place’s last', ok: !!r && r.combine === 'per_item' && JSON.stringify(r.value) === JSON.stringify(['a_*: allow', 'b_*: deny']), got: { combine: r && r.combine, value: r && r.value } }); }
+		return out;
+	});
+	for (const c of a1) await t.check(`Astra A1 (per_item): ${c.name}`, c.ok, JSON.stringify(c.got));
+	// A1 in the page: the review's first witness in the live world, the engine's own table, the row's line and the panel
+	await reset(t);
+	const a1p = await run(t, async (O) => {
+		const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), id = 'safety.rules.per-tool-permissions', out = {};
+		P.setCtx({ project: 'tastebook' }); await wait(400);
+		P.apply([{ level: 'computer', key: 'here', id, value: { bash: 'deny' } }, { level: 'project', key: 'tastebook', id, value: { bash: 'allow' } }], { history: false });
+		if (P.feed && P.feed.push) P.feed.push(); await wait(500);
+		const eng = (window.PM12_KIMI.getState().settings || {})[id]; out.engine = eng && eng.bash;
+		out.line = (P.rows && P.rows.lines ? P.rows.lines(id, P.resolve(id, P.S.ctx)) : []).map((x) => x.text);
+		Object.assign(out, await (new Function('return ' + O))()(id));
+		return out;
+	}, OPEN_PANEL.toString());
+	await t.check('Astra A1: in tastebook, the engine’s Answer for each tool gets Block for bash (This computer’s), and the row says “For safety, This computer’s Bash: Block is used”', a1p.engine === 'deny' && a1p.line.some((x) => /For safety, This computer’s Bash: Block is used/.test(x)), JSON.stringify({ engine: a1p.engine, line: a1p.line }));
+	await t.check('Astra A1: the panel says tastebook asks for Bash: Allow and This computer’s Bash: Block is used, which line decides which answer, and how answers combine', a1p.code === 'safety.rules.per-tool-permissions' && /tastebook asks for Bash: Allow\. For safety, This computer’s own is used: Bash: Block\./.test(a1p.now) && /This computer Bash: Block In use here for Bash, for safety/.test(a1p.where) && /tastebook Bash: Allow Not used here for Bash: for safety This computer’s own is used\./.test(a1p.where) && /Everywhere .* the default In use here for Edit, Read, Grep and 5 more/.test(a1p.where) && a1p.rules.some((x) => x.rule === 'per-item' && /the more careful is used: Block, then Ask me first, then Allow/.test(x.text)), JSON.stringify(a1p));
+	await pic(t, 'astra-a1-panel', 'Astra A1: Answer for each tool in tastebook, This computer Block and tastebook Allow for bash: Block is used, and the panel says why', '#pm-settings-root .detail-inspector');
+	await run(t, CLOSE_PANEL);
+
+	/* A4, on the page's own resolver: every combination of Everywhere, this device and this project (each absent, On or
+	   Off) with the operating system's preference (off, on): 54 cases. The value is On when any own request here is On,
+	   the default only when none exists; the motion in use adds the operating system's */
+	const a4 = await run(t, () => {
+		const P = window.PSX, id = 'general.visual.reduce-animations', out = { n: 0, bad: [], fixture: null };
+		const V = [undefined, true, false];
+		for (const e of V) for (const d of V) for (const p of V) for (const os of [false, true]) {
+			const w = P.clone(P.W); delete w.everywhere[id]; Object.keys(w.device).forEach((k) => { delete w.device[k][id]; }); Object.keys(w.project).forEach((k) => { delete w.project[k][id]; });
+			if (e !== undefined) w.everywhere[id] = e; if (d !== undefined) w.device.here[id] = d; if (p !== undefined) w.project.harbor[id] = p;
+			const r = P.resolve(id, { project: 'harbor', device: 'here', on: 'here', os }, w);
+			const own = [['everywhere', e], ['device', d], ['project', p]].filter(([, v]) => v !== undefined);
+			const want = own.length ? own.some(([, v]) => v === true) : P.DEFAULTS[id] === true;
+			const by = want ? own.filter(([, v]) => v === true).pop() : own.pop(), wantFrom = by ? by[0] : 'default';
+			const inUse = r && r.motion ? r.motion.effective : undefined;
+			out.n++;
+			if (!r || r.value !== want || r.from.level !== wantFrom || inUse !== (want || os)) out.bad.push(`Everywhere ${e}, This computer’s screen ${d}, harbor ${p}, OS ${os}: ${r && r.value} from ${r && r.from.level}, in use ${inUse} (want ${want} from ${wantFrom}, in use ${want || os})`);
+		}
+		const w = P.clone(P.W); w.everywhere[id] = true; w.device.here[id] = false; delete w.project.harbor[id];
+		const r = P.resolve(id, { project: 'harbor', device: 'here', on: 'here' }, w); out.fixture = { value: r.value, from: r.from, combine: r.combine };
+		return out;
+	});
+	await t.check('Astra A4: the review’s fixture (Everywhere On, This computer’s screen Off, harbor none of its own) resolves On, from Everywhere', !!a4.fixture && a4.fixture.value === true && a4.fixture.from.level === 'everywhere', JSON.stringify(a4.fixture));
+	await t.check(`Astra A4: Reduce motion is an OR in all ${a4.n} combinations of Everywhere, the device and the project (absent, On, Off) with the operating system (off, on)`, a4.n === 54 && !a4.bad.length, `${a4.bad.length} wrong: ` + a4.bad.slice(0, 8).join(' | '));
+	// A4 in the page: the fixture in the live world, then the operating system on with every request Off
+	await reset(t);
+	const a4p = await run(t, async (O) => {
+		const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), id = 'general.visual.reduce-animations', out = {};
+		P.setCtx({ project: 'harbor' }); await wait(400);
+		const clear = Object.keys(P.W.device).map((k) => ({ level: 'device', key: k, id, value: undefined })).concat(Object.keys(P.W.project).map((k) => ({ level: 'project', key: k, id, value: undefined })));
+		P.apply(clear.concat([{ level: 'everywhere', key: null, id, value: true }, { level: 'device', key: 'here', id, value: false }]), { history: false });
+		if (P.feed && P.feed.push) P.feed.push(); await wait(500);
+		out.engine = (window.PM12_KIMI.getState().settings || {})[id];
+		out.line = (P.rows && P.rows.lines ? P.rows.lines(id, P.resolve(id, P.S.ctx)) : []).map((x) => x.text);
+		out.fixture = await (new Function('return ' + O))()(id);
+		document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close') && document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close').click(); await wait(300);
+		P.apply([{ level: 'everywhere', key: null, id, value: false }, { level: 'device', key: 'here', id, value: false }], { history: false });
+		await P.command({ cmd: 'motion', reduced: true }); if (P.feed && P.feed.push) P.feed.push(); await wait(400);
+		const r = P.resolve(id, P.S.ctx); out.os = { value: r.value, inUse: r.motion && r.motion.effective, painted: document.documentElement.getAttribute('data-motion') };
+		out.osPanel = await (new Function('return ' + O))()(id);
+		await P.command({ cmd: 'motion', reduced: false });
+		return out;
+	}, OPEN_PANEL.toString());
+	await t.check('Astra A4: in harbor, the engine’s Reduce motion is On, and the row says less motion wins because Everywhere asks for it', a4p.engine === true && a4p.line.some((x) => /^Less motion wins: Everywhere asks for it$/.test(x)), JSON.stringify({ engine: a4p.engine, line: a4p.line }));
+	await t.check('Astra A4: the panel says This screen asks for full motion, Everywhere for less, and less motion wins; the device line says it isn’t used; the rule names the operating system', a4p.fixture.code === 'general.visual.reduce-animations' && /This screen asks for full motion\. Everywhere asks for less, and less motion wins\./.test(a4p.fixture.now) && /Not used here: less motion wins, and Everywhere asks for it\./.test(a4p.fixture.where) && a4p.fixture.rules.some((x) => x.rule === 'motion' && /or your operating system does, motion is reduced/.test(x.text)), JSON.stringify(a4p.fixture));
+	await t.check('Astra A4: with every request Off and the operating system asking for less motion, the setting reads Off, the motion in use is reduced, and the panel says the operating system asks for it', a4p.os.value === false && a4p.os.inUse === true && a4p.os.painted === 'reduced' && /Your operating system asks for less motion, so motion is reduced anyway\./.test(a4p.osPanel.now) && a4p.osPanel.rules.some((x) => x.rule === 'motion' && /Your operating system asks for it now\./.test(x.text)), JSON.stringify({ os: a4p.os, now: a4p.osPanel.now, rules: a4p.osPanel.rules }));
+	await run(t, CLOSE_PANEL);
+
+	// found with A1 and A4: FileSafe's careful order reads its true and false (7150f6c5bc compared them with "on" and "off")
+	const fsx = await run(t, () => {
+		const P = window.PSX, id = 'safety.protection.filesafe-integration', ctx = { project: 'tastebook', device: 'here', on: 'here' };
+		const at = (c, p) => { const w = P.clone(P.W); w.computer.here[id] = c; w.project.tastebook[id] = p; const r = P.resolve(id, ctx, w); return { value: r.value, from: r.from.level, careful: !!r.careful }; };
+		return { order: P.DEF[id].careful, offOn: at(false, true), onOff: at(true, false) };
+	});
+	await t.check('neighbour (found with A1/A4): FileSafe On is the more careful whichever place asks for Off (This computer Off and tastebook On give On)', fsx.offOn.value === true && fsx.offOn.from === 'project' && fsx.onOff.value === true && fsx.onOff.from === 'computer' && fsx.onOff.careful, JSON.stringify(fsx));
+
+	/* N1, in real panels: the review's three actions name their owner, keep "An action, not a setting" and no Change;
+	   the two with an owner of their own open it */
+	await reset(t);
+	for (const [id, owner, open] of [['code.execution.registry-credentials', 'your company registry list', 'code.execution.enterprise-registries'], ['general.interaction.settings-search', 'the search box at the top of Settings', 'search'], ['general.interaction.history-compare', 'each item in the History timeline', null]]) {
+		const n = await run(t, async ([i, ln, O]) => {
+			const out = await (new Function('return ' + O))()(i);
+			if (ln) {
+				const b = document.querySelector('#pm-settings-root .detail-inspector [data-psx-key="owner-open"]');
+				if (b) {
+					b.click();
+					if (ln === 'search') { await new Promise((r) => setTimeout(r, 400)); out.landed = !!document.activeElement && document.activeElement.matches('input[data-global-search]'); }
+					else { for (let k = 0; k < 30; k++) { await new Promise((r) => setTimeout(r, 150)); const c = document.querySelector('#pm-settings-root .detail-inspector .o55-insp-tech code'); if (c && c.textContent.trim() === ln) break; } const c = document.querySelector('#pm-settings-root .detail-inspector .o55-insp-tech code'); out.landed = !!c && c.textContent.trim() === ln; }
+				}
+			}
+			return out;
+		}, [id, open, OPEN_PANEL.toString()]);
+		await t.check(`Astra N1: ${id} says it is an action, names its owner (${owner}) in Where it applies, and offers no Change${open ? `; “${n.link || 'its link'}” opens ${open === 'search' ? 'the search box' : open}` : ''}`, n.code === id && n.owner === 'action' && n.name === owner && /An action, not a setting/.test(n.where) && n.where.includes(`It belongs to ${owner}.`) && !n.change.length && (!open || n.landed === true), JSON.stringify(n));
+		if (id === 'code.execution.registry-credentials') { await run(t, async (O) => { await (new Function('return ' + O))()('code.execution.registry-credentials'); }, OPEN_PANEL.toString()); await pic(t, 'astra-n1-registry', 'Astra N1: Other registry sign-ins names its owner, your company registry list, and opens it', '#pm-settings-root .detail-inspector'); }
+		await run(t, CLOSE_PANEL);
+	}
+	await reset(t);
+}
+
+/* ------------------------------------------------------------------ Astra max A2 (2026-11-13): table E2, both ways
+   The check's own copy of the README's table E2 (when a command pattern is host-dependent), never the page's: each row
+   with the examples the README gives, the review's five patterns that were saved Everywhere on 7150f6c5bc, every earlier
+   spelling (Sol max F1's seven, the reader's fourteen, the review's six controls), the patterns the rule reads
+   conservatively, and the portable controls. Every case is typed as your own pattern on npm test (a portable step, so
+   only the pattern decides), and asserts the places offered, the line saying why, and the save: a host-dependent
+   pattern offers no Everywhere, the save guard keeps no Everywhere rule even when Everywhere is forced, and This computer
+   is kept; a portable one offers Everywhere and keeps it */
+const E2 = {
+	rows: [[1, 'program'], [2, 'separator'], [3, 'relative'], [4, 'home'], [5, 'flag'], [6, 'file'], [7, 'filecmd'], [8, 'wildcard']],
+	// [pattern, the row the rule must name first, the word it must name]
+	table: [
+		['./scripts/release.sh v1.4.0', 1, './scripts/release.sh'], ['scripts/release', 1, 'scripts/release'], ['"/opt/tools/runner" test', 1, '/opt/tools/runner'], ['C:/Tools/runner test', 1, 'C:/Tools/runner'], ['\\\\nas\\share\\runner test', 1, '\\\\nas\\share\\runner'], ['$HOME/bin/runner', 1, '$HOME/bin/runner'],
+		['node scripts/release', 2, 'scripts/release'], ['npm --prefix=packages/app test', 2, 'packages/app'], ['git -C repos/loom status', 2, 'repos/loom'], ['gcc -I/usr/include x', 2, '/usr/include'], ['PATH=/opt/bin npm test', 2, '/opt/bin'], ['npm --prefix ~/x test', 2, '~/x'],
+		['prettier --write .', 3, '.'], ['cd ..', 3, '..'],
+		['cd ~', 4, '~'], ['cd $HOME', 4, '$HOME'], ['dir C:', 4, 'C:'],
+		['npm --prefix=release test', 5, 'release'], ['git -C repo status', 5, 'repo'], ['tsc -p tsconfig.json', 5, 'tsconfig.json'], ['cargo build --manifest-path Cargo.toml', 5, 'Cargo.toml'], ['docker build -f Dockerfile', 5, 'Dockerfile'],
+		['python3 build.py', 6, 'build.py'], ['bash deploy.sh *', 6, 'deploy.sh'], ['release.sh', 6, 'release.sh'],
+		['read *', 7, 'read'], ['rm -rf *', 7, 'rm'],
+		['*', 8, '*'], ['*-cli build', 8, '*-cli']
+	],
+	// the review's five, saved as Everywhere rules on 7150f6c5bc
+	witnesses: ['npm --prefix=packages/app test', 'git -C repos/loom status', 'node scripts/release', 'npm --prefix=release test', 'git -C repo status'],
+	// every earlier spelling: Sol max F1's seven, the reader's fourteen, the review's six controls, and the units' path
+	earlier: ['npm --prefix=/opt/release test', 'npm --prefix=../other test', '"/opt/tools/runner" test', '"../tools/runner" test', 'C:/Tools/runner test', '.\\tools\\runner test', '\\\\nas\\share\\runner test',
+		'C:\\Tools\\runner test', 'npm --prefix ~/x test', '$HOME/bin/runner', '%USERPROFILE%\\bin\\runner.exe', 'tools/runner test', 'gcc -I/usr/include x', 'PATH=/opt/bin npm test', '//nas/share/runner', '~\\bin\\runner', 'node --require=./hook.js app', "npm --prefix='/opt/x' test", 'prettier --write .', 'tools\\runner test', 'npm --prefix="C:\\Program Files\\x" test',
+		'/opt/release', '"/opt/release tools/run"', 'C:/tools/release', '.\\scripts\\release.cmd', '\\\\nas\\share\\release.cmd', '"./scripts/release.js"', '/usr/local/bin/npm test'],
+	// read conservatively (README: a word with / or \ reads as a path): row 2
+	conservative: ['git push origin feature/tags', 'docker push ghcr.io/jared/loom:1.4.0', 'npm publish --registry=https://registry.npmjs.org', 'curl -fsSL https://bun.sh/install', 'npm install @types/node'],
+	// portable: the brief's four, then the earlier controls with no / or \
+	portable: ['npm test *', 'git status', 'cargo build', 'pytest -q', 'npm test', 'git push origin *', 'npm run build', 'NODE_ENV=production npm test', 'make -j8 test', 'cargo build --profile release', 'pytest -p no:cacheprovider', 'cargo test -p mycrate']
+};
+async function astraAlways(t, h) {
+	const { sh, open, typeOwn, ed, keptRules } = h;
+	// the page's one rule has the table's rows, in its order, and names each table case's row and word
+	const unit = await run(t, (T) => {
+		const P = window.PSX, A = P.approvals, S = A ? Object.fromEntries(A.ASKS.map((x) => [x.id, x])) : {};
+		const host = (p) => (P.paths && P.paths.host ? P.paths.host(p) : null);
+		return {
+			rows: P.paths && P.paths.rows ? P.paths.rows.map((r) => [r.row, r.why]) : null,
+			table: T.table.map(([p, row, word]) => { const x = host(p); return { p, want: [row, word], got: x ? [x.row, x.word] : null, editor: !!A && A.hostDependent(p, S.test) }; }).filter((x) => !x.got || x.got[0] !== x.want[0] || x.got[1] !== x.want[1] || !x.editor),
+			conservative: T.conservative.map((p) => ({ p, got: host(p) })).filter((x) => !x.got || x.got.row !== 2),
+			portable: T.portable.filter((p) => !!host(p) || (A && A.hostDependent(p, S.test)))
+		};
+	}, E2);
+	await t.check('Astra A2: the page’s one rule (PSX.paths.host) holds table E2’s eight rows, in the table’s order', JSON.stringify(unit.rows) === JSON.stringify(E2.rows), JSON.stringify(unit.rows));
+	await t.check(`Astra A2: each of table E2’s ${E2.table.length} examples is host-dependent by its own row, naming its word, and the editor’s classifier agrees`, !unit.table.length, JSON.stringify(unit.table));
+	await t.check(`Astra A2: the ${E2.conservative.length} patterns read conservatively (a branch, an image, a package scope, a web address) are host-dependent by row 2`, !unit.conservative.length, JSON.stringify(unit.conservative));
+	await t.check(`Astra A2: the ${E2.portable.length} portable controls (npm test *, git status, cargo build, pytest -q and the earlier ones) are host-dependent by no row`, !unit.portable.length, JSON.stringify(unit.portable));
+	// broad detection reads the same words: a directory flag's value counts with its flag
+	const broad = await run(t, () => { const A = window.PSX.approvals, S = Object.fromEntries(A.ASKS.map((x) => [x.id, x])); return { flagThenStar: A.isBroad('git -C repo *', S.test), subcommand: A.isBroad('git -C repo status *', S.test), script: A.isBroad('node scripts/release *', S.test) }; });
+	await t.check('Astra A2 (F reads E2’s words): git -C repo * is a program, flags and a flag’s folder, then *: broad; git -C repo status * and node scripts/release * name a subcommand or a script: not broad', broad.flagThenStar === true && broad.subcommand === false && broad.script === false, JSON.stringify(broad));
+	// both ways, in the editor and through the save, one case at a time
+	const cases = [], seen = new Set();
+	const add = (p, kind, why) => { if (seen.has(p)) return; seen.add(p); cases.push([p, kind, why]); };
+	E2.witnesses.forEach((p) => add(p, 'host', 'the review’s saved witness'));
+	E2.table.forEach(([p, row]) => add(p, 'host', `table E2 row ${row}`));
+	E2.earlier.forEach((p) => add(p, 'host', 'an earlier spelling'));
+	E2.conservative.forEach((p) => add(p, 'host', 'read conservatively, row 2'));
+	E2.portable.forEach((p) => add(p, 'portable', 'a portable control'));
+	let shot = false;
+	for (const [pat, kind, why] of cases) {
+		await open('regular');
+		await typeOwn('test', pat);
+		const e = await ed('test');
+		const places = e ? e.where.map((x) => x.split(':')[0]) : [];
+		let admitted = {};
+		if (kind === 'host') {
+			/* the save guard on an editor that still shows Everywhere (as the Sol max guard check does): Everywhere chosen for
+			   npm test, the pattern swapped with no redraw, Add the rule pressed; then This computer */
+			await open('regular');
+			await typeOwn('test', 'npm test');
+			await t.root.locator(`${sh} [data-always="test"] [data-where="everywhere"]`).check(); await settle(t, 150);
+			await run(t, (q) => { window.PSX.approvals.st.edit.pattern = q; const i = document.querySelector('.psx-sheet [data-pat-own]'); if (i) i.value = q; }, pat);
+			await t.root.locator(`${sh} [data-always-save="test"]`).click(); await settle(t, 220);
+			const g = await run(t, () => ({ rules: window.PSX.approvals.st.rules.map((r) => `${r.pattern} @ ${r.where}`), note: ((document.querySelector('.psx-note') || {}).innerText || '').replace(/\s+/g, ' ').trim() }));
+			admitted.everywhere = g.rules.some((r) => / @ everywhere$/.test(r)); admitted.note = g.note;
+			if (await t.root.locator(`${sh} [data-always="test"] [data-where="computer"]`).count()) { await t.root.locator(`${sh} [data-always="test"] [data-where="computer"]`).check(); await settle(t, 150); await t.root.locator(`${sh} [data-always-save="test"]`).click(); await settle(t, 220); }
+			admitted.kept = await keptRules();
+			const ok = !!e && JSON.stringify(places) === JSON.stringify(['project', 'computer']) && e.note && e.noteText.length > 25 && !admitted.everywhere && /Not kept/.test(admitted.note) && admitted.kept.includes(`${pat} @ computer`) && !admitted.kept.some((r) => / @ everywhere$/.test(r));
+			await t.check(`Astra A2 (${why}): ${pat} offers This project and This computer only, says why, the guard keeps no Everywhere rule, and This computer is kept`, ok, JSON.stringify({ places, line: e && e.noteText, guard: admitted.note, kept: admitted.kept }));
+			if (!shot && pat === E2.witnesses[0]) { shot = true; await open('regular'); await typeOwn('test', pat); await run(t, () => window.__psxScrollTo(document.querySelector('.psx-sheet [data-k="noeverywhere"]'), 'center')); await settle(t, 200); await pic(t, 'astra-a2-witness', `Astra A2: ${pat} typed on npm test: Everywhere isn’t offered, and the line says why`, '.psx-sheet'); }
+		} else {
+			let kept = [];
+			if (places.includes('everywhere')) { await t.root.locator(`${sh} [data-always="test"] [data-where="everywhere"]`).check(); await settle(t, 150); await t.root.locator(`${sh} [data-always-save="test"]`).click(); await settle(t, 220); kept = await keptRules(); }
+			await t.check(`Astra A2 (${why}): ${pat} offers This project, This computer and Everywhere with no line against it, and is kept Everywhere`, !!e && JSON.stringify(places) === JSON.stringify(['project', 'computer', 'everywhere']) && !e.note && kept.includes(`${pat} @ everywhere`), JSON.stringify({ places, line: e && e.noteText, kept }));
+		}
+	}
+	await t.check(`Astra A2: ${cases.length} cases walked through the editor and the save (${cases.filter((c) => c[1] === 'host').length} host-dependent, ${cases.filter((c) => c[1] === 'portable').length} portable)`, cases.length === new Set([...E2.witnesses, ...E2.table.map((x) => x[0]), ...E2.earlier, ...E2.conservative, ...E2.portable]).size && cases.length >= 60, String(cases.length));
+}
+
+/* ------------------------------------------------------------------ Astra max A3 (2026-11-13): Keep them fixed and screens
+   SSYS-062: Keep them fixed "freezes only the previewed portable values"; "computer programs, paths, screen values and
+   secrets are never made portable by freezing". The review's set-up: the device in use has its own Theme (Retro Light)
+   and Reduce motion (On); Copy settings tastebook into harbor, Advanced, Keep them fixed. 7150f6c5bc counted, ticked,
+   previewed and wrote both into harbor. Then the source project's own Theme, which travels under its own contract */
+async function astraCopy(t) {
+	const TH = 'general.visual.theme', RM = 'general.visual.reduce-animations';
+	for (const [where, variant] of [['settings', 'device'], ['new', 'device'], ['settings', 'own']]) {
+		await reset(t);
+		const r = await run(t, async ([where, variant, TH, RM]) => {
+			const P = window.PSX, wait = (ms) => new Promise((res) => setTimeout(res, ms)), out = { where, variant };
+			const writes = [{ level: 'device', key: 'here', id: TH, value: 'Retro Light' }, { level: 'device', key: 'here', id: RM, value: true }];
+			if (variant === 'own') writes.push({ level: 'project', key: 'tastebook', id: TH, value: 'Glass Light' });
+			const sh = () => document.querySelector('.psx-sheet.psx-copy');
+			// a moment starts from a fresh demo, so the device's own values are set once its sheet is open (the plan is read live)
+			if (where === 'settings') { P.apply(writes, { history: false }); P.setCtx({ project: 'harbor' }); await wait(500); P.copy.open({ mode: 'settings', src: 'tastebook', advanced: true }); await wait(600); }
+			else { await P.command({ cmd: 'moment', id: 'copy-new' }); await wait(800); P.apply(writes, { history: false }); await wait(200); }
+			out.src = P.copy.st.src; out.dst = P.copy.st.dst;
+			const adv = sh().querySelector('details.psx-adv'); if (adv && !adv.open) { sh().querySelector('details.psx-adv > summary').click(); await wait(250); }
+			sh().querySelector('input[data-act="fixed"]').click(); await wait(300);
+			const ob = sh().querySelector('[data-act="openkind"][data-kind="appearance_workspace"]'); if (ob && ob.getAttribute('aria-expanded') !== 'true') { ob.click(); await wait(250); }
+			const plan = P.copy.plan();
+			out.plan = plan.rows.filter((x) => [TH, RM].includes(x.id)).map((x) => `${x.id}=${JSON.stringify(x.value)} (${x.from})`);
+			out.held = (plan.held || []).map((x) => x.id).sort();
+			out.ticks = [TH, RM].filter((id) => !!sh().querySelector(`input[data-id="${id}"]`));
+			const m = /Copy (\d+) setting/.exec(sh().querySelector('.psx-sheet-foot .btn.primary').textContent); out.button = m ? +m[1] : -1; out.total = P.copy.totals().n;
+			sh().querySelector('.psx-sheet-foot .btn.primary').click(); await wait(500);
+			out.preview = [...sh().querySelectorAll('li .psx-li-name')].map((x) => x.textContent.trim()).filter((x) => /^(Theme|Reduce motion):/.test(x));
+			out.heldLine = ((sh().querySelector('[data-k="screenheld"]') || {}).textContent || '').replace(/\s+/g, ' ').trim();
+			out.skipLine = /screen settings \(they belong to each device\)/.test(sh().innerText);
+			if (where === 'settings') {
+				[...sh().querySelectorAll('.psx-sheet-foot .btn')].find((b) => b.textContent === 'Copy').click(); await wait(1600);
+				const now = P.W.project.harbor || {};
+				out.write = { theme: now[TH], motion: now[RM] };
+				out.receipt = ((document.querySelector('.psx-note') || {}).innerText || '').replace(/\s+/g, ' ').trim();
+			}
+			return out;
+		}, [where, variant, TH, RM]);
+		const W3 = where === 'new' ? 'New Project like tastebook' : 'Copy settings tastebook into harbor';
+		if (variant === 'device') {
+			await t.check(`Astra A3, ${W3}: Keep them fixed leaves the device’s own Theme and Reduce motion out of the plan, the ticks and the count`, !r.plan.length && JSON.stringify(r.held) === JSON.stringify([RM, TH].sort()) && !r.ticks.length && r.button === r.total, JSON.stringify(r));
+			await t.check(`Astra A3, ${W3}: the preview lists neither, names them as held with the device, and its “screen settings” line is true`, !r.preview.length && /Not kept fixed: .*Reduce motion \(On\).*Theme \(Retro Light\)|Not kept fixed: .*Theme \(Retro Light\).*Reduce motion \(On\)/.test(r.heldLine) && /This computer’s own screen settings, and screen settings belong to each device/.test(r.heldLine) && r.skipLine, JSON.stringify({ preview: r.preview, held: r.heldLine }));
+			if (where === 'settings') await t.check(`Astra A3, ${W3}: Copy writes neither into harbor (the committed destination, not only the preview)`, !!r.write && r.write.theme === undefined && r.write.motion === undefined && /^Copied \d+ settings/.test(r.receipt), JSON.stringify({ write: r.write, receipt: r.receipt }));
+			if (where === 'new') { await run(t, () => window.__psxScrollTo(document.querySelector('.psx-sheet.psx-copy [data-k="screenheld"]'), 'center')); await settle(t, 250); }
+			if (where === 'new') await pic(t, 'astra-a3-preview', 'Astra A3: New Project like tastebook, Keep them fixed: the device’s Theme and Reduce motion are held, and the preview says so', '.psx-sheet.psx-copy');
+		} else {
+			await t.check('Astra A3, the source project’s own Theme still travels under its own contract (an own row, ticked, previewed and written); the device’s Reduce motion is held', r.plan.length === 1 && /^general\.visual\.theme="Glass Light" \(own\)$/.test(r.plan[0]) && JSON.stringify(r.held) === JSON.stringify([RM]) && JSON.stringify(r.ticks) === JSON.stringify([TH]) && r.preview.some((x) => /^Theme: Glass Light/.test(x)) && !r.preview.some((x) => /^Reduce motion/.test(x)) && !!r.write && r.write.theme === 'Glass Light' && r.write.motion === undefined, JSON.stringify(r));
+		}
+		await run(t, () => window.PSX.closeSheets()); await settle(t, 300);
+	}
+	await reset(t);
+}
+
 export default async function (t) {
 	await t.app.open();
 	const has = await run(t, () => document.documentElement.hasAttribute('data-psx-layer'));
@@ -684,7 +973,7 @@ export default async function (t) {
 		const INVA = inventory(t);
 		const align = await run(t, (inv) => {
 			const P = window.PSX, byId = (window.PM51.placement || {}).byId || {}, L = ['everywhere', 'computer', 'device', 'project'], off = P.offLadder || {};
-			const out = { source: P.layering ? P.layering.source : null, drawn: 0, checked: 0, owner: 0, ladder: 0, look: [], notListed: [], perItem: [], bad: [] };
+			const out = { source: P.layering ? P.layering.source : null, drawn: 0, checked: 0, owner: 0, ladder: 0, look: [], notListed: [], perItem: [], actions: 0, bad: [] };
 			if (!P.layering || !P.ownerHeld || !(P.panel && P.panel.ownerFacts)) { out.bad.push('the page has no inventory layering, owner rule or owner view'); }
 			const key = (l) => (l === 'project' ? 'tastebook' : l === 'everywhere' ? null : 'here');
 			for (const id of Object.keys(byId)) {
@@ -703,8 +992,11 @@ export default async function (t) {
 					if (takes.length) out.bad.push(`${id}: owner-held, yet ${takes.join(', ')} takes a write`);
 					const f = P.panel.ownerFacts(id);
 					if (!f || !f.sentence || !f.everywhere || !f.computer || !f.project) out.bad.push(`${id}: no owner view`);
-					else if (f.kind === 'action' ? !/not a setting/.test(f.sentence) : !(f.owner && f.sentence.includes(f.owner))) out.bad.push(`${id}: its panel doesn’t name its owner (${f.sentence})`);
+					/* Astra max N1: an action names its owner too (the review: registry credentials, Settings search and History
+					   compare said only "An action, not a setting"), by name from the panel's own table, never the generic "its owner" */
+					else if (f.kind === 'action' ? !(/not a setting/.test(f.sentence) && !!f.owner && f.sentence.includes(f.owner) && !/^its owner/.test(f.owner) && !!(P.panel.ACTION_OWNERS || {})[id]) : !(f.owner && f.sentence.includes(f.owner))) out.bad.push(`${id}: its panel doesn’t name its owner (${f.sentence})`);
 					else if (I.type === 'action' && f.kind !== 'action') out.bad.push(`${id}: an action in the inventory, not shown as one`);
+					if (f && f.kind === 'action') out.actions++;
 					else if (I.may.includes('project') !== /^A project can choose its own/.test(f.project)) out.bad.push(`${id}: its project line doesn’t follow the inventory (${f.project})`);
 					continue;
 				}
@@ -714,15 +1006,19 @@ export default async function (t) {
 				if (got.join('+') !== want.join('+')) { out.bad.push(`${id}: offers ${got.join('+')} (inventory ${want.join('+')})`); continue; }
 				const r = P.reasons(d);
 				L.forEach((l) => { if (!o[l] && I.notOffered[l] && r[l] != null && r[l] !== I.notOffered[l]) out.bad.push(`${id}: ${l} isn’t offered because ${r[l]} (inventory ${I.notOffered[l]})`); });
-				const comb = I.combine === 'per_item' ? 'most_specific' : I.combine;
-				if (I.combine === 'per_item') out.perItem.push(id);
-				if ((d.combine || 'most_specific') !== comb) out.bad.push(`${id}: combines ${d.combine || 'most_specific'} (inventory ${I.combine})`);
+				/* Astra max A1: the inventory's combine, exactly (7150f6c5bc's check read per_item as most_specific, and so passed a
+				   resolver that dropped it). A per_item row also needs its owner's own rule for its items (PSX.PER_ITEM) */
+				if (I.combine === 'per_item') { out.perItem.push(id); if (!(P.PER_ITEM && P.PER_ITEM[id])) out.bad.push(`${id}: per_item, with no owner rule for its items`); }
+				if ((d.combine || 'most_specific') !== I.combine) out.bad.push(`${id}: combines ${d.combine || 'most_specific'} (inventory ${I.combine})`);
+				// found with A1 and A4: a careful order is made of the values the row holds (FileSafe's on and off are true and false)
+				if (I.combine === 'more_careful') { const c = d.careful || [], dv = P.DEFAULTS[id], opts = P.optionsFor(id); if (c.length !== (I.careful || []).length || c.some((v) => (typeof dv === 'boolean' ? typeof v !== 'boolean' : opts && opts.length ? !opts.some((o) => P.same(o, v)) : false))) out.bad.push(`${id}: careful order ${JSON.stringify(c)} isn’t made of its values (inventory ${JSON.stringify(I.careful)})`); }
 				if (!!d.host !== (I.key === 'execution_host')) out.bad.push(`${id}: its Computer key is ${d.host ? 'the execution host' : 'the server'} (inventory ${I.key})`);
 			}
 			return out;
 		}, INVA);
 		await t.check(`inventory alignment: the page reads this tree’s Plans/settings_inventory.json (${align.source ? `${align.source.rows} rows, schema ${align.source.schema_version}` : 'none'})`, !!INVA && !!align.source && align.source.sha256 === INVENTORY_SHA, JSON.stringify({ page: align.source, tree: INVENTORY_SHA }));
-		await t.check(`inventory alignment: all ${align.checked} drawn rows the inventory lists follow it (${align.ladder} on the ladder, ${align.owner} owner-held; ${align.look.length} engine-painted look details keep their Theme view; ${align.notListed.length} not listed: ${align.notListed.join(', ')})`, !!INVA && align.checked > 800 && align.bad.length === 0, `${align.bad.length} mismatched: ` + align.bad.slice(0, 25).join(' | '));
+		await t.check(`inventory alignment: all ${align.checked} drawn rows the inventory lists follow it, its combine exactly (${align.ladder} on the ladder, ${align.perItem.length} of them per_item; ${align.owner} owner-held, ${align.actions} of them actions naming their owner; ${align.look.length} engine-painted look details keep their Theme view; ${align.notListed.length} not listed: ${align.notListed.join(', ')})`, !!INVA && align.checked > 800 && align.bad.length === 0 && align.perItem.length === 3 && align.actions > 60, `${align.bad.length} mismatched: ` + align.bad.slice(0, 25).join(' | '));
+		await astraWhere(t);
 		// real panels, one owner-held row of each kind: an action, a field kept by its owner, a key, the Rules file, a row a project can choose inside its owner
 		for (const kind of ['action', 'owned', 'secret', 'projection', 'project']) {
 			const ids = await run(t, ([k, inv]) => {
@@ -744,7 +1040,7 @@ export default async function (t) {
 				if (p.code === id && p.slots.length) { opened = p; break; }
 			}
 			await t.check(`inventory alignment: a real panel for an owner-held ${kind} row (${opened ? opened.id : `none of ${ids.length} opened: ${ids.join(', ')}`}) names its owner in the same three parts, with no Change`,
-				!!opened && opened.heads === 1 && JSON.stringify(opened.slots) === JSON.stringify(['everywhere', 'computer', 'project']) && !!opened.owner && (kind === 'action' ? /not a setting/.test(opened.where) : !!opened.name && opened.where.toLowerCase().includes(opened.name.toLowerCase())) && !opened.buttons.length && (kind === 'secret' || opened.choices === 0) && (kind !== 'project' || /A project can choose its own/.test(opened.where)) && (kind !== 'secret' || /stays on the computer where you entered it/.test(opened.where)),
+				!!opened && opened.heads === 1 && JSON.stringify(opened.slots) === JSON.stringify(['everywhere', 'computer', 'project']) && !!opened.owner && (kind !== 'action' || /not a setting/.test(opened.where)) && !!opened.name && opened.where.toLowerCase().includes(opened.name.toLowerCase()) && !opened.buttons.length && (kind === 'secret' || opened.choices === 0) && (kind !== 'project' || /A project can choose its own/.test(opened.where)) && (kind !== 'secret' || /stays on the computer where you entered it/.test(opened.where)),
 				JSON.stringify(opened || ids));
 			if (opened) await pic(t, `owner-${kind}`, `Inventory alignment: ${opened.id}, owner-held (${kind}): its owner in the same three parts, no Change`, '#pm-settings-root .detail-inspector');
 		}
@@ -1067,6 +1363,7 @@ export default async function (t) {
 		const noValue = await run(t, () => window.PSX.copy.plan().rows.filter((x) => x.fixed && x.value === undefined).map((x) => x.id));
 		await t.check('F2: Keep them fixed counts, previews and writes no setting that has no value (each one it counts is written)', !noValue.length, noValue.join(', '));
 		await run(t, () => window.PSX.closeSheets());
+		await astraCopy(t);
 	});
 
 	/* ------------------------------------------------------------------ guided flows 8.03-8.04: Always allow
@@ -1252,9 +1549,10 @@ export default async function (t) {
 			await t.check(`F1 (Sol max): the save guard keeps no Everywhere rule for ${pat} from an editor that still showed Everywhere, clears the place and says why`, !g.rules.some((r) => / @ everywhere$/.test(r)) && /Not kept/.test(g.note) && g.note.includes(word) && g.cleared, JSON.stringify(g));
 			if (pat === HOST7[0][0]) await pic(t, 'f1-guard', 'F1: the save guard refused Everywhere for npm --prefix=/opt/release test and said why', null);
 		}
-		/* controls: portable patterns still offer Everywhere with no line against them; a web address is not a path (the
-		   old reader took .sh in https://bun.sh/install for a script); one is kept Everywhere */
-		const PORTABLE = ['npm test', 'npm test *', 'git push origin *', 'npm run build', 'git push origin feature/tags', 'docker push ghcr.io/jared/loom:1.4.0', 'npm publish --registry=https://registry.npmjs.org', 'NODE_ENV=production npm test', 'make -j8 test', 'curl -fsSL https://bun.sh/install'];
+		/* controls: portable patterns still offer Everywhere with no line against them. Astra max A2: the four with a / that
+		   were controls here (a branch, an image, a registry and a web address) are read conservatively now, as README table
+		   E2 says, and astraAlways walks them as host-dependent; one is kept Everywhere */
+		const PORTABLE = ['npm test', 'npm test *', 'git push origin *', 'npm run build', 'NODE_ENV=production npm test', 'make -j8 test'];
 		await open('regular');
 		for (const pat of PORTABLE) {
 			await typeOwn('test', pat);
@@ -1334,6 +1632,7 @@ export default async function (t) {
 		await t.check('F: broad = a wildcard program, sudo with *, a shell or interpreter running *, or one program word then *; a folder rule reaching past its file or folder', !units.broad.length, 'not flagged: ' + units.broad.join(' | '));
 		await t.check('F: a named script or subcommand then * is not broad (./scripts/release.sh *, npm test *, git push origin *), nor a folder rule inside its file or folder', !units.narrow.length, 'flagged: ' + units.narrow.join(' | '));
 		await t.check('E: host-dependent = a pattern naming a path or script, a file command or a wildcard program, whatever step it is typed on (N2); never Everywhere', !units.host.length && !units.notHost.length, JSON.stringify(units));
+		await astraAlways(t, { sh, open, typeOwn, ed, keptRules });
 
 		/* fresh runs: FileSafe on (the demo's), then off */
 		for (const fs of [true, false]) for (const m of ['regular', 'yolo']) {

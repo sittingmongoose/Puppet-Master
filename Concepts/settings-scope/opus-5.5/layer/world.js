@@ -68,27 +68,33 @@
   // the inventory's title for a row's group (its owner's page), from the id's first two parts
   const groupOf = (id) => (layering && layering.groups[String(id).split('.').slice(0, 2).join('.')]) || null;
 
-  /* ------------------------------------------------------------------ is this a path? One reader for the layer
-     Review Sol max F1: Always allow decided "host-dependent" with a regexp that saw a path only at the start of a word,
-     so a path behind "=", in quotes, on a drive written C:/, relative with backslashes, or on a UNC share offered
-     Everywhere and could be saved there. Every place in the layer that asks "is this a path?" asks this one reader:
-     the Always allow editor and its save guard, broad detection, folder-rule matching and the home-folder read.
-     It splits text the way a shell does (quotes keep a word together and come off) and reads each word. A word is a
-     path when
-       - it starts at a root: / (and //host), \\host, ~ or ~user, a drive (C: then / or \), a variable then a
-         separator ($HOME/, ${HOME}/, %USERPROFILE%\, $env:USERPROFILE\), or file:
-       - it is relative by its dots: . .. ./ ../ .\ ..\
-       - a backslash stands between two names (tools\runner reads as a Windows path, the careful reading)
-       - it names a script or program file by its extension (.sh .ps1 .bat .cmd .exe .py .js and the like)
-     The value of --opt=value or NAME=value (each part of a , ; or : list) and a value written against a one-letter
-     flag (-I/usr/include) are read the same way. The program word (the first, after sudo, env and NAME=value) is a
-     path whenever it holds a / or a \: a shell runs such a command by its location, not from PATH. A web address
-     (https://...) is never a path. */
-  const PATH_EXT = /\.(sh|bash|zsh|fish|ps1|psm1|bat|cmd|exe|py|js|mjs|cjs|ts|rb|pl|php|lua)\b/i;
-  const PATH_URL = /^[a-z][a-z0-9+.-]*:\/\//i;
-  const PATH_ROOTS = [
+  /* ------------------------------------------------------------------ is a pattern about one computer? One rule
+     Astra max A2 (2026-11-13): the second max review in a row found spellings the old word reader missed (a relative
+     folder or script with no dots or extension, "node scripts/release"; a folder flag's one-word value, "git -C repo
+     status"; both saved as Everywhere rules). So it is rebuilt as one rule over a pattern's words, written first as the
+     README's table E2 and held here as HOST_ROWS, one entry per row, in the table's order. Nothing else in the layer
+     decides it: the Always editor's places, its line saying why, the line saying a place was cleared, the save guard,
+     broad detection (F), the home read (B) and feed.js's absolute-path rows all ask PSX.paths.
+     The pattern is split the way a shell splits it (quotes keep a word together and come off). The program word is the
+     first after sudo, env (with their flags) and NAME=value; every other word, a NAME=value before the program included,
+     is an argument. A flag's value is read with its flag (row 5). The pattern is host-dependent when any row holds for
+     any word; the first such word, in pattern order, is named with its row. */
+  const PATH_EXT = /\.(sh|bash|zsh|fish|ps1|psm1|bat|cmd|exe|py|js|mjs|cjs|ts|rb|pl|php|lua)$/i;
+  // the parts of a NAME=value or --flag=value value: a , ; or : list (a drive's C: and a web address's :// stay whole)
+  const PATH_LIST = /[,;]|(?<!(?:^|[,;])[A-Za-z]):(?!\/\/)/;
+  const FILE_CMDS = /^(read|write|edit|list|open|cat|less|head|tail|ls|cp|mv|rm|rmdir|mkdir|touch|chmod|chown|find|grep|tar|zip|unzip)$/i;
+  /* row 5: the flags whose value is a folder or a file. -p only after tsc or vue-tsc (elsewhere it names a package, a
+     port or a plugin); any other long flag whose name ends in dir, directory, path, folder or root, or in -file or _file
+     (--profile is not one), except a --no-... switch */
+  const DIR_FLAGS = ['-C', '--prefix', '--cwd', '--dir', '--directory', '--root', '--workdir', '--chdir', '-chdir', '--git-dir', '--work-tree', '-f', '--file', '--config', '--manifest-path', '--project'];
+  const FLAG_AFTER = { '-p': /^(tsc|vue-tsc)$/ };
+  const FLAG_NAME = /^--(?!no-)(?:[\w.-]*(?:dir|directory|path|folder|root)|(?:[\w.]+[-_])+file)$/i;
+  const baseName = (w) => String(w || '').split(/[\\/]/).pop();
+  const pathFlag = (name, seen) => DIR_FLAGS.includes(name) || FLAG_NAME.test(name) || (!!FLAG_AFTER[name] && seen.some((w) => FLAG_AFTER[name].test(baseName(w))));
+  // where a word starts: a root, the home folder, a drive, a UNC share, a variable then a separator, file:, or dots
+  const ROOTS = [
     ['unc', /^(\\\\|\/\/)[^\\/]/],
-    ['home', /^~[\w.-]*(?=[\\/]|$)/],
+    ['home', /^~[\w.+-]*(?=[\\/]|$)/],
     ['home', /^(\$HOME|\$\{HOME\}|%USERPROFILE%|%HOMEPATH%|\$env:USERPROFILE|\$env:HOME)(?=[\\/]|$)/i],
     ['drive', /^[A-Za-z]:(?=[\\/]|$)/],
     ['variable', /^(\$\{?\w+\}?|%\w+%|\$env:\w+)(?=[\\/])/i],
@@ -96,7 +102,7 @@
     ['root', /^\//],
     ['relative', /^\.{1,2}(?=[\\/]|$)/]
   ];
-  const PATH_LIST = /[,;]|(?<!(?:^|[,;])[A-Za-z]):(?!\/\/)/;
+  const rootOf = (w) => { const s = String(w == null ? '' : w); for (const [root, re] of ROOTS) if (re.test(s)) return root; return null; };
   function shellWords(text) {
     const out = []; let cur = '', has = false, q = null;
     for (const ch of String(text == null ? '' : text)) {
@@ -119,33 +125,69 @@
     }
     return i;
   }
-  function pathWord(word, program, depth) {
-    const w = String(word == null ? '' : word); depth = depth || 0;
-    if (!w || (PATH_URL.test(w) && !/^file:/i.test(w))) return null;
-    for (const [root, re] of PATH_ROOTS) if (re.test(w)) return { path: w, root };
-    if (depth < 3) {
-      const eq = /^[^=\\/]+=(.+)$/.exec(w);                       // --prefix=/opt/release, PATH=/opt/bin:/usr/bin
-      if (eq) { for (const part of eq[1].split(PATH_LIST)) { const r = pathWord(part, false, depth + 1); if (r) return r; } return null; }
-      const glued = /^-[A-Za-z](.+)$/.exec(w);                   // -I/usr/include, -o./out
-      if (glued) { const r = pathWord(glued[1], false, depth + 1); if (r) return r; }
+  /* what rows 2, 3, 4 and 6 read in one argument: the value of NAME=value or --flag=value (each part of its list), the
+     rest of a one-letter flag written against its value (-I/usr/include), then the word itself. The first part a row
+     holds for is the one it names */
+  function partsOf(w) {
+    const out = [], eq = w.indexOf('=');
+    if (eq > 0 && !/[\\/]/.test(w.slice(0, eq))) out.push(...w.slice(eq + 1).split(PATH_LIST).filter(Boolean));
+    const glued = /^-[A-Za-z]([^=].*)$/.exec(w); if (glued && !w.startsWith('--')) out.push(glued[1]);
+    out.push(w);
+    return out;
+  }
+  // the words of a pattern, each with its role: program, flag, value (a directory or file flag's), arg or end (--)
+  function read(text) {
+    const ws = shellWords(text), at = programAt(ws), words = [];
+    let ended = false, takes = null;
+    ws.forEach((w, i) => {
+      const x = { word: w, at: i, role: i === at ? 'program' : 'arg', program: i === at, parts: i === at ? [w] : partsOf(w), value: null };
+      if (i > at) {
+        if (takes) { x.role = 'value'; x.value = { flag: takes, word: w }; takes = null; }
+        else if (!ended && w === '--') { x.role = 'end'; ended = true; }
+        else if (!ended && /^-./.test(w)) {
+          x.role = 'flag';
+          const eq = w.indexOf('='), name = eq > 0 ? w.slice(0, eq) : w, seen = ws.slice(at, i);
+          if (pathFlag(name, seen)) { if (eq > 0) x.value = { flag: name, word: w.slice(eq + 1) }; else if (i + 1 < ws.length && !/^-/.test(ws[i + 1])) takes = name; }
+        }
+      }
+      words.push(x);
+    });
+    return { words, at, program: at < ws.length ? ws[at] : '' };
+  }
+  const first = (parts, ok) => parts.find((p) => ok(p)) || null;
+  const homeWord = (p) => /^~/.test(p) || /^(\$HOME|\$\{HOME\}|%USERPROFILE%|%HOMEPATH%|\$env:USERPROFILE|\$env:HOME)$/i.test(p);
+  /* README table E2, row by row. Each test gets one word and gives the word it names, or nothing */
+  const HOST_ROWS = [
+    { row: 1, why: 'program', test: (x) => (x.program && (/[\\/]/.test(x.word) || /^[~.]/.test(x.word) || !!rootOf(x.word)) ? x.word : null) },
+    { row: 2, why: 'separator', test: (x) => (x.program ? null : first(x.parts, (p) => /[\\/]/.test(p))) },
+    { row: 3, why: 'relative', test: (x) => (x.program ? null : first(x.parts, (p) => /^\.{1,2}([\\/]|$)/.test(p))) },
+    { row: 4, why: 'home', test: (x) => (x.program ? null : first(x.parts, (p) => homeWord(p) || /^[A-Za-z]:$/.test(p) || /^file:/i.test(p))) },
+    { row: 5, why: 'flag', test: (x) => (x.value && x.value.word !== '' ? x.value.word : null) },
+    { row: 6, why: 'file', test: (x) => first(x.parts, (p) => PATH_EXT.test(p)) },
+    { row: 7, why: 'filecmd', test: (x) => (x.program && FILE_CMDS.test(x.word) ? x.word : null) },
+    { row: 8, why: 'wildcard', test: (x) => (x.program && x.word.includes('*') ? x.word : null) }
+  ];
+  // the first row that holds for one word: { row, why, word, root, flag?, program, at } or null
+  function hostWord(x) {
+    for (const R of HOST_ROWS) {
+      const w = R.test(x); if (w == null) continue;
+      const why = R.why === 'home' && !homeWord(w) ? 'root' : R.why;
+      return Object.assign({ row: R.row, why, word: w, path: w, root: rootOf(w), program: x.program, at: x.at }, R.row === 5 ? { flag: x.value.flag } : {});
     }
-    if (/[\w.$%~-]\\[\w.$%~-]/.test(w)) return { path: w, root: 'relative' };
-    if (program && /[\\/]/.test(w)) return { path: w, root: 'relative' };
-    if (PATH_EXT.test(w)) return { path: w, root: 'relative', file: true };
     return null;
   }
   const paths = {
     words: shellWords,
     programAt,
+    rows: HOST_ROWS.map((R) => ({ row: R.row, why: R.why })),
     program(text) { const ws = shellWords(text), i = programAt(ws); return i < ws.length ? ws[i] : ''; },
-    // one word: a path or null; `program` reads it as the word a shell runs
-    word: (w, program) => pathWord(w, !!program, 0),
-    // every path in a piece of text, in order: [{ path, root, file, program, at }]
-    find(text) {
-      const ws = shellWords(text), i = programAt(ws), out = [];
-      ws.forEach((w, k) => { const r = pathWord(w, k === i, 0); if (r) out.push(Object.assign({ program: k === i, at: k }, r)); });
-      return out;
-    },
+    rootOf,
+    // a pattern's words with their roles, each with the first row that holds for it (host) or null
+    read(text) { const r = read(text); r.words.forEach((x) => { x.host = hostWord(x); }); return r; },
+    // is this pattern about one computer? The first word a row holds for, in pattern order, or null
+    host(text) { const r = paths.read(text); const x = r.words.find((y) => y.host); return x ? x.host : null; },
+    // every word a row holds for: [{ row, why, word, path, root, program, at }]
+    find(text) { return paths.read(text).words.filter((y) => y.host).map((y) => y.host); },
     // the same path written either way: quotes off, \ as /, one separator at a time, no separator at the end
     norm(text) {
       let s = shellWords(text).join(' ').replace(/\\/g, '/');
@@ -361,6 +403,8 @@
 
   /* ------------------------------------------------------------------ names and words */
   const projectName = (id) => (id === 'psx-none' || id === 'none' || id == null ? 'No project' : id);
+  // who asks for a value, in a sentence: Everywhere, a device (the one in use is "This screen"), a project by its name
+  const askerName = (f) => (!f ? '' : f.level === 'device' && PSX.S && f.key === PSX.S.actor ? 'This screen' : f.level === 'project' ? f.key : placeName(f.level, f.key));
   const placeName = (lvl, key) => {
     if (lvl === 'everywhere') return 'Everywhere';
     if (lvl === 'default') return 'Puppet Master’s default';
@@ -666,7 +710,7 @@
     D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip, paths, layering, layerOf, groupOf,
     store, COMPUTERS, HOSTS, DEVICES, PROJECTS, MENU_PROJECTS, projectById, DEFAULTS, DEF, IDS, REASONS, computerIds, home,
     homeName: () => placeName('computer', home()), bagOf,
-    projectName, placeName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
+    projectName, placeName, askerName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
     note, hideNote, sheet, topSheet, closeSheets, sheets, menu
   });
 })(window);
