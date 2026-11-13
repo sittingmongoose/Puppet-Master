@@ -97,6 +97,35 @@ this kit, named "(Sol max S1)" to "(Sol max S5)", that fails on `2a42d02f16` and
   them (base 44 and 1). The list keeps 8 px under Archived. Every group through Archived shows with no scrolling, and
   every word, action and type size is kept.
 
+### Astra max fixes (2026-11-12)
+
+The Astra max review (`REVIEW-concept-B-max-astra.md` in the share folder) found four should-fix defects. Each has checks
+in `tools/checks/astra.check.mjs`, named "(Astra max A1)" to "(Astra max A4)", that fail on `751805fd5f` and pass after the
+fix. Every entry point in them is a real press.
+
+- **A1, Try that file again** (ACD-511; `layer/np.js`, `concepts/c.js`). The move's operation record holds every file by its
+  own name and what happened to it: moved, didn't move (with its reason and how many tries), skipped because the same file
+  is already there, skipped by choice, or not picked. `PJX.np.moveRetry` retries the failed names, and `PJX.np.moveReport`
+  derives the report (Moved, Stayed, Held, Didn't move), the title, the summary line and the notice from that record each
+  time the page is drawn, so nothing patches a report's words any more. A file still open in the other app (the report's
+  concept demo "the file is still open in the other app") fails again and keeps its reason, with Try again still offered.
+- **A2, new work ends conversion Undo** (ACD-511; `layer/work.js`, `layer/np.js`, `concepts/c.js`). `PJX.np.workAccepted` ends
+  Undo for every conversion into a Project the moment Start a run is accepted there (started or queued, under Auto, the
+  Project's choice or a run pin), for a Project made from a chat and for a chat moved into one. The report and the moved
+  chat say why ("Undo has ended: new work started in harbor (Run the tests)"), as a message and the 7 days do. Undo is
+  checked again when its confirmation runs and again before it changes anything, so an Undo dialog opened before the work
+  was accepted changes nothing and says why.
+- **A3, Undo's preview counts what moved** (ACD-511; `concepts/c.js`, `layer/np.js`). Undo making a Project from a chat counts
+  the files that were picked and moved (`fromChatRec.files`), names the ones left out as never moved, and its steps and
+  result say the same count. Undo move names the files that never moved, each with why (didn't move, already the same in
+  the Project, skipped, not picked).
+- **A4, the records home, the files and the default Computer stay apart** (SRV-006, SIR-056; `layer/np.js`, `layer/np-ui.js`,
+  `concepts/c.js`). `PJX.np.filesHolder` is the place that holds the files, named from the Computer or device it is.
+  `makeProject` records the files there, `toPlan()` says `server_ref` (the records home it was given) and `files_holder`
+  apart from `default_computer`, the Where it lives plate says that place and its own room, the library groups the Project
+  under it, and Where work runs names the records home and the default Computer apart. No Home NAS or This computer is
+  filled in by default on that path: with Studio Mac as records home the Project is on Studio Mac (640 GB free).
+
 ## Split v2 (pass 2, 2026-11-02): the chosen concept
 
 Jared chose C: "I am leaning towards the Split option. Lets just focus on that for future passes." Split v2 keeps the

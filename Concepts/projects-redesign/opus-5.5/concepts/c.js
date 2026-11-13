@@ -189,7 +189,7 @@
     // it answers and offers to add a Project from it
     if (!filtering) PJX.ENV.devices.forEach((d) => byPlace.set(d.name, []));
     L.forEach((p) => { const k = p.where.label || 'Elsewhere'; if (!byPlace.has(k)) byPlace.set(k, []); byPlace.get(k).push(p); });
-    const order = ['This computer'].concat(PJX.ENV.devices.map((d) => d.name));
+    const order = [PJX.np.comp('here').name].concat(PJX.ENV.devices.map((d) => d.name));
     const keys = Array.from(byPlace.keys()).sort((a, b) => { const ia = order.indexOf(a), ib = order.indexOf(b); return ((ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib)) || a.localeCompare(b); });
     const arch = PJX.archived().filter(hit).filter(show).sort(sort);
     return {
@@ -486,17 +486,25 @@
     acts.push(act(W_('np.done.ok'), { cls: 'pmu-textbtn', key: 'f:done', run: () => { delete C.flash[p.id]; render(); focusTitle(); } }));
     const more = fl.accounts ? h('div.pjx-notice-text.pjxc-flash-acc', null, h('span', { text: (fl.accounts === 1 ? W_('np.done.accountsOne', { computer: fl.computer }) : W_('np.done.accounts', { n: fl.accounts, computer: fl.computer })) + ' ' }),
       act(W_('np.done.accountsGo'), { cls: 'pjx-link', key: 'f:signin', run: () => { PJX.toast('Settings › Providers', 'Opens Providers with ' + fl.computer + ' chosen, so the sign-ins and keys are kept there.', 'info'); if (W.PM_PAGES) W.PM_PAGES.go('settings'); } })) : null;
-    const partial = fl.report && fl.report.failed && fl.report.failed.length;
+    // (Astra max A1) a move's report, title and summary are read from its operation record at every draw, so Try again
+    // (or anything else that changes the record) can never leave them saying something the record doesn't
+    const live = fl.moved ? PJX.np.moveReport(fl.moved) : null, rep = live ? live.report : fl.chat && p.fromChatRec ? newChatReport(p, p.fromChatRec, fl) : fl.report;
+    const partial = rep && rep.failed && rep.failed.length;
     return h('div.pjx-notice.pjxc-flash', { 'data-tone': partial ? 'attention' : 'done', role: 'status' },
       h('span.pjx-notice-mark', { html: PJX.calm(partial ? 'warning' : 'complete', 16), 'aria-hidden': 'true' }),
-      h('div.pjx-notice-title', { text: fl.title }), h('div.pjx-notice-text', { text: fl.text }), fl.agent ? h('div.pjx-notice-text.pjxc-flash-agent', { text: fl.agent }) : null, more,
-      fl.report ? reportNode(p, fl, urec) : null, h('div.pjx-notice-acts', null, ...acts));
+      h('div.pjx-notice-title', { text: live ? live.title : fl.title }), h('div.pjx-notice-text', { text: live ? live.text : fl.text }), fl.agent ? h('div.pjx-notice-text.pjxc-flash-agent', { text: fl.agent }) : null, more,
+      rep ? reportNode(p, fl, urec, rep) : null, h('div.pjx-notice-acts', null, ...acts));
   }
   /* the operation report (ACD-511): every result, partial too, lists what moved, stayed, was held and didn't move, the line
      the chat shows, and what ends Undo */
-  function reportNode(p, fl, urec) {
-    const r = fl.report, fam = (label, list, key) => (list && list.length ? h('div.pjxc-repfam', null, h('div.pjxc-repcap', { text: label }), PJX.flow.facts(list.map((t) => ({ key, text: t })))) : null);
-    const retry = r.failed && r.failed.length ? act(W_('cv.rep.retry'), { cls: 'pjx-link', key: 'f:retryfile', cmd: 'gap:thread files move (retry, same operation)', run: () => { const m = fl.moved; if (!m) return; const f0 = r.failed.slice(); PJX.run(p.id, 'move', 'Copying ' + f0[0], [{ label: 'Copying ' + f0[0] + ' into ' + m.folder + '/', ms: 700 }], () => { m.files = m.files.concat(f0); r.moved = r.moved.concat(f0.map((f) => f + ' · into ' + m.folder + '/')); r.failed = []; m.failed = []; fl.title = W_('cv.rep.title', { project: p.name }); }); } }) : null;
+  function reportNode(p, fl, urec, r) {
+    const fam = (label, list, key) => (list && list.length ? h('div.pjxc-repfam', null, h('div.pjxc-repcap', { text: label }), PJX.flow.facts(list.map((t) => ({ key, text: t })))) : null);
+    // (Astra max A1) Try again works on the record's failed files by their own names, and the report is read again from the
+    // record when it is drawn; a file that is still open fails again and keeps its reason
+    const m = fl.moved, busy = opOf(p.id);
+    const retry = m && m.failed.length ? act(W_('cv.rep.retry'), { cls: 'pjx-link', key: 'f:retryfile', cmd: 'gap:thread files move (retry, same operation)', off: busy ? 'Working on it' : null, run: () => retryFiles(p, fl) }) : null;
+    const still = m && m.failed.length ? PJX.npui.check('f:retrystill', W_('cv.rep.retryStill'), !!fl.retryStill, (v) => { fl.retryStill = v; }) : null;
+    if (still) still.classList.add('pjxc-retrystill');
     const endedWhy = PJX.np.undoEnded(urec);
     // the moved chat opens in its new place: a message or an edited message there ends Undo (ACD-511)
     const openChat = urec && urec.chat && PJX.chat ? act(W_('cv.rep.openChat'), { cls: 'pjx-link', key: 'f:openchat', icon: 'chat', run: () => PJX.chat.openMoved(urec.chat) }) : null;
@@ -505,9 +513,29 @@
       urec.files && urec.files.length ? h('span', { text: ' · ' }) : null,
       act(W_('cv.undo.demoClock'), { cls: 'pjx-link', key: 'f:enddemo:clock', run: () => { const F0 = PJX.S.world.facts; F0.clockDays = (F0.clockDays || 0) + 7; PJX.toast(W_('cv.undo.clockMoved'), W_('cv.undo.clockMovedText'), 'info'); render(); } })) : null;
     return h('div.pjxc-report', null, h('div.pjxc-repgrid', null, fam(W_('cv.rep.moved'), r.moved, 'complete'), fam(W_('cv.rep.stayed'), r.stayed, 'info'), fam(W_('cv.rep.held'), r.held, 'paused'), fam(W_('cv.rep.failed'), r.failed, 'failed')),
-      retry ? h('div.pjx-row', null, retry) : null,
+      retry ? h('div.pjx-row.pjxc-retryrow', null, retry, still) : null,
       textLine(W_('cv.rep.divider', { project: p.name, when: (urec && urec.at) || 'now' }), 'is-hint'),
       urec ? h('p', { class: ['pjxc-say', 'is-hint', 'pjxc-undoline'], 'data-undo': endedWhy ? 'ended' : 'open' }, h('span', { text: (endedWhy ? W_('cv.undo.ended', { reason: endedWhy }) : W_('cv.undo', { until: urec.until })) + ' ' }), openChat) : null, demo);
+  }
+  /* (Astra max A1) Try that file again: the same move, on the record's failed files; the outcome is said from the record */
+  function retryFiles(p, fl) {
+    const m = fl.moved; if (!m || !m.failed.length || opOf(p.id)) return;
+    const f0 = m.failed.slice(), still = !!fl.retryStill;
+    PJX.run(p.id, 'move', W_('cv.rep.retrying', { file: f0[0], folder: m.folder + '/' }), [{ label: W_('cv.rep.retrying', { file: PJX.np.andList(f0), folder: m.folder + '/' }), ms: 700 }], () => { PJX.np.moveRetry(m, { still }); }, { cmd: 'gap:thread files move (retry, same operation)' })
+      .then(() => {
+        const out = PJX.np.moveReport(m);
+        if (m.failed.length) PJX.toast(W_('cv.rep.retryFail', { file: PJX.np.andList(m.failed) }), W_('cv.rep.retryFailText'), 'warn');
+        else PJX.toast(W_('cv.rep.retryOk', { file: PJX.np.andList(f0), project: p.name }), W_('cv.rep.retryOkText', { files: PJX.np.plural(m.files.length, 'file') }) + ' ' + out.notify, 'success');
+        announce(out.title);
+      });
+  }
+  /* a new Project made from a chat: its report, from the conversion's record (the files picked and moved, the ones left out) */
+  function newChatReport(p, fr, fl) {
+    const ch0 = PJX.np.chatOf(fr.chat); if (!ch0) return fl.report || null;
+    const left = fr.left || [];
+    const stayed = [].concat(left.length && fl.files === 'move' ? [left.length <= 4 ? W_('cv.rep.leftNamed', { list: PJX.np.andList(left) }) : PJX.np.plural(left.length, 'file') + ' you left out, in ' + ch0.folder] : [])
+      .concat(ch0.outside.length ? [PJX.np.plural(ch0.outside.length, 'file') + ' it changed outside its folder'] : []).concat((ch0.grants || []).map((g) => W_('cv.rep.grant', { grant: g })));
+    return { moved: [W_('cv.rep.chatLine', { chat: ch0.title, n: ch0.messages, a: ch0.attachments })].concat(fr.files.length ? [W_('cv.rep.filesLine', { files: PJX.np.plural(fr.files.length, 'file'), into: p.where.path })] : []), stayed, held: fr.held, failed: [] };
   }
   /* (GUIDED-FLOWS 6.07) the paused sync's resolution path: which version of the clashing file, or a hand merge in Source
      Control; then the rest comes in. Nothing is sent, and the original never gets a force-push */
@@ -529,13 +557,35 @@
     dlg = PJX.dialog({ title: W_('pg.cf.title', { file: cl.files[0] }), kicker: p.name, body, wide: true });
     paint();
   }
+  /* (Astra max A2) Undo may have ended while its dialog was open or while it runs (new work was accepted, a message was
+     sent, the 7 days passed): it is checked again when the confirmation runs and again before anything changes, and an
+     ended Undo changes nothing and says why */
+  function undoStillOpen(rec, p) {
+    const why = PJX.np.undoEnded(rec); if (!why) return true;
+    PJX.toast(W_('cv.undo.ended', { reason: why }), W_('cv.undo.stopped', { project: p.name }), 'info');
+    render();
+    return false;
+  }
   /* Undo a new project made from a chat: its own statement first, by the way its files were used (NOPROJECT 7.7) */
   function undoNewFromChat(p, fl) {
     const mode = fl.files || 'move', c = (PJX.ENV.chats || []).find((x) => x.title === fl.chat) || {};
-    const body = h('div', null, PJX.flow.facts([{ key: 'info', text: W_('np.done.undoNew.' + mode, { name: p.name, n: c.files || 0, path: (c.workedIn || {}).path || '' }) }, { key: 'info', text: W_('np.done.undoNew.never') }]));
     const rec = p.fromChatRec, why0 = PJX.np.undoEnded(rec); if (why0) { PJX.toast(W_('cv.undo.ended', { reason: why0 }), '', 'info'); return; }
+    // (Astra max A3) the files picked and moved go back; the ones left out never moved, and are named apart
+    const files = (rec && rec.files) || [], left = (rec && rec.left) || [], n = PJX.np.plural(files.length, 'file');
+    const lines = [{ key: 'info', text: W_('np.done.undoNew.' + mode, { name: p.name, n: files.length, path: (c.workedIn || {}).path || '' }) }];
+    if (mode === 'move' && left.length) lines.push({ key: 'info', text: W_(left.length === 1 ? 'cv.u.leftOne' : 'cv.u.leftMany', { list: PJX.np.andList(left) }) });
+    lines.push({ key: 'info', text: W_('np.done.undoNew.never') });
+    const body = h('div', null, PJX.flow.facts(lines));
     PJX.yes({ title: W_('np.done.undoNew.title', { name: p.name, chat: fl.chat }), body, okLabel: W_('np.done.undo'),
-      ok: () => PJX.run(p.id, 'remove', 'Undoing', [{ label: 'Moving “' + fl.chat + '” back to No project', ms: 700 }, { label: mode === 'move' ? 'Putting its files back in the chat folder' : 'Taking ' + p.name + ' off your list', ms: 700 }], () => { PJX.S.world.projects = PJX.all().filter((x) => x !== p); delete C.flash[p.id]; if (rec) { delete (PJX.S.world.facts.converted || {})[rec.chat]; const ch = PJX.np.chatOf(rec.chat); if (ch) ch.back = 'Back in No project · ' + p.name + ' was undone at ' + PJX.np.nowWord(); } }, { cmd: 'ACD-511 Undo' }).then(() => PJX.toast(W_('np.done.undoNew.done', { chat: fl.chat, name: p.name }), W_('np.done.undoNew.never'), 'success')),
+      ok: () => {
+        if (!undoStillOpen(rec, p)) return;
+        let done = false;
+        return PJX.run(p.id, 'remove', 'Undoing', [{ label: 'Moving “' + fl.chat + '” back to No project', ms: 700 }, { label: mode === 'move' && files.length ? W_('cv.u.putting', { files: n }) : 'Taking ' + p.name + ' off your list', ms: 700 }], () => {
+          if (!undoStillOpen(rec, p)) return;
+          done = true;
+          PJX.S.world.projects = PJX.all().filter((x) => x !== p); delete C.flash[p.id]; if (rec) { delete (PJX.S.world.facts.converted || {})[rec.chat]; const ch = PJX.np.chatOf(rec.chat); if (ch) ch.back = 'Back in No project · ' + p.name + ' was undone at ' + PJX.np.nowWord(); }
+        }, { cmd: 'ACD-511 Undo' }).then(() => { if (done) PJX.toast(W_('np.done.undoNew.done', { chat: fl.chat, name: p.name }), (mode === 'move' && files.length ? W_('cv.u.back', { files: n }) + ' ' : '') + W_('np.done.undoNew.never'), 'success'); });
+      },
       report: { title: W_('np.done.undoNew.done', { chat: fl.chat, name: p.name }) } });
   }
   /* Undo a move into a project you have: its statement first, then the move back */
@@ -543,7 +593,16 @@
     const why0 = PJX.np.undoEnded(rec); if (why0) { PJX.toast(W_('cv.undo.ended', { reason: why0 }), '', 'info'); return; }
     const body = h('div', null, PJX.flow.facts(PJX.np.moveUndoStatement(rec).map((t) => ({ key: 'info', text: t }))));
     PJX.yes({ title: W_('np.mv.u.title', { chat: rec.title }), body, okLabel: W_('np.mv.u.go'),
-      ok: () => PJX.run(p.id, 'move', 'Undoing the move', [{ label: 'Putting the files back in the chat folder', ms: 700 }, { label: 'Moving “' + rec.title + '” back to No project', ms: 700 }], () => { PJX.np.moveUndo(rec.chat); delete C.flash[p.id]; const ch = PJX.np.chatOf(rec.chat); if (ch) ch.back = 'Back in No project · moved out of ' + p.name + ' at ' + PJX.np.nowWord(); }, { cmd: 'ACD-511 Undo' }).then(() => PJX.toast(W_('np.mv.u.done', { chat: rec.title }), W_('np.mv.u.never'), 'success')),
+      ok: () => {
+        if (!undoStillOpen(rec, p)) return;
+        const n = PJX.np.plural(rec.files.length, 'file');
+        let done = false;
+        return PJX.run(p.id, 'move', 'Undoing the move', [{ label: rec.files.length ? W_('cv.u.putting', { files: n }) : 'Moving “' + rec.title + '” back', ms: 700 }, { label: 'Moving “' + rec.title + '” back to No project', ms: 700 }], () => {
+          if (!undoStillOpen(rec, p)) return;
+          done = true;
+          PJX.np.moveUndo(rec.chat); delete C.flash[p.id]; const ch = PJX.np.chatOf(rec.chat); if (ch) ch.back = 'Back in No project · moved out of ' + p.name + ' at ' + PJX.np.nowWord();
+        }, { cmd: 'ACD-511 Undo' }).then(() => { if (done) PJX.toast(W_('np.mv.u.done', { chat: rec.title }), (rec.files.length ? W_('cv.u.back', { files: n }) + ' ' : '') + W_('np.mv.u.never'), 'success'); });
+      },
       report: { title: W_('np.mv.u.done', { chat: rec.title }) } });
   }
   /* Find the folder, in place (PJX.parts.repairBody): the same choices as the shared dialog, on the page that shows the
@@ -984,16 +1043,20 @@
   function wherePlate(p) {
     const w0 = p.where, op = opOf(p.id), offline = (p.attention || []).some((a) => a.code === 'device_offline');
     const moving = op && ['relocate', 'move', 'restore', 'retry', 'computer'].indexOf(op.kind) >= 0;
-    const comp = PJX.np.comp(p.runsOn || 'here');
     const st = moving ? ['working', op.label] : w0.missing ? ['blocked', 'Missing'] : offline ? ['offline', 'Not answering'] : w0.pending ? ['pending', 'Not made yet'] : ['complete', 'Found'];
     const devs = p.sync && p.sync.devices;
     const devRec = PJX.ENV.devices.find((x) => x.name === w0.device);
-    const kept = w0.kind === 'local' ? 'This computer · ' + PJX.np.comp('here').free + ' free' : devRec && devRec.online === false ? w0.device + ' · not answering' : w0.device + (devRec && devRec.id === 'nas' ? ' · /volume1 · 3.1 TB free' : '');
+    // (Astra max A4) kept on the Computer or device that holds the files, with that place's own room: never This computer's
+    // room for files on another Computer, never a fixed Home NAS
+    const holderC = PJX.ENV.computers.find((c) => c.name === w0.label) || null;
+    const kept = devRec && devRec.online === false ? w0.label + ' · not answering' : w0.label + (holderC && holderC.free ? ' · ' + holderC.free + ' free' : '');
+    // files on this computer that the records home reaches over the network say which Computer reaches them
+    const reacher = (w0.reach || []).find((c) => c !== 'here');
     // each way of reaching the files in its own words (SSH, SMB, NFS, a connected drive, Puppet Master on the device)
-    const reached = w0.kind === 'local' ? ((w0.reach || []).indexOf(p.runsOn) >= 0 && p.runsOn !== 'here' ? W_('pg.wh.shared', { computer: comp.name }) : W_('pg.wh.direct')) : w0.via === 'Puppet Master' ? W_('pg.wh.pm', { device: w0.device })
+    const reached = w0.kind === 'local' ? (reacher ? W_('pg.wh.shared', { computer: PJX.np.comp(reacher).name }) : W_('pg.wh.direct')) : w0.via === 'Puppet Master' ? W_('pg.wh.pm', { device: w0.device })
       : /SMB/.test(w0.via || '') ? W_('pg.wh.smb') : /NFS/.test(w0.via || '') ? W_('pg.wh.nfs') : /connected drive|drive/i.test(w0.via || '') ? W_('pg.wh.drive') : /SSH/.test(w0.via || '') ? W_('pg.wh.ssh') : W_('pg.wh.other', { via: w0.via || 'the network' });
     return plate('where', {
-      icon: w0.kind === 'local' ? 'desktop' : 'server', title: 'Where it lives', sub: w0.label + (w0.via ? ' · over ' + w0.via : ''),
+      icon: holderC ? holderC.glyph || 'desktop' : w0.kind === 'local' ? 'desktop' : 'server', title: 'Where it lives', sub: w0.label + (w0.via ? ' · over ' + w0.via : ''),
       meta: cornerSays(st[0]) ? parts().st(st[0], st[1]) : null,
       body: [moving ? working(op) : null, facts([
         { k: W_('pg.wh.folder'), node: midPath(w0.path), tone: w0.missing ? 'crit' : null },
@@ -1450,9 +1513,7 @@
         // what can't be undone is said: an online copy or a fork made here stays there if you Undo
         const remote = p.online && p.online.service && /make|instead/.test(PJX.np.onlineMode(s)) ? ' The online copy on ' + p.online.service + ' can’t be undone from here: delete it there if you don’t want it.' : p.online && p.online.upstream && !((PJX.np.accessDone(s) || {}).fork) && agent ? ' Your fork on ' + p.online.service + ' can’t be undone from here: delete it there if you don’t want it.' : '';
         const fr = p.fromChatRec, ch0 = fr && PJX.np.chatOf(fr.chat);
-        const report = fr && ch0 ? { moved: ['“' + ch0.title + '” · ' + ch0.messages + ' messages and ' + ch0.attachments + ' attachments'].concat(fr.files.length ? [PJX.np.plural(fr.files.length, 'file') + ' · into ' + p.where.path] : []),
-          stayed: [].concat((ch0.fileList || []).length - fr.files.length > 0 && files === 'move' ? [PJX.np.plural((ch0.fileList || []).length - fr.files.length, 'file') + ' you left out, in ' + ch0.folder] : []).concat(ch0.outside.length ? [PJX.np.plural(ch0.outside.length, 'file') + ' it changed outside its folder'] : []).concat((ch0.grants || []).map((g) => 'Its permission “' + g + '”')),
-          held: fr.held, failed: [] } : null;
+        const report = fr && ch0 ? newChatReport(p, fr, { files }) : null;
         if (report) PJX.toast(W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: ch0.title, project: p.name, files: PJX.np.plural(fr.files.length, 'file'), stayed: PJX.np.plural(report.stayed.length, 'thing'), failed: '' }), 'success');
         // (Sol max S2) a restore says which copy came back, and from where
         const back = p.restored ? W_('np.done.restored', { when: p.restored.when, where: p.restored.where }) + ' ' : '';
@@ -1580,7 +1641,7 @@
     // 1 which project: the library's groups, with search
     const T = NPx.moveTargets(m), groups = new Map();
     T.forEach((x) => { const k = x.p.where.label || 'Elsewhere'; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(x); });
-    const order = ['This computer'].concat(PJX.ENV.devices.map((d) => d.name));
+    const order = [PJX.np.comp('here').name].concat(PJX.ENV.devices.map((d) => d.name));
     const lists = Array.from(groups.keys()).sort((a, b) => ((order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99))).map((k) => U.group(k, U.choices('mv:target:' + k.replace(/\W+/g, '-'), groups.get(k).map((x) => ({ id: x.p.id, glyph: x.p.glyph, title: x.p.name, sub: [PJX.primary(x.p).word, x.other ? W_('np.mv.other', { project: x.p.name, computer: x.other }) : null].filter(Boolean).join(' · '), disabled: x.off })), m.target, (v) => { m.target = v; m.place = 'draft'; m.changed(); }, { label: k })));
     put0(box, q(1, W_('np.mv.q1'), W_('np.mv.q1Lead'), U.field(W_('np.mv.search'), U.input('mv:q', m.q, 'harbor', (v) => { m.q = v; m.changed(); }), ''), lists.length ? lists : U.hint('No project matches that search.'),
       p && (p.home || p.runsOn || 'here') !== c.runsOn ? U.line('info', W_('np.mv.other', { project: p.name, computer: NPx.comp(p.home || p.runsOn).name })) : null));
@@ -1654,16 +1715,10 @@
     const res = await PJX.np.moveCommit(m, { yolo: PJX.yolo(), onPhase(i, l, st) { if (C && C.mvCommit) { C.mvCommit.states[i] = st; render(); if (st === 'complete') announce(l[i].label + ' · done'); } } });
     if (!C) return;
     if (res.ok) {
-      const r = res.rec, c = PJX.np.chatOf(r.chat), p = res.project, left = [];
-      const nLeft = (c.fileList || []).length - (r.chatOnly ? 0 : PJX.np.movePicked(m).length);
-      if (nLeft) left.push(PJX.np.plural(nLeft, 'file') + ' you didn’t pick');
-      if (c.outside.length) left.push(PJX.np.plural(c.outside.length, 'file') + ' outside the chat folder');
-      (c.grants || []).forEach((g) => left.push('its permission “' + g + '”'));
-      const report = { moved: ['“' + c.title + '” · ' + c.messages + ' messages and ' + c.attachments + ' attachments'].concat(r.files.length ? [PJX.np.plural(r.files.length, 'file') + ' · into ' + r.folder + '/' + (r.place === 'draft' ? ' on the draft ' + r.branch : '')] : []),
-        stayed: left.map((x) => x.charAt(0).toUpperCase() + x.slice(1)), held: r.held, failed: r.failed.map((f) => f + ' · it was open in another app, so it stayed in the chat folder') };
-      const partial = r.failed.length;
-      C.flash[p.id] = { report, title: partial ? W_('cv.rep.partial', { project: p.name, n: r.failed.length }) : W_('np.mv.done', { project: p.name }), text: W_('np.mv.doneText', { n: c.messages, a: c.attachments, files: r.files.length ? W_('np.mv.doneFiles', { k: PJX.np.plural(r.files.length, 'file'), folder: r.folder, onDraft: r.place === 'draft' ? W_('np.mv.onDraft', { branch: r.branch }) : '' }) : '', left: left.length ? PJX.np.andList(left) : 'nothing' }) + (r.by === 'yolo' ? ' YOLO didn’t ask for a yes.' : ''), moved: r };
-      PJX.toast(partial ? W_('cv.rep.partial', { project: p.name, n: r.failed.length }) : W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: c.title, project: p.name, files: PJX.np.plural(r.files.length, 'file'), stayed: PJX.np.plural(report.stayed.length, 'thing'), failed: partial ? ' ' + PJX.np.plural(r.failed.length, 'file') + ' didn’t move.' : '' }), partial ? 'warn' : 'success');
+      // (Astra max A1) the flash keeps the operation's record; its report, title and summary are read from it when drawn
+      const r = res.rec, p = res.project, out = PJX.np.moveReport(r);
+      C.flash[p.id] = { moved: r };
+      PJX.toast(out.partial ? out.title : W_('cv.rep.title', { project: p.name }), out.notify, out.partial ? 'warn' : 'success');
       announce(W_('np.mv.done', { project: p.name }));
       closeMove(p.id);
     }
