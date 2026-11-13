@@ -1848,7 +1848,7 @@
         "wrong_version_or_duplicate_scheduled_build",
         "wrong_version_or_hidden_build_state"
       ],
-      "sha256": "c40d71c6e0d5a8464b48f84d922bce53e96a5b84e1060ea8fef3f55519494abb",
+      "sha256": "4401f5b65a1cca3087eb32423eeb4e257b10c22765c427a8c61995cde8e56565",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28
@@ -2004,7 +2004,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7468,
+      "line_count": 7488,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 81,
       "plan_unit_ids": [
@@ -2160,7 +2160,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "36efbcb57a3de6332493b17f4c4173e6d964223829253d2f43efc8ea3e7f6390",
+      "sha256": "a61d285e14a5afbca6cbafa8e55d5d5185581e01a5727e03bbc11b5015675d31",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80,
@@ -2311,6 +2311,8 @@
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-ui-command-response.py",
         "python3 scripts/pm-validate-pm7-gui-fixtures.py validate",
+        "python3 scripts/pm-w3g-event-contracts.py",
+        "python3 scripts/pm-w3g-guard-tables.py --out <dir>",
         "python3 scripts/pm-working-notebook-contracts.py",
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
@@ -7240,7 +7242,7 @@
         "Plans/external_research_contracts.schema.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 1088,
+      "line_count": 1089,
       "path": "Plans/External_Research.md",
       "plan_unit_count": 19,
       "plan_unit_ids": [
@@ -7284,7 +7286,7 @@
         "unapproved_scope_expansion",
         "unreviewed_canon_change"
       ],
-      "sha256": "680005d7f7c153a0d18daca5b092b82b946fe664a83f2be91f93047c03cb564e",
+      "sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 19
@@ -9829,7 +9831,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "c5e60f46b27a3c2f45c4963ed869de4bb7f7893179a1daffc6fc9ea5a86e7009",
+      "sha256": "5f7ecbac63fbe3dd3380c5e90687f9d28c9396b6fd2aa79081a6a38bb3ce538e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 78,
@@ -18754,7 +18756,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 31145,
+      "line_count": 31201,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 362,
       "plan_unit_ids": [
@@ -19244,7 +19246,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "3428625615e8e20bb479b23e145ff57edb1826a6c7c21cc828116282cc43121d",
+      "sha256": "6b3024c84d258a99ef07009f05bb736cb20bb8cb19b3e0dc7962ff8ebe4ce434",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 358,
@@ -21441,7 +21443,7 @@
         "tool_surface_ambiguity",
         "unbounded_injection"
       ],
-      "sha256": "aecaee78a41cc688ac771614a537a5e080c224628a2c185621ef92cd1e22987c",
+      "sha256": "8a9931bf6eccbf73c5f202d1e15f6d180457b951c41660ee1c2cfce0284082be",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 26
@@ -21636,7 +21638,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-13T16:33:14Z",
+  "generated_at_utc": "2026-11-13T17:26:23Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -24066,6 +24066,86 @@
           "isolation": "Recompute only deterministic dependent copies/keys/commitments. Keep independent authentic sources immutable. If multiple enforcement sites test this same field and predicate, enumerate that predicate-only duplicate set; remove each site separately then all sites. Distinct predicates never share a removal set. Prove using reviewed scripts/pm_guard_isolation.py in phase 2.",
           "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
           "case_boundary": "Original-source spelling join after successful owner grammar validation."
+        },
+        {
+          "guard_id": "external_research.topic_started:stage_snapshot_discovery",
+          "predicate": "a discovery stage admits no frozen plans snapshot (ERS-003, ERS-1511)",
+          "positive": "An authentic topic start whose stage admission plan gives discovery only the product brief and admits the frozen snapshot at reconcile and compare.",
+          "negative": {
+            "mutation": "add the valid, correctly hashed frozen snapshot to the discovery stage inputs only; keep input custody, freeze, currentness and read/write authority valid",
+            "expected_refusal": "research_leakage_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R2)",
+          "split_from": "external_research.topic_started:research_leakage"
+        },
+        {
+          "guard_id": "external_research.topic_started:stage_snapshot_study",
+          "predicate": "a study stage admits no frozen plans snapshot (ERS-003, ERS-1511)",
+          "positive": "An authentic topic start whose study stage admits the brief and its own arm artifacts only.",
+          "negative": {
+            "mutation": "add the valid frozen snapshot to the study stage inputs only",
+            "expected_refusal": "research_leakage_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R2)",
+          "split_from": "external_research.topic_started:research_leakage"
+        },
+        {
+          "guard_id": "external_research.topic_started:stage_other_arm_discovery",
+          "predicate": "a discovery stage admits no declared_other_arm_artifact (ERS-003)",
+          "positive": "An authentic topic start whose discovery stage admits no other arm artifact; reconcile and compare admit the declared one.",
+          "negative": {
+            "mutation": "add a valid declared_other_arm_artifact (same topic, declared source arm) to the discovery stage inputs only",
+            "expected_refusal": "research_leakage_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R2)",
+          "split_from": "external_research.topic_started:research_leakage"
+        },
+        {
+          "guard_id": "external_research.topic_started:stage_other_arm_study",
+          "predicate": "a study stage admits no declared_other_arm_artifact (ERS-003)",
+          "positive": "An authentic topic start whose study stage admits no other arm artifact.",
+          "negative": {
+            "mutation": "add a valid declared_other_arm_artifact to the study stage inputs only",
+            "expected_refusal": "research_leakage_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R2)",
+          "split_from": "external_research.topic_started:research_leakage"
         }
       ],
       "unknown_or_withdrawn_selector": "Read-only unavailable; never relabel or mutate historical original",
@@ -24482,6 +24562,12 @@
         "identifier_fullmatch": [
           "external_research.topic_started:identifier_fullmatch",
           "external_research.topic_started:identifier_spelling"
+        ],
+        "phase2_review_additions": [
+          "external_research.topic_started:stage_snapshot_discovery",
+          "external_research.topic_started:stage_snapshot_study",
+          "external_research.topic_started:stage_other_arm_discovery",
+          "external_research.topic_started:stage_other_arm_study"
         ]
       },
       "case_execution_rule": "Every guard row is a required planned positive/one-defect negative. Run per applicable edition and path, one component/dependency/occurrence at a time; no aggregate rule substitutes for its leaves. Current-write/retry authorization checks never govern original retained history. Failure is nonzero with its named refusal and zero new effects, including no second native effect, append, receipt, projector publication or external call. An already committed native result remains pending/resolvable under its original owner."
@@ -26060,6 +26146,25 @@
           },
           "isolation": "Construct from its own valid branch; preserve every independent guard and refresh only deterministic derivatives. One predicate per shared-tool removal set.",
           "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads."
+        },
+        {
+          "guard_id": "goal.paused:revision_successor",
+          "predicate": "the original lifecycle mutation advances the ordinary body revision by exactly one (receipt after_revision = before_revision + 1, exact integers)",
+          "positive": "An authentic original pause whose narrow body receipt records before_revision=3 and after_revision=4, with every join, currentness hash and control commitment derived from that receipt.",
+          "negative": {
+            "mutation": "record a coherent but wrong delta (before_revision=3, after_revision=5) in the authentic receipt; derive the after body, currentness hashes, control body hash, payload goal_revision and every independent expectation from it so no copy, join or hash mismatch masks the relation",
+            "expected_refusal": "pause_state_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R1)"
         }
       ],
       "unknown_or_withdrawn_selector": "Read-only unavailable; never relabel or mutate historical original",
@@ -27075,6 +27180,9 @@
         "identifier_fullmatch": [
           "goal.paused:identifier_fullmatch",
           "goal.paused:identifier_spelling"
+        ],
+        "phase2_review_additions": [
+          "goal.paused:revision_successor"
         ]
       },
       "case_execution_rule": "Every guard row is a required planned positive/one-defect negative. Run per applicable edition and path, one component/dependency/occurrence at a time; no aggregate rule substitutes for its leaves. Current-write/retry authorization checks never govern original retained history. Failure is nonzero with its named refusal and zero new effects, including no second native effect, append, receipt, projector publication or external call. An already committed native result remains pending/resolvable under its original owner.",
@@ -28660,6 +28768,63 @@
           },
           "isolation": "Construct from its own valid branch; preserve every independent guard and refresh only deterministic derivatives. One predicate per shared-tool removal set.",
           "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads."
+        },
+        {
+          "guard_id": "goal.resumed:revision_successor",
+          "predicate": "the original lifecycle mutation advances the ordinary body revision by exactly one (receipt after_revision = before_revision + 1, exact integers)",
+          "positive": "An authentic original resume whose narrow body receipt records before_revision=3 and after_revision=4, with every join, currentness hash and control commitment derived from that receipt.",
+          "negative": {
+            "mutation": "record a coherent but wrong delta (before_revision=3, after_revision=5) in the authentic receipt; derive the after body, currentness hashes, control body hash, payload goal_revision and every independent expectation from it",
+            "expected_refusal": "resume_blocker_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R1)"
+        },
+        {
+          "guard_id": "goal.resumed:resume_body",
+          "predicate": "resume preserves the exact original objective bytes (after objective hash = before objective hash)",
+          "positive": "An authentic original resume whose before and after bodies carry the same objective hash.",
+          "negative": {
+            "mutation": "change only the after body objective bytes; recompute the after body hash, currentness hash, control body hash and payload currentness_hash from it; keep the receipt revisions, accepted history, Stop, lease and permissions valid",
+            "expected_refusal": "resume_blocker_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R1)"
+        },
+        {
+          "guard_id": "goal.resumed:resume_body_history",
+          "predicate": "resume preserves the original accepted objective-history head",
+          "positive": "An authentic original resume whose before and after bodies carry the same accepted-history head.",
+          "negative": {
+            "mutation": "change only the after body accepted-history head; recompute the after body hash, currentness hash, control body hash and payload currentness_hash from it; keep the receipt accepted_history_head expectation join valid",
+            "expected_refusal": "resume_blocker_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R1)"
         }
       ],
       "unknown_or_withdrawn_selector": "Read-only unavailable; never relabel or mutate historical original",
@@ -29779,6 +29944,11 @@
         "identifier_fullmatch": [
           "goal.resumed:identifier_fullmatch",
           "goal.resumed:identifier_spelling"
+        ],
+        "phase2_review_additions": [
+          "goal.resumed:revision_successor",
+          "goal.resumed:resume_body",
+          "goal.resumed:resume_body_history"
         ]
       },
       "case_execution_rule": "Every guard row is a required planned positive/one-defect negative. Run per applicable edition and path, one component/dependency/occurrence at a time; no aggregate rule substitutes for its leaves. Current-write/retry authorization checks never govern original retained history. Failure is nonzero with its named refusal and zero new effects, including no second native effect, append, receipt, projector publication or external call. An already committed native result remains pending/resolvable under its original owner.",
@@ -31078,6 +31248,25 @@
           "isolation": "Recompute only deterministic dependent copies/keys/commitments. Keep independent authentic sources immutable. If multiple enforcement sites test this same field and predicate, enumerate that predicate-only duplicate set; remove each site separately then all sites. Distinct predicates never share a removal set. Prove using reviewed scripts/pm_guard_isolation.py in phase 2.",
           "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
           "case_boundary": "Original-source spelling join after successful owner grammar validation."
+        },
+        {
+          "guard_id": "notebook.checkpoint_committed:required_set_digest",
+          "predicate": "payload required_revisions_sha256 is SHA-256 of the CV-317 RFC 8785 bytes of the complete original ordered required_entry_revisions array",
+          "positive": "An authentic checkpoint whose payload digest is recomputed from its native ordered required array.",
+          "negative": {
+            "mutation": "substitute a well-formed digest of another valid ordered array (the same revisions reordered) in the stored payload only; keep the native array, its custody, every readable dependency, the capsule hash, first receipt and source commitment intact; refresh only the dependent event commitments",
+            "expected_refusal": "checkpoint_required_set_refused",
+            "expected_new_effects": 0,
+            "single_defect": true
+          },
+          "isolation": "Change only this named predicate at its stated boundary. Preserve authentic complete independent originals and all peer predicates; refresh deterministic copied fields/commitments, never original admission. Phase 2 cuts this clause only with the reviewed shared tool; same refusal or enforcement site does not merge predicates.",
+          "applies_to": [
+            "current_write",
+            "current_retry"
+          ],
+          "historical_original": "A retained authentic original keeps its original admission and edition; this current-write predicate is never applied to it.",
+          "branch_rule": "Each named component/participant is tested separately on every owner-defined branch where it is required. A nonparticipating optional Crew/Goal/run/Project is not fabricated. Preserve original admission and edition for retained reads.",
+          "added_in": "phase 2 (W3G-sol recheck B1-R3)"
         }
       ],
       "unknown_or_withdrawn_selector": "Read-only unavailable; never relabel or mutate historical original",
@@ -31986,6 +32175,9 @@
         "identifier_fullmatch": [
           "notebook.checkpoint_committed:identifier_fullmatch",
           "notebook.checkpoint_committed:identifier_spelling"
+        ],
+        "phase2_review_additions": [
+          "notebook.checkpoint_committed:required_set_digest"
         ]
       },
       "case_execution_rule": "Every guard row is a required planned positive/one-defect negative. Run per applicable edition and path, one component/dependency/occurrence at a time; no aggregate rule substitutes for its leaves. Current-write/retry authorization checks never govern original retained history. Failure is nonzero with its named refusal and zero new effects, including no second native effect, append, receipt, projector publication or external call. An already committed native result remains pending/resolvable under its original owner."
@@ -40770,5 +40962,16 @@
     "current_write": "New current mutation/append admission; all current writer predicates apply at their actual boundary.",
     "current_retry": "A retry that would perform current mutation/append revalidates current writer predicates. If native effect already committed, keep its original result pending/resolvable without repeating it.",
     "retained_original": "Read/resolve an immutable already committed original through authenticated original admission/edition and current disclosure policy. No reacquisition of live writer lease, write permission, owner/CAS/Stop/cancellation or migration into current schemas."
+  },
+  "phase2": {
+    "status": "EXECUTABLE_SYNTHETIC_ORACLES_NATIVE_NOT_RUN",
+    "date": "2026-11-13",
+    "checker": "scripts/pm_w3g_events.py",
+    "tables": "scripts/pm_w3g_table_*.py (generated by scripts/pm-w3g-table-generate.py)",
+    "cases": "scripts/pm_w3g_cases.py",
+    "runner": "python3 scripts/pm-w3g-event-contracts.py",
+    "guard_tool": "python3 scripts/pm-w3g-guard-tables.py --out <dir> (gated scripts/pm_guard_isolation.py at 004bdedd63)",
+    "numbers": "scripts/pm_w3g_numbers.py (shared NUMRULE corpus through the complete routes)",
+    "plan_guard_mapping": "Each plan guard <family>:<suffix> is a table row of pm_w3g_events (common phases ad, sc, pf, en, nm, tm, src, pj, ej, sj, wr, id, st, ry, rr, rd, rs; family phases py_<slug>, fx_<slug>); compound plan rows are split further where one clause had two predicates. The runner maps every schema_predicate_inventory site to its row or to a written implication."
   }
 }

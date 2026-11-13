@@ -44,7 +44,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload."
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-RUNTIME-365D@1.0.0",
+        "application": "RP-RUNTIME-365D@1.0.0"
+      },
+      "retention_decision": "DL-401 (Card 1, Case L-3), bound in phase 1"
     },
     {
       "prefix": "APR",
@@ -57,8 +62,8 @@
         "assistant_plan_cancel_result",
         "assistant_plan_cancel_result_application"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G15 is chat actions, not this exact Plan cancellation; pre-Build cancellation has no real run, so RP-RUNTIME-365D cannot be assigned to the whole family by analogy.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "assistant_plan.cancelled",
       "number": 1501,
@@ -88,7 +93,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload."
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "APR",
@@ -131,7 +141,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload."
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-RUNTIME-365D@1.0.0",
+        "application": "RP-RUNTIME-365D@1.0.0"
+      },
+      "retention_decision": "DL-401 (Card 1, Case L-3), bound in phase 1"
     },
     {
       "prefix": "APR",
@@ -143,8 +158,8 @@
         "assistant_plan_document_revision_application",
         "assistant_plan_record_application"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G15 names thread/worktree actions, not AssistantPlan creation; an indefinite Plan record does not itself assign a lifetime to this additional event.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "assistant_plan.created",
       "number": 1503,
@@ -172,7 +187,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload."
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "APR",
@@ -184,8 +204,8 @@
         "assistant_plan_record_application",
         "runtime_artifact_projector_families"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G15/G16 do not name this export history; the artifact body and export receipt retain independent policies.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "assistant_plan.exported",
       "number": 1504,
@@ -214,7 +234,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload."
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "APR",
@@ -226,8 +251,8 @@
         "assistant_plan_document_revision_application",
         "assistant_plan_record_application"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G16 covers planning-document annotations/revisions in its exact nine-name group, not this newly returned AssistantPlan version family.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "assistant_plan.version_created",
       "number": 1505,
@@ -255,7 +280,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload."
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "APR",
@@ -266,8 +296,8 @@
         "assistant_plan_record",
         "assistant_plan_record_application"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G17 is the listed Wizard histories; it does not name AssistantPlan handoff history. Source and destination retain their independent policies.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "assistant_plan.wizard_handoff_created",
       "number": 1506,
@@ -296,7 +326,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload."
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "ERS",
@@ -306,8 +341,8 @@
       "store": [
         "event_append_receipt_custody"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G16 names planning-document annotations, not research budget refusals; no exact event retention assignment was found.",
+      "retention": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_reason": "`RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17659 and :17668): seven years (220,752,000 seconds) sharing the existing 2,000,000-entry seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675) lists this type among its change, failure and refusal entries (:17681), so the anchor is the entry's own first durable save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and restore never restart it",
       "app": false,
       "event_type": "external_research.budget_denied",
       "number": 1507,
@@ -332,7 +367,11 @@
         "application": []
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes."
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0"
+      },
+      "retention_decision": "DL-455"
     },
     {
       "prefix": "ERS",
@@ -342,8 +381,8 @@
       "store": [
         "event_append_receipt_custody"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G16 does not name this research classification/credit family; the underlying finding/union record is separate.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17647): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": false,
       "event_type": "external_research.finding_classified",
       "number": 1508,
@@ -368,7 +407,11 @@
         "application": []
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes."
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "ERS",
@@ -378,8 +421,8 @@
       "store": [
         "event_append_receipt_custody"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "A research_job_id or manifest is not an Executor/PlanRun identity; G16 and Run year cannot supply an event clock by analogy.",
+      "retention": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_reason": "`RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17659 and :17668): seven years (220,752,000 seconds) sharing the existing 2,000,000-entry seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675) lists this type among its finish and outcome entries (:17678), so the anchor is the entry's own first durable save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and restore never restart it",
       "app": false,
       "event_type": "external_research.job_terminal",
       "number": 1509,
@@ -404,7 +447,11 @@
         "application": []
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes."
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0"
+      },
+      "retention_decision": "DL-455"
     },
     {
       "prefix": "ERS",
@@ -414,8 +461,8 @@
       "store": [
         "event_append_receipt_custody"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G16 covers the listed planning-document events, not this new research packet delivery event; chat artifact content remains separately governed.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17647): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": false,
       "event_type": "external_research.packet_delivered",
       "number": 1510,
@@ -440,7 +487,11 @@
         "application": []
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes."
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "ERS",
@@ -450,8 +501,8 @@
       "store": [
         "event_append_receipt_custody"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G16 is not an exact assignment to research-topic start; frozen source and manifest retention do not automatically assign this extra event.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17647): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": false,
       "event_type": "external_research.topic_started",
       "number": 1511,
@@ -476,7 +527,11 @@
         "application": []
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes."
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "GRS",
@@ -492,8 +547,8 @@
         "goal_body_control_application",
         "goal_body_mutation_receipt_application"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G29 decides continuation_evaluated only; neither it nor the independently indefinite native body receipt assigns retention to this new pause event.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17648): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "goal.paused",
       "number": 1512,
@@ -540,7 +595,12 @@
           "Plans/storage_value_registry.json:goal_body_control"
         ],
         "integration_dependency": null
-      }
+      },
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "GRS",
@@ -556,8 +616,8 @@
         "goal_body_control_application",
         "goal_body_mutation_receipt_application"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G29 covers the exact continuation check, not this resumed semantic event; preserving native result/Stop policy does not choose an additional event lifetime.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17648): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "goal.resumed",
       "number": 1513,
@@ -604,7 +664,12 @@
           "Plans/storage_value_registry.json:goal_body_control"
         ],
         "integration_dependency": null
-      }
+      },
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "WN",
@@ -615,8 +680,8 @@
         "notebook_checkpoint_record",
         "working_notebook_entry_record"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "SP-256 assigns native checkpoint values indefinite receipt/source lineage; no exact additional event assignment was found. G03 is Assistant memory, not notebook history.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "notebook.checkpoint_committed",
       "number": 1514,
@@ -644,7 +709,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself."
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "WN",
@@ -655,8 +725,8 @@
         "notebook_checkpoint_record",
         "context_transition_record"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "The failure event is not the checkpoint value itself; G03/G27 do not name it. No age/count/deletion rule is inferred.",
+      "retention": "RP-OPERATIONAL-2555D@1.0.0 (project); RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (application)",
+      "retention_reason": "`RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17659 and :17669): seven years (220,752,000 seconds) sharing the existing 2,000,000-entry seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675) lists this type among its change, failure and refusal entries (:17681), so the anchor is the entry's own first durable save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and restore never restart it. Its application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (DL-455's separate 2,000,000-entry application allowance, count key `app:operational_security`, `anchor_kind=creation`: the first successful save that survives a restart, 220,752,000 seconds)",
       "app": true,
       "event_type": "notebook.checkpoint_failed",
       "number": 1515,
@@ -684,7 +754,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself."
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_decision": "DL-455"
     },
     {
       "prefix": "WN",
@@ -694,8 +769,8 @@
       "store": [
         "working_notebook_entry_record"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G03 applies Assistant memory-note actions, not these notebook entries. Native notebook indefinite retention does not automatically retain this additional event.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "notebook.entry_committed",
       "number": 1516,
@@ -723,7 +798,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself."
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "WN",
@@ -733,8 +813,8 @@
       "store": [
         "working_notebook_entry_record"
       ],
-      "retention": "PENDING_RETENTION_DECISION",
-      "retention_reason": "G03 is a different memory owner/family set; native entry lifecycle and retention are reused without assigning event retention by analogy.",
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
       "app": true,
       "event_type": "notebook.entry_superseded",
       "number": 1517,
@@ -762,7 +842,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself."
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
     },
     {
       "prefix": "WN",
@@ -802,7 +887,12 @@
         ]
       },
       "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself."
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-RUNTIME-365D@1.0.0",
+        "application": "RP-RUNTIME-365D@1.0.0"
+      },
+      "retention_decision": "DL-401 (Card 1, Case L-3), bound in phase 1"
     }
   ]
 }

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L29605-L31145
+Source lines: L29605-L31201
 
-Source SHA256: `3428625615e8e20bb479b23e145ff57edb1826a6c7c21cc828116282cc43121d`
+Source SHA256: `6b3024c84d258a99ef07009f05bb736cb20bb8cb19b3e0dc7962ff8ebe4ce434`
 
 ---
 
@@ -120,9 +120,12 @@ canonical_text: Newly authored owner contract for assistant_plan.cancelled alone
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G15 is chat actions, not this
-  exact Plan cancellation; pre-Build cancellation has no real run, so RP-RUNTIME-365D cannot be assigned to the
-  whole family by analogy. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application
+  scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it
+  on main f8b2098608 (Plans/storage-plan.md:17638 and :17646); no age or count expiry and no new count allowance;
+  explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the
+  native record, receipt and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic
+  checkpoint RP-PROJECTION-3GEN@1.0.0
   and append identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not
   extend the event/body lifetime or authorize a current write.
 gui_related: false
@@ -285,9 +288,12 @@ canonical_text: Newly authored owner contract for assistant_plan.created alone u
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G15 names thread/worktree actions,
-  not AssistantPlan creation; an indefinite Plan record does not itself assign a lifetime to this additional event.
-  Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application
+  scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it
+  on main f8b2098608 (Plans/storage-plan.md:17638 and :17646); no age or count expiry and no new count allowance;
+  explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the
+  native record, receipt and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic
+  checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
   custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not extend the event/body lifetime
   or authorize a current write.
 gui_related: false
@@ -367,8 +373,11 @@ canonical_text: Newly authored owner contract for assistant_plan.exported alone 
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G15/G16 do not name this export
-  history; the artifact body and export receipt retain independent policies. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0,
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application
+  scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it
+  on main f8b2098608 (Plans/storage-plan.md:17638 and :17646); no age or count expiry and no new count allowance;
+  explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the
+  native record, receipt and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0,
   generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0.
   Those independent existing policies do not extend the event/body lifetime or authorize a current write.
 gui_related: false
@@ -447,9 +456,12 @@ canonical_text: Newly authored owner contract for assistant_plan.version_created
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G16 covers planning-document
-  annotations/revisions in its exact nine-name group, not this newly returned AssistantPlan version family. Event
-  index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application
+  scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it
+  on main f8b2098608 (Plans/storage-plan.md:17638 and :17646); no age or count expiry and no new count allowance;
+  explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the
+  native record, receipt and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic
+  checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
   custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not extend the event/body lifetime
   or authorize a current write.
 gui_related: false
@@ -529,9 +541,12 @@ canonical_text: Newly authored owner contract for assistant_plan.wizard_handoff_
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G17 is the listed Wizard histories;
-  it does not name AssistantPlan handoff history. Source and destination retain their independent policies. Event
-  index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application
+  scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it
+  on main f8b2098608 (Plans/storage-plan.md:17638 and :17646); no age or count expiry and no new count allowance;
+  explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the
+  native record, receipt and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic
+  checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
   custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not extend the event/body lifetime
   or authorize a current write.
 gui_related: false
@@ -610,8 +625,13 @@ canonical_text: Newly authored owner contract for external_research.budget_denie
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G16 names planning-document annotations,
-  not research budget refusals; no exact event retention assignment was found. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0,
+  never empty or successful replay. Event retention is `RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by
+  DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608
+  (Plans/storage-plan.md:17659 and :17668); seven years (220,752,000 seconds) sharing the existing 2,000,000-entry
+  seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675)
+  lists this type among its change, failure and refusal entries (:17681), so the anchor is the entry's own first durable
+  save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and
+  restore never restart it. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0,
   generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0.
   Those independent existing policies do not extend the event/body lifetime or authorize a current write.
 gui_related: false
@@ -689,8 +709,11 @@ canonical_text: Newly authored owner contract for external_research.finding_clas
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G16 does not name this research
-  classification/credit family; the underlying finding/union record is separate. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0,
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by
+  DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608
+  (Plans/storage-plan.md:17638 and :17647); no age or count expiry and no new count allowance; explicit Project or
+  application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt
+  and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0,
   generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0.
   Those independent existing policies do not extend the event/body lifetime or authorize a current write.
 gui_related: false
@@ -768,9 +791,14 @@ canonical_text: Newly authored owner contract for external_research.job_terminal
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; A research_job_id or manifest
-  is not an Executor/PlanRun identity; G16 and Run year cannot supply an event clock by analogy. Event index rows
-  keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result custody
+  never empty or successful replay. Event retention is `RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by
+  DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608
+  (Plans/storage-plan.md:17659 and :17668); seven years (220,752,000 seconds) sharing the existing 2,000,000-entry
+  seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675)
+  lists this type among its finish and outcome entries (:17678), so the anchor is the entry's own first durable save
+  unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and
+  restore never restart it. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint
+  RP-PROJECTION-3GEN@1.0.0 and append identity/result custody
   RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not extend the event/body lifetime or
   authorize a current write.
 gui_related: false
@@ -848,9 +876,12 @@ canonical_text: Newly authored owner contract for external_research.packet_deliv
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G16 covers the listed planning-document
-  events, not this new research packet delivery event; chat artifact content remains separately governed. Event
-  index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by
+  DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608
+  (Plans/storage-plan.md:17638 and :17647); no age or count expiry and no new count allowance; explicit Project or
+  application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt
+  and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint
+  RP-PROJECTION-3GEN@1.0.0 and append identity/result
   custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not extend the event/body lifetime
   or authorize a current write.
 gui_related: false
@@ -928,9 +959,12 @@ canonical_text: Newly authored owner contract for external_research.topic_starte
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G16 is not an exact assignment
-  to research-topic start; frozen source and manifest retention do not automatically assign this extra event. Event
-  index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by
+  DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608
+  (Plans/storage-plan.md:17638 and :17647); no age or count expiry and no new count allowance; explicit Project or
+  application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt
+  and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint
+  RP-PROJECTION-3GEN@1.0.0 and append identity/result
   custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not extend the event/body lifetime
   or authorize a current write.
 gui_related: false
@@ -1008,8 +1042,11 @@ canonical_text: Newly authored owner contract for goal.paused alone under deck-2
   preserves complete canonical sources, original operation/result, receipt group, payload dependencies, identities
   and current tombstones under the original Storage instance; derived index/checkpoint rebuild cannot mint originals
   or clear a newer Stop. Missing custody fences recovery and reports unavailable, never empty or successful replay.
-  Event retention is PENDING_RETENTION_DECISION; G29 decides continuation_evaluated only; neither it nor the independently
-  indefinite native body receipt assigns retention to this new pause event. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0,
+  Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453
+  (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608
+  (Plans/storage-plan.md:17638 and :17648); no age or count expiry and no new count allowance; explicit Project or
+  application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt
+  and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0,
   generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0.
   Those independent existing policies do not extend the event/body lifetime or authorize a current write.
 gui_related: false
@@ -1092,8 +1129,11 @@ canonical_text: Newly authored owner contract for goal.resumed alone under deck-
   preserves complete canonical sources, original operation/result, receipt group, payload dependencies, identities
   and current tombstones under the original Storage instance; derived index/checkpoint rebuild cannot mint originals
   or clear a newer Stop. Missing custody fences recovery and reports unavailable, never empty or successful replay.
-  Event retention is PENDING_RETENTION_DECISION; G29 covers the exact continuation check, not this resumed semantic
-  event; preserving native result/Stop policy does not choose an additional event lifetime. Event index rows keep
+  Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453
+  (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608
+  (Plans/storage-plan.md:17638 and :17648); no age or count expiry and no new count allowance; explicit Project or
+  application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt
+  and source keep their own lifetimes. Event index rows keep
   RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0.
   Those independent existing policies do not extend the event/body lifetime or authorize a current write.
 gui_related: false
@@ -1176,9 +1216,12 @@ canonical_text: Newly authored owner contract for notebook.checkpoint_committed 
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; SP-256 assigns native checkpoint
-  values indefinite receipt/source lineage; no exact additional event assignment was found. G03 is Assistant memory,
-  not notebook history. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application
+  scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it
+  on main f8b2098608 (Plans/storage-plan.md:17638 and :17649); no age or count expiry and no new count allowance;
+  explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the
+  native record, receipt and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic
+  checkpoint RP-PROJECTION-3GEN@1.0.0
   and append identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not
   extend the event/body lifetime or authorize a current write.
 gui_related: false
@@ -1257,8 +1300,15 @@ canonical_text: Newly authored owner contract for notebook.checkpoint_failed alo
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; The failure event is not the
-  checkpoint value itself; G03/G27 do not name it. No age/count/deletion rule is inferred. Event index rows keep
+  never empty or successful replay. Event retention is `RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by
+  DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608
+  (Plans/storage-plan.md:17659 and :17669); seven years (220,752,000 seconds) sharing the existing 2,000,000-entry
+  seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675)
+  lists this type among its change, failure and refusal entries (:17681), so the anchor is the entry's own first durable
+  save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and
+  restore never restart it. Its application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (DL-455's
+  separate 2,000,000-entry application allowance, count key `app:operational_security`, `anchor_kind=creation`, the
+  first successful save that survives a restart, 220,752,000 seconds). Event index rows keep
   RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0.
   Those independent existing policies do not extend the event/body lifetime or authorize a current write.
 gui_related: false
@@ -1337,9 +1387,12 @@ canonical_text: Newly authored owner contract for notebook.entry_committed alone
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G03 applies Assistant memory-note
-  actions, not these notebook entries. Native notebook indefinite retention does not automatically retain this additional
-  event. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application
+  scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it
+  on main f8b2098608 (Plans/storage-plan.md:17638 and :17649); no age or count expiry and no new count allowance;
+  explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the
+  native record, receipt and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic
+  checkpoint RP-PROJECTION-3GEN@1.0.0 and append
   identity/result custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not extend the
   event/body lifetime or authorize a current write.
 gui_related: false
@@ -1417,9 +1470,12 @@ canonical_text: Newly authored owner contract for notebook.entry_superseded alon
   code is introduced. Coherent backup/restore preserves complete canonical sources, original operation/result, receipt
   group, payload dependencies, identities and current tombstones under the original Storage instance; derived index/checkpoint
   rebuild cannot mint originals or clear a newer Stop. Missing custody fences recovery and reports unavailable,
-  never empty or successful replay. Event retention is PENDING_RETENTION_DECISION; G03 is a different memory owner/family
-  set; native entry lifecycle and retention are reused without assigning event retention by analogy. Event index
-  rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
+  never empty or successful replay. Event retention is `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application
+  scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it
+  on main f8b2098608 (Plans/storage-plan.md:17638 and :17649); no age or count expiry and no new count allowance;
+  explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the
+  native record, receipt and source keep their own lifetimes. Event index rows keep RP-EVENT-INDEX-SOURCE@1.0.0, generic
+  checkpoint RP-PROJECTION-3GEN@1.0.0 and append identity/result
   custody RP-EVENT-IDENTITY-APPROOT@1.0.0. Those independent existing policies do not extend the event/body lifetime
   or authorize a current write.
 gui_related: false
