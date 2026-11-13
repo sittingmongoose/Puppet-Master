@@ -1062,7 +1062,13 @@
 @media (prefers-reduced-motion: reduce) { #panel-settings .tab-ink { transition: none; } #panel-settings .tab-swap, #panel-settings .manager-page .manager-body { animation: none !important; } }
 
 /* PM7 T44 semantic host bridge.  K3 geometry is preserved; paint is PM7-owned. */
+/* FO-177: Settings' layers stay inside the Settings page. #pm-settings-portals (z-index 300: drawers, dialogs) had no
+   stacking context of its own page around it, so outside Glass (where .main-area is one) it stacked against the title
+   bar itself (z-index 50, "menus/sprouts must paint above .main-area") and an open drawer covered the notices that
+   hang from the bell (#rsStage), its menus and its panel: Back Seat Driver's "Open in chat" answer sat behind the
+   finding drawer. isolation keeps every z-index inside Settings as it was and moves no box. */
 #panel-settings {
+  isolation: isolate;
   container: settings-host / inline-size;
   min-width: 0;
   min-height: 0;
