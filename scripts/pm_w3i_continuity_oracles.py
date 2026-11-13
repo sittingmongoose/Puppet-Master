@@ -799,12 +799,16 @@ REQUEST_STRINGS = ('event_type', 'event_id', 'idempotency_key')
 
 
 def retained_request(event):
-    """The expected binding of the original the read asks for. A request that cannot name one original refuses as
-    original_query (the shared dispatcher's own reason); a shared-helper refusal keeps its own reason."""
+    """The expected binding of the original the read asks for, or None when the request cannot name one original
+    (its shape is wrong, or the shared full-value commitment refuses it, e.g. another envelope edition). None goes to
+    the shared dispatcher, which refuses it as original_query itself."""
     if (type(event) is not dict or any(type(event.get(k)) is not str for k in REQUEST_STRINGS)
             or type(event.get('payload')) is not dict or type(event['payload'].get('fact_ref')) is not str):
-        raise Refusal('original_query')
-    return original_binding(event)
+        return None
+    try:
+        return original_binding(event)
+    except Refusal:
+        return None
 
 
 def resolve_retained(case):
@@ -1778,7 +1782,8 @@ row(T, 'entailed_retained_resolved', 'retained_resolved', 'original_unavailable'
 entailed('retained_resolved', [r for r, _x, _f, _w in DISPATCH_ROWS] + [r[0] for r in FROZEN_ROWS],
          'RetainedDispatcher.resolve (scripts/pm_event_numbers.py:523-545) refuses with caller_recipe_override, '
          'original_query, original_authority, original_binding, recipe_selection, recipe_unknown, original_bytes_type, '
-         'original_verification or current_disclosure, plus what the owner raises. The owner here '
+         'original_verification or current_disclosure, plus what the owner raises. A request with no computable '
+         'expected binding reaches it as None and is refused as original_query (retained_request). The owner here '
          '(SealedReceiptOwner/_custody_from_sealed) raises only original_receipt_missing, original_receipt_ambiguous '
          'and sealed_receipt_malformed, and always returns an OriginalCustody built from OriginalBinding(**), '
          'RecipeTuple(**) and bytes.fromhex(...) values, so original_authority, recipe_selection and '
@@ -2420,6 +2425,8 @@ def build_negatives(controls):
            'caller recipe override (through resolve(recipe_override=...))')
         T_('retained_query', _value(('original_ref',), ''), 'none', 'empty original reference')
         T_('retained_query', _value(('event',), 'not-an-event'), 'none', 'the request names no original')
+        T_('retained_query', _value(('event', 'schema_version'), '1.0.0'), 'none',
+           'the request names another envelope edition (the shared full-value commitment refuses it)')
         T_('retained_receipt_present', _value(('sealed_store',), []), 'none', 'missing receipt')
         T_('retained_receipt_unique', lambda c: c['sealed_store'].append(copy.deepcopy(c['sealed_store'][0])), 'none',
            'ambiguous receipt')
