@@ -206,7 +206,11 @@ function pair(R, i, layer, maxRate, frame) {
 		const h0 = shownAt(a, r1.w), h1 = shownAt(b, r1.w);
 		if (h0 >= 0 || h1 >= 0) { out.hand = +Math.abs(h1 - h0).toFixed(5); out.handBound = +(frame / Math.min(a.dur, b.dur) * 1.1 + 0.002).toFixed(5); }
 	}
-	out.stale = r1.w - r0.w > 3 * frame;
+	// the main thread's view is from the frame's own time: not judged when that time lags the wall clock by more than
+	// a frame or two at the sample (a busy frame that began before a long task) or the samples are far apart; the
+	// hand-over above is judged always (lane S safety net on s-4: a frame whose time lagged ~37 ms showed a just-placed
+	// loop 0.0133 ahead on the main thread while the hand-over step was 0.0012)
+	out.stale = r1.w - r0.w > 3 * frame || r1.w - r1.t > 3 * frame;
 	if (!out.stale && a.place != null && b.place != null) {
 		// a loop the chip has just re-placed is put by the wall clock, which runs up to a frame ahead of the frame's own
 		// time: the main thread's view may then move up to two frames (the hand-over above stays at one)
