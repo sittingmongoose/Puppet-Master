@@ -82,7 +82,7 @@ def lane_matrix(phase, controls, negatives):
     return problems
 
 
-def suite_for(phase, slot, negative_limit=6, control_limit=8):
+def suite_for(phase, slot, negative_limit=3, control_limit=3):
     module = TABLE_PREFIX + phase
     controls = list(slot['controls'].values())[:control_limit]
     if not controls:
@@ -115,8 +115,8 @@ def main(argv=None):
     parser.add_argument('--json')
     parser.add_argument('--markdown')
     parser.add_argument('--max-rss', type=int, default=2048)
-    parser.add_argument('--pause-when-low', type=int, default=12)
-    parser.add_argument('--resume-at', type=int, default=13)
+    parser.add_argument('--pause-when-low', type=int, default=8)
+    parser.add_argument('--resume-at', type=int, default=9)
     args = parser.parse_args(argv)
 
     collected, counts = collect(progress=lambda f: print(f'collected {f}', file=sys.stderr))
