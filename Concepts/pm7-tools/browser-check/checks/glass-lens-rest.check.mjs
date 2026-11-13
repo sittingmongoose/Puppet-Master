@@ -147,6 +147,41 @@ const PROBE = () => {
 			requestAnimationFrame(tick);
 			return !!l;
 		},
+		/* the same, the lens found by a selector each frame (the bead may not exist yet when the watch starts) */
+		watchSel(sel) {
+			this.frames = []; this.phase = 'before'; this.on = true;
+			const tick = (ts) => {
+				if (!this.on) return;
+				const l = document.querySelector(sel);
+				if (l) { const f = getComputedStyle(l).backdropFilter; this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), bend: /url\(/.test(f || ''), fl: f && f !== 'none' ? f : '', on: l.classList.contains('on'), b: box(l) }); }
+				else this.frames.push({ t: Math.round(ts), ph: this.phase, none: true });
+				requestAnimationFrame(tick);
+			};
+			requestAnimationFrame(tick);
+		},
+		/* every lens in the page each frame (an entrance's rides): its moving frames and those of them that do not bend */
+		watchAll() {
+			this.allOn = true; this.allRows = { frames: 0, moving: 0, riding: 0, rideFlat: 0, flat: [], kinds: {} };
+			/* a ride: glass.js mirrors an entrance onto the lens additively (rideApply, composite 'add'); a travel replaces */
+			const rides = (l) => l.getAnimations().some((a) => (a.playState === 'running' || a.playState === 'pending') && a.effect && !a.effect.pseudoElement && a.effect.composite === 'add' &&
+				a.effect.getKeyframes().some((k) => ['transform', 'translate', 'scale', 'rotate'].some((p) => k[p] != null && k[p] !== '' && k[p] !== 'none')));
+			const tick = (ts) => {
+				if (!this.allOn) return;
+				this.allRows.frames++;
+				this.all().forEach((l) => {
+					if (!this.laid(l)) return;
+					const ride = rides(l); if (!ride && !moving(l)) return;
+					const k = l.getAttribute('data-lg-lens') + (l.classList.contains('lg-bead') ? ' bead' : '') + (ride ? ' ride' : '');
+					const bent = /url\(/.test(getComputedStyle(l).backdropFilter || '');
+					this.allRows.moving++; this.allRows.kinds[k] = (this.allRows.kinds[k] || 0) + 1;
+					if (ride) { this.allRows.riding++; if (!bent) this.allRows.rideFlat++; }
+					if (!bent) this.allRows.flat.push([Math.round(ts), k]);
+				});
+				requestAnimationFrame(tick);
+			};
+			requestAnimationFrame(tick);
+		},
+		stopAll() { this.allOn = false; const r = this.allRows; r.flatN = r.flat.length; r.flat = r.flat.slice(0, 8); return r; },
 		stop() { this.on = false; return this.frames; },
 		times() { return { tDown: this.tDown, tUp: this.tUp, tAbandon: this.tAbandon || null }; },
 		/* a hold abandoned with no pointerup reaching the page (R31 F2, R30 Finding 3): the window's blur, or the document
@@ -344,6 +379,30 @@ async function scrubCheck(t, f, x, tag) {
 	await t.check(`scrub: it travels home bending and rests unbent ${tag}`, j.relMoving >= 3 && j.movingFlat.length === 0 && j.after >= 5 && j.afterBent === 0, JSON.stringify(j));
 }
 
+/* R30 Finding 5: Usage's range scrubbed from its chosen button onto the next and released there: the lifted lens bends,
+   the travel that follows the app's choice bends, and it rests unbent; the original button is chosen back after */
+async function scrubNewCheck(t, f, x, tag) {
+	if (!x.other) { await t.check(`scrub: Usage's range has another button ${tag}`, false, ''); return; }
+	const off = await offsetOf(t, f), c = x.cur, o = x.other;
+	const a = { x: off.x + c.x + c.w / 2, y: off.y + c.y + c.h / 2 }, b = { x: off.x + o.x + o.w / 2, y: a.y };
+	await t.page.mouse.move(a.x, a.y); await t.page.waitForTimeout(400);
+	await f.evaluate((i) => window.__g.watch(i), x.lens);
+	await t.page.waitForTimeout(100);
+	await t.page.mouse.down();
+	for (let k = 1; k <= 12; k++) { await t.page.mouse.move(a.x + (b.x - a.x) * k / 12, a.y); await t.page.waitForTimeout(16); }
+	await t.page.waitForTimeout(200);
+	await t.page.mouse.up();
+	await t.page.waitForTimeout(1500);
+	await f.evaluate(() => window.__g.settle(4000));
+	const fr = await f.evaluate(() => window.__g.stop());
+	const lifted = fr.filter((z) => z.up), j = judge(fr), moved = j.end && Math.abs(j.end.x - o.x) <= o.w / 2;
+	const row = { lifted: lifted.length, liftedFlat: lifted.filter((z) => !z.bend).length, ...j, landedOnNew: moved };
+	t.log(`scrub to a new item ${tag}: ${JSON.stringify(row)}`);
+	await t.check(`scrub: released on another button, it bends while lifted and while it lands, then rests unbent ${tag}`, lifted.length >= 5 && row.liftedFlat === 0 && j.movingFlat.length === 0 && j.after >= 5 && j.afterBent === 0 && moved, JSON.stringify(row));
+	await t.page.mouse.move(a.x, a.y); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+	await t.page.waitForTimeout(1500); await f.evaluate(() => window.__g.settle(4000));
+}
+
 /* the hover bead between two neighbouring Activity icons */
 async function beadCheck(t, f, tag) {
 	const icons = await f.evaluate(() => [...document.querySelectorAll('#activityBar .icon[data-target]:not([data-lg-current])')]
@@ -353,8 +412,16 @@ async function beadCheck(t, f, tag) {
 	for (let i = 0; i + 1 < icons.length && !pair; i++) if (Math.hypot(icons[i + 1].x - icons[i].x, icons[i + 1].y - icons[i].y) < 100) pair = [icons[i], icons[i + 1]];
 	if (!pair) { await t.check(`bead: two neighbouring Activity icons to hover ${tag}`, false, JSON.stringify(icons)); return; }
 	const off = await offsetOf(t, f), c = (r) => ({ x: off.x + r.x + r.w / 2, y: off.y + r.y + r.h / 2 });
+	/* the bead's lift (R31 F4, R30 Findings 1 and 5): it swells in over 240 ms on the first hover and must bend while it
+	   does, then rest with its plain tint */
+	await f.evaluate(() => window.__g.watchSel('i.lg-lens.lg-bead'));
 	await t.page.mouse.move(c(pair[0]).x, c(pair[0]).y, { steps: 3 });
 	await t.page.waitForTimeout(700);
+	const lift = (await f.evaluate(() => window.__g.stop())).filter((z) => !z.none);
+	const lmv = lift.filter((z) => z.mv), llast = lift.reduce((k, z, n) => (z.mv ? n : k), -1), lafter = lift.slice(llast + 1);
+	const lrow = { frames: lift.length, lifting: lmv.length, liftMs: lmv.length > 1 ? lmv[lmv.length - 1].t - lmv[0].t : 0, liftFlat: lmv.filter((z) => !z.bend).length, after: lafter.length, afterBent: lafter.filter((z) => z.bend).length };
+	t.log(`bead lift ${tag}: ${JSON.stringify(lrow)}`);
+	await t.check(`bead: it bends in every frame of its lift and rests unbent ${tag}`, lrow.liftMs >= 120 && lrow.liftFlat === 0 && lrow.after >= 5 && lrow.afterBent === 0, JSON.stringify(lrow));
 	const rest1 = await f.evaluate(() => { const b = document.querySelector('i.lg-lens.lg-bead'); if (!b) return null; const s = getComputedStyle(b); return { on: b.classList.contains('on'), filter: s.backdropFilter, inline: b.style.getPropertyValue('backdrop-filter'), opacity: s.opacity }; });
 	await t.check(`bead: resting on an icon it bends nothing and keeps only its plain saturate(1.1) ${tag}`, !!rest1 && rest1.on && rest1.filter === 'saturate(1.1)' && !rest1.inline, JSON.stringify(rest1));
 	const i = await f.evaluate(() => window.__g.all().indexOf(document.querySelector('i.lg-lens.lg-bead')));
@@ -389,10 +456,33 @@ async function appPart(t, surface, W, H) {
 	for (const look of list(t.args.looks, LOOKS)) {
 		await t.app.look(look);
 		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
+		/* R31 F3, R30 Findings 2 and 5: the Planning Wizard's arrival. Its card slides in, and the work-type chip's lens,
+		   placed while the card is still entering, rides it (glass.js rideApply: the entrance's transform mirrored onto the
+		   lens, composite 'add'). Every frame a lens rides or travels must bend; the first look's arrival must ride */
+		{
+			const tag = `${look} wizard arrival ${surface}`;
+			await f.evaluate(() => PM_PAGES.go('dashboard')); await t.page.waitForTimeout(1500);
+			await parkPointer(t.page, W, H); await f.evaluate(() => window.__g.settle(4000));
+			await f.evaluate(() => window.__g.watchAll());
+			await f.evaluate(() => PM_PAGES.go('wizard')); await t.page.waitForTimeout(2200);
+			const ar = await f.evaluate(() => window.__g.stopAll());
+			t.log(`arrival ${tag}: ${JSON.stringify(ar)}`);
+			await t.check(`ride: every lens frame that rides or travels while the wizard arrives bends ${tag}`, ar.flatN === 0, JSON.stringify(ar));
+			if (look === list(t.args.looks, LOOKS)[0]) await t.check(`ride: the wizard's first arrival rides a lens (the ride is sampled) ${tag}`, ar.riding >= 3, JSON.stringify(ar));
+			await f.evaluate(() => window.__g.settle(4000));
+		}
 		for (const view of list(t.args.views, ['home', 'usage', 'settings'])) {
 			const tag = `${look} ${view} ${surface}`;
+			/* every lens frame that moves while a view arrives must bend (Usage's rows slide in, a travel follows the page tabs) */
+			const arrival = view === 'usage';
+			if (arrival) await f.evaluate(() => window.__g.watchAll());
 			await f.evaluate((p) => PM_PAGES.go(p), VIEWS[view] || view);
 			await t.page.waitForTimeout(2500);
+			if (arrival) {
+				const ar = await f.evaluate(() => window.__g.stopAll());
+				t.log(`arrival ${tag}: ${JSON.stringify(ar)}`);
+				await t.check(`ride: every lens frame that moves while Usage arrives bends ${tag}`, ar.flatN === 0, JSON.stringify(ar));
+			}
 			await restCheck(t, f, tag, { W, H });
 			if (view === 'home') {
 				/* a press held well past its travel (R29 F1): the Activity bar, and the title bar's page tabs as the control */
@@ -419,7 +509,7 @@ async function appPart(t, surface, W, H) {
 				}
 			}
 			const xs = await presses(t, f, tag, { hold: Number(t.args.hold || 1100) });
-			if (view === 'usage') { const r = xs.find((x) => x.strip === '#pmuRange'); if (r) await scrubCheck(t, f, r, tag); else await t.check(`scrub: Usage's range has its lens ${tag}`, false, JSON.stringify(xs)); }
+			if (view === 'usage') { const r = xs.find((x) => x.strip === '#pmuRange'); if (r) { await scrubCheck(t, f, r, tag); await scrubNewCheck(t, f, r, tag); } else await t.check(`scrub: Usage's range has its lens ${tag}`, false, JSON.stringify(xs)); }
 			if (view === 'home') await beadCheck(t, f, tag);
 			await restCheck(t, f, tag + ' after the presses', { W, H });
 		}
