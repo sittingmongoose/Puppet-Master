@@ -301,7 +301,7 @@ body[data-theme] { --tx-gutter: 24px; }
 .working-head:has(.work-demo-drawer) > div:not(.working-controls) { overflow: visible; }
 .working-head:has(.work-demo-drawer) strong { flex: 0 0 auto; min-width: min-content; }
 .working-head:has(.work-demo-drawer) .sub { min-width: min-content; }
-.working-head:has(.work-demo-drawer) .orbit-caption { flex: 1 1 0; }
+.working-head:has(.work-demo-drawer) .orbit-caption { flex: 1 1 0; opacity: .25; }
 .working-head:has(.work-demo-drawer) > .spacer { display: none; }
 .working-head:has(.work-demo-drawer) > .working-controls {
   grid-column: 1 / -1;
