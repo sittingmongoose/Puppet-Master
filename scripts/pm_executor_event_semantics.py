@@ -47,6 +47,10 @@ UNCLAIMED_RECIPE = object()
 # authenticated SP-1101 recipe tuple (frozen_verifier); a stored dependency body's by its authenticated custody
 # edition (validate_dependencies). Request data never sets it.
 _DATETIME = ContextVar('executor_datetime_edition', default=CURRENT_RECIPE)
+# SP-1101 (batch 2 fix 1): set while the frozen verifier of a retained original reads that original's own
+# capture. Every stored body read there (its source records and dependencies) is part of the retained original
+# and needs its own custody entry; none takes the current writer's recipe by default.
+_PINNED = ContextVar('executor_pinned_original', default=False)
 # Field-owner profiles. DX_OWNER: every DX timestamp (CV-500..515 "[Tt] ... Z", calendar, ranges, no leap second);
 # backoff clock observations also need an uppercase T (instant(..., backoff=True)). OTHER_OWNER_RFC3339: a field
 # another owner's schema declares only as format date-time (RFC 3339; execution_unit_context.schema.json).
@@ -152,9 +156,17 @@ def q(value):
     return [value.numerator, value.denominator]
 
 
+def _unique_keys(pairs):
+    keys = [key for key, _ in pairs]
+    if len(keys) != len(set(keys)):
+        # Two receipts for one original never collapse to one: the catalogue refuses to load.
+        raise ValueError('custody catalogue: more than one receipt for one original')
+    return dict(pairs)
+
+
 @lru_cache(maxsize=1)
 def _custody_catalogue(path, mtime_ns, size):
-    return json.loads(path.read_text())['records']
+    return json.loads(path.read_text(), object_pairs_hook=_unique_keys)['records']
 
 
 def custody_entry(source_sha256):
@@ -170,12 +182,17 @@ def record_rules(retained_source_sha256=None, claimed_recipe=UNCLAIMED_RECIPE, *
     append-custody read, never a caller-provided edition or hash fallback. Its
     keys pin the *complete original*, including every source/dependency digest.
     Native readers must resolve that binding from Storage's original custody.
-    Every retained original has a catalogue custody binding. An uncatalogued
-    newly supplied source body uses the current writer recipe only.
+    Every retained original has a catalogue custody binding, and so does every
+    stored body read inside one (SP-1101, batch 2 fix 1: _PINNED). Only an
+    uncatalogued newly supplied source body of a current read or write uses the
+    current writer recipe; inside a retained original nothing is selected by default.
     """
     if retained_source_sha256 is None:
         return _RECIPE.get()
+    retained = retained is True or _PINNED.get()
     entry = custody_entry(retained_source_sha256)
+    # A missing entry's placeholder only parameterizes the observation: RB02 refuses a retained or pinned
+    # read without an entry before any recipe is returned.
     edition = entry.get('recipe_version', CURRENT_RECIPE)
     claimed_kind = ('unclaimed' if claimed_recipe is UNCLAIMED_RECIPE
                     else 'str' if type(claimed_recipe) is str else 'other')
@@ -194,6 +211,21 @@ def stored_rules(source_sha256, claimed_recipe=UNCLAIMED_RECIPE, *, retained=Fal
         yield
     finally:
         _RECIPE.reset(token)
+
+
+@contextmanager
+def custody_view(overrides):
+    """Checker controls only: read the sealed catalogue with these entries replaced ({} removes one)."""
+    global custody_entry
+    real = custody_entry
+
+    def view(source_sha256):
+        return copy.deepcopy(overrides[source_sha256]) if source_sha256 in overrides else real(source_sha256)
+    custody_entry = view
+    try:
+        yield
+    finally:
+        custody_entry = real
 
 
 @contextmanager
@@ -1113,7 +1145,7 @@ class CustodyOwner:
             project_id=scope['project_id'], event_type=entry.get('family', self.contract['event_type']),
             event_id=identity[1], idempotency_key=identity[0], owner_operation_id=HISTORY_OPERATION,
             source_commitment=original_ref)
-        recipe = recipe_tuple(self.contract, entry.get('recipe_version', CURRENT_RECIPE), entry.get('write_time_edition', ''), manifest)
+        recipe = recipe_tuple(self.contract, entry.get('recipe_version', ''), entry.get('write_time_edition', ''), manifest)
         return OriginalCustody(binding=binding, recipe=recipe, record_bytes=canonical(self.original).encode('utf-8'),
                                result_bytes=b'history_only', receipt_bytes=json.dumps(identity).encode('utf-8'))
 
@@ -1165,8 +1197,13 @@ def _validate_history(contract, payload, original, retained_source_sha256, discl
 
     def verify(custody):
         # The frozen verifier: the complete original and its then-valid lifecycle under its own recipe.
-        # The recorded viewer is evidence of original disclosure, never a current grant.
-        validate_capture(contract, payload, original['capture'], historical=True)
+        # The recorded viewer is evidence of original disclosure, never a current grant. Every stored body
+        # of the pinned original is read under its own custody entry (_PINNED), never a default recipe.
+        token = _PINNED.set(True)
+        try:
+            validate_capture(contract, payload, original['capture'], historical=True)
+        finally:
+            _PINNED.reset(token)
         return True
 
     def disclose(binding):
@@ -1493,6 +1530,12 @@ def main(family_name=None):
     families = expand_fixture_literals({name: family for name, family in fixture_doc['families'].items()
                                         if name in selected})
     helper_cases = fixture_doc.get('helper_cases', [])
+    # SP-1101 (batch 2 fix 1): two receipts for one original never collapse when the catalogue loads.
+    try:
+        _unique_keys([('a' * 64, {}), ('a' * 64, {})])
+        failures.append(['shared', 'sp1101/ambiguous-receipt-loads', 'accepted'])
+    except ValueError:
+        pass
     for case in fixture_doc.get('canonical_golden_cases', []):
         try:
             value = json.loads(case['json'])
@@ -1599,6 +1642,31 @@ def main(family_name=None):
                 current_result = 'reject'
             if current_result != 'reject':
                 failures.append([contract['event_type'], case['case'] + '-live-control', current_result])
+        # SP-1101 (batch 2 fix 1): inside a retained original every stored body selects its recipe only from its
+        # own custody entry. With one source body's entry removed, or bound to another body, the accepted
+        # history read refuses at the recipe binding instead of taking the current recipe.
+        accepted = next((c for c in family.get('history_cases', []) if c['expected'] == 'accept'), None)
+        if accepted is not None:
+            original = mutate(family['baseline'], accepted['original_changes'])
+            payload = copy.deepcopy(family['baseline']['payload'])
+            payload.update(accepted['event_changes'])
+            source = accepted.get('retained_source_sha256', family['retained_source_sha256'])
+            nested = sorted(r['sha256'] for r in original['capture']['records'].values())
+            other = next((x for x in sorted(_custody_catalogue(ROOT / 'Plans/executor_event_recipe_custody_fixtures.json', 0, 0)) if x not in nested), None)
+            controls = [('nested-body-without-receipt', {nested[0]: {}}),
+                        ('nested-body-receipt-for-other-original', {nested[0]: dict(custody_entry(nested[0]), source_sha256=other)})] if nested else []
+            if not controls:
+                failures.append([contract['event_type'], 'sp1101/no-nested-body', 'accepted history case reads no stored body'])
+            for name, overrides in controls:
+                history_cases += 1
+                with custody_view(overrides):
+                    try:
+                        validate_history(contract, payload, original, source, accepted['disclosure'])
+                        reason = None
+                    except (ValueError, KeyError, jsonschema.ValidationError) as error:
+                        reason = str(error)
+                if reason is None or not reason.startswith('authenticated retained recipe binding'):
+                    failures.append([contract['event_type'], 'sp1101/' + name, reason])
         for scenario in family['traces']:
             traces += 1
             actual = run_trace(contract, family['baseline']['payload'], scenario)
