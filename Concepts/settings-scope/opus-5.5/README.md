@@ -79,8 +79,8 @@ projects-redesign.
 
 | File | What |
 |---|---|
-| `layer/world.js` | `window.PSX`: helpers, the path reader (`PSX.paths`, the one answer to "is this a path?"), the layer's storage (`psx.settings-scope.v1`, review options and the one-time tip only, with an in-memory fallback), the demo world (`PSX.W`, `PSX.freshWorld()`), world transactions with History and Undo, the note, sheets and menus |
-| `layer/resolve.js` | `PSX.resolve(id, ctx)` and `PSX.selfTest()` (BUILD-SPEC section 5's 16 cases, and 6 more from the fix pass: an AI service's own value, Changed under a limit, an adopted safety row and an adopted limit row) |
+| `layer/world.js` | `window.PSX`: helpers, the host rule (`PSX.paths`, README table E2: the one answer to "is this pattern about one computer?"), the layer's storage (`psx.settings-scope.v1`, review options and the one-time tip only, with an in-memory fallback), the demo world (`PSX.W`, `PSX.freshWorld()`), world transactions with History and Undo, the note, sheets and menus |
+| `layer/resolve.js` | `PSX.resolve(id, ctx)` (with `PER_ITEM`, each per_item row's owner rule, and `motionOr`, Reduce motion's OR) and `PSX.selfTest()` (BUILD-SPEC section 5's 16 cases, and 6 more from the fix pass: an AI service's own value, Changed under a limit, an adopted safety row and an adopted limit row) |
 | `layer/guard.js` | The one guarded write path, `PSX.write` (first start, the device in use, the level, the value's type and range, the writer answering, pairing; atomic or a batch that names what it couldn't change), `PSX.simulate` (what a transaction does to every project, deletions included), `PSX.confirm` (each yes-point in Regular and YOLO), and the command list with each command's Plans owner or named gap |
 | `layer/feed.js` | adopts every inventory row; feeds each project's resolved values into `PM_SETTINGS_PROJECT_SNAPSHOTS` and switches project with `PM_ACTIVE_PROJECT_ID` + `PM12_KIMI.reloadProject()`; pushes single values with `PM12_KIMI.setSettingFromHost`; the router that routes a person's change to its level; the note's words; the hold on the engine's own Saved toast |
 | `layer/rows.js`, `rows.css` | the end of the row (five options) in a fixed column, the Changed mark (four options), lines under rows, the header and its Change menu, the row menu (option D, right-click, long-press), the Projects folder row |
@@ -160,7 +160,10 @@ detection, folder matching and the home read; `copy` walks Keep them fixed, an u
 computer's values, through the ticks, the counts, the preview and the write, and the other order. Since the S1 fix,
 `where` and `always` read Plans' inventory layering (`Plans/settings_inventory.json`, or `--set inventory=<path>`): every
 row whose value is an absolute path follows it first, so an owner-held row stays with its owner, with no ordinary level
-and its owner's panel; an ordinary one still goes to each computer.
+and its owner's panel; an ordinary one still goes to each computer. Since the Astra max fixes (below), `where` compares
+each row's combine with the inventory's exactly and resolves the per_item witnesses, every Reduce motion combination and
+the three named actions' panels; `always` walks table E2 both ways through the editor and the save; `copy` walks Keep
+them fixed with a device's own screen values to the committed destination. Every check they added prints "Astra".
 
 ## Jared's review fixes (2026-11-10)
 
@@ -294,34 +297,59 @@ path, and that suggestion is meant to cover the folder it names.
 
 | Rule | This project | This computer | Everywhere | Rests on |
 |---|---|---|---|---|
-| command rule that isn't host-dependent (`npm test *`, `git *`) | offered | offered | offered | PS-144 "Always requires a person to choose the exact pattern and `This project`, `This computer` or `Everywhere`; nothing is preselected." |
-| host-dependent command rule: its pattern names a path anywhere in it, runs a program by its location, or names a script file (the path reader below) | offered | offered | **never** | PS-144 "Rules about a file, directory, executable location, root or other host-dependent target never offer Everywhere." |
-| …and, as a **concept choice**, a pattern whose program is a file command (`read *`, `rm -rf *`) or a wildcard (`*`, `./scripts/*`) | offered | offered | **never** | Canon names targets, not commands. A file command acts on files of one computer, and a wildcard program can match a program by its path on one computer, so these are treated as about a location. |
+| command rule that isn't host-dependent (`npm test *`, `git status`, `cargo build`, `pytest -q`) | offered | offered | offered | PS-144 "Always requires a person to choose the exact pattern and `This project`, `This computer` or `Everywhere`; nothing is preselected." |
+| host-dependent command rule: any row 1 to 6 of table E2 below holds for one of its words | offered | offered | **never** | PS-144 "Rules about a file, directory, executable location, root or other host-dependent target never offer Everywhere." |
+| …and, as a **concept choice**, rows 7 and 8 of E2: a pattern whose program is a file command (`read *`, `rm -rf *`) or a wildcard (`*`, `./scripts/*`) | offered | offered | **never** | Canon names targets, not commands. A file command acts on files of one computer, and a wildcard program can match a program by its path on one computer, so these are treated as about a location. |
 | folder rule | offered | offered | **never** | §6.1 "paths never offer Everywhere". |
 | (no project open) | hidden | | | §6.1 "no-project hides This project". |
 
 Host-dependence comes from the pattern, which is what the rule is about (PS-144), never from the step it is typed on
 (round A-r4, N2): `git push origin *` typed on the release step offers Everywhere.
 
-**The path reader** (`PSX.paths` in `layer/world.js`, Sol max F1). One reader answers "is this a path?" for the whole
-layer: the editor's places, its line saying why, the line saying a chosen place was cleared, the save guard, broad
-detection (F), folder-rule matching (D) and the home read (B). It splits the pattern as a shell does (quotes keep a word
-together and come off) and reads every word, wherever it sits. A word is a path when it
+**E2. When a command pattern is host-dependent** (Astra max A2, 2026-11-13). Two max reviews found a spelling the path
+reader missed (Sol: a path behind `=`, in quotes, `C:/`, `.\`, a UNC share; Astra: a relative folder or script with no
+dots or extension, `node scripts/release`, and a folder flag's single-name value, `git -C repo status`), so the reader
+is rebuilt as one rule over the pattern's words, from this table. `PSX.paths.host(pattern)` in `layer/world.js` holds
+the table as `HOST_ROWS`, one entry per row, and nothing else decides. The pattern is split as a shell splits it
+(quotes keep a word together and come off). The program word is the first word after `sudo`, `env` (with their flags)
+and any `NAME=value`; every other word, a `NAME=value` before the program included, is an argument. The pattern is
+host-dependent when any row holds for any word; the editor's line names the first such word, in pattern order, with its
+row's reason.
 
-- starts at a root: `/` and `//host`, `\\host`, `~` or `~user`, a drive (`C:\` or `C:/`), a variable then a separator
-  (`$HOME/`, `${HOME}/`, `%USERPROFILE%\`, `$env:USERPROFILE\`), or `file:`;
-- is relative by its dots: `.`, `..`, `./`, `../`, `.\`, `..\`;
-- has a backslash between two names (`tools\runner`: read as a Windows path, the careful reading);
-- names a script or program file by its extension (`.sh`, `.ps1`, `.bat`, `.cmd`, `.exe`, `.py`, `.js` and the like).
+| Row | A word… | Examples (each one is a case in `feedback.check.mjs --set only=always`) | Why it is about one computer |
+|---|---|---|---|
+| 1 | is the program word, and holds `/` or `\`, starts with `~`, `.` or a drive, or is a variable then a separator | `./scripts/release.sh v1.4.0`, `scripts/release`, `"/opt/tools/runner" test`, `C:/Tools/runner test`, `\\nas\share\runner test`, `$HOME/bin/runner` | a shell runs it by its location, not from `PATH` (PS-144 "executable location") |
+| 2 | is an argument holding a path separator, `/` or `\`, anywhere: inside `--flag=value`, `NAME=value` or a glued `-I/usr/include` too | `node scripts/release`, `npm --prefix=packages/app test`, `git -C repos/loom status`, `gcc -I/usr/include x`, `PATH=/opt/bin npm test`, `tools\runner test` | a path: a file or a folder |
+| 3 | is an argument that is `.` or `..`, or starts with `./`, `../`, `.\` or `..\` | `prettier --write .`, `cd ..` | a place relative to the folder it runs in |
+| 4 | is an argument naming the home folder or a root with no separator: starts with `~` (`~`, `~user`), or is `$HOME`, `${HOME}`, `%USERPROFILE%`, `%HOMEPATH%`, `$env:USERPROFILE`, `$env:HOME`, a drive (`C:`), or starts with `file:` | `cd ~`, `cd $HOME`, `dir C:` | the home folder or a drive of one computer |
+| 5 | is the value of a directory or file flag (below), written `--flag=value` or `--flag value` | `npm --prefix=release test`, `git -C repo status`, `tsc -p tsconfig.json`, `cargo build --manifest-path Cargo.toml`, `docker build -f Dockerfile` | the flag says its value is a folder or a file |
+| 6 | names a script or program file by its extension: `.sh .bash .zsh .fish .ps1 .psm1 .bat .cmd .exe .py .js .mjs .cjs .ts .rb .pl .php .lua` | `python3 build.py`, `bash deploy.sh *`, `release.sh` | a file in the folder it runs in |
+| 7, **concept choice** | is the program word and a file command: `read write edit list open cat less head tail ls cp mv rm rmdir mkdir touch chmod chown find grep tar zip unzip` | `read *`, `rm -rf *` | it works on the files of one computer |
+| 8, **concept choice** | is the program word and holds `*` | `*`, `./scripts/*`, `*.sh` | it can match a program by its location |
+| none | no row holds for any word | `npm test *`, `git status`, `cargo build`, `pytest -q`, `git push origin *`, `npm run build`, `NODE_ENV=production npm test`, `make -j8 test` | portable: Everywhere is offered |
 
-The value of `--opt=value` or `NAME=value` (each part of a `,` `;` or `:` list) and a value written against a
-one-letter flag (`-I/usr/include`) are read the same way. The program word (the first, after `sudo`, `env` and
-`NAME=value`) is a path whenever it holds a `/` or a `\`: a shell runs such a command by its location, not from `PATH`.
-A web address (`https://bun.sh/install`) is never a path. So `npm --prefix=/opt/release test`, `"../tools/runner" test`,
-`C:/Tools/runner test`, `.\tools\runner test` and `\\nas\share\runner test` never offer Everywhere, and the line under
-the places names what it found ("it names /opt/release, a path on one computer"). Folder rules and the paths they are
-matched against are each written one way first (quotes off, `\` as `/`, one separator at a time, none at the end), so
-`/mnt/team-share/release-notes/` covers the folder it names.
+**The directory and file flags (row 5):** `-C`, `--prefix`, `--cwd`, `--dir`, `--directory`, `--root`, `--workdir`,
+`--chdir`, `-chdir`, `--git-dir`, `--work-tree`, `-f`, `--file`, `--config`, `--manifest-path`, `--project`; `-p` only
+after `tsc` or `vue-tsc` (elsewhere `-p` names a package, a port or a plugin); and any other long flag whose name ends in
+`dir`, `directory`, `path`, `file`, `folder` or `root` (`--target-dir`, `--env-file`, `--rootdir`,
+`--project-directory`), except a `--no-…` switch. Its value is the word after it, unless that word starts with `-`; a
+wildcard value counts (`git -C * status`).
+
+**What it reads conservatively (concept choice).** A word with a `/` or `\` can't be told from a relative path by its
+spelling (`feature/tags` reads like `scripts/release`), so row 2 holds for a branch, a package scope, an image name or a
+web address too: `git push origin feature/tags`, `npm install @types/node`, `docker push ghcr.io/jared/loom:1.4.0`,
+`npm publish --registry=https://registry.npmjs.org` and `curl -fsSL https://bun.sh/install` don't offer Everywhere (a
+web address can name this computer too: `http://localhost:3000`). Before this rule the last four were controls that
+offered it. A boolean `-f` reads the same way (`git push -f origin main`: `origin` is read as its value), and so does
+`--project` given an ID. Choose This project or This computer for these. Narrowing them loosens nothing canon asks for.
+
+**One rule everywhere it is asked.** The editor's places, its line saying why, the line saying a chosen place was
+cleared, and the save guard (the same call on the exact pattern it would keep) read `PSX.paths.host`. Broad detection
+(F) reads the same words: a "named script" is a word rows 1, 2, 3 or 6 make host-dependent, and a flag's value counts
+with its flag (`git -C repo *` is a program word, flags, then `*`). The home read (B) asks the same row 4 words
+(`PSX.paths.rootOf`), and so does `feed.js` for a Settings row whose value is an absolute path. Folder rules and the
+paths they are matched against are each written one way first (`PSX.paths.norm`: quotes off, `\` as `/`, one separator
+at a time, none at the end), so `/mnt/team-share/release-notes/` covers the folder it names.
 
 **F. What counts as broad** (the preview warns "This one is broad"; the rule can still be made). **The whole table is
 a concept choice:** canon names no list. It is the lead's r3 definition ("A bare `*`, a shell, interpreter or package
@@ -334,7 +362,7 @@ runner, `sudo`, or `rm -rf` followed by `*` is broad. A specific script path fol
 | a wildcard program: `*`, `./scripts/*`, `*.sh` | broad: it runs programs nobody named |
 | `sudo` with any `*` (`sudo *`, `sudo apt install *`) | broad |
 | a shell or interpreter running `*` or inline code (`bash -c *`, `python3 *`, `node *`) | broad |
-| one program word, with or without flags, then ` *`: a package runner or any command (`npm *`, `npx *`, `git *`, `rm -rf *`, `read *`) | broad |
+| one program word, with or without flags (and a directory flag's value, E2 row 5), then ` *`: a package runner or any command (`npm *`, `npx *`, `git *`, `rm -rf *`, `read *`, `git -C repo *`) | broad |
 | a named script or subcommand then ` *` (`./scripts/release.sh *`, `npm test *`, `git push origin *`, `python3 tools/build.py *`) | not broad |
 | a folder rule reaching past the file or folder the step asked for (`/mnt/team-share/**`, `~/Documents/**`, `*`) | broad |
 | a folder rule inside it (`/mnt/team-share/release-notes`, `/mnt/team-share/release-notes/**`) | not broad |
@@ -356,7 +384,9 @@ concept runs over main's PMConcept7 and main's inventory.
   concept at the next build.
 - **On the ladder.** `classify()` reads the inventory first (`feed.js` `placesOf`). A row takes its places from
   `may_differ_by`, its Computer key from `computer_key` (an execution host, or the server itself), and its `combine` and
-  `careful_order`. The reasons for the places it doesn't offer come from `not_offered` (`resolve.js` `reasons`). The
+  `careful_order` (a switch's `on` and `off` read as its true and false). `per_item` is kept, and each item resolves by
+  its owner's own rule (`resolve.js` `PER_ITEM`, Astra max A1). The reasons for the places it doesn't offer come from
+  `not_offered` (`resolve.js` `reasons`). The
   concept's own treatment stays: the safety preview and a run's own choice. The demo world's hand-written rows take
   their places from it too. Main Branch name became project-only, as the inventory says.
 - **Owner-held.** A row the inventory gives `home: thing` is off the ladder, and the guard refuses it at every ordinary
@@ -366,7 +396,9 @@ concept runs over main's PMConcept7 and main's inventory.
   - the language server list, your publisher profile;
   - this wizard session, each chat.
 
-  An action says "An action, not a setting: it runs when you choose it, so it has no place to set". A key or sign-in
+  An action says "An action, not a setting: it runs when you choose it, so it has no place to set", then names its
+  owner: "It belongs to your company registry list" (`panel.js` `ACTION_OWNERS`, one entry per action the inventory
+  lists, Astra max N1). Where that owner has a place of its own, the panel opens it. A key or sign-in
   also says it stays on the computer where you entered it. A row a project may choose inside its owner says so
   ("A project can choose its own, inside each skill"). An account's own field keeps the base page's list of each
   one's value.
@@ -378,8 +410,44 @@ concept runs over main's PMConcept7 and main's inventory.
   Moment 11.10's narrow assistant write, 11.12's update defaults and 11.6's joining setups moved with it. The kit's
   `checks/settings-scope.check.mjs` moved every Thinking depth assertion to Everyday building, and dropped none.
 - **Checks.** `feedback.check.mjs --set only=where` reads the same inventory and its SHA-256. It walks every drawn row:
-  its places, reasons, combine and Computer key, or for an owner-held row no ladder, no write and an owner view. It
-  then opens a real panel for an owner-held action, field, key, the Rules file, and a row a project may choose.
+  its places, reasons, combine (exactly, since Astra max A1) and Computer key, or for an owner-held row no ladder, no
+  write and an owner view that names its owner (an action too, since Astra max N1). It then opens a real panel for an
+  owner-held action, field, key, the Rules file, and a row a project may choose.
+
+## Astra max fixes (2026-11-13)
+
+The blind Astra max review (`REVIEW-concept-A-max-astra.md`) found four should-fix defects and one note. Each was
+reproduced on `7150f6c5bc` before it was fixed, by a check that fails there and passes now (`CONCEPT-FIX-REPORT-A.md`
+has the numbers and the pictures).
+
+- **A1, permission maps lost per_item.** `feed.js` dropped the inventory's `per_item`, so the resolver kept the most
+  specific whole map: This computer's Block and tastebook's Allow for the same tool gave Allow. Now `per_item` is kept
+  and `resolve.js` resolves each item by its owner's own rule (`PER_ITEM`), never by a generic merge. Answer for each
+  tool and Answer for each web ability follow PS-144: each exact key on its own; when this computer's own and this
+  project's own answer for it both exist, the more careful is used (Block, then Ask me first, then Allow); otherwise
+  the most specific own answer, then Everywhere's, then the default. Ordered rules keep Permissions' own behaviour
+  (§2.4, §3.1): every place's rules apply together, a more specific place's same rule shadowing the others, last match
+  wins, with no careful reordering. The row, the panel's Now, each line of Where it applies (which items it decides,
+  which it loses for safety) and a rule line say so. The `where` check compares the inventory's combine exactly; it used
+  to rewrite `per_item` to `most_specific`.
+- **A2, relative host paths could be saved Everywhere.** Table E2 above, and `PSX.paths.host`, built from it.
+- **A3, Keep them fixed copied a device's screen values into a project.** The source is read on the device in front of
+  you, so Theme and Reduce motion could be in use from that device's own values, and Keep them fixed counted, ticked,
+  previewed and wrote them. Now a value in use from a device is left out before anything counts it, and the preview
+  names it: "Not kept fixed: Reduce motion (On) and Theme (Retro Light). They come from This computer's own screen
+  settings, and screen settings belong to each device." The source project's own values still travel under their own
+  contract.
+- **A4, Reduce motion ignored an Everywhere request when the device said Off.** SSYS-059's named rule is now explicit
+  (`resolve.js` `motionOr`): the own requests here (Everywhere, the device, the project) are ORed, the default only
+  when none exists, and the operating system's preference is ORed after as its own input. The panel says who asks for
+  what ("This screen asks for full motion. Everywhere asks for less, and less motion wins.").
+- **N1, owner-held actions didn't name their owner.** Every action now does, from one table, and opens its owner where
+  it has a place of its own: Other registry sign-ins opens your company registry list, Search all settings goes to the
+  search box.
+- **Found with A1 and A4: FileSafe's careful order.** The inventory writes it as `on`, `off`; the row's values are true
+  and false, so the comparison matched neither and fell back to the computer's own: This computer Off and a project On
+  gave Off, the less careful. A switch's careful order is now read as its values, and the check asserts every
+  more-careful row's order is made of values it can hold.
 
 ## Sol max fixes (2026-11-12)
 
@@ -575,14 +643,16 @@ and Jared's YOLO rulings. The full table of findings and outcomes is in `pass2/B
   Everyday model and Profile in use would contradict BUILD-SPEC 4.4's world, and main's one-model and Memory rulings
   retired Thinking depth and one memory row it set. harbor has 1, not 6.
 - **The plain specimen row on the board is Speed or power**, not Text size: Text size varies by device in this world.
-- **Reduce motion's operating-system part** is the strip's checkbox; a device's or project's own value is fed to the engine,
-  which paints it.
+- **Reduce motion's operating-system part** is the strip's checkbox, the preference of the device in use. The resolver
+  ORs it after your own requests (`motion.effective`); the setting's own value, which the engine paints, is the OR of
+  your requests alone, and the layer keeps the page reduced while the checkbox is on.
 - **YOLO is shown, not run:** the strip's Run mode stands for the chat's run mode; a person's own click in a sheet stands
   for an agent's request with a clear target. Real tool execution, pushes and publishing are simulated in 11.18.
 - **The classification** follows Plans' inventory layering for every row it lists. Three kinds of row stay outside it,
   each named: the six look details the engine paints itself (they follow Theme, with the inventory's places in their
-  panel), the rows the inventory doesn't list (the heuristic decides them; `PSX.classReport().fallback`), and the
-  inventory's `per_item` combine, which the concept's resolver reads as `most_specific`.
+  panel) and the rows the inventory doesn't list (the heuristic decides them; `PSX.classReport().fallback`). Its
+  `per_item` rows resolve by Permissions' rules in the concept's own resolver: a picture of those rules, not the
+  native permission engine.
 - **"MCP server" and "language server"** keep their protocol names; only the work machine is renamed Computer
   (decision S1). Whether the product renames MCP's own word is Jared's call.
 - **Glass transparency, the wallpaper and the Basic colour scheme** stay outside the ladder: the engine paints them on its

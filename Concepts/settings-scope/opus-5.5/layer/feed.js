@@ -77,8 +77,14 @@
      server itself), its combine and careful order, and its reasons for the levels it doesn't offer (not_offered); the
      concept's own treatment (the safety preview, a run's own choice) stays. heuristic() decides only rows the inventory
      doesn't list; PSX.classReport() names them */
-  function placesOf(L, h) {
+  /* the inventory writes a switch's careful order in words (FileSafe: on before off); a switch's value is true or false.
+     Found next to Astra max A1/A4: compared as written, FileSafe's order matched neither value, so the "custom" rule
+     took the computer's own, and a computer's Off beat a project's On (the less careful value). A switch's order is
+     read as its values */
+  const carefulValues = (order, toggle) => order.map((x) => (!toggle ? x : /^(on|true)$/i.test(String(x)) ? true : /^(off|false)$/i.test(String(x)) ? false : x));
+  function placesOf(L, h, id, s) {
     h = h || {};
+    const toggle = (PSX.layering && PSX.layering.types[id]) === 'toggle' || (s && typeof s.value === 'boolean') || typeof DEFAULTS[id] === 'boolean';
     const may = (L.may_differ_by || []).filter((x) => x !== 'everywhere'), n = L.not_offered || {};
     const r = { inventory: true, notOffered: n };
     if (L.home === 'computer') Object.assign(r, { home: 'computer', reason: n.everywhere || 'names_a_program' });
@@ -86,8 +92,11 @@
     else if (!may.length) Object.assign(r, { home: 'everywhere', reason: n.project || n.computer || 'same_for_you' });
     else { r.may = may; if (may.includes('device')) r.screen = true; }
     if (L.computer_key === 'execution_host') r.host = true;
-    if (L.combine === 'more_careful') { r.combine = 'more_careful'; r.careful = Array.isArray(L.careful_order) && L.careful_order.length ? L.careful_order.slice() : (h.careful || []); }
+    if (L.combine === 'more_careful') { r.combine = 'more_careful'; r.careful = Array.isArray(L.careful_order) && L.careful_order.length ? carefulValues(L.careful_order, toggle) : (h.careful || []); }
     else if (L.combine === 'computer_ceiling') r.combine = 'computer_ceiling';
+    /* Astra max A1: per_item is kept as the inventory says. resolve.js resolves each item by its owner's own rule
+       (PSX.PER_ITEM: Permissions' answers per exact key, and its ordered rules per rule), never by a generic merge */
+    else if (L.combine === 'per_item') r.combine = 'per_item';
     // the concept's safety preview stays (1.7); its careful order only previews, the inventory's combine resolves
     if (h.safety) { r.safety = true; if (!r.careful && h.careful && h.careful.length) r.careful = h.careful; }
     if (h.run) r.run = true;
@@ -96,7 +105,7 @@
   function classify(ref, s) {
     const L = PSX.layerOf(ref.id);
     if (!L) return heuristic(ref, s);
-    return L.home === 'thing' ? null : placesOf(L, heuristic(ref, s));
+    return L.home === 'thing' ? null : placesOf(L, heuristic(ref, s), ref.id, s);
   }
   // an owner-held row: the inventory's home: thing, or (for a row it doesn't list) the reviewed list
   const ownerHeld = (id) => { const L = PSX.layerOf(id); return L ? L.home === 'thing' : REVIEWED.thing.includes(id) || REVIEWED.libraryAction.includes(id); };
@@ -106,7 +115,7 @@
      doesn't list (the layer's Projects folder, a row it has retired) keeps its own */
   Object.keys(DEF).forEach((id) => {
     const d = DEF[id], L = PSX.layerOf(id); if (!L || L.home === 'thing') return;
-    const r = placesOf(L, { safety: d.safety, careful: d.careful, run: d.run });
+    const r = placesOf(L, { safety: d.safety, careful: d.careful, run: d.run }, id);
     ['home', 'may', 'screen', 'host'].forEach((k) => { delete d[k]; });
     Object.keys(r).forEach((k) => { if (r[k] !== undefined) d[k] = r[k]; });
   });
@@ -131,11 +140,12 @@
     if (/(proxy|\.port$|-port$|bind-address|listen-)/.test(id)) return { home: 'computer', host: true, reason: 'about_the_network' };
     if (/(gpu|vram|cpu-cores|memory-limit-mb|hardware)/.test(id)) return { home: 'computer', host: true, reason: 'about_hardware' };
     if (s.control === 'path' || /(cli-path|binary-path|-binary$|executable|terminal\.shell$|launch-config|docker-host|socket-path)/.test(id)) return { home: 'computer', host: true, reason: /(dir|folder|location)$/.test(id) && !/cli|binary/.test(id) ? 'names_a_folder' : 'names_a_program' };
-    /* review Sol max F1, the same weakness here: a row whose value is a place on one computer (an absolute path, read by
-       the layer's one path reader: /, ~, a drive, a UNC share, file:) is each computer's own, whatever its control.
+    /* review Sol max F1, the same weakness here: a row whose value is a place on one computer (an absolute path: where
+       the layer's one rule says a word starts, PSX.paths.rootOf: /, ~, a drive, a UNC share, file:) is each computer's
+       own, whatever its control.
        A value is one word, never a command line, so "anthropic/claude-sonnet-4" stays a model's name. Review S1: it
        runs only after the reviewed owner-held rows (REVIEWED.thing, read first above), as SSYS-059 orders it */
-    if (typeof s.value === 'string' && (() => { const f = PSX.paths.word(s.value.trim(), false); return !!f && /^(root|home|drive|unc|file)$/.test(f.root); })()) return { home: 'computer', host: true, reason: 'names_a_path' };
+    if (typeof s.value === 'string' && /^(root|home|drive|unc|file)$/.test(PSX.paths.rootOf(s.value.trim()) || '')) return { home: 'computer', host: true, reason: 'names_a_path' };
     if (/^general\.visual\./.test(id) || /^general\.interaction\.(sound|submit-key|haptic)/.test(id) || /^general\.startup\.window/.test(id) || /(keyboard-shortcuts|font-family|ui-scale|zoom-level)/.test(id)) return { may: ['device'], screen: true };
     // a safety row: the more careful of a computer's and a project's own (1.4)
     if (/^safety\./.test(id) && !Array.isArray(s.value) && (typeof s.value !== 'object' || s.value === null)) return { may: ['computer', 'project'], combine: 'more_careful', careful: carefulOrder(s, id), safety: true };
