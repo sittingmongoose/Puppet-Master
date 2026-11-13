@@ -13,6 +13,18 @@ import pm_guard_isolation as g
 FIELDS = ('dispatch_refusal',)
 
 
+def SX03_original_sealed(value, context):
+    return 'original_refused' if value['dispatch_refusal'] == 'original_query' else None
+
+
+def SX04_original_authentic(value, context):
+    return 'original_refused' if value['dispatch_refusal'] == 'original_authority' else None
+
+
+def SX06_recipe_known(value, context):
+    return 'original_refused' if value['dispatch_refusal'] == 'recipe_unknown' else None
+
+
 def SX07_dispatch_other(value, context):
     return 'original_refused' if value['dispatch_refusal'] is not None else None
 
@@ -20,10 +32,16 @@ def SX07_dispatch_other(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('SX07_dispatch_other', g.Invariant('/dispatch_refusal', 'no other RetainedDispatcher refusal (original_binding, original_ambiguous, caller_recipe_override, recipe_selection, original_bytes_type, current_disclosure); entailed: the owner is the custody of the Storage instance read and the commitment covers every event field of the binding, which the earlier rows join to the family and scope; the owner seals one original per ref and commitment; no override is passed; disclosure is the separate DS rows'), 'original_refused', SX07_dispatch_other),
+        g.Guard('SX03_original_sealed', g.Invariant('/dispatch_refusal', 'this Storage instance holds a sealed original at the original ref (RetainedDispatcher original_query); entailed: rd_recipe SX08 refuses first every original without a sealed receipt at that ref with its exact commitment, which is what the sealed original owner looks up'), 'original_refused', SX03_original_sealed),
+        g.Guard('SX04_original_authentic', g.Invariant('/dispatch_refusal', 'the fetched original bytes are the bytes sealed at that ref: their CV-339 full-value commitment is the sealed one (RetainedDispatcher original_authority); entailed: SX08 selects only by that same commitment, so a fetched original whose commitment has no receipt refuses there first'), 'original_refused', SX04_original_authentic),
+        g.Guard('SX06_recipe_known', g.Invariant('/dispatch_refusal', "the original's sealed recipe tuple has an installed frozen verifier (RetainedDispatcher recipe_unknown; no other verifier is probed); entailed: the owner returns the tuple of the same one receipt rd_recipe selected, and SX02 refuses first a receipt whose recipe has no installed verifier"), 'original_refused', SX06_recipe_known),
+        g.Guard('SX07_dispatch_other', g.Invariant('/dispatch_refusal', 'no other RetainedDispatcher refusal (original_binding, original_ambiguous, caller_recipe_override, recipe_selection, original_bytes_type, current_disclosure); entailed: the owner is the custody of the Storage instance read and the commitment covers every event field of the binding, which the earlier rows join to the family and scope; SX09 refuses first more than one receipt for one original; no override is passed; disclosure is the separate DS rows'), 'original_refused', SX07_dispatch_other),
     ])
 
     def check(value):
+        table.require('SX03_original_sealed', value, context)
+        table.require('SX04_original_authentic', value, context)
+        table.require('SX06_recipe_known', value, context)
         table.require('SX07_dispatch_other', value, context)
         return True
     return g.Case(table, check, context)

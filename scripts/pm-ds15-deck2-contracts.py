@@ -299,7 +299,9 @@ def main():
             p = data['payload']
             record = json.loads(data['owner_records'][p['outcome_ref']])
             assert p == data['envelope']['payload'] == data['original']['payload'] == data['original']['event']['payload'] == data['outcome']['payload'] == record['payload']
-            assert base.receipt_ok(data, base.harness_recipe(c, data)), (case['id'], 'incoherent fixture custody')
+            recipe = (base.new_write_recipe() if case['operation'] in base.NEW_WRITE_OPS
+                      else base.harness_recipe(c, data))
+            assert base.receipt_ok(data, recipe), (case['id'], 'incoherent fixture custody')
     assert {'writer-replay-only', 'original-retry', 'history-after-live-change', 'valid-checkpoint',
             'read-denied', 'read-deleted', 'writer-withdrawal', 'reader-withdrawal',
             'rebuild-valid', 'rebuild-missing-prefix', 'receipt-storage-sequence',

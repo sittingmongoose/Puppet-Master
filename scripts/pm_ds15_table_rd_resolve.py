@@ -13,35 +13,17 @@ import pm_guard_isolation as g
 FIELDS = ('dispatch_refusal',)
 
 
-def SX03_original_sealed(value, context):
-    return 'original_refused' if value['dispatch_refusal'] == 'original_query' else None
-
-
-def SX04_original_authentic(value, context):
-    return 'original_refused' if value['dispatch_refusal'] == 'original_authority' else None
-
-
 def SX05_original_verification(value, context):
     return 'original_refused' if value['dispatch_refusal'] == 'original_verification' else None
-
-
-def SX06_recipe_known(value, context):
-    return 'original_refused' if value['dispatch_refusal'] == 'recipe_unknown' else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('SX03_original_sealed', g.Invariant('/dispatch_refusal', 'this Storage instance holds a sealed original at the original ref (RetainedDispatcher original_query)'), 'original_refused', SX03_original_sealed),
-        g.Guard('SX04_original_authentic', g.Invariant('/dispatch_refusal', 'the fetched original bytes are the bytes sealed at that ref: their CV-339 full-value commitment is the sealed one (RetainedDispatcher original_authority)'), 'original_refused', SX04_original_authentic),
         g.Guard('SX05_original_verification', g.Invariant('/dispatch_refusal', 'the frozen verifier of the sealed recipe tuple recomputes the original: editions, family, payload join, commitment, producer digest and identity (RetainedDispatcher original_verification)'), 'original_refused', SX05_original_verification),
-        g.Guard('SX06_recipe_known', g.Invariant('/dispatch_refusal', "the original's sealed recipe tuple has an installed frozen verifier (RetainedDispatcher recipe_unknown; no other verifier is probed)"), 'original_refused', SX06_recipe_known),
     ])
 
     def check(value):
-        table.require('SX03_original_sealed', value, context)
-        table.require('SX04_original_authentic', value, context)
         table.require('SX05_original_verification', value, context)
-        table.require('SX06_recipe_known', value, context)
         return True
     return g.Case(table, check, context)

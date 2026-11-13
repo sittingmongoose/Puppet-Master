@@ -1,5 +1,5 @@
 {
- "description": "Static stand-in for Storage's SP-1101 sealed write custody of DS15 originals (sweep part 2B, S-N2). stores: the write recipe each Storage instance's custody records per family; resource_manifests: the SHA-256 manifest of the frozen resources each family's originals were written against; sealed_originals: the binding (Storage instance, scope, Server, Project, event type, ids, owner operation, CV-339 commitment) and write recipe sealed at each original ref. Recorded once by scripts/pm_ds15_p2b_cases.py --write-custody; the case under check never adds to it. Native custody NOT_RUN.",
+ "description": "Static stand-in for Storage's SP-1101 sealed write custody of DS15 originals (sweep part 2B, S-N2; batch 2 fix 1). stores: the families each Storage instance's custody holds (a Store never supplies a recipe); resource_manifests: the SHA-256 manifest of the frozen resources each family's originals were written against; sealed_originals: the binding (Storage instance, scope, Server, Project, event type, ids, owner operation, CV-339 commitment) and write recipe of the one receipt sealed with each original at its ref (more than one only for the deliberate SX09 negatives); a retained read selects only from that receipt. Recorded once by scripts/pm_ds15_p2b_cases.py --write-custody; the case under check never adds to it. Native custody NOT_RUN.",
  "resource_manifests": {
   "browser.context_captured": "b4be8d27872ed994c4f01291c7d2ac68416f9b4361909469314081a6286a2543",
   "browser.context_share_revoked": "06bf5635fa11a94db20e5df586b71c8d7977c8b97de7d530dc4776805e54bdd1",
@@ -27,6 +27,38 @@
  },
  "schema_id": "pm.ds15.original_write_custody.fixture.v1",
  "sealed_originals": [
+  {
+   "binding": {
+    "event_id": "event:browser_context_captured:1",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a310a:636170747572653a6f7065726174696f6e3a31",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "50ccb51ca9476ff09989a7388d31638a843475f7e6a137226bf1d631befcaa0d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "event:browser_context_captured:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_captured:1",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a31:636170747572653a6f7065726174696f6e3a31",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "149f1e412b1c8c53001436b3dc70f8822392518f708980abe46c11724f680709",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "event:browser_context_captured:1",
+   "write_recipe": "ds15-v1"
+  },
   {
    "binding": {
     "event_id": "event:browser_context_captured:1",
@@ -68,7 +100,103 @@
     "project_id": null,
     "scope_kind": "application",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "7ba0872bb2f1d5c1a22c16d27ee2e8d2008751002a219994d49ed45d6ac78cf6",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "event:browser_context_captured:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_captured:1",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a31:636170747572653a6f7065726174696f6e3a31",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "95b8a83a2e30f28323ed52fba9fb3626109ddaaa484f47c26cdf6f45a40165cf",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "event:browser_context_captured:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_captured:1",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a31:636170747572653a6f7065726174696f6e3a31",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b2549e7875450d4fa17a2ff9b7849590ae6d8306ec97d46521b129e2d51628b7",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "event:browser_context_captured:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_captured:1",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a31:636170747572653a6f7065726174696f6e3a31",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "d4ae024daab0e12583b975cc99f7f37d4f5075fc24d0b5789b47d08e7c681070",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "event:browser_context_captured:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_captured:1",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a31:636170747572653a6f7065726174696f6e3a31",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ed3bf896fe385eafdf7b0d455b694cb9905d13818d86183d941920c177369c30",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "event:browser_context_captured:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_captured:1",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a31:636170747572653a6f7065726174696f6e3a31",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ede80d1994708dcc0b443e59208ee2e192f15add45bd806924aff850eb04e4ec",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "event:browser_context_captured:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_captured:1",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a31:636170747572653a6f7065726174696f6e3a310a",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b0bafadd39ce4e6d8c2825fccf3f6dcd18feffcc473171e878afad0a9d819290",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "browser.context_captured",
@@ -228,6 +356,70 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "5b4260ecd334a147a1e563ba7205591dd8763ceacd8fe210395b1a15320459c3",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.completed",
+   "original_ref": "event:catalog_install_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_completed:1",
+    "event_type": "catalog.install.completed",
+    "idempotency_key": "7ba2534c2a574e0e5dfefa95927185fafe883e16726472b65404ab3e493e605e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "5d608b9614c5f44812c987b0f58a3b1cd1b32451335f66660433076f46658f4f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.completed",
+   "original_ref": "event:catalog_install_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_completed:1",
+    "event_type": "catalog.install.completed",
+    "idempotency_key": "7ba2534c2a574e0e5dfefa95927185fafe883e16726472b65404ab3e493e605e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "700294b66898a47659d10b1edd0beec97731600c2f1dcb76abdd846d63694ee4",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.completed",
+   "original_ref": "event:catalog_install_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_completed:1",
+    "event_type": "catalog.install.completed",
+    "idempotency_key": "7ba2534c2a574e0e5dfefa95927185fafe883e16726472b65404ab3e493e605e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "793d491bceb6b91c24878d277b0f4cc7c1aa3b6d2017879de07819cebd561599",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.completed",
+   "original_ref": "event:catalog_install_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_completed:1",
+    "event_type": "catalog.install.completed",
+    "idempotency_key": "7ba2534c2a574e0e5dfefa95927185fafe883e16726472b65404ab3e493e605e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "816e666a37f758405599f42040e58217dca24a3b4e6d343070efbf2d2f78a0c1",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
@@ -245,6 +437,38 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "b00e977294c721a976ec61458aa8e15c8c209a4a9c0999caec1d361009eadccd",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.completed",
+   "original_ref": "event:catalog_install_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_completed:1",
+    "event_type": "catalog.install.completed",
+    "idempotency_key": "7ba2534c2a574e0e5dfefa95927185fafe883e16726472b65404ab3e493e605e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "e3d3a3335ab39bc5ebff481139febf845e87e6c1c1037be2b4041771250369d1",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.completed",
+   "original_ref": "event:catalog_install_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_completed:1",
+    "event_type": "catalog.install.completed",
+    "idempotency_key": "7ba2534c2a574e0e5dfefa95927185fafe883e16726472b65404ab3e493e605e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ece1536f58324834a45e6a947b0f323546a4d7dbdb6eb4f0355e25404da50010",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "catalog.install.completed",
@@ -293,6 +517,102 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "1da93f48feb76d580c9c3dbf16efe3359e0d22b0f0be51ca21ecce7c123e8f47",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_install_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_started:1",
+    "event_type": "catalog.install.started",
+    "idempotency_key": "75eebafd559ed5243048783a936f22e059980d3f501e54f00f8943fab587807e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "4b3490b12145200152082b8225fe9210d3d144bbff36ef5071a351ac6bca8ca1",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_install_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_started:1",
+    "event_type": "catalog.install.started",
+    "idempotency_key": "75eebafd559ed5243048783a936f22e059980d3f501e54f00f8943fab587807e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "a6544bf4c911dc5805e7ee26fc08cf10761c9e8d82d5411fc65537d73ca0032c",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_install_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_started:1",
+    "event_type": "catalog.install.started",
+    "idempotency_key": "75eebafd559ed5243048783a936f22e059980d3f501e54f00f8943fab587807e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b083c3dd068f07faba9df92f7a262bea838ba1178d74e880f219edf7bb7c6dc9",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_install_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_started:1",
+    "event_type": "catalog.install.started",
+    "idempotency_key": "75eebafd559ed5243048783a936f22e059980d3f501e54f00f8943fab587807e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "d0d8fd65c5463fce76a4393869ad8909b434cb82528abf5ac0b8e8a348728e64",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_install_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_started:1",
+    "event_type": "catalog.install.started",
+    "idempotency_key": "75eebafd559ed5243048783a936f22e059980d3f501e54f00f8943fab587807e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "e7acafa3d9f8d25c83a3c44c7af1eb0dc3e9eb2feb711bec8b9a5c98cd267157",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_install_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_install_started:1",
+    "event_type": "catalog.install.started",
+    "idempotency_key": "75eebafd559ed5243048783a936f22e059980d3f501e54f00f8943fab587807e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ec91838a430c9d9c9fb9fe4a6cf2fb07f6241321dddd3681af6297fa005c33e5",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "catalog.install.started",
@@ -548,7 +868,55 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "349018ab0d4dd719fd0a9ee134ef4d31708608b20ff0d350be35fc099a796aec",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.restarting",
+   "original_ref": "event:dev_session_restarting:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_restarting:1",
+    "event_type": "dev.session.restarting",
+    "idempotency_key": "69601380aa2338e7f1e9401fc6d6dd535f8165fccb6da5af76e6fe074c8016ed",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "8888660f044d6f62c9da01dc88e98b1a4d43910b26cad05fb82585315e848389",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.restarting",
+   "original_ref": "event:dev_session_restarting:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_restarting:1",
+    "event_type": "dev.session.restarting",
+    "idempotency_key": "69601380aa2338e7f1e9401fc6d6dd535f8165fccb6da5af76e6fe074c8016ed",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9a2a2206bdffbefdf2d4c84704ffb7a8e266d8705e586244b78cd79ea549b9b2",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.restarting",
+   "original_ref": "event:dev_session_restarting:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_restarting:1",
+    "event_type": "dev.session.restarting",
+    "idempotency_key": "69601380aa2338e7f1e9401fc6d6dd535f8165fccb6da5af76e6fe074c8016ed",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9cbb0843bc5ebe91dfd839c41345b371313106d96120652dbff9bca8dcaf7751",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "dev.session.restarting",
@@ -573,6 +941,134 @@
   },
   {
    "binding": {
+    "event_id": "event:dev_session_restarting:1",
+    "event_type": "dev.session.restarting",
+    "idempotency_key": "69601380aa2338e7f1e9401fc6d6dd535f8165fccb6da5af76e6fe074c8016ed",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b1d8657a0a6c0daf978521a89b4898e34105664111c9a5e161172a3613a0a1c4",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.restarting",
+   "original_ref": "event:dev_session_restarting:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_restarting:1",
+    "event_type": "dev.session.restarting",
+    "idempotency_key": "69601380aa2338e7f1e9401fc6d6dd535f8165fccb6da5af76e6fe074c8016ed",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "d1c8d1d251953c87e1b0c686b307cbeeca30f6e05198b517a4fb19ebbdf56611",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.restarting",
+   "original_ref": "event:dev_session_restarting:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_restarting:1",
+    "event_type": "dev.session.restarting",
+    "idempotency_key": "69601380aa2338e7f1e9401fc6d6dd535f8165fccb6da5af76e6fe074c8016ed",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "d8078f9d32abd42d541e7ee2cce946e28ca91d03a002527e1d5e286c2ce086a7",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.restarting",
+   "original_ref": "event:dev_session_restarting:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_restarting:1",
+    "event_type": "dev.session.restarting",
+    "idempotency_key": "69601380aa2338e7f1e9401fc6d6dd535f8165fccb6da5af76e6fe074c8016ed",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "f714e58fb57ca26807e0c1783b174e9e664886a691563ee2de2592d7ec879edf",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.restarting",
+   "original_ref": "event:dev_session_restarting:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_started:1",
+    "event_type": "dev.session.started",
+    "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "0bc51ce71d9a43abeff3faa49c82c6518279b93000e20665dd21e75925e48c64",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.started",
+   "original_ref": "event:dev_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_started:1",
+    "event_type": "dev.session.started",
+    "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "2e43b33f74126fa4fec5fa733bf81390974ec2c747ac67b9d133d9d93e535acd",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.started",
+   "original_ref": "event:dev_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_started:1",
+    "event_type": "dev.session.started",
+    "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "4a549b231655a4a1b9399943228768faadd734819d7e5b87834299d0364a8e26",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.started",
+   "original_ref": "event:dev_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_started:1",
+    "event_type": "dev.session.started",
+    "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "583f327cf8ee39cbf9e8409d23a2d9df903288a5019c101d5047b2b704ed452d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.started",
+   "original_ref": "event:dev_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
     "event_id": "event:dev_session_started:1",
     "event_type": "dev.session.started",
     "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
@@ -581,6 +1077,38 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "5d92cebc648a3bd501de03849301f70db678d8ab40e1cf3e873cf6316d46c77b",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.started",
+   "original_ref": "event:dev_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_started:1",
+    "event_type": "dev.session.started",
+    "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "60f9b61eb37f4533bcb037ec44b829b12df6f929c9941c0dd5ebc496b74c9747",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.started",
+   "original_ref": "event:dev_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_started:1",
+    "event_type": "dev.session.started",
+    "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ad4198d45c588c5b00e8b8937bbe566e35c54e32acc4fee6a073f4e07264d449",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "dev.session.started",
@@ -621,6 +1149,38 @@
   },
   {
    "binding": {
+    "event_id": "event:dev_session_started:1",
+    "event_type": "dev.session.started",
+    "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "d16643dc35037a6f7aec5bd4891503db4af862594dafc2c045c32f625cff628d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.started",
+   "original_ref": "event:dev_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopped:1",
+    "event_type": "dev.session.stopped",
+    "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "16285d5f76ba62f7276b441fb3020209ee5ba0f46641ae8cf8a4de08dd1b5001",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopped",
+   "original_ref": "event:dev_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
     "event_id": "event:dev_session_stopped:1",
     "event_type": "dev.session.stopped",
     "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
@@ -629,6 +1189,22 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "202b9f9d6efeb803167d1695b5d322cfe752c3d1b4c70f794c8f7b15b095dc63",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopped",
+   "original_ref": "event:dev_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopped:1",
+    "event_type": "dev.session.stopped",
+    "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "2106766c37b98d5a8d0114976f402b8d3bacc1ec0cc1b9126dfb38556ea59da9",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "dev.session.stopped",
@@ -669,6 +1245,102 @@
   },
   {
    "binding": {
+    "event_id": "event:dev_session_stopped:1",
+    "event_type": "dev.session.stopped",
+    "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "6b1443223a956909a47106d14bdde55ad831a8719f1fcc0c2fcd14486654487b",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopped",
+   "original_ref": "event:dev_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopped:1",
+    "event_type": "dev.session.stopped",
+    "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ca56409036bd979a4029276a2fcd4de2bbdc0f6a37349fec78f916ef7344a129",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopped",
+   "original_ref": "event:dev_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopped:1",
+    "event_type": "dev.session.stopped",
+    "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "caa7884eea5b50e45436f0727f4a29b226bdea84ce2ee708638c0940864bc60b",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopped",
+   "original_ref": "event:dev_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopped:1",
+    "event_type": "dev.session.stopped",
+    "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "de882d6066d886399af3880f594681a266ff76792b2d46508e10ffff2ba64459",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopped",
+   "original_ref": "event:dev_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopped:1",
+    "event_type": "dev.session.stopped",
+    "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "df9b9782ae8880d3919d2a958ee751e2a6fd2fb44f65e6c624611b6ba02bc414",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopped",
+   "original_ref": "event:dev_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopping:1",
+    "event_type": "dev.session.stopping",
+    "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "0b6bb9f509f7f989c465b6d0be34e124b25f4fb7c2e35ccd14e2d727600ad331",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopping",
+   "original_ref": "event:dev_session_stopping:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
     "event_id": "event:dev_session_stopping:1",
     "event_type": "dev.session.stopping",
     "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
@@ -677,6 +1349,70 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "13f00f502f8302795a80a544981163bcf52b1a5f105499a07923aa44bf21072f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopping",
+   "original_ref": "event:dev_session_stopping:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopping:1",
+    "event_type": "dev.session.stopping",
+    "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "3b24bda574da27ce96da49b8fccb1650c6e5ef58e6cbff647ec004e77a73f2ef",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopping",
+   "original_ref": "event:dev_session_stopping:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopping:1",
+    "event_type": "dev.session.stopping",
+    "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "4b1a6e18633c9fc47c56e45ad27ac4d03d463a1ac572077e62b5984e2ecb677f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopping",
+   "original_ref": "event:dev_session_stopping:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopping:1",
+    "event_type": "dev.session.stopping",
+    "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "4b8615dde2f09e8e295ad6d34913e59b33af6a9d5662763f60c36b25592f88e2",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopping",
+   "original_ref": "event:dev_session_stopping:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopping:1",
+    "event_type": "dev.session.stopping",
+    "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "607bebc4989635fc7280886a738c95ec45d0a260d51bf8a04000c987f3c98a76",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "dev.session.stopping",
@@ -717,6 +1453,54 @@
   },
   {
    "binding": {
+    "event_id": "event:dev_session_stopping:1",
+    "event_type": "dev.session.stopping",
+    "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "a97d827d969df91c6eddb9998ba3d8e0e157542b0cfdd5b26d44d9fbf15314f8",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopping",
+   "original_ref": "event:dev_session_stopping:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:dev_session_stopping:1",
+    "event_type": "dev.session.stopping",
+    "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "eb370f2ff1bca710e246334410fe073d9e559375f932cd55ac5200a3413b71b4",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopping",
+   "original_ref": "event:dev_session_stopping:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:doctor_custom_headless_checked:1",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "0dcff79b519a018b4182a551742c861a1fdd85c82adecaacb50e4c019c7a7ddd",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "event:doctor_custom_headless_checked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
     "event_id": "event:doctor_custom_headless_checked:1",
     "event_type": "doctor.custom_headless.checked",
     "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
@@ -725,6 +1509,22 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "2b3719c0c070a637cf90d273a4a82fab1790abf1752a1869646df19df6e0a133",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "event:doctor_custom_headless_checked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:doctor_custom_headless_checked:1",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "407e3b1a2ec7631af1dfade0eb5c4fe00ca8df738423d6ddec86e702ccbb68bf",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "doctor.custom_headless.checked",
@@ -756,6 +1556,102 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "4c4277869f350b6f211a04e792b1fd3453f256e801ceb18fe335b63a57c7411f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "event:doctor_custom_headless_checked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:doctor_custom_headless_checked:1",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "504d60091b5773f1cbb71a78244e2add973d4b46723ce0cd984335334d083576",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "event:doctor_custom_headless_checked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:doctor_custom_headless_checked:1",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "a45630c51c7e04ab630c265ac856928a8b61a033a1980abd0d70e9b6a4905c78",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "event:doctor_custom_headless_checked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:doctor_custom_headless_checked:1",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b2270a356e1165331c18aacd9c524b25fcbfb405da4292b33ca1f0a5749c6156",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "event:doctor_custom_headless_checked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:doctor_custom_headless_checked:1",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b96b8d6e190119eb702cdacf677de4b4f060adade43d113aa21fae88e6fb8d3d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "event:doctor_custom_headless_checked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:doctor_custom_headless_checked:1",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "d29c79485b1991b0073dcdb4880c4034ff565015f8f7426b916654ad75802051",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "event:doctor_custom_headless_checked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:doctor_custom_headless_checked:1",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "ea3a4feaa7bf21a7e2657893994040e505d57e268e30ecfc75c8e61622669305",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
@@ -772,7 +1668,87 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "20c9fdaea85f2cefa3209ad6d30b13d7f762fec3f28ae32fd78178e249ce823a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.artifact.created",
+   "original_ref": "event:live_artifact_created:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_artifact_created:1",
+    "event_type": "live.artifact.created",
+    "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "239c27aa3cbbf64d3a6c680ce832ac2e6d5b3927a1f93fb9034e934e0b14c02f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.artifact.created",
+   "original_ref": "event:live_artifact_created:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_artifact_created:1",
+    "event_type": "live.artifact.created",
+    "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "4ce3609c185974c4a2d75199be52987e5893a09bffecdc091481e9f91ce4eac8",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.artifact.created",
+   "original_ref": "event:live_artifact_created:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_artifact_created:1",
+    "event_type": "live.artifact.created",
+    "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "6502c36d5e3b92ec9f41b7c9913953669d6bea6d592d7ab33f015622e5a827a2",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.artifact.created",
+   "original_ref": "event:live_artifact_created:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_artifact_created:1",
+    "event_type": "live.artifact.created",
+    "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "6a03d82b2168a34faada4b4211b390808c68b40219ceea05a7419444b5c5cf37",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.artifact.created",
+   "original_ref": "event:live_artifact_created:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_artifact_created:1",
+    "event_type": "live.artifact.created",
+    "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "6f7f31a1116e12c95d02b255c3fa4473e465440f3e682193223c42db34b4668a",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.artifact.created",
@@ -804,6 +1780,22 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "d87d4a8ea7d0ed4e7557e1516125933819d4dd8b5d349a8e9d55284e805316af",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.artifact.created",
+   "original_ref": "event:live_artifact_created:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_artifact_created:1",
+    "event_type": "live.artifact.created",
+    "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "fcfdf10126e01f2937ae4a6900e8ed0c4c6093e6f03a706d29b87027fd55e59e",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
@@ -820,7 +1812,87 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "0feae018d40183619d745e084e75a1b8c08305613d28e29f08269fe3016fd329",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.completed",
+   "original_ref": "event:live_session_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_completed:1",
+    "event_type": "live.session.completed",
+    "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "18bbb60de96157dc7b2280ab10364b329ba35e212b370c31ad9667fda2a09253",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.completed",
+   "original_ref": "event:live_session_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_completed:1",
+    "event_type": "live.session.completed",
+    "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "542b81d746d932728bc8c0942de06e6359e2ef71273d3f740e592fae7bdb4228",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.completed",
+   "original_ref": "event:live_session_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_completed:1",
+    "event_type": "live.session.completed",
+    "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "6cef9ff3cad63a88970bd5ace687d58aabf9f040b5b690fc91e34cebd171e090",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.completed",
+   "original_ref": "event:live_session_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_completed:1",
+    "event_type": "live.session.completed",
+    "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "7614c4d18166b4365dbbe769b4dcea96146a0abd4c5ee499d0eb48087e4784dc",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.completed",
+   "original_ref": "event:live_session_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_completed:1",
+    "event_type": "live.session.completed",
+    "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "7e94cf5a60c3cd4f3011192689c52496aeeec24c81aa7c91ce7e9c3d6bd76d9b",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.session.completed",
@@ -861,6 +1933,38 @@
   },
   {
    "binding": {
+    "event_id": "event:live_session_completed:1",
+    "event_type": "live.session.completed",
+    "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "eb3e3f9ec11636b9e2ea1ce212933ff47836f3fd8e94de56481fceb50a81f1db",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.completed",
+   "original_ref": "event:live_session_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_degraded:1",
+    "event_type": "live.session.degraded",
+    "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "05e78e635a7fbbe1a810177b7424480995b318645a913f4de7f3c5397c7d601f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.degraded",
+   "original_ref": "event:live_session_degraded:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
     "event_id": "event:live_session_degraded:1",
     "event_type": "live.session.degraded",
     "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
@@ -869,6 +1973,54 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "28ed46715805122efc9e33dc758d40a606b64477ff37dbb5c2233f012744a53e",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.degraded",
+   "original_ref": "event:live_session_degraded:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_degraded:1",
+    "event_type": "live.session.degraded",
+    "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "3899c733b79e8a3034b3e2e5e8a3c7a68adcaedf75cda422d4dabaad1f674a4c",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.degraded",
+   "original_ref": "event:live_session_degraded:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_degraded:1",
+    "event_type": "live.session.degraded",
+    "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "3da5539fadc7a28fa516e6970b1fc9b52e64f5ff83f9805e02b1a46dec1b5ae5",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.degraded",
+   "original_ref": "event:live_session_degraded:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_degraded:1",
+    "event_type": "live.session.degraded",
+    "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "513cefc99d2d0682f07908d7cf29211685493352dfe73327724eba2eea4d06f7",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.session.degraded",
@@ -900,11 +2052,75 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "61215227ca8a13f4343b34b9e314bd7492350e8871c532df4cb6eb9d54b336db",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.degraded",
+   "original_ref": "event:live_session_degraded:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_degraded:1",
+    "event_type": "live.session.degraded",
+    "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "74f8307a6f8e8f69b93b8674d5e53d2e7e330d1914538a73a40354cf4cdca84a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.degraded",
+   "original_ref": "event:live_session_degraded:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_degraded:1",
+    "event_type": "live.session.degraded",
+    "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "a1ab281ec21bdf9ad0ae877b159c38eb81a016dff4b5f96520e28575c5e10cc2",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.degraded",
+   "original_ref": "event:live_session_degraded:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_degraded:1",
+    "event_type": "live.session.degraded",
+    "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "ce05b2e54250c132e32516fae2477e8c72929e8f91dcd762840d84d95e9be4ff",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.session.degraded",
    "original_ref": "event:live_session_degraded:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_started:1",
+    "event_type": "live.session.started",
+    "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "2b12d4e16b92ea6a78b2e751705e20857fc8f3cfa7ab2dc9e21474334234cdd7",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.started",
+   "original_ref": "event:live_session_started:1",
    "write_recipe": "ds15-v1"
   },
   {
@@ -948,7 +2164,103 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "5e739769cc548777a67b2df4b7ac31195df469b5588b0a312a0c92a6d2b230c3",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.started",
+   "original_ref": "event:live_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_started:1",
+    "event_type": "live.session.started",
+    "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "62944910607ff3337d77927e4d22da14ed68c5fdadd227e3517f99493999dad6",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.started",
+   "original_ref": "event:live_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_started:1",
+    "event_type": "live.session.started",
+    "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "68c3511c4edc2c440aeb4187a08f72b5856de6fffa877e704f6fbf4471eecf68",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.started",
+   "original_ref": "event:live_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_started:1",
+    "event_type": "live.session.started",
+    "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9861116320524eb3613b92f28dee0be1430eac9987b1a7f0403a5b84b88e935c",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.started",
+   "original_ref": "event:live_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_started:1",
+    "event_type": "live.session.started",
+    "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "aa052964e0b4194230a775dcb68bedcc7d7924ab7c8abf96d554087da2c74996",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.started",
+   "original_ref": "event:live_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_started:1",
+    "event_type": "live.session.started",
+    "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ce08dca7690a6b0970ea5c9a8d057c155e27fa5fee38285ee7e3a5ffab53a4b9",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.started",
+   "original_ref": "event:live_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_session_started:1",
+    "event_type": "live.session.started",
+    "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "dbcaf4ea159c0db3d2bf2ac98d3d979031f3323da581672500ec6d10fb4589fd",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.session.started",
@@ -964,7 +2276,55 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "1ef9180fe916e0da9d62f326c9fc7ad0d3239d037dfc5caab1899c6a0d80fe23",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "1ef9180fe916e0da9d62f326c9fc7ad0d3239d037dfc5caab1899c6a0d80fe23",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "21f5d4a308f718498547df96e0d45bbf284303fa73bfadc7c875db3113c2b228",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "352f184437d7bfe617ca7a78ebfc1afbd7aaee9de802d48f88c2d615ec1d1898",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.step.updated",
@@ -996,12 +2356,60 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "4a7a1ab2417f753bc8b9c69752faa96a60e67563138340cd1c655c89739ce77b",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "4d6fd18b814560b8b236bbbabd0ab34329928f420fc5e5677351e7a047484b3c",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.step.updated",
    "original_ref": "event:live_step_updated:1",
    "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "597e0918cd31b257ccafb25d6a0b13eb8e6d03107e7b799afe10ca0fb1dc1b7f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "64a4cbe56159d4ce5c1d29c5413d1cb8de12a97991e89dee05e9cca1c2a88d57",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
   },
   {
    "binding": {
@@ -1029,6 +2437,38 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "7b6a5c42f2964edad7320ef203877929007e719850e27a576e9752addef1f6ad",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "921b7376f39810a7b9ccd0497a2fcb3427b9508f678932139051526401c951f0",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ac84db85f1260921c3d3c6cf00b0f1d342dd70184135f1b5bf549104ada78eb1",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.step.updated",
@@ -1076,7 +2516,87 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "b8cd6fdcd1cfa8f187551745a35f475c59232dfc8259d09040c1ca111248c154",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ba097b9452a9a0f962e72c793b9588956132c1ee68305146f4d4a712badc5236",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ba097b9452a9a0f962e72c793b9588956132c1ee68305146f4d4a712badc5236",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "dc9a14ef84d15c6fd79ce5faa0242f6c2f7c0515c310b1ed624c03462b083dee",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "ed05d6cab81a74191d9739864f58e180d3a1a1fcbe7ed02a26e9d15690a05e55",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "event:live_step_updated:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:live_step_updated:1",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "f6e7180a8b501e352d532f7f97cfb6dbcafd9b65ce99f5a75261ebae2adea285",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "live.step.updated",
@@ -1124,7 +2644,119 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "49a819d2ea7cb9fec40431cc11f2ddd89953ea4914b6d45752490358eff5972e",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.refreshed",
+   "original_ref": "event:preview_session_refreshed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_refreshed:1",
+    "event_type": "preview.session.refreshed",
+    "idempotency_key": "d91f9d0ac837fe872470a7bd65e116743d853f37e2cba6517ba3c6a08741ee5c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "66539300cf508fe07baa41e151860aac41e9aaf1a461d43fd80f34acb672c159",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.refreshed",
+   "original_ref": "event:preview_session_refreshed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_refreshed:1",
+    "event_type": "preview.session.refreshed",
+    "idempotency_key": "d91f9d0ac837fe872470a7bd65e116743d853f37e2cba6517ba3c6a08741ee5c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "6d0d10414df3173555c0bf73f077649b0906db44c65fe06fb8118d90c029aee0",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.refreshed",
+   "original_ref": "event:preview_session_refreshed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_refreshed:1",
+    "event_type": "preview.session.refreshed",
+    "idempotency_key": "d91f9d0ac837fe872470a7bd65e116743d853f37e2cba6517ba3c6a08741ee5c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9158a263ce73b03613a93dd6ad8981a15e4f5098f650ee3465a74d915cc26bd8",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.refreshed",
+   "original_ref": "event:preview_session_refreshed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_refreshed:1",
+    "event_type": "preview.session.refreshed",
+    "idempotency_key": "d91f9d0ac837fe872470a7bd65e116743d853f37e2cba6517ba3c6a08741ee5c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9bdd1f5e6943a68e0b23bcabe610853ca30e564f6f9d28baf887cd6eac2e448e",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.refreshed",
+   "original_ref": "event:preview_session_refreshed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_refreshed:1",
+    "event_type": "preview.session.refreshed",
+    "idempotency_key": "d91f9d0ac837fe872470a7bd65e116743d853f37e2cba6517ba3c6a08741ee5c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b39e89317240738146f78912fca53b69d01436859cec67dca1f995d88f2bbf45",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.refreshed",
+   "original_ref": "event:preview_session_refreshed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_refreshed:1",
+    "event_type": "preview.session.refreshed",
+    "idempotency_key": "d91f9d0ac837fe872470a7bd65e116743d853f37e2cba6517ba3c6a08741ee5c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b585bb9196ce5589976525e7eec60de10e3960ab1d7e241506b08ce3c9371b03",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.refreshed",
+   "original_ref": "event:preview_session_refreshed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_refreshed:1",
+    "event_type": "preview.session.refreshed",
+    "idempotency_key": "d91f9d0ac837fe872470a7bd65e116743d853f37e2cba6517ba3c6a08741ee5c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "c644a595250b63e4b569476d3c54ee489cb365a0e390985db8c3d166d484c4c3",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "preview.session.refreshed",
@@ -1140,7 +2772,39 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "06c1efb0fc9d8df90581b945b3028b022d48d59d784d2005cc0d437a46f390fe",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.started",
+   "original_ref": "event:preview_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_started:1",
+    "event_type": "preview.session.started",
+    "idempotency_key": "b71a836cb3daeeef0a288c914f4abfb7ce25842bd2d9d87521e1afa42ba6c3fa",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "2fa710b49d4f8cfe7c05069732acfc04c65c21a2ef7fd3d2591ad1104ac93f19",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.started",
+   "original_ref": "event:preview_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_started:1",
+    "event_type": "preview.session.started",
+    "idempotency_key": "b71a836cb3daeeef0a288c914f4abfb7ce25842bd2d9d87521e1afa42ba6c3fa",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "4330cacf6ccd23c900441422c8aecd3fd95fe6ee5fde26a7d93b2738fb712246",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "preview.session.started",
@@ -1173,6 +2837,86 @@
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
     "source_commitment": "54abbb2e6b02cfb04b4b2e211df085b28f9eabe1c9ff26a066d7dc11f682a256",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.started",
+   "original_ref": "event:preview_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_started:1",
+    "event_type": "preview.session.started",
+    "idempotency_key": "b71a836cb3daeeef0a288c914f4abfb7ce25842bd2d9d87521e1afa42ba6c3fa",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "768b39fa3cae8bf3e1146f912f746eccf1b9ff6e1950d63ac0258e8b1679e09f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.started",
+   "original_ref": "event:preview_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_started:1",
+    "event_type": "preview.session.started",
+    "idempotency_key": "b71a836cb3daeeef0a288c914f4abfb7ce25842bd2d9d87521e1afa42ba6c3fa",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "80cd4298d691e74a7c41ad4bd98bc8a759d84d99e6912e0549ec0b446b1757d1",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.started",
+   "original_ref": "event:preview_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_started:1",
+    "event_type": "preview.session.started",
+    "idempotency_key": "b71a836cb3daeeef0a288c914f4abfb7ce25842bd2d9d87521e1afa42ba6c3fa",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "93c5535034049f9e2df8bd034f473c291aed5062a04e5bb7aaa6a6e02c467f65",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.started",
+   "original_ref": "event:preview_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_started:1",
+    "event_type": "preview.session.started",
+    "idempotency_key": "b71a836cb3daeeef0a288c914f4abfb7ce25842bd2d9d87521e1afa42ba6c3fa",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ce44f8f090ffeb30ce6050615eed620062da183706f1319d7cdb01b4c7ac02d4",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.started",
+   "original_ref": "event:preview_session_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_started:1",
+    "event_type": "preview.session.started",
+    "idempotency_key": "b71a836cb3daeeef0a288c914f4abfb7ce25842bd2d9d87521e1afa42ba6c3fa",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "e96588860a03cc970ebf7f74cfbd82bf1709df15582bc428caf5bf81de25595f",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "preview.session.started",
@@ -1229,6 +2973,118 @@
   },
   {
    "binding": {
+    "event_id": "event:preview_session_stopped:1",
+    "event_type": "preview.session.stopped",
+    "idempotency_key": "cb449db2cf94488c33642aaafc2831ae0e7259aa60387727ab814d4d80a0939d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "5d5ded599127739f5c001c9637efd6ae2472350f4369637ba23b341ede5fbb75",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.stopped",
+   "original_ref": "event:preview_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_stopped:1",
+    "event_type": "preview.session.stopped",
+    "idempotency_key": "cb449db2cf94488c33642aaafc2831ae0e7259aa60387727ab814d4d80a0939d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "654be05e209423ae361b2ae26ca011d713267a5fcd5cacd42fdc104e6e6f08e6",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.stopped",
+   "original_ref": "event:preview_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_stopped:1",
+    "event_type": "preview.session.stopped",
+    "idempotency_key": "cb449db2cf94488c33642aaafc2831ae0e7259aa60387727ab814d4d80a0939d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "71847528e2f107dae6944c85eafede6b1134350d1274f1959185c5eb51247ef1",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.stopped",
+   "original_ref": "event:preview_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_stopped:1",
+    "event_type": "preview.session.stopped",
+    "idempotency_key": "cb449db2cf94488c33642aaafc2831ae0e7259aa60387727ab814d4d80a0939d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "c24caa6abdc67d32db2804f66e51524f41162d03bcfc595e76498d14b1d0515e",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.stopped",
+   "original_ref": "event:preview_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_stopped:1",
+    "event_type": "preview.session.stopped",
+    "idempotency_key": "cb449db2cf94488c33642aaafc2831ae0e7259aa60387727ab814d4d80a0939d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "c4035f537a103ee07ed5718813a8574d2010b3ecbaad64458080924db3442552",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.stopped",
+   "original_ref": "event:preview_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_stopped:1",
+    "event_type": "preview.session.stopped",
+    "idempotency_key": "cb449db2cf94488c33642aaafc2831ae0e7259aa60387727ab814d4d80a0939d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "e4239fa622f53dd0309d9b8d97f285c537782a42445a0228f9354c9d01fa010f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.stopped",
+   "original_ref": "event:preview_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:preview_session_stopped:1",
+    "event_type": "preview.session.stopped",
+    "idempotency_key": "cb449db2cf94488c33642aaafc2831ae0e7259aa60387727ab814d4d80a0939d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "f738a64e65521a1937e0ae1bc074f51823dfc657f4e0769d4ce31f7f25e5e362",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.stopped",
+   "original_ref": "event:preview_session_stopped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
     "event_id": "event:tool_custom_headless_skipped:1",
     "event_type": "tool.custom_headless.skipped",
     "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
@@ -1257,6 +3113,262 @@
    },
    "event_type": "tool.custom_headless.skipped",
    "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "browser.context_captured",
+    "idempotency_key": "application@1:7365727665723a6170703a31:636170747572653a6f7065726174696f6e3a31",
+    "owner_operation_id": "correlation-51",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "38f2c763606ffeb5c9a82aa8edf65aad44746cb8bf51b792106ceadab836d0f7",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_captured",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "catalog.install.completed",
+    "idempotency_key": "7ba2534c2a574e0e5dfefa95927185fafe883e16726472b65404ab3e493e605e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "78c6cff701025bcd4827161f8056039b7de749cac9769d3e40cc4f7baf90adcf",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.completed",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "catalog.install.started",
+    "idempotency_key": "75eebafd559ed5243048783a936f22e059980d3f501e54f00f8943fab587807e",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "1e4c4bbb767632855b65590ff8ce0e72ab524cf7dab43e019b59d58753d3a350",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "dev.session.restarting",
+    "idempotency_key": "69601380aa2338e7f1e9401fc6d6dd535f8165fccb6da5af76e6fe074c8016ed",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "be4ebd5566d9cc6915cc9b68be09a636806bd738d7105abd7cc1eafe09445bc2",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.restarting",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "dev.session.started",
+    "idempotency_key": "e3aa51d43a4267f85c692a887c3dbff95ae475179015e33e300b5f23aa8d91a3",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "cf5bb66f79b40c52c1b4c4997c849fdf0274045b04abbed29315dde426c15508",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.started",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "dev.session.stopped",
+    "idempotency_key": "c40f7997a7639bb56aae7b4439146a681f52891d82c267f5df010315897b5ec2",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "aa7afd456639d5b446e4bed956a87b43240db1409a7828fd959c56540472a0bb",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopped",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "dev.session.stopping",
+    "idempotency_key": "2a54386bab89202971b4015496b2d115a0793ddce4d58b6cc02e9f7afca21fe6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "3930189d954c17a5f7e1c627787ad5ba4c00ddf77fc28462fb635badba682a28",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "dev.session.stopping",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "doctor.custom_headless.checked",
+    "idempotency_key": "a258a73cab4844865b6aa6b590dd80144b2af906b7327d66298dcbd313abcf0b",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "06f5e829a901fcc9cddb6c374479794de08a8177884dcd1768d317f549e70d8e",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "doctor.custom_headless.checked",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "live.artifact.created",
+    "idempotency_key": "27ea26b2c3f73d63fb953b149076cf739915f0575f1400d9ed0c4f8fdecf1afb",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "d96cd3fa8475a7a8ace4a0d4735b79290660506a5d00b364b9c9b9c1b68b87fd",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.artifact.created",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "live.session.completed",
+    "idempotency_key": "2d653a3adf04fee0907680fbe34b170746610b517ff5cb24d1fd57fada74f458",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9f3eeb562f6bd12013d433a5b7ade5ff5eee299ce3dfd7a18965f04c6fcc7bec",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.completed",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "live.session.degraded",
+    "idempotency_key": "294ae1851940375aca5d3141bbfe58c591f80bcc93baf4f772f3143701a459ff",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "37881af7130ec13381444e810a5bceb2d8dc08a19c9c414c1d26ca734090dd9a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.degraded",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "live.session.started",
+    "idempotency_key": "58cf6ba00d350c4b0714d1893de8616bf315484d7c528b5d5af657fc3564990c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "82eb267caecd479ae704efe7d9b984610e15f3fcd04f608549de8cee69cb6f94",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.session.started",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "live.step.updated",
+    "idempotency_key": "fdef82e7803dc8d8be3c64d359c42a33d9e3c6305a04c6549682c9c63b7585a6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "541318daec44a22ea215d25fafbfe11698e118c51fff52ebb6f901818a0f3c59",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "live.step.updated",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "preview.session.refreshed",
+    "idempotency_key": "d91f9d0ac837fe872470a7bd65e116743d853f37e2cba6517ba3c6a08741ee5c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "212c6b61494f97fb2a5ca895d6d183daad6cd2ea42d6dcb21772ebb43c950cd0",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.refreshed",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "preview.session.started",
+    "idempotency_key": "b71a836cb3daeeef0a288c914f4abfb7ce25842bd2d9d87521e1afa42ba6c3fa",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "271fd7d0abb1c50105c73d1661cc9e2e5a5e20d239013da00e76202054c49830",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.started",
+   "original_ref": "other:retained-event",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "other:retained-event",
+    "event_type": "preview.session.stopped",
+    "idempotency_key": "cb449db2cf94488c33642aaafc2831ae0e7259aa60387727ab814d4d80a0939d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9dbe47c2ab1dc465b46ccbfc2772fed8ae110e56f94db81e98214ac8f49d8d1f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "preview.session.stopped",
+   "original_ref": "other:retained-event",
    "write_recipe": "ds15-v1"
   },
   {
@@ -1542,8 +3654,7 @@
     "preview.session.started",
     "preview.session.stopped",
     "tool.custom_headless.skipped"
-   ],
-   "write_recipe": "ds15-v1"
+   ]
   },
   "22222222-2222-4222-8222-222222222222": {
    "families": [
@@ -1570,36 +3681,7 @@
     "preview.session.started",
     "preview.session.stopped",
     "tool.custom_headless.skipped"
-   ],
-   "write_recipe": "ds15-v1"
-  },
-  "44444444-4444-4444-8444-444444444444": {
-   "families": [
-    "browser.context_captured",
-    "browser.context_share_revoked",
-    "browser.context_shared",
-    "catalog.install.completed",
-    "catalog.install.started",
-    "catalog.remove.completed",
-    "catalog.remove.started",
-    "catalog.update.completed",
-    "catalog.update.started",
-    "dev.session.restarting",
-    "dev.session.started",
-    "dev.session.stopped",
-    "dev.session.stopping",
-    "doctor.custom_headless.checked",
-    "live.artifact.created",
-    "live.session.completed",
-    "live.session.degraded",
-    "live.session.started",
-    "live.step.updated",
-    "preview.session.refreshed",
-    "preview.session.started",
-    "preview.session.stopped",
-    "tool.custom_headless.skipped"
-   ],
-   "write_recipe": "ds15-v0"
+   ]
   },
   "66666666-6666-4666-8666-666666666666": {
    "families": [
@@ -1626,8 +3708,7 @@
     "preview.session.started",
     "preview.session.stopped",
     "tool.custom_headless.skipped"
-   ],
-   "write_recipe": "ds15-v1"
+   ]
   }
  }
 }
