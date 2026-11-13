@@ -512,7 +512,7 @@ Provider/runtime resolution rules:
 - providers whose quota semantics depend on billing or organization context may also resolve an effective billing/entity bucket
 
 Examples:
-- `Gemini` direct and `Gemini CLI` are separate runtime surfaces that may belong to the same family pool
+- Gemini Direct (`gemini`) and Antigravity are distinct live runtime surfaces; Gemini CLI (`gemini_cli`) is retired from the live family pool (DL-332, UF-019, UF-021, DL-478).
 - `Codex` resolves separate account rows for `ChatGPT` and `API key` auth families
 - For OpenAI/Codex setup, `Sign in with ChatGPT` is an account-linking authentication path that connects a ChatGPT identity to an API account and stores local credentials; prompt/runtime evidence keeps that ChatGPT-backed identity separate from API-key-backed accounts.
 - `GitHub Copilot` resolves one auth-backed account row plus a selected billing entity when premium-request semantics require it
@@ -2281,7 +2281,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Provider/runtime resolution preserves requested_platform, effective_platform, provider_family_id, effective account rows, effective connection_profile_id, and billing/entity bucket semantics while keeping provider examples distinct by runtime surface and auth family.
+  Provider/runtime resolution preserves requested_platform, effective_platform, provider_family_id, effective account rows, effective connection_profile_id, and billing/entity bucket semantics while keeping provider examples distinct by runtime surface and auth family. Gemini Direct and Antigravity stay live; Gemini CLI is retired from active family-pool resolution by DL-332 (UF-019, UF-021), reaffirmed by DL-478.
 gui_related: false
 gui_classification_reason: This unit defines runtime/account/profile resolver fields rather than visual presentation.
 split_recommended: false
@@ -5350,7 +5350,7 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plan
 
 ### Time-Traveling conditional rules
 
-The shared runtime may evaluate versioned dormant conditional rules indexed by `project`, `path`, `tool`, `mode`, Goal phase, workflow state, and regex/AST/typed conditions. Prompt Pipeline owns only the admission and stable rendering of a resulting concise instruction delta. Rule discovery/evaluation remains deterministic program logic and adds zero hidden model-gate calls.
+The shared runtime may evaluate versioned dormant conditional rules indexed by `project`, `path`, `tool`, `mode`, workflow state, and regex/AST/typed conditions. Prompt Pipeline owns only the admission and stable rendering of a resulting concise instruction delta. Rule discovery/evaluation remains deterministic program logic and adds zero hidden model-gate calls.
 
 Each shared-runtime `ConditionalRuleEngine` receipt consumed by Prompt Pipeline carries `rule_id`, `rule_version`, scope refs, matched typed fact/evidence IDs, matcher kind/version, emitted instruction IDs or stable content ref, interrupt policy, logical turn/attempt/context epoch, pre/post rendered dependency hashes, cache impact, retry counters/caps, disposition, loop-breaker state, and user-visible activity reason. Prompt Pipeline does not create a parallel conditional-rule lifecycle or receipt family.
 

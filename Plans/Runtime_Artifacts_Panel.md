@@ -767,21 +767,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  Runtime Artifacts projects Goal Runtime receipt and verification evidence without becoming the receipt owner. It must expose WorkNodeReceipt, GoalCompletionReceipt, VerificationReceipt, validator evidence, adjudication records, repair cycles, restart records, model-switch evidence, skipped validator reasons, unresolved risks, certification status, and evidence taxonomy across acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence through artifact identity and open-by-artifact routing, with degraded views when underlying storage or contract records are stale.
+  Runtime Artifacts projects receipt and evidence records without becoming the receipt owner. It must expose WorkNodeReceipt, validator evidence, restart records, model-switch evidence, skipped validator reasons, unresolved risks, and evidence taxonomy across acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence through artifact identity and open-by-artifact routing, with degraded views when underlying storage or contract records are stale.
 gui_related: true
 gui_classification_reason: Runtime Artifacts receipt, evidence, restart, and model-switch projection is a user-visible panel behavior.
 depends_on:
   - RAP-024
   - RAP-026
   - CV-288
-  - SP-215
-  - OP-022
-  - EP-098
+  - GRS-053
 unblocks: []
 acceptance_criteria:
-  - Runtime Artifacts can show WorkNodeReceipt and GoalCompletionReceipt references.
-  - Runtime Artifacts can show VerificationReceipt references, skipped validator reasons, unresolved risks, and certification status.
-  - Validator evidence, adjudication records, repair cycles, restart records, and model-switch evidence are visible through artifact identity.
+  - Runtime Artifacts can show WorkNodeReceipt references and Goal evidence under GRS-053.
+  - Runtime Artifacts can show skipped validator reasons and unresolved risks from owner records.
+  - Validator evidence, restart records, and model-switch evidence are visible through artifact identity.
   - Evidence projection distinguishes acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence.
   - Stale or missing owner records degrade the view rather than becoming artifact truth.
   - Runtime Artifacts does not replace Contracts_V0 or storage-plan receipt authority.
@@ -809,14 +807,9 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0091
 preserved_exact_tokens:
   - "WorkNodeReceipt"
-  - "GoalCompletionReceipt"
-  - "VerificationReceipt"
   - "validator evidence"
-  - "adjudication records"
-  - "repair cycles"
   - "skipped validator reasons"
   - "unresolved risks"
-  - "certification status"
   - "acceptance criteria"
   - "live evidence"
   - "tests"
@@ -849,15 +842,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  Runtime Artifacts projects plans-to-code receipts and automated-test evidence without becoming their owner. It displays PlanCompile receipts, ExecutorIntakeReport, source-control receipts, safe-point receipts, WorkNode change receipts, test run receipts, visual evidence, model resolution receipts, Auditor verification receipts, repair attempt receipts, merge/promotion receipts, WorkNode completion receipts, and GoalCompletionReceipt. Evidence projection distinguishes source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, browser/device screenshots/logs, validator outputs, unresolved risks, skipped validator reasons, and final certification status, with degraded views when owner records are stale or missing.
+  Runtime Artifacts projects plans-to-code receipts and automated-test evidence without becoming their owner. It displays PlanCompile receipts, ExecutorIntakeReport, source-control receipts, safe-point receipts, WorkNode change receipts, test run receipts, visual evidence, model resolution receipts, Auditor verification receipts, repair attempt receipts, merge/promotion receipts, and WorkNode completion receipts. The Goal-owned final completion certification projection is retired by DL-478. Evidence projection distinguishes source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, browser/device screenshots/logs, validator outputs, unresolved risks, skipped validator reasons, and workflow-owned certification status, with degraded views when owner records are stale or missing.
   Runtime Artifacts distinguishes canonical evidence from source/process/governance/test/source-control evidence and can project browser/GUI/device sessions while attributing generic external-Project test-tool context to the owning Project process rather than treating it as receipt or PM Browser authority. It may display 100% automated completion claims, no human intervention assertions, all WorkNodes terminal status, and all automated tests passed evidence only as projections from owner receipts. Source-control projections include repo/worktree/branch/baseline/head/safe-point/changed-files/conflicts/rollback context only as owner-receipt fields.
 gui_related: true
 gui_classification_reason: Runtime Artifacts receipt, screenshot, visual evidence, skipped validator, and certification projections are user-visible panel behavior.
-depends_on: [RAP-027, POA-047, POA-048, ATS-004, EP-103, GRS-030]
+depends_on: [RAP-027, POA-047, POA-048, ATS-004, EP-103]
 unblocks: [OP-024, F3-397]
 acceptance_criteria:
   - Runtime Artifacts can project source-control, test, model, Auditor, repair, promotion, WorkNode, and completion receipts.
-  - Browser/device screenshots, logs, visual evidence, validator outputs, unresolved risks, skipped validators, and final certification are visible through artifact identity.
+  - Browser/device screenshots, logs, visual evidence, validator outputs, unresolved risks, skipped validators, and workflow-owned certification are visible through artifact identity.
   - Stale or missing owner records degrade the view instead of becoming final evidence.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -881,7 +874,6 @@ preserved_exact_tokens:
   - "conflicts"
   - "rollback"
   - "model resolution receipt"
-  - "GoalCompletionReceipt"
   - "visual evidence"
   - "browser/GUI/device sessions"
   - "screenshots"

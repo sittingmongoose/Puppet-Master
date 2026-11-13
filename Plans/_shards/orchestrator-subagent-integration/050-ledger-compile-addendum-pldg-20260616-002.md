@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31433-L31547
+Source lines: L31432-L31536
 
-Source SHA256: `a133f042952f4fcc9a3c09116e3be09aedb89fb31b629307226749b368332653`
+Source SHA256: `60d3ef46e9d34adfd5e01d6a25d733f35f7c9bf6280b24227df7618c875cba23`
 
 ---
 
@@ -15,9 +15,10 @@ Source SHA256: `a133f042952f4fcc9a3c09116e3be09aedb89fb31b629307226749b368332653
 ```yaml
 plan_unit_id: OSI-428
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun SubagentWave and certification routing flow is retired; the old text is retained only for source lineage.
   Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. SubagentPolicy governs fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory-subagent rules with default limits of 4 parallel children, 8 children per wave, 3 waves per GoalRun, 2000000 microusd per wave, 16000 estimated tokens per wave, 900000 wall-clock ms per child, 2 retry attempts per child, 1 retry attempt per wave, and 30000 ms retry backoff for provider_transient, rate_limit, tool_timeout, or coordination_conflict only.
   SubagentPolicy cost controls may reduce exploratory fanout, but cannot disable required verification, receipts, independent review where its owner requires it, or certification gates.
 gui_related: false
@@ -25,18 +26,7 @@ gui_classification_reason: Subagent task boundaries, capability lanes, and certi
 depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
 unblocks: [OP-022, F3-394]
 acceptance_criteria:
-  - Subagent fanout remains central to Orchestrator design rather than collapsing into one smart agent.
-  - Each SubagentWave records task boundaries, assigned inputs, capability lane, cost/budget policy, outputs, failures, and evidence refs.
-  - Each bounded_work_unit records child_goal or parent WorkNode context, capability_lane, agent_role, write_policy, parent_synthesis expectation, verification_cycle expectation, receipt expectation, write_mode, and certification_tier when applicable.
-  - Subagent policy records fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent rules.
-  - SubagentPolicy receipts record evaluated thresholds, selected child count, parallelism cap, cost ceiling, retry budget, capability lanes, write policy, and compatibility aliases consumed.
-  - Default limits are measurable in children, waves, microusd, estimated tokens, bytes, refs, write targets, wall-clock ms, and tool rounds; hard-limit exceedance blocks the wave rather than silently widening scope.
-  - SubagentPolicy limits cannot exceed the parent Run_Modes run-envelope budget or remaining budget.
-  - Cost limits may reduce exploratory fanout while preserving required verification, receipts, independent review where its owner requires it, and certification gates.
-  - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
-  - Parent synthesis and high-end certification remain required for meaningful completion.
-  - Old fixed-hierarchy and tier-era labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active runtime prose.
-  - Old tier/config-era code samples are not implemented literally as canonical runtime semantics.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Orchestrator subagent wave runtime review

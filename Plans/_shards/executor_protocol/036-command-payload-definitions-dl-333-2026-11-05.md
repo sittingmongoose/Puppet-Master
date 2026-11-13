@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L9139-L10675
+Source lines: L9133-L10669
 
-Source SHA256: `d0e92f093ddf7cb354e3c3f8120a54a1b22441d6f30d37b5a2104b4bd103901a`
+Source SHA256: `9bb56532eb8a4ee5374d13acbfe2fc87deabb2a1118c5e9690b238625b862511`
 
 ---
 

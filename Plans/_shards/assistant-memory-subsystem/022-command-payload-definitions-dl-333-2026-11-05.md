@@ -4,7 +4,7 @@ Source: `Plans/assistant-memory-subsystem.md`
 
 Source lines: L3421-L4936
 
-Source SHA256: `c762c8b604809ac0eb7e46eb9ae5b5d3ec2a8b822c6fa95cb42981ccd7c7d67d`
+Source SHA256: `6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911`
 
 ---
 
@@ -137,7 +137,7 @@ command_payload_definitions:
         default: none
         provenance: canon
         source: 'UI_Command_Catalog.md:1133 { project_id, gist_id }; UCC-230 identity_aliases: gist_id stands for
-          the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8857; DL-341 resolution 4);
+          the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8875; DL-341 resolution 4);
           MemoryGist id (assistant-memory-subsystem.md §3.1)'
     owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
     result:
@@ -935,7 +935,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: gap
-          gap_note: maintenance operations report explicit success/failure status (assistant-memory-subsystem.md:412);
+          gap_note: internal operations retain truthful success/failure status (AMS-023);
             canon names neither the field nor its values
         receipt_ref:
           type: ref

@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L4244-L4415
+Source lines: L4218-L4388
 
-Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614`
+Source SHA256: `89fd63627d92d52c7eb46ca8f019b279f72c15db055a54e46aeb9eec66c963bb`
 
 ---
 
@@ -81,7 +81,7 @@ canonical_text: >-
   Configured checkpoints are HITL-only additions, while default escalation remains limited to credentials/secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, and security-sensitive approval. Internal repair escalation uses Overseer review and High-Effort Worker routing before user escalation when evidence permits.
 gui_related: false
 gui_classification_reason: Autonomy, HITL, and escalation policy are runtime/permission behavior.
-depends_on: [GRS-027, PS-116, HITL-036]
+depends_on: [GRS-053, PS-116, HITL-036]
 unblocks: [EP-102, GRS-030, OP-024]
 acceptance_criteria:
   - Default mode is hands-off with critical-only user escalation.
@@ -128,9 +128,10 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-030
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The Goal-owned plans-to-code certification receipt is retired with the GoalRun build flow. The old text below is retained for lineage only.
   Plans-to-code completion requires a GoalCompletionReceipt. Code complete means all WorkNodes are terminal with valid receipts, all required automated tests passed or are explicitly dispositioned, all source-control receipts are valid, rollback and safe-point requirements are satisfied, Auditor passed, no active blockers remain, no stale Plan/WorkGraph/currentness mismatch remains, final source state is clean or intentionally preserved, and final summary/evidence is written. GoalCompletionReceipt fields include rollback_requirements_satisfied, safe_point_requirements_satisfied, no_stale_plan_workgraph_currentness_mismatch, final_source_state, final_summary_ref, child_receipt_refs, worknode_receipt_refs, changed_artifact_refs, validator_outcomes, authority_check_refs, source_control_receipt_refs, test_receipt_refs, model_resolution_receipt_refs, unresolved_risks, and evidence_layers. Worker says done is insufficient; completion must preserve source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, and completion receipts as separate truth layers.
   GoalCompletionReceipt certification requires the exact code-complete evidence that all WorkNodes terminal, all automated tests passed or were dispositioned, and no active blockers remain. Plans to code completion is an artifact-backed handoff where Auditor verifies before final certification.
 gui_related: false
@@ -138,9 +139,7 @@ gui_classification_reason: Completion certification and evidence truth-layer pol
 depends_on: [GRS-027, GRS-029, EP-103, ATS-004]
 unblocks: [RAP-029, CV-289, OP-024]
 acceptance_criteria:
-  - GoalCompletionReceipt proves code-complete status from objective receipt criteria.
-  - Test, source-control, Auditor, blocker, currentness, and final evidence states are checked before completion.
-  - Evidence truth layers remain separate and auditable.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema

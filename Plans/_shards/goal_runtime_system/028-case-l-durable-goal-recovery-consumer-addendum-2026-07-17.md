@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L5392-L5535
+Source lines: L5358-L5501
 
-Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614`
+Source SHA256: `89fd63627d92d52c7eb46ca8f019b279f72c15db055a54e46aeb9eec66c963bb`
 
 ---
 
@@ -21,10 +21,10 @@ Goal Runtime therefore distinguishes these aftermaths without inventing success:
 - a validated receipt and continuous canonical event lineage may resume or display its exact recorded lifecycle after normal currentness and authority checks;
 - while receipt/canonical-event recovery is in progress or its truth is not yet established, completion and resumability are unknown, no new mutation-capable scheduling begins, and no projection is promoted to receipt authority;
 - a projection rebuilt to the current survivor set remains degraded in its completeness/health when canonical history has a proven or possible gap; its receipt/evidence views carry recovery provenance and residual risk. This is derived-view quality, not a fifth GoalRecordV2 state or authority to emit `goal.degraded`; GRS-061 preserves the exact event for historical interpretation only;
-- missing, corrupt, quarantined, or unrecoverable canonical goal receipt data remains `goal.blocked` for completion/certification and names the affected receipt/family, storage recovery state, last verified backup boundary, known loss window, last recovery attempt, and next safe action;
-- canonical history loss that is unknown or may include mutation-authorizing, approval, safe-point, receipt, verification, or completion events blocks mutation and certification rather than using a degraded receipt as a success substitute.
+- missing, corrupt, quarantined, or unrecoverable canonical goal receipt data remains `goal.blocked` for completion and names the affected receipt/family, storage recovery state, last verified backup boundary, known loss window, last recovery attempt, and next safe action;
+- canonical history loss that is unknown or may include mutation-authorizing, approval, safe-point, receipt, verification, or completion events blocks mutation and completion rather than using a degraded receipt as a success substitute.
 
-Restoring a mandatory backup never synthesizes a newer completion. Goal Runtime reloads the restored receipt and event boundary, invalidates projections beyond that boundary, marks post-backup writes as the disclosed loss window, reconciles child/attempt/receipt refs, and reruns revision, authority, evidence, and certification checks before any resume. If the required backup is unavailable, Goal Runtime cannot reconstruct a `GoalCompletionReceipt` from worker claims, UI state, Runtime Artifacts, cached projections, or surviving ordinary goal events.
+Restoring a mandatory backup never synthesizes a newer completion. Goal Runtime reloads the restored receipt and event boundary, invalidates projections beyond that boundary, marks post-backup writes as the disclosed loss window, reconciles attempt/receipt refs, and reruns revision, authority, and GRS-050 completion-evidence checks before any resume. If the required backup is unavailable, Goal Runtime cannot reconstruct a canonical `goal_receipt` from worker claims, UI state, Runtime Artifacts, cached projections, or surviving ordinary goal events.
 
 Goal receipt, completion, degraded, stopped, blocked, recovery, evidence, and certification records retain indefinitely under the storage-owned authority policy. Open blocked/recovery, preserved-run, audit, certification, evidence, legal-hold, and referenced safe-point/restore-transaction anchors compose by union. Goal completion, archive, process exit, model switch, permission refresh, or ordinary age never clears those anchors.
 
@@ -61,15 +61,15 @@ canonical_text: |-
   Degraded survivor projection means derived-view quality/provenance, not GoalRecordV2.state or an active goal.degraded producer; GRS-061 governs the exact historical event. Existing canonical-loss mutation/completion fences remain unchanged.
 gui_related: true
 gui_classification_reason: Recovery availability, derived-view quality, provenance and safe-next-action disclosure are user-visible; degraded is not a fifth GoalRecordV2 state.
-depends_on: [GRS-005, GRS-012, GRS-019, SP-235, SP-236, SP-237]
+depends_on: [GRS-048, GRS-050, GRS-019, SP-235, SP-236, SP-237]
 unblocks: []
 acceptance_criteria:
-  - Per-family corruption/deletion fixtures never reconstruct a GoalCompletionReceipt from events, worker claims, artifacts, or projections.
-  - Recovery from a verified backup invalidates post-boundary projections, discloses the loss window, and reruns currentness, authority, evidence, and certification checks.
-  - Unknown receipt/event truth schedules no mutation and certifies no completion.
+  - Per-family corruption/deletion fixtures never reconstruct a canonical goal_receipt from events, worker claims, artifacts, or projections.
+  - Recovery from a verified backup invalidates post-boundary projections, discloses the loss window, and reruns currentness, authority, and GRS-050 completion-evidence checks.
+  - Unknown receipt/event truth schedules no mutation and allows no completion.
   - A current survivor projection with a canonical gap retains degraded projection quality or owner-blocked recovery, with integrity/recovery provenance; this does not add a GoalRecordV2 state or emit goal.degraded.
   - Unavailable mandatory backup leaves completion blocked and names the exact affected family, recovery state, boundary, and next safe action.
-  - Goal/receipt/recovery/evidence/certification anchors survive ordinary completion, archive, exit, age, model switch, and permission refresh.
+  - Goal/receipt/recovery/evidence anchors survive ordinary completion, archive, exit, age, model switch, and permission refresh.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Case L per-family goal receipt corruption, backup restore, continuity, and false-success fixtures
@@ -91,7 +91,7 @@ source_lineage:
   - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/CONSUMER_PROPAGATION_MAP.md
 negative_constraints:
   - Do not treat a canonical goal receipt as a disposable projection.
-  - Do not certify completion from surviving projections or ordinary events when receipt authority is missing or uncertain.
+  - Do not complete from surviving projections or ordinary events when receipt authority is missing or uncertain.
 owner_hints:
   - Plans/Goal_Runtime_System.md
 ```

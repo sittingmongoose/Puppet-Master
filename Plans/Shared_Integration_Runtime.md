@@ -280,7 +280,7 @@ ContractRef: SchemaID:pm.shared_runtime.contracts.v1, ContractName:Plans/Prompt_
 
 ## 12. Time-Traveling conditional rules
 
-`ConditionalRuleEngine` indexes versioned rules by Project, source path, tool, mode, Goal phase, workflow state, and typed regex/AST predicates. Evaluation uses immutable facts and records rule version, matched facts, emitted instruction or action ID, ContextEpoch impact, retry/steer count, and outcome.
+`ConditionalRuleEngine` indexes versioned rules by Project, source path, tool, mode, workflow state or stage (Goals have no phases, DL-478), and typed regex/AST predicates. Evaluation uses immutable facts and records rule version, matched facts, emitted instruction or action ID, ContextEpoch impact, retry/steer count, and outcome.
 
 A match may inject one bounded reminder, request a capped steer/retry, produce a receipt, update context-cache impact, or route repeated failure to process repair. It cannot replace deterministic safety, alter canonical state directly, grant permissions, widen authority, or create hidden tool access. Repeated identical matches are suppressed by rule/version/fact digest.
 
@@ -906,7 +906,7 @@ These are required adapter and measurement boundaries under the one `RuntimeReso
 - Sockets, process pipes, PTYs, and high-concurrency file operations use completion-based asynchronous I/O and do not allocate one thread per handle. The admitted packet does not freeze `IOCP` or a particular wait API as a product contract.
 - Normal filesystem watching uses `ReadDirectoryChangesW`; NTFS USN data is optional acceleration for overflow, recovery, or long disconnect and always retains a normal fallback.
 - Latency-critical controls use high QoS; maintenance uses EcoQoS or equivalent efficiency policy.
-- Startup, input-to-paint, provider receive-to-paint, storage, Git, process launch, Browser lifecycle, queues, and Goal phases emit ETW/WPR/WPA-compatible instrumentation. Resource evidence measures the total process tree rather than the primary process alone.
+- Startup, input-to-paint, provider receive-to-paint, storage, Git, process launch, Browser lifecycle, queues, and workflow stages emit ETW/WPR/WPA-compatible instrumentation. Resource evidence measures the total process tree rather than the primary process alone.
 - Large processor-group systems are supported and third-party pool assumptions are tested without indiscriminate affinity.
 - Native and standalone Windows are complete execution hosts with WSL off. WSL is an optional selectable execution backend and cannot be a hidden prerequisite or substitute for native Windows proof.
 

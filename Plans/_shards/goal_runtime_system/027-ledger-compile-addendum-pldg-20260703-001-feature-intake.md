@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L4559-L5390
+Source lines: L4528-L5356
 
-Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614`
+Source SHA256: `89fd63627d92d52c7eb46ca8f019b279f72c15db055a54e46aeb9eec66c963bb`
 
 ---
 
@@ -306,7 +306,6 @@ negative_constraints:
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): terminal authority is defined against SMPFS-182 and never includes a stored write grant to a human's terminal."
 observed_signal: Repeated failures cluster around agents/subagents inheriting wrong model or reasoning effort, running in circles, spending uncontrolled budget, or continuing after transport/tool failure. OpenCode and Codex show model/effort propagation confusion; Cline and Agent Zero show loop/spend/resource failures; Warp/Codex show UI/runtime stall modes.
-pm_current_coverage: PM already has Goal Runtime role-policy, progress fingerprints, hard budgets, parent/child goals, verification repair loop, provider/model requested/effective identity, and approval boundaries.
 pm_gap_or_delta: Controls are strong but scattered. PM needs one runtime envelope every main agent, subagent, delegated thread, background goal, terminal-bound task, browser/device session, and provider attempt must carry.
 proposal_or_recommendation: Define AgentControlEnvelope with autonomy_mode, write_surface, provider/model/effort policy, tool/MCP permission ceiling, context/token budgets, loop budgets, wall-clock budgets, terminal/browser/device authority, child-spawn policy, cancellation/steering semantics, progress heartbeat, and receipt refs.
 compile_disposition: create_new_planunit
@@ -397,7 +396,6 @@ preserved_exact_tokens:
 - Agent Zero
 negative_constraints: []
 observed_signal: Codex and OpenCode expose custom/subagent model and reasoning config gaps; Cline temporarily disabled/stabilized subagents in the SDK migration and has loop reports; Agent Zero release notes show child chats/parallel tools and non-destructive await timeouts.
-pm_current_coverage: PM has parent/child goal runtime policy, canonical child run identity for subagents, and prompt-packet subagent hard gates.
 pm_gap_or_delta: 'PM needs a single child execution lifecycle independent of prompt packets: spawn, admitted context, first event, heartbeat, partial result, await, cancellation, orphan reap, result settlement, and parent completion gating.'
 proposal_or_recommendation: Define SubagentExecutionContract and SubagentResultEnvelope. Child result is advisory unless marked allowed_to_write=false/true under parent policy; parent remains the only canonical writer where required. Include per-child model/effort settlement, context slice hash, tool ceiling, timeout, wait_agent/cancel semantics, and orphan reaper.
 compile_disposition: create_new_planunit
@@ -489,7 +487,6 @@ preserved_exact_tokens:
 - Codex
 negative_constraints: []
 observed_signal: OpenCode reports empty assistant loops, MCP resource-list spend loops, compaction loops, truncated tool-call repair loops, failed edit loops, and thinking-only loops. Cline reports truncated tool-call and no-match loops. Agent Zero reports monologue/tool loops. Pi reports hung tools/transport first-event hangs.
-pm_current_coverage: Executor has doom-loop guard and Goal Runtime has progress fingerprints, budgets, and verification repair loop.
 pm_gap_or_delta: The same simple identical-failure triple will not catch compaction loops, empty assistant loops, tool-result loops, failed edit loops, prompt-cache churn, first-event hangs, no-progress reasoning, and repeated subagent file-read loops.
 proposal_or_recommendation: 'Add LoopBreakerRegistry with typed families: identical_tool_failure, empty_assistant, no_tool_progress, repeated_edit_miss, compaction_no_gain, context_overflow_replay, MCP_resource_missing, first_event_timeout, transport_idle, reasoning_no_action, subagent_same_read, and spend_anomaly. Each family has fingerprint, max_count, required observation window, terminal action, and user-facing reason.'
 compile_disposition: create_new_planunit
@@ -511,7 +508,7 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Every subagent receives a ChildAgentLease with parent_goal_id, allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
+- Every subagent working for a Goal receives a ChildAgentLease whose parent_goal_id names that initiating Goal (never another Goal; no parent/child Goal edge, GRS-052), with allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
 - A child/subagent cannot spawn further agents unless its lease explicitly grants delegation_depth > 0.
 - Parent sees child terminal errors as typed failed outcomes, never empty successful completion.
 - Subagent cache/context lineage is separate from parent stable-prefix/cache lineage unless explicitly linked by a receipt.
@@ -519,7 +516,7 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Every subagent receives a ChildAgentLease with parent_goal_id, allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
+- Every subagent working for a Goal receives a ChildAgentLease whose parent_goal_id names that initiating Goal (never another Goal; no parent/child Goal edge, GRS-052), with allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.
 - A child/subagent cannot spawn further agents unless its lease explicitly grants delegation_depth > 0.
 - Parent sees child terminal errors as typed failed outcomes, never empty successful completion.
 - Subagent cache/context lineage is separate from parent stable-prefix/cache lineage unless explicitly linked by a receipt.
@@ -699,19 +696,19 @@ status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Goal Runtime enumerates the shared envelope and event-specific payload minima for
-  all canonical goal and goal_run events, and defines the spec-level runtime
-  records LoopBreakerRegistry, AgentControlEnvelope, CertificationReceipt,
-  ChildAgentLease, WorkNodeRequests, AuditCycle, AuditFinding, and AuditClosure.
-  The closure preserves Goal Runtime as the semantic owner while consuming
-  Contracts_V0 for cross-surface field names, storage-plan for persistence and
-  replay, Executor for WorkNode scheduling and safe-point behavior, and
-  Permissions/Models/Multi-Account owners for authority and requested/effective
-  identity.
+  all canonical goal and goal_run events. LoopBreakerRegistry, AgentControlEnvelope,
+  ChildAgentLease, and WorkNodeRequests retain their owning runtime contracts.
+  CertificationReceipt, AuditCycle, AuditFinding, and AuditClosure belong to the
+  owning workflow and Auditor (DL-472, DL-478), not Goal Runtime; their Event Authority
+  field names remain unchanged. The closure consumes Contracts_V0 for cross-surface
+  field names, storage-plan for persistence and replay, Executor for WorkNode scheduling
+  and safe-point behavior, and Permissions/Models/Multi-Account owners for authority
+  and requested/effective identity.
 
   For exactly goal.created, all remaining v2 common-field, branch, identity and oracle clauses retain whole-v2 historical interpretation. Active-v3 field and original creation authority follow CV-341/SP-294/SIR-048/GRS-066; no other row is migrated or granted current emission by this exception.
 gui_related: false
 gui_classification_reason: This unit defines backend Goal Runtime event payload and record semantics, not visual presentation.
-depends_on: [GRS-005, GRS-026, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, EP-098, PNC-013]
+depends_on: [GRS-048, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, PNC-013]
 unblocks: []
 acceptance_criteria:
   - >-

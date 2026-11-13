@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L99-L1156
+Source lines: L99-L1155
 
-Source SHA256: `7ff2491d71ee78eec6776858e7635032b19386458d363c95a132b0e9d74895e5`
+Source SHA256: `9c406a902f6078fb761662c6534c8afb7877b338ac7a94bc77637b92c64d8574`
 
 ---
 
@@ -800,7 +800,7 @@ plan_unit_id: PWIZ-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Planning Wizard uses current Goal Runtime and Auditor-based AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than superseded experimental workflow machinery. Every Topic Plan Draft receives a scoped fidelity audit/repair loop, and the integrated Final Plan Pack receives a separate broad multi-specialist audit/repair loop before user review and approval. Final Plan Pack audit covers PRD and ledger fidelity, exact details, unsupported inventions, owner and consumer placement, cross-topic conflicts, implementation readiness, testing readiness, security/data/permissions consistency, repository currentness, source lineage, schemas, mechanics, and future compile readiness. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all
+canonical_text: 'Planning Wizard workflow and Auditor own AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than Goal Runtime (DL-472, DL-478). Every Topic Plan Draft receives a scoped fidelity audit/repair loop, and the integrated Final Plan Pack receives a separate broad multi-specialist audit/repair loop before user review and approval. Final Plan Pack audit covers PRD and ledger fidelity, exact details, unsupported inventions, owner and consumer placement, cross-topic conflicts, implementation readiness, testing readiness, security/data/permissions consistency, repository currentness, source lineage, schemas, mechanics, and future compile readiness. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all
   findings are durably closed or a true typed blocker remains. Audit findings have stable finding keys, source and artifact hashes, closure status, evidence, reason, repair attempts, and reopen conditions so unchanged closed findings become previously closed rather than recurring forever. Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
@@ -894,7 +894,7 @@ plan_unit_id: PWIZ-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details. A context-aware incomplete-content validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason,
+canonical_text: 'Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details. A context-aware incomplete-content validator runs at Planning Wizard approval, Plan Compile certification, and WorkNode completion (Goal completion carries no check, DL-478) across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason,
   risk, approver, downstream disposition, expiration or reopen condition, and evidence; broad permission to leave TODOs is invalid. Planning is compile-ready only when all required topics are Ready or explicitly excluded, ledgers are synchronized, topic plans compiled and audited, invalidations resolved, final integration and final audit completed, testing requirements captured, project context current, source lineage complete, zero-incomplete gate passed, and immutable ApprovedPlanPack can be created. Implementation readiness requires behavior, actors and identity, data and state transitions, edge and failure cases, permissions, currentness and idempotency, UI commands and states where applicable, adapters and side effects, validation surfaces, acceptance evidence, dependencies, and handoff contracts. Every material plan and compile claim must trace to an Approved PRD Pack, user planning answer, accepted Planning Amendment, repository fact, reference artifact,
   explicit system policy, or recorded assumption; unsupported invented claims are audit defects. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision, requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker. Only product policy with no safe inference, material risk acceptance, destructive or irreversible operations, credentials or permissions, legal/compliance authority, or irreconcilable user preference conflicts may block for user decision.'
 gui_related: false
@@ -960,7 +960,6 @@ preserved_exact_tokens:
 - Planning Wizard approval
 - Plan Compile certification
 - WorkNode completion
-- Goal completion
 - context-aware
 - user_approved_incomplete_item
 - compile-ready

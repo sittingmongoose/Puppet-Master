@@ -2,9 +2,9 @@
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L3634-L3696
+Source lines: L3633-L3695
 
-Source SHA256: `cab7a281fc9dcf122b17aae5fca87691bfb7c1709166166bec3afc024e7f3dca`
+Source SHA256: `72df37706b4be279175bd902815fa3c1e190d8ed0cc4ee16755ec08299d8f855`
 
 ---
 

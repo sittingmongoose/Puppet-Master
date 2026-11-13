@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L1684-L1783
+Source lines: L1670-L1769
 
-Source SHA256: `22d3ca043e564c223a75a877b4e46a65ea1103b94698fc53a14a35006afafa04`
+Source SHA256: `7ac0440bbf7df272f65f2b98c2918ece20982eb6a28a55072e14aa430f410937`
 
 ---
 
@@ -23,7 +23,7 @@ canonical_text: >-
   The tab can label the compile as Plans to WorkNodes, but Plan Compile tab scope excludes Executor execution progress except summarized handoff readiness or final handoff status.
 gui_related: true
 gui_classification_reason: This unit defines a user-visible Orchestrator tab, status panels, progress projection, and activity details.
-depends_on: [OP-022, PNC-010, PNC-014, MS-110, ATS-001, GRS-028]
+depends_on: [PNC-010, PNC-014, MS-110, ATS-001, GRS-028]
 unblocks: [F3-397, RGV-013, RAP-029]
 acceptance_criteria:
   - Plan Compile tab shows progress/speed/ETA/status panels for progress, speed, stage status, counts, blockers, warnings, ETA confidence, model lane status, test capability status, and handoff readiness.
@@ -73,7 +73,7 @@ canonical_text: >-
   Existing execution views, not Plan Compile, own Executor execution progress after handoff.
 gui_related: true
 gui_classification_reason: This unit maps visible execution progress to existing Orchestrator tabs and panels.
-depends_on: [OP-023, EP-103, GRS-030, RAP-029, W-072]
+depends_on: [OP-023, EP-103, RAP-029, W-072]
 unblocks: [RGV-013, F3-397]
 acceptance_criteria:
   - Execution progress remains on existing execution views.

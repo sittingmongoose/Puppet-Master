@@ -710,7 +710,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Crew stays a configurable collaboration kind, distinct from Subagents, child Goals and Orchestrator.
+  Crew stays a configurable collaboration kind, distinct from Subagents and Orchestrator. Child Goals are retired (DL-478).
   Coordinator-authored assignments use expected outputs/dependencies and frozen model/Persona/tool/context
   ceilings. Project Crew Auto retains its saved Project configuration and thread override; app Crew Auto
   uses CWR-045's saved thread-bound revision-1 configuration initialized once from Everywhere/Computer

@@ -2,17 +2,18 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L182-L203
+Source lines: L182-L204
 
-Source SHA256: `a133f042952f4fcc9a3c09116e3be09aedb89fb31b629307226749b368332653`
+Source SHA256: `60d3ef46e9d34adfd5e01d6a25d733f35f7c9bf6280b24227df7618c875cba23`
 
 ---
 
 ## Compatibility Tier-Level Subagent Strategy
 
 This legacy section is retained for import/search compatibility. Live runtime
-subagent routing uses GoalRun, WorkGraph, WorkNode, package, seam, lane, phase,
-capability_lane, agent_role, SubagentWave, and SubagentPolicy vocabulary. Terms
+subagent routing uses WorkGraph, WorkNode, package, seam, lane, phase,
+capability_lane, agent_role, and SubagentPolicy vocabulary. Goal-bound GoalRun
+and SubagentWave routing is retired by DL-478. Terms
 such as tier, phase/task/subtask/iteration tier, tier_overrides, and
 enable_tier_subagents are compatibility aliases only and must normalize through
 `SubagentPolicy` before runtime admission.
