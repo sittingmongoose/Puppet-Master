@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L24594-L25853
+Source lines: L24594-L25833
 
-Source SHA256: `b6337f3031b3eec68ea61fedf5965fd9ee64671bc5b777b7e18351f5f29e3495`
+Source SHA256: `8df82e483b07ff4755ea95abec326b9a178e75eb314f861f23c0234015683c3c`
 
 ---
 
@@ -29,8 +29,7 @@ canonical_text: 'Newly authored exact payload dispatch for backup.destination_ch
   this same schema; do not validate the reference string as the object or require payload_ref=null. All $refs resolve
   eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct, and identifier/digest
   strings require full consumption without trailing LF. Timestamps, where inherited through source/token schemas,
-  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 
   change_kind is derived only from the genuine accepted create/update/remove owner result and joins the original
@@ -72,7 +71,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -100,8 +99,7 @@ canonical_text: Newly authored exact payload dispatch for backup.state_changed@1
   require payload_ref=null. All $refs resolve eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number
   types are distinct, and identifier/digest strings require full consumption without trailing LF. Timestamps, where
   inherited through source/token schemas, use their owner-selected shared profile; write no local validator. No
-  schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION; membership remains ABSENT
-  and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original receipt and SP-337
+  schema or fixture admits this family. Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_security (DL-455, E-CARDS-3 item 3.a, option A), seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore. The application policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original receipt and SP-337
   payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -134,7 +132,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -163,8 +161,7 @@ canonical_text: Newly authored exact payload dispatch for remote_access.private_
   $refs resolve eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct,
   and identifier/digest strings require full consumption without trailing LF. Timestamps, where inherited through
   source/token schemas, use their owner-selected shared profile; write no local validator. No schema or fixture
-  admits this family. retention_policy_ref=PENDING_RETENTION_DECISION; membership remains ABSENT and oracle criterion
-  12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
+  admits this family. retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
   are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -197,7 +194,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -225,8 +222,7 @@ canonical_text: Newly authored exact payload dispatch for remote_access.proxy_st
   string as the object or require payload_ref=null. All $refs resolve eagerly. Schema integer domains are inherited,
   exact Python/JSON boolean-number types are distinct, and identifier/digest strings require full consumption without
   trailing LF. Timestamps, where inherited through source/token schemas, use their owner-selected shared profile;
-  write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -259,7 +255,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -288,8 +284,7 @@ canonical_text: Newly authored exact payload dispatch for remote_access.public_s
   All $refs resolve eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct,
   and identifier/digest strings require full consumption without trailing LF. Timestamps, where inherited through
   source/token schemas, use their owner-selected shared profile; write no local validator. No schema or fixture
-  admits this family. retention_policy_ref=PENDING_RETENTION_DECISION; membership remains ABSENT and oracle criterion
-  12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
+  admits this family. retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
   are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -322,7 +317,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -350,8 +345,7 @@ canonical_text: Newly authored exact payload dispatch for remote_access.remote_l
   the reference string as the object or require payload_ref=null. All $refs resolve eagerly. Schema integer domains
   are inherited, exact Python/JSON boolean-number types are distinct, and identifier/digest strings require full
   consumption without trailing LF. Timestamps, where inherited through source/token schemas, use their owner-selected
-  shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -384,7 +378,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -413,8 +407,7 @@ canonical_text: Newly authored exact payload dispatch for remote_access.route_mi
   $refs resolve eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct,
   and identifier/digest strings require full consumption without trailing LF. Timestamps, where inherited through
   source/token schemas, use their owner-selected shared profile; write no local validator. No schema or fixture
-  admits this family. retention_policy_ref=PENDING_RETENTION_DECISION; membership remains ABSENT and oracle criterion
-  12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
+  admits this family. retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
   are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -447,7 +440,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -475,8 +468,7 @@ canonical_text: Newly authored exact payload dispatch for remote_access.route_pr
   the reference string as the object or require payload_ref=null. All $refs resolve eagerly. Schema integer domains
   are inherited, exact Python/JSON boolean-number types are distinct, and identifier/digest strings require full
   consumption without trailing LF. Timestamps, where inherited through source/token schemas, use their owner-selected
-  shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -509,7 +501,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -537,8 +529,7 @@ canonical_text: Newly authored exact payload dispatch for remote_access.route_st
   string as the object or require payload_ref=null. All $refs resolve eagerly. Schema integer domains are inherited,
   exact Python/JSON boolean-number types are distinct, and identifier/digest strings require full consumption without
   trailing LF. Timestamps, where inherited through source/token schemas, use their owner-selected shared profile;
-  write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -571,7 +562,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -599,8 +590,7 @@ canonical_text: Newly authored exact payload dispatch for remote_access.route_te
   schema; do not validate the reference string as the object or require payload_ref=null. All $refs resolve eagerly.
   Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct, and identifier/digest
   strings require full consumption without trailing LF. Timestamps, where inherited through source/token schemas,
-  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -633,7 +623,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -661,8 +651,7 @@ canonical_text: Newly authored exact payload dispatch for restore.state_changed@
   $refs resolve eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct,
   and identifier/digest strings require full consumption without trailing LF. Timestamps, where inherited through
   source/token schemas, use their owner-selected shared profile; write no local validator. No schema or fixture
-  admits this family. retention_policy_ref=PENDING_RETENTION_DECISION; membership remains ABSENT and oracle criterion
-  12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
+  admits this family. Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_security (DL-455, E-CARDS-3 item 3.a, option A), seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore. The application policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
   are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -695,7 +684,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -722,8 +711,7 @@ canonical_text: Newly authored exact payload dispatch for server.catalog_changed
   do not validate the reference string as the object or require payload_ref=null. All $refs resolve eagerly. Schema
   integer domains are inherited, exact Python/JSON boolean-number types are distinct, and identifier/digest strings
   require full consumption without trailing LF. Timestamps, where inherited through source/token schemas, use their
-  owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -756,7 +744,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -784,8 +772,7 @@ canonical_text: Newly authored exact payload dispatch for server.client_pairing_
   this same schema; do not validate the reference string as the object or require payload_ref=null. All $refs resolve
   eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct, and identifier/digest
   strings require full consumption without trailing LF. Timestamps, where inherited through source/token schemas,
-  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -818,7 +805,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -846,8 +833,7 @@ canonical_text: Newly authored exact payload dispatch for server.client_revoked@
   payload_ref=null. All $refs resolve eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number
   types are distinct, and identifier/digest strings require full consumption without trailing LF. Timestamps, where
   inherited through source/token schemas, use their owner-selected shared profile; write no local validator. No
-  schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION; membership remains ABSENT
-  and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original receipt and SP-337
+  schema or fixture admits this family. retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original receipt and SP-337
   payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -880,7 +866,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -908,8 +894,7 @@ canonical_text: Newly authored exact payload dispatch for server.client_trust_ch
   object or require payload_ref=null. All $refs resolve eagerly. Schema integer domains are inherited, exact Python/JSON
   boolean-number types are distinct, and identifier/digest strings require full consumption without trailing LF.
   Timestamps, where inherited through source/token schemas, use their owner-selected shared profile; write no local
-  validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION; membership
-  remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original receipt
+  validator. No schema or fixture admits this family. retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original receipt
   and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -942,7 +927,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -970,8 +955,7 @@ canonical_text: Newly authored exact payload dispatch for server.connection_stat
   string as the object or require payload_ref=null. All $refs resolve eagerly. Schema integer domains are inherited,
   exact Python/JSON boolean-number types are distinct, and identifier/digest strings require full consumption without
   trailing LF. Timestamps, where inherited through source/token schemas, use their owner-selected shared profile;
-  write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -1004,7 +988,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1031,8 +1015,7 @@ canonical_text: Newly authored exact payload dispatch for server.discovery_expir
   schema; do not validate the reference string as the object or require payload_ref=null. All $refs resolve eagerly.
   Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct, and identifier/digest
   strings require full consumption without trailing LF. Timestamps, where inherited through source/token schemas,
-  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -1065,7 +1048,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1092,8 +1075,7 @@ canonical_text: Newly authored exact payload dispatch for server.discovery_obser
   this same schema; do not validate the reference string as the object or require payload_ref=null. All $refs resolve
   eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct, and identifier/digest
   strings require full consumption without trailing LF. Timestamps, where inherited through source/token schemas,
-  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  use their owner-selected shared profile; write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -1126,7 +1108,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1154,8 +1136,7 @@ canonical_text: 'Newly authored exact payload dispatch for server.endpoint_chang
   All $refs resolve eagerly. Schema integer domains are inherited, exact Python/JSON boolean-number types are distinct,
   and identifier/digest strings require full consumption without trailing LF. Timestamps, where inherited through
   source/token schemas, use their owner-selected shared profile; write no local validator. No schema or fixture
-  admits this family. retention_policy_ref=PENDING_RETENTION_DECISION; membership remains ABSENT and oracle criterion
-  12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
+  admits this family. retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original receipt and SP-337 payload-store ownership
   are unchanged.
 
   change_kind is derived only from the genuine accepted create/update/remove owner result and joins the original
@@ -1197,7 +1178,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1225,8 +1206,7 @@ canonical_text: Newly authored exact payload dispatch for server.identity_mismat
   string as the object or require payload_ref=null. All $refs resolve eagerly. Schema integer domains are inherited,
   exact Python/JSON boolean-number types are distinct, and identifier/digest strings require full consumption without
   trailing LF. Timestamps, where inherited through source/token schemas, use their owner-selected shared profile;
-  write no local validator. No schema or fixture admits this family. retention_policy_ref=PENDING_RETENTION_DECISION;
-  membership remains ABSENT and oracle criterion 12 PARTIAL until phase 2. SP-278 filtered checkpoint, SP-286 original
+  write no local validator. No schema or fixture admits this family. retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN. SP-278 filtered checkpoint, SP-286 original
   receipt and SP-337 payload-store ownership are unchanged.
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -1259,7 +1239,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339

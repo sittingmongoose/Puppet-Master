@@ -15,8 +15,8 @@
       "producer": "BackupCoordinator.destination_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For backup.destination_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -2541,7 +2541,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-453 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "backup.state_changed",
@@ -2551,8 +2552,8 @@
       "producer": "BackupCoordinator.backup_phase_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For backup.state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Project and Full Server/application records? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "project: RP-OPERATIONAL-2555D@1.0.0; application: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -5126,7 +5127,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-455 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "remote_access.private_endpoint_state_changed",
@@ -5136,8 +5138,8 @@
       "producer": "RemoteAccessRouteService.private_endpoint_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For remote_access.private_endpoint_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -7498,7 +7500,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-454 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "remote_access.proxy_state_changed",
@@ -7508,8 +7511,8 @@
       "producer": "RemoteAccessRouteService.proxy_state_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For remote_access.proxy_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -9946,7 +9949,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-454 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "remote_access.public_security_violation_detected",
@@ -9956,8 +9960,8 @@
       "producer": "PublicIngressGuard.record_violation@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For remote_access.public_security_violation_detected, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -12328,7 +12332,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-455 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "remote_access.remote_link_state_changed",
@@ -12338,8 +12343,8 @@
       "producer": "RemoteAccessRouteService.remote_link_state_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For remote_access.remote_link_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -14797,7 +14802,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-454 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "remote_access.route_migration_state_changed",
@@ -14807,8 +14813,8 @@
       "producer": "RemoteAccessRouteService.migration_phase_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For remote_access.route_migration_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -17324,7 +17330,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-455 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "remote_access.route_preference_changed",
@@ -17334,8 +17341,8 @@
       "producer": "RemoteAccessRouteService.preference_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For remote_access.route_preference_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -19739,7 +19746,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-453 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "remote_access.route_state_changed",
@@ -19749,8 +19757,8 @@
       "producer": "RemoteAccessRouteService.route_state_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For remote_access.route_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -22250,7 +22258,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-454 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "remote_access.route_test_completed",
@@ -22260,8 +22269,8 @@
       "producer": "RemoteAccessRouteService.test_terminal_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For remote_access.route_test_completed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -24716,7 +24725,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-455 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "restore.state_changed",
@@ -24726,8 +24736,8 @@
       "producer": "BackupCoordinator.restore_phase_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For restore.state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Project and Full Server/application records? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "project: RP-OPERATIONAL-2555D@1.0.0; application: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -27606,7 +27616,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-455 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.catalog_changed",
@@ -27616,8 +27627,8 @@
       "producer": "ServerCatalogService.catalog_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.catalog_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -29974,7 +29985,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-453 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.client_pairing_state_changed",
@@ -29984,8 +29996,8 @@
       "producer": "ClientTrustRegistry.pairing_phase_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.client_pairing_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -32414,7 +32426,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-455 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.client_revoked",
@@ -32424,8 +32437,8 @@
       "producer": "ClientTrustRegistry.revoke_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.client_revoked, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -34827,7 +34840,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-453 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.client_trust_changed",
@@ -34837,8 +34851,8 @@
       "producer": "ClientTrustRegistry.trust_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.client_trust_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -37236,7 +37250,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-453 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.connection_state_changed",
@@ -37246,8 +37261,8 @@
       "producer": "ServerConnectionService.connection_state_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.connection_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -39682,7 +39697,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-454 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.discovery_expired",
@@ -39692,8 +39708,8 @@
       "producer": "ServerDiscoveryService.expiry_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.discovery_expired, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -42037,7 +42053,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-454 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.discovery_observed",
@@ -42047,8 +42064,8 @@
       "producer": "ServerDiscoveryService.observation_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.discovery_observed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -44402,7 +44419,8 @@
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
         "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
-      ]
+      ],
+      "retention_decision": "DL-454 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.endpoint_changed",
@@ -44412,8 +44430,8 @@
       "producer": "ServerCatalogService.endpoint_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.endpoint_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -46943,7 +46961,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-453 (E-CARDS-3, option A; landed on main)"
     },
     {
       "event_type": "server.identity_mismatch_detected",
@@ -46953,8 +46972,8 @@
       "producer": "ServerIdentityVerifier.mismatch_commit@1.0.0",
       "outcome": "prepared",
       "membership": "ABSENT",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For server.identity_mismatch_detected, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_question": null,
       "criterion_12": "PARTIAL",
       "runtime_guards": [
         {
@@ -49353,7 +49372,8 @@
       "candidate_retention_classes": [
         "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
         "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
-      ]
+      ],
+      "retention_decision": "DL-455 (E-CARDS-3, option A; landed on main)"
     }
   ]
 }

@@ -29615,7 +29615,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for backup.destination_changed@1.0.0, prepared without admission.
   BRS-1400/CV-1400 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_backup_destination_changed_custody, w3e_backup_destination_changed_history and w3e_backup_destination_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_backup_destination_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/backup_destination_changed.schema.json#/$defs/custody. It retains original intent,
   complete before/after source refs, original owner result, semantic input, stable event identity/digest and nullable
@@ -29682,7 +29682,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -29702,7 +29702,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for backup.state_changed@1.0.0, prepared without admission.
   BRS-1401/CV-1401 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_backup_state_changed_custody, w3e_backup_state_changed_history and w3e_backup_state_changed_checkpoint. Current
-  writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in canonical
+  writes remain missing_event_registration; Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_security (DL-455, E-CARDS-3 item 3.a, option A), seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore. The application policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in canonical
   redb uses w3e_backup_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/backup_state_changed.schema.json#/$defs/custody. It retains original intent, complete
   before/after source refs, original owner result, semantic input, stable event identity/digest and nullable first
@@ -29769,7 +29769,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -29790,7 +29790,7 @@ canonical_text: 'Newly authored Storage bindings only for remote_access.private_
   without admission. RAS-1402/CV-1402 own the exact semantic contract. Three closed independently keyed values live
   in Plans/storage_value_registry.json: w3e_remote_access_private_endpoint_state_changed_custody, w3e_remote_access_private_endpoint_state_changed_history
   and w3e_remote_access_private_endpoint_state_changed_checkpoint. Current writes remain missing_event_registration;
-  retention_policy_ref=PENDING_RETENTION_DECISION. Custody in canonical redb uses w3e_remote_access_private_endpoint_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
+  retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in canonical redb uses w3e_remote_access_private_endpoint_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json#/$defs/custody. It retains
   original intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
   and nullable first append-result ref. pending_append becomes settled only with actual CV-339 full-value original
@@ -29858,7 +29858,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -29878,7 +29878,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for remote_access.proxy_state_changed@1.0.0, prepared without
   admission. RAS-1403/CV-1403 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_remote_access_proxy_state_changed_custody, w3e_remote_access_proxy_state_changed_history and w3e_remote_access_proxy_state_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_remote_access_proxy_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/remote_access_proxy_state_changed.schema.json#/$defs/custody. It retains original
   intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
@@ -29946,7 +29946,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -29967,7 +29967,7 @@ canonical_text: 'Newly authored Storage bindings only for remote_access.public_s
   prepared without admission. RAS-1404/CV-1404 own the exact semantic contract. Three closed independently keyed
   values live in Plans/storage_value_registry.json: w3e_remote_access_public_security_violation_detected_custody,
   w3e_remote_access_public_security_violation_detected_history and w3e_remote_access_public_security_violation_detected_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_remote_access_public_security_violation_detected_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/remote_access_public_security_violation_detected.schema.json#/$defs/custody. It retains
   original intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
@@ -30036,7 +30036,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30057,7 +30057,7 @@ canonical_text: 'Newly authored Storage bindings only for remote_access.remote_l
   without admission. RAS-1405/CV-1405 own the exact semantic contract. Three closed independently keyed values live
   in Plans/storage_value_registry.json: w3e_remote_access_remote_link_state_changed_custody, w3e_remote_access_remote_link_state_changed_history
   and w3e_remote_access_remote_link_state_changed_checkpoint. Current writes remain missing_event_registration;
-  retention_policy_ref=PENDING_RETENTION_DECISION. Custody in canonical redb uses w3e_remote_access_remote_link_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
+  retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in canonical redb uses w3e_remote_access_remote_link_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/remote_access_remote_link_state_changed.schema.json#/$defs/custody. It retains original
   intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
   and nullable first append-result ref. pending_append becomes settled only with actual CV-339 full-value original
@@ -30125,7 +30125,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30146,7 +30146,7 @@ canonical_text: 'Newly authored Storage bindings only for remote_access.route_mi
   without admission. RAS-1406/CV-1406 own the exact semantic contract. Three closed independently keyed values live
   in Plans/storage_value_registry.json: w3e_remote_access_route_migration_state_changed_custody, w3e_remote_access_route_migration_state_changed_history
   and w3e_remote_access_route_migration_state_changed_checkpoint. Current writes remain missing_event_registration;
-  retention_policy_ref=PENDING_RETENTION_DECISION. Custody in canonical redb uses w3e_remote_access_route_migration_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
+  retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in canonical redb uses w3e_remote_access_route_migration_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json#/$defs/custody. It retains
   original intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
   and nullable first append-result ref. pending_append becomes settled only with actual CV-339 full-value original
@@ -30214,7 +30214,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30234,7 +30234,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for remote_access.route_preference_changed@1.0.0, prepared
   without admission. RAS-1407/CV-1407 own the exact semantic contract. Three closed independently keyed values live
   in Plans/storage_value_registry.json: w3e_remote_access_route_preference_changed_custody, w3e_remote_access_route_preference_changed_history
-  and w3e_remote_access_route_preference_changed_checkpoint. Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION.
+  and w3e_remote_access_route_preference_changed_checkpoint. Current writes remain missing_event_registration; retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane.
   Custody in canonical redb uses w3e_remote_access_route_preference_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json#/$defs/custody. It retains original
   intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
@@ -30303,7 +30303,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30323,7 +30323,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for remote_access.route_state_changed@1.0.0, prepared without
   admission. RAS-1408/CV-1408 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_remote_access_route_state_changed_custody, w3e_remote_access_route_state_changed_history and w3e_remote_access_route_state_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_remote_access_route_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json#/$defs/custody. It retains original
   intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
@@ -30391,7 +30391,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30411,7 +30411,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for remote_access.route_test_completed@1.0.0, prepared without
   admission. RAS-1409/CV-1409 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_remote_access_route_test_completed_custody, w3e_remote_access_route_test_completed_history and w3e_remote_access_route_test_completed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_remote_access_route_test_completed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json#/$defs/custody. It retains original
   intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
@@ -30479,7 +30479,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30499,7 +30499,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for restore.state_changed@1.0.0, prepared without admission.
   BRS-1410/CV-1410 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_restore_state_changed_custody, w3e_restore_state_changed_history and w3e_restore_state_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_security (DL-455, E-CARDS-3 item 3.a, option A), seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore. The application policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_restore_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/restore_state_changed.schema.json#/$defs/custody. It retains original intent, complete
   before/after source refs, original owner result, semantic input, stable event identity/digest and nullable first
@@ -30566,7 +30566,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30586,7 +30586,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.catalog_changed@1.0.0, prepared without admission.
   SRV-1411/CV-1411 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_catalog_changed_custody, w3e_server_catalog_changed_history and w3e_server_catalog_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_catalog_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_catalog_changed.schema.json#/$defs/custody. It retains original intent, complete
   before/after source refs, original owner result, semantic input, stable event identity/digest and nullable first
@@ -30653,7 +30653,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30673,7 +30673,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.client_pairing_state_changed@1.0.0, prepared without
   admission. SRV-1412/CV-1412 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_client_pairing_state_changed_custody, w3e_server_client_pairing_state_changed_history and w3e_server_client_pairing_state_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_client_pairing_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_client_pairing_state_changed.schema.json#/$defs/custody. It retains original
   intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
@@ -30741,7 +30741,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30761,7 +30761,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.client_revoked@1.0.0, prepared without admission.
   SRV-1413/CV-1413 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_client_revoked_custody, w3e_server_client_revoked_history and w3e_server_client_revoked_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_client_revoked_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_client_revoked.schema.json#/$defs/custody. It retains original intent, complete
   before/after source refs, original owner result, semantic input, stable event identity/digest and nullable first
@@ -30828,7 +30828,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30848,7 +30848,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.client_trust_changed@1.0.0, prepared without admission.
   SRV-1414/CV-1414 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_client_trust_changed_custody, w3e_server_client_trust_changed_history and w3e_server_client_trust_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_client_trust_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_client_trust_changed.schema.json#/$defs/custody. It retains original intent,
   complete before/after source refs, original owner result, semantic input, stable event identity/digest and nullable
@@ -30915,7 +30915,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -30935,7 +30935,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.connection_state_changed@1.0.0, prepared without
   admission. SRV-1415/CV-1415 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_connection_state_changed_custody, w3e_server_connection_state_changed_history and w3e_server_connection_state_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_connection_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_connection_state_changed.schema.json#/$defs/custody. It retains original intent,
   complete before/after source refs, original owner result, semantic input, stable event identity/digest and nullable
@@ -31003,7 +31003,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -31023,7 +31023,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.discovery_expired@1.0.0, prepared without admission.
   SRV-1416/CV-1416 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_discovery_expired_custody, w3e_server_discovery_expired_history and w3e_server_discovery_expired_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_discovery_expired_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_discovery_expired.schema.json#/$defs/custody. It retains original intent,
   complete before/after source refs, original owner result, semantic input, stable event identity/digest and nullable
@@ -31090,7 +31090,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -31110,7 +31110,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.discovery_observed@1.0.0, prepared without admission.
   SRV-1417/CV-1417 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_discovery_observed_custody, w3e_server_discovery_observed_history and w3e_server_discovery_observed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_discovery_observed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_discovery_observed.schema.json#/$defs/custody. It retains original intent,
   complete before/after source refs, original owner result, semantic input, stable event identity/digest and nullable
@@ -31177,7 +31177,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -31197,7 +31197,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.endpoint_changed@1.0.0, prepared without admission.
   SRV-1418/CV-1418 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_endpoint_changed_custody, w3e_server_endpoint_changed_history and w3e_server_endpoint_changed_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_endpoint_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_endpoint_changed.schema.json#/$defs/custody. It retains original intent, complete
   before/after source refs, original owner result, semantic input, stable event identity/digest and nullable first
@@ -31264,7 +31264,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -31284,7 +31284,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for server.identity_mismatch_detected@1.0.0, prepared without
   admission. SRV-1419/CV-1419 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
   w3e_server_identity_mismatch_detected_custody, w3e_server_identity_mismatch_detected_history and w3e_server_identity_mismatch_detected_checkpoint.
-  Current writes remain missing_event_registration; retention_policy_ref=PENDING_RETENTION_DECISION. Custody in
+  Current writes remain missing_event_registration; retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
   canonical redb uses w3e_server_identity_mismatch_detected_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
   and Plans/event_payloads/w3e/server_identity_mismatch_detected.schema.json#/$defs/custody. It retains original
   intent, complete before/after source refs, original owner result, semantic input, stable event identity/digest
@@ -31352,7 +31352,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339

@@ -746,14 +746,8 @@ canonical_text: 'Newly authored owner contract for remote_access.private_endpoin
   recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
   revocation, backup, restore, route activation, billing, timer or canonical write.
 
-  Retention: retention_policy_ref=PENDING_RETENTION_DECISION. Storage Case L-3 is reused for hold/protection machinery,
-  not a guessed classification or no-project bucket. Card 1 G26 describes another bounded population; deck 2 1.a..1.g
-  adds no W3E counting population. Exact question: For remote_access.private_endpoint_state_changed, which history
-  class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application
-  records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records
-  keep their own policies. Until decided, admission remains materially incomplete and no age/count eviction is permitted;
-  this hold posture is not an approved lifetime. Original source bodies, receipts and secrets keep their independent
-  existing rules. The newly prepared custody/history/checkpoint values inherit this unresolved assignment and cannot
+  Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
   create a shorter lifetime or bypass dependency holds.
 
   Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete
@@ -791,10 +785,7 @@ canonical_text: 'Newly authored owner contract for remote_access.private_endpoin
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/2 and ATS-1240/ATS-1241. Criterion 12 is PARTIAL:
-  phase 1 supplies per-guard positive/negative plans, not oracle code or guard-isolation proof. Membership is ABSENT,
-  retention PARTIAL, native execution NOT_RUN. Phase 2 must adopt the reviewed shared number/timestamp helper and
-  pm_guard_isolation tool before reviews or admission readiness.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/2 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, connector_owner,
@@ -804,12 +795,7 @@ canonical_text: 'Newly authored owner contract for remote_access.private_endpoin
   independently. No all-true flag, substituted receipt or matching hash supplies a missing role.
 
 
-  Candidate retention classes, not an assignment: Approval/receipt/audit authority/source lineage: indefinite, no
-  count eviction (Case L-3, Plans/storage-plan.md:17409). Non-authority security diagnostics or migration/recovery
-  operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).
-  Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414;
-  deck 2 1.a..1.g names other populations). The exact audit/diagnostic role and application counting/deletion authority
-  remain with Jared. No runtime Run is invented for a BackupRun or RestoreRun.
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
   '
 gui_related: false
@@ -847,7 +833,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -932,14 +918,8 @@ canonical_text: 'Newly authored owner contract for remote_access.proxy_state_cha
   recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
   revocation, backup, restore, route activation, billing, timer or canonical write.
 
-  Retention: retention_policy_ref=PENDING_RETENTION_DECISION. Storage Case L-3 is reused for hold/protection machinery,
-  not a guessed classification or no-project bucket. Card 1 G26 describes another bounded population; deck 2 1.a..1.g
-  adds no W3E counting population. Exact question: For remote_access.proxy_state_changed, which history class, expiry
-  anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with
-  no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their
-  own policies. Until decided, admission remains materially incomplete and no age/count eviction is permitted; this
-  hold posture is not an approved lifetime. Original source bodies, receipts and secrets keep their independent
-  existing rules. The newly prepared custody/history/checkpoint values inherit this unresolved assignment and cannot
+  Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
   create a shorter lifetime or bypass dependency holds.
 
   Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete
@@ -976,10 +956,7 @@ canonical_text: 'Newly authored owner contract for remote_access.proxy_state_cha
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/3 and ATS-1240/ATS-1241. Criterion 12 is PARTIAL:
-  phase 1 supplies per-guard positive/negative plans, not oracle code or guard-isolation proof. Membership is ABSENT,
-  retention PARTIAL, native execution NOT_RUN. Phase 2 must adopt the reviewed shared number/timestamp helper and
-  pm_guard_isolation tool before reviews or admission readiness.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/3 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, route_source,
@@ -990,12 +967,7 @@ canonical_text: 'Newly authored owner contract for remote_access.proxy_state_cha
   a missing role.
 
 
-  Candidate retention classes, not an assignment: Approval/receipt/audit authority/source lineage: indefinite, no
-  count eviction (Case L-3, Plans/storage-plan.md:17409). Non-authority security diagnostics or migration/recovery
-  operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).
-  Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414;
-  deck 2 1.a..1.g names other populations). The exact audit/diagnostic role and application counting/deletion authority
-  remain with Jared. No runtime Run is invented for a BackupRun or RestoreRun.
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
   '
 gui_related: false
@@ -1033,7 +1005,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1120,14 +1092,8 @@ canonical_text: 'Newly authored owner contract for remote_access.public_security
   recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
   revocation, backup, restore, route activation, billing, timer or canonical write.
 
-  Retention: retention_policy_ref=PENDING_RETENTION_DECISION. Storage Case L-3 is reused for hold/protection machinery,
-  not a guessed classification or no-project bucket. Card 1 G05 describes another bounded population; deck 2 1.a..1.g
-  adds no W3E counting population. Exact question: For remote_access.public_security_violation_detected, which history
-  class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application
-  records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records
-  keep their own policies. Until decided, admission remains materially incomplete and no age/count eviction is permitted;
-  this hold posture is not an approved lifetime. Original source bodies, receipts and secrets keep their independent
-  existing rules. The newly prepared custody/history/checkpoint values inherit this unresolved assignment and cannot
+  Retention: retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
   create a shorter lifetime or bypass dependency holds.
 
   Redaction/custody: PublicIngressGuard on the actual Server holds the original accepted intent, complete before/after
@@ -1165,10 +1131,7 @@ canonical_text: 'Newly authored owner contract for remote_access.public_security
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/4 and ATS-1240/ATS-1241. Criterion 12 is PARTIAL:
-  phase 1 supplies per-guard positive/negative plans, not oracle code or guard-isolation proof. Membership is ABSENT,
-  retention PARTIAL, native execution NOT_RUN. Phase 2 must adopt the reviewed shared number/timestamp helper and
-  pm_guard_isolation tool before reviews or admission readiness.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/4 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, public_policy,
@@ -1178,12 +1141,7 @@ canonical_text: 'Newly authored owner contract for remote_access.public_security
   independently. No all-true flag, substituted receipt or matching hash supplies a missing role.
 
 
-  Candidate retention classes, not an assignment: Approval/receipt/audit authority/source lineage: indefinite, no
-  count eviction (Case L-3, Plans/storage-plan.md:17409). Non-authority security diagnostics or migration/recovery
-  operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).
-  Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414;
-  deck 2 1.a..1.g names other populations). The exact audit/diagnostic role and application counting/deletion authority
-  remain with Jared. No runtime Run is invented for a BackupRun or RestoreRun.
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
   '
 gui_related: false
@@ -1221,7 +1179,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1308,14 +1266,8 @@ canonical_text: 'Newly authored owner contract for remote_access.remote_link_sta
   recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
   revocation, backup, restore, route activation, billing, timer or canonical write.
 
-  Retention: retention_policy_ref=PENDING_RETENTION_DECISION. Storage Case L-3 is reused for hold/protection machinery,
-  not a guessed classification or no-project bucket. Card 1 G26 describes another bounded population; deck 2 1.a..1.g
-  adds no W3E counting population. Exact question: For remote_access.remote_link_state_changed, which history class,
-  expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records
-  with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep
-  their own policies. Until decided, admission remains materially incomplete and no age/count eviction is permitted;
-  this hold posture is not an approved lifetime. Original source bodies, receipts and secrets keep their independent
-  existing rules. The newly prepared custody/history/checkpoint values inherit this unresolved assignment and cannot
+  Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
   create a shorter lifetime or bypass dependency holds.
 
   Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete
@@ -1352,10 +1304,7 @@ canonical_text: 'Newly authored owner contract for remote_access.remote_link_sta
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/5 and ATS-1240/ATS-1241. Criterion 12 is PARTIAL:
-  phase 1 supplies per-guard positive/negative plans, not oracle code or guard-isolation proof. Membership is ABSENT,
-  retention PARTIAL, native execution NOT_RUN. Phase 2 must adopt the reviewed shared number/timestamp helper and
-  pm_guard_isolation tool before reviews or admission readiness.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/5 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, route_source,
@@ -1366,12 +1315,7 @@ canonical_text: 'Newly authored owner contract for remote_access.remote_link_sta
   a missing role.
 
 
-  Candidate retention classes, not an assignment: Approval/receipt/audit authority/source lineage: indefinite, no
-  count eviction (Case L-3, Plans/storage-plan.md:17409). Non-authority security diagnostics or migration/recovery
-  operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).
-  Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414;
-  deck 2 1.a..1.g names other populations). The exact audit/diagnostic role and application counting/deletion authority
-  remain with Jared. No runtime Run is invented for a BackupRun or RestoreRun.
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
   '
 gui_related: false
@@ -1409,7 +1353,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1495,14 +1439,8 @@ canonical_text: 'Newly authored owner contract for remote_access.route_migration
   recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
   revocation, backup, restore, route activation, billing, timer or canonical write.
 
-  Retention: retention_policy_ref=PENDING_RETENTION_DECISION. Storage Case L-3 is reused for hold/protection machinery,
-  not a guessed classification or no-project bucket. Card 1 G26 describes another bounded population; deck 2 1.a..1.g
-  adds no W3E counting population. Exact question: For remote_access.route_migration_state_changed, which history
-  class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application
-  records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records
-  keep their own policies. Until decided, admission remains materially incomplete and no age/count eviction is permitted;
-  this hold posture is not an approved lifetime. Original source bodies, receipts and secrets keep their independent
-  existing rules. The newly prepared custody/history/checkpoint values inherit this unresolved assignment and cannot
+  Retention: retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
   create a shorter lifetime or bypass dependency holds.
 
   Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete
@@ -1540,10 +1478,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_migration
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/6 and ATS-1240/ATS-1241. Criterion 12 is PARTIAL:
-  phase 1 supplies per-guard positive/negative plans, not oracle code or guard-isolation proof. Membership is ABSENT,
-  retention PARTIAL, native execution NOT_RUN. Phase 2 must adopt the reviewed shared number/timestamp helper and
-  pm_guard_isolation tool before reviews or admission readiness.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/6 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, source_route,
@@ -1554,12 +1489,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_migration
   a missing role.
 
 
-  Candidate retention classes, not an assignment: Approval/receipt/audit authority/source lineage: indefinite, no
-  count eviction (Case L-3, Plans/storage-plan.md:17409). Non-authority security diagnostics or migration/recovery
-  operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).
-  Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414;
-  deck 2 1.a..1.g names other populations). The exact audit/diagnostic role and application counting/deletion authority
-  remain with Jared. No runtime Run is invented for a BackupRun or RestoreRun.
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
   '
 gui_related: false
@@ -1596,7 +1526,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1681,14 +1611,8 @@ canonical_text: 'Newly authored owner contract for remote_access.route_preferenc
   recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
   revocation, backup, restore, route activation, billing, timer or canonical write.
 
-  Retention: retention_policy_ref=PENDING_RETENTION_DECISION. Storage Case L-3 is reused for hold/protection machinery,
-  not a guessed classification or no-project bucket. Card 1 G01 describes another bounded population; deck 2 1.a..1.g
-  adds no W3E counting population. Exact question: For remote_access.route_preference_changed, which history class,
-  expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records
-  with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep
-  their own policies. Until decided, admission remains materially incomplete and no age/count eviction is permitted;
-  this hold posture is not an approved lifetime. Original source bodies, receipts and secrets keep their independent
-  existing rules. The newly prepared custody/history/checkpoint values inherit this unresolved assignment and cannot
+  Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
   create a shorter lifetime or bypass dependency holds.
 
   Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete
@@ -1725,10 +1649,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_preferenc
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/7 and ATS-1240/ATS-1241. Criterion 12 is PARTIAL:
-  phase 1 supplies per-guard positive/negative plans, not oracle code or guard-isolation proof. Membership is ABSENT,
-  retention PARTIAL, native execution NOT_RUN. Phase 2 must adopt the reviewed shared number/timestamp helper and
-  pm_guard_isolation tool before reviews or admission readiness.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/7 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, previous_route,
@@ -1738,12 +1659,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_preferenc
   applicable role independently. No all-true flag, substituted receipt or matching hash supplies a missing role.
 
 
-  Candidate retention classes, not an assignment: Approval/receipt/audit authority/source lineage: indefinite, no
-  count eviction (Case L-3, Plans/storage-plan.md:17409). Non-authority security diagnostics or migration/recovery
-  operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).
-  Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414;
-  deck 2 1.a..1.g names other populations). The exact audit/diagnostic role and application counting/deletion authority
-  remain with Jared. No runtime Run is invented for a BackupRun or RestoreRun.
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
   '
 gui_related: false
@@ -1780,7 +1696,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-AUTHORITY-INDEFINITE@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -1865,14 +1781,8 @@ canonical_text: 'Newly authored owner contract for remote_access.route_state_cha
   recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
   revocation, backup, restore, route activation, billing, timer or canonical write.
 
-  Retention: retention_policy_ref=PENDING_RETENTION_DECISION. Storage Case L-3 is reused for hold/protection machinery,
-  not a guessed classification or no-project bucket. Card 1 G26 describes another bounded population; deck 2 1.a..1.g
-  adds no W3E counting population. Exact question: For remote_access.route_state_changed, which history class, expiry
-  anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with
-  no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their
-  own policies. Until decided, admission remains materially incomplete and no age/count eviction is permitted; this
-  hold posture is not an approved lifetime. Original source bodies, receipts and secrets keep their independent
-  existing rules. The newly prepared custody/history/checkpoint values inherit this unresolved assignment and cannot
+  Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
   create a shorter lifetime or bypass dependency holds.
 
   Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete
@@ -1909,10 +1819,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_state_cha
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/8 and ATS-1240/ATS-1241. Criterion 12 is PARTIAL:
-  phase 1 supplies per-guard positive/negative plans, not oracle code or guard-isolation proof. Membership is ABSENT,
-  retention PARTIAL, native execution NOT_RUN. Phase 2 must adopt the reviewed shared number/timestamp helper and
-  pm_guard_isolation tool before reviews or admission readiness.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/8 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, endpoint_identity,
@@ -1923,12 +1830,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_state_cha
   a missing role.
 
 
-  Candidate retention classes, not an assignment: Approval/receipt/audit authority/source lineage: indefinite, no
-  count eviction (Case L-3, Plans/storage-plan.md:17409). Non-authority security diagnostics or migration/recovery
-  operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).
-  Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414;
-  deck 2 1.a..1.g names other populations). The exact audit/diagnostic role and application counting/deletion authority
-  remain with Jared. No runtime Run is invented for a BackupRun or RestoreRun.
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
   '
 gui_related: false
@@ -1969,7 +1871,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
 - SP-278
 - SP-286
 - CV-339
@@ -2055,14 +1957,8 @@ canonical_text: 'Newly authored owner contract for remote_access.route_test_comp
   recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
   revocation, backup, restore, route activation, billing, timer or canonical write.
 
-  Retention: retention_policy_ref=PENDING_RETENTION_DECISION. Storage Case L-3 is reused for hold/protection machinery,
-  not a guessed classification or no-project bucket. Card 1 G26 describes another bounded population; deck 2 1.a..1.g
-  adds no W3E counting population. Exact question: For remote_access.route_test_completed, which history class,
-  expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records
-  with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep
-  their own policies. Until decided, admission remains materially incomplete and no age/count eviction is permitted;
-  this hold posture is not an approved lifetime. Original source bodies, receipts and secrets keep their independent
-  existing rules. The newly prepared custody/history/checkpoint values inherit this unresolved assignment and cannot
+  Retention: retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
   create a shorter lifetime or bypass dependency holds.
 
   Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete
@@ -2099,10 +1995,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_test_comp
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/9 and ATS-1240/ATS-1241. Criterion 12 is PARTIAL:
-  phase 1 supplies per-guard positive/negative plans, not oracle code or guard-isolation proof. Membership is ABSENT,
-  retention PARTIAL, native execution NOT_RUN. Phase 2 must adopt the reviewed shared number/timestamp helper and
-  pm_guard_isolation tool before reviews or admission readiness.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/9 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, test_invocation,
@@ -2112,12 +2005,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_test_comp
   applicable role independently. No all-true flag, substituted receipt or matching hash supplies a missing role.
 
 
-  Candidate retention classes, not an assignment: Approval/receipt/audit authority/source lineage: indefinite, no
-  count eviction (Case L-3, Plans/storage-plan.md:17409). Non-authority security diagnostics or migration/recovery
-  operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).
-  Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414;
-  deck 2 1.a..1.g names other populations). The exact audit/diagnostic role and application counting/deletion authority
-  remain with Jared. No runtime Run is invented for a BackupRun or RestoreRun.
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
   '
 gui_related: false
@@ -2156,7 +2044,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
 - SP-278
 - SP-286
 - CV-339

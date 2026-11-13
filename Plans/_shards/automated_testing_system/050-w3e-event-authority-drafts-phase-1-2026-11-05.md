@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7238-L7360
+Source lines: L7238-L7359
 
-Source SHA256: `c53c48d3acfecbf1b557f7aa0ca115cdd1ab03445609122b8bf1db4ff9f13d43`
+Source SHA256: `2ba1d16fb6f8fb8eabcb1b21c05bbe44fa1c6f4055c49175b111ca424213d8df`
 
 ---
 
@@ -21,7 +21,7 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: Newly authored oracle plan for the exact twenty W3E families listed in Plans/event_authority_w3e_oracle_plan.json.
   Each family has its own guard inventory, positives, single-defect negatives, source schema, owner method and retention
-  question. prepared without admission; membership ABSENT, retention PENDING_RETENTION_DECISION, criterion 12 PARTIAL.
+  question. prepared without admission; membership ABSENT. Retention is decided per family by DL-453, DL-454 and DL-455 (bound in the CV, SP and owner unit of each family); phase 2 (2026-11-13) executes this plan as scripts/pm_w3e_event_oracles.py.
   This plan is not executed oracle code. Eagerly resolve every payload/source/token reference, including unvisited
   branches; exact type/full-string and all encoded-part 16384-byte checks remain required. SP-278 actual all-partition
   read proof and SP-286/CV-339 original first/full-value receipt proof are independent prerequisites; SP-337 supplies
@@ -60,7 +60,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- DL-455
 - SP-278
 - SP-286
 - CV-339
@@ -85,8 +85,7 @@ canonical_text: 'For every W3E family use its own plan in Plans/event_authority_
   that exact defect, removing all makes it pass. Shared refusal code, shared allOf/if/runtime site or several related
   fields never combines invariants. Cover every real schema and semantic guard and every actual enforcement site,
   history/current-writer separation, authentic old recipe, storage uint64 domain, RFC8785 qualification, SP-236
-  physical numeric types and owner timestamp profiles. No oracle/proof PASS until executed coverage and shared-tool
-  proof exist. Criterion 12 remains PARTIAL and retention PENDING_RETENTION_DECISION; adopt SP-278, SP-286 and SP-337
+  physical numeric types and owner timestamp profiles. No oracle/proof PASS until executed coverage and shared-tool proof exist. Phase 2 (2026-11-13) adopts the gated NUMRULE head 58c2816ff3 and guard tool 004bdedd63: the complete checker scripts/pm_w3e_event_oracles.py, its generated tables scripts/pm_w3e_table_*.py, the tool runner scripts/pm-w3e-guard-proof.py and the mutation runner scripts/pm-w3e-mutations.py, with SP-286/CV-339 first-receipt custody checked on every append; retention is decided by DL-453, DL-454 and DL-455; adopt SP-278, SP-286 and SP-337
   unchanged.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
@@ -122,7 +121,7 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
 preserved_exact_tokens:
 - prepared without admission
-- PENDING_RETENTION_DECISION
+- DL-454
 - SP-278
 - SP-286
 - CV-339

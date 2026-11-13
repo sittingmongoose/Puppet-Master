@@ -1993,7 +1993,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7360,
+      "line_count": 7359,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 79,
       "plan_unit_ids": [
@@ -2147,7 +2147,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "c53c48d3acfecbf1b557f7aa0ca115cdd1ab03445609122b8bf1db4ff9f13d43",
+      "sha256": "2ba1d16fb6f8fb8eabcb1b21c05bbe44fa1c6f4055c49175b111ca424213d8df",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 78,
@@ -2599,7 +2599,7 @@
         "future security adapter registry",
         "future verify dispatcher"
       ],
-      "line_count": 2819,
+      "line_count": 2783,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 36,
       "plan_unit_ids": [
@@ -2678,7 +2678,7 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "16c1e99e6e7619d10523c1c8e876699ef8b0c967ba108b76650de5a97cf8767e",
+      "sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 36
@@ -4600,7 +4600,7 @@
         "scripts/pm_event_datetime.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 25853,
+      "line_count": 25833,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 383,
       "plan_unit_ids": [
@@ -5350,7 +5350,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "b6337f3031b3eec68ea61fedf5965fd9ee64671bc5b777b7e18351f5f29e3495",
+      "sha256": "8df82e483b07ff4755ea95abec326b9a178e75eb314f861f23c0234015683c3c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 383
@@ -16239,7 +16239,7 @@
         "future proxy configuration service",
         "future sole Server SSH owner and shared protected-auth broker; no implementation claimed"
       ],
-      "line_count": 2930,
+      "line_count": 2818,
       "path": "Plans/Remote_Access_System.md",
       "plan_unit_count": 25,
       "plan_unit_ids": [
@@ -16292,7 +16292,7 @@
         "static_remote_contract_promoted_to_wan_readiness",
         "tailscale_identity_or_product_claim_drift"
       ],
-      "sha256": "70c6a7d6a382a14b5a2cf6799b20f04d60ab0b0deb1f2f50ae61a8151fb251ec",
+      "sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 25
@@ -17594,7 +17594,7 @@
         "future sole Server SSH owner and shared protected-auth broker; no implementation claimed",
         "future trust and session services"
       ],
-      "line_count": 3208,
+      "line_count": 3094,
       "path": "Plans/Server_System.md",
       "plan_unit_count": 27,
       "plan_unit_ids": [
@@ -17650,7 +17650,7 @@
         "static_evidence_promoted_to_server_readiness",
         "visible_server_action_without_owner_wiring"
       ],
-      "sha256": "37a1465108c3f8e617f5fbbbc2ae31f2c6735241bbed3d448121b0f522136822",
+      "sha256": "95326c4662fafb4a3ec7d51ab61d469692db101a83ececd68536dc1ce15338e3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27
@@ -19249,7 +19249,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "fe2d9381795c08ea6586ecd139c79b6947cbdb388879c91421ca9e5c0df398cc",
+      "sha256": "81102d8035021e8035a1a66de30e5b4c3e658ff2f97451e8030a01b770559dad",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 359,
@@ -21633,7 +21633,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-13T21:22:48Z",
+  "generated_at_utc": "2026-11-13T22:30:43Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
