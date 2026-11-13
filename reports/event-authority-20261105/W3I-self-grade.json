@@ -281,28 +281,35 @@
           "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Implemented criterion-12 oracles: five boundaries, 59 named guard rows, 260 single-defect negatives and 32 controls; gated guard tool 14/14 suites PASS, 59/59 rows proved, 0 masked. Shared CV-1100/SP-1100/SP-1101/CV-1101 helpers adopted. Native execution NOT_RUN.",
+          "finding": "Criterion-12 oracles implemented and executed (fix 1): 217 single-predicate guard rows in 41 tables, and the complete checker refuses only through those table predicates; 48 controls (including an owner-valid SP-337 body above 16 KiB and a retained read after a live-state change) and 1,591 single-defect negatives, each refused by exactly its row; 215 rows proved by the gated tool 004bdedd63, 2 entailed with written proofs; 27/27 checker mutations killed; shared number corpus 0 disagreements; timestamp fields re-derived from the owner schemas. PARTIAL, not PASS, on what the tests prove: the plan's source-frame relocation and held retention/restore cases are not built; withdrawal, successor rebuild, CAS and dedupe catch-up are scenario-flag models; the owner schemas are enforced in full by one row per subject, not by the separate per-keyword guards the plan names. Native execution NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1280",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "Phase-1 grade is PARTIAL"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "source-frame relocation through authenticated translation, held retention/restore"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-1280",
+              "line_start": 7246,
+              "line_end": 7246,
+              "quote": "Guards include separate checks for every required property/type/const/ref/length"
             },
             {
               "path": "scripts/pm_w3i_continuity_oracles.py",
               "unit": "W3I-oracles",
               "line_start": 2,
               "line_end": 2,
-              "quote": "W3I wave-3 phase 2: the complete continuity lane checker."
+              "quote": "W3I wave-3 phase 2 (fix 1): the complete continuity lane checker."
             }
           ],
-          "prior": "PARTIAL",
+          "prior": "PASS",
           "change": "regraded",
-          "change_reason": "Wave-3 phase 2: oracle code written (scripts/pm_w3i_continuity_oracles.py), all 59 guard rows proved by the gated tool 004bdedd63 with single-defect witnesses, shared number corpus 0 disagreements, shared date_time at every timestamp field. Native execution remains NOT_RUN; whole-tree date-time gate is the T198 integration item."
+          "change_reason": "Fix 1 after the NOT_CLEAN recheck (reviews/W3I-p2-recheck/REVIEW.md finding 9): the phase-2 PASS rested on verdict-lookup adapters, multi-clause rows and unexercised claims. Re-graded only on what the fixed tests prove; the untested ATS items above keep it PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -596,28 +603,35 @@
           "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Implemented criterion-12 oracles: five boundaries, 59 named guard rows, 260 single-defect negatives and 32 controls; gated guard tool 14/14 suites PASS, 59/59 rows proved, 0 masked. Shared CV-1100/SP-1100/SP-1101/CV-1101 helpers adopted. Native execution NOT_RUN.",
+          "finding": "Criterion-12 oracles implemented and executed (fix 1): 217 single-predicate guard rows in 41 tables, and the complete checker refuses only through those table predicates; 48 controls (including an owner-valid SP-337 body above 16 KiB and a retained read after a live-state change) and 1,591 single-defect negatives, each refused by exactly its row; 215 rows proved by the gated tool 004bdedd63, 2 entailed with written proofs; 27/27 checker mutations killed; shared number corpus 0 disagreements; timestamp fields re-derived from the owner schemas. PARTIAL, not PASS, on what the tests prove: the plan's source-frame relocation and held retention/restore cases are not built; withdrawal, successor rebuild, CAS and dedupe catch-up are scenario-flag models; the owner schemas are enforced in full by one row per subject, not by the separate per-keyword guards the plan names. Native execution NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1281",
-              "line_start": 7295,
-              "line_end": 7295,
-              "quote": "Phase-1 grade is PARTIAL"
+              "line_start": 7297,
+              "line_end": 7297,
+              "quote": "source-frame relocation through authenticated translation, held retention/restore"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-1281",
+              "line_start": 7299,
+              "line_end": 7299,
+              "quote": "Guards include separate checks for every required property/type/const/ref/length"
             },
             {
               "path": "scripts/pm_w3i_continuity_oracles.py",
               "unit": "W3I-oracles",
               "line_start": 2,
               "line_end": 2,
-              "quote": "W3I wave-3 phase 2: the complete continuity lane checker."
+              "quote": "W3I wave-3 phase 2 (fix 1): the complete continuity lane checker."
             }
           ],
-          "prior": "PARTIAL",
+          "prior": "PASS",
           "change": "regraded",
-          "change_reason": "Wave-3 phase 2: oracle code written (scripts/pm_w3i_continuity_oracles.py), all 59 guard rows proved by the gated tool 004bdedd63 with single-defect witnesses, shared number corpus 0 disagreements, shared date_time at every timestamp field. Native execution remains NOT_RUN; whole-tree date-time gate is the T198 integration item."
+          "change_reason": "Fix 1 after the NOT_CLEAN recheck (reviews/W3I-p2-recheck/REVIEW.md finding 9): the phase-2 PASS rested on verdict-lookup adapters, multi-clause rows and unexercised claims. Re-graded only on what the fixed tests prove; the untested ATS items above keep it PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -911,28 +925,35 @@
           "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Implemented criterion-12 oracles: five boundaries, 59 named guard rows, 260 single-defect negatives and 32 controls; gated guard tool 14/14 suites PASS, 59/59 rows proved, 0 masked. Shared CV-1100/SP-1100/SP-1101/CV-1101 helpers adopted. Native execution NOT_RUN.",
+          "finding": "Criterion-12 oracles implemented and executed (fix 1): 217 single-predicate guard rows in 41 tables, and the complete checker refuses only through those table predicates; 48 controls (including an owner-valid SP-337 body above 16 KiB and a retained read after a live-state change) and 1,591 single-defect negatives, each refused by exactly its row; 215 rows proved by the gated tool 004bdedd63, 2 entailed with written proofs; 27/27 checker mutations killed; shared number corpus 0 disagreements; timestamp fields re-derived from the owner schemas. PARTIAL, not PASS, on what the tests prove: the plan's source-frame relocation and held retention/restore cases are not built; withdrawal, successor rebuild, CAS and dedupe catch-up are scenario-flag models; the owner schemas are enforced in full by one row per subject, not by the separate per-keyword guards the plan names. Native execution NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1282",
-              "line_start": 7348,
-              "line_end": 7348,
-              "quote": "Phase-1 grade is PARTIAL"
+              "line_start": 7350,
+              "line_end": 7350,
+              "quote": "source-frame relocation through authenticated translation, held retention/restore"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-1282",
+              "line_start": 7352,
+              "line_end": 7352,
+              "quote": "Guards include separate checks for every required property/type/const/ref/length"
             },
             {
               "path": "scripts/pm_w3i_continuity_oracles.py",
               "unit": "W3I-oracles",
               "line_start": 2,
               "line_end": 2,
-              "quote": "W3I wave-3 phase 2: the complete continuity lane checker."
+              "quote": "W3I wave-3 phase 2 (fix 1): the complete continuity lane checker."
             }
           ],
-          "prior": "PARTIAL",
+          "prior": "PASS",
           "change": "regraded",
-          "change_reason": "Wave-3 phase 2: oracle code written (scripts/pm_w3i_continuity_oracles.py), all 59 guard rows proved by the gated tool 004bdedd63 with single-defect witnesses, shared number corpus 0 disagreements, shared date_time at every timestamp field. Native execution remains NOT_RUN; whole-tree date-time gate is the T198 integration item."
+          "change_reason": "Fix 1 after the NOT_CLEAN recheck (reviews/W3I-p2-recheck/REVIEW.md finding 9): the phase-2 PASS rested on verdict-lookup adapters, multi-clause rows and unexercised claims. Re-graded only on what the fixed tests prove; the untested ATS items above keep it PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -1226,28 +1247,35 @@
           "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Implemented criterion-12 oracles: five boundaries, 59 named guard rows, 260 single-defect negatives and 32 controls; gated guard tool 14/14 suites PASS, 59/59 rows proved, 0 masked. Shared CV-1100/SP-1100/SP-1101/CV-1101 helpers adopted. Native execution NOT_RUN.",
+          "finding": "Criterion-12 oracles implemented and executed (fix 1): 217 single-predicate guard rows in 41 tables, and the complete checker refuses only through those table predicates; 48 controls (including an owner-valid SP-337 body above 16 KiB and a retained read after a live-state change) and 1,591 single-defect negatives, each refused by exactly its row; 215 rows proved by the gated tool 004bdedd63, 2 entailed with written proofs; 27/27 checker mutations killed; shared number corpus 0 disagreements; timestamp fields re-derived from the owner schemas. PARTIAL, not PASS, on what the tests prove: the plan's source-frame relocation and held retention/restore cases are not built; withdrawal, successor rebuild, CAS and dedupe catch-up are scenario-flag models; the owner schemas are enforced in full by one row per subject, not by the separate per-keyword guards the plan names. Native execution NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-1283",
-              "line_start": 7401,
-              "line_end": 7401,
-              "quote": "Phase-1 grade is PARTIAL"
+              "line_start": 7403,
+              "line_end": 7403,
+              "quote": "source-frame relocation through authenticated translation, held retention/restore"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-1283",
+              "line_start": 7405,
+              "line_end": 7405,
+              "quote": "Guards include separate checks for every required property/type/const/ref/length"
             },
             {
               "path": "scripts/pm_w3i_continuity_oracles.py",
               "unit": "W3I-oracles",
               "line_start": 2,
               "line_end": 2,
-              "quote": "W3I wave-3 phase 2: the complete continuity lane checker."
+              "quote": "W3I wave-3 phase 2 (fix 1): the complete continuity lane checker."
             }
           ],
-          "prior": "PARTIAL",
+          "prior": "PASS",
           "change": "regraded",
-          "change_reason": "Wave-3 phase 2: oracle code written (scripts/pm_w3i_continuity_oracles.py), all 59 guard rows proved by the gated tool 004bdedd63 with single-defect witnesses, shared number corpus 0 disagreements, shared date_time at every timestamp field. Native execution remains NOT_RUN; whole-tree date-time gate is the T198 integration item."
+          "change_reason": "Fix 1 after the NOT_CLEAN recheck (reviews/W3I-p2-recheck/REVIEW.md finding 9): the phase-2 PASS rested on verdict-lookup adapters, multi-clause rows and unexercised claims. Re-graded only on what the fixed tests prove; the untested ATS items above keep it PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -1437,6 +1465,36 @@
     "number_self_test": "pass",
     "fixture_inventory_gate": "pass",
     "criterion_12": "PASS",
-    "membership": "ABSENT"
+    "membership": "ABSENT",
+    "superseded_by": "phase_2_fix_1"
+  },
+  "phase_2_fix_1": {
+    "review": "reviews/W3I-p2-recheck/REVIEW.md (NOT_CLEAN, nine REAL findings)",
+    "code_head": "198a635a02",
+    "rows": 217,
+    "tables": 41,
+    "entailed_rows": [
+      "projection_size",
+      "retained_resolved"
+    ],
+    "controls": 48,
+    "negatives": 1591,
+    "mutations": {
+      "total": 27,
+      "killed": 27,
+      "recheck_adapted": 14,
+      "own": 13
+    },
+    "number_corpus_disagreements": 0,
+    "number_self_test": "pass",
+    "fixture_inventory_gate": "pass",
+    "whole_tree_inventory_gate": "fail (T198 class only, 37 rows)",
+    "criterion_12": "PARTIAL",
+    "membership": "ABSENT",
+    "native_execution": "NOT_RUN",
+    "rows_proved": 215,
+    "tables_pass": "39/39 run (2 entailed tables have no negative)",
+    "masked": 0,
+    "fixture_items": 1639
   }
 }

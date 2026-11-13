@@ -247,3 +247,246 @@ Criterion 1 stays **ABSENT** (no admission). Criteria 2–11 stay **PASS**. Crit
 **Index baseline proof.** `pm-plan-index.py validate` compares against `origin/main` `8f4eddac6f24c933f3e1c3c375343fb6e34ecd2e`. At the phase-2 start head `0ef6e6842a` the same validate reports **764** failures (21 `plan_unit_removal_ledger_invalid` on unchanged legacy ledgers + 743 `plan_unit_removed_without_ledger_decision`). This branch reports **760**: the gated NUMRULE merge adds CV-1100/CV-1101/SP-1100/SP-1101, resolving exactly those 4 base rows. A set comparison shows **0 new failures introduced** and exactly those 4 resolved. The 739 remaining removal rows are units added to `origin/main` after this lane's base (none present in the base index); the no-rebase rule leaves them for batch-3 integration. No W3I/continuity file appears in any failure.
 
 **Diff scope.** From `0ef6e6842a`, the committed diff is exactly the two gated merges (11 tool files + 22 NUMRULE-exclusive files + the 2 shared owner-document unions) plus 164 regenerated derived files, then this lane's new checker/driver/adapters and report/self-grade. No tool or NUMRULE file is edited after its merge; no unrelated owner document, registry, Decision Log, Spec Lock, `.evidence`, `auto_decisions`, `.gitignore` or frozen validator is touched.
+## Wave 3 phase 2, fix 1
+
+**Start:** `origin/plans/ea-w3-continuity-hitl-20261105` at `d569a07086451749abed531f94412d51163d558c`. **Review answered:** `reviews/W3I-p2-recheck/REVIEW.md` (Opus 5.5 recheck, NOT_CLEAN, nine REAL findings; code 5/10, tests 3/10). **Commits:**
+- `1756709fdb`: the checker, tables, generator and guard driver; the adapters removed.
+- `f77574cc03`: the mutation runner.
+- `1834769f7b` and `198a635a02`: the own-audit fixes below.
+- The report commit that adds this section.
+
+No rebase, no merge, `main` never pushed; no guard-tool or NUMRULE file edited; no `Plans/` file edited, so no regeneration; no admission, registry append or Decision Log entry.
+
+> **Superseded above.** The phase-2 section's guard-table credit (59/59 by verdict-lookup adapters), its "no rule weakened" and "SW-F1 carryover closed" claims, its timestamp table (`acknowledged_at_utc` on `storage_utc_z`) and its criterion-12 PASS are replaced by this section.
+
+### How the checker is now built
+
+- **One predicate per row.** `scripts/pm_w3i_continuity_oracles.py` declares **217 rows** (`row()`, `:1184`; the rows from `:1228`) in **41 tables**. Each row has one template (`TEMPLATES`, `:1157`): equal, not-equal, true/false/none, empty list, membership, at-most, ordered, not-in, handled.
+- **The table modules are the refusal path.** `scripts/pm-w3i-table-generate.py` writes each row's decision into `scripts/pm_w3i_table_<table>.py` (`--check` fails on any stale or extra module). `evaluate()` (`:1827`) projects each row's inputs and calls those table predicates in table order; their refusals are the checker's result. Nothing else refuses.
+- **Inputs, never verdicts.** A row's inputs are the presented value and the independent reference it must equal (the recomputed identity, Storage's own record, the resolved source, the sealed original), or a shared helper's own result where the rule is that helper (owner schema validation with the shared CV-1101 format checker, `date_time`, `storage_uint64`, `storage_value_bytes`, `verify_payload_bytes`, `RetainedDispatcher`).
+- **`applies` is the precondition.** It holds the row's family and readiness gates derived from the case (for example: the integer slots hold, then the value encodes physically, then the owner schema accepts). It never reads a table result, so cutting one table row changes only that row.
+- **Copies join their authority.** Every copy is compared with its authority (the Storage instance, Storage's record, the event, the source), never with another copy. A single-defect witness changes one value and resyncs its dependent copies (`resync()`, `:584`); Storage's record and the source observation are never resynced.
+- **The gated tool sees the predicate code.** `scripts/pm-w3i-guard-proof.py` runs the gated tool once per table, in its own process, with that table module as `checker_modules`. The verdict adapters `scripts/w3i-guards/*.py` are deleted.
+
+### Findings and responses
+
+| # | Finding | Fix (commit, path:line) | How to verify |
+|---|---|---|---|
+| 1 | Guard credit came from adapters that looked up precomputed verdicts | `1756709fdb`: the rows are the checker's predicates, generated into `scripts/pm_w3i_table_*.py`; `evaluate()` (`pm_w3i_continuity_oracles.py:1827`) refuses only through them; adapters deleted; the tool scans each table module (`pm-w3i-guard-proof.py` `run_table`) | `python3 scripts/pm-w3i-table-generate.py --check`; `python3 scripts/pm-w3i-guard-proof.py collect --out D && python3 scripts/pm-w3i-guard-proof.py run --out D`; each `D/<table>.summary.json` lists `static_files` = that table module |
+| 2 | Multi-clause rows with one witness; 10 of 14 mutations survived | `1756709fdb`: every clause is its own row (59 → 217 rows); each reachable row has single-defect witnesses for every family it covers. `f77574cc03`: `scripts/pm-w3i-mutations.py` runs the recheck's 14 (adapted) and 13 own mutations | `python3 scripts/pm-w3i-mutations.py --scratch <dir>`: **27/27 killed** (table below) |
+| 3 | Shape view stripped `pattern`/`format`/`not` and the state `allOf`; owner-invalid values accepted | `1756709fdb`: `schema_errors()` (`:132`) validates with the **full owner schemas** and the shared format checker (`_validator`, `:127`); the shape view is gone. Named rows restore only what Python cannot see: a `$`-anchored pattern without a CR/LF guard (`_owner_pattern`, `:159`, reads the owner's own pattern) and the RFC 4122 uuid form (`UUID_RE`, `:179`). Joins added for the checkpoint's `storage_instance_id`, `project_id`, `stream_id` (`checkpoint_instance`/`_project`/`_stream`, `:1566`–`:1572`), each retired core (`retired_*`, `:1641`–`:1672`), and `source_selection.storage_instance_id` (`selection_instance`) | Negatives (built in `build_negatives()`, `:1947`): `!` and trailing-LF on the checkpoint's `project_id`, `stream_id`, `storage_instance_id`, `publication_id`; uuid defects on `source_selection.storage_instance_id`; and **every field of a retired publication** (consts, ids, token fields, the nine integer slots, `segment_name`, `last_event_id`, `filter_complete`, `state`, `withdrawn_at_utc`, `hold_refs`, maxItems), each refused by exactly its row |
+| 4 | `acknowledged_at_utc` and retired `withdrawn_at_utc` never checked | `1756709fdb`: both go through `pm_event_datetime` via the full owner schemas with the shared format checker (custody_v2 at `append_custody_schema`, `:1387`; checkpoint core at `checkpoint_schema`, `:1530`); `acknowledged_at_utc` also joins Storage's record (`append_receipt_acknowledged_at_utc`, `:1392`). The field list is re-derived from the schemas at every run (`timestamp_inventory()`, `:2577`; `TIMESTAMP_FIELDS`, `:2541`) and any difference fails the checker | Negatives: ack `garbage`, hour 25, trailing LF, missing zone; retired `withdrawn_at_utc` `not-a-time`, trailing LF, missing zone, null; mutation X8 |
+| 5 | No join of payload `created_at_utc` to the source; two-defect oversize witness; no >16 KiB SP-337 positive | `1756709fdb`: `append_created_source` (`:1301`). The oversize witness changes only the source time and resyncs its copies (`set_source_time`, `:641`). Control `pack-large:<family>` (`build_controls`, `:1863`, `:1873`) externalizes an owner-valid 20,470-byte body through SP-337, and `append_pack_body` (`:1454`) checks the pack bytes are exactly that body | Negatives for both join directions; `pack-large` controls accept; mutations X1, X10, X11 |
+| 6 | Payload integers outside the physical range raised | `1756709fdb`: `append_event_physical` (`:1248`) refuses any value outside SP-1100 EVENT_VALUE with a code, before any schema validation or packing; every schema row and packing row is gated after it. The `except ValueError` in schema validation is removed | Negatives: `2**64`, `10**4399`, `-(2**63)-1` and `-10**4399` as an extra payload member and at a string field, for all four families; retry and derived equivalents. No route raises (the checker would crash) |
+| 7 | Retained-read properties were fixture flags | `1756709fdb`: `resolve_retained()` (`:814`) snapshots the sealed store before and after `resolve` and counts every call of the shared `current_append_policy` while it runs. The caller override goes through `resolve(recipe_override=...)`. The live-state control (`retained-live`, `:1894`) changes the live admission and the live source facts the append boundary reads. The frozen verifier is split into its 16 components (`frozen_components`, `:710`) | Negatives: a store-writing owner (`AccessLoggingOwner`, `:695`) refused only by `retained_no_receipt_creation`; a verifier that runs the writer gate (`_current_gated_verify`, `:773`) refused only by `retained_no_current_gate`; missing, ambiguous, malformed and other-original receipts. Mutations M2, X2–X5 |
+| 8 | Integer slots used a lane-local bound | `1756709fdb`: `storage_uint64` at every integer slot: the envelope `sequence_id` (`:1244`), the five receipt slots (`:1379`), the projection `sequence_id`, the nine checkpoint slots and the nine in each retired core (`:1505`–`:1515`). No lane-local bound remains; `current_integer` applies only through `verify_payload_bytes` (`byte_size`), since no W3I slot is a caller-supplied current integer | Negatives at every slot (`2**64`, `-1`, float, string number, boolean, null, array, object); mutation M14 |
+| 9 | Criterion-12 PASS and "SW-F1 closed" not supported | Report commit: criterion 12 re-graded **PARTIAL** for all four families (`W3I-self-grade.json`). SW-F1 is now closed for every embedded copy: the owner patterns apply in full to the current checkpoint and every retired core (owner schema plus the trailing-LF rows), and the uuid fields keep their RFC 4122 form | Self-grade quotes checked: 96/96 at their lines |
+
+**Own audit (beyond the nine).** After every row was gated on readiness, an audit of the gates found three inputs that no row refused. All three are closed in commit `1834769f7b`, each with its own witnesses:
+- **A non-object EventRecord.** Every append row is gated on the family and an object event. Fix: `append_event_object`.
+- **A non-object retry candidate.** Fix: `retry_event_object`.
+- **A retry candidate that is not a valid EventRecord.** Example: a malformed Storage time, which the semantic comparison rightly ignores. Fix: `retry_envelope_schema`, with the full EventRecord schema.
+
+Two smaller fixes:
+- **Retained request.** A request that names no original, or whose expected binding the shared full-value commitment refuses (another envelope edition), now reaches the shared dispatcher with no binding through `retained_request()`. The dispatcher refuses it as `original_query`; before, it raised or returned a reason no row owned. Without this, the entailed catch-all `retained_resolved` could have refused first. Fixed in commit `198a635a02`.
+- **Pack descriptor.** Type witnesses for its fields were added (`1834769f7b`).
+
+**Notes from the recheck.** N1: the source-lineage retention row is now `Plans/storage-plan.md:17410` (one line later after the NUMRULE merge). N3: index validate is pinned to the base below. N4: the checker no longer reads a token or cursor before the checkpoint schema accepts it. N5: the withdrawal-boundary rows stay scenario models (graded accordingly).
+
+### Mutation table
+
+`python3 scripts/pm-w3i-mutations.py --scratch <dir>`, run at `198a635a02`. Each mutation edits a scratch copy of the checker, regenerates the tables and runs the complete checker. Baseline clean; **27/27 killed**. Each kill is the mutated row's own witness refusing nowhere, or, for X5, the live-state control being refused (`mutations-final.json`).
+
+| Id | Clause weakened | Row | Killing case |
+|---|---|---|---|
+| M1 | owner `$defs/id` CR/LF guard dropped (id full match) | `append_payload_schema` | 40 failures; first: free id + LF accepted |
+| M2 | ambiguous-receipt refusal removed | `retained_receipt_unique` | ambiguous receipt accepted |
+| M3 | Storage time on the event_record profile | `append_observed_utc_z` | `+00:00` accepted |
+| M4 | frozen verifier skips the payload schema | `frozen_payload_schema` | invalid retained payload accepted |
+| M5 | frozen verifier skips the identity recompute | `frozen_identity` | forged retained event_id accepted |
+| M6 | prefix-membership clause dropped | `append_fact_replay_prefix_member` | prefix without the source accepted |
+| M7 | storage-instance clause dropped | `append_fact_replay_instance` | foreign-instance token accepted |
+| M8 | retired limit dropped (owner maxItems) | `checkpoint_schema` | three retired cores accepted |
+| M9 | custody partition join dropped | `append_custody_partition` | wrong custody partition accepted |
+| M10 | self-reference clause dropped | `append_source_not_self` | event_id = source accepted |
+| M11 | checkpoint_key join dropped | `token_checkpoint_key` | wrong checkpoint_key accepted |
+| M12 | cursor offset order dropped | `cursor_offset_order` | offset after end accepted |
+| M13 | producer_sequence_id null dropped | `append_producer_sequence_null` | `7` accepted |
+| M14 | sequence slot accepts `2**64` | `append_sequence_uint64` | `2**64` accepted |
+| X1 | created_at_utc not joined to the source | `append_created_source` | payload time ≠ source accepted |
+| X2 | store snapshot compared with itself | `retained_no_receipt_creation` | store-writing owner accepted |
+| X3 | writer-gate instrumentation removed | `retained_no_current_gate` | gated verifier accepted |
+| X4 | override not passed to the dispatcher | `retained_recipe_override` | caller override accepted |
+| X5 | retained read consults live admission | `retained_disclosure` | **control** `retained-live` refused |
+| X6 | payload skipped by the physical row | `append_event_physical` | payload `2**64` accepted |
+| X7 | frozen custody digest compared with itself | `frozen_receipt_semantic` | forged sealed digest accepted |
+| X8 | custody validated without date-time format | `append_custody_schema` | ack `garbage` accepted |
+| X9 | retired state clause dropped | `retired_state` | current retired core accepted |
+| X10 | inline limit doubled | `append_inline_limit` | 20,470-byte inline body accepted |
+| X11 | pack bytes not compared with the body | `append_pack_body` | pack of another body accepted |
+| X12 | ack join to Storage's record dropped | `append_receipt_acknowledged_at_utc` | different ack accepted |
+| X13 | `eq` template type check dropped | `withdrawal_once` | `True` for 1 accepted |
+
+M1, M8: the clause now lives in the owner schema the checker validates in full, so the adapted mutation removes that keyword from the checker's copy of the schema. M14: the slot now calls the shared `storage_uint64`, so the mutation clamps the value before the call.
+
+### Guard-table result (gated tool `004bdedd63`, Method B)
+
+`python3 scripts/pm-w3i-guard-proof.py collect --out D && python3 scripts/pm-w3i-guard-proof.py run --out D`. One gated-tool run per table, each in its own process, under the tool's MemoryGate.
+
+- **Tool:** `scripts/pm_guard_isolation.py`, sha256 `e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8` (the file `004bdedd63` merged, unedited).
+- **What it scans:** each table's own module, with no adapters. Each report's `static.files` names exactly that table module.
+- **Credit is the tool's own.** This driver adds none.
+
+**Result: 41 tables, 217 rows; 215 proved, 2 unproved, each with a written proof; 39/39 tables run PASS; masked: 0.**
+
+- **Suite sizes.** Up to 4 distinct negative projections per row and up to 6 control projections per table were given to the tool. The complete checker runs all of them.
+- **Lane matrix.** The driver's own matrix checks every collected case on every table predicate.
+
+| Table | Boundary | Rows | Proved | Tool N / C | Seconds |
+|---|---|---:|---:|---|---:|
+| `append_admission` | append | 6 | 6 | 21 / 4 | 44.3 |
+| `append_numbers` | append | 2 | 2 | 3 / 2 | 0.9 |
+| `append_envelope` | append | 7 | 7 | 28 / 5 | 83.3 |
+| `append_storage` | append | 4 | 4 | 16 / 6 | 21.4 |
+| `append_policy` | append | 4 | 4 | 7 / 3 | 10.4 |
+| `append_payload` | append | 7 | 7 | 28 / 6 | 99.3 |
+| `append_copies_1` | append | 5 | 5 | 20 / 6 | 40.6 |
+| `append_copies_2` | append | 5 | 5 | 6 / 2 | 8.8 |
+| `append_fact_1` | append | 6 | 6 | 6 / 4 | 12.4 |
+| `append_fact_2` | append | 5 | 5 | 5 / 2 | 8.8 |
+| `append_custody_1` | append | 7 | 7 | 11 / 2 | 33.9 |
+| `append_receipt_1` | append | 6 | 6 | 24 / 6 | 64.8 |
+| `append_receipt_2` | append | 5 | 5 | 5 / 2 | 7.5 |
+| `append_custody_2` | append | 6 | 6 | 24 / 6 | 59.0 |
+| `append_custody_3` | append | 2 | 2 | 8 / 6 | 3.0 |
+| `append_body_1` | append | 5 | 5 | 17 / 6 | 27.8 |
+| `append_body_2` | append | 4 | 4 | 10 / 6 | 15.5 |
+| `retry` | retry | 8 | 8 | 25 / 4 | 129.7 |
+| `retry_custody` | retry | 3 | 3 | 10 / 4 | 4.9 |
+| `derived_slots_1` | derived | 5 | 5 | 6 / 1 | 6.0 |
+| `derived_slots_2` | derived | 5 | 5 | 6 / 1 | 6.7 |
+| `retired_slots_1` | derived | 5 | 5 | 5 / 3 | 21.4 |
+| `retired_slots_2` | derived | 4 | 4 | 4 / 3 | 8.5 |
+| `derived_shape` | derived | 5 | 5 | 15 / 6 | 22.0 |
+| `entailed_projection_size` | derived | 1 | 0 (entailed, own table) | not run: no negative can exist | — |
+| `projection_joins` | derived | 8 | 8 | 32 / 6 | 183.7 |
+| `checkpoint_joins` | derived | 8 | 8 | 32 / 6 | 183.9 |
+| `token_format_1` | derived | 6 | 6 | 6 / 2 | 11.2 |
+| `token_format_2` | derived | 6 | 6 | 6 / 2 | 10.4 |
+| `token_joins` | derived | 5 | 5 | 5 / 5 | 11.8 |
+| `cursor` | derived | 5 | 5 | 20 / 5 | 28.1 |
+| `retired_joins` | derived | 8 | 8 | 8 / 5 | 140.1 |
+| `retired_format_1` | derived | 7 | 7 | 7 / 2 | 62.4 |
+| `retired_format_2` | derived | 6 | 6 | 6 / 2 | 30.8 |
+| `withdrawal` | withdrawal | 6 | 6 | 11 / 1 | 17.1 |
+| `retained_dispatch` | retained | 8 | 8 | 8 / 2 | 45.1 |
+| `retained_frozen_1` | retained | 6 | 6 | 18 / 5 | 39.9 |
+| `retained_frozen_2` | retained | 6 | 6 | 24 / 6 | 63.7 |
+| `retained_frozen_3` | retained | 4 | 4 | 13 / 6 | 12.3 |
+| `retained_effects` | retained | 5 | 5 | 20 / 6 | 29.2 |
+| `entailed_retained_resolved` | retained | 1 | 0 (entailed, own table) | not run: no negative can exist | — |
+
+**Unproved rows and their proofs (each alone in its own table, never the first refusal):**
+
+- `projection_size` (rows that always refuse first: `projection_schema`). Proof: Plans/continuity_event_contracts.schema.json $defs/projection is closed (additionalProperties false) with exactly ten members: two consts (39 and 5 bytes), seven $defs/id strings of at most 256 ASCII characters and an event_type enum of at most 30 characters, and one uint64. Every projection_schema accepts therefore encodes to at most 1 + 10*(1+21) + 2*(3+39) + 7*(3+256) + (2+30) + 9 = 2129 bytes of SP-236 MessagePack, below 16384; a larger projection always fails projection_schema first (this row is gated on it).
+
+- `retained_resolved` (rows that always refuse first: `retained_recipe_override`, `retained_query`, `retained_receipt_present`, `retained_receipt_unique`, `retained_receipt_wellformed`, `retained_binding`, `retained_recipe_known`, `retained_disclosure`, and the 16 frozen rows). Proof: RetainedDispatcher.resolve (scripts/pm_event_numbers.py:523-545) refuses with caller_recipe_override, original_query, original_authority, original_binding, recipe_selection, recipe_unknown, original_bytes_type, original_verification or current_disclosure, plus what the owner raises. A request with no computable expected binding reaches it as None and is refused as original_query (retained_request). The owner here (SealedReceiptOwner/_custody_from_sealed) raises only original_receipt_missing, original_receipt_ambiguous and sealed_receipt_malformed, and always returns an OriginalCustody built from OriginalBinding(**), RecipeTuple(**) and bytes.fromhex(...) values, so original_authority, recipe_selection and original_bytes_type cannot occur. Every other reason has its own dispatch row (retained_dispatch), and original_verification is returned exactly when a frozen_* row refuses (_frozen_verify is the conjunction of frozen_components). So this catch-all never refuses first.
+
+### Owner rules and SW-F1
+
+- **Full owner schemas.** The EventRecord envelope, every family payload, `custody_v2`, the projection and the checkpoint are validated with every owner keyword, including the checkpoint state `allOf` and each retired core's `checkpoint_core`. The shared CV-1101 format checker (`format_checker(profile=EVENT_RECORD)`) runs date-time and jsonschema's other built-in formats.
+- **Restored at named rows:**
+  - **Trailing LF.** The owner's `$`-anchored patterns without a CR/LF guard accept a final LF under Python. The rows are `generation_id` and the nine `*_sha256` fields of the current token and every retired token, `segment_name` in the current and retired cursors, and `group_digest`.
+  - **uuid.** The four `format: uuid` fields keep the RFC 4122 string form. jsonschema's check is `uuid.UUID()` plus four hyphen positions, which accepts a trailing `}`, an extra hyphen and `_` (tested).
+  - **`event_type`.** It is held to its family by equality, so a trailing LF fails there.
+- **SW-F1.** Closed for every embedded copy (current and retired `segment_name`, checkpoint ids, uuid fields), each with single-defect negatives.
+
+### Timestamps (re-derived from the schemas)
+
+`timestamp_inventory()` walks every `format: date-time` location in the subjects the lane validates, and the checker fails if the list differs from this table.
+
+| Subject | Field | Owner profile | Shared check and rows |
+|---|---|---|---|
+| EventRecord | `occurred_at_utc` | event_record | `append_envelope_schema` (format) / `frozen_envelope_schema`; copy of `created_at_utc` (`append_copy_occurred`) |
+| EventRecord | `observed_at_utc` | event_record + CV-253 storage_utc_z | schema format + `append_observed_utc_z` (`date_time`, storage_utc_z) / `frozen_observed_utc_z`; `append_storage_observed` |
+| EventRecord | `persisted_at_utc` | event_record + CV-253 storage_utc_z | schema format + `append_persisted_utc_z` / `frozen_persisted_utc_z`; `append_storage_persisted` |
+| family payload (all four) | `created_at_utc` | event_record | `append_payload_schema` (format) / `frozen_payload_schema`; `append_created_source` |
+| checkpoint | `withdrawn_at_utc` | event_record | `checkpoint_schema` (format and the state `allOf`) |
+| checkpoint | `retired_publications/*/withdrawn_at_utc` | event_record | `checkpoint_schema` (format and the core `allOf`) |
+| custody_v2 | `first_append_receipt/acknowledged_at_utc` | event_record | `append_custody_schema` (format) / `frozen_receipt_schema`; `append_receipt_acknowledged_at_utc` |
+
+- **`acknowledged_at_utc`.** It moves from phase 2's `storage_utc_z` to `event_record`. Its owner schema (`Plans/event_append_receipt_contracts.schema.json` `$defs/AppendReceipt`) says only `format: date-time`, and CV-1101 selects a stricter profile only where the field's owner requires one. W3F made the same choice. One question for Jared follows below.
+- **Date-time inventory gate.**
+  - **Fixture-scoped universe: PASS.** The 1,639 exported controls and negatives, as excluded instance data, plus the EventRecord schema: 2 nodes, 0 unclassified, 0 failures.
+  - **One exclusion re-pinned in the universe.** The fence that the lane's own phase-1 CV-1600..1603 text moved in `Contracts_V0.md` keeps its content hash, moving from `fence:20988` to `fence:21205`.
+  - **Whole tree: fail, T198 class only.** 37 rows (19 `.plan_migration`, 16 `.plan_index`, 2 `Contracts_V0.md` position drift), the same count the recheck measured.
+  - **Not edited.** The NUMRULE inventory and exclusions files are unchanged.
+
+### Numbers
+
+- **Self-test.** `python3 scripts/pm_event_numbers.py --self-test --scope numbers`: exit 0, `"status": "pass"` (276 positives, 304 negatives).
+- **Corpus through the complete checker.** The shared corpus enters through `loads_current_json` at the Storage sequence slot (event and Storage's record) and runs the complete append route: 260 checks (76 accepted, 92 refused, 92 load-refused), **0 disagreements**. A disagreement is collected as a failure, not asserted.
+- **4,400-digit integers.** `10**4399` and `-10**4399` are negatives at:
+  - the sequence slot;
+  - a payload extra member and a payload string field (all four families);
+  - the retry candidate;
+  - the derived `index_through_sequence_id`;
+  - the projection and custody extra members.
+  Each is refused with a code at its row, and none raises.
+- **Fixture expectations the shared rule changes:**
+  - **Payload integers.** A payload integer outside the physical range is refused at `append_event_physical`, where it used to raise. Inside the range but not a string, the payload schema refuses it.
+  - **Slot types.** A float, string number, boolean, null, array or object at any uint64 slot is refused at that slot's `storage_uint64` row before the owner schema runs.
+
+### Retained reads
+
+- **Recipe from the sealed receipt only.** The recipe comes only from the independently sealed receipt for that exact original (`SealedReceiptOwner` → shared `RetainedDispatcher`), with a frozen map installed outside the request.
+- **Refused reasons.** Missing, ambiguous, malformed and other-original receipts, an unknown recipe, a caller override (through `resolve(recipe_override=...)`) and refused disclosure are each refused by their own row.
+- **Frozen verifier.** Its 16 components are rows: decoding, the envelope and payload schemas, the family, the payload schema id, the recipe family, the Storage times on storage_utc_z, the identity and key recompute, the source commitment, the result, the custody schema, the semantic digest, the full value and the event id.
+- **No receipt is created while reading.** Proven by the sealed-store snapshot.
+- **The current gate is never used.** Proven by instrumenting the shared `current_append_policy`.
+- **History after a live-state change still verifies.** The live admission is revoked and the live source facts change, and the read still verifies. The compatibility (replay-only) original, and an original written with a lowercase `t`, a `+02:00` offset and a long fraction, also verify.
+- **The catch-all row is entailed.** `retained_resolved` covers any dispatcher reason no earlier row owns. It sits alone in its own table with its written proof. A faulty verifier that raises its own refusal reaches it second, after `retained_no_current_gate`.
+
+### Retention
+
+Unchanged from phase 2: the cells bind `RP-AUTHORITY-INDEFINITE@1.0.0` (`Plans/storage-plan.md:17410`) and `RP-PROJECTION-3GEN@1.0.0`, and no retention question is pending.
+
+### Grades before and after
+
+| Criterion | Phase 2 (`d569a07086`) | Fix 1 |
+|---|---|---|
+| 1 membership | ABSENT | ABSENT (no admission) |
+| 2–11 | PASS | PASS (no owner text changed) |
+| 12 positive/negative oracles | PASS, not supported per the recheck | **PARTIAL**, all four families |
+
+- **Why PARTIAL.** It is graded only on what the fixed tests prove, and the plan's own list (ATS-1280..1283) is not fully tested:
+  - the source-frame relocation and held retention/restore cases are not built;
+  - withdrawal, successor rebuild, CAS and dedupe catch-up are scenario-flag models;
+  - each owner schema is enforced in full by one row per subject, not by the separate per-keyword guards ATS-128x names.
+- **Native execution** stays NOT_RUN.
+
+### Verification commands (exit codes)
+
+Run at the final code head `198a635a02`; the report commit adds only `reports/`. `Plans/` is byte-identical to `d569a07086`. Every heavy command ran under `systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0`, with at least 12 GB available.
+
+| Command | Exit | Result |
+|---|---:|---|
+| `python3 scripts/pm-w3i-table-generate.py --check` | 0 | 41 tables, 217 rows, 2 entailed, 0 stale, 0 extra |
+| `python3 scripts/pm_w3i_continuity_oracles.py` | 0 | `pass`; 217 rows, 215 witnessed, 2 entailed; 48 controls; 1,591 negatives, each refused by exactly its row; corpus 260 checks, 0 disagreements; timestamp inventory matches the schemas; eager `$ref`s 71/46/13 |
+| `python3 scripts/pm-w3i-guard-proof.py collect --out D` | 0 | lane matrix 0 problems; rows without a negative = the 2 entailed rows |
+| `python3 scripts/pm-w3i-guard-proof.py run --out D` (gated tool, one process per table) | 0 | 41 tables, 217 rows; **215 proved**, 2 unproved, each with a written proof in its own table; 39/39 tables run PASS; 0 masked |
+| `python3 scripts/pm-w3i-mutations.py --scratch S` | 0 | baseline clean; **27/27 killed** (14 recheck mutations adapted, 13 own on 13 rows) |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, 276 positives, 304 negatives |
+| `python3 scripts/pm_event_datetime_inventory.py --root <fixture universe>` | 0 | `pass`; 2 nodes, 0 unclassified, 0 failures (1,639 fixture items) |
+| `python3 scripts/pm_event_datetime_inventory.py --root .` (whole tree) | 1 | 37 failure rows, all T198 class (recorded for the batch-3 inventory refresh) |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass`; 99 docs, 3,104 shards |
+| `python3 scripts/pm-plan-index.py validate` in a scratch clone at this branch, `origin/main` pinned to `58c2816ff33365384d4039553f5efdb5370930e6`, ignored currentness edition copied (15 files, sha256 identical) | 0 | `pass`, 0 failures |
+
+
+### Questions for Jared
+
+1. **16 KiB inline limit.** Does SP-337's "at most 16 KiB inline" (`Plans/storage-plan.md:245`) bound only the payload body, as `Plans/Contracts_V0.md:1019` reads, or the whole stored record?
+   - **Why it matters here:** the only unbounded continuity field, `created_at_utc`, is copied into the envelope's `occurred_at_utc`. So a payload over 16 KiB always leaves an envelope field over 16 KiB inline.
+   - **If it bounds the whole record:** the `pack-large` positive becomes a size-refusal case, and these families can never carry an owner-valid externalized body.
+2. **`acknowledged_at_utc` profile.** Does `AppendReceipt.acknowledged_at_utc` keep the broad EventRecord date-time profile its owner schema declares, or does SP-347's "RFC 3339 UTC with milliseconds" make it a stricter Storage profile?
+   - **What the checker does now:** it applies the owner schema's profile, as W3F does.
