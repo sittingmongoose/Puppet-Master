@@ -1,6 +1,6 @@
 // FO-173 (P concept A, Sol max N1, 2026-11-12): long Settings detail values got less room than their widest word at
-// 860 px: Media & Output › Image Generation's "Saves to" path shared its control with Change (154 px against a 243 px
-// word at 12.5 px mono) and Code & Tools › Toolchain › Formatters › Prettier's "Runs as" got the 131 px a 120 px key
+// 860 px: Media & Output › Image Generation's "Saves to" path shared its control with Change (154 px against a 222 px
+// word at 12.5 px mono on Windows, 243 px with the Linux hosts' mono) and Code & Tools › Toolchain › Formatters › Prettier's "Runs as" got the 131 px a 120 px key
 // column left it (161 px word). Both broke the path anywhere (`overflow-wrap: anywhere`).
 //
 // Every detail value in a cell (`.pm51-kv-row > span:last-child`, `.pm51-row-value`) is read with its own computed
@@ -97,18 +97,26 @@ async function tab(t, f, ws, id) {
 	else await f.evaluate(([w, i]) => window.PM51.switchTab(w, i), [ws, id]);
 	await settled(f, ws);
 }
-/* the list's items, in order, and one picked by a real press (the list is a drawer behind its menu button below a
-   720 px host: then it is picked by its own click, as the drawer's row) */
+/* the list's items, in order. pick() clicks the item's own row in the DOM (below a 720 px host the list is an off-canvas
+   drawer behind its menu button, so a pointer press would not reach it); the subject is the detail's layout, not the list */
 const items = (f, ws) => f.evaluate((w) => [...document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .pm51-roster .resource-row[data-id]`)].map((b) => ({ id: b.getAttribute('data-id'), name: (b.querySelector('.resource-row-name') || b).textContent.replace(/\s+/g, ' ').trim().slice(0, 40) })), ws);
-async function pick(t, f, ws, id) {
-	for (let n = 0; n < 2; n++) {
-		await f.evaluate(([w, i]) => { const b = document.querySelector(`[data-continuous-workspace-body="${w}"] .resource-row[data-id="${i}"]`); if (b) b.click(); }, [ws, id]);
-		const ok = await f.waitForFunction(([w, i]) => { const b = document.querySelector(`[data-continuous-workspace-body="${w}"] .resource-row[data-id="${i}"]`); return !!b && b.classList.contains('active') && b.getAttribute('aria-current') === 'true'; }, [ws, id], { timeout: 3000 }).then(() => true).catch(() => false);
-		if (ok) break;
+/* the row turns active before its detail re-renders, so a read right after the press measured the previous item's
+   detail (main 6bd8294726, Windows: Video Generation read Audio Generation's path). Wait for the detail's own title to
+   name the item, then for the body to hold still. Returns whether the detail showed it. */
+async function pick(t, f, ws, it) {
+	let ok = false;
+	for (let n = 0; n < 3 && !ok; n++) {
+		await f.evaluate(([w, i]) => { const b = document.querySelector(`[data-continuous-workspace-body="${w}"] .resource-row[data-id="${i}"]`); if (b) b.click(); }, [ws, it.id]);
+		ok = await f.waitForFunction(([w, i, name]) => {
+			const b = document.querySelector(`[data-continuous-workspace-body="${w}"] .resource-row[data-id="${i}"]`);
+			const title = document.querySelector(`[data-continuous-workspace-body="${w}"] .pm51-detail .pm51-detail-title`);
+			return !!b && b.classList.contains('active') && !!title && title.textContent.replace(/\s+/g, ' ').trim().startsWith(name);
+		}, [ws, it.id, it.name], { timeout: 4000 }).then(() => true).catch(() => false);
 	}
 	await settled(f, ws);
 	await f.evaluate((w) => { for (const d of document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .pm51-detail details:not([open])`)) d.open = true; }, ws);
 	await t.page.waitForTimeout(150);
+	return ok;
 }
 
 const CASES = {
@@ -154,11 +162,13 @@ for (const surface of ['normal', 'sandbox']) {
 						const c = CASES[name];
 						await go(t, f, c.chapter, c.ws);
 						if (!guarded) { await guardPaintedLook(t, f, look, cell); guarded = true; }
-						const seen = [], found = new Set();
+						const seen = [], found = new Set(), misses = [];
+						let picked = 0;
 						for (const tb of c.tabs) {
 							await tab(t, f, c.ws, tb);
 							for (const it of await items(f, c.ws)) {
-								await pick(t, f, c.ws, it.id);
+								picked++;
+								if (!(await pick(t, f, c.ws, it))) { misses.push(`${tb} › ${it.name}`); continue; }
 								const { values } = await f.evaluate(VALUES, `[data-continuous-workspace-body="${c.ws}"] .pm51-detail`);
 								for (const v of values) {
 									seen.push({ ...v, where: `${tb} › ${it.name}` });
@@ -173,6 +183,7 @@ for (const surface of ['normal', 'sandbox']) {
 						if (probe) for (const v of seen) t.log(`${cell} ${name} | ${v.where} | ${v.kind} ${v.label} | "${v.text}" | ${r1(v.w)} px, word ${r1(v.widest)}, room ${r1(v.room)}, ${v.lines} line${v.lines === 1 ? '' : 's'}`);
 						const bad = seen.map((v) => ({ v, why: verdict(v) })).filter((x) => x.why.length);
 						for (const x of bad) t.log(`${cell} ${name} FAIL | ${x.v.where} | ${x.v.kind} ${x.v.label}: "${x.v.text}" | ${x.why.join('; ')}`);
+						await t.check(`${cell} ${name}: every picked item's detail is shown under its own title (${picked - misses.length}/${picked})`, picked > 0 && misses.length === 0, `the detail never named: ${misses.join(', ')}`);
 						await t.check(`${cell} ${name}: the named values are drawn (${c.need.map((n) => n.label).join(', ')})`, found.size === c.need.length,
 							`missing: ${c.need.filter((n) => !found.has(`${n.label}: ${n.text}`)).map((n) => `${n.item} › ${n.label}`).join(', ')}`);
 						await t.check(`${cell} ${name}: every detail value has room for its widest word or its row's whole width, unclipped, ${MIN_PX} px or more (${seen.length} values)`,
