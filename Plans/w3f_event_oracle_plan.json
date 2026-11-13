@@ -5247,6 +5247,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "discovery.backpressure:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref names only an actual independently committed source receipt; null when there is none",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "discovery.backpressure:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ],
       "positive_scenarios": [
@@ -6553,6 +6573,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "discovery.candidates_returned:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref names only an actual independently committed source receipt; null when there is none",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "discovery.candidates_returned:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ],
       "positive_scenarios": [
@@ -7859,6 +7899,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "discovery.disabled:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref names only an actual independently committed source receipt; null when there is none",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "discovery.disabled:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ],
       "positive_scenarios": [
@@ -9165,6 +9225,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "discovery.fallback:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref names only an actual independently committed source receipt; null when there is none",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "discovery.fallback:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ],
       "positive_scenarios": [
@@ -10471,6 +10551,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "discovery.invoked:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref names only an actual independently committed source receipt; null when there is none",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "discovery.invoked:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ],
       "positive_scenarios": [
@@ -11777,6 +11877,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "discovery.selected:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref names only an actual independently committed source receipt; null when there is none",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "discovery.selected:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ],
       "positive_scenarios": [
@@ -13083,6 +13203,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "discovery.unsupported:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref names only an actual independently committed source receipt; null when there is none",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "discovery.unsupported:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ],
       "positive_scenarios": [
@@ -14389,6 +14529,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "discovery.verified:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref names only an actual independently committed source receipt; null when there is none",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "discovery.verified:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ],
       "positive_scenarios": [
@@ -15596,6 +15756,26 @@
           "defect_count": 1,
           "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
           "phase2_proof": "Shared pm_guard_isolation.py: explicit assertion inventory; cut each site alone and all same-field/same-predicate duplicates; keep other clauses enabled. Acceptance after all and only the predicate sites are weakened is required."
+        },
+        {
+          "guard_id": "planning.question_budget_exhausted:source_receipt_ref:no_independent_receipt",
+          "predicate": "source_receipt_ref is null unless an independently existing original result receipt actually exists, and then exactly that receipt",
+          "positive_plan": "Fresh append with no independent original result receipt and source_receipt_ref=null; the event's own SP-286 first-receipt custody is separate",
+          "negative_plan": "Change only source_receipt_ref to a well-formed non-null reference (opaque:unrelated:receipt) while the actual source/absence evidence stays fixed; refresh body/semantic/wire commitments. Also on the retry candidate.",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_independent of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
+        },
+        {
+          "guard_id": "planning.question_budget_exhausted:source_receipt_ref:self_reference",
+          "predicate": "source_receipt_ref never names this event's own SP-286 first-receipt custody (a self-reference is not independent custody)",
+          "positive_plan": "Same fresh-append baseline with source_receipt_ref=null",
+          "negative_plan": "Change only source_receipt_ref to the event's own first-receipt custody ref (sp286:first_receipt:{storage_instance_id}:{event_id}); refresh dependent commitments",
+          "defect_count": 1,
+          "construction": "Derive from one completely valid scenario. Change only this predicate input; regenerate dependent copies/commitments/keys/post-state that are not authority for the predicate, without changing the independent original. If that cannot leave all peers valid, redesign the case.",
+          "phase2_proof": "Row source_receipt_not_self of scripts/pm_w3f_event_oracles.py, proved by the gated pm_guard_isolation.py (004bdedd63).",
+          "added_by": "W3F phase 2, review B4 (reviews/W3F-sol/REVIEW-phase1-recheck.md)"
         }
       ]
     },
@@ -20406,5 +20586,18 @@
       ],
       "unproved": "No executable oracle or check-11 proof in phase 1; exact assertion sites and single-clause schema cuts are phase-2 inventory work, never implied by these prose cases."
     }
-  ]
+  ],
+  "phase2": {
+    "status": "EXECUTABLE_ORACLES",
+    "checker": "scripts/pm_w3f_event_oracles.py",
+    "fixtures": [
+      "Plans/w3f_event_fixtures.json",
+      "Plans/w3f_original_custody.json"
+    ],
+    "builder": "scripts/pm-w3f-cases.py",
+    "tables": "scripts/pm_w3f_table_*.py (scripts/pm-w3f-table-generate.py)",
+    "guard_tool_runner": "scripts/pm-w3f-guard-tables.py",
+    "plan_coverage": "reports/event-authority-20261105/W3F-phase2-plan-coverage.json",
+    "note": "Phase-1 entries are unchanged; the per-family status fields keep their phase-1 values as lineage. Native execution remains NOT_RUN; membership ABSENT."
+  }
 }
