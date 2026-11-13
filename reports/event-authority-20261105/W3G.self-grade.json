@@ -19,12 +19,7 @@
       "positive_negative_oracles"
     ]
   },
-  "assessed_tree": {
-    "branch": "plans/ea-w3-plan-research-notebook-20261105",
-    "owner_tree_commit": "e3e1d7b2b38274d7d3a4e4f8290b895f0bb4cd47",
-    "base_commit": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
-    "note": "Phase-1 fix round 1 re-grade; source-file hashes identify the exact assessed owner/plan bytes. Executable oracle and native execution remain NOT_RUN."
-  },
+  "assessed_tree": "phase 2 (see report section \"Wave 3 phase 2: findings and responses\")",
   "registry": {
     "path": "Plans/event_family_registry.json",
     "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
@@ -38,8 +33,7 @@
   },
   "status_counts": {
     "ABSENT": 19,
-    "PASS": 174,
-    "PARTIAL": 35
+    "PASS": 209
   },
   "native_execution": "NOT_RUN",
   "static_suites_run_by_grader": [],
@@ -254,9 +248,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 42 positives and 512 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -266,9 +260,9 @@
               "quote": "**Criterion 12.** `ATS-1260` and the `assistant_plan.build_started` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fi"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -406,21 +400,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should assistant_plan.cancelled use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G15 is chat actions, not this exact Plan cancellation; pre-Build cancellation has no real run, so RP-RUNTIME-365D cannot be assigned to the whole family by analogy.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
               "unit": "APR-1501",
               "line_start": 1140,
               "line_end": 1140,
-              "quote": "PENDING_RETENTION_DECISION`. G15 is chat actions, not this exact Plan cancellation; pre-Build cancellation has no real run, so RP-RUNTIME-365D cannot be assigned to the whole family by analo"
+              "quote": "SP-1501 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -491,9 +485,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 36 positives and 488 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -503,9 +497,9 @@
               "quote": "**Criterion 12.** `ATS-1260` and the `assistant_plan.cancelled` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtur"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -729,9 +723,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 30 positives and 492 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -741,9 +735,9 @@
               "quote": "**Criterion 12.** `ATS-1260` and the `assistant_plan.completed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtur"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -881,21 +875,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should assistant_plan.created use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G15 names thread/worktree actions, not AssistantPlan creation; an indefinite Plan record does not itself assign a lifetime to this additional event.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
               "unit": "APR-1503",
               "line_start": 1254,
               "line_end": 1254,
-              "quote": "PENDING_RETENTION_DECISION`. G15 names thread/worktree actions, not AssistantPlan creation; an indefinite Plan record does not itself assign a lifetime to this additional event. No reference"
+              "quote": "SP-1503 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -966,9 +960,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 36 positives and 478 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -978,9 +972,9 @@
               "quote": "**Criterion 12.** `ATS-1260` and the `assistant_plan.created` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -1119,21 +1113,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should assistant_plan.exported use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G15/G16 do not name this export history; the artifact body and export receipt retain independent policies.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
               "unit": "APR-1504",
               "line_start": 1311,
               "line_end": 1311,
-              "quote": "PENDING_RETENTION_DECISION`. G15/G16 do not name this export history; the artifact body and export receipt retain independent policies. No reference extends the linked body's retention. With"
+              "quote": "SP-1504 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1204,9 +1198,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 30 positives and 492 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -1216,9 +1210,9 @@
               "quote": "**Criterion 12.** `ATS-1260` and the `assistant_plan.exported` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixture"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -1357,21 +1351,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should assistant_plan.version_created use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G16 covers planning-document annotations/revisions in its exact nine-name group, not this newly returned AssistantPlan version family.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
               "unit": "APR-1505",
               "line_start": 1369,
               "line_end": 1369,
-              "quote": "PENDING_RETENTION_DECISION`. G16 covers planning-document annotations/revisions in its exact nine-name group, not this newly returned AssistantPlan version family. No reference extends the l"
+              "quote": "SP-1505 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1442,9 +1436,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 30 positives and 514 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -1454,9 +1448,9 @@
               "quote": "**Criterion 12.** `ATS-1260` and the `assistant_plan.version_created` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -1595,21 +1589,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should assistant_plan.wizard_handoff_created use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G17 is the listed Wizard histories; it does not name AssistantPlan handoff history. Source and destination retain their independent policies.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
               "unit": "APR-1506",
               "line_start": 1427,
               "line_end": 1427,
-              "quote": "PENDING_RETENTION_DECISION`. G17 is the listed Wizard histories; it does not name AssistantPlan handoff history. Source and destination retain their independent policies. No reference extend"
+              "quote": "SP-1506 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1680,9 +1674,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 30 positives and 494 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Assistant_Plan_Runtime.md",
@@ -1692,9 +1686,9 @@
               "quote": "**Criterion 12.** `ATS-1260` and the `assistant_plan.wizard_handoff_created` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Exec"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -1833,21 +1827,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should external_research.budget_denied use in its Project scope, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G16 names planning-document annotations, not research budget refusals; no exact event retention assignment was found.",
+          "finding": "Bound to {'project': 'RP-OPERATIONAL-2555D@1.0.0'} by DL-455 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1507",
               "line_start": 777,
               "line_end": 777,
-              "quote": "PENDING_RETENTION_DECISION`. G16 names planning-document annotations, not research budget refusals; no exact event retention assignment was found. No reference extends the linked body's rete"
+              "quote": "SP-1507 binds retention as `RP-OPERATIONAL-2555D@1.0.0` for its Project records, assign"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1918,9 +1912,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 15 positives and 241 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -1930,9 +1924,9 @@
               "quote": "**Criterion 12.** `ATS-1261` and the `external_research.budget_denied` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -2071,21 +2065,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should external_research.finding_classified use in its Project scope, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G16 does not name this research classification/credit family; the underlying finding/union record is separate.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1508",
               "line_start": 835,
               "line_end": 835,
-              "quote": "PENDING_RETENTION_DECISION`. G16 does not name this research classification/credit family; the underlying finding/union record is separate. No reference extends the linked body's retention. "
+              "quote": "SP-1508 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assign"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2156,9 +2150,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 21 positives and 225 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -2168,9 +2162,9 @@
               "quote": "**Criterion 12.** `ATS-1261` and the `external_research.finding_classified` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Execu"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -2309,21 +2303,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should external_research.job_terminal use in its Project scope, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? A research_job_id or manifest is not an Executor/PlanRun identity; G16 and Run year cannot supply an event clock by analogy.",
+          "finding": "Bound to {'project': 'RP-OPERATIONAL-2555D@1.0.0'} by DL-455 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1509",
               "line_start": 893,
               "line_end": 893,
-              "quote": "PENDING_RETENTION_DECISION`. A research_job_id or manifest is not an Executor/PlanRun identity; G16 and Run year cannot supply an event clock by analogy. No reference extends the linked body"
+              "quote": "SP-1509 binds retention as `RP-OPERATIONAL-2555D@1.0.0` for its Project records, assign"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2394,9 +2388,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 15 positives and 226 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -2406,9 +2400,9 @@
               "quote": "**Criterion 12.** `ATS-1261` and the `external_research.job_terminal` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -2547,21 +2541,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should external_research.packet_delivered use in its Project scope, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G16 covers the listed planning-document events, not this new research packet delivery event; chat artifact content remains separately governed.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1510",
               "line_start": 951,
               "line_end": 951,
-              "quote": "PENDING_RETENTION_DECISION`. G16 covers the listed planning-document events, not this new research packet delivery event; chat artifact content remains separately governed. No reference exte"
+              "quote": "SP-1510 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assign"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2632,9 +2626,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 15 positives and 224 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
@@ -2644,9 +2638,9 @@
               "quote": "**Criterion 12.** `ATS-1261` and the `external_research.packet_delivered` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executa"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -2690,8 +2684,8 @@
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1009,
-              "line_end": 1009,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "No family is admitted by this phase."
             }
           ],
@@ -2724,8 +2718,8 @@
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1003,
-              "line_end": 1003,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "**Producer and original source.** ExternalResearch topic admission host, before first job admission. Reuse ERS-002/003/014, exact real Project, frozen plans snapshot, product brief and origi"
             }
           ],
@@ -2741,8 +2735,8 @@
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1005,
-              "line_end": 1005,
+              "line_start": 1006,
+              "line_end": 1006,
               "quote": "**Payload and scope.** CV-1511 selects `Plans/event_authority_w3g/payloads/external_research_topic_started.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts."
             }
           ],
@@ -2758,8 +2752,8 @@
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1005,
-              "line_end": 1005,
+              "line_start": 1006,
+              "line_end": 1006,
               "quote": "**Payload and scope.** CV-1511 selects `Plans/event_authority_w3g/payloads/external_research_topic_started.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts."
             }
           ],
@@ -2775,8 +2769,8 @@
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1007,
-              "line_end": 1007,
+              "line_start": 1008,
+              "line_end": 1008,
               "quote": "**Replay, consumer and checkpoints.** SP-1511 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original el"
             }
           ],
@@ -2785,21 +2779,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should external_research.topic_started use in its Project scope, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G16 is not an exact assignment to research-topic start; frozen source and manifest retention do not automatically assign this extra event.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1009,
-              "line_end": 1009,
-              "quote": "PENDING_RETENTION_DECISION`. G16 is not an exact assignment to research-topic start; frozen source and manifest retention do not automatically assign this extra event. No reference extends t"
+              "line_start": 1010,
+              "line_end": 1010,
+              "quote": "SP-1511 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assign"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2809,8 +2803,8 @@
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1009,
-              "line_end": 1009,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache "
             }
           ],
@@ -2843,8 +2837,8 @@
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1007,
-              "line_end": 1007,
+              "line_start": 1008,
+              "line_end": 1008,
               "quote": "reader.external_research.topic_started.history.v1@1.0.0` is the sole newly authored family history reader for External Research status/packet history under the research and chat owners. It a"
             }
           ],
@@ -2860,8 +2854,8 @@
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1009,
-              "line_end": 1009,
+              "line_start": 1010,
+              "line_end": 1010,
               "quote": "Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cut"
             }
           ],
@@ -2870,21 +2864,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 15 positives and 232 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/External_Research.md",
               "unit": "ERS-1511",
-              "line_start": 1011,
-              "line_end": 1011,
+              "line_start": 1012,
+              "line_end": 1012,
               "quote": "**Criterion 12.** `ATS-1261` and the `external_research.topic_started` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -3023,21 +3017,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should goal.paused use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G29 decides continuation_evaluated only; neither it nor the independently indefinite native body receipt assigns retention to this new pause event.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1512",
               "line_start": 341,
               "line_end": 341,
-              "quote": "PENDING_RETENTION_DECISION`. G29 decides continuation_evaluated only; neither it nor the independently indefinite native body receipt assigns retention to this new pause event. No reference "
+              "quote": "SP-1512 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3108,9 +3102,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 53 positives and 566 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
@@ -3120,9 +3114,9 @@
               "quote": "**Criterion 12.** `ATS-1262` and the `goal.paused` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -3261,21 +3255,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should goal.resumed use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G29 covers the exact continuation check, not this resumed semantic event; preserving native result/Stop policy does not choose an additional event lifetime.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
               "unit": "GRS-1513",
               "line_start": 404,
               "line_end": 404,
-              "quote": "PENDING_RETENTION_DECISION`. G29 covers the exact continuation check, not this resumed semantic event; preserving native result/Stop policy does not choose an additional event lifetime. No r"
+              "quote": "SP-1513 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3346,9 +3340,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 40 positives and 594 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Goal_Runtime_System.md",
@@ -3358,9 +3352,9 @@
               "quote": "**Criterion 12.** `ATS-1262` and the `goal.resumed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and share"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -3499,21 +3493,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should notebook.checkpoint_committed use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? SP-256 assigns native checkpoint values indefinite receipt/source lineage; no exact additional event assignment was found. G03 is Assistant memory, not notebook history.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
               "unit": "WN-1514",
               "line_start": 934,
               "line_end": 934,
-              "quote": "PENDING_RETENTION_DECISION`. SP-256 assigns native checkpoint values indefinite receipt/source lineage; no exact additional event assignment was found. G03 is Assistant memory, not notebook "
+              "quote": "SP-1514 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3584,9 +3578,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 30 positives and 476 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -3596,9 +3590,9 @@
               "quote": "**Criterion 12.** `ATS-1263` and the `notebook.checkpoint_committed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable f"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -3737,21 +3731,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should notebook.checkpoint_failed use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? The failure event is not the checkpoint value itself; G03/G27 do not name it. No age/count/deletion rule is inferred.",
+          "finding": "Bound to {'project': 'RP-OPERATIONAL-2555D@1.0.0', 'application': 'RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0'} by DL-455 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
               "unit": "WN-1515",
               "line_start": 992,
               "line_end": 992,
-              "quote": "PENDING_RETENTION_DECISION`. The failure event is not the checkpoint value itself; G03/G27 do not name it. No age/count/deletion rule is inferred. No reference extends the linked body's rete"
+              "quote": "SP-1515 binds retention as `RP-OPERATIONAL-2555D@1.0.0` for its Project records, assign"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3822,9 +3816,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 36 positives and 462 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -3834,9 +3828,9 @@
               "quote": "**Criterion 12.** `ATS-1263` and the `notebook.checkpoint_failed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixt"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -3975,21 +3969,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should notebook.entry_committed use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G03 applies Assistant memory-note actions, not these notebook entries. Native notebook indefinite retention does not automatically retain this additional event.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
               "unit": "WN-1516",
               "line_start": 1050,
               "line_end": 1050,
-              "quote": "PENDING_RETENTION_DECISION`. G03 applies Assistant memory-note actions, not these notebook entries. Native notebook indefinite retention does not automatically retain this additional event. "
+              "quote": "SP-1516 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4060,9 +4054,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 36 positives and 480 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -4072,9 +4066,9 @@
               "quote": "**Criterion 12.** `ATS-1263` and the `notebook.entry_committed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtur"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -4213,21 +4207,21 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "What exact age/count, clock anchor, overflow and deletion rule should notebook.entry_superseded use in its Project and application scopes, given that the cited Card-1 group does not include this exact family and no exact Storage event-class assignment decides it? G03 is a different memory owner/family set; native entry lifecycle and retention are reused without assigning event retention by analogy.",
+          "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
               "unit": "WN-1517",
               "line_start": 1107,
               "line_end": 1107,
-              "quote": "PENDING_RETENTION_DECISION`. G03 is a different memory owner/family set; native entry lifecycle and retention are reused without assigning event retention by analogy. No reference extends th"
+              "quote": "SP-1517 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: the landed decision now decides this cell (W3-P2 step 5)."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4298,9 +4292,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 30 positives and 484 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -4310,9 +4304,9 @@
               "quote": "**Criterion 12.** `ATS-1263` and the `notebook.entry_superseded` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtu"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -4536,9 +4530,9 @@
           "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The corrected phase-1 plan enumerates 1629 semantic/shared guard rows and 2309 payload schema assertion sites. Distinct write lease, write permission and compound-clause positives/one-defect negatives are planned, with named refusals and zero new effects. This is not executable oracle or guard-removal proof; criterion 12 stays PARTIAL for phase 2.",
+          "finding": "Executable synthetic oracle (native NOT_RUN): 42 positives and 494 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
           "evidence": [
             {
               "path": "Plans/Working_Notebook.md",
@@ -4548,9 +4542,9 @@
               "quote": "**Criterion 12.** `ATS-1263` and the `notebook.transition_state_changed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executab"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "New phase-1 draft under the exact 9.a technical-definition grant; no admission or native verdict."
+          "prior": "PARTIAL",
+          "change": "improved",
+          "change_reason": "Phase 2: executable oracles on guard tables proved by the gated tool (W3-P2 steps 1-3)."
         }
       },
       "remaining_gaps": [
@@ -4573,16 +4567,16 @@
     }
   ],
   "source_file_hashes": {
-    "Plans/Assistant_Plan_Runtime.md": "c40d71c6e0d5a8464b48f84d922bce53e96a5b84e1060ea8fef3f55519494abb",
-    "Plans/Automated_Testing_System.md": "36efbcb57a3de6332493b17f4c4173e6d964223829253d2f43efc8ea3e7f6390",
-    "Plans/Contracts_V0.md": "acd0494273730a9a82a3edc5752eeccfb929526900bce2bdcd205147f57b5f33",
-    "Plans/External_Research.md": "680005d7f7c153a0d18daca5b092b82b946fe664a83f2be91f93047c03cb564e",
-    "Plans/Goal_Runtime_System.md": "c5e60f46b27a3c2f45c4963ed869de4bb7f7893179a1daffc6fc9ea5a86e7009",
-    "Plans/Working_Notebook.md": "aecaee78a41cc688ac771614a537a5e080c224628a2c185621ef92cd1e22987c",
-    "Plans/event_authority_w3g/contracts.json": "32f56845330eb631341c4e7a8a1989c166e396568bcdab499ba1054c3958f46e",
-    "Plans/event_authority_w3g/oracle_plan.json": "4a5794af5b9503c3119956a1ccb548d1e322fbf24155dd7e542fdc1665ef4d68",
-    "Plans/storage-plan.md": "b566ce0cf9fe0b5a856bfd2e785683947d79afd4562ddc23b280ce09d7c30b31",
-    "Plans/event_authority_w3g/schema_resources.json": "b5d61b0abbd69c8a1e5332129f7a9ef2b07f468a64cdd83cdbefd8c5bc821222"
+    "Plans/Assistant_Plan_Runtime.md": "4401f5b65a1cca3087eb32423eeb4e257b10c22765c427a8c61995cde8e56565",
+    "Plans/Automated_Testing_System.md": "a61d285e14a5afbca6cbafa8e55d5d5185581e01a5727e03bbc11b5015675d31",
+    "Plans/Contracts_V0.md": "86bdf064a73fa004d69b1755875b84cb9b83235245a2c963a0f97ca247463369",
+    "Plans/External_Research.md": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70",
+    "Plans/Goal_Runtime_System.md": "5f7ecbac63fbe3dd3380c5e90687f9d28c9396b6fd2aa79081a6a38bb3ce538e",
+    "Plans/Working_Notebook.md": "8a9931bf6eccbf73c5f202d1e15f6d180457b951c41660ee1c2cfce0284082be",
+    "Plans/event_authority_w3g/contracts.json": "001aacc04cba0adcbe7a495ead9cea7b69853cc477271e0dd6065d93cac236e4",
+    "Plans/event_authority_w3g/oracle_plan.json": "fa43206bf7100f17f353b8345cbee6089f4d9cc694140255773578b7766a3f42",
+    "Plans/event_authority_w3g/schema_resources.json": "b5d61b0abbd69c8a1e5332129f7a9ef2b07f468a64cdd83cdbefd8c5bc821222",
+    "Plans/storage-plan.md": "6b3024c84d258a99ef07009f05bb736cb20bb8cb19b3e0dc7962ff8ebe4ce434"
   },
   "review_round1": {
     "findings": [
@@ -4594,5 +4588,14 @@
     "retention_pending": 16,
     "goal_receipt_question_unchanged": true,
     "new_ids": 0
+  },
+  "phase2": {
+    "changes": {
+      "C12 PARTIAL->PASS": 19,
+      "retention PARTIAL->PASS": 16
+    },
+    "guard_tool_summary_sha256": "879dce5932e17b275400228a9732b7d400f25682a60a0a28ab26ebc9245a83ed",
+    "contracts_run_sha256": "33dbbce47bfcb9ba0cc0f80159ba9166c45dd223dfeb1a2bcf1f063142f3b514",
+    "native_execution": "NOT_RUN"
   }
 }
