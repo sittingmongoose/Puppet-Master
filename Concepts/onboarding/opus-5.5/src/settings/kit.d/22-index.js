@@ -144,7 +144,7 @@ setActiveLocalSection = function (workspaceId, sectionId, persist = true) {
 
 /* ---------- scroll spy ------------------------------------------------------------------------------------------- */
 /* An anchor counts as reached when the page has scrolled to where a jump to it lands (scrollOffsetWithin, which
-   allows for a manager's sticky tab strip) less a reading allowance. A jump pins its target: it stays lit while it is
+   allows for a manager's sticky tab strip), give or take 4 px (FO-185). A jump pins its target: it stays lit while it is
    on screen until you scroll, type or click yourself. */
 let pm51SpyPin = null;
 const pm51LandTop = (scroller, el) => scrollOffsetWithin(scroller, el) - 26;
@@ -177,7 +177,12 @@ setupScrollSpy = function () {
     if (performance.now() < suppressScrollSpyUntil) { schedule(); return; }
     const blocks = [...scroller.querySelectorAll('[data-workspace-block]')];
     if (!blocks.length) return;
-    const top = scroller.scrollTop, line = top + Math.min(140, scroller.clientHeight * .3);
+    /* FO-185 (Jared, 2026-11-13 #6: "When you scroll in settings, the highlight on the submenu doesnt work properly"):
+       a section is the one in view once its heading has reached the top of the page's view, where a jump to it lands
+       (pm51LandTop), not 140 px before it gets there. The old reading allowance lit the next section about 180 px early
+       and passed over a short section (Answers, the last of Providers & Accounts) altogether, since the next page's
+       top passed the same early line right after it. 4 px absorbs a landing's rounding. */
+    const top = scroller.scrollTop, line = top + 4;
     const sc = scroller.getBoundingClientRect();
     const pinEl = pm51SpyPin ? root.querySelector(`[data-section-id="${cssEscape(pm51SpyPin)}"]`) : null;
     const pinOn = pinEl && pm51SpyShown(pinEl) && (() => { const r = pinEl.getBoundingClientRect(); return r.bottom > sc.top + 20 && r.top < sc.bottom - 40; })();
