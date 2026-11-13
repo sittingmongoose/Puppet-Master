@@ -29,6 +29,9 @@ PM51.sameValue = o55SameValue;
 const o55IsJunkNote = t => !t || /^(simple|advanced)(\s*·.*)?$/i.test(String(t).trim());
 const o55IsRecommendLine = t => /^recommended\s*:/i.test(String(t || '').trim());
 function o55ChoicesFor(setting, current) {
+  /* FO-182: a model setting's choices are the shared model picker's (kit.d/31-model-rows.js): its own inherit choice
+     and the other choices that are not a model, then the models, each with its depths */
+  if (O55_PICK_MODELS.has(setting.id)) return { kind: 'single', items: o55ModelItems(setting.id, current) };
   const row = O55R[setting.id] || {};
   const control = row.control || setting.control;
   const ref = O55_REF.get(setting.id) || {};
@@ -63,10 +66,16 @@ function o55ChoicesFor(setting, current) {
    lists, by id, exactly as Jared chose them: the 13 model settings (option B, 2026-11-10) and the 11 long single-choice
    lists of question 3 ("looks good, I choose all 11", 2026-11-11), those without the maker strip. No rule widens it:
    every other list, however long (Terminal colors, How it talks and the rest), stays a tick list until he says so. */
-const O55_PICK_MODELS = new Set(['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.teach-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.thread-title-model', 'ai.models.per-lane-model', 'personas.tuning.default-model']);
+/* FO-182/183 (Jared, 2026-11-13: "sometimes the correct one, sometimes just the list"): the model settings are now every
+   model_picker row of Plans/settings_inventory.json, all 16 (O55S.canonModels, written by the build from the
+   inventory), and every one of them uses this picker, on its row as well as here. The ids the inventory retired are
+   gone with their rows: the per-lane model (batch 3), the Goal worker and checker, the helper model and a persona's
+   model (DL-476). */
+const O55_MODEL_CANON = (typeof O55S === 'object' && O55S && O55S.canonModels) || {};
+const O55_PICK_MODELS = new Set(Object.keys(O55_MODEL_CANON));
 const O55_PICK_LISTS = new Set(['code.terminal.background-image', 'code.editing.color-scheme', 'ai.models.default-provider', 'code.terminal.background-gradient', 'general.visual.theme', 'planning.verification.goal-template', 'code.terminal.bezel-material', 'personas.library.default-persona', 'personas.library.active-persona', 'general.visual.nier-background', 'media.image.provider']);
 const O55_BRANDS = { anthropic: 'Anthropic', 'anthropic-api': 'Anthropic', 'claude-code': 'Anthropic', openai: 'OpenAI', 'openai-codex': 'OpenAI', gemini: 'Google', google: 'Google', 'qwen-coding': 'Alibaba', 'qwen-token': 'Alibaba', alibaba: 'Alibaba', 'kimi-coding': 'Moonshot', moonshot: 'Moonshot', 'zai-coding': 'z.ai', zai: 'z.ai', 'cursor-cli': 'Cursor', cursor: 'Cursor', 'free-models': 'Free routes', opencode: 'OpenCode' };
-const o55IsModelChoice = setting => O55_PICK_MODELS.has(setting.id);
+const o55IsModelChoice = setting => O55_PICK_MODELS.has(setting.id) || !!setting.o55Model;
 const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && (O55_PICK_MODELS.has(setting.id) || O55_PICK_LISTS.has(setting.id));
 /* the chat's maker mark (PM56_PICKERS.providerMark draws its PROVIDER_MARKS; an unknown maker gets the chat's sparkle),
    or the maker's first letter when the chat is not in the page */
@@ -89,16 +98,20 @@ function o55PickSource(setting, ch) {
 function o55PickModel(setting, ch, src) {
   const model = o55IsModelChoice(setting);
   const items = ch.items.map((it, i) => {
+    /* FO-182: an item the model rows built (o55ModelItems) carries its own name, small line, maker and depths; a
+       choice that is not a model (the row's inherit choice, Default, None, auto) is `pre`: it comes first, under no
+       maker, with the mark of the model it resolves to */
+    if (it.name != null) return Object.assign({}, it, { index: i, brand: it.pre ? '' : (it.brand || ''), sub: it.why || it.sub || '', levels: it.levels || [] });
     const raw = String(it.raw), slash = model ? raw.indexOf('/') : -1, pid = slash > 0 ? raw.slice(0, slash) : '';
     const brand = model ? (O55_BRANDS[pid] || pid.replace(/[-_]+/g, ' ').replace(/^./, c => c.toUpperCase())) : '';
     const parts = String(it.label).split(' · ');
     const name = model && parts.length > 1 ? parts.slice(0, -1).join(' · ') : String(it.label);
-    return Object.assign({}, it, { index: i, brand, name, sub: it.why || it.hint || '' });
+    return Object.assign({}, it, { index: i, brand, name, sub: it.why || it.hint || '', pre: model && !brand, levels: model ? o55DepthLevels(raw) : [] });
   });
   /* one section per maker, makers in the order they first appear (the inventory's examples first), as the chat
-     groups its menu; data-index stays the choice's own index */
-  const brands = model ? [...new Set(items.map(x => x.brand))] : [];
-  const rows = model ? brands.flatMap(b => items.filter(x => x.brand === b)) : items;
+     groups its menu; data-index stays the choice's own index. The choices that are not a model sit above them. */
+  const brands = model ? [...new Set(items.filter(x => !x.pre).map(x => x.brand))] : [];
+  const rows = model ? items.filter(x => x.pre).concat(brands.flatMap(b => items.filter(x => !x.pre && x.brand === b))) : items;
   return { model, items: rows, brands, current: rows.find(x => x.on) || null, static: !!(src && src.static), reason: src && src.static ? src.reason : '' };
 }
 function o55PickTrigger(setting, pm) {
@@ -106,14 +119,19 @@ function o55PickTrigger(setting, pm) {
   /* read only: it names no current value (each thing has its own, listed above) */
   const name = pm.static ? `See the ${pm.items.length} choices` : cur ? cur.name : PM51.valueText(setting, settingValue(setting));
   const marks = cur ? cur.marks : [];
-  const sub = pm.static ? pm.reason : cur ? [pm.model ? cur.brand : '', cur.sub].filter(Boolean).join(' · ') : '';
-  return `<button type="button" class="o55-pick-trigger${pm.model ? ' is-model' : pm.current && pm.current.swatch ? ' has-dot' : ''}" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(`${label}: ${name}${marks.length ? ', ' + marks.join(', ') : ''}`)}" data-action="o55-insp-pick" data-setting="${a(setting.id)}">${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(cur ? cur.brand : '', 16)}</span>` : cur && cur.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${cur.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(name)}${marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${sub ? `<small>${h(sub)}</small>` : ''}</span><span class="o55-pick-chev" aria-hidden="true">${icon('down')}</span></button>`;
+  const sub = pm.static ? pm.reason : cur ? [pm.model ? cur.brand : '', cur.effort ? `${cur.effort} depth` : '', cur.sub].filter(Boolean).join(' · ') : '';
+  return `<button type="button" class="o55-pick-trigger${pm.model ? ' is-model' : pm.current && pm.current.swatch ? ' has-dot' : ''}" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(`${label}: ${name}${marks.length ? ', ' + marks.join(', ') : ''}`)}" data-action="o55-insp-pick" data-setting="${a(setting.id)}">${pm.model ? `<span class="o55-pick-mark${cur && cur.pre ? ' is-pre' : ''}" aria-hidden="true">${o55ItemMark(cur, 16)}</span>` : cur && cur.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${cur.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(name)}${marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${sub ? `<small>${h(sub)}</small>` : ''}</span><span class="o55-pick-chev" aria-hidden="true">${icon('down')}</span></button>`;
 }
 function o55PickItems(pm, idBase) {
   let html = '', last = null;
   pm.items.forEach(it => {
-    if (pm.model && it.brand !== last) { html += `<div class="pm51-popout-group o55-pick-group" role="presentation" data-brand="${a(it.brand)}">${h(it.brand)}</div>`; last = it.brand; }
-    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : it.swatch ? ' has-dot' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${it.why || it.off ? ` aria-disabled="true" data-disabled-reason="${a(it.why || it.reason)}"` : ''}>${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(it.brand, 15)}</span>` : it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${it.sub ? `<small>${h(it.sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
+    if (pm.model && !it.pre && it.brand !== last) { html += `<div class="pm51-popout-group o55-pick-group" role="presentation" data-brand="${a(it.brand)}">${h(it.brand)}</div>`; last = it.brand; }
+    /* FO-182: a model's depths are named under it, as the chat's model rows name their efforts */
+    /* a choice that is not a model says its tag (Default) on its small line, before the model it resolves to: beside a
+       long name such as "Same as Everyday building" the tag wrapped to a line of its own */
+    const tags = it.pre ? [] : it.marks;
+    const small = [it.pre ? it.marks.join(' · ') : '', it.sub, pm.model && it.levels && it.levels.length ? it.levels.join(' / ') : ''].filter(Boolean).join(' · ');
+    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : it.swatch ? ' has-dot' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${pm.model && it.levels && it.levels.length ? ` data-levels="${a(it.levels.join('|'))}"` : ''}${it.pre ? ' data-pre="1"' : ''}${it.why || it.off ? ` aria-disabled="true" data-disabled-reason="${a(it.why || it.reason)}"` : ''}>${pm.model ? `<span class="o55-pick-mark${it.pre ? ' is-pre' : ''}" aria-hidden="true">${o55ItemMark(it, 15)}</span>` : it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${tags.map(m => `<em>${h(m)}</em>`).join('')}</strong>${small ? `<small>${h(small)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
   });
   return html + '<div class="pm51-popout-empty" hidden>No matches</div>';
 }
@@ -155,19 +173,22 @@ function o55PickFilterRows(entry, root) {
   const first = [...root.querySelectorAll('[role="option"]')].find(n => !n.hidden && n.getAttribute('aria-disabled') !== 'true');
   if (first) { entry.el.scrollTop = 0; o55PopActive(entry, Number(first.dataset.index)); } else entry.active = -1;
 }
-function o55PickCommit(id, raw) {
+function o55PickCommit(id, raw, effort) {
   const found = findSettingGlobal(id); if (!found) return;
-  if (o55SameValue(settingValue(found.setting), raw)) return;
-  if (!commitSettingValue(id, raw)) return;
-  saveState(); o55InspRefresh(id); o55Changed(found.setting, raw);
+  /* FO-182: a model and its depth are one value; the same model at another depth is a change too */
+  const same = o55SameValue(settingValue(found.setting), raw), deep = O55_PICK_MODELS.has(id);
+  if (same && (!deep || o55DepthOf(id, raw) === (effort || ''))) return;
+  if (!same && !commitSettingValue(id, raw)) return;
+  if (deep) o55DepthPut(id, raw, effort);
+  saveState(); o55InspRefresh(id); o55Changed(found.setting, raw); if (deep) o55MselSoon();
   o55PickFocusBack(id);
 }
 /* a per-thing setting saves through its thing's own row (its scoped setter stores it on the thing and says so), then
    the panel follows: its Now list and the picker read the thing again */
-function o55PickOwnerCommit(id, src, raw) {
-  if (!src.commit(raw)) { showToast('Not saved', 'Change it where it is shown.', 'info', 2600); return; }
+function o55PickOwnerCommit(id, src, raw, effort) {
+  if (!src.commit(raw, effort)) { showToast('Not saved', 'Change it where it is shown.', 'info', 2600); return; }
   PM51.syncInspector();
-  o55PickFocusBack(id);
+  if (src.after) src.after(); else o55PickFocusBack(id);
 }
 function o55PickFocusBack(id) {
   /* a pick hands focus back to the picker, as a select does; a model change can re-render the page in place
@@ -183,7 +204,7 @@ function o55PickFocusBack(id) {
   const watch = () => { back(); if (busy() && Date.now() < until) setTimeout(watch, 100); else requestAnimationFrame(() => requestAnimationFrame(back)); };
   back(); requestAnimationFrame(() => requestAnimationFrame(watch));
 }
-const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!(it.why || it.off), reason: it.why || it.reason || '' }; }); return o; };
+const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!(it.why || it.off), reason: it.why || it.reason || '', levels: pm.model ? it.levels || [] : [], name: it.name, brand: it.brand, on: !!it.on, effort: it.effort || '' }; }); return o; };
 const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip is-on" data-brand="" aria-pressed="true" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
   .concat(pm.brands.map(b => `<button type="button" class="o55-pick-chip" data-brand="${a(b)}" aria-pressed="false" aria-label="${a(b)}" data-pm-hover-label="${a(b)}">${o55BrandMark(b, size)}</button>`)).join('');
 /* FO-178 (Jared's card Q6, answer A, 2026-11-13: "Pop up over the panel, like the chat picker"): the rows no longer
@@ -208,6 +229,7 @@ let o55Pop = null;
 function o55PopClose(focusTrigger) {
   const e = o55Pop; if (!e) return; o55Pop = null;
   if (e.watch) e.watch.disconnect();
+  e.depth = null;
   if (e.trigger.isConnected) { e.trigger.setAttribute('aria-expanded', 'false'); e.trigger.removeAttribute('aria-controls'); }
   const box = e.box;
   sproutClose(box, () => { if (box.isConnected && !box.classList.contains('is-open')) box.remove(); });
@@ -243,10 +265,94 @@ function o55PopPlace(p) {
   list.scrollTop = keep;
   p.at = anchorAt(p.trigger);
 }
+/* FO-182, the depth inside the picker (Models_System 7.1: "one open picker keeps the model list visible while showing
+   the selected route's supported depth levels beside the list on desktop and inside the same picker on phone"). The
+   chosen model's depths are a second listbox inside the popup: beside the list, level with the model's row, on the side
+   with room (the chat's effort sidecar sits beside its model row the same way), or, with no room on either side, at the
+   popup's foot. Being part of the popup, it closes, moves and keeps focus by the popup's own rules (a press outside,
+   focus leaving, Escape, a scroll that moves the trigger). Its first choice is the model's own default depth. Arrow
+   keys walk it, Enter or a press saves the model with that depth and closes the picker, Arrow Left goes back to the
+   list (and Escape, ahead of the popup's own Escape, which then closes it). */
+const O55_DEPTH_W = 196;
+function o55DepthHtml(p, index) {
+  const o = p.entry.options[index], id = p.box.id + '-depth';
+  const cur = o.on ? o.effort || '' : null;
+  return `<div class="o55-depth-head"><span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(o.brand, 14)}</span><span class="o55-depth-copy"><strong>${h(o.name)}</strong><small>Thinking depth</small></span></div><div class="o55-depth-list" role="listbox" id="${id}" tabindex="-1" aria-label="${a('Thinking depth for ' + o.name)}">${[''].concat(o.levels).map((lv, i) => `<div class="pm51-popout-item o55-depth-item" role="option" id="${id}-${i}" data-effort="${a(lv)}" aria-selected="${cur === lv}"><span class="o55-depth-name">${h(lv || 'Model default')}</span><span class="o55-pick-tick" aria-hidden="true">${cur === lv ? icon('check') : ''}</span></div>`).join('')}</div>`;
+}
+function o55DepthPlace(p) {
+  const d = p && p.depth; if (!d) return;
+  const box = p.box, gap = 6, { vw, vh, top: ft, bottom: fb } = popoutFrame();
+  /* the popup's own layout box (its style and offsets), never its rect: it may still be sprouting (scaled) */
+  const bl = parseFloat(box.style.left) || 0, bw = box.offsetWidth, bh = box.offsetHeight;
+  const bt = box.style.top && box.style.top !== 'auto' ? parseFloat(box.style.top) || 0 : vh - (parseFloat(box.style.bottom) || 0) - bh;
+  const side = bl + bw + gap + O55_DEPTH_W <= vw - 8 ? 'right' : bl - gap - O55_DEPTH_W >= 8 ? 'left' : 'in';
+  d.side = side;
+  box.classList.toggle('has-depth-side', side !== 'in');
+  d.el.className = `o55-depth ${side === 'in' ? 'o55-depth-in' : 'o55-depth-side is-' + side}`;
+  if (side === 'in') { d.el.removeAttribute('style'); return; }
+  const list = p.entry.el, row = list.querySelector(`[role="option"][data-index="${d.index}"]`);
+  const rowTop = row ? list.offsetTop + row.offsetTop - list.scrollTop : 0;
+  d.el.style.cssText = `width:${O55_DEPTH_W}px;top:0px`;
+  const h = d.el.offsetHeight;
+  d.el.style.top = Math.round(Math.max(ft - bt, Math.min(fb - bt - h, rowTop - 8))) + 'px';
+}
+function o55DepthMark(p) {
+  const d = p.depth; if (!d) return;
+  const list = d.el.querySelector('[role="listbox"]'), opts = [...list.querySelectorAll('[role="option"]')];
+  opts.forEach((n, i) => n.classList.toggle('is-active', i === d.active));
+  if (opts[d.active]) list.setAttribute('aria-activedescendant', opts[d.active].id);
+}
+function o55DepthBack(p) { try { p.entry.searchInput.focus({ preventScroll: true }); } catch (e) { p.entry.searchInput.focus(); } }
+function o55DepthOpen(p, index, keys) {
+  const o = p.entry.options[index]; if (!o || !o.levels || !o.levels.length) return false;
+  const focus = () => { const l = p.depth.el.querySelector('[role="listbox"]'); try { l.focus({ preventScroll: true }); } catch (e) { l.focus(); } };
+  if (p.depth && p.depth.index === index) { if (keys) focus(); return true; }
+  if (p.depth) { p.depth.el.remove(); p.depth = null; }
+  p.box.querySelectorAll('.o55-pick-item.is-pending').forEach(n => n.classList.remove('is-pending'));
+  const row = p.entry.el.querySelector(`[role="option"][data-index="${index}"]`); if (row) row.classList.add('is-pending');
+  const el = document.createElement('div');
+  el.innerHTML = o55DepthHtml(p, index);
+  const d = p.depth = { index, el, side: null, active: 0 };
+  const opts = () => [...el.querySelectorAll('[role="option"]')];
+  const sel = opts().findIndex(n => n.getAttribute('aria-selected') === 'true'); d.active = sel >= 0 ? sel : 0;
+  p.box.appendChild(el);
+  o55DepthPlace(p); o55DepthMark(p);
+  if (!p.depthScroll) { p.depthScroll = () => { if (p.depth && p.depth.side !== 'in') o55DepthPlace(p); }; p.entry.el.addEventListener('scroll', p.depthScroll, { passive: true }); }
+  /* its own presses and moves stop here, so the popup's list handlers never read a depth row as a model row */
+  el.addEventListener('pointermove', e => { e.stopPropagation(); const it = e.target.closest('[role="option"]'); if (it) { const i = opts().indexOf(it); if (i !== d.active) { d.active = i; o55DepthMark(p); } } });
+  el.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); const it = e.target.closest('[role="option"]'); if (it) p.commit(index, it.dataset.effort || ''); });
+  if (keys) focus();
+  return true;
+}
+/* the depth's keys, ahead of the popup's own (a capture listener on the popup): in the depths, arrows walk them, Enter
+   saves, Arrow Left goes back; in the list, Enter or Arrow Right (the caret at the end of the search) on a model with
+   depths moves into them */
+function o55DepthKeys(p, e) {
+  const k = e.key, d = p.depth, entry = p.entry, stop = () => { e.preventDefault(); e.stopPropagation(); };
+  if (d && d.el.contains(e.target)) {
+    const opts = [...d.el.querySelectorAll('[role="option"]')], n = opts.length;
+    if (k === 'ArrowDown' || k === 'ArrowUp') { stop(); d.active = Math.max(0, Math.min(n - 1, d.active + (k === 'ArrowDown' ? 1 : -1))); o55DepthMark(p); }
+    else if (k === 'Home' || k === 'End') { stop(); d.active = k === 'Home' ? 0 : n - 1; o55DepthMark(p); }
+    else if (k === 'Enter' || k === ' ') { stop(); const it = opts[d.active]; if (it) p.commit(d.index, it.dataset.effort || ''); }
+    else if (k === 'ArrowLeft' || k === 'Backspace') { stop(); o55DepthBack(p); }
+    else if (k === 'Tab') { stop(); o55PopClose(true); }
+    return;
+  }
+  if (e.target.closest && e.target.closest('.o55-pick-chip')) return;
+  const o = entry.active >= 0 ? entry.options[entry.active] : null;
+  if (!o || !o.levels || !o.levels.length || o.disabled) return;
+  const atEnd = e.target !== entry.searchInput || entry.searchInput.selectionStart === entry.searchInput.value.length;
+  if (k === 'Enter' || (k === 'ArrowRight' && atEnd)) { stop(); o55DepthOpen(p, entry.active, true); }
+}
+/* Escape in the depths goes back to the list, ahead of the popup's own Escape (registered after this one) */
+document.addEventListener('keydown', e => {
+  const p = o55Pop; if (!p || e.key !== 'Escape' || !p.depth || !p.depth.el.contains(e.target)) return;
+  e.preventDefault(); e.stopImmediatePropagation(); o55DepthBack(p);
+}, true);
 function o55PopOpen(trigger, setting, pm, src) {
   if (o55Pop && o55Pop.trigger === trigger) { o55PopClose(true); return; }
   o55PopClose(false); PM51.closePopouts();
-  const label = PM51.rowLabel(setting), id = POP_ID();
+  const label = (src && src.label) || PM51.rowLabel(setting), id = POP_ID();
   const box = document.createElement('div');
   box.className = `pm51-popout o55-pick-pop${pm.model ? ' is-model' : ''}`; box.id = id;
   box.dataset.portalDisplay = 'flex'; box.setAttribute('data-lg-surface', 'menu');
@@ -254,9 +360,14 @@ function o55PopOpen(trigger, setting, pm, src) {
   document.body.appendChild(box);
   const list = box.querySelector('.o55-pick-list');
   const entry = { el: list, pop: box, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
-  const p = o55Pop = { box, trigger, entry, at: null, watch: null };
+  const p = o55Pop = { box, trigger, entry, at: null, watch: null, depth: null };
   trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', id + '-list');
-  const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55PopClose(true); if (src && src.commit) o55PickOwnerCommit(setting.id, src, o.value); else o55PickCommit(setting.id, o.value); };
+  /* FO-182 (Models_System 7.1): a model with depths is not saved when it is chosen; its depths show beside the list
+     (inside the popup when there is no room beside it), the popup stays open, and the depth chosen saves the model and
+     the depth together. A choice that is not a model, or a model without depths, is saved at once. */
+  const commit = (index, effort) => { const o = entry.options[index]; if (!o) return; o55PopClose(true); if (src && src.commit) o55PickOwnerCommit(setting.id, src, o.value, effort || ''); else o55PickCommit(setting.id, o.value, effort || ''); };
+  const pick = (index, keys) => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } if (o.levels && o.levels.length) { o55DepthOpen(p, index, keys); return; } commit(index, ''); };
+  p.commit = commit;
   o55PopPlace(p);
   /* the current choice (else the first that can be picked) is the active row, in the middle of the list's view */
   const sel = pm.items.find(x => x.on), first = pm.items.find(x => !x.why);
@@ -264,6 +375,10 @@ function o55PopOpen(trigger, setting, pm, src) {
   const node = list.querySelector(`[data-index="${entry.active}"]`);
   if (node) list.scrollTop = Math.max(0, node.offsetTop - (list.clientHeight - node.offsetHeight) / 2);
   if (window.PM6_SPROUT) PM6_SPROUT.open(box, null, trigger, { origin: 'trigger' }); else box.classList.add('is-open');
+  /* FO-182: the model chosen now shows its depths from the start; Enter or Arrow Right on a model with depths moves
+     into them (o55DepthKeys, ahead of the popup's own keys) */
+  if (sel && sel.levels && sel.levels.length && pm.model) o55DepthOpen(p, sel.index, false);
+  box.addEventListener('keydown', e => o55DepthKeys(p, e), true);
   box.addEventListener('pointermove', e => { const it = e.target.closest('[role="option"]'); if (it && Number(it.dataset.index) !== entry.active) setActiveOption(entry, Number(it.dataset.index), false); });
   /* a press on a row, a heading or the popup's edge leaves focus where it is (the search), as a listbox's rows do: the
      rows take no focus, and a blur there would close the popup before a press held for a moment ends in its click */
@@ -324,7 +439,7 @@ document.addEventListener('keydown', e => {
 }, true);
 function o55PickerHtml(setting, ch) {
   const ps = o55PickSource(setting, ch), pm = o55PickModel(setting, ps.ch, ps.src);
-  const count = pm.model ? `${pm.items.length} models from ${pm.brands.length} makers` : `${pm.items.length} choices`;
+  const count = pm.model ? `${pm.items.filter(x => !x.pre).length} models from ${pm.brands.length} makers` : `${pm.items.length} choices`;
   return `<section class="o55-insp-block o55-pick-block${pm.static ? ' is-static' : ''}"><h4>${pm.static ? 'What it can be' : 'Your choices'} <span class="o55-pick-count">· ${h(count)}</span></h4>${o55PickTrigger(setting, pm)}</section>`;
 }
 function o55ChoicesHtml(setting, ch) {

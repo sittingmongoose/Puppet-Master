@@ -251,7 +251,7 @@ PM51.pickSource = setting => {
   const ctl = from ? o55PickControl(from) : null;
   if (!ctl) return { static: true, reason: row.perWhere || 'Change it where it is shown.' };
   return {
-    items: [...ctl.options].map(o => ({ raw: o.value, label: o.textContent, hint: o.dataset.meta || '', on: o.value === ctl.value, marks: [], why: o.dataset.disabled === '1' ? (o.dataset.reason || 'Not available here.') : '' })),
+    items: [...ctl.options].map(o => ({ raw: o.value, label: o.textContent, hint: o.dataset.meta || o.dataset.sub || '', on: o.value === ctl.value, marks: [], why: o.dataset.disabled === '1' ? (o.dataset.reason || 'Not available here.') : '' })),
     commit(value) {
       const live = o55PickControl(from); if (!live) return false;
       const i = [...live.options].findIndex(o => o.value === String(value)); if (i < 0) return false;

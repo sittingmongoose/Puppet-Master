@@ -147,3 +147,58 @@
 #panel-settings .pm51-hero.tone-blocked .pm51-hero-icon { color: var(--k3-red); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-red) 35%, transparent); }
 /* a chosen or keyed row (NieR inverts it to ink): its tag and small line follow the row's own ink */
 .o55-pick-pop .o55-pick-item:is(.is-active, [aria-selected="true"]) .o55-pick-copy :is(em, small) { color: inherit; opacity: .8; }
+
+/* FO-182/183 (Jared, 2026-11-13: "sometimes the correct one, sometimes just the list"): every model row draws the
+   Details panel's picker button (kit.d/31-model-rows.js PM51.modelSelect), sized for a row: as wide as a row's
+   dropdown (190-320 px, the whole width where the row stacks), two lines, the maker's mark. A choice that is not a
+   model (the row's own inherit choice, Default, None) wears the mark of the model it resolves to, or a quiet tile. */
+#panel-settings .o55-msel { display: inline-flex; min-width: 0; max-width: 100%; }
+#panel-settings .o55-msel > .o55-pick-trigger { width: 300px; max-width: 100%; min-height: 44px; padding: 6px 10px 6px 7px; gap: 9px; border-radius: 9px; }
+#panel-settings .o55-msel > .o55-pick-trigger .o55-pick-copy strong { font-size: 13px; }
+#panel-settings .o55-msel > .o55-pick-trigger .o55-pick-copy small { font-size: 11px; }
+#panel-settings .pm51-field .o55-msel, #panel-settings .o55-field .o55-msel { display: flex; width: 100%; }
+#panel-settings :is(.pm51-field, .o55-field) .o55-msel > .o55-pick-trigger { width: 100%; }
+.o55-pick-mark.is-pre { background: color-mix(in srgb, var(--accent-primary, #7c6cff) 22%, var(--surface, #12152a)); color: var(--text-primary, #f4f2ff); }
+#panel-settings .o55-pick-mark.is-pre { background: color-mix(in srgb, var(--k3-accent) 22%, var(--k3-bg-2)); color: var(--k3-text-1); }
+.o55-pick-mark.is-pre svg { width: 14px; height: 14px; }
+@container settings-host (max-width: 760px) {
+  #panel-settings .o55-row .setting-control > .o55-msel { display: flex; width: 100%; }
+  #panel-settings .o55-row .o55-msel > .o55-pick-trigger { width: 100%; }
+}
+/* the model row being chosen while its depths are open */
+.o55-pick-pop .o55-pick-item.is-pending { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, #7c6cff) 55%, transparent); }
+
+/* FO-182: the depth inside the picker (kit.d/30-inspector.js o55DepthOpen), a part of the popup. Beside the list it
+   stands just outside the popup's edge, level with the model's row, painted as the popup is (its own surface, border,
+   corners and shadow, read from the popup); with no room beside, it sits at the popup's foot. Its rows are the popup's. */
+.pm51-popout.o55-pick-pop.has-depth-side { overflow: visible; }
+.o55-depth-side { position: absolute; z-index: 1; box-sizing: border-box; padding: 6px; background: inherit; background-color: var(--surface-elevated, #171b31); border: inherit; border-radius: inherit; box-shadow: inherit; color: inherit;
+  animation: o55-depth-in 160ms cubic-bezier(.2, .8, .2, 1) both; }
+.o55-depth-side.is-right { left: calc(100% + 6px); --o55-depth-dx: -6px; }
+.o55-depth-side.is-left { right: calc(100% + 6px); --o55-depth-dx: 6px; }
+@keyframes o55-depth-in { from { opacity: 0; transform: translateX(var(--o55-depth-dx, -6px)); } to { opacity: 1; transform: none; } }
+html[data-motion="reduced"] .o55-depth-side { animation: none; }
+@media (prefers-reduced-motion: reduce) { .o55-depth-side { animation: none; } }
+.o55-depth-in { flex: 0 0 auto; margin: 6px -4px 0; padding: 6px 4px 0; border-top: 1px solid var(--border, rgba(164,158,219,.16)); }
+.o55-depth-head { display: flex; align-items: center; gap: 8px; padding: 2px 4px 6px; }
+.o55-depth-head .o55-pick-mark { width: 22px; height: 22px; border-radius: 6px; }
+.o55-depth-head .o55-pick-mark svg { width: 13px; height: 13px; }
+.o55-depth-copy { display: flex; flex-direction: column; min-width: 0; }
+.o55-depth-copy strong { font-size: 12px; font-weight: 700; color: var(--text-primary, #f4f2ff); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.o55-depth-copy small { font-size: 10.5px; font-weight: 600; color: var(--text-muted, #8f8ab0); letter-spacing: .02em; }
+.o55-depth-list { outline: 0; }
+.o55-depth-in .o55-depth-list { display: flex; flex-wrap: wrap; gap: 4px; }
+.o55-depth-in .o55-depth-item { width: auto; flex: 1 1 auto; min-height: 30px; justify-content: center; }
+.pm51-popout-item.o55-depth-item { display: grid; grid-template-columns: minmax(0, 1fr) 16px; align-items: center; gap: 6px; min-height: 32px; padding: 6px 8px; }
+.o55-depth-in .pm51-popout-item.o55-depth-item { display: flex; }
+.o55-depth-list:focus-visible .o55-depth-item.is-active { outline: 2px solid var(--accent-primary, #7c6cff); outline-offset: -2px; }
+
+/* FO-184 (Jared, 2026-11-13 #7: "The top tabs should probably be centered"): a chapter's page strip ("Providers &
+   Accounts / Web & Research / Media & Output / Back Seat Driver") stands in the middle of Settings. Auto margins on its
+   first and last tab, not justify-content: a strip wider than its box keeps its start in view and scrolls, never cut
+   off on the left. The page tabs under it (Services / Models / ...) stand in the middle too, under the page's own
+   centred title and line, so the strip, the title and the page tabs share one axis; where the page tabs' track spans
+   the page (a narrow Settings), its tabs are centred in it. */
+#panel-settings .workspace-tabs > .workspace-tab:first-of-type { margin-inline-start: auto; }
+#panel-settings .workspace-tabs > .workspace-tab:last-of-type { margin-inline-end: auto; }
+#panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs { align-self: center; justify-content: center; }

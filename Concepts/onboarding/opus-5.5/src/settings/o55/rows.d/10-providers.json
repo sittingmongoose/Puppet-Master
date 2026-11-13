@@ -20,6 +20,12 @@
    "why": "Keep an expensive account for the hardest jobs, or a small one for everyday work. None picked means any job.",
    "emptyList": "Any job"
   },
+  "ai.accounts.default-model": {
+   "label": "An account's default model",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "help": "For runs you send to this account yourself, when nothing earlier names a model."
+  },
   "ai.accounts.billing-entity": {
    "label": "Who is billed for an account",
    "per": "account",
