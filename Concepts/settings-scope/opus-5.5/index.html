@@ -251,6 +251,20 @@
     if (!(W.PMG && W.PM_PAGES && d.getElementById('panel-settings') && d.getElementById('themeSelect'))) { setTimeout(inject, 150); return; }
     d.documentElement.setAttribute('data-psx-layer', 'loading');
     let i = 0;
+    /* inventory alignment: the layer reads Plans' inventory layering (the per-row authority, SSYS-059) from this
+       repository before it starts; the single files carry it inline (tools/build_standalone.py) */
+    const INVENTORY = new URL('../../../Plans/settings_inventory.json', base).href;
+    const withInventory = async () => {
+      try {
+        const res = await fetch(INVENTORY, { cache: 'no-store' }); if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+        const text = await res.text(), inv = JSON.parse(text);
+        let sha = null;
+        try { const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)); sha = [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, '0')).join(''); } catch (e) { /* not a secure context */ }
+        const settings = (inv.settings || []).filter((r) => r && r.id && r.layering).map((r) => ({ id: r.id, type: r.type, layering: r.layering }));
+        const groups = {}; (inv.categories || []).forEach((c) => (c.subgroups || []).forEach((g) => { groups[c.id + '.' + g.id] = g.title; }));
+        W.PSX_LAYERING = { source: { path: 'Plans/settings_inventory.json', sha256: sha, schema_version: inv.schema_version, rows: settings.length }, groups, settings };
+      } catch (e) { console.warn('Settings concept: could not read Plans’ inventory', INVENTORY, e); }
+    };
     const next = () => {
       if (i >= STEPS.length) return;
       const [kind, url] = STEPS[i++];
@@ -260,7 +274,7 @@
       el.onerror = () => { console.error('Settings concept: could not load', url); next(); };
       (kind === 'css' ? d.head : d.body).appendChild(el);
     };
-    next();
+    withInventory().then(next);
   }
   frame.addEventListener('load', () => { live = false; inject(); });
 

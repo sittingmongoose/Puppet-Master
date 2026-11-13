@@ -68,9 +68,10 @@
   }
   function offeredAt(x) {
     const def = DEF[x.id];
-    /* review S1: a row kept inside its owner (feed.js REVIEWED.thing; Plans' inventory home: thing, every ordinary level
-       set_inside_a_thing) takes no write at everywhere, a computer, a device or a project */
-    if (!def) return ((PSX.offLadder || {}).thing || []).includes(x.id) ? PSX.REASONS.kept_by_owner[0] : null;
+    /* review S1 and the inventory alignment: a row kept inside its owner (PSX.ownerHeld: Plans' inventory home: thing,
+       every ordinary level set_inside_a_thing; the reviewed list only for rows it doesn't list) takes no write at
+       everywhere, a computer, a device or a project */
+    if (!def) return PSX.ownerHeld && PSX.ownerHeld(x.id) ? PSX.REASONS.kept_by_owner[0] : null;
     if (x.value === undefined) return null;
     const off = PSX.offered(def);
     if (x.level === 'everywhere' && !off.everywhere) return PSX.REASONS[def.reason || 'about_this_project'][0];

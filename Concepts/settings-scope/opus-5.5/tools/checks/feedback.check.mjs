@@ -9,18 +9,21 @@
 // `strip` opens the page with the review strip (settings-scope.html beside the app page, or --set strip=<path>); the
 // account switch in `shake` is compared with bare PMConcept7 (Concepts/PMConcept7.html, or --set bare=<path>).
 // "Full" is a 2560-wide window (the review strip's Full width is whatever window holds the frame).
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 const want = (t, part) => !t.args.only || String(t.args.only).split(',').includes(part);
 /* review S1: Plans' inventory layering is the per-row authority (SSYS-059). The checks read it from the repository
    (--set inventory=<path> to read another copy) and pass each row's layering in: { id: { home, value } } */
-let INVENTORY;
+let INVENTORY, INVENTORY_SHA = null;
 const inventory = (t) => {
 	if (INVENTORY !== undefined) return INVENTORY;
 	try {
-		const out = {}, walk = (o) => { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') { if (typeof o.id === 'string' && o.layering) out[o.id] = { home: o.layering.home, value: o.default }; Object.values(o).forEach(walk); } };
-		walk(JSON.parse(fs.readFileSync(path.resolve(t.args.inventory || 'Plans/settings_inventory.json'), 'utf8')));
+		const raw = fs.readFileSync(path.resolve(t.args.inventory || 'Plans/settings_inventory.json'));
+		INVENTORY_SHA = crypto.createHash('sha256').update(raw).digest('hex');
+		const out = {}, walk = (o) => { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') { if (typeof o.id === 'string' && o.layering) { const L = o.layering; out[o.id] = { home: L.home, value: o.default, type: o.type || null, may: L.may_differ_by || [], notOffered: L.not_offered || {}, combine: L.combine || 'most_specific', key: L.computer_key || null }; } Object.values(o).forEach(walk); } };
+		walk(JSON.parse(raw.toString('utf8')));
 		INVENTORY = Object.keys(out).length ? out : null;
 	} catch (e) { INVENTORY = null; }
 	return INVENTORY;
@@ -608,8 +611,10 @@ export default async function (t) {
 			}
 			return out;
 		});
-		await t.check(`all ${all.n} rows: Everywhere, then ${'Computers or Devices'}, then Projects`, all.n > 800 && all.bad.length === 0, all.bad.slice(0, 6).join(' | '));
-		await t.check(`${all.screen} screen rows list Devices with one plain line, and libraries are not among them`, all.screen > 10 && !all.devices.some((l) => /Your own themes|Sound library|Add a sound|Start custom themes/.test(l)), all.devices.join(', '));
+		await t.check(`all ${all.n} rows: Everywhere, then ${'Computers or Devices'}, then Projects`, all.n > 600 && all.bad.length === 0, all.bad.slice(0, 6).join(' | '));
+		/* inventory alignment: "Start custom themes from" is a value, and Plans' inventory gives it Everywhere and Device
+		   (round A-r1 had made it same-everywhere with the libraries); the libraries themselves are owner-held actions */
+		await t.check(`${all.screen} screen rows list Devices with one plain line, and libraries are not among them`, all.screen > 10 && !all.devices.some((l) => /Your own themes|Sound library|Add a sound/.test(l)), all.devices.join(', '));
 		const left = await run(t, () => {
 			const P = window.PSX, off = P.offLadder;
 			return Object.keys(window.PM51.placement.byId).filter((id) => {
@@ -665,6 +670,81 @@ export default async function (t) {
 			}, id);
 			await t.check(`library ${id}: three parts with reasons only, no value line, no Change, Now says it is your library`, lib.code === id && lib.heads === 1 && JSON.stringify(lib.slots) === JSON.stringify(['everywhere', 'computer', 'project']) && lib.lines === 0 && lib.change.length === 0 && /^Your library Kept with your settings$/.test(lib.now), JSON.stringify(lib));
 			if (id === 'general.visual.manage-custom-themes') await pic(t, 'where-library', 'Your own themes: Your library, kept with your settings; the three parts with their reasons, no value and no Change', '#pm-settings-root .detail-inspector');
+		}
+		await run(t, () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); });
+		/* inventory alignment (2026-11-13): Plans' inventory layering is the per-row authority (SSYS-059), and the page
+		   reads the tree's own Plans/settings_inventory.json. Every row Settings draws is checked against it: its offered
+		   places are the inventory's may_differ_by (none for an owner-held row), its reasons for the places it doesn't offer
+		   are the inventory's not_offered, and its combine and Computer key are the inventory's. An owner-held row (home:
+		   thing) is off the ladder, takes no write at an ordinary level, and its panel names its owner (an action says it
+		   isn't a setting). The look details the engine paints keep their Theme view, with the inventory's places. Rows the
+		   inventory doesn't list are named, not checked. 556c7042e5 (and e81d95d829, the same code on main) failed this */
+		const INVA = inventory(t);
+		const align = await run(t, (inv) => {
+			const P = window.PSX, byId = (window.PM51.placement || {}).byId || {}, L = ['everywhere', 'computer', 'device', 'project'], off = P.offLadder || {};
+			const out = { source: P.layering ? P.layering.source : null, drawn: 0, checked: 0, owner: 0, ladder: 0, look: [], notListed: [], perItem: [], bad: [] };
+			if (!P.layering || !P.ownerHeld || !(P.panel && P.panel.ownerFacts)) { out.bad.push('the page has no inventory layering, owner rule or owner view'); }
+			const key = (l) => (l === 'project' ? 'tastebook' : l === 'everywhere' ? null : 'here');
+			for (const id of Object.keys(byId)) {
+				const s = window.PM51.setting(id); if (!s) continue;
+				out.drawn++;
+				const I = inv && inv[id]; if (!I) { out.notListed.push(id); continue; }
+				out.checked++;
+				const want = I.home === 'thing' ? [] : L.filter((l) => I.may.includes(l));
+				if (off.look && off.look.test(id)) { out.look.push(id); continue; }
+				const d = P.DEF[id];
+				if (I.home === 'thing') {
+					out.owner++;
+					if (d) { out.bad.push(`${id}: owner-held in the inventory, on the ladder here (${L.filter((l) => P.offered(d)[l]).join('+')})`); continue; }
+					if (!P.ownerHeld || !P.ownerHeld(id)) { out.bad.push(`${id}: owner-held in the inventory, not held by its owner here`); continue; }
+					const takes = L.filter((l) => !P.guard.why({ level: l, key: key(l), id, value: 'x' }));
+					if (takes.length) out.bad.push(`${id}: owner-held, yet ${takes.join(', ')} takes a write`);
+					const f = P.panel.ownerFacts(id);
+					if (!f || !f.sentence || !f.everywhere || !f.computer || !f.project) out.bad.push(`${id}: no owner view`);
+					else if (f.kind === 'action' ? !/not a setting/.test(f.sentence) : !(f.owner && f.sentence.includes(f.owner))) out.bad.push(`${id}: its panel doesn’t name its owner (${f.sentence})`);
+					else if (I.type === 'action' && f.kind !== 'action') out.bad.push(`${id}: an action in the inventory, not shown as one`);
+					else if (I.may.includes('project') !== /^A project can choose its own/.test(f.project)) out.bad.push(`${id}: its project line doesn’t follow the inventory (${f.project})`);
+					continue;
+				}
+				out.ladder++;
+				if (!d) { out.bad.push(`${id}: on the ladder in the inventory (${want.join('+')}), off it here`); continue; }
+				const o = P.offered(d), got = L.filter((l) => o[l]);
+				if (got.join('+') !== want.join('+')) { out.bad.push(`${id}: offers ${got.join('+')} (inventory ${want.join('+')})`); continue; }
+				const r = P.reasons(d);
+				L.forEach((l) => { if (!o[l] && I.notOffered[l] && r[l] != null && r[l] !== I.notOffered[l]) out.bad.push(`${id}: ${l} isn’t offered because ${r[l]} (inventory ${I.notOffered[l]})`); });
+				const comb = I.combine === 'per_item' ? 'most_specific' : I.combine;
+				if (I.combine === 'per_item') out.perItem.push(id);
+				if ((d.combine || 'most_specific') !== comb) out.bad.push(`${id}: combines ${d.combine || 'most_specific'} (inventory ${I.combine})`);
+				if (!!d.host !== (I.key === 'execution_host')) out.bad.push(`${id}: its Computer key is ${d.host ? 'the execution host' : 'the server'} (inventory ${I.key})`);
+			}
+			return out;
+		}, INVA);
+		await t.check(`inventory alignment: the page reads this tree’s Plans/settings_inventory.json (${align.source ? `${align.source.rows} rows, schema ${align.source.schema_version}` : 'none'})`, !!INVA && !!align.source && align.source.sha256 === INVENTORY_SHA, JSON.stringify({ page: align.source, tree: INVENTORY_SHA }));
+		await t.check(`inventory alignment: all ${align.checked} drawn rows the inventory lists follow it (${align.ladder} on the ladder, ${align.owner} owner-held; ${align.look.length} engine-painted look details keep their Theme view; ${align.notListed.length} not listed: ${align.notListed.join(', ')})`, !!INVA && align.checked > 800 && align.bad.length === 0, `${align.bad.length} mismatched: ` + align.bad.slice(0, 25).join(' | '));
+		// real panels, one owner-held row of each kind: an action, a field kept by its owner, a key, the Rules file, a row a project can choose inside its owner
+		for (const kind of ['action', 'owned', 'secret', 'projection', 'project']) {
+			const ids = await run(t, ([k, inv]) => {
+				const P = window.PSX, byId = (window.PM51.placement || {}).byId || {}, cred = (P.offLadder || {}).credential;
+				if (!P.panel || !P.panel.ownerFacts) return [];
+				return Object.keys(byId).filter((id) => inv[id] && inv[id].home === 'thing' && window.PM51.setting(id) && !((P.offLadder || {}).library || []).includes(id)).filter((id) => {
+					const f = P.panel.ownerFacts(id), I = inv[id], sec = !!(cred && cred.test(id));
+					return k === 'action' ? f.kind === 'action' : k === 'owned' ? f.kind === 'owned' && !sec && !I.may.includes('project') : k === 'secret' ? f.kind === 'owned' && sec : k === 'projection' ? f.kind === 'projection' : f.kind === 'owned' && I.may.includes('project');
+				}).slice(0, 6);
+			}, [kind, INVA || {}]);
+			let opened = null;
+			for (const id of ids) {
+				const p = await run(t, async (i) => {
+					window.PM51.revealSetting(i, { detail: true });
+					for (let k = 0; k < 24; k++) { await new Promise((r) => setTimeout(r, 150)); const c = document.querySelector('#pm-settings-root .detail-inspector .o55-insp-tech code'); if (c && c.textContent.trim() === i && document.querySelector('#pm-settings-root .detail-inspector [data-psx-block="where"] [data-psx-slot]')) break; }
+					const insp = document.querySelector('#pm-settings-root .detail-inspector'), w = insp && insp.querySelector('[data-psx-block="where"]');
+					return { id: i, code: insp && (insp.querySelector('.o55-insp-tech code') || {}).textContent, owner: w && w.getAttribute('data-psx-owner'), name: w && w.getAttribute('data-psx-owner-name'), slots: w ? [...w.querySelectorAll(':scope > [data-psx-slot]')].map((g) => g.getAttribute('data-psx-slot')) : [], where: w ? w.innerText.replace(/\s+/g, ' ').trim() : '', heads: insp ? [...insp.querySelectorAll('.o55-insp-block h4')].filter((h) => h.offsetParent && /^Where it applies$/.test(h.textContent.trim())).length : 0, buttons: insp ? [...insp.querySelectorAll('button')].filter((b) => b.getClientRects().length && !b.closest('.pm51-panel-head') && /^(Change|Set for|Same as everywhere|\+)/.test(b.textContent.trim())).map((b) => b.textContent.trim()) : [], choices: insp ? [...insp.querySelectorAll('.o55-insp-choice, .o55-pick-trigger, .o55-pick-inline')].filter((x) => x.getClientRects().length).length : -1 };
+				}, id);
+				if (p.code === id && p.slots.length) { opened = p; break; }
+			}
+			await t.check(`inventory alignment: a real panel for an owner-held ${kind} row (${opened ? opened.id : `none of ${ids.length} opened: ${ids.join(', ')}`}) names its owner in the same three parts, with no Change`,
+				!!opened && opened.heads === 1 && JSON.stringify(opened.slots) === JSON.stringify(['everywhere', 'computer', 'project']) && !!opened.owner && (kind === 'action' ? /not a setting/.test(opened.where) : !!opened.name && opened.where.toLowerCase().includes(opened.name.toLowerCase())) && !opened.buttons.length && (kind === 'secret' || opened.choices === 0) && (kind !== 'project' || /A project can choose its own/.test(opened.where)) && (kind !== 'secret' || /stays on the computer where you entered it/.test(opened.where)),
+				JSON.stringify(opened || ids));
+			if (opened) await pic(t, `owner-${kind}`, `Inventory alignment: ${opened.id}, owner-held (${kind}): its owner in the same three parts, no Change`, '#pm-settings-root .detail-inspector');
 		}
 		await run(t, () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); });
 		/* review S1 (Sol-high recheck of the Sol max fixes): every row whose value is an absolute path follows Plans'

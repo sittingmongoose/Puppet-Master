@@ -13,6 +13,7 @@
   const K = () => W.PM12_KIMI;
   const wait = PSX.wait;
   const ORIGINAL_DEFAULTS = clone(DEFAULTS);
+  const DEFAULTS_MOVED = {};   // defaults a moment moved on rows adopted after ORIGINAL_DEFAULTS was taken (11.12)
 
   /* ------------------------------------------------------------------ helpers */
   async function go(domain, workspace, tab) {
@@ -163,11 +164,13 @@
     PSX.setCtx({ project: 'loom' });
     await go('ai', 'providers', ['providers', 'models']);
     await wait(300);
-    const tid = 'ai.models.reasoning-effort';
+    /* main's one-model design (Settings batch 3) retired Thinking depth, so the assistant's narrow write is on Everyday
+       building (ai.models.worker-model), a row main's Models page draws with Everywhere and Project */
+    const tid = 'ai.models.worker-model', tval = 'claude-code/claude-opus';
     const yolo = S.runMode === 'yolo';
     // a request about loom stays narrow in both run modes
-    const tx = PSX.write([{ level: 'project', key: 'loom', id: tid, value: 'high' }], { by: 'assistant', yolo });
-    if (tx) PSX.note({ title: 'The assistant set Thinking depth to High for loom.', body: `In loom’s chat: “Raise the thinking depth here.” It wrote the narrowest place, this project${yolo ? ', in YOLO too' : ''}.`, mark: 'complete', actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, tid) }], ms: 8000 });
+    const tx = PSX.write([{ level: 'project', key: 'loom', id: tid, value: tval }], { by: 'assistant', yolo });
+    if (tx) PSX.note({ title: `The assistant set ${label(tid)} to ${vt(tid, tval)} for loom.`, body: `In loom’s chat: “Build with Opus here.” It wrote the narrowest place, this project${yolo ? ', in YOLO too' : ''}.`, mark: 'complete', actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, tid) }], ms: 8000 });
     await wait(1600);
     const f = PSX.followers('ai.models.default-model', 'openai/gpt-5');
     const keeps = f.keeps;
@@ -187,7 +190,9 @@
   };
   M['11.11'] = async () => { S.actor = 'ipad'; PSX.setCtx({ device: 'ipad' }); await go('general', 'app-input'); await reveal('general.visual.font-size'); PSX.note({ title: 'You’re using Sam’s iPad', body: 'A Member’s device: it can change only its own screen settings. Try Change on any other line.', mark: 'info', ms: 8000 }); };
   M['11.12'] = async () => {
-    DEFAULTS['ai.models.reasoning-effort'] = 'auto'; DEFAULTS['system.mcp.timeout'] = 45000;
+    // an update moves two defaults (Everyday building is adopted after ORIGINAL_DEFAULTS was taken, so reset() puts back
+    // what this moment moved)
+    [['ai.models.worker-model', 'claude-code/claude-sonnet'], ['system.mcp.timeout', 45000]].forEach(([k, v]) => { if (!(k in DEFAULTS_MOVED)) DEFAULTS_MOVED[k] = DEFAULTS[k]; DEFAULTS[k] = v; });
     PSX.W.rev++; PSX.feed.push(); PSX.emit('redraw');
     try { W.PM_PAGES.go('settings'); } catch (e) { /* ignore */ }
     try { K().dispatchAction('home'); } catch (e) { /* ignore */ }
@@ -270,7 +275,7 @@
   /* ------------------------------------------------------------------ 11.6 Two setups joining */
   const JOIN = [
     ['general.visual.theme', null, 'Basic Light'], ['general.visual.font-size', null, 16], ['ai.models.default-model', null, 'anthropic/claude-sonnet-4'],
-    ['general.interaction.eli5-default', null, false], ['general.interaction.sound-effects', null, true], ['ai.models.reasoning-effort', null, 'high'],
+    ['general.interaction.eli5-default', null, false], ['general.interaction.sound-effects', null, true], ['ai.models.worker-model', null, 'claude-code/claude-opus'],
     ['branching.worktrees.default-branch', null, 'master'], ['system.mcp.timeout', null, 45000], ['safety.rules.permission-preset', null, 'full']
   ];
   /* The keeper is the owner's choice (YOLO never picks it); each row then keeps the keeper's value, keeps the other's as
@@ -351,8 +356,9 @@
 
   /* ------------------------------------------------------------------ 11.12 An update changed defaults */
   function updateCard() {
-    const text = `This update changed 2 defaults: ${label('ai.models.reasoning-effort')} (Medium to Let the model decide) and ${label('system.mcp.timeout')} (30 to 45 seconds). Keep the old ones?`;
-    const act = [{ label: 'Keep the old ones', primary: true, run: () => { const tx = PSX.apply([{ level: 'everywhere', key: null, id: 'ai.models.reasoning-effort', value: 'medium' }, { level: 'everywhere', key: null, id: 'system.mcp.timeout', value: 30000 }], { batch: 'migrated', text: 'Kept the old defaults (source: migrated)' }); PSX.feed.push(); PSX.note({ title: 'Kept the old ones.', body: 'They are your everywhere values now.', actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id) }] }); } }, { label: 'Use the new ones', run: () => PSX.note({ title: 'Using the new defaults.', mark: 'complete' }) }];
+    const wm = 'ai.models.worker-model';
+    const text = `This update changed 2 defaults: ${label(wm)} (${vt(wm, 'inherit')} to ${vt(wm, 'claude-code/claude-sonnet')}) and ${label('system.mcp.timeout')} (30 to 45 seconds). Keep the old ones?`;
+    const act = [{ label: 'Keep the old ones', primary: true, run: () => { const tx = PSX.apply([{ level: 'everywhere', key: null, id: wm, value: 'inherit' }, { level: 'everywhere', key: null, id: 'system.mcp.timeout', value: 30000 }], { batch: 'migrated', text: 'Kept the old defaults (source: migrated)' }); PSX.feed.push(); PSX.note({ title: 'Kept the old ones.', body: 'They are your everywhere values now.', actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id) }] }); } }, { label: 'Use the new ones', run: () => PSX.note({ title: 'Using the new defaults.', mark: 'complete' }) }];
     const home = D.querySelector('#pm-settings-root .home-page');
     if (home) {
       home.querySelectorAll('[data-psx-update]').forEach((n) => n.remove());
@@ -806,6 +812,7 @@
   function reset() {
     if (guideEl) { guideEl.remove(); guideEl = null; }
     Object.keys(ORIGINAL_DEFAULTS).forEach((k) => { DEFAULTS[k] = ORIGINAL_DEFAULTS[k]; });
+    Object.keys(DEFAULTS_MOVED).forEach((k) => { DEFAULTS[k] = DEFAULTS_MOVED[k]; delete DEFAULTS_MOVED[k]; });
     S.conflict = null; S.conflictArmed = null; S.firstStart = false; S.ownLook = false; S.mcpProject = null; S.actor = 'here';
     PSX.H.removeAttribute('data-psx-first');
     D.querySelectorAll('[data-psx-update], [data-psx-first]').forEach((n) => n.remove());
