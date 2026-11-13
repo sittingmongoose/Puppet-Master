@@ -18,8 +18,8 @@ def recipe_installed(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('recipe_custody', g.Invariant('/storage/event', "Storage's sealed write custody holds the requested original's Store (SP-1101 owner; no case flag counts)"), 'original_unavailable', recipe_custody),
-        g.Guard('recipe_installed', g.Invariant('/storage/event', 'the sealed write-time recipe tuple has an installed frozen verifier (SP-1101; no fallback, no probing)'), 'recipe_unsupported', recipe_installed),
+        g.Guard('recipe_custody', g.Invariant('/storage/event', "Storage's sealed write custody holds the requested original's Store and a sealed receipt for that exact original (SP-1101 owner; no Store default and no case flag counts)"), 'original_unavailable', recipe_custody),
+        g.Guard('recipe_installed', g.Invariant('/storage/event', 'exactly one sealed receipt selects the write-time recipe tuple, which has an installed frozen verifier (SP-1101; no fallback, no probing)'), 'recipe_unsupported', recipe_installed),
     ])
 
     def check(value):

@@ -15028,10 +15028,11 @@
       ]
     },
     {
-      "id": "p2b/sp1101/other-operation-control/browser.session.created/retry",
+      "id": "p2b/sp1101/missing-receipt/browser.session.created/retry",
       "base": "browser.session.created/project/retry",
-      "expect": "accept",
-      "defect": "the same coherent change under another original operation id with no sealed receipt: the Store's sealed card2@1 recipe; accepted",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent card2@1 original (operation-other) for which Storage sealed no receipt: original_unavailable, never the card2@1 recipe by default",
       "changes": [
         [
           "/event/event_id",
@@ -15076,6 +15077,112 @@
         [
           "/retry/original_event/payload/owner_operation_id",
           "operation-other"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/ambiguous-receipt/browser.session.created/retry",
+      "base": "browser.session.created/project/retry",
+      "target": "recipe_installed",
+      "guard": "recipe_unsupported",
+      "defect": "a coherent original (operation-ambiguous) with two sealed receipts (card2@1 and card2@0-unregistered): recipe_ambiguous, no single selection and no probing",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/retry/original_event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/receipt-for-other-original/browser.session.created/retry",
+      "base": "browser.session.created/project/retry",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent project original (operation-other-scope) whose only sealed receipt at its event id is the application-scope original's: original_unavailable",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/retry/original_event/payload/owner_operation_id",
+          "operation-other-scope"
         ]
       ]
     },
@@ -15257,10 +15364,11 @@
       ]
     },
     {
-      "id": "p2b/sp1101/other-operation-control/memory.gist_state_changed/retry",
+      "id": "p2b/sp1101/missing-receipt/memory.gist_state_changed/retry",
       "base": "memory.gist_state_changed/project/retry",
-      "expect": "accept",
-      "defect": "the same coherent change under another original operation id with no sealed receipt: the Store's sealed card2@1 recipe; accepted",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent card2@1 original (operation-other) for which Storage sealed no receipt: original_unavailable, never the card2@1 recipe by default",
       "changes": [
         [
           "/event/event_id",
@@ -15305,6 +15413,112 @@
         [
           "/retry/original_event/payload/owner_operation_id",
           "operation-other"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/ambiguous-receipt/memory.gist_state_changed/retry",
+      "base": "memory.gist_state_changed/project/retry",
+      "target": "recipe_installed",
+      "guard": "recipe_unsupported",
+      "defect": "a coherent original (operation-ambiguous) with two sealed receipts (card2@1 and card2@0-unregistered): recipe_ambiguous, no single selection and no probing",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/retry/original_event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/receipt-for-other-original/memory.gist_state_changed/retry",
+      "base": "memory.gist_state_changed/project/retry",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent project original (operation-other-scope) whose only sealed receipt at its event id is the application-scope original's: original_unavailable",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/retry/original_event/payload/owner_operation_id",
+          "operation-other-scope"
         ]
       ]
     },
@@ -15626,10 +15840,11 @@
       ]
     },
     {
-      "id": "p2b/sp1101/other-operation-control/browser.session.created/history",
+      "id": "p2b/sp1101/missing-receipt/browser.session.created/history",
       "base": "browser.session.created/project/history",
-      "expect": "accept",
-      "defect": "the same coherent change under another original operation id with no sealed receipt: the Store's sealed card2@1 recipe; accepted",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent card2@1 original (operation-other) for which Storage sealed no receipt: original_unavailable, never the card2@1 recipe by default",
       "changes": [
         [
           "/event/event_id",
@@ -15666,6 +15881,96 @@
         [
           "/reader/event_id",
           "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/ambiguous-receipt/browser.session.created/history",
+      "base": "browser.session.created/project/history",
+      "target": "recipe_installed",
+      "guard": "recipe_unsupported",
+      "defect": "a coherent original (operation-ambiguous) with two sealed receipts (card2@1 and card2@0-unregistered): recipe_ambiguous, no single selection and no probing",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/reader/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/receipt-for-other-original/browser.session.created/history",
+      "base": "browser.session.created/project/history",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent project original (operation-other-scope) whose only sealed receipt at its event id is the application-scope original's: original_unavailable",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/reader/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564"
         ]
       ]
     },
@@ -15991,10 +16296,11 @@
       ]
     },
     {
-      "id": "p2b/sp1101/other-operation-control/memory.gist_state_changed/history",
+      "id": "p2b/sp1101/missing-receipt/memory.gist_state_changed/history",
       "base": "memory.gist_state_changed/project/history",
-      "expect": "accept",
-      "defect": "the same coherent change under another original operation id with no sealed receipt: the Store's sealed card2@1 recipe; accepted",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent card2@1 original (operation-other) for which Storage sealed no receipt: original_unavailable, never the card2@1 recipe by default",
       "changes": [
         [
           "/event/event_id",
@@ -16031,6 +16337,96 @@
         [
           "/reader/event_id",
           "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/ambiguous-receipt/memory.gist_state_changed/history",
+      "base": "memory.gist_state_changed/project/history",
+      "target": "recipe_installed",
+      "guard": "recipe_unsupported",
+      "defect": "a coherent original (operation-ambiguous) with two sealed receipts (card2@1 and card2@0-unregistered): recipe_ambiguous, no single selection and no probing",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d616d626967756f7573"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-ambiguous"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/reader/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/receipt-for-other-original/memory.gist_state_changed/history",
+      "base": "memory.gist_state_changed/project/history",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent project original (operation-other-scope) whose only sealed receipt at its event id is the application-scope original's: original_unavailable",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f746865722d73636f7065"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-other-scope"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/reader/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564"
         ]
       ]
     },
