@@ -347,7 +347,7 @@
     set('project', 'tastebook', 'planning.testing.cap-visible-browser', 'On');
     set('project', 'tastebook', 'planning.testing.cap-simulator', 'On');
     set('project', 'tastebook', 'memory.retention.history-retention', 'recent');
-    set('project', 'tastebook', 'memory.retention.subagent-access', true);
+    // (main's Memory rulings retired memory.retention.subagent-access, which tastebook used to set here)
     // the history seed (4.6)
     w.history = [
       { id: 'h5', when: 'Sun 20:10', by: 'you', from: 'here', level: 'everywhere', key: null, sid: 'ai.models.default-model', before: 'anthropic/claude-sonnet-4', after: 'anthropic/claude-opus-4' },

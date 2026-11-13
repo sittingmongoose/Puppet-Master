@@ -58,7 +58,9 @@
       if (typeof x.value !== 'number' || !Number.isFinite(x.value)) return 'It has to be a number';
       const min = s && Number.isFinite(+s.min) ? +s.min : (d >= 0 ? (def.combine === 'computer_ceiling' ? 1 : 0) : -Infinity);
       const max = s && Number.isFinite(+s.max) ? +s.max : Infinity;
-      if (x.value < min) return `It can’t be less than ${min}`;
+      /* inventory alignment: Plans' inventory makes some limit rows computer ceilings whose own default is 0 ("no
+         limit"); the row's own default is never refused, whatever floor a ceiling would otherwise get */
+      if (x.value < min && x.value !== d) return `It can’t be less than ${min}`;
       if (x.value > max) return `It can’t be more than ${max}`;
       if (Number.isInteger(d) && !Number.isInteger(x.value) && def.combine === 'computer_ceiling') return 'It has to be a whole number';
     }

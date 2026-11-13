@@ -171,14 +171,16 @@ export default async function (t) {
 			const P = window.PSX;
 			await P.command({ cmd: 'ctx', homenas: 'down' });
 			await new Promise((r) => setTimeout(r, 400));
-			const sel = document.querySelector('#setting-ai\\.models\\.default-variant select.pm51-dd-native');
-			const was = P.W.everywhere['ai.models.default-variant'];
-			sel.value = 'fast'; sel.dispatchEvent(new Event('change', { bubbles: true }));
+			// main's one-model design (Settings batch 3) retired Faster or smarter edition (ai.models.default-variant);
+			// Service tried first is an everywhere choice main's Models page draws
+			const sel = document.querySelector('#setting-ai\\.models\\.default-provider select.pm51-dd-native');
+			const was = P.W.everywhere['ai.models.default-provider'];
+			sel.value = 'codex'; sel.dispatchEvent(new Event('change', { bubbles: true }));
 			await new Promise((r) => setTimeout(r, 900));
-			const engine = window.PM12_KIMI.getState().settings['ai.models.default-variant'];
-			return { was, now: P.W.everywhere['ai.models.default-variant'], engine, note: P.lastNote, head: (document.querySelector('.psx-head') || {}).innerText || '' };
+			const engine = window.PM12_KIMI.getState().settings['ai.models.default-provider'];
+			return { was, now: P.W.everywhere['ai.models.default-provider'], engine, note: P.lastNote, head: (document.querySelector('.psx-head') || {}).innerText || '' };
 		});
-		await t.check('with Home NAS away an everywhere change is not made', c.now === c.was && c.engine !== 'fast', JSON.stringify(c));
+		await t.check('with Home NAS away an everywhere change is not made', c.now === c.was && c.engine !== 'codex', JSON.stringify(c));
 		await t.check('it offers Just this computer for now, and queues nothing', c.note && c.note.actions.includes('Just this computer for now') && /Nothing was saved or queued/.test(c.note.body), JSON.stringify(c.note));
 		await t.check('the head says what you are seeing, and as of when', /Can’t reach Home NAS, which keeps your settings/.test(c.head), c.head);
 		await rules(t, 'Home NAS away');
@@ -204,12 +206,15 @@ export default async function (t) {
 		await t.equal('the panel stays right through five changes in a row', five, 5);
 		await pic(t, 'panel-helpers-1920', 'The panel for Helpers at once in tastebook, 1920 wide', '#pm-settings-root .detail-inspector');
 		await rules(t, 'the panel');
-		// focus, from a row on screen (Everyday building on the Models page; main's one-model design retired Thinking depth): the end word opens the panel, Change on a line
-		// opens its control, Esc puts focus back on Change, Esc again closes the panel onto the row's end word
-		await run(t, async () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); await new Promise((r) => setTimeout(r, 500)); window.PM12_KIMI.navigate('ai', 'providers'); await new Promise((r) => setTimeout(r, 400)); window.PM12_KIMI.dispatchAction('pm51-tab', { manager: 'providers', tab: 'models' }); await new Promise((r) => setTimeout(r, 600)); });
-		await t.root.locator('#setting-ai\\.models\\.worker-model > .o55-about').click();
+		/* focus, from a row on screen: the end word opens the panel, Change on a line opens its control, Esc puts focus back
+		   on Change, Esc again closes the panel onto the row's end word. Main's one-model design (Settings batch 3) retired
+		   Thinking depth, and its model pickers have no choices in the panel (so no "Choosing here changes"), so this runs
+		   on New chats get their own worktree, a choice row tastebook owns */
+		const FR = 'branching.worktrees.auto-worktree-new-threads', FRS = '#setting-branching\\.worktrees\\.auto-worktree-new-threads';
+		await run(t, async (id) => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); await new Promise((r) => setTimeout(r, 500)); window.PM51.revealSetting(id); await new Promise((r) => setTimeout(r, 900)); const row = document.getElementById('setting-' + id); if (row) window.__psxScroll ? window.__psxScroll(row) : row.scrollIntoView({ block: 'center' }); await new Promise((r) => setTimeout(r, 400)); }, FR);
+		await t.root.locator(`${FRS} > .o55-about`).click();
 		await t.until('the end word opens the panel', () => !!document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"] [data-psx-block="where"]'), null, { timeout: 6000 });
-		await t.check('the end word says the panel is open', () => run(t, () => document.querySelector('#setting-ai\\.models\\.worker-model > .o55-about').getAttribute('aria-expanded') === 'true'));
+		await t.check('the end word says the panel is open', () => run(t, (sel) => document.querySelector(`${sel} > .o55-about`).getAttribute('aria-expanded') === 'true', FRS));
 		await t.check('Choosing here changes names this project', () => run(t, () => /tastebook/.test((document.querySelector('#pm-settings-root .detail-inspector .psx-target-btn') || {}).textContent || '')));
 		const ch = t.root.locator('#pm-settings-root .detail-inspector [data-psx-key="project:tastebook:change"]');
 		await ch.click();
@@ -217,7 +222,7 @@ export default async function (t) {
 		await t.page.keyboard.press('Escape');
 		await t.until('Esc puts focus back on Change', () => !!document.activeElement && document.activeElement.getAttribute('data-psx-key') === 'project:tastebook:change', null, { timeout: 4000 });
 		await t.page.keyboard.press('Escape');
-		await t.until('Esc closes the panel and focus lands on the row’s end word', () => !!document.activeElement && document.activeElement.classList.contains('o55-about') && document.activeElement.getAttribute('data-setting') === 'ai.models.worker-model', null, { timeout: 5000 });
+		await t.until('Esc closes the panel and focus lands on the row’s end word', () => !!document.activeElement && document.activeElement.classList.contains('o55-about') && document.activeElement.getAttribute('data-setting') === 'branching.worktrees.auto-worktree-new-threads', null, { timeout: 5000 });
 
 		// the copy sheet: the totals match the ticks, Tab stays inside, Esc returns to the opener
 		await reset(t);

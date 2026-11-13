@@ -276,7 +276,8 @@
   const JOIN = [
     ['general.visual.theme', null, 'Basic Light'], ['general.visual.font-size', null, 16], ['ai.models.default-model', null, 'anthropic/claude-sonnet-4'],
     ['general.interaction.eli5-default', null, false], ['general.interaction.sound-effects', null, true], ['ai.models.worker-model', null, 'claude-code/claude-opus'],
-    ['branching.worktrees.default-branch', null, 'master'], ['system.mcp.timeout', null, 45000], ['safety.rules.permission-preset', null, 'full']
+    // inventory alignment: Main branch name is project-only in Plans' inventory, so it has no everywhere value to join
+    ['ai.models.default-provider', null, 'codex'], ['system.mcp.timeout', null, 45000], ['safety.rules.permission-preset', null, 'full']
   ];
   /* The keeper is the owner's choice (YOLO never picks it); each row then keeps the keeper's value, keeps the other's as
      that computer's own, or uses the other's everywhere. The settings home, Studio Mac's joining and every value move
@@ -285,6 +286,8 @@
     const st = { keepOn: 'homenas', pick: JOIN.map(() => 'keeper') };
     const nas = (id) => { const r = PSX.resolve(id, { project: 'none', on: 'homenas', device: 'here' }); return r.everywhere !== undefined ? r.everywhere : DEFAULTS[id]; };
     const studioOwnLevel = (id) => { const def = DEF[id]; return def && (def.may || []).includes('device') ? 'device' : 'computer'; };
+    // inventory alignment: "keep it as Studio Mac's own" only where the row has that place (Everyday building has no Computer)
+    const canOwn = (id) => !!DEF[id] && !!PSX.offered(DEF[id])[studioOwnLevel(id)];
     const other = () => (st.keepOn === 'homenas' ? 'studio' : 'homenas');
     const valueOf = (who, id, studioV) => (who === 'homenas' ? nas(id) : studioV);
     function plan() {
@@ -310,7 +313,7 @@
         + `<div class="psx-h">${JOIN.length} settings are different</div><ul class="psx-list">${JOIN.map(([id, , studioV], i) => {
           const def = DEF[id], screen = def && def.screen && !(def.may || []).includes('project');
           const kn = placeName('computer', st.keepOn), on = placeName('computer', other());
-          return `<li class="psx-li psx-join"><span><span class="psx-li-name">${esc(label(id))}</span><span class="psx-li-sub" style="display:block">Home NAS: ${esc(vt(id, nas(id)))} · Studio Mac: ${esc(vt(id, studioV))}</span></span><span class="psx-li-end"><select class="psx-input" data-i="${i}" aria-label="${esc(label(id))}"><option value="keeper"${st.pick[i] === 'keeper' ? ' selected' : ''}>Keep ${esc(kn)}’s</option>${screen && other() === 'homenas' ? '' : `<option value="own"${st.pick[i] === 'own' ? ' selected' : ''}>Keep ${esc(on)}’s on ${screen ? 'its screen' : esc(on)}</option>`}<option value="every"${st.pick[i] === 'every' ? ' selected' : ''}>Use ${esc(on)}’s everywhere</option></select></span></li>`;
+          return `<li class="psx-li psx-join"><span><span class="psx-li-name">${esc(label(id))}</span><span class="psx-li-sub" style="display:block">Home NAS: ${esc(vt(id, nas(id)))} · Studio Mac: ${esc(vt(id, studioV))}</span></span><span class="psx-li-end"><select class="psx-input" data-i="${i}" aria-label="${esc(label(id))}"><option value="keeper"${st.pick[i] === 'keeper' ? ' selected' : ''}>Keep ${esc(kn)}’s</option>${(screen && other() === 'homenas') || !canOwn(id) ? '' : `<option value="own"${st.pick[i] === 'own' ? ' selected' : ''}>Keep ${esc(on)}’s on ${screen ? 'its screen' : esc(on)}</option>`}<option value="every"${st.pick[i] === 'every' ? ' selected' : ''}>Use ${esc(on)}’s everywhere</option></select></span></li>`;
         }).join('')}</ul><details class="psx-adv"><summary><svg class="psx-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Show the 31 settings that already match</span></summary><p class="psx-p psx-muted">They are the same on both, so nothing changes for them.</p></details>`
         + `<p class="psx-p" style="margin-top:12px">${icon('lock')} Projects keep their own values. Nothing is lost: what isn’t kept stays in History, and you can undo this for 30 days.</p>`;
       s.body.querySelectorAll('input[name="psx-keep"]').forEach((x) => x.addEventListener('change', () => { st.keepOn = x.value; draw(s); s.setActions(acts()); }));
