@@ -11,18 +11,18 @@
 // REST (fails on main 6bd8294726, where the listener exists): after the page has settled, no animationiteration
 // listener on the document or the window (DevTools names them; not on the sandbox surface, where the app is a frame),
 // and in a 3 s DevTools trace on Home no animationiteration event is dispatched.
-// PACE, per look: a Working run on Home with the check feeding the chip's word hook (PM56_SENDSTOP.token, which
-// turn-stream calls for every released word), the chip sampled every frame (its loops' place and length, the glyph's
+// PACE, per look: a Working run on Home with the check feeding the chip's word hook (PM56_SENDSTOP.token) from a frame
+// callback every 100 ms, as turn-stream.js and thought-stream.js release their words, the chip sampled every frame (its loops' place and length, the glyph's
 // scale and the backlight's opacity, as the page computes them; the films show the pixels). Changes: a word while
 // waiting, early in the loop and just before its end; 900 ms without a word while flowing, landing near a loop's end
 // and in its middle; Settings' Animation speed set to Fast mid-loop, then a word right after it and the quiet after
-// that, then Measured again; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
+// that, then Measured again; a word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
 // so the pace turns to waiting while held), closed, then a word. For each change:
-//   - at once: a word changes data-flow and the loop's length before the next frame; the quiet one comes 900 ms after
+//   - at once: a word changes data-flow and the loop's length by the frame after it; the quiet one comes 900 ms after
 //     the last word (the module's timer on the word's age; up to --set late=<ms>, default 150, later on a busy page);
-//   - no jump, on what the compositor shows: at the sample after the change (samples are taken after each frame), the
-//     loop's place on the wall clock under the new timing equals its place under the old one to within one frame at
-//     the faster pace (the step the square makes when the frame hands the new timing over); the main thread's own view
+//   - no jump, on what the compositor shows: at every sample (taken after each frame), the loop's place on the wall
+//     clock under the timing just sampled equals its place under the timing of the sample before to within one frame
+//     at the faster pace (no allowance for a sample two back) (the step the square makes when the frame hands the new timing over); the main thread's own view
 //     too (place within a frame, two right after the chip re-placed its loop; scale and opacity within the fastest
 //     ordinary frame of the same look), except in a frame after a long task, whose time is from before the task.
 //     A new loop (a restart) at a change fails.
@@ -81,13 +81,24 @@ const PACE = async ({ speed, windowPart }) => {
 	const last = () => rows[rows.length - 1] || {};
 	const frac = () => { const g = last().g; return g && g.place != null ? g.place % 1 : null; };
 	const until = async (pred, ms = 9000) => { const end = performance.now() + ms; while (!pred()) { if (performance.now() > end) return false; await frame(); } return true; };
-	let feeding = 0, lastWord = 0;
+	let feeding = false, nextWord = 0, lastWord = 0;
 	const word = () => { SS.token(); lastWord = performance.now(); };
 	const mark = (name, extra) => marks.push({ name, i: rows.length, now: performance.now(), frac: frac(), ...extra });
-	const feedOn = () => { if (!feeding) feeding = setInterval(word, 100); };
-	const feedOff = () => { clearInterval(feeding); feeding = 0; };
+	// words are released inside a frame callback every 100 ms, as turn-stream.js:352 and thought-stream.js:229 release
+	// them (R32 F4: a timer released them between frames, a path the app does not use)
+	const feedTick = () => { if (!feeding) return; if (performance.now() >= nextWord) { word(); nextWord = performance.now() + 100; } requestAnimationFrame(feedTick); };
+	const feedOn = () => { if (feeding) return; feeding = true; nextWord = performance.now() + 100; requestAnimationFrame(feedTick); };
+	const feedOff = () => { feeding = false; };
 	// a word between two frames, as a mark
-	const wordAt = async (name) => { await sleep(2); mark(name, { kind: 'word' }); word(); feedOn(); };
+	// a word inside a frame callback (the code after `await frame()` runs in that callback's microtask checkpoint)
+	const wordAt = async (name) => { await frame(); mark(name, { kind: 'word' }); word(); feedOn(); };
+	// the same, then a long task before the next frame (R32 F2: the change handed over by this frame was re-placed again
+	// by the next one, by the old timing, and the square stepped back by the task's length times the change of rate)
+	const wordThenTask = async (name, ms) => {
+		await frame(); mark(name, { kind: 'word', task: ms }); word();
+		setTimeout(() => { const end = performance.now() + ms; while (performance.now() < end) { /* a long task */ } }, 0);
+		feedOn();
+	};
 	// stop the words so that the quiet change (900 ms later) lands near `target` of a loop at the flowing length
 	const quietAt = async (name, target) => {
 		await sleep(400);
@@ -115,6 +126,10 @@ const PACE = async ({ speed, windowPart }) => {
 		if (!(await inLoop(0.955, 0.99))) throw new Error('late: the loop never reached .955-.99');
 		await wordAt('word while waiting, just before the loop end');
 		if (!(await quietAt('quiet while flowing, landing mid-loop', 0.5))) throw new Error('quiet mid-loop: no change');
+		// a word from a frame callback, then a 200 ms long task before the next frame; then quiet again
+		if (!(await inLoop(0.3, 0.4))) throw new Error('long task: the loop never reached .3-.4');
+		await wordThenTask('word while waiting, then a 200 ms long task', 200);
+		if (!(await quietAt('quiet after the long task', 0.6))) throw new Error('quiet after the long task: no change');
 		if (speed) {
 			if (!(await inLoop(0.3, 0.4))) throw new Error('speed: the loop never reached .3-.4');
 			await sleep(2); mark('Animation speed Fast, waiting, mid-loop', { kind: 'speed' });
@@ -184,13 +199,13 @@ function pair(R, i, layer, maxRate, frame) {
 	if (!a || !b) return null;
 	if (a.id !== b.id) return { restart: true };
 	const out = {};
-	// The previous sample may hold a state the compositor never got: one the chip set in a task and replaced in the
-	// next frame's callback before that frame was handed over, or a loop pending its start time. So the step is taken
-	// from the nearer of the two samples before (same loop, a known start time or held) and the smaller one counts.
-	const usable = (x) => x && x.id === b.id && (x.state === 'paused' || x.s != null);
-	const r00 = R.rows[i - 2], prev = [a, r00 && r00[layer]].filter(usable);
-	const h1 = shownAt(b, r1.w), steps = prev.map((x) => { const h0 = shownAt(x, r1.w); return h0 >= 0 || h1 >= 0 ? Math.abs(h1 - h0) : null; }).filter((x) => x != null);
-	if ((b.state === 'paused' || b.s != null) && steps.length) { out.hand = +Math.min(...steps).toFixed(5); out.handBound = +(frame / Math.min(a.dur, b.dur) * 1.1 + 0.002).toFixed(5); }
+	// Every shown frame against the frame before it (R32 F4: no allowance for a sample two back, which hid F2). A loop
+	// pending its start time (just made, not yet started by a frame) has no place to judge and is skipped.
+	const placed = (x) => x.state === 'paused' || x.s != null;
+	if (placed(a) && placed(b)) {
+		const h0 = shownAt(a, r1.w), h1 = shownAt(b, r1.w);
+		if (h0 >= 0 || h1 >= 0) { out.hand = +Math.abs(h1 - h0).toFixed(5); out.handBound = +(frame / Math.min(a.dur, b.dur) * 1.1 + 0.002).toFixed(5); }
+	}
 	out.stale = r1.w - r0.w > 3 * frame;
 	if (!out.stale && a.place != null && b.place != null) {
 		// a loop the chip has just re-placed is put by the wall clock, which runs up to a frame ahead of the frame's own
@@ -378,8 +393,10 @@ export default async function (t) {
 				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
 			// at once: a word -> flowing with the flowing length in the next frame; the quiet change on time
 			const words = R.marks.filter((m) => m.kind === 'word' && m.i > 0 && m.i < R.rows.length);
-			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = R.rows[m.i]; if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
-			await t.check(`${look}: a word turns the pace to flowing before the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => `${m.name}: next frame ${JSON.stringify(R.rows[m.i].flow)} ${R.rows[m.i].g && R.rows[m.i].g.dur}`).join('; ') : `${words.length} words`);
+			// a word released inside frame N's callbacks shows by frame N + 1 (the sample after it)
+			const by = (m) => R.rows[Math.min(m.i + 1, R.rows.length - 1)];
+			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = by(m); if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
+			await t.check(`${look}: a word turns the pace to flowing by the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => `${m.name}: the frame after ${JSON.stringify(by(m).flow)} ${by(m).g && by(m).g.dur}`).join('; ') : `${words.length} words`);
 			const quiet = R.marks.filter((m) => m.kind === 'quiet');
 			const off = quiet.filter((m) => m.flipMs == null || m.flipMs < 880 || m.flipMs > 900 + late);
 			await t.check(`${look}: 900 ms without a word turns it to waiting (within ${late} ms after)`, quiet.length >= 2 && off.length === 0, quiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}`).join('; '));
