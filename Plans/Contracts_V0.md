@@ -24624,8 +24624,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.backend
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -24691,8 +24692,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.backend
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -24759,8 +24761,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.checkpo
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -24828,8 +24831,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.checkpo
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -24897,8 +24901,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.remote.
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -24965,8 +24970,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.remote.
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25035,8 +25041,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.remote.
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25104,8 +25111,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.remote.
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25177,8 +25185,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.remote.
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25249,8 +25258,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.remote.
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25317,8 +25327,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.reposit
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25385,8 +25396,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.reposit
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25453,8 +25465,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.status.
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25521,8 +25534,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.workspa
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25589,8 +25603,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.workspa
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25657,8 +25672,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.workspa
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25725,8 +25741,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.workspa
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25793,8 +25810,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.writer_
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -25861,8 +25879,9 @@ canonical_text: 'Newly authored payload owner for exactly source_control.writer_
   referenced payload must validate against the same closed definition, with actual BLAKE3/size/media-type checks.
   Producer semantic equality uses CV-317 and the original payload representation/recipe, never Storage-assigned
   sequence/time. History selects only authenticated original editions and cannot choose weaker rules from caller
-  metadata. No local number/date-time implementation is authored; phase 2 uses the reviewed shared helper. Membership
-  remains ABSENT and criterion 12 PARTIAL.'
+  metadata. No local number/date-time implementation is authored: phase 2 (scripts/pm_w3b_event_oracles.py) applies the shared
+  CV-1100/SP-1100 calls at every integer slot and the shared CV-1101 date_time with each field owner profile, and
+  full-matches every identifier pattern in every copy. Membership remains ABSENT.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:

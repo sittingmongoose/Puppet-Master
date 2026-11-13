@@ -29672,11 +29672,14 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.backe
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1250 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.backend.detected` in its existing Project
-  scope, does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention
-  class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission, native
+  Withdrawal follows this exact family''s SCS-1250 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-454 (E-CARDS-3 item 2.a): RP-TELEMETRY-90D@1.0.0, kept for 90
+  days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance.
+  Retention of the original source fact is PENDING_RETENTION_DECISION: For `source_control.backend.detected`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_backend_detected_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No central family append, admission, native
   activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -29786,11 +29789,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.backe
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1251 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.backend.selected` in its existing Project
-  scope, does its saved history use configuration/source-lineage audit versus ordinary telemetry? Please choose
-  its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1251 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.backend.selected`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_backend_selected_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -29900,11 +29905,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.check
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1252 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.checkpoint.created` in its existing Project
-  scope, does its saved history use source-lineage audit versus migration/recovery operational history? Please choose
-  its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1252 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.checkpoint.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_created_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30014,11 +30021,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.check
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1253 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.checkpoint.restored` in its existing Project
-  scope, does its saved history use source-lineage audit versus migration/recovery operational history? Please choose
-  its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1253 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.checkpoint.restored`, DL-453 (E-CARDS-3 item 1.a) has its saved
+  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
+  their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_restored_fact`
+  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
+  the same lifetime as its history entry, or follow another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30129,11 +30138,15 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1254 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.remote.fetch_completed` in its existing
-  Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please
-  choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original
-  source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family
+  Withdrawal follows this exact family''s SCS-1254 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
+  For `source_control.remote.fetch_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the
+  separate original source fact `source_control_remote_fetch_completed_fact` (the accepted request, native evidence
+  refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry,
+  or follow another rule? No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30243,11 +30256,15 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1255 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.remote.fetch_started` in its existing
-  Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please
-  choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original
-  source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family
+  Withdrawal follows this exact family''s SCS-1255 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
+  For `source_control.remote.fetch_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_fetch_started_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30358,11 +30375,15 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1256 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.remote.publish_completed` in its existing
-  Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please
-  choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original
-  source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family
+  Withdrawal follows this exact family''s SCS-1256 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
+  For `source_control.remote.publish_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the
+  separate original source fact `source_control_remote_publish_completed_fact` (the accepted request, native evidence
+  refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry,
+  or follow another rule? No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30473,11 +30494,15 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1257 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.remote.publish_started` in its existing
-  Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please
-  choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original
-  source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family
+  Withdrawal follows this exact family''s SCS-1257 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
+  For `source_control.remote.publish_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the
+  separate original source fact `source_control_remote_publish_started_fact` (the accepted request, native evidence
+  refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry,
+  or follow another rule? No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30587,11 +30612,15 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1258 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.remote.sync_completed` in its existing
-  Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please
-  choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original
-  source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family
+  Withdrawal follows this exact family''s SCS-1258 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
+  For `source_control.remote.sync_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_sync_completed_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30701,11 +30730,15 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1259 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.remote.sync_started` in its existing Project
-  scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose
-  its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1259 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
+  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
+  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
+  For `source_control.remote.sync_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_sync_started_fact` (the accepted request, native evidence refs and owner
+  result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30815,11 +30848,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.repos
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1260 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.repository.bound` in its existing Project
-  scope, does its saved history use source-lineage audit versus operational binding history? Please choose its exact
-  retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1260 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.repository.bound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_repository_bound_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -30929,11 +30964,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.repos
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1261 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.repository.unbound` in its existing Project
-  scope, does its saved history use source-lineage audit versus operational binding history? Please choose its exact
-  retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1261 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.repository.unbound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_repository_unbound_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -31043,11 +31080,14 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.statu
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1262 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.status.refreshed` in its existing Project
-  scope, does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention
-  class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission, native
+  Withdrawal follows this exact family''s SCS-1262 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-454 (E-CARDS-3 item 2.a): RP-TELEMETRY-90D@1.0.0, kept for 90
+  days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance.
+  Retention of the original source fact is PENDING_RETENTION_DECISION: For `source_control.status.refreshed`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_status_refreshed_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No central family append, admission, native
   activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -31157,11 +31197,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.works
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1263 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.workspace.created` in its existing Project
-  scope, does its saved history use source-lineage audit versus the separately approved Git-worktree release-anchored
-  class? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether
-  the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No
+  Withdrawal follows this exact family''s SCS-1263 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.workspace.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_workspace_created_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No
   central family append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -31271,11 +31313,14 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.works
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1264 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.workspace.opened` in its existing Project
-  scope, does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention
-  class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission, native
+  Withdrawal follows this exact family''s SCS-1264 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-454 (E-CARDS-3 item 2.a): RP-TELEMETRY-90D@1.0.0, kept for 90
+  days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance.
+  Retention of the original source fact is PENDING_RETENTION_DECISION: For `source_control.workspace.opened`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_workspace_opened_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No central family append, admission, native
   activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -31385,11 +31430,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.works
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1265 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.workspace.removed` in its existing Project
-  scope, does its saved history use source-lineage audit versus the separately approved Git-worktree release-anchored
-  class? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether
-  the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No
+  Withdrawal follows this exact family''s SCS-1265 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.workspace.removed`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_workspace_removed_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No
   central family append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -31499,11 +31546,14 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.works
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1266 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.workspace.switched` in its existing Project
-  scope, does its saved history use source-lineage audit versus ordinary selection telemetry? Please choose its
-  exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1266 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-454 (E-CARDS-3 item 2.a): RP-TELEMETRY-90D@1.0.0, kept for 90
+  days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance.
+  Retention of the original source fact is PENDING_RETENTION_DECISION: For `source_control.workspace.switched`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_workspace_switched_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -31613,11 +31663,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.write
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1267 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.writer_lease.granted` in its existing
-  Project scope, does its saved history use write-authorization audit versus operational lease history? Please choose
-  its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1267 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.writer_lease.granted`, DL-453 (E-CARDS-3 item 1.a) has its saved
+  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
+  their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_granted_fact`
+  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
+  the same lifetime as its history entry, or follow another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -31727,11 +31779,13 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.write
   checks. Do not reconstruct an operation source from event/index/history. Restore older backups obeys SP-286 missing-original
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
-  Withdrawal follows this exact family''s SCS-1268 cutoff, receipt retention and verified successor rebuild. Retention
-  of event/source fact is PENDING_RETENTION_DECISION: For `source_control.writer_lease.lost` in its existing Project
-  scope, does its saved history use write-authorization audit versus operational lease history? Please choose its
-  exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No central family append, admission,
+  Withdrawal follows this exact family''s SCS-1268 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
+  PENDING_RETENTION_DECISION: For `source_control.writer_lease.lost`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_lost_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.

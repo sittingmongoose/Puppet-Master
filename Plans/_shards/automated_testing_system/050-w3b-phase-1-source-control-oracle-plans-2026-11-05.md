@@ -2,15 +2,15 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7238-L7737
+Source lines: L7238-L7847
 
-Source SHA256: `1ad373a826436fda9f6808820677f15f2bc7a02f5008e571fa29f96cd23f4ef6`
+Source SHA256: `a75c2b82ff1c0d4ad5cd4a572f5f5787d444772b986ada629619141b230312c7`
 
 ---
 
 ## W3B phase-1 Source Control oracle plans — 2026-11-05
 
-No oracle code is authored in this phase. The per-family plans below and `reports/event-authority-20261105/W3B-oracle-plan.json` define controls and single-defect negative constructions. Criterion 12 is PARTIAL for every row. Phase 2 requires the reviewed shared number/date-time helper and `scripts/pm_guard_isolation.py`, with predicate-by-predicate inventory of inherited schemas, exact duplicate-site proofs and Sol/Astra review. None of these plans proves native behavior or admission.
+Phase 1 authored no oracle code; phase 2 (2026-11-13, ATS-1210..ATS-1219 below) implements the plans as executable synthetic oracles. The per-family plans below and `reports/event-authority-20261105/W3B-oracle-plan.json` define controls and single-defect negative constructions. Criterion 12 is PARTIAL for every row. Phase 2 requires the reviewed shared number/date-time helper and `scripts/pm_guard_isolation.py`, with predicate-by-predicate inventory of inherited schemas, exact duplicate-site proofs and Sol/Astra review. None of these plans proves native behavior or admission.
 
 ### ATS-1210 — Source Control phase-1 oracle plans 1
 
@@ -30,9 +30,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -44,6 +49,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -80,9 +91,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -94,6 +110,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -130,9 +152,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -144,6 +171,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -180,9 +213,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -194,6 +232,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -230,9 +274,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -244,6 +293,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -280,9 +335,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -294,6 +354,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -330,9 +396,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -344,6 +415,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -380,9 +457,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -394,6 +476,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -430,9 +518,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
   and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
   and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
-  full original receipts, global checkpoint coverage and every effect counter. Nothing here executes a fixture or
-  proves guard isolation. Criterion 12 PARTIAL; native NOT_RUN. Registration, retention decisions, shared-helper/tool
-  adoption and independent Sol/Astra review remain separate.
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -444,6 +537,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan
@@ -479,9 +578,14 @@ canonical_text: This is an oracle plan only. Each family below has its own indep
   its peer, weakening all admits its negative. Compound rules and shared enforcement sites are cut per predicate.
   Include current replay-only refusal, valid retained replay-only and original-recipe history, 16 KiB wrapper/payload
   boundaries, malformed types/formats/LF, source authentication, full original receipts, global checkpoint coverage
-  and every effect counter. Nothing here executes a fixture or proves guard isolation. Criterion 12 PARTIAL; native
-  NOT_RUN. Registration, retention decisions, shared-helper/tool adoption and independent Sol/Astra review remain
-  separate.
+  and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
 gui_related: false
 gui_classification_reason: Plans verification of saved-history behavior.
 depends_on:
@@ -492,6 +596,12 @@ acceptance_criteria:
 - Single-defect negative per guard; inherited predicates expanded before coverage can close.
 validation_surfaces:
 - reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
 risk_class: masked_negative_or_unproved_contract
 reasoning_tier: high
 context_scope: w3b_phase_1_oracle_plan

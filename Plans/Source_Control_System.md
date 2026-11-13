@@ -2197,13 +2197,18 @@ canonical_text: 'Newly authored owner contract for source_control.backend.detect
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.backend.detected` in its existing Project scope,
-  does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention class
-  and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here. Snapshot bodies,
+  C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
+  RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
+  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.backend.detected`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_backend_detected_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1250 keeps this family''s source and event unavailable
-  pending exact policy adoption.
+  policies; no event reference retains their bodies implicitly. SP-1250 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-TELEMETRY-90D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -2244,9 +2249,11 @@ canonical_text: 'Newly authored owner contract for source_control.backend.detect
 
 
   C12 oracle plan: ATS-1210 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.backend.detected
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -2340,13 +2347,17 @@ canonical_text: 'Newly authored owner contract for source_control.backend.select
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.backend.selected` in its existing Project scope,
-  does its saved history use configuration/source-lineage audit versus ordinary telemetry? Please choose its exact
-  retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.backend.selected`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_backend_selected_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1251 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1251 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -2387,9 +2398,11 @@ canonical_text: 'Newly authored owner contract for source_control.backend.select
 
 
   C12 oracle plan: ATS-1210 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.backend.selected
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -2483,13 +2496,17 @@ canonical_text: 'Newly authored owner contract for source_control.checkpoint.cre
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.checkpoint.created` in its existing Project scope,
-  does its saved history use source-lineage audit versus migration/recovery operational history? Please choose its
-  exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.checkpoint.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_created_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1252 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1252 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -2530,9 +2547,11 @@ canonical_text: 'Newly authored owner contract for source_control.checkpoint.cre
 
 
   C12 oracle plan: ATS-1211 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.checkpoint.created
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -2627,13 +2646,17 @@ canonical_text: 'Newly authored owner contract for source_control.checkpoint.res
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.checkpoint.restored` in its existing Project scope,
-  does its saved history use source-lineage audit versus migration/recovery operational history? Please choose its
-  exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.checkpoint.restored`, DL-453 (E-CARDS-3 item 1.a) has its saved
+  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
+  their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_restored_fact`
+  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
+  the same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1253 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1253 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -2675,9 +2698,11 @@ canonical_text: 'Newly authored owner contract for source_control.checkpoint.res
 
 
   C12 oracle plan: ATS-1211 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.checkpoint.restored
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -2772,13 +2797,19 @@ canonical_text: 'Newly authored owner contract for source_control.remote.fetch_c
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.remote.fetch_completed` in its existing Project
-  scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose
-  its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.fetch_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_fetch_completed_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1254 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1254 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -2819,9 +2850,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.fetch_c
 
 
   C12 oracle plan: ATS-1212 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.fetch_completed
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -2915,13 +2948,19 @@ canonical_text: 'Newly authored owner contract for source_control.remote.fetch_s
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.remote.fetch_started` in its existing Project scope,
-  does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact
-  retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.fetch_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_fetch_started_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1255 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1255 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -2961,9 +3000,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.fetch_s
 
 
   C12 oracle plan: ATS-1212 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.fetch_started
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -3058,13 +3099,19 @@ canonical_text: 'Newly authored owner contract for source_control.remote.publish
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.remote.publish_completed` in its existing Project
-  scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose
-  its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.publish_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_publish_completed_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1256 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1256 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -3107,9 +3154,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.publish
 
 
   C12 oracle plan: ATS-1213 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.publish_completed
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -3204,13 +3253,19 @@ canonical_text: 'Newly authored owner contract for source_control.remote.publish
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.remote.publish_started` in its existing Project
-  scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose
-  its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.publish_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_publish_started_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1257 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1257 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -3252,9 +3307,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.publish
 
 
   C12 oracle plan: ATS-1213 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.publish_started
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -3351,13 +3408,19 @@ canonical_text: 'Newly authored owner contract for source_control.remote.sync_co
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.remote.sync_completed` in its existing Project scope,
-  does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact
-  retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.sync_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_sync_completed_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1258 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1258 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -3402,9 +3465,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.sync_co
 
 
   C12 oracle plan: ATS-1214 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.sync_completed
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -3500,13 +3565,19 @@ canonical_text: 'Newly authored owner contract for source_control.remote.sync_st
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.remote.sync_started` in its existing Project scope,
-  does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact
-  retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.sync_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_sync_started_fact` (the accepted request, native evidence refs and owner
+  result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1259 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1259 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -3550,9 +3621,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.sync_st
 
 
   C12 oracle plan: ATS-1214 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.sync_started
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -3646,13 +3719,17 @@ canonical_text: 'Newly authored owner contract for source_control.repository.bou
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.repository.bound` in its existing Project scope,
-  does its saved history use source-lineage audit versus operational binding history? Please choose its exact retention
-  class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here. Snapshot bodies,
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.repository.bound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_repository_bound_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1260 keeps this family''s source and event unavailable
-  pending exact policy adoption.
+  policies; no event reference retains their bodies implicitly. SP-1260 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -3693,9 +3770,11 @@ canonical_text: 'Newly authored owner contract for source_control.repository.bou
 
 
   C12 oracle plan: ATS-1215 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.repository.bound
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -3789,13 +3868,17 @@ canonical_text: 'Newly authored owner contract for source_control.repository.unb
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.repository.unbound` in its existing Project scope,
-  does its saved history use source-lineage audit versus operational binding history? Please choose its exact retention
-  class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here. Snapshot bodies,
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.repository.unbound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_repository_unbound_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1261 keeps this family''s source and event unavailable
-  pending exact policy adoption.
+  policies; no event reference retains their bodies implicitly. SP-1261 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -3836,9 +3919,11 @@ canonical_text: 'Newly authored owner contract for source_control.repository.unb
 
 
   C12 oracle plan: ATS-1215 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.repository.unbound
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -3932,13 +4017,18 @@ canonical_text: 'Newly authored owner contract for source_control.status.refresh
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.status.refreshed` in its existing Project scope,
-  does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention class
-  and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here. Snapshot bodies,
+  C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
+  RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
+  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.status.refreshed`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_status_refreshed_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1262 keeps this family''s source and event unavailable
-  pending exact policy adoption.
+  policies; no event reference retains their bodies implicitly. SP-1262 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-TELEMETRY-90D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -3978,9 +4068,11 @@ canonical_text: 'Newly authored owner contract for source_control.status.refresh
 
 
   C12 oracle plan: ATS-1216 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.status.refreshed
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -4074,13 +4166,16 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.crea
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.workspace.created` in its existing Project scope,
-  does its saved history use source-lineage audit versus the separately approved Git-worktree release-anchored class?
-  Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether
-  the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No
-  lifetime is selected here. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
-  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1263
-  keeps this family''s source and event unavailable pending exact policy adoption.
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.workspace.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_workspace_created_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
+  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1263 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -4121,9 +4216,11 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.crea
 
 
   C12 oracle plan: ATS-1216 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.workspace.created
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -4217,13 +4314,18 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.open
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.workspace.opened` in its existing Project scope,
-  does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention class
-  and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here. Snapshot bodies,
+  C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
+  RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
+  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.workspace.opened`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_workspace_opened_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1264 keeps this family''s source and event unavailable
-  pending exact policy adoption.
+  policies; no event reference retains their bodies implicitly. SP-1264 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-TELEMETRY-90D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -4263,9 +4365,11 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.open
 
 
   C12 oracle plan: ATS-1217 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.workspace.opened
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -4359,13 +4463,16 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.remo
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.workspace.removed` in its existing Project scope,
-  does its saved history use source-lineage audit versus the separately approved Git-worktree release-anchored class?
-  Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether
-  the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name. No
-  lifetime is selected here. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
-  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1265
-  keeps this family''s source and event unavailable pending exact policy adoption.
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.workspace.removed`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_workspace_removed_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
+  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1265 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -4406,9 +4513,11 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.remo
 
 
   C12 oracle plan: ATS-1217 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.workspace.removed
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -4502,13 +4611,18 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.swit
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.workspace.switched` in its existing Project scope,
-  does its saved history use source-lineage audit versus ordinary selection telemetry? Please choose its exact retention
-  class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares
-  that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here. Snapshot bodies,
+  C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
+  RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
+  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.workspace.switched`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_workspace_switched_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1266 keeps this family''s source and event unavailable
-  pending exact policy adoption.
+  policies; no event reference retains their bodies implicitly. SP-1266 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-TELEMETRY-90D@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -4549,9 +4663,11 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.swit
 
 
   C12 oracle plan: ATS-1218 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.workspace.switched
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -4645,13 +4761,17 @@ canonical_text: 'Newly authored owner contract for source_control.writer_lease.g
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.writer_lease.granted` in its existing Project scope,
-  does its saved history use write-authorization audit versus operational lease history? Please choose its exact
-  retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.writer_lease.granted`, DL-453 (E-CARDS-3 item 1.a) has its saved
+  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
+  their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_granted_fact`
+  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
+  the same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1267 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1267 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -4692,9 +4812,11 @@ canonical_text: 'Newly authored owner contract for source_control.writer_lease.g
 
 
   C12 oracle plan: ATS-1218 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.writer_lease.granted
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
@@ -4788,13 +4910,17 @@ canonical_text: 'Newly authored owner contract for source_control.writer_lease.l
   remain passive reads; mismatched source/recipe/withdrawn data refuse.
 
 
-  C7 retention: PENDING_RETENTION_DECISION. For `source_control.writer_lease.lost` in its existing Project scope,
-  does its saved history use write-authorization audit versus operational lease history? Please choose its exact
-  retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact
-  custody shares that rule. G01/G26 are analogies only and do not assign this name. No lifetime is selected here.
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.writer_lease.lost`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_lost_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1268 keeps this family''s source and
-  event unavailable pending exact policy adoption.
+  assigned policies; no event reference retains their bodies implicitly. SP-1268 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
   C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
@@ -4835,9 +4961,11 @@ canonical_text: 'Newly authored owner contract for source_control.writer_lease.l
 
 
   C12 oracle plan: ATS-1219 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.writer_lease.lost
-  enumerate this family''s positive/negative obligations. PARTIAL in phase 1: no executable oracles or check-11
-  proof is claimed; reviewed shared number/date-time and guard-isolation adoption plus Sol/Astra review remain phase
-  2. Native execution NOT_RUN.'
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
 depends_on:
