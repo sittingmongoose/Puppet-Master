@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8134-L8357
+Source lines: L8162-L8385
 
-Source SHA256: `59ed224d15e3e1a8b69889f2cbb2bb3390f5053a1b3f899f5b3cb443b6427170`
+Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614`
 
 ---
 
@@ -94,7 +94,7 @@ canonical_text: 'An explicitly requested Goal may be born in an app thread with 
   app Goal custody creates no user folder until a file save/command requires one. The existing Goal host reloads
   canonical state, checks owner/current permission/recovery/storage/Stop epochs and evidence and admits bounded
   ordinary continuations; no Assistant Plan, NamedPlan, repository, WorkGraph, WorkNode or Orchestrator run is required.
-  It may use Crew only under parent ceilings. Body/revisions/origin/control/pending, creation/update/cancel results,
+  It may not use Crew at all. Crews, plans, reviews and similar systems may start a separate Goal with no parent edge under GRS-052; the Goal uses the initiating chat Persona/model. Body/revisions/origin/control/pending, creation/update/cancel results,
   associations and every needed active event/read/backup edge adopt one explicit app-version map together or stay
   unavailable. Original pm.goal.record.v2 and owner.goal.body.mutation@1.0.0 Project codecs and hashes remain exact
   and readable; app siblings have distinct schema IDs and hash domains, never null coerced into a Project string.

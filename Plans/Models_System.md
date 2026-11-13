@@ -10,7 +10,7 @@ These requirements are canonical live specification text for this owner document
 
 ## 0. Scope and SSOT status
 
-This document is the **single canonical source of truth** for the Puppet Master model selection, configuration, and variant system — how models are identified, selected, overridden per Persona, and cycled via variants. All other plan documents MUST reference this document by anchor (e.g., `Plans/Models_System.md#MODEL-ID`) rather than restating model selection rules or variant definitions.
+This document is the **single canonical source of truth** for the Puppet Master model selection, configuration, and variant system — how models are identified, selected through the shared Defaults list or run choices, and cycled via presets. All other plan documents MUST reference this document by anchor (e.g., `Plans/Models_System.md#MODEL-ID`) rather than restating model selection rules or variant definitions.
 
 Models_System also owns live provider/model capability snapshot fields used by chat, prompt assembly, runtime routing, and settings surfaces, including context-window and max-token limits, fallback-chain eligibility, capability provenance, and requested/effective model disclosure. Legacy `platform_specs` / `platform_specs.rs` references from the removed Rust/Iced implementation are source-lineage only; they are not an active provider/model capability SSOT and must not be called as `platform_specs::context_window(provider)` or `platform_specs::fallback_model_ids(platform)`.
 
@@ -44,7 +44,7 @@ This section is the single owner section for provider/model precedence across ru
 ### Three-axis settings model
 
 Settings resolution is always described on three axes:
-- `source`: where a candidate value came from (`manual_override`, `persona_preference`, `surface_default`, `scope_policy`, `config_default`, `provider_default`).
+- `source`: where a candidate value came from (`manual_override`, `surface_default`, `scope_policy`, `account_default`, `config_default`; retired `persona_preference` and `provider_default` are historical read vocabulary).
 - `request`: the value explicitly requested for this run or child run.
 - `execution`: the value actually handed to the selected provider/runtime after capability checks, worktree assignment, and policy gating.
 
@@ -52,16 +52,17 @@ The display grammar MUST preserve the distinction between requested and effectiv
 
 ### Deterministic precedence by scope
 
-The canonical precedence chain is:
+The plain rule is: **What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere.**
+
+Technical source order (the build/page sources apply only where their owners already declare them):
 1. explicit run-envelope override
 2. scoped owner policy for the active execution unit (`run`, `seam`, `package`, `node`, `overseer`, or delegated subagent)
-3. Persona preference
-4. surface or stage default
-5. Project own configuration default
-6. work Computer own configuration default
-7. Everywhere, then factory configuration default
-8. last-used state where explicitly permitted
-9. provider default
+3. surface or stage default
+4. default of an account the person explicitly selected for this run, if no earlier model is set
+5. This project defaults list, omitted for No project
+6. Everywhere, then factory configuration default
+
+Persona and command model fields are retired compatibility inputs, never candidates. Computer, last-used and provider-default candidates no longer select a model. Parent/policy ceilings apply to every source. Historical receipts keep their source-order version and original numbers.
 
 Rules:
 - the same inputs and availability set MUST produce the same effective result
@@ -114,7 +115,7 @@ Run Graph event-update vocabulary is historical input only. `Plans/Run_Graph_Vie
 
 Provider account snapshots are runtime-wide. `storage-plan` and `storage-plan.md` must model durable provider account snapshots for runs and for other actor classes that use the same provider runtime, not only the run actor class.
 
-Resolver selection reason text is concise but structured. Standard explanation snippets include `Package overseer default`, `Seam integration default`, `Node implementation match: Rust + backend`, `Review pass default`, `Recovery actor default`, and `Provider fallback from preferred persona model`.
+Resolver selection reason text is concise but structured. Standard explanation snippets include `Package overseer default`, `Seam integration default`, `Node implementation match: Rust + backend`, `Review pass default`, `Recovery actor default`, and `Provider fallback from requested model`.
 
 Requested/effective runtime identity uses the `requested_*` and `effective_*` field families as canonical cross-system IDs. `Contracts_V0`, `Contracts_V0.md`, `_id` compatibility fields, and `/runtime` consumers may expose those IDs, but they must not collapse requested, effective, account, provider, model, execution role, or operational identity into one value.
 
@@ -248,17 +249,18 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-featur
 
 Model and runtime selection remains deterministic and follows the same requested/effective runtime pipeline used elsewhere.
 
+**What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere.**
+
 | Priority | Source | Description |
 |---|---|---|
-| 1 | explicit override | run envelope, manual picker, tier override, or surface-level override |
-| 2 | scoped owner policy | execution-unit owner policy and parent/managed ceilings |
-| 3 | Persona runtime preferences | supported provider/model/variant preferences |
-| 4 | surface or stage default | canonical stage/surface source after Persona |
-| 5 | Project own default | actual Project configuration, omitted in app scope |
-| 6 | Computer own default | actual work Server/Host context |
-| 7 | Everywhere/factory configuration | one Settings resolver, unset falls through |
-| 8 | last used | only where the surface permits it |
-| 9 | provider fallback | after capability/account filtering |
+| 1 | explicit override | The run's model/depth picker, selected preset, sheet row or per-request model |
+| 2 | scoped owner policy | A build's rule for this piece of work; existing parent/managed ceilings always apply |
+| 3 | surface or stage default | A page's existing built-in default, including the Wizard's eligible GUI preference |
+| 4 | manually selected account default | Only if the person sent the run to this account and no earlier model is set |
+| 5 | This project | Project's copy of the same defaults list; absent for No project |
+| 6 | Everywhere/factory | App-wide list, then the declared factory default |
+
+Behaviour change (MD1 A, MD2 NEITHER, MD3 A): remove the old Persona rung 3, Computer rung 6, permitted last-used rung 8 and provider-default rung 9. Commands no longer supply saved model requests. Keep old scoped owner rung 2 and surface/stage rung 4 as technical rungs 2 and 3; insert the manually selected account at 4, and resolve Project then Everywhere at 5 and 6. The old conservative/standard/aggressive selection policies and stored default variants no longer alter this order. This is a model-default exception to ordinary Everywhere/Computer/Project settings layering; Computer capacity and availability still constrain execution. A run with an explicit model keeps it when its account changes. Automatic account selection/rotation does not read that account's default. Historical receipts are never renumbered.
 
 ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
@@ -396,7 +398,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Thinking effort is a global user-selectable intent that resolves through provider/model-specific support. PM must store requested effort separately from supported variants and effective wire mapping, then disclose honored, skipped, clamped, unsupported, and partially supported outcomes. Current transforms include Claude Code print-mode thinking models, Antigravity model-specific choices, Codex/OpenAI `model_reasoning_effort`, Cursor model/route caveats, GitHub Copilot `reasoning_effort` only where the hosted model supports it, Kimi `thinking` and `reasoning_effort` with `xhigh|max -> high`, Z.AI/Zhipu preserved thinking plus GLM-5.2 `high|max`, MiniMax M3 `none|thinking`, MiniMax M2 defaults, and Alibaba/Qwen `enable_thinking` as an explicit PM-owned verification gap.
+  Thinking effort is part of the model selection intent, chosen inside the model picker, and resolves through provider/model-specific support. PM must store requested effort separately from supported variants and effective wire mapping, then disclose honored, skipped, clamped, unsupported, and partially supported outcomes. Current transforms include Claude Code print-mode thinking models, Antigravity model-specific choices, Codex/OpenAI `model_reasoning_effort`, Cursor model/route caveats, GitHub Copilot `reasoning_effort` only where the hosted model supports it, Kimi `thinking` and `reasoning_effort` with `xhigh|max -> high`, Z.AI/Zhipu preserved thinking plus GLM-5.2 `high|max`, MiniMax M3 `none|thinking`, MiniMax M2 defaults, and Alibaba/Qwen `enable_thinking` as an explicit PM-owned verification gap.
 gui_related: false
 gui_classification_reason: Provider/model transform and effective-wire behavior; GUI consumes the state but does not own it.
 depends_on: [MS-113]
@@ -576,7 +578,7 @@ A pre-start run estimate reads these rates only through the pricing snapshot it 
 
 Provider-sensitive token counting uses `token_counting_adapter_id`, `token_counting_basis`, and `counting_semantics` before cost or budget enforcement reads canonical UF-085 token buckets. Provider raw counts may be preserved for audit, but the adapter result is what feeds `input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`. Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens` remain compatibility import/export aliases only.
 
-Context-detail `Breakdown` views that consume model/runtime usage metadata show the context usage bar, token buckets, and grouped breakdowns by role, tools, and provider/model when available.
+Thread context details retain basic capacity/effective-window, token/cost and effective model information plus useful compaction status. Role/tool/source composition and grouped source breakdowns remain internal for enforcement/debugging, with no Curated/Raw source inspection or per-run inclusion receipt (DL-475).
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 
@@ -672,36 +674,9 @@ Rules:
 
 <a id="PERSONA-MODEL-OVERRIDES"></a>
 
-A Persona MAY specify preferred runtime settings in the PERSONA.md frontmatter (defined in `Plans/Personas.md` §3.2):
+Personas describe behaviour, permissions, tools and Skills. They carry no model, provider preference, variant or thinking depth (MD2 NEITHER). `temperature` and `top_p` remain optional capability-filtered answer controls; unsupported controls are recorded as skipped.
 
-```yaml
----
-id: "rust-engineer"
-name: "Rust Engineer"
-description: "Expert Rust developer."
-default_platform: "anthropic"
-default_model: "anthropic/claude-sonnet-4"
-default_variant: "powerful"
-temperature: 0.2
-top_p: null
-reasoning_effort: "high"
----
-```
-
-| Field | Required | Type | Description |
-|-------|----------|------|-------------|
-| `default_platform` | Optional | `string` or `null` | Preferred provider/platform. `null` or absent means inherit from the selection chain (§2). |
-| `default_model` | Optional | `string` or `null` | Model identifier in `provider_id/model_id` format. `null` or absent means inherit from selection priority (§2). |
-| `default_variant` | Optional | `string` or `null` | Preferred variant preset. `null` or absent means inherit from the selection chain (§2). |
-| `temperature` | Optional | `number` or `null` | Preferred sampling temperature when supported by the active provider transport. |
-| `top_p` | Optional | `number` or `null` | Preferred nucleus sampling value when supported. |
-| `reasoning_effort` | Optional | `string` or `null` | Preferred effort/reasoning level when the provider transport exposes it. |
-
-Rule: Persona runtime preferences participate at priority 2 in the selection chain (§2). They are overridden by explicit run-envelope or surface-level overrides (priority 1) but override surface defaults, config defaults, last-used state, and internal defaults.
-
-Rule: If a Persona specifies a preferred platform/model/variant that is not available, the system logs a warning and falls through to the next priority level. The run is NOT blocked.
-
-Rule: If a Persona specifies runtime controls (`temperature`, `top_p`, `reasoning_effort`) that the active provider transport does not support, those controls MUST be recorded as skipped and excluded from the effective runtime state rather than silently ignored.
+Compatibility readers accept old PERSONA.md `default_platform`, `default_model`, `default_variant` and `reasoning_effort` fields as inert source data, warn that model selection moved to Settings > Models or the run's picker, and preserve the original file for inspection/export. They never use these fields to select a route, silently copy them to a shared default, or write them on a new/edit save. Protected built-ins remain protected. Imports and transfers disclose omitted retired fields and require the ordinary owner preview before writing any replacement.
 
 ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, PolicyRule:Decision_Policy.md§2, ContractName:Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING
 
@@ -726,7 +701,7 @@ Puppet Master ships with a set of built-in variants based on available providers
 | `fast` | Smallest/cheapest available model | Optimized for speed and cost. |
 | `powerful` | Largest/most capable available model | Optimized for quality. |
 
-Built-in variants are resolved dynamically based on available providers at runtime. If a variant's target model is unavailable, the variant falls back to the `default` variant.
+Built-in variants resolve dynamically from allowed, runnable provider/model routes. If a target is unavailable, resolution falls back to `default` with requested/effective disclosure. `fast` means the smallest eligible model currently available. Naming and Teach evaluate that choice each time, with Teach's no-silent-costly-fallback guard (MS-117) also enforced when no small model exists; this does not grant a title-model substitution after its request is frozen.
 
 ### 6.3 Custom variants
 
@@ -768,18 +743,12 @@ The user can cycle through enabled variants via:
 - The model picker dropdown in the Chat panel.
 - The command palette.
 
-When a variant is selected, its `model` field is used as the active model for subsequent runs (priority 3 in §2). The active variant is persisted per session (not across restarts unless `config.default_variant` is set).
+Picking or cycling to a preset selects its model as a priority-1 run/session choice. Presets and nicknames are shortcuts, never additional precedence sources. There is no persistent `config.default_variant` or Persona preset default. Compatibility readers retain the old key as inert source data and explain its removal; they do not select a model from it. A saved chat/session choice remains local to that chat/session and never becomes an Everywhere default.
 
 ### 6.6 Per-Persona variant overrides
 
 
-A Persona MAY specify a preferred variant via a `default_variant` field in PERSONA.md frontmatter:
-
-```yaml
-default_variant: "powerful"
-```
-
-When set, this variant is pre-selected when the Persona is active. The user can still cycle to another variant during the session.
+Per-Persona variant overrides are retired by MD2 NEITHER. `default_variant` is compatibility-read only and cannot preselect a model. Preset selection in a run's picker or through the preset key remains available.
 
 ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA
 
@@ -833,7 +802,10 @@ The chat model picker shows:
 - capability indicators where available
 
 Rules:
-- selecting a model creates a priority-1 requested override.
+- selecting a model in a run creates a priority-1 requested override; Settings pickers save only their declared defaults scope.
+- Every Settings model picker reuses the chat composer picker as ACD-438 defines it: one open picker keeps the model list visible while showing the selected route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are chosen and committed as one atomic value; the same picker stays open throughout model and depth choice. A model without supported levels shows none, and unknown capability stays unknown. The picker floats without moving page content and creates no separate thinking-depth Settings row.
+- offer only depth levels proven for that concrete route; a model without levels shows none. A typed/unlisted name offers none until route-specific use or retest proves the levels.
+- an exact unlisted name is tested with one small call on the chosen service/account before saving (WL4 B). A refusal or unreachable/indeterminate service saves nothing and preserves the prior selection. Success proves only name acceptance, not vision, effort, tools or other features. Unknown capabilities remain unknown until separately proven.
 - if two runtime surfaces expose the same canonical model id, the picker must show the concrete runtime surface on the secondary line.
 - the detailed inspector must always expose the exact raw canonical model id.
 
@@ -841,7 +813,22 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 
 ### 7.2 Settings > Models
 
-Settings must show:
+One **Default models** list has **Everywhere** and **This project** tabs on this same page. No project omits the latter. Every row uses the chat model/depth picker; the saved explicit value is one model selection with concrete provider/runtime route, canonical model id and optional supported effort. Inherit follows the entire model/depth pair of the named source; no cross-level field merge. A blank row names both its source and the model/depth that source resolves to now, never an unexplained Default.
+
+| Row | Left alone |
+|---|---|
+| Everyday model | Declared Everywhere/factory everyday model |
+| Planning and supervising; Everyday building; Design and layout; The hardest jobs; Checking finished work | Everyday model |
+| Easy, routine jobs | Everyday building, only for small, low-risk, non-design implementation; never checking work |
+| Naming new chats | Smallest allowed runnable model; Off remains available |
+| Explaining things to you | Smallest allowed runnable model, with MS-117's disclosed fallback guard |
+| Back Seat Driver | Checking finished work |
+| Making pictures; Making videos; Reading text aloud; Making music and sounds | No route until chosen; each generation row appears when its media kind is enabled |
+| Reading pictures | Automatic eligible vision model, the first bridge choice; automatic policy-permitted fallback is disclosed |
+
+Helpers have no separate model or depth row. A parent may choose any available model and supported effort for a child, where available means allowed and runnable under parent/managed/provider/account policy ceilings; absent that choice, resolve the normal job/everyday defaults. Model size alone creates no new ceiling. Personas and commands carry no model defaults. Goals use their ordinary chat choice and a Review's sheet supplies its own checking choice.
+
+Presets and nicknames remain under the list; More options retains answer controls, capability/cache controls and the visible What actually ran link to run history. Service tried first belongs in Limits & switching. Settings must show:
 - provider/runtime grouping
 - concrete runtime surface availability
 - current defaults and their source
@@ -887,11 +874,11 @@ OpenCode uses `provider_id/model_id` format with `parseModel()` splitting on the
 ### 8.2 Puppet Master deltas
 
 1. **Model identifier format:** Same as OpenCode (`provider_id/model_id`). No delta needed.
-2. **Configurable priority list:** OpenCode hardcodes the priority list. Puppet Master makes it configurable via `config.model_priority`.
-3. **Per-Persona overrides:** OpenCode uses `agent.<name>.model`. Puppet Master stores model overrides in the Persona file (`default_model` in PERSONA.md frontmatter) for file-based management and GUI editing.
-4. **Variant persistence:** OpenCode persists the active variant per session. Puppet Master adds `config.default_variant` for cross-session persistence.
+2. **Owned priority list:** §2 defines one fixed order; legacy `config.model_priority` is an inert compatibility input.
+3. **Persona boundary:** OpenCode agent model settings are import/source data only; PM Personas carry no model default.
+4. **Preset selection:** Presets select a model for the active run/session; persistent default variants retire.
 5. **Provider transform in Rust:** OpenCode's transform layer is TypeScript. Puppet Master implements equivalent normalization in the Rust provider facade.
-6. **GUI model picker:** OpenCode's TUI has a basic model selector. Puppet Master provides a full model picker dropdown in Chat, a dedicated Models settings tab, and per-Persona override editing.
+6. **GUI model picker:** OpenCode's TUI has a basic model selector. Puppet Master provides a full model picker dropdown in Chat, a dedicated Models settings tab, and model/depth default editing on one list.
 7. **Overflow detection:** OpenCode uses regex-based detection across 12+ providers. Puppet Master ports these patterns to Rust and integrates with auto-compaction.
 
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
@@ -913,16 +900,16 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression
 **AC-MOD02:** Model selection MUST follow the priority chain in §2 deterministically. Given identical inputs, the same model MUST be selected.
 
 <a id="AC-MOD03"></a>
-**AC-MOD03:** Per-Persona `default_model` (§5) MUST override config defaults, last-used, and internal defaults, but MUST be overridden by explicit run-envelope or tier-config model settings.
+**AC-MOD03:** Persona and command saved model fields MUST be compatibility-read only and MUST NOT participate in model selection.
 
 <a id="AC-MOD04"></a>
-**AC-MOD04:** If a Persona specifies an unavailable model, the system MUST log a warning and fall through to the next priority level. The run MUST NOT be blocked.
+**AC-MOD04:** An old Persona model preference is disclosed as retired and never blocks or changes the run; normal defaults apply.
 
 <a id="AC-MOD05"></a>
 **AC-MOD05:** Built-in variants MUST resolve dynamically based on available providers. An unavailable variant MUST fall back to `default`.
 
 <a id="AC-MOD06"></a>
-**AC-MOD06:** Custom variants MUST be validated: unique name, valid model identifier, model available at definition time or warning logged.
+**AC-MOD06:** Custom variants MUST validate unique name and canonical model identifier. Their model field uses the shared picker: a typed exact name must pass one small call before a new save; refusal or unreachable service saves nothing. Existing unavailable presets remain inspectable with a warning and obey disclosed runtime fallback, but a warning alone never authorizes saving a new unvalidated name.
 
 <a id="AC-MOD07"></a>
 **AC-MOD07:** The Chat panel model picker MUST display all available models grouped by provider and support variant quick-switch.
@@ -940,16 +927,7 @@ This addendum expands the Models system so Persona-driven runtime control is exp
 
 ### 10.1 Persona-driven model/runtime control principle
 
-A Persona may request:
-- platform/provider,
-- model,
-- variant,
-- temperature,
-- top_p,
-- reasoning_effort,
-- and provider-specific runtime options.
-
-These Persona preferences participate in effective run assembly but MUST pass through a provider capability matrix before being applied.
+A Persona may request temperature, top_p and provider-specific answer controls that do not select a model or effort. Model/provider/variant/depth preferences are retired. All supported controls still pass through the provider capability matrix and preserve skipped/clamped receipts.
 
 ### 10.2 Effective selection fields (cross-system runtime contract)
 
@@ -991,25 +969,9 @@ Rules:
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
 ### 10.3 Selection precedence (expanded)
 
-The effective model/runtime selection chain is:
+The effective selection consumes exactly the source order in §2 and MS-005/MS-099: explicit run, scoped owner, surface/stage, manually selected account, This project, Everywhere/factory. What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere.
 
-1. **Explicit run-envelope override**
-   Manual surface selection or structured run override for platform/model/variant/runtime controls.
-2. **Scoped owner policy**
-   Exact execution-unit policy, preserving parent/managed ceilings.
-3. **Persona preference**
-   Persona `default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`.
-4. **Surface/tier/phase defaults**
-   Chat/Interview/Builder/Orchestrator/Multi-Pass defaults.
-5. **Project own default**: omit for No project.
-6. **Computer own default**: actual work Computer.
-7. **Everywhere/factory configuration default**: one Settings resolver.
-8. **Last-used state**: only where permitted.
-9. **Internal/provider defaults**: after capability/account filtering.
-
-This is the same source order as MS-005/099; no second numbering scheme applies.
-
-Rule: Given the same inputs and provider availability set, effective selection MUST be deterministic.
+The technical build and page defaults keep their existing owners. A command or Persona contributes no model. Same inputs and availability must produce the same result; historical source-order versions remain readable without reinterpretation.
 
 ### 10.3A Direct coding-plan provider surfaces
 
@@ -1037,7 +999,7 @@ Trigger conditions:
 - no explicit run-envelope or stage override already selected a different platform/model
 
 Behavior:
-- if a Gemini transport is configured, available, and supports the required controls for the current stage, Gemini becomes the default platform/model source at precedence level 3 ("Surface/tier/phase defaults")
+- if a Gemini transport is configured, available, and supports the required controls for the current stage, Gemini becomes the default platform/model source at precedence level 3 ("surface/stage default")
 - validation stages do **not** auto-switch to Gemini unless the user or a stage override explicitly requests it
 - if Gemini is unavailable or fails capability checks, selection falls back to the normal precedence chain with no special-case retry loop
 
@@ -1162,7 +1124,7 @@ Canonical snapshot shape:
       "rank": 1,
       "provider_entry_id": "cursor",
       "model_id": "anthropic/claude-sonnet-4",
-      "candidate_source": "persona_preference",
+      "candidate_source": "config_default",
       "eligibility_state": "eligible",
       "capability_delta_refs": [],
       "selected": true
@@ -1174,7 +1136,7 @@ Canonical snapshot shape:
       "reason": "provider accepts system/rules prompt injection",
       "source": "documented"
     },
-    "persona_reasoning_effort": {
+    "reasoning_effort": {
       "state": "unsupported",
       "reason": "transport does not expose an effort knob",
       "source": "documented"
@@ -1187,7 +1149,7 @@ Rules:
 - The canonical effective support state for a run is the intersection of transport support, model metadata, and variant/runtime-path constraints.
 - Provider/model catalog snapshots carry `boot_refresh_enabled`, `model_catalog_status`, `last_model_refresh_at`, and `selectable_unit_ids[]` / `selectable_unit_ids` so boot-time refresh, stale catalog state, and the selectable units tied to a catalog entry remain inspectable.
 - Capability resolution records may include `resolved_capability_deltas[]`, `pool_scope`, and `provider_entry`; `pool_scope` can be `provider_entry` when capability differences must be pinned to the concrete runtime surface rather than a provider family.
-- Both the runtime filtering stage and the Persona editor MUST call the same resolver to obtain this snapshot.
+- Runtime model/effort controls and the Persona editor obtain the same capability snapshot, but the Persona editor exposes only its surviving non-model controls. Historical persona_reasoning_effort is an inert read alias, never a Persona setting; current reasoning_effort is run-owned. The example’s config_default is the Everywhere/factory model source, not a Persona preference.
 - A cached copy MAY be persisted for performance, but the cache is derivative; the canonical source is the shared capability resolver plus its provider/model metadata inputs.
 - Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.
 - `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.
@@ -1230,18 +1192,18 @@ If a Persona requests a control the active provider cannot honor:
 Example skipped control records:
 - `temperature`: `unsupported by Claude Code transport`
 - `top_p`: `unsupported by Cursor CLI transport`
-- `reasoning_effort`: `provider does not expose effort knob`
+- Retired Persona reasoning_effort is disclosed as inert old-data inspection, never attempted as a Persona control. A run-requested effort that cannot be honored is recorded by the separate requested/effective model-effort owner.
 
 ### 10.6 GUI disclosure requirements
 
-Persona-related model/runtime controls shown in GUI MUST reflect provider support state:
+Remaining Persona answer controls and run model/effort controls shown in GUI MUST reflect provider support state; no Persona model/depth field is offered:
 
 - **supported:** editable normally
 - **partially_supported:** editable with warning badge and explanatory tooltip
 - **unsupported:** disabled with explanatory text
 
 Example UI copy patterns:
-- `Reasoning effort` -> disabled on Cursor CLI with note `Cursor CLI does not expose a documented effort control.`
+- The run picker offers Reasoning effort only at route-proven levels; a model without proven levels shows none. Unknown support stays Unknown, and unsupported/clamped historical or explicit requests retain their outcome receipt. There is no Persona effort field.
 - `Temperature` -> disabled on Claude Code with note `Not exposed in official Claude Code CLI settings.`
 
 ### 10.7 Runtime display requirements
@@ -1258,7 +1220,7 @@ Minimum display requirements:
 
 Example display:
 - `Persona: Rust Engineer (Auto: Rust repo + code task)`
-- `Model: Codex GPT-5.3 (Persona preferred)`
+- `Model: Codex GPT-5.3 (Checking finished work default)`
 - `Platform: Codex (Available)`
 - `Skipped controls: temperature unsupported by provider`
 
@@ -1270,7 +1232,7 @@ OpenCode demonstrates the integrated runtime shape Puppet Master is adopting:
 - role prompt is injected into system prompt assembly,
 - role model and runtime options are applied before model call.
 
-Puppet Master follows that structure conceptually, but uses Persona as the canonical stored contract and adds provider capability disclosure instead of assuming all backends honor all knobs.
+Puppet Master uses Persona for behaviour and remaining answer controls; provider-native model/variant fields are source evidence only. Model/depth defaults belong to Models §2/§7.2, with provider capability disclosure rather than an assumption that every backend honors every knob.
 
 ### 10.9 Acceptance criteria addendum
 
@@ -1288,7 +1250,7 @@ Puppet Master follows that structure conceptually, but uses Persona as the canon
 Model/provider selection fallback remains separate from runtime retry classification.
 
 Required clarifications:
-- unavailable Persona-preferred models continue to fall through the normal selection chain and do not create a blocked state by themselves
+- retired Persona model fields are inert compatibility reads and never choose or block a model
 - provider execution failures that occur after selection must map into the shared runtime taxonomy, most notably `provider_transient` or terminal provider failure classes
 - provider-level retry defaults must not silently override the shared runtime retry/backoff matrix
 ## Runtime Retry / Fallback Ownership Addendum (2026-03-09)
@@ -1362,30 +1324,17 @@ This addendum elaborates how the canonical provider/model precedence owner secti
 ### Persona, execution-unit, and scope policy inputs
 
 
-1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
+1. **Persona axis**: Users select behaviour, instructions and mutation_policy; the Persona supplies no model/provider/depth default.
 2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
-3. **Scope axis**: Ordinary defaults consume Everywhere → Computer → optional Project through SSYS-002/059; worktree/run/owner policies remain their existing narrower inputs and ceilings, not another ordinary store.
+3. **Scope axis**: Model defaults offer Everywhere and optional Project through SSYS-002/059; Computer remains execution context and a capacity ceiling, never an extra model-default store. Worktree/run/owner policies retain their narrower inputs and ceilings.
 
 ### Precedence chain for provider/model selection
 
-When a unit needs to select a provider and model, resolve in this order:
-
-1. **Explicit run-envelope override**: If the run was launched with `--provider=X --model=Y`, use those.
-2. **Scoped owner policy**: If the active execution_unit_type has a policy (e.g., "node-type uses Copilot"), apply it.
-3. **Persona preference**: Use the active Persona's default model and provider.
-4. **Surface or stage default**: If the UI surface or execution stage has a default (e.g., "code review prefers GPT-4"), use it.
-5. **Project own default**: omit for No project.
-6. **Computer own default**: actual work Computer.
-7. **Everywhere/factory configuration default**: consume the one Settings resolver.
-8. **Last-used state**: only where permitted.
-9. **Provider default**: after capability/account filtering.
+Resolve through §2 and MS-005/MS-099 only. The order is explicit run, scoped owner policy, surface/stage default, manually selected account default, This project list, Everywhere/factory list. Missing sources fall through; eligibility, ceilings and cost gates always apply.
 
 ### Settings resolution and override semantics
 
-
-- **Conservative policy**: tiers 1, 2, 5, 6, 7, 9 under MS-100; exclude Persona/stage defaults and preserve scoped/parent ceilings. The old numeric shorthand is superseded.
-- **Standard policy** (default): Use tiers 1–7 (explicit override through Everywhere/factory defaults); respect all configuration.
-- **Aggressive policy**: Use all tiers 1–9; auto-select the cheapest or fastest model if multiple are available and equally suitable.
+`ai.models.resolution-policy` is retired. Conservative policy, Standard policy and Aggressive policy are compatibility-read names only; none may skip or add a rung. Old values are retained for inspection with a retirement notice and omitted from new saves and transfers. Presets are picker shortcuts, not another stored default or precedence policy.
 
 ### Provider capability and cost gating
 
@@ -1423,7 +1372,7 @@ When a provider and model are selected, emit a `selection_reason` object:
 selection_reason {
   selected_provider: string,           // e.g., 'openai', 'anthropic', 'github'
   selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
-  precedence_tier: number,             // 1–9, using the versioned MS-005/099 source order
+  precedence_tier: number,             // 1–6, using the versioned MS-005/099 source order
   fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
   alternatives: Array,                 // Other models that were considered and why they were skipped
   selection_time_utc: string,          // When the decision was made
@@ -1617,13 +1566,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Settings retain source, request and execution axes. Model selection consumes SSYS-002/059 for ordinary defaults.
-  The canonical source order is 1 explicit run-envelope override, 2 scoped owner policy, 3 Persona preference,
-  4 surface/stage default, 5 Project own default, 6 work Computer own default, 7 Everywhere (then factory configuration
-  default), 8 permitted last-used state, 9 provider fallback. Skip missing/inapplicable rungs, including Project
-  for app work; preserve every applicable parent/managed ceiling, supported capability, account/route/currentness
-  and requested/effective reason. The one Settings resolver supplies default values; the existing Models owner
-  applies its selection policy. No model option/variant field merge is invented.
+  The canonical model source order is 1 explicit run-envelope override, 2 scoped owner policy for the
+  active execution unit, 3 surface/stage default, 4 manually selected account default, 5 This project
+  defaults list when a real Project applies, 6 Everywhere then factory defaults. Skip
+  missing/inapplicable sources. Computer defaults, Persona preference, command-saved model, last-used
+  state and provider default are not model selection rungs. Account defaults count only when the person
+  explicitly sends the run to that account and no earlier source names a model; automatic account
+  rotation never activates them. Preserve parent/managed ceilings, runnable routes, capability evidence,
+  cost gates, requested/effective identity and resolver reasons. A build policy and a page default retain
+  their existing meaning as technical detail. The Settings resolver supplies only the offered levels of
+  the list, without inventing a model/effort field merge.
 gui_related: false
 gui_classification_reason: The unit covers resolver policy and precedence rather than direct GUI presentation.
 split_recommended: false
@@ -2971,8 +2923,12 @@ plan_unit_id: MS-029
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Context-detail Breakdown views that consume model/runtime usage metadata show the context usage bar, token
-  buckets, and grouped breakdowns by role, tools, and provider/model when available.
+canonical_text: >-
+  Thread context details consume canonical model/runtime usage metadata for basic
+  capacity/effective-window, token/cost, effective model facts and useful compaction status.
+  Role/tool/source composition and grouped source breakdowns stay internal for
+  enforcement/debugging; no user-facing Breakdown/Curated/Raw source-inspection view or per-run
+  inclusion receipt is required.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -2981,10 +2937,11 @@ depends_on:
 - MS-028
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
-- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+  - "Covered source spans remain losslessly available for exact-text audit."
+  - "The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage."
+  - "Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Thread context details retain capacity/cost/effective-model facts and useful compaction status without role/tool/source composition, raw/curated source inspection or per-run inclusion receipts."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2998,6 +2955,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0026
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - Context-detail
 - Breakdown
@@ -3006,7 +2964,8 @@ preserved_exact_tokens:
 - role
 - tools
 - provider/model
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -3591,8 +3550,11 @@ plan_unit_id: MS-040
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona runtime preferences may define default_platform, default_model, default_variant, temperature, top_p,
-  and reasoning_effort in PERSONA.md frontmatter using the canonical provider_id/model_id model format.
+canonical_text: >-
+  Personas may carry temperature, top_p and other capability-filtered answer controls, but no
+  provider/model/variant/effort default. Old PERSONA.md default_platform, default_model, default_variant
+  and reasoning_effort are compatibility-read only; disclose their retirement, preserve source bytes for
+  inspection and omit them from new writes. See Personas §3.2.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -3648,8 +3610,11 @@ plan_unit_id: MS-041
 unit_type: selection_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona runtime preferences participate at priority 2, are overridden by explicit run-envelope or surface-level
-  overrides, override lower defaults, and log warnings plus fall through when preferred runtime choices are unavailable.
+canonical_text: >-
+  Persona preference no longer supplies a model selection source. Old preferred
+  platform/model/variant/effort fields are inert compatibility reads and never preselect or block a
+  model; use the fixed §2 normal defaults. Answer-control filtering still records requested/effective
+  outcomes.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -3682,7 +3647,7 @@ preserved_exact_tokens:
 - falls through to the next priority level
 - run is NOT blocked
 negative_constraints:
-- Unavailable Persona preferred platform/model/variant must not block the run.
+- Unavailable retired Persona fields must not block the run or silently become shared defaults.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -3702,7 +3667,7 @@ plan_unit_id: MS-042
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Unsupported Persona runtime controls such as temperature, top_p, or reasoning_effort are recorded as skipped
+canonical_text: Unsupported Persona runtime controls such as temperature or top_p are recorded as skipped
   and excluded from effective runtime state instead of silently ignored.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
@@ -3857,8 +3822,11 @@ plan_unit_id: MS-045
 unit_type: variant_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Built-in variants default, fast, and powerful resolve dynamically from available providers; unavailable target
-  models fall back to default.
+canonical_text: >-
+  Built-in variants default, fast, and powerful resolve dynamically from available providers; unavailable
+  target models fall back to default. Smallest/cheapest available model means allowed and runnable now;
+  missing small routes fall back with disclosure. Teach also enforces MS-117 on every resolution,
+  including no-small-model cases, and naming freezes its resolved request without silent substitution.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -3911,11 +3879,16 @@ plan_unit_id: MS-046
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Custom variants are defined in config with unique validated names, canonical model IDs, and optional descriptions
-  capped at 200 characters.
-gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
-  behavior rather than direct GUI presentation.
+canonical_text: >-
+  Custom variants are defined in config with unique validated names, canonical model IDs, and optional
+  descriptions capped at 200 characters. The preset model field uses the shared model/depth picker and
+  WL4 B validation: test a new typed exact name with one small call before save, never save a refused or
+  unreachable name, and infer no capabilities from acceptance. Existing imported/unavailable presets can
+  be read with a warning and disclosed runtime fallback; a warning alone does not permit a new
+  unvalidated model save.
+gui_related: true
+gui_classification_reason: >-
+  Defines the preset editor model/depth picker and save refusal for unvalidated typed model names.
 split_recommended: false
 depends_on:
 - MS-044
@@ -4070,8 +4043,11 @@ plan_unit_id: MS-049
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: When a variant is selected, its model becomes the active model at priority 3 for subsequent runs and persists
-  per session unless config.default_variant sets cross-session default behavior.
+canonical_text: >-
+  Selecting or cycling to a variant selects its model as a priority-1 run/session choice. It remains
+  local to that session; config.default_variant and ai.models.default-variant are retired compatibility
+  inputs and never create a persistent default. Presets stay selectable through the picker, configurable
+  preset key and command palette.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -4122,7 +4098,10 @@ plan_unit_id: MS-050
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: A Persona may specify a preferred variant with default_variant in PERSONA.md frontmatter.
+canonical_text: >-
+  Per-Persona default_variant is retired: compatibility-read old fields as inert source data, disclose
+  removal, and omit from new Persona writes. Presets remain model picker shortcuts, not Persona-owned
+  model defaults.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -4173,8 +4152,9 @@ plan_unit_id: MS-051
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: When a Persona default_variant is set, that variant is pre-selected while the Persona is active, and the user
-  can still cycle to another variant during the session.
+canonical_text: >-
+  Activating a Persona never preselects a model or variant. Old default_variant values are inert
+  compatibility data. A person may still select or cycle presets as explicit run/session model choices.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -4396,8 +4376,13 @@ plan_unit_id: MS-055
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: The Chat panel model picker displays cleaned primary labels, runtime-platform secondary labels when needed,
-  capability indicators, and the exact raw canonical model ID in the detailed inspector.
+canonical_text: >-
+  The Chat panel model picker displays cleaned primary labels, runtime-platform secondary labels when
+  needed, capability indicators, and the exact raw canonical model ID in the detailed inspector. Reuse
+  this picker as a floating overlay in every model row, with depth inside the same picker. Permit an
+  exact name only after one small service/account call accepts it; refusal or unreachable service saves
+  nothing. That success proves no capability, and unknown vision/effort/tool features stay unknown until
+  proven.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -4450,8 +4435,11 @@ plan_unit_id: MS-056
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Selecting a model in the picker creates a priority-1 requested override and duplicate runtime surfaces for
-  the same canonical ID are disambiguated with concrete runtime surface state.
+canonical_text: >-
+  Selecting a model in the picker creates a priority-1 requested override and duplicate runtime surfaces
+  for the same canonical ID are disambiguated with concrete runtime surface state. A Settings picker
+  writes only its declared default scope as one model/depth value. A typed name uses the same requested-
+  model pipeline only after WL4 B validation; failed validation preserves the previous saved value.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -4504,7 +4492,18 @@ unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Settings > Models shows provider/runtime grouping, concrete runtime surface availability, current defaults and sources, supported image-generation model/route rows, and stale/silent/partial discovery state without inferring unsupported when discovery is silent or stale. Image-generation support in Settings is route-specific rather than Gemini-primary: OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct where verified, and disabled/capability-gated/unverified provider rows are displayed separately from broader text-only public `agy` capability rows.
+  Settings > Models shows provider/runtime grouping, concrete runtime surface availability, current
+  defaults and sources, supported image-generation model/route rows, and stale/silent/partial discovery
+  state without inferring unsupported when discovery is silent or stale. Image-generation support in
+  Settings is route-specific rather than Gemini-primary: OpenAI API-key `gpt-image-2`, Responses
+  `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`,
+  Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct where verified, and
+  disabled/capability-gated/unverified provider rows are displayed separately from broader text-only
+  public `agy` capability rows. One Default models list offers Everywhere and This project only, showing
+  the named fallback source and its current model/depth. §7.2 owns all rows, including the six jobs,
+  naming, Teach, BSD and per-kind media routes. Depth is chosen inside the model picker, with no separate
+  helper/model/depth setting. Presets and nicknames remain below, More options links What actually ran to
+  run history, and Service tried first moves to Limits & switching.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -4965,8 +4964,11 @@ plan_unit_id: MS-065
 unit_type: delta_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Puppet Master keeps OpenCode identifier format while adding configurable model priority, Persona file default_model
-  overrides, config.default_variant, Rust provider facade normalization, and Rust auto-compaction integration.
+canonical_text: >-
+  Puppet Master keeps the OpenCode model identifier format, Rust provider facade normalization and Rust
+  auto-compaction integration. Model selection uses the fixed §2 order. config.model_priority, Persona
+  default_model and config.default_variant are retired compatibility reads only, never active selection
+  controls.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -5019,8 +5021,10 @@ plan_unit_id: MS-066
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Puppet Master adds a full Chat model picker dropdown, dedicated Models settings tab, and per-Persona override
-  editing beyond the OpenCode TUI baseline.
+canonical_text: >-
+  Puppet Master adds the full Chat model/depth picker overlay and the one Default models list in Settings
+  beyond the OpenCode TUI baseline. Persona model editing is retired; all rows use shared picker behavior
+  with supported effort and WL4 B validation of typed names.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -5128,8 +5132,10 @@ plan_unit_id: MS-068
 unit_type: acceptance_criteria
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Acceptance criteria require Persona default_model to override lower-priority defaults but yield to explicit
-  run-envelope or tier-config settings, and unavailable Persona models must warn and fall through without blocking the run.
+canonical_text: >-
+  Persona default_model is compatibility-read only and supplies no model precedence. Retired preferences
+  never block a run or bypass the ordinary model resolver; disclose the retirement without mutating
+  shared defaults.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -5165,7 +5171,7 @@ preserved_exact_tokens:
 - fall through
 - run MUST NOT be blocked
 negative_constraints:
-- If a Persona specifies an unavailable model, the run MUST NOT be blocked.
+- Retired Persona model preferences never select or block a model.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -5185,8 +5191,12 @@ plan_unit_id: MS-069
 unit_type: acceptance_criteria
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Acceptance criteria require built-in variants to resolve dynamically and fall back to default when unavailable,
-  and custom variants to validate unique name and model availability or log warnings.
+canonical_text: >-
+  Built-in variants resolve dynamically and fall back to default with disclosure when unavailable. Custom
+  variants validate unique name and canonical model identity, with WL4 B checking a typed exact name
+  before any new save; refusal or unreachable service saves nothing. Existing unavailable config entries
+  remain inspectable with warnings and runtime fallback, without allowing warning-only saves of new
+  names.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -5349,8 +5359,10 @@ plan_unit_id: MS-072
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: A Persona may request platform/provider, model, variant, temperature, top_p, reasoning_effort, and provider-specific
-  runtime options.
+canonical_text: >-
+  A Persona may request temperature, top_p and supported provider-specific answer controls, but no
+  platform/provider, model, variant or reasoning_effort default. Those retired selection fields are
+  accepted only by compatibility readers and excluded from new writes.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -5404,18 +5416,21 @@ plan_unit_id: MS-073
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona preferences participate in effective run assembly only after passing through the provider capability
-  matrix.
+canonical_text: 'Only surviving non-model Persona controls participate in effective run assembly after the
+  provider capability matrix: prompt/response style, permitted sampling controls, tools and permissions. Model/provider/preset/depth
+  preferences are retired and cannot be restored by capability support. Resolve run model/depth through Models
+  §2 and the shared ACD-438 picker.'
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
-  behavior rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or
+  backend contract behavior rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-072
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving
+  coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -5431,6 +5446,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0050
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - effective run assembly
 - MUST pass through a provider capability matrix
@@ -5444,8 +5460,8 @@ owner_boundary_notes:
 owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs: []
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 ### MS-074 - Effective Selection Identity Fields
 
@@ -5528,14 +5544,16 @@ unit_type: selection_policy
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Model selection consumes SSYS-002/059 for ordinary defaults. The canonical source order is 1 explicit run-envelope
-  override, 2 scoped owner policy, 3 Persona preference, 4 surface/stage default, 5 Project own default, 6 work
-  Computer own default, 7 Everywhere (then factory configuration default), 8 permitted last-used state, 9 provider
-  fallback. Skip missing/inapplicable rungs, including Project for app work; preserve every applicable parent/managed
-  ceiling, supported capability, account/route/currentness and requested/effective reason. The one Settings resolver
-  supplies default values; the existing Models owner applies its selection policy. No model option/variant field
-  merge is invented. Former six-tier summaries and 1-7 indexes are historical shorthand for this canonical order,
-  never competing ladders.
+  The canonical model source order is 1 explicit run-envelope override, 2 scoped owner policy for the
+  active execution unit, 3 surface/stage default, 4 manually selected account default, 5 This project
+  defaults list when a real Project applies, 6 Everywhere then factory defaults. Skip
+  missing/inapplicable sources. Computer defaults, Persona preference, command-saved model, last-used
+  state and provider default are not model selection rungs. Account defaults count only when the person
+  explicitly sends the run to that account and no earlier source names a model; automatic account
+  rotation never activates them. Preserve parent/managed ceilings, runnable routes, capability evidence,
+  cost gates, requested/effective identity and resolver reasons. A build policy and a page default retain
+  their existing meaning as technical detail. The Settings resolver supplies only the offered levels of
+  the list, without inventing a model/effort field merge.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -5707,9 +5725,10 @@ plan_unit_id: MS-078
 unit_type: surface_default_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Interview GUI/UI/UX Gemini preference is a surface/stage default at precedence level 3 when trigger conditions
-  match, no explicit override wins, Gemini is configured and capable, and validation stages do not auto-switch without user
-  or stage override.
+canonical_text: >-
+  Interview GUI/UI/UX Gemini preference remains a surface/stage default at technical source 3 under §2
+  when its existing trigger conditions match, no earlier source wins, Gemini is configured and capable,
+  and validation stages do not auto-switch without explicit user or stage override.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
   or settings behavior.
@@ -6025,19 +6044,22 @@ plan_unit_id: MS-083
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token limits,
-  fallback-chain eligibility, provenance, and requested/effective model identity from one canonical machine-readable
-  capability snapshot produced by the shared capability resolver and provider/model metadata inputs.
+canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token
+  limits, fallback-chain eligibility, provenance, and requested/effective model identity from one canonical
+  machine-readable capability snapshot produced by the shared capability resolver and provider/model metadata
+  inputs.
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
-  semantics rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or
+  backend execution semantics rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-079
 unblocks: []
 acceptance_criteria:
-- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and staleness state.
-- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc UI-only logic.
+- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and
+  staleness state.
+- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc
+  UI-only logic.
 - Requested/effective model identity and fallback/clamp state remain visible to runtime and GUI consumers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -6053,6 +6075,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0058
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - canonical machine-readable snapshot contract
 - provider_id
@@ -6082,19 +6105,22 @@ preserved_exact_tokens:
 negative_constraints:
 - Every control disclosure shown to the user must be derivable from the snapshot without ad hoc UI-only logic.
 - Do not source snapshot fields from legacy platform_specs or platform_specs.rs.
-- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque capability states.
+- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque
+  capability states.
 compatibility_only_notes:
 - platform_specs and platform_specs.rs are retired source-lineage only.
+- The old persona_reasoning_effort capability token is an inert compatibility alias, not a Persona preference.
+  Current effort capability is run-owned; current candidate_source follows Models §2 (the example uses config_default).
 stale_retired_dispositions:
-- Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at, and selectable_unit_ids
-  so boot-time refresh and stale catalog state remain inspectable.
+- Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at,
+  and selectable_unit_ids so boot-time refresh and stale catalog state remain inspectable.
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
 owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs: []
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 
 ### MS-084 - Account Routing Capability Metadata Snapshot
@@ -6289,8 +6315,11 @@ plan_unit_id: MS-087
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona-related model/runtime controls in GUI reflect provider support states as supported, partially_supported
-  with warning badge and tooltip, or unsupported with explanatory disabled text.
+canonical_text: >-
+  Persona-related model/runtime controls in GUI reflect provider support states as supported,
+  partially_supported with warning badge and tooltip, or unsupported with explanatory disabled text.
+  Persona model/depth controls are retired; this gating applies to remaining Persona answer controls and
+  actual run model/effort choices.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
   or settings behavior.
@@ -6403,8 +6432,11 @@ plan_unit_id: MS-089
 unit_type: implementation_reference
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: OpenCode role object runtime shape is implementation-reference evidence; Puppet Master uses Persona as the
-  canonical stored contract and adds provider capability disclosure instead of assuming all backends honor all knobs.
+canonical_text: >-
+  OpenCode role object runtime shape is implementation-reference evidence; Puppet Master uses Persona as
+  the canonical stored contract and adds provider capability disclosure instead of assuming all backends
+  honor all knobs. Provider-native model/variant fields remain source evidence; PM Personas carry
+  behaviour and answer controls only, while model/depth defaults resolve through §2/§7.2.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -6520,8 +6552,11 @@ plan_unit_id: MS-091
 unit_type: runtime_policy
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Model/provider selection fallback remains separate from runtime retry classification; unavailable Persona-preferred
-  models fall through selection, while provider execution failures map to runtime taxonomy such as provider_transient.
+canonical_text: >-
+  Model/provider selection fallback remains separate from runtime retry classification. Retired Persona
+  model fields are inert compatibility reads, never selection candidates or blockers; post-selection
+  provider failures still map to the shared runtime taxonomy, including provider_transient, without a
+  feature-local retry policy.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -6852,9 +6887,13 @@ plan_unit_id: MS-097
 unit_type: settings_model
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Default Crew configuration belongs under model/runtime settings and includes enablement, ordered crew members,
-  per-member model/runtime selectors, and immediate whole-crew Copilot normalization because Copilot is a crew-level provider
-  constraint.
+canonical_text: >-
+  Default Crew Settings stores enablement and an ordered list of Personas only, without per-member
+  model/runtime defaults. Every invocation opens the Crew sheet; new Crew rows start from Everyday
+  building, new Review rows from Checking finished work, other new rows from Everyday model. Each
+  resolves the named row through §2; no Persona contributes a model. The sheet may override model/depth
+  for that invocation, freezes requested/effective identity, and preserves whole-crew Copilot
+  normalization because Copilot remains a crew-level provider constraint.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
   or settings behavior.
@@ -6912,10 +6951,12 @@ unit_type: audit_policy
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  The provider/model policy and audit surfaces preserve Persona and execution-unit axes and distinguish Everywhere,
-  work Computer, optional Project and narrower worktree/run scopes. Device is relevant only to screen rows, never
-  model execution. In No project, omit Project/worktree when absent; record the actual Server/Host/Environment.
-  Local-model capacity rows consume the declared Computer ceiling after requested defaults resolve.
+  The provider/model policy and audit surfaces preserve Persona and execution-unit axes and distinguish
+  Everywhere, work Computer, optional Project and narrower worktree/run scopes. Device is relevant only
+  to screen rows, never model execution. In No project, omit Project/worktree when absent; record the
+  actual Server/Host/Environment. Local-model capacity rows consume the declared Computer ceiling after
+  requested defaults resolve. The Default models list is the declared exception: Everywhere and optional
+  Project only; Computer model defaults retire while host capacity ceilings remain.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -6979,14 +7020,16 @@ unit_type: selection_policy
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Model selection consumes SSYS-002/059 for ordinary defaults. The canonical source order is 1 explicit run-envelope
-  override, 2 scoped owner policy, 3 Persona preference, 4 surface/stage default, 5 Project own default, 6 work
-  Computer own default, 7 Everywhere (then factory configuration default), 8 permitted last-used state, 9 provider
-  fallback. Skip missing/inapplicable rungs, including Project for app work; preserve every applicable parent/managed
-  ceiling, supported capability, account/route/currentness and requested/effective reason. The one Settings resolver
-  supplies default values; the existing Models owner applies its selection policy. No model option/variant field
-  merge is invented. The former 1-7 tier numbering is superseded by this explicit 1-9 order; no owner scope loses
-  its permission ceiling.
+  The canonical model source order is 1 explicit run-envelope override, 2 scoped owner policy for the
+  active execution unit, 3 surface/stage default, 4 manually selected account default, 5 This project
+  defaults list when a real Project applies, 6 Everywhere then factory defaults. Skip
+  missing/inapplicable sources. Computer defaults, Persona preference, command-saved model, last-used
+  state and provider default are not model selection rungs. Account defaults count only when the person
+  explicitly sends the run to that account and no earlier source names a model; automatic account
+  rotation never activates them. Preserve parent/managed ceilings, runnable routes, capability evidence,
+  cost gates, requested/effective identity and resolver reasons. A build policy and a page default retain
+  their existing meaning as technical detail. The Settings resolver supplies only the offered levels of
+  the list, without inventing a model/effort field merge.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model/runtime selection, UI surface defaults, or inspector/audit presentation
   behavior.
@@ -7047,12 +7090,10 @@ unit_type: settings_policy
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  The expanded 1-9 order in MS-005/099 keeps Standard as default: Standard uses tiers 1–7. Aggressive admits 1–9
-  and retains its existing capability/cost tie handling. Conservative obeys the explicit existing exclusion of
-  Persona and surface/stage defaults: tiers 1, 2, 5, 6, 7 and 9, while never bypassing scoped/parent/managed ceilings.
-  The older numeric shorthand tier 1 or tier 3+ conflicts with that explicit exclusion and is superseded; it does
-  not authorize Persona or stage values. No new recommendation, quality-ranking or variant-merge algorithm is
-  added.
+  The old conservative, standard and aggressive model-resolution policies are retired. Compatibility
+  readers accept ai.models.resolution-policy as inert source data, show its retirement, and omit it from
+  new Settings saves and transfer apply. The fixed six-source order in MS-005/099 always applies; old
+  policy names and tier numbers remain historical receipt vocabulary only.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
   rather than direct GUI presentation.
@@ -7091,7 +7132,7 @@ preserved_exact_tokens:
 - tiers 1-7
 - cheapest or fastest model
 negative_constraints:
-- Conservative policy must not apply stage defaults or persona preferences.
+- Retired resolution policies never add, remove or reorder model sources.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -7343,23 +7384,23 @@ plan_unit_id: MS-105
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  Provider/model selection emits a selection_reason object carrying selected provider/model, precedence tier,
-  optional fallback reason, alternatives considered, selection timestamp, and execution unit identity. precedence_tier
-  uses the MS-005/099 1–9 order and names the source level/key; include actual work Server/Host/Environment and
-  null Project in app scope. Original historical audit records retain their original tier version/bytes; a number
-  from an older recipe is never silently reinterpreted. Computer capacity limits retain requested/effective and
-  clamp reasons.
+canonical_text: Provider/model selection emits a selection_reason object carrying selected provider/model,
+  precedence tier, optional fallback reason, alternatives considered, selection timestamp, and execution unit
+  identity. precedence_tier uses the versioned MS-005/099 1–6 order and names the source level/key; include
+  actual work Server/Host/Environment and null Project in app scope. Original historical audit records retain
+  their original tier version/bytes; a number from an older recipe is never silently reinterpreted. Computer
+  capacity limits retain requested/effective and clamp reasons.
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
-  rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend
+  audit behavior rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-099
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving
+  coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -7377,6 +7418,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0077
 - 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
   settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - selection_reason
 - selected_provider
@@ -7393,7 +7435,10 @@ preserved_exact_tokens:
 - '''claude-3-opus'''
 - 1-7
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- ModelPrecedenceAuditV2 / scoped_owner_ladder_v2 and models.strategy_tier_allowed describe historical audit
+  decoding only. They preserve old numeric tiers/policy names without permitting them as current emitters,
+  selection sources or Settings choices.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
@@ -7401,8 +7446,8 @@ owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs:
 - 'ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md'
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 
 ### MS-106 - Selection Reason Audit Trail Traceability
@@ -7588,19 +7633,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns concrete requested/effective model resolution for Goal Runtime worker, planner, evaluator, verifier, and adjudicator roles, plus model capability evidence needed by Goal_Runtime_System certification policy. Goal_Runtime_System owns block/degrade semantics, and provider-specific default tier mappings remain deferred.
+  The Goal Runtime worker/planner/evaluator/verifier/adjudicator model-role cast, worker_default policy
+  and certification-owned model selectors are retired with Goal V2. Goals use ordinary Assistant model
+  selection; a separate Review chooses checking models through its invocation sheet. Models_System still
+  owns requested/effective model identity and capability evidence. The old role words remain
+  compatibility/source-lineage only, never active Settings or Goal-owned model policy.
 gui_related: false
 gui_classification_reason: Concrete model-role resolution and capability evidence are backend provider/model policy; F3-393 owns the visible Settings selectors.
 depends_on:
-  - MS-017
-  - MS-073
-  - MS-074
-  - GRS-010
+- MS-017
+- MS-073
+- MS-074
+- GRS-049
 unblocks: []
 acceptance_criteria:
-  - Goal Runtime role policies can request model resolution for worker, planner, evaluator, verifier, and adjudicator roles.
-  - Resolution exposes requested/effective model identity and capability evidence for each role where relevant.
-  - Models_System does not override Goal Runtime certification-tier block/degrade semantics and does not hard-code provider defaults.
+- Goals use the ordinary Assistant model resolver and expose no worker/verifier selectors.
+- Legacy role-policy values are inert compatibility reads and cannot recreate retired Goal roles.
+- Independent checking and implementation remain distinct work requests under MS-109.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Goal Runtime model-role resolver review
@@ -7631,8 +7680,7 @@ preserved_exact_tokens:
   - "requested/effective model"
   - "capability evidence"
 negative_constraints:
-  - Do not hard-code provider defaults in Models_System for Goal Runtime certification correctness.
-  - Do not collapse verifier/adjudicator and worker model roles into one effective selection.
+- Do not revive Goal model-role policy or certification tier semantics from compatibility data.
 owner_hints:
   - Plans/Models_System.md
   - Plans/Goal_Runtime_System.md
@@ -7649,18 +7697,36 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, model profiles, and provider-specific owner docs such as Plans/Provider_OpenCode.md, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding. Old tier-era wording may remain only as compatibility/search aliases where necessary; capability_lane and agent_role are Models-owned binding inputs, while write_mode and certification_tier are consumed references from Goal Runtime, Contracts, storage, Permissions, and Worktree owner surfaces rather than Models-owned enforcement or certification semantics.
+  Model routing uses six jobs: Planning and supervising (overseer), Everyday building (worker), Easy,
+  routine jobs (low_effort_worker), Design and layout (gui_frontend_worker), The hardest jobs
+  (high_effort_worker), and Checking finished work (auditor). Resolve the configured model/depth through
+  §2; a blank job follows Everyday model, except Easy, routine jobs follows Everyday building. Keep
+  configured provider/account/model-profile identity, capability evidence and requested/effective
+  receipts. Old low_cost_executor maps to low_effort_worker,
+  standard_reviewer/verifier/adjudicator/certifier map to auditor, high_reasoning_orchestrator maps to
+  overseer as compatibility input names only, without restoring retired Goal roles. Missing usable models
+  after named inheritance return typed blocked states with recovery; never arbitrary defaults. Preserve
+  per-piece build policies, parent ceilings and separate checking versus implementation selections.
+  Helpers may use any parent-selected available model and effort; available means allowed and runnable
+  under policy/parent ceilings, otherwise ordinary job/everyday defaults apply. Models owns no
+  write_mode, lease or certification semantics.
 gui_related: false
 gui_classification_reason: Lane binding resolution is backend model/provider policy; FinalGUISpec owns visible Settings controls.
 depends_on:
-  - MS-108
+- MS-005
+- MS-108
 unblocks: []
 acceptance_criteria:
-  - Model resolution accepts capability_lane and agent_role inputs for Orchestrator Goal Runtime.
-  - Required lane roles resolve through configured providers, accounts, and model profiles.
-  - requested/effective identity and capability evidence are exposed to runtime receipts and GUI projections.
-  - Missing required bindings return unconfigured-lane blockers instead of selecting arbitrary defaults.
-  - Legacy tier labels are treated only as compatibility/search aliases; capability_lane and agent_role remain Models-owned binding inputs, while write_mode and certification_tier are carried as owner-surface references rather than Models-owned enforcement or certification semantics.
+- Six job routes resolve configured providers, accounts, model profiles and model/depth pairs.
+- Easy, routine jobs inherits Everyday building when blank and handles only small, low-risk, non-GUI implementation.
+- Legacy lane bindings are compatibility reads; ambiguous retired maps are disclosed and do not write new job
+  defaults automatically.
+- A required job with no usable model after inheritance blocks with recovery instead of choosing arbitrarily.
+- Cheap implementation never acts as verifier, adjudicator or certifier; checking and implementation remain
+  distinct requests.
+- Parent-selected helper model and effort obey actual authority, availability and policy ceilings without a
+  separate Settings row.
+- Receipts preserve requested/effective identity and capability evidence.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future capability-lane resolver review
@@ -7711,10 +7777,10 @@ preserved_exact_tokens:
   - "write_mode"
   - "certification_tier"
 negative_constraints:
-  - Do not hardcode provider/model defaults.
-  - Do not resolve low_cost_executor lanes as verifier, adjudicator, or certifier roles.
-  - Do not preserve old tier-era wording as the canonical execution model.
-  - Do not make Models_System own write_mode enforcement, worktree lease policy, or certification semantics.
+- Do not hardcode provider/model defaults.
+- Do not resolve low_cost_executor or low_effort_worker as verifier, adjudicator or certifier work.
+- Do not revive tier-era or Goal certification roles.
+- Do not make Models own write_mode enforcement, worktree leases or certification semantics.
 owner_hints:
   - Plans/Models_System.md
   - Plans/FinalGUISpec.md
@@ -7736,14 +7802,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns the six user-facing model settings for plans-to-code automation: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. Default Model covers assistant chat, normal Planning Wizard conversation, ordinary research/browser lookup, and fallback behavior. Overseer Model covers Planning Wizard ledger-to-Plans conversion, PRD Builder structured conversion, Plans-to-WorkNode-request compilation, seam/split/merge decisions, execution supervision, graph patch recommendations, and blocked-state reasoning. Worker Model handles normal WorkNode implementation; GUI / Frontend Worker Model handles GUI/frontend/UX/layout/visual WorkNodes; High-Effort Worker Model handles difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes; Auditor Model owns the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review. The loop repeats audit, bounded repair, and re-audit, also recorded by the legacy source token audit/repair/audit, until completion is certified or a critical block or authority boundary stops the loop. Executor has no user-facing Executor Model setting because Executor is deterministic scheduler/runtime machinery and Overseer handles execution-level reasoning around it.
-  High-Effort Worker Model covers repo-wide reasoning explicitly, and Executor deterministic runtime behavior stays outside user-facing model settings.
+  Models_System owns seven user-facing model settings for plans-to-code automation: Default Model,
+  Overseer Model, Worker Model, Low-Effort Worker Model, GUI / Frontend Worker Model, High-Effort Worker
+  Model, and Auditor Model. Default Model covers assistant chat, normal Planning Wizard conversation,
+  ordinary research/browser lookup, and fallback behavior. Overseer Model covers Planning Wizard ledger-
+  to-Plans conversion, PRD Builder structured conversion, Plans-to-WorkNode-request compilation,
+  seam/split/merge decisions, execution supervision, graph patch recommendations, and blocked-state
+  reasoning. Worker Model handles normal WorkNode implementation; GUI / Frontend Worker Model handles
+  GUI/frontend/UX/layout/visual WorkNodes; High-Effort Worker Model handles difficult, broad, repo-wide,
+  high-risk, or high-reasoning WorkNodes; Auditor Model owns the Auditor audit-to-repair loop,
+  verification, certification, quality gates, and evidence review. The loop repeats audit, bounded
+  repair, and re-audit, also recorded by the legacy source token audit/repair/audit, until completion is
+  certified or a critical block or authority boundary stops the loop. Executor has no user-facing
+  Executor Model setting because Executor is deterministic scheduler/runtime machinery and Overseer
+  handles execution-level reasoning around it. High-Effort Worker Model covers repo-wide reasoning
+  explicitly, and Executor deterministic runtime behavior stays outside user-facing model settings. Low-
+  Effort Worker Model is Easy, routine jobs: small, low-risk, non-design implementation only. A blank
+  value inherits Worker Model with its effort and never performs checking. The PRD Builder, Planning
+  Wizard, building and Scout start from the common defaults and permit run overrides; their screens are
+  redesigned separately.
 gui_related: true
 gui_classification_reason: This unit defines user-facing Settings labels and GUI/frontend model routing labels.
 depends_on: [MS-109]
 unblocks: [F3-396, EP-100, OP-023, GRS-028]
 acceptance_criteria:
-  - Exactly six user-facing model settings are exposed for this flow unless a later advanced override is accepted.
+  - Exactly seven user-facing model settings are exposed for this flow: the everyday model and six job rows.
   - Plan Compiler, Planning Wizard ledger-to-Plans, and PRD Builder structured conversion map to Overseer Model.
   - Old fixed validation-pass model settings are replaced by Auditor Model and an Auditor audit-to-repair loop where this compile touches the concept.
   - Legacy `validation_pass_report` artifact family names and old Pass 1 / Pass 2 / Pass 3 names remain Project Output/Chain Wizard lineage or compatibility aliases only; they are not user-facing validation-pass model selectors or active process stages.
@@ -7813,8 +7896,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Every dispatched WorkNode and every plans-to-code role resolution records a model resolution receipt with requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. WorkNode requests carry work_type, gui_related, frontend_related, effort class, reasoning tier, context size, validation cost, risk class, authority risk, user-visible risk, and capability lane metadata so native routing can choose Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, Auditor Model, or Overseer Model without exposing Codex-only external GUI-agent CLI bridge settings in built Puppet Master.
-  The receipt is the native provider/model routing proof for built Puppet Master and preserves effort_class and capability_lane in the canonical routing body.
+  Every dispatched WorkNode and every plans-to-code role resolution records a model resolution receipt
+  with requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason,
+  and capability_checks. WorkNode requests carry work_type, gui_related, frontend_related, effort class,
+  reasoning tier, context size, validation cost, risk class, authority risk, user-visible risk, and
+  capability lane metadata so native routing can choose Worker Model, Low-Effort Worker Model, GUI /
+  Frontend Worker Model, High-Effort Worker Model, Auditor Model, or Overseer Model without exposing
+  Codex-only external GUI-agent CLI bridge settings in built Puppet Master. The receipt is the native
+  provider/model routing proof for built Puppet Master and preserves effort_class and capability_lane in
+  the canonical routing body. Route to low_effort_worker/low_effort_worker_model only when tags describe
+  small, low-risk, non-GUI implementation; review/validation and difficult work cannot use that shortcut.
+  Record named inheritance and requested/effective effort.
 gui_related: false
 gui_classification_reason: This unit defines backend model-resolution receipts and routing metadata; visible labels are consumed by FinalGUISpec.
 depends_on: [MS-110]
@@ -8019,11 +8111,17 @@ plan_unit_id: MS-117
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Teach/Teacher defaults to a low-end/fast model and exposes a GUI-adjustable scoped model setting.
-  Teacher threads disclose requested and effective model, fallback/clamp state, setting source, and whether a stronger
-  model is recommended for handoff. Setting states cover default, user override, unavailable route, capability clamp,
-  policy denial, inherited project/account default, and temporary fallback; Teach model defaults are explained in
-  Help/Glossary content.
+canonical_text: >-
+  Teach/Teacher defaults to a low-end/fast model and exposes a GUI-adjustable scoped model setting.
+  Teacher threads disclose requested and effective model, fallback/clamp state, setting source, and
+  whether a stronger model is recommended for handoff. Setting states cover default, user override,
+  unavailable route, capability clamp, policy denial, inherited project/account default, and temporary
+  fallback; Teach model defaults are explained in Help/Glossary content. The unset/fast policy resolves
+  the smallest allowed runnable model each time, never a hard-coded vendor model. If no small model is
+  available, Teach remains available through the permitted normal fallback, shows its effective model and
+  why before provider dispatch, and never silently selects an unrequested costly/high-effort route.
+  Preserve policy denial and all existing disclosure/permission gates. The model/depth selection lives in
+  the one Defaults list, not the Teacher Persona.
 gui_related: true
 gui_classification_reason: Defines visible settings, model chips, fallback states, and requested/effective model
   disclosure for Teach/Teacher.
@@ -8136,8 +8234,7 @@ negative_constraints:
 - Do not duplicate generic Chat model picker behavior without clarifying Teach/Teacher default scope.
 - Do not make Teach/Teacher model settings ambiguous about scope or precedence.
 - Do not show unavailable low-end preferences as applied when runtime fallback selected something else.
-- Do not add a seventh broad user-facing automation model setting when a Teach/Teacher-specific Persona/surface
-  override is enough.
+- Do not turn Teach into an eighth broad automation setting; its scoped Defaults-list row is sufficient.
 - Do not make Teach model configuration invisible in a raw PERSONA.md file only.
 - Do not create a broad new automation model class when a scoped Teach/Teacher row is sufficient.
 - Do not show fallback model choice as if the requested low-end setting was applied.
@@ -8146,7 +8243,7 @@ negative_constraints:
 - Do not reuse a broad automation model setting when a scoped Teach/Teacher setting is intended.
 - Do not hide requested/effective model differences.
 - Do not let Settings imply a provider honored a Teacher model preference when it was skipped or clamped.
-- Do not create a broad seventh automation model setting for Teach.
+- Do not create a broad eighth automation model setting for Teach.
 - Do not invent a separate chat product surface for Teacher.
 - Do not hide requested/effective Persona/model state.
 - Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
@@ -9165,7 +9262,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  P2-MODEL-CATALOG-CONFIDENCE-UI (P2) is compiled as canonical Puppet Master intent for Provider/catalog confidence and user explanation: Add ModelCapabilityConfidence UI: verified_live, provider_reported, inferred, configured_static, stale, unknown, unsupported, with last_refresh and route/account scope. The preserved PM gap/delta is: Expose capability source confidence in Settings/model picker so users understand why a model shows/hides vision, effort, cache, or context controls. The observed external-repo signal remains source-lineage evidence: Recent issues show model catalogs with wrong context windows, missing modalities, ghost models, static capability assumptions, and route-specific gaps.
+  P2-MODEL-CATALOG-CONFIDENCE-UI (P2) is compiled as canonical Puppet Master intent for Provider/catalog
+  confidence and user explanation: Add ModelCapabilityConfidence UI: verified_live, provider_reported,
+  inferred, configured_static, stale, unknown, unsupported, with last_refresh and route/account scope.
+  The preserved PM gap/delta is: Expose capability source confidence in Settings/model picker so users
+  understand why a model shows/hides vision, effort, cache, or context controls. The observed external-
+  repo signal remains source-lineage evidence: Recent issues show model catalogs with wrong context
+  windows, missing modalities, ghost models, static capability assumptions, and route-specific gaps. An
+  exact unlisted name is validated by one small call before saving, never saved on refusal or unreachable
+  service. Name acceptance proves no feature; unknown vision/effort/cache/context remains unknown until
+  the concrete route proves it.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -9902,3 +10008,56 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json, ContractName:Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json, ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json, ContractName:Plans/requested_effective_runtime.schema.json
+
+
+### MS-199 - Event Authority model.catalog_refreshed 1.0.0 — newly authored owner contract under DL-045.
+
+```yaml
+plan_unit_id: MS-199
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: |-
+  model.catalog_refreshed 1.0.0 — newly authored owner contract under DL-045.
+  Prepared without admission. Exact payload is Plans/event_payloads/model_catalog_refreshed.schema.json (pm.event_payload.model_catalog_refreshed.v1); no sibling or legacy spelling is admitted. Scope is application_or_project; project_id is a real immutable Project ID or, only for application scope, null; never an empty or sentinel Project. Payload project_id equals the envelope join. Existing CV-365 scope rules remain mandatory. Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity is insufficient.
+  Producer: shared model capability resolver refresh completion adapter. Capture completion of cmd.model.refresh, or the already specified automatic refresh, after the resolver publishes its exact catalog revision and provider status refs. A partial refresh remains partial in those status refs; stale cached entries never imply provider readiness. Failure before a new revision publishes emits no completion.
+  Freeze operation_id from fresh entropy in the original owning operation before its effect; preserve it and all source facts on retry/restart. Freeze the completion payload after owner success, before append. If the original operation cannot durably retain its intent/result, publication fails closed: never rerun the effect to reconstruct evidence. This contract creates no independent operation journal or stored value. The owner retains its existing intent/result and source refs under its existing storage contract.
+  Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved retention or unavailable source custody prevents activation. Referenced bodies commit under SP-337 before append. The first original AppendReceipt is exposed only after the durable group frame; terminal event success publication follows that receipt. Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.
+  Identity digest is SHA-256 of UTF-8 compact JSON array ["model.catalog_refreshed", "1.0.0", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order preserved. event_id="evt_"+digest; Project idempotency_key="model.catalog_refreshed:"+digest; application idempotency_key=application@1:{hex(server_id)}:{hex(owner_operation_id)} exactly under CV-366. For model.catalog_refreshed, server_id is the actual Server identity durably frozen by its original shared model capability resolver refresh completion adapter; owner_operation_id is that same original payload.operation_id. Encode each complete exact UTF-8 byte string as lowercase hexadecimal without hashing, trimming or normalization; absent original Server identity refuses publication. Never take Server identity from the retrying Client, current focus or storage_instance_id; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=secret_refs_only. Use Contracts_V0.md#EventRecord for the closed envelope, not a local field list. Envelope occurred_at_utc equals payload.completed_at_utc byte-for-byte from the original Models manual or automatic catalog refresh; retry time is forbidden. Storage alone assigns sequence_id, observed_at_utc and persisted_at_utc. Full producer semantic digest uses EventRecord and CV-339, not only the identity tuple.
+  Exact envelope joins for model.catalog_refreshed: actor_ref is the non-empty non-secret actor reference retained by the original Models manual or automatic catalog refresh: the accepted cmd.model.refresh actor for a manual refresh, or the actual resolver service actor for an automatic refresh. correlation_id is the non-empty correlation_id frozen by that same original owner operation; payload.operation_id equals its immutable operation_id. Never synthesize either required value as null. Scope/project and the entire frozen payload must equal that original operation result. The published original Models revision must join model_catalog_revision, provider_status_refs, provider_id and account_id exactly. Other nullable EventRecord lineage, account, causal and upstream-sequence joins copy the retained original operation facts, including required-present nulls only when that original has no such join; they are never populated from ambient focus. For model.catalog_refreshed, measure the exact uncompressed canonical MessagePack logical body bytes under Case L-2. At most 16 KiB stays inline with payload_ref=null. Above 16 KiB, SP-337 owns the pack bytes/index: payload={} and payload_ref is UTF-8 compact JSON with lexicographically sorted keys {"blake3_id":<lowercase BLAKE3 of those exact bytes>,"byte_size":<exact uncompressed byte count>,"media_type":"application/msgpack"}, no whitespace. This newly authored owner binding preserves EventRecord's existing string ref type and the same exact closed logical payload schema after authorized resolution. In external mode every payload field join and identity recipe in this unit refers to that resolved logical body; the stored inline map stays empty. Freeze body, descriptor and representation before append; pack bytes and index must be durable before receipt issuance. Reject oversized inline bodies, inline/base64 duplicates, missing or uncommitted pack/index, changed bytes/id/size/media type, unavailable permission/deletion/hold/source, and substituted refs. Do not hash payload-store bytes with SHA-256; CV-339 semantic/full-value domains remain unchanged. Resolved logical payload joins the complete original result; immutable replay returns the original stored representation and receipt. New-native migration fields are null. Freeze all these producer values before append and resolve the complete original EventRecord through storage.first_append_receipt.resolve_full_value.v1 on receipt-dependent recovery. Required non-null fields retain their schema-required types.
+  Operating consumer reader.models.catalog_refresh@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id}, value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278 CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity. Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized, deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success evidence.
+  Profile rationale for model.catalog_refreshed: provider status bodies and sensitive provider/account details remain behind authorized refs; account_id is an opaque Models identifier, never credentials; redaction_profile=secret_refs_only is an existing EventRecord value and does not grant source access.
+  Custody remains with shared model capability resolver refresh completion adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, provider response, private absolute path or credential content. Recheck current permission, source deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable, never backup authority. Restore verifies original identities and current source availability; missing originals remain unavailable rather than reconstructed from an index.
+  Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled constraints; no new stored derived record is owned here.
+  Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.models.catalog_refresh@1.0.0 refuses disclosure and fences its in-memory token; generic global indexing remains available for other families. Re-enable only after governed schema/admission validation and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution is authorized.
+  Exact-family oracle matrix for model.catalog_refreshed: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-field append result, full-value commitment, and positive/negative vectors; scripts/pm-small-owner-events.py validates them without registry admission. Positive append vectors assume fixture-only resolved membership/retention; actual absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope field, profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original intent/original result/current owner acceptance/body commit/current lease/restore controls before append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt; no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never reruns shared model capability resolver refresh completion adapter or reconstructs old owner admission. Withdrawal vectors fence pending/prepared and stale-epoch intents, preserve previously issued immutable replay without effects, refuse the withdrawn operating reader, keep unrelated global indexing, and require governed new admission plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored cases remain NOT_RUN.
+  Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability follows from this preparation.
+  model.catalog_refreshed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only; immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before terminal publication validate the delivered eleven-field first AppendReceipt against protected original committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt publishes no success and never undoes or duplicates the already durable frame. Each identifier/path regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions, the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.
+  Checkpoint identity for model.catalog_refreshed: before atomic rebuild publication, validate the nine-field durable token against the SP-278 read_token schema with redb_snapshot_id removed and full-match identifier checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id} key must identify the Storage instance of this original event; its index_dataset_name must identify its generation_id. Match every durable field to the independently captured CURRENT-selected live token after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing, malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the same Storage/key/generation joins before comparing the exact selected live token. Each exact-family oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.
+  Historical operating reads and rebuild for model.catalog_refreshed authenticate the retained EventRecord against Storage's protected original source and full-value commitment at the selected CURRENT frontier, including Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid when written remains readable after live owner request/session/admission retirement, including compatibility-reader-only projector_replay_only history; never rerun current-writer admission or require a transient old owner request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11 isolation is exercised by scripts/pm-small-owner-guard-audit.py: each refusal witness starts from a valid case, changes one semantic fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent. Each enforcement rule is removed only in memory; its witnesses must become accepted, unrelated witnesses must still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar identity mismatches; no production guard is weakened.
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- CV-622
+- SP-602
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```

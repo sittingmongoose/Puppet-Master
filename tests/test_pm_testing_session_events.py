@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -29,9 +30,13 @@ class TestingSessionEventTests(unittest.TestCase):
         self.assertEqual(len(upstream), 40)
         self.assertEqual({row["family_id"] for row in upstream}, upstream_ids)
         encoded = json.dumps(sorted(upstream, key=lambda row: row["family_id"]), sort_keys=True, separators=(",", ":")).encode()
+        # Re-frozen 2026-11-05 (was b59cc61d..., last true at d86090abd9) after three landed registry
+        # changes: c0d688db9f (DL-188/D42 workspace.layout_changed 2.0.0; terminal.workgroup_moved
+        # source_refs), 634412b3ac (terminal.workgroup_moved source_refs) and 102a7e99e8 (CV-366 exact
+        # application selectors on eleven goal rows). No Testing Session row is among the 40.
         # Re-frozen 2026-09-23 (was a3246c0e..., last true at 4fe66204bd) after six landed, recorded
         # goal v3 adoptions: 3890d86c70, 5fc9747b6f, 1136661ddc, e686963ad5, a3c511657f, f6350caf27.
-        self.assertEqual(hashlib.sha256(encoded).hexdigest(), "b59cc61d0f6569d1389256157d29d80f88516644b70c029809d4543405be52ea")
+        self.assertEqual(hashlib.sha256(encoded).hexdigest(), "d78354d22eef69af1ccfe7762ab49b347049f2fd764d7f07fcc29349f21aecac")
         admitted_ids = {row["family_id"] for row in manifest["rows"] if row["admission_status"] == "admitted_static_contract"}
         coordination_rows = {row["family_id"]: row["registry_row"] for row in coordination["rows"]
                              if row["admission_status"] == "admitted_static_contract"}
@@ -40,9 +45,47 @@ class TestingSessionEventTests(unittest.TestCase):
             self.assertEqual(json.dumps(live.get(family_id), sort_keys=True, separators=(",", ":"), ensure_ascii=False),
                              json.dumps(prepared, sort_keys=True, separators=(",", ":"), ensure_ascii=False))
         admitted_ids |= set(coordination_rows)
-        self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids)
-        self.assertEqual(len(families), 40 + len(admitted_ids))
-        return len(admitted_ids)
+        proposed_ids = {"event-family-settings-layer-changed", "event-family-approval-chat-tool-requested",
+                        "event-family-approval-chat-tool-resolved"}
+        for ident in proposed_ids:
+            self.assertTrue(all(v["producer_admission"] == "requires_owner_adoption" for v in live[ident]["payload_versions"]))
+        self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids | proposed_ids)
+        self.assertEqual(len(families), 40 + len(admitted_ids) + len(proposed_ids))
+        # Registry census includes the three families DL-300 registered; their app producers still
+        # require owner adoption. Same rule as the GitHub helper.
+        return len(admitted_ids) + len(proposed_ids)
+
+    def test_registry_helper_refuses_each_one_defect(self):
+        registry = gate.load("Plans/event_family_registry.json")
+        self.assert_registry_matches_upstream_plus_admitted_browser()
+
+        def changed_upstream(value):
+            row = next(row for row in value["families"] if row["family_id"] == "event-family-workspace-layout-changed")
+            row["family_revision"] = "9.9.9"
+
+        def unknown_family(value):
+            value["families"].append(dict(copy.deepcopy(value["families"][0]), family_id="event-family-unknown"))
+
+        def missing_proposed(value):
+            value["families"] = [row for row in value["families"] if row["family_id"] != "event-family-settings-layer-changed"]
+
+        def adopted_proposed(value):
+            row = next(row for row in value["families"] if row["family_id"] == "event-family-settings-layer-changed")
+            row["payload_versions"][0]["producer_admission"] = "existing_project_policy"
+
+        real_load = gate.load
+        for name, change in (("changed_upstream", changed_upstream), ("unknown_family", unknown_family),
+                             ("missing_proposed", missing_proposed), ("adopted_proposed", adopted_proposed)):
+            with self.subTest(defect=name):
+                value = copy.deepcopy(registry)
+                change(value)
+
+                def load(path, value=value):
+                    return copy.deepcopy(value) if path == "Plans/event_family_registry.json" else real_load(path)
+
+                with patch.object(gate, "load", side_effect=load):
+                    with self.assertRaises((AssertionError, KeyError)):
+                        self.assert_registry_matches_upstream_plus_admitted_browser()
 
     def assert_quarantined_unchanged(self, oracle, case):
         before = copy.deepcopy(vars(oracle))

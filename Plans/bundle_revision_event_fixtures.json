@@ -1,0 +1,283 @@
+{
+  "schema_id": "pm.bundle_revision.fixtures.v1",
+  "families": [
+    {
+      "event_type": "bundle.revision_requested",
+      "schema": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+      "positive": {
+        "project_id": "project-a",
+        "thread_id": "thread-a",
+        "bundle_id": "bundle-a",
+        "revision_id": "revision-a",
+        "requested_revision_capability": "x-requested_revision_capability",
+        "permission_snapshot_id": "x-permission_snapshot_id",
+        "schema_id": "pm.event_payload.bundle.revision_requested.v1",
+        "schema_version": "1.0.0",
+        "event_type": "bundle.revision_requested",
+        "annotation_ids": [
+          "annotation-a"
+        ],
+        "effective_revision_capability": "validated_structured_revision",
+        "ts": "2026-11-04T18:00:00Z",
+        "safe_point_id": null,
+        "predecessor_event_id": null,
+        "source_ref": "x-source_ref",
+        "phase_sequence": 0
+      },
+      "phase": "requested",
+      "semantic_owner": "ACD-571",
+      "payload_owner": "CV-590",
+      "storage_owner": "SP-575",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "schema": "Plans/event_payloads/bundle_revision/revision_started.schema.json",
+      "positive": {
+        "project_id": "project-a",
+        "thread_id": "thread-a",
+        "bundle_id": "bundle-a",
+        "revision_id": "revision-a",
+        "requested_revision_capability": "x-requested_revision_capability",
+        "permission_snapshot_id": "x-permission_snapshot_id",
+        "schema_id": "pm.event_payload.bundle.revision_started.v1",
+        "schema_version": "1.0.0",
+        "event_type": "bundle.revision_started",
+        "annotation_ids": [
+          "annotation-a"
+        ],
+        "effective_revision_capability": "validated_structured_revision",
+        "ts": "2026-11-04T18:00:00Z",
+        "safe_point_id": null,
+        "predecessor_event_id": "evt-predecessor",
+        "source_ref": "x-source_ref",
+        "phase_sequence": 1
+      },
+      "phase": "started",
+      "semantic_owner": "ACD-572",
+      "payload_owner": "CV-591",
+      "storage_owner": "SP-576",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "schema": "Plans/event_payloads/bundle_revision/revision_completed.schema.json",
+      "positive": {
+        "project_id": "project-a",
+        "thread_id": "thread-a",
+        "bundle_id": "bundle-a",
+        "revision_id": "revision-a",
+        "requested_revision_capability": "x-requested_revision_capability",
+        "permission_snapshot_id": "x-permission_snapshot_id",
+        "schema_id": "pm.event_payload.bundle.revision_completed.v1",
+        "schema_version": "1.0.0",
+        "event_type": "bundle.revision_completed",
+        "annotation_ids": [
+          "annotation-a"
+        ],
+        "effective_revision_capability": "validated_structured_revision",
+        "ts": "2026-11-04T18:00:00Z",
+        "safe_point_id": null,
+        "predecessor_event_id": "evt-predecessor",
+        "source_ref": "x-source_ref",
+        "phase_sequence": 2
+      },
+      "phase": "completed",
+      "semantic_owner": "ACD-573",
+      "payload_owner": "CV-592",
+      "storage_owner": "SP-577",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "schema": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
+      "positive": {
+        "project_id": "project-a",
+        "thread_id": "thread-a",
+        "bundle_id": "bundle-a",
+        "revision_id": "revision-a",
+        "requested_revision_capability": "x-requested_revision_capability",
+        "permission_snapshot_id": "x-permission_snapshot_id",
+        "schema_id": "pm.event_payload.bundle.revision_interrupted.v1",
+        "schema_version": "1.0.0",
+        "event_type": "bundle.revision_interrupted",
+        "annotation_ids": [
+          "annotation-a"
+        ],
+        "effective_revision_capability": "validated_structured_revision",
+        "ts": "2026-11-04T18:00:00Z",
+        "safe_point_id": null,
+        "predecessor_event_id": "evt-predecessor",
+        "source_ref": "x-source_ref",
+        "phase_sequence": 2
+      },
+      "phase": "interrupted",
+      "semantic_owner": "ACD-574",
+      "payload_owner": "CV-593",
+      "storage_owner": "SP-578",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    }
+  ],
+  "native_oracles": [
+    {
+      "event_type": "bundle.revision_requested",
+      "case_id": "bundle.revision_requested:append_receipt_before_phase_publication",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "case_id": "bundle.revision_requested:lost_ack_returns_original_full_value",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "case_id": "bundle.revision_requested:effect_unknown_no_reexecution",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "case_id": "bundle.revision_requested:restore_skew_fences",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "case_id": "bundle.revision_requested:permission_or_deleted_source_refused",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "case_id": "bundle.revision_requested:generic_frontier_CAS_and_gaps",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "case_id": "bundle.revision_requested:writer_cutoff_reader_rebuild",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "case_id": "bundle.revision_requested:retention_not_selected",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "case_id": "bundle.revision_started:append_receipt_before_phase_publication",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "case_id": "bundle.revision_started:lost_ack_returns_original_full_value",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "case_id": "bundle.revision_started:effect_unknown_no_reexecution",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "case_id": "bundle.revision_started:restore_skew_fences",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "case_id": "bundle.revision_started:permission_or_deleted_source_refused",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "case_id": "bundle.revision_started:generic_frontier_CAS_and_gaps",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "case_id": "bundle.revision_started:writer_cutoff_reader_rebuild",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "case_id": "bundle.revision_started:retention_not_selected",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "case_id": "bundle.revision_completed:append_receipt_before_phase_publication",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "case_id": "bundle.revision_completed:lost_ack_returns_original_full_value",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "case_id": "bundle.revision_completed:effect_unknown_no_reexecution",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "case_id": "bundle.revision_completed:restore_skew_fences",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "case_id": "bundle.revision_completed:permission_or_deleted_source_refused",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "case_id": "bundle.revision_completed:generic_frontier_CAS_and_gaps",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "case_id": "bundle.revision_completed:writer_cutoff_reader_rebuild",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "case_id": "bundle.revision_completed:retention_not_selected",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "case_id": "bundle.revision_interrupted:append_receipt_before_phase_publication",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "case_id": "bundle.revision_interrupted:lost_ack_returns_original_full_value",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "case_id": "bundle.revision_interrupted:effect_unknown_no_reexecution",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "case_id": "bundle.revision_interrupted:restore_skew_fences",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "case_id": "bundle.revision_interrupted:permission_or_deleted_source_refused",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "case_id": "bundle.revision_interrupted:generic_frontier_CAS_and_gaps",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "case_id": "bundle.revision_interrupted:writer_cutoff_reader_rebuild",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "case_id": "bundle.revision_interrupted:retention_not_selected",
+      "execution_status": "NOT_RUN"
+    }
+  ]
+}

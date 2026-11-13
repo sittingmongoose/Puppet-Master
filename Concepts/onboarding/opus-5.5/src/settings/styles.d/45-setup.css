@@ -121,7 +121,7 @@ html[data-theme^="retro"] #panel-settings .o55g-node[data-state="current"] circl
 @keyframes o55g-pixpulse { 50% { fill: var(--g-accent); } }
 #panel-settings .o55g-recap { width: 100%; max-width: 270px; }
 #panel-settings .o55g-about { margin: 0 auto; max-width: 30ch; text-align: center; font-size: 13px; line-height: 1.5; color: var(--text-secondary); text-wrap: pretty; }
-#panel-settings .o55g-recap-title { margin: 0 0 8px; font: 700 10.5px/1.2 var(--body-font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+#panel-settings .o55g-recap-title { margin: 0 0 8px; font: 700 11px/1.2 var(--body-font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
 #panel-settings .o55g-recap-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 #panel-settings .o55g-recap-list li { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 10px; padding: 7px 10px; border: 1px solid var(--g-line); border-radius: calc(var(--g-card-r) * 0.7); background: var(--g-card-bg); font-size: 12.5px; }
 #panel-settings .o55g-recap-list li span { color: var(--text-muted); }

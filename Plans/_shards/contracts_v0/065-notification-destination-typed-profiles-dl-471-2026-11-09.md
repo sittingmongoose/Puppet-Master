@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L24490-L24647
+Source lines: L25937-L26216
 
-Source SHA256: `974b4a737050357f760deafa8f6247c7679b93d6352a1c45684f72d219510105`
+Source SHA256: `ceebca4211052885a0bc5796d5cd888f7ebf7e9a5f7e60b2a0cc7927f29a8d8f`
 
 ---
 
@@ -166,3 +166,125 @@ typed_contracts:
         json_pointer: {type: string, constraints: {max_length: 512}, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-G8 decided by the owner: JSON Pointer string at most 512 characters, empty root allowed, syntax owner-validated.'}
         literal_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-G9 decided by the owner: reference an owner-validated non-secret scalar of at most 1024 serialized bytes.'}
 ```
+
+
+### CV-740 — Governed application board message/source/wrapper V2 selection
+
+**Newly authored technical contract under DL-045/DL-085.** Current-source search for `crew.board_message_posted` read OSI-247/299/440/681, CV-366, SP-351/720 and the complete original application message/source/wrapper graph. No selected original V1 can hold subject/priority; no existing complete header-bearing successor was found. The existing canonical subject and low/normal/high/urgent domain remain required. Select `Plans/application_board_message_v2.schema.json`, immutable `https://puppetmaster.local/schemas/application-board-message/2.0.0/schema.json`, definitions `AgentMessageApplicationV2`, `OriginalCoordinationAppendSourceV2` and `CrewBoardMessageStorageApplicationV2`, each with its own .v2 schema_id and 2.0.0 version. V2 retains every V1 member, explicit WorkflowScopeV2/Server/thread/crew/run/message identity, sender/receiver and message_kind, inline/ref/source-sequence/created-at fields. It adds genuine original subject/priority, platform, direct/type/node/lane routing, message type, execution context, reply/read/resolution. Null optional targets mean broadcast/inapplicable only under original scope; no fabricated Project or node/lane grants access.
+
+Both AgentMessage producer/consumer description sites select this whole current board-post edition. `Plans/application_board_message_v2_graph.json` selects `app.coordination_append.v2`, `storage.coordination_append.application@2.0.0`, the V2 closed source/input/wrapper/key/codec and exact read/backup/restore graph. The original output remains the exactly selected unchanged CoordinationProjectionApplicationV1; a board event never gains an agent lifecycle reducer route. The complete original source preserves all eleven original stage-custody fields, original operation, accepted-source reference/hash, input/output semantic hashes and source semantic hash. Every stage joins the same original operation and selected method. Before publication or any application V1/V2 consumer path, the five original pre-publication stages (original_intent, accepted_original_source, current_owner_and_stop_fence, canonical_pending_or_reservation, owner_commit) must be accepted and have resolved original request/result/owner-evidence records. Recompute each stage-evidence digest from its exact retained record and join evidence owner/revision/generation, operation, selected method, input and accepted-source commitments and actual wrapper key/physical bytes; missing, foreign, refused, unknown or not-reached originals refuse. Accepted-source witness/hash, physical wrapper digest and all stage-method joins apply equally to post, read, archive and recovery. Original commit-result custody is distinct from admission-dependent event append/first receipt, whose prepared stage remains not_reached. These are original captured facts, not a current producer-state gate on retained history; native source authentication remains NOT_RUN. SP-723 owns physical identity, codec, first receipt, payload-store and backup/restore obligations; CV-366's existing semantic domains and CV-339 full-value append domains remain exact. Complete original message headers commit before event publication; no EventRecord/header default/body reinterpretation is original source authority.
+
+Compatibility explicitly retains `AgentMessageApplicationV1`, `OriginalCoordinationAppendSource` and `CrewBoardMessageStorageApplicationV1` at their original immutable URIs/keys/codecs for supported retained reads and existing read/archive source graphs. Project resources remain byte-identical. V1 cannot auto-upgrade to V2: the SP-723 governed upgrader requires genuine original headers and every other V2 field, otherwise unavailable. A V1 reader/writer encountering V2 performs no mutation and refuses unless a separately validating V2 reader is selected. Current posts select the complete V2 graph or are unavailable, never mixed editions. Withdrawal follows SP-723 and OSI-681: cut exact writer admission, settle first receipts, fence exact reader/publication before successor/rebuild; preserve originals and independent generic index. Supported compatibility history uses original admission/schema/source and current access/deletion/hold fences, independent of current producer live state. Native adoption/custody/authentication/durability remain NOT_RUN; no Event Authority admission follows.
+
+```yaml
+plan_unit_id: CV-740
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Current application crew.board_message_posted selects the governed closed V2 message/source/wrapper and whole graph immediately above; preserve exact historical V1 and Project resources.
+gui_related: false
+gui_classification_reason: Versioned original source and compatibility selection.
+depends_on: [CV-366, OSI-247, OSI-299, OSI-440, OSI-681, SP-351]
+unblocks: []
+acceptance_criteria:
+- Original subject/priority/body/routing and custody are retained by the whole selected V2 graph.
+- Frozen V1/Project URI/bytes/codecs remain unchanged and unsupported/mixed versions refuse.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [Plans/application_board_message_v2.schema.json, Plans/application_board_message_v2_graph.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-085]
+preserved_exact_tokens: [AgentMessageApplicationV2, OriginalCoordinationAppendSourceV2, CrewBoardMessageStorageApplicationV2, app.coordination_append.v2, crew.board_message_posted]
+negative_constraints: [No frozen URI rebinding, invented headers, admission or native authority.]
+owner_hints: [Plans/Contracts_V0.md]
+```
+
+
+<a id="CV-690"></a>
+### CV-690 - DG6B exact payload routes prepared without admission
+
+```yaml
+plan_unit_id: CV-690
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  DG6B exact payload routes prepared without admission. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [DL-045, SP-670, SP-671]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+- `auth.github.authenticated`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_authenticated`, version `1.0.0`, semantic owner `GAAAF-077`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_authenticated`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `auth.github.device_code.issued`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_device_code_issued`, version `1.0.0`, semantic owner `GAAAF-078`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_device_code_issued`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `auth.github.disconnected`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_disconnected`, version `1.0.0`, semantic owner `GAAAF-079`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_disconnected`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `auth.github.failed`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_failed`, version `1.0.0`, semantic owner `GAAAF-080`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_failed`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `auth.github.token.polling`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_token_polling`, version `1.0.0`, semantic owner `GAAAF-081`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_token_polling`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `plugin.hook.blocked`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_blocked`, version `1.0.0`, semantic owner `PLUG-131`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `plugin.hook.error`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_error`, version `1.0.0`, semantic owner `PLUG-132`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_error`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `plugin.hook.invoked`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_invoked`, version `1.0.0`, semantic owner `PLUG-133`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_invoked`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `plugin.load_failed`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_load_failed`, version `1.0.0`, semantic owner `PLUG-134`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_load_failed`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `plugin.loaded`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_loaded`, version `1.0.0`, semantic owner `PLUG-135`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_loaded`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `plugin.permission.override`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_permission_override`, version `1.0.0`, semantic owner `PLUG-136`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_permission_override`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `plugin.tool.collision`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_tool_collision`, version `1.0.0`, semantic owner `PLUG-137`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_tool_collision`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+- `plugin.tool.registered`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_tool_registered`, version `1.0.0`, semantic owner `PLUG-138`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_tool_registered`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+
+
+<a id="CV-691"></a>
+### CV-691 - DG6B Persona payload routes prepared without admission
+
+```yaml
+plan_unit_id: CV-691
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  DG6B Persona payload routes prepared without admission. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, SP-672, CV-365]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+- `persona.created`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_created`, version `1.0.0`, semantic owner `P-120`, individual persistence `SP-672`. Selected command request/result are `persona_create_request_v2`/`persona_create_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_created`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+
+- `persona.deleted`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_deleted`, version `1.0.0`, semantic owner `P-121`, individual persistence `SP-672`. Selected command request/result are `persona_delete_request_v2`/`persona_delete_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_deleted`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+
+- `persona.exported`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_exported`, version `1.0.0`, semantic owner `P-122`, individual persistence `SP-672`. Selected command request/result are `persona_export_request_v2`/`persona_export_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_exported`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+
+- `persona.imported`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_imported`, version `1.0.0`, semantic owner `P-123`, individual persistence `SP-672`. Selected command request/result are `persona_import_request_v2`/`persona_import_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_imported`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+
+- `persona.selected`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_selected`, version `1.0.0`, semantic owner `P-124`, individual persistence `SP-672`. Selected command request/result are `persona_select_request_v2`/`persona_select_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_selected`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+
+- `persona.updated`: closed payload `Plans/dg6b_event_contracts.schema.json#/$defs/persona_updated`, version `1.0.0`, semantic owner `P-125`, individual persistence `SP-672`. Selected command request/result are `persona_update_request_v2`/`persona_update_result_v2` in shared_integration_runtime; closed operation and exact source/scope/runtime joins are mandatory. Schema binding grants no membership. Current append/retry uses Contracts_V0.md#EventRecord, replay_policy=dedupe_by_idempotency_key, exact CV-366 application@1 Server/original-operation keys, and payload_schema_id `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_updated`; projector_replay_only refuses as replay_only_not_appendable. Required source, transport and storage-identity oracles are individual to this family.
+
+For `persona.selected` only, `Plans/dg6b_event_contracts.schema.json#/$defs/persona_selected_resolution` is the newly authored closed ref-only resolution evidence behind the selected v2 result’s authenticated `owner_result_ref`. Its logical schema_id is `pm.persona.selected_resolution.v1`, version 1.0.0. It binds original operation_id/persona_id/result/selection-target and the canonical requested/effective identity with the frozen complete runtime snapshot ref/hash. Current readers authenticate and join this record; aliases, missing frozen evidence or conflicting identity quarantine. The existing selected-whole shared_integration_runtime resource and legacy Project definitions remain byte-identical; no source-graph hash is restamped and no runtime identity is recomputed. The separate resolution is held by the existing selected owner-result custody behind owner_result_ref. Measure the complete Storage canonical MessagePack encoded resolution value independently of both the event body and the operation. A complete value at or below 16,384 bytes may be inline; above that limit the existing SP-337 payload store holds the complete original resolution before the owner result is acknowledged. Its closed physical carrier is persona_selected_resolution_storage: schema_id/schema_version plus payload_ref (BLAKE3 id, encoded byte_size and application/msgpack), bounded to 16,384 encoded bytes. The source adapter supplies the independently authenticated physical value and resolved bytes; readers verify current access, durability, exact BLAKE3/size/media/bytes, canonical decode/re-encode, the closed logical schema and typed agreement with the original owner result and frozen selection. Missing, foreign, deleted or conflicting resolution custody refuses append, retry, history and recovery. This reuses SP-337 and the existing owner result, adds no stored family and leaves retention pending; externalizing the event or operation alone never proves this separate limit.
+
+<a id="closed-collaboration-payload-schema-dl-090-2026-11-04"></a>

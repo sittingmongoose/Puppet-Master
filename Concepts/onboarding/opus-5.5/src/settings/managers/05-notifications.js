@@ -37,6 +37,9 @@
     #panel-settings .o55-notif-master { margin-bottom: 14px; }
     #panel-settings .o55-notif-master .pm51-note { margin-top: 8px; }
     #panel-settings .pm51-sound-styles { margin: 0 0 12px; overflow-x: auto; scrollbar-width: none; }
+    /* FO-159 round 2: the strip scrolls sideways, so let each chip keep its own width: squeezed to the strip's
+       width, "Setup & tour" needs a third line at 11 px where 10.5 px drew two. */
+    #panel-settings .pm51-sound-styles .segmented { width: max-content; }
     #panel-settings .o55-notif-master ~ :not(.pm51-quiet) { transition: opacity var(--k3-dur-base, 220ms) var(--k3-ease-out, ease); }
     #panel-settings .o55-notif-master.is-off ~ :not(.pm51-quiet) { opacity: .55; }
     /* events: the sound choice sits on the row; nothing on the row is whole-row clickable */
@@ -196,8 +199,22 @@
   const escStore = p => p.to === 'none' ? 'None' : p.to === 'repeat' ? `Repeat urgent after ${p.after}` : `${p.to} after ${p.after}`;
   const escText = g => { const p = escParts(g); return p.to === 'none' ? 'No escalation' : p.to === 'repeat' ? `Repeats after ${p.after}` : `Then ${p.to} after ${p.after}`; };
   const pm51NotifPrevEnsure = ensureStateShape;
-  ensureStateShape = function () { pm51NotifPrevEnsure(); migrateEvents(); };
-  migrateEvents();
+  /* An agent watches alerts you have: its list names events on the Events list, the only ones its panel can switch, so
+     "Watches N alerts" counts what it really watches (B11 notify 2: the example agents named "Goal failed", "Usage
+     exhausted" and "Authentication expired", which no event was, so they could not be taken off). Rename and Remove keep
+     the lists in step; this repairs a list saved before. An old name of an example event is mapped to it. */
+  const AGENT_EVENT_ALIASES = { 'Usage exhausted': 'Provider usage exhausted' };
+  function migrateAgents() {
+    const n = state.notifications; if (!n || !Array.isArray(n.agents) || !Array.isArray(n.events)) return;
+    const names = new Set(n.events.map(e => e.name));
+    n.agents.forEach(g => {
+      const kept = [];
+      (Array.isArray(g.events) ? g.events : []).forEach(x => { const name = names.has(x) ? x : AGENT_EVENT_ALIASES[x]; if (name && names.has(name) && !kept.includes(name)) kept.push(name); });
+      g.events = kept;
+    });
+  }
+  ensureStateShape = function () { pm51NotifPrevEnsure(); migrateEvents(); migrateAgents(); };
+  migrateEvents(); migrateAgents();
 
   /* The engine's dialog autofocus lands on the head's close button (first match in document order); put it on the field. */
   const focusField = overlay => { const t = overlay && overlay.querySelector('[data-autofocus], .form-input, .pm51-dd-trigger'); if (t) { try { t.focus({ preventScroll: true }); } catch (err) { t.focus(); } } };
@@ -207,7 +224,8 @@
   const destById = id => dests().find(d => d.id === id) || currentDest();
   const isBuiltIn = d => BUILT_IN_TYPES.includes(d.type);
   const typeLabel = d => TYPE_LABEL[d.type] || d.type;
-  const destStatus = d => d.status === 'active' ? (isBuiltIn(d) ? 'Ready' : 'Connected') : d.status === 'attention' ? 'Needs attention' : d.status === 'disabled' ? 'Off' : 'Not set up';
+  /* a destination just added is saved and waits for its first test ("is saved. Send a test…"), so it never reads "Not set up" (B11 notify 8) */
+  const destStatus = d => d.status === 'active' ? (isBuiltIn(d) ? 'Ready' : 'Connected') : d.status === 'attention' ? 'Needs attention' : d.status === 'disabled' ? 'Off' : d.status === 'setup' && d.address ? 'Saved, not tested yet' : 'Not set up';
   const destRank = d => d.status === 'active' ? 0 : d.status === 'attention' ? 1 : d.status === 'disabled' ? 3 : 2;
   const destsSorted = () => dests().slice().sort((x, y) => destRank(x) - destRank(y));
   const mask = d => { if (isBuiltIn(d)) return d.address || 'This device'; const s = String(d.address || ''); if (!s) return 'Not set'; if (s.includes('•')) return s; if (s.length <= 6) return '••••'; return s.slice(0, 2) + '••••' + s.slice(-4); };
@@ -515,7 +533,9 @@
         { label: 'Delivery history', icon: 'history', onClick: () => { PM51.setTab(ID, 'history'); PM51.refresh(ID); } }
       ], d.name),
       body: PM51.section({ title: 'Destination', body: PM51.scoped.rows(rows) + own })
-        + PM51.section({ title: 'Alerts that arrive here', help: 'Switch an alert on to send it here too. The same choice is on each alert under Events.', body: PM51.rows(events().map(e => ({ label: e.name, help: `${e.priority || 'Normal'}${e.enabled ? '' : ' · this alert is off'}`, control: PM51.toggle(e.destinations.includes(d.name), { action: 'pm51-notifications-event-dest', data: { event: e.id, dest: d.id }, label: `Send ${e.name} to ${d.name}` }) }))) + ((N().agents || []).some(g => g.destinations.includes(d.name)) ? PM51.note(`Agents that also send here: ${(N().agents || []).filter(g => g.destinations.includes(d.name)).map(g => g.name).join(', ')}.`, 'info') : '') })
+        /* A3 B-2: each switch says whether the alert arrives here, so an alert that is off is never shown on beside
+           "off" words. Switching one on here sends it here and turns the alert on; off stops it arriving here only. */
+        + PM51.section({ title: 'Alerts that arrive here', help: 'Switch an alert on to send it here. An alert that is off arrives nowhere; switching it on here turns it on. The same choices are on each alert under Events.', body: PM51.rows(events().map(e => ({ label: e.name, help: `${e.priority || 'Normal'}${e.enabled ? '' : ' · this alert is off'}`, control: PM51.toggle(e.enabled && e.destinations.includes(d.name), { action: 'pm51-notifications-event-dest', data: { event: e.id, dest: d.id, arrives: '1' }, label: `Send ${e.name} to ${d.name}` }) }))) + ((N().agents || []).some(g => g.destinations.includes(d.name)) ? PM51.note(`Agents that also send here: ${(N().agents || []).filter(g => g.destinations.includes(d.name)).map(g => g.name).join(', ')}.`, 'info') : '') })
         + destAdvanced(d)
     };
   }
@@ -788,6 +808,37 @@
       primaryLabel: 'Done', onPrimary: () => save()
     });
   }
+  /* Upload file and Replace file are about a recording: each needs a file, and nothing else changes on the way. A sound
+     is renamed only by Rename, which tells its alerts. (B11 notify 5-7: both borrowed the engine's sound editor, which
+     renamed a sound without telling its alerts, made a built-in sound "Custom upload" with no file when saved as it was,
+     and listed a sound added with no file as built in.) */
+  function soundFileDialog(s) {
+    const replacing = !!s;
+    openDialog({
+      title: replacing ? `Replace the file of ${s.name}` : 'Upload a sound',
+      subtitle: replacing ? 'Alerts that use it keep it, under the same name. It plays your file from now on.' : 'It joins your sounds. Pick it for an alert under Events, or from its menu.',
+      body: PM51.form([{ label: 'Sound file', name: 'file', type: 'file', full: true, help: 'WAV, MP3, OGG or M4A, up to 32 MB. It stays in this tab until you reload.' }]
+        .concat(replacing ? [] : [{ label: 'Name', name: 'name', value: '', full: true, help: 'Left empty, the name of the file is used.' }])),
+      saveLabel: replacing ? 'Replace file' : 'Add sound',
+      onSave: (data, form) => {
+        const input = form && form.querySelector('input[type="file"]'), file = input && input.files && input.files[0];
+        if (!file) { PM51.toast('Choose a file first', replacing ? `${s.name} keeps its sound until you pick a file.` : 'A sound needs its recording.', 'info'); return false; }
+        if (file.size > 32 * 1024 * 1024) { PM51.toast('File too large', 'Choose a sound file under 32 MB.', 'info'); return false; }
+        const format = (String(file.name).split('.').pop() || 'WAV').toUpperCase();
+        let target = s;
+        if (!target) {
+          const name = String(data.name || '').trim() || String(file.name).replace(/\.[^.]+$/, '').trim() || 'My sound';
+          if (sounds().some(x => x.name.toLowerCase() === name.toLowerCase())) { PM51.toast('That name is taken', `There is already a sound called ${name}.`, 'info'); return false; }
+          target = { id: uid('sound', name), name, duration: '0:02.0', assignments: 0, volume: 70 };
+          (N().sounds = N().sounds || []).push(target);
+        }
+        Object.assign(target, { source: 'Custom upload', format });
+        delete target.tones; delete target.bars; delete target.style;
+        settingsSoundPreview.attachFile(target.id, file);
+        save(); PM51.toast(replacing ? 'File replaced' : 'Sound added', replacing ? `${target.name} plays your file now.` : `${target.name} is in your sounds.`, 'success');
+      }
+    });
+  }
   function renameSound(s) {
     openDialog({
       title: `Rename ${s.name}`, subtitle: 'Events keep using it under the new name.',
@@ -810,9 +861,9 @@
     return PM51.section({
       title: 'Quiet hours', help: 'A daily window when alerts wait instead of interrupting you.',
       body: PM51.rows([
-        { label: 'Quiet hours', help: q.enabled ? `${q.start} to ${q.end}` : 'Alerts arrive any time.', control: PM51.toggle(!!q.enabled, { action: 'pm51-notifications-quiet-toggle', data: { key: 'enabled' }, label: 'Quiet hours' }) },
+        { label: 'Quiet hours', help: q.enabled ? (q.start === q.end ? `Start and end are both ${q.start}, so quiet hours never begin. Pick a different end time.` : `${q.start} to ${q.end}`) : 'Alerts arrive any time.', control: PM51.toggle(!!q.enabled, { action: 'pm51-notifications-quiet-toggle', data: { key: 'enabled' }, label: 'Quiet hours' }) },
         { label: 'Start', control: sel('start', q.start, TIMES) },
-        { label: 'End', control: sel('end', q.end, TIMES) },
+        { label: 'End', help: q.start === q.end ? 'The same as Start: quiet hours never begin.' : '', control: sel('end', q.end, TIMES) },
         { label: 'Weekends', control: sel('weekends', q.weekends, ['Same schedule', 'Quiet all weekend', 'No quiet hours on weekends']) },
         { label: 'Still reaches you', help: through.length ? through.map(d => `${d.name} (${d.quiet === 'always' ? 'everything' : 'urgent only'})`).join(', ') : 'Nothing. Every destination holds its alerts.', value: `${through.length} of ${dests().length} destinations`, action: { label: 'Change', icon: 'route', action: 'pm51-notifications-quiet-dests' } }
       ])
@@ -824,7 +875,7 @@
       ])
     }) + PM51.advanced([
       PM51.rows([
-        { label: 'Escalation groups', control: sel('escalation', q.escalation || 'Follow quiet hours', ['Follow quiet hours', 'Ignore quiet hours']) },
+        { label: 'Notification agents', help: 'Whether agents escalate during quiet hours.', control: sel('escalation', q.escalation || 'Follow quiet hours', ['Follow quiet hours', 'Ignore quiet hours']) },
         { label: 'Time zone', help: 'Quiet hours follow this clock.', control: sel('timeZone', q.timeZone || 'Same as this device', ['Same as this device', 'Same as your server']) }
       ])
     ].join(''));
@@ -911,7 +962,13 @@
       }
     });
   });
-  PM51.on('notifications-quiet-dests', () => { PM51.setTab(ID, 'destinations'); PM51.refresh(ID); PM51.toast('Set it in each destination', 'Pick a destination, then choose "During quiet hours".', 'info'); });
+  /* "Still reaches you › Change" changes it here: every destination's "During quiet hours", the same choice each
+     destination holds (B11 notify 4: it only switched to Destinations with a toast). */
+  PM51.on('notifications-quiet-dests', () => PM51.panel({
+    icon: 'clock', eyebrow: 'Quiet hours', title: 'What still reaches you', summary: 'For each destination: whether its alerts wait for quiet hours to end. The same choice is in each destination.',
+    body: PM51.panelSection('During quiet hours', dests().length ? PM51.rows(destsSorted().map(d => ({ label: d.name, help: typeLabel(d), control: PM51.dropdown(d.quiet || 'hold', QUIET_CHOICES, { action: 'pm51-notifications-dest-quiet', data: { dest: d.id }, label: `${d.name} during quiet hours` }) }))) : PM51.note('No destinations yet. Add one under Destinations.')),
+    primaryLabel: 'Done', onPrimary: () => save()
+  }));
   PM51.onChange('notifications-dest-adv', el => { const d = destById(ds(el, 'dest')); d.advanced = d.advanced || {}; d.advanced[ds(el, 'key')] = el.value; saveState(); });
   PM51.on('notifications-export', el => PM51.panel({
     icon: 'download', title: 'Export delivery log', subtitle: ds(el, 'dest') ? destById(ds(el, 'dest')).name : 'All destinations',
@@ -941,10 +998,17 @@
   });
   PM51.on('notifications-event-dest', el => {
     const e = eventById(ds(el, 'event')); const d = dests().find(x => x.id === ds(el, 'dest')); if (!e || !d) return;
-    const on = !e.destinations.includes(d.name);
-    e.destinations = on ? [...e.destinations, d.name] : e.destinations.filter(n => n !== d.name);
+    /* a destination's own list (data-arrives) switches whether the alert arrives here: on also turns an alert that is
+       off on; an alert's own sheet keeps its separate "Alert is on" switch, so there each switch is the route alone */
+    const arrives = ds(el, 'arrives') === '1';
+    const routed = e.destinations.includes(d.name);
+    const on = arrives ? !(e.enabled && routed) : !routed;
+    e.destinations = on ? (routed ? e.destinations : [...e.destinations, d.name]) : e.destinations.filter(n => n !== d.name);
+    const turnedOn = arrives && on && !e.enabled;
+    if (turnedOn) e.enabled = true;
     el.classList.toggle('on', on); el.setAttribute('aria-checked', on ? 'true' : 'false'); saveState();
     PM51.refresh(ID, { swap: false }); refreshEventSheet(e);
+    if (turnedOn) PM51.toast(`${e.name} is on`, `It arrives in ${d.name}${e.destinations.length > 1 ? ` and ${e.destinations.length - 1} other place${e.destinations.length > 2 ? 's' : ''}` : ''}.`, 'info');
   });
   /* One handler for every event-sound dropdown: row, Event sounds list, and the sheet. The body re-renders so
      metas and the library's "Used by" follow; the sheet only swaps its own preview button and facts. */
@@ -977,10 +1041,10 @@
   PM51.onInput('notifications-event-desc', el => { const e = eventById(ds(el, 'event')); if (!e) return; e.description = String(el.value || '').trim(); saveState(); refreshEventSheet(e); });
   PM51.on('notifications-event-remove', el => {
     const e = eventById(ds(el, 'event')); if (!e) return;
-    PM51.confirm(`Remove ${e.name}?`, 'Nothing is delivered for it any more, and escalation groups stop watching it. Scripts that raise it are not changed.', 'Remove', () => {
+    PM51.confirm(`Remove ${e.name}?`, 'Nothing is delivered for it any more, and notification agents stop watching it. Scripts that raise it are not changed.', 'Remove', () => {
       N().events = events().filter(x => x.id !== e.id);
       (N().agents || []).forEach(g => { g.events = (g.events || []).filter(n => n !== e.name); });
-      eventSheet = null; PM51.setTab(ID, 'events'); save(); PM51.toast('Event removed', `${e.name} is gone.`);
+      eventSheet = null; PM51.setTab(ID, 'events'); save(); PM51.toast('Alert removed', `${e.name} is gone.`);
     }, true);
   });
   PM51.on('notifications-group', el => groupPanel(ds(el, 'id')));
@@ -1054,14 +1118,14 @@
     });
   }
   PM51.on('notifications-export-events', () => PM51.panel({ icon: 'download', title: 'Export events', body: PM51.panelSection('What is included', PM51.kv([['Events', `${events().length}`], ['Destinations', 'Names only, never addresses'], ['Sounds', 'Names only']])), primaryLabel: 'Save file', onPrimary: () => example('Export ready', 'Example data only. No file was written in this preview.') }));
-  PM51.on('notifications-import-events', () => openDialog({ title: 'Import events', subtitle: 'Bring event settings from another workspace.', body: PM51.form([{ label: 'File', name: 'file', type: 'file', full: true, help: 'A file exported from Puppet Master.' }]), saveLabel: 'Import', onSave: () => example('Import requested', 'Example data only. Nothing was imported in this preview.') }));
+  PM51.on('notifications-import-events', () => openDialog({ title: 'Import events', subtitle: 'Bring in events exported from another copy of Puppet Master.', body: PM51.form([{ label: 'File', name: 'file', type: 'file', full: true, help: 'A file exported from Puppet Master.' }]), saveLabel: 'Import', onSave: () => example('Import requested', 'Example data only. Nothing was imported in this preview.') }));
 
   /* ---------- actions: sounds ---------------------------------------------- */
   /* Also reached from the Add sound setting's own button (a detached element): anchor on the button on the page. */
-  PM51.on('notifications-add-sound', el => { const anchor = el && el.isConnected ? el : root.querySelector(`[data-pm51-manager="${ID}"] [data-setting-id="${S.manage}"]`); if (!anchor) { editSound(); return; } addSoundMenu(anchor); });
+  PM51.on('notifications-add-sound', el => { const anchor = el && el.isConnected ? el : root.querySelector(`[data-pm51-manager="${ID}"] [data-setting-id="${S.manage}"]`); if (!anchor) { soundFileDialog(null); return; } addSoundMenu(anchor); });
   PM51.on('notifications-browse', () => PM51.revealSetting(S.catalog));
   const addSoundMenu = el => PM51.menu(el, [
-    { label: 'Upload file', icon: 'upload', meta: 'WAV, MP3, OGG, M4A', onClick: () => editSound() },
+    { label: 'Upload file', icon: 'upload', meta: 'WAV, MP3, OGG, M4A', onClick: () => soundFileDialog(null) },
     { label: 'Import pack', icon: 'download', meta: 'PeonPing-compatible', onClick: () => dispatchAction('import-peonping-pack', el, null) }
   ], 'Add sound');
   PM51.on('notifications-assign-open', el => { const s = sounds().find(x => x.id === ds(el, 'id')); if (s) assignPanel(s); });
@@ -1076,7 +1140,7 @@
       { label: 'Rename', icon: 'edit', onClick: () => renameSound(s) },
       /* setup and the tour play a setup sound whatever the library holds, so it has no file to replace and stays */
       ...(isAppSound(s) ? [] : [
-        { label: 'Replace file', icon: 'upload', onClick: () => editSound(s) },
+        { label: 'Replace file', icon: 'upload', onClick: () => soundFileDialog(s) },
         { separator: true },
         { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${s.name}?`, used.length ? `${used.map(e => e.name).join(', ')} will have no sound.` : 'No event uses it right now.', 'Remove', () => { events().forEach(e => { if (e.sound === s.name) e.sound = 'None'; }); settingsSoundPreview.releaseFile(s.id); N().sounds = sounds().filter(x => x.id !== s.id); save(); PM51.toast('Sound removed', `${s.name} is gone.`); }, true) }
       ])
@@ -1097,13 +1161,19 @@
 
   /* ---------- actions: quiet hours ------------------------------------------ */
   PM51.on('notifications-quiet-toggle', el => { const q = N().quiet; const k = ds(el, 'key'); q[k] = !q[k]; save(); });
-  PM51.onChange('notifications-quiet', el => { N().quiet[ds(el, 'key')] = el.value; save(); });
+  /* Start and End make a window, so they can't be the same time (B11 notify 3: "11:00 PM to 11:00 PM" said nothing about
+     what it meant); the dropdown goes back to what it was. */
+  PM51.onChange('notifications-quiet', el => {
+    const q = N().quiet, key = ds(el, 'key');
+    if ((key === 'start' || key === 'end') && el.value === q[key === 'start' ? 'end' : 'start']) { PM51.refresh(ID, { swap: false }); PM51.toast('Pick a different time', `Quiet hours need a start and an end that differ. ${key === 'start' ? 'End' : 'Start'} is ${el.value}.`, 'info'); return; }
+    q[key] = el.value; save();
+  });
   PM51.on('notifications-quiet-during', el => { N().quiet.during = ds(el, 'value'); save(); });
 
   /* ---------- actions: history & page ------------------------------------- */
   PM51.on('notifications-history', el => historyPanel(Number(ds(el, 'index'))));
   PM51.on('notifications-reset', () => PM51.confirm('Reset notification defaults?', 'Destinations, events, sounds, and quiet hours go back to the example defaults. Uploaded recordings are forgotten.', 'Reset', () => {
-    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); PM51.s().o55NotifV2 = false; PM51.s().o55NotifSoundsV1 = false; PM51.s().o55NotifSoundsV2 = false; barsTried.clear(); barsRun++; appPreview.stop(); migrateV2(); migrateSounds(); syncAppSounds(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
+    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); migrateAgents(); PM51.s().o55NotifV2 = false; PM51.s().o55NotifSoundsV1 = false; PM51.s().o55NotifSoundsV2 = false; barsTried.clear(); barsRun++; appPreview.stop(); migrateV2(); migrateSounds(); syncAppSounds(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
   }, true));
   PM51.on('notifications-help', () => PM51.panel({
     icon: 'info', title: 'How notifications work',

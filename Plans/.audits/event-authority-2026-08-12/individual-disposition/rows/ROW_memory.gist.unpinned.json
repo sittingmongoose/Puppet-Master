@@ -6,8 +6,8 @@
     "july248"
   ],
   "working_bucket": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to memory.gist.unpinned. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "RECLASSIFY_TO_EXCLUDED: current owner retires memory.gist.unpinned; DL-407. See reports/event-authority-20261104/DCN-exclusion-application.json. Legacy bucket/cohort pins and denominator preserved. Previous rationale: Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to memory.gist.unpinned. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -85,6 +85,16 @@
       "citation": "Input shard command-catalog line anchor",
       "status": "drift",
       "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1094."
+    },
+    {
+      "citation": "Plans/assistant-memory-subsystem.md:3179",
+      "status": "ok",
+      "notes": "DL-407 retires memory.gist.verification_requested"
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1127",
+      "status": "ok",
+      "notes": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
     }
   ],
   "owner_veto": null,

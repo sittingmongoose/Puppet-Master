@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29606
+Source lines: L28747-L32284
 
-Source SHA256: `e5672b6ff50e8a865b498558df91e27315b6ba2b9a48e63cfce3e2086293d658`
+Source SHA256: `1f98f5160c64525ea2f159a6d03dbdd92a224c7fa708a7dea4c9abaa3c814f3c`
 
 ---
 
@@ -2820,4 +2820,729 @@ preserved_exact_tokens:
 - BLOCKED
 owner_hints:
 - Plans/Planning_Ledger_System.md
+```
+
+
+### DL-473 - Auto Placement And Person-Allowed Project Computers
+
+```yaml
+plan_unit_id: DL-473
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared's decisions, verbatim (2026-11-09):
+  - Who wins: "Person's pin wins".
+  - A build's computers: "Any allowed computer. It should work similar to the way T3 does it where we have a number of parameters to give certain devices priority. Like ram, cpu or storage. We would need to talk through that priority system."
+  - Offline mid-task: "Wait, then safe retry".
+  - No-project chats: "Keep the computer you're on".
+  - Controls: "Presets + Advanced (Recommended)".
+  - Measures in Balanced: "Free CPU and memory (Recommended), Free disk space, Queued work (Recommended)".
+  - A computer in use: "Yes, count it as Less often (Recommended)".
+  - Levels: "As proposed (Recommended)".
+
+  Each Project has a default Computer and new Project work defaults to Auto. SIR-056 owns the single placement policy: must-haves gate before ranking; levels Prefer/Normal/Less often/Only when I choose it; Balanced default, Fastest and Keep my computer free presets; Everywhere weights and optional Project preset override. Tasks add only minimums, never priority. Keyboard activity or battery power demotes to Less often by default, with an off setting. Has the files already was not chosen for Balanced; it exists only as an Advanced slider with default 0. Tie-break is Project default Computer then stable execution_host_id order, unchanged by rename. Why this computer accompanies Auto → <Computer> or Chosen: <Computer> with chooser and requested/effective differences.
+
+  A person's pin binds agents unless the person lets them choose. Agents may pin one task or choose Auto only within allowed Computers; they never change Project/Everywhere defaults. PS-147/148 grants authorize the Project's current person-allowed Computers, including a Computer the person allows later, while each dispatch freezes one exact selection and rechecks authority. A new Computer/device identity still asks even in YOLO. Started work waits/resumes on its Computer; only a safe checkpoint, reconciliation and old-owner fencing permit retry elsewhere. Unstarted independent work may use Auto elsewhere. Home Server remains the records home and never automatically fails over. SRV-017 and general.interaction.no-project-default-computer remain unchanged.
+
+  The must-haves are answering/trusted identity, Project allowance, files or permission to fetch, actual-worker sign-ins/tools, task minimums and not drained. Absolute memory/disk floors in GB, running-task reservations and leased browsers/recordings/phones/exclusive GPU slots remain governor gates. Quota belongs to an account, not a Computer. Related chains, fair caps, measured file latency/health, timing-sensitive versus heavy work, OS-correct memory and durable-runner/restart risk feed existing admission and truthful explanation; none widens authority. Precise scoring calibration and governed grant/context/typed-command successors remain implementation prerequisites, not fabricated native support. Prose precedes inventory/schema/fixture companions; no governance reseal is authorized.
+gui_related: true
+gui_classification_reason: Defines visible placement choices, controls and explanations.
+depends_on: [SRV-006, SIR-056, PS-147, PS-148, SSYS-059, PJCT-012]
+unblocks: []
+acceptance_criteria:
+- "Accepted Jared quotes remain verbatim and each owner preserves the human pin, allowed-set and no-project boundaries."
+- "Owner prose and companion records do not claim native placement, grant migration or governance readiness."
+validation_surfaces: [future placement gate/ranking/pin/recovery fixtures, scripts/pm-plan-index.py]
+risk_class: placement_authority_and_duplicate_effects
+reasoning_tier: high
+context_scope: project_work_placement
+implementation_surfaces: [Plans/Decision_Log.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+preserved_exact_tokens: ["Person's pin wins", "Wait, then safe retry", "Keep the computer you're on", "Presets + Advanced (Recommended)", "Why this computer"]
+negative_constraints:
+- No placement widens authority or changes the Project Home Server.
+- No native readiness or governance seal is inferred from accepted prose.
+```
+
+### DL-474 - Settings Admission, Free Persona Tags And Truthful Service Readiness
+
+```yaml
+plan_unit_id: DL-474
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q2, Q3 and Q4 on 2026-11-11 at 17:08:56 UTC. Each signed answer records choice ["A"] and an empty note. The selected card labels, verbatim, are:
+  - Q2: "Make them real settings".
+  - Q3: "Free tags, with suggestions".
+  - Q4: "Keep 'Needs attention'".
+
+  Q2 approves making Prefer pinned memories, When memories disagree, Crews can read project memories, the four memory source switches (Project files, Plans, Tool output and Manager records), a new Goal's Persona, a new Goal's Crew, Run test profile and Ask me to confirm searchable, explainable and resettable Settings choices. Admission must carry the semantic owner's actual values, default, scope and offered levels through SSYS-004/059 and the existing writer. The answer supplies no missing value/default/level rules and cannot by itself invent them or override AMS-026/054 memory isolation or Goal V2 ownership. Owner gaps must be adjudicated before the affected rows are registered; demo defaults and page-local state are source lineage only. Chat history already has memory.retention.history-retention and is not a fifth new source row.
+
+  Q2 disposition in this batch: 0 Q2 rows admitted. Approved but unregistered, pending these owner questions:
+  - Prefer pinned memories: whether AMS-020's pinned ranking boost may be switched off at all, the off and on scoring meaning, default and offered levels.
+  - When memories disagree: a retrieval-time disagreement policy, its values, default and offered levels; per-capture Teach resolution is not that policy.
+  - Crews can read project memories: an owner-approved successor to AMS-026/054 naming exactly what a Crew may read and what stays private, with values, default, levels and the command and storage contract.
+  - Project files, Plans, Tool output and Manager records source switches: whether each gates retrieval, capture or evidence use, with default and levels, without letting required context or verification evidence go missing.
+  - A new Goal's Persona and a new Goal's Crew: inherit the ordinary thread choice or seed a distinct preference; reference, default, none and inherit meaning, and levels, without adding GoalRecordV2 fields or starting collaboration by setting alone.
+  - Run test profile: a test-profile record and selection contract, default and levels, and absence and deletion behavior for completion evidence.
+  - Ask me to confirm: whether and how a human completion confirmation joins caller evidence, default and levels, and approval, cancellation and replay behavior.
+
+  Q3 follows Personas P-010: personas.library.persona-tags is a free string tag input with suggested kinds phase, task, subtask, iteration, cross-phase, language, domain and framework, plus arbitrary freeform tags. The inventory's old seam/package/lane/node/cross-seam choices are replaced as suggestions, not migrated into a closed enum or used to rewrite existing free tags. Persona-owned scope, default empty list and existing layering remain.
+
+  Q4 keeps Needs attention for AI roster services with no model chosen. F3-108 and SSYS-026 consume actual owner readiness; this records the existing behavior rather than introducing a second status engine or a new setting.
+
+  The How runs pause option is labelled Without pausing; its stored value hands-off, default and behavior remain. The Hands-off development permission profile keeps its distinct name. Current census prose refers to the unique live IDs in Plans/settings_inventory.json; historical admission counts remain lineage.
+gui_related: true
+gui_classification_reason: Records Settings search/reset admission, free tag input and visible roster/option labels.
+depends_on: [SSYS-004, SSYS-059, P-010, F3-108, SSYS-026]
+unblocks: []
+acceptance_criteria:
+- The signed A choices and exact selected labels are preserved with source hashes.
+- Inventory admission uses owner-defined values/defaults/levels; unresolved owners do not acquire invented policy.
+- This batch admits 0 Q2 rows and lists each pending owner question; a later decision admits each row only after its question is answered.
+- Persona tags remain free input with the owner suggestions and existing record ownership.
+- No chosen model renders Needs attention from owner readiness.
+- Without pausing retains the stored value hands-off and does not rename the permission profile.
+validation_surfaces:
+- scripts/pm-settings-layering-check.py
+- scripts/pm7-build-check.py
+- scripts/pm7-canon-check.py
+- future native Settings/owner search, Details, Reset and readiness evidence; not_run
+risk_class: settings_owner_default_scope_and_presentation_drift
+reasoning_tier: high
+context_scope: settings_canon_batch_20261111
+implementation_surfaces: [Plans/settings_inventory.json, Plans/Settings_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q2.json; SHA-256 c06a7ce177aa44ede2f3b875bf2b7462815558344a34c33f6a85290875336950; answered 2026-11-11T17:08:56.662Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q2.json; SHA-256 09f6c10d2b01830210cb3e635fd5dbca911ca76a8df1b415487db2f412763afe; selected label: Make them real settings"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q3.json; SHA-256 3da29e33a83120b34ab8c3509372e2eb27f7d89b9d55f1ec63774f58653e6d76; answered 2026-11-11T17:08:56.685Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q3.json; SHA-256 4fbdf63b756d689e3c19a62f1e8ea0e1050f97a383617cb1fed224e2997b200d; selected label: Free tags, with suggestions"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q4.json; SHA-256 c645fa80be83f6013d0e52dbc79b845c39a354149bc0a764962088ea9067d36f; answered 2026-11-11T17:08:56.754Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q4.json; SHA-256 13eb1adbd7b3a66da20cd406e5e2bbce067687e57453d46bb60842a9a0a68265; selected label: Keep 'Needs attention'"
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-settings-canon-batch.md"
+preserved_exact_tokens:
+- Make them real settings
+- Free tags, with suggestions
+- Keep 'Needs attention'
+- personas.library.persona-tags
+- Without pausing
+- hands-off
+negative_constraints:
+- Do not derive owner policy or offered levels from concept demo defaults.
+- Do not expand Crew memory access, Goal V2 fields or runtime authority from Settings admission intent.
+- Do not infer native implementation, readiness or a governance seal from this decision.
+owner_hints: [Plans/Settings_System.md, Plans/assistant-memory-subsystem.md, Plans/Goal_Runtime_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+```
+
+### DL-475 - Quiet Memory, Authorized Helper Reads And Goals Rulings
+
+```yaml
+plan_unit_id: DL-475
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared's 2026-11-11 decisions, relayed verbatim by pm7-build: "ok that memory system looks good"
+  (about 11:05 PM EST); "No named sets"; "No switch"; "goals may not use crews at all. Goals run
+  with whatever the persona and model was in the chat thread that started it. crews could spawn
+  goals though, same for plans or reviews and some of the other systems." (Goals about 7:30 PM EST).
+  The approved quiet Memory design supersedes DL-474's still-open Q2 memory choices: one Memory
+  page, This project and Every project levels, one memory switch, search/level
+  filter/list/Add/Edit/Delete/Archived; the chat Memory button opens that same page as a sheet.
+  Personal notes can live at Every project, resolving MEM-SCOPE. The Assistant remains
+  writer/manager; Crews, reviews and chat helpers may read Project and personal notes read-only
+  under source restrictions. Private app-thread memory stays private; no helper-owned store or
+  other-Project access follows. Saved to memory · View appears only after a real save; memory-use
+  chips/counts/preview/ribbon/ranking/pin/conflict/source/verification UI and ordinary
+  Followed/Missed rule receipts retire. Fading and archive-only upkeep stay built in, preserving
+  saved pin protections and DL-403/444–447 holds. Delete is a real user action with durable
+  suppression against silent recreation from old chats. No new memory database, service or
+  per-helper store is introduced.  DL-474's Q2 Goals questions are closed: no new-Goal Persona/Crew
+  default, no named test profiles and no Ask me to confirm completion switch. Goals use their
+  initiating chat Persona/model, never use Crews, and finish when proof is in while existing pauses
+  remain. Existing Let the assistant test its work and Speed or thoroughness steer testing. Crews,
+  plans, reviews and similar systems may start separate Goals with no parent edge under GRS-052. The
+  concept drops New Goals start with, Run test profile and Ask me to confirm; these three were never
+  Plans inventory rows. DL-474 remains history, not a current list of unanswered Q2 questions.
+  Retire 43 memory.* inventory rows from search, All Settings and transfer; eight remain in their
+  proper owners. SSYS-040 defines all 51 dispositions/compatibility reads and source-off/privacy
+  migration to equivalent or stricter read restrictions. Existing storage architecture, bounded
+  context, source/currentness and native admission gates remain. This decision authorizes these
+  owner contracts and required companion alignment, not native implementation or governance
+  resealing. Follow-up, Jared 2026-11-12 at 8:12 AM EST: "Keep them there". Rules for every project
+  and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions.
+  The existing application/project instruction writer and storage remain; Memory does not become
+  their editor. Ordinary Memory/Teach capture has no lock, conflict, source or rollback controls;
+  retained legacy protection and codecs remain internal.
+gui_related: true
+gui_classification_reason: Records the approved Memory page/reply behavior and removes concept-only Goals controls.
+depends_on:
+- DL-474
+- AMS-026
+- AMS-054
+- AMS-141
+- SSYS-040
+- GRS-046
+- GRS-052
+unblocks: []
+acceptance_criteria:
+  - "All Q2 memory and Goals questions in DL-474 have the explicit dispositions above."
+  - "The exact Jared quotes are preserved; DL-474 remains unchanged history."
+  - "No source restriction is relaxed, private app thread shared, held cleanup enabled or native readiness inferred."
+  - "Jared’s exact follow-up \"Keep them there\" is preserved, and both named rule editors remain in Settings > Personas & Crews > Defaults > Standing instructions."
+validation_surfaces:
+- scripts/pm-settings-layering-check.py
+- scripts/pm-command-payload-defs-check.py
+- scripts/pm-new-contracts-verify.py
+- scripts/pm7-build-check.py
+risk_class: memory_privacy_deletion_and_goal_execution
+reasoning_tier: high
+context_scope: settings_batch2_20261112
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+- Plans/Settings_System.md
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-settings-batch2.md
+- share/puppet-master/2026-11-11-memory-review/PACKET.md#3-proposed-pm-design
+- share/puppet-master/2026-11-11-memory-review/mock/README.md
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+preserved_exact_tokens:
+- ok that memory system looks good
+- No named sets
+- No switch
+- goals may not use crews at all. Goals run with whatever the persona and model was in the chat thread that started
+  it. crews could spawn goals though, same for plans or reviews and some of the other systems.
+- Memory
+- This project
+- Every project
+- Saved to memory
+- "Keep them there"
+negative_constraints:
+- No Goal uses a Crew.
+- No new database, memory service or per-helper store.
+- No source-off/privacy choice silently restores access.
+- No native implementation or governance seal is inferred.
+```
+
+### DL-476 - One Model Defaults List And Jared Model Answers
+
+```yaml
+plan_unit_id: DL-476
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered the model-design questions at about 11:55 PM EST on 2026-11-11, relayed by pm7-build in the settings batch 3 brief. The answers, verbatim as relayed, are:
+  MD1: "A".
+  MD2: "NEITHER".
+  MD3: "A".
+  MD4: "A".
+  Helper agents, verbatim: "If a helper is a subagent, then the main agent should be able to choose any model it wants at any effort level that is available. There shouldnt be a separate setting for it, if it needs a default, it can follow the other default settings like a regular agent would."
+  The which-wins line, verbatim: "What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere."
+  The accepted design is one list in Settings > Models, with thinking depth chosen inside each model picker. MD1 A permits the same list for This project with Everywhere fallback. MD2 NEITHER removes Persona model/service/preset/effort and command model fields, not merely their priority: old definitions remain compatibility-read only. MD3 A activates an account's own model/depth only when the person sends the run to that account and no earlier source names a model. MD4 A makes Reading pictures the first bridge choice with no separately saved backup; later automatic fallback still requires policy permission and disclosure. The helper model and helper-depth rows are removed; a parent may choose any allowed runnable model/effort within existing parent and policy ceilings, otherwise normal defaults apply.
+  Behaviour: keep build-internal scoped owner policy and a page's built-in default as technical detail, remove the old Persona, Computer, last-used and provider-default model sources, and retire configurable resolution policy and stored default variants. Preserve all parent/managed/capability/account/currentness/cost gates and requested/effective receipts. Presets stay picker/key shortcuts. Keep the six jobs including Easy, routine jobs, separate checking from cheap implementation, naming on the smallest available model with Off, explaining with its small-model and no-silent-costly-fallback guard, BSD following Checking finished work, and per-kind picture/video/speech/music models. WL4 = B remains accepted: test an exact typed model name with one small call before saving; a refused or unreachable name is never saved, and acceptance proves no capability.
+  Behaviour: retire 18 model-related rows with the compatibility reads in settings_inventory.json; admit Easy, routine jobs, one account model/depth field and three enabled-media model rows. Search, All Settings, transfer, Reset and census derive their active admission from that inventory. Old values remain inspectable, never an extra selection source or new write authority. The PRD Builder, Wizard, building and Scout read the common defaults and allow run overrides; their screen redesign is separate.
+  Wording: this one Decision_Log entry records both P17 and E13; it does not reseal governance or claim native runtime proof.
+gui_related: true
+gui_classification_reason: Owns visible model/depth defaults, compatibility disclosure, Settings search and
+  transfer behavior.
+depends_on:
+- SSYS-077
+- MS-005
+- MS-109
+- F3-396
+unblocks: []
+acceptance_criteria:
+- The exact MD1 A, MD2 NEITHER, MD3 A, MD4 A, helper words and plain order are preserved.
+- Removed settings remain compatible reads without active model precedence or new writes.
+- Every model picker includes its supported depth and WL4 B validation.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-settings-layering
+- python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+- python3 -m unittest discover -s tests -p test_pm_settings_draft_transfer.py
+risk_class: model_default_precedence_and_retirement_drift
+reasoning_tier: high
+context_scope: settings_models_batch3_20261112
+implementation_surfaces: &id001
+- Plans/Models_System.md
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/settings_inventory.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- settings-model-design-20261112:MD1-A/MD2-NEITHER/MD3-A/MD4-A/helpers
+- share/puppet-master/2026-11-11-model-selection-map/PACKET-v2.md
+- share/puppet-master/2026-11-11-work-lanes/PACKET.md
+preserved_exact_tokens:
+- MD1
+- MD2
+- NEITHER
+- MD3
+- MD4
+- There shouldnt be a separate setting for it
+- WL4 = B
+- Easy, routine jobs
+negative_constraints:
+- Do not preserve Persona, command or helper-owned model/depth defaults.
+- Do not silently reinterpret historical source tiers, old backup values or old Computer model preferences.
+owner_hints: *id001
+```
+
+### DL-500: Rebuildable bookmarks (retention deck 4 Q1)
+
+```yaml
+plan_unit_id: DL-500
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q1. The following 34 exact stored-value families receive the existing policies shown:
+
+  - alert_acknowledged_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-660).
+  - alert_dismissed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-661).
+  - alert_rule_muted_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-662).
+  - alert_snoozed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-663).
+  - panel_redocked_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-664).
+  - panel_undocked_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-665).
+  - concern_created_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-666).
+  - bundle_note_created_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-706).
+  - bundle_note_status_changed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-707).
+  - bundle_annotation_state_changed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-708).
+  - concern_assigned_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-709).
+  - concern_evidence_linked_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-710).
+  - concern_promoted_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-711).
+  - concern_reopened_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-712).
+  - concern_resolved_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-713).
+  - concern_updated_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-714).
+  - ds15_doctor_custom_headless_checked_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-640).
+  - ds15_live_session_started_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-642).
+  - ds15_live_step_updated_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-643).
+  - ds15_live_artifact_created_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-644).
+  - ds15_live_session_completed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-645).
+  - ds15_live_session_degraded_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-646).
+  - ds15_browser_context_captured_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-647).
+  - ds15_dev_session_started_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-648).
+  - ds15_dev_session_stopping_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-649).
+  - ds15_dev_session_stopped_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-650).
+  - ds15_dev_session_restarting_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-651).
+  - ds15_preview_session_started_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-652).
+  - ds15_preview_session_refreshed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-653).
+  - ds15_preview_session_stopped_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-654).
+  - ds15_catalog_install_started_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-657).
+  - ds15_catalog_install_completed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-658).
+  - memory_index_lexical_selector: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-632).
+  - memory_index_semantic_selector: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-634).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-PROJECTION-3GEN@1.0.0", "alert_acknowledged_checkpoint", "alert_dismissed_checkpoint", "alert_rule_muted_checkpoint", "alert_snoozed_checkpoint", "panel_redocked_checkpoint", "panel_undocked_checkpoint", "concern_created_checkpoint", "bundle_note_created_checkpoint", "bundle_note_status_changed_checkpoint", "bundle_annotation_state_changed_checkpoint", "concern_assigned_checkpoint", "concern_evidence_linked_checkpoint", "concern_promoted_checkpoint", "concern_reopened_checkpoint", "concern_resolved_checkpoint", "concern_updated_checkpoint", "ds15_doctor_custom_headless_checked_checkpoint", "ds15_live_session_started_checkpoint", "ds15_live_step_updated_checkpoint", "ds15_live_artifact_created_checkpoint", "ds15_live_session_completed_checkpoint", "ds15_live_session_degraded_checkpoint", "ds15_browser_context_captured_checkpoint", "ds15_dev_session_started_checkpoint", "ds15_dev_session_stopping_checkpoint", "ds15_dev_session_stopped_checkpoint", "ds15_dev_session_restarting_checkpoint", "ds15_preview_session_started_checkpoint", "ds15_preview_session_refreshed_checkpoint", "ds15_preview_session_stopped_checkpoint", "ds15_catalog_install_started_checkpoint", "ds15_catalog_install_completed_checkpoint", "memory_index_lexical_selector", "memory_index_semantic_selector"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-501: Alert, concern, bundle-note and panel operations (retention deck 4 Q2)
+
+```yaml
+plan_unit_id: DL-501
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q2. The following 15 exact stored-value families receive the existing policies shown:
+
+  - alert_acknowledged_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-660).
+  - alert_dismissed_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-661).
+  - alert_rule_muted_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-662).
+  - alert_snoozed_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-663).
+  - panel_redocked_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-664).
+  - panel_undocked_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-665).
+  - concern_created_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-666).
+  - bundle_note_created_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-706).
+  - bundle_note_status_changed_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-707).
+  - concern_assigned_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-709).
+  - concern_evidence_linked_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-710).
+  - concern_promoted_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-711).
+  - concern_reopened_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-712).
+  - concern_resolved_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-713).
+  - concern_updated_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-714).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-OPERATIONAL-2555D@1.0.0", "alert_acknowledged_operation", "alert_dismissed_operation", "alert_rule_muted_operation", "alert_snoozed_operation", "panel_redocked_operation", "panel_undocked_operation", "concern_created_operation", "bundle_note_created_operation", "bundle_note_status_changed_operation", "concern_assigned_operation", "concern_evidence_linked_operation", "concern_promoted_operation", "concern_reopened_operation", "concern_resolved_operation", "concern_updated_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-502: GitHub sign-in operation history (retention deck 4 Q3)
+
+```yaml
+plan_unit_id: DL-502
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q3. The following 5 exact stored-value families receive the existing policies shown:
+
+  - auth_github_authenticated_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  - auth_github_device_code_issued_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  - auth_github_disconnected_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  - auth_github_failed_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  - auth_github_token_polling_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0", "auth_github_authenticated_operation", "auth_github_device_code_issued_operation", "auth_github_disconnected_operation", "auth_github_failed_operation", "auth_github_token_polling_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-503: Plugin operation history (retention deck 4 Q4)
+
+```yaml
+plan_unit_id: DL-503
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q4. The following 8 exact stored-value families receive the existing policies shown:
+
+  - plugin_hook_blocked_operation: RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_hook_error_operation: RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_hook_invoked_operation: RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_load_failed_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_loaded_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_permission_override_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_tool_collision_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_tool_registered_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0", "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0", "plugin_hook_blocked_operation", "plugin_hook_error_operation", "plugin_hook_invoked_operation", "plugin_load_failed_operation", "plugin_loaded_operation", "plugin_permission_override_operation", "plugin_tool_collision_operation", "plugin_tool_registered_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-504: Persona operation history (retention deck 4 Q5)
+
+```yaml
+plan_unit_id: DL-504
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q5. The following 6 exact stored-value families receive the existing policies shown:
+
+  - persona_created_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_deleted_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_exported_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_imported_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_selected_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_updated_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-CONFIG-CURRENT@1.0.0", "persona_created_operation", "persona_deleted_operation", "persona_exported_operation", "persona_imported_operation", "persona_selected_operation", "persona_updated_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-505: Current alert, rule and preview state (retention deck 4 Q6)
+
+```yaml
+plan_unit_id: DL-505
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q6. The following 3 exact stored-value families receive the existing policies shown:
+
+  - shared_alert_state: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-660).
+  - shared_alert_rule_state: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-660).
+  - ds15_preview_subject_ui_state: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-656).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-CONFIG-CURRENT@1.0.0", "shared_alert_state", "shared_alert_rule_state", "ds15_preview_subject_ui_state"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-506: Developer session record (retention deck 4 Q7)
+
+```yaml
+plan_unit_id: DL-506
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q7. The following 1 exact stored-value families receive the existing policies shown:
+
+  - dev_session_record: RP-DEBUG-30D@1.0.0 (Plans/storage-plan.md#SP-655).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-DEBUG-30D@1.0.0", "dev_session_record"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-507: Dev-tool source records (retention deck 4 Q8)
+
+```yaml
+plan_unit_id: DL-507
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q8. The following 5 exact stored-value families receive the existing policies shown:
+
+  - dt_requirements_clarification_requested_source: RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-588).
+  - dt_usage_event_source: RP-TELEMETRY-90D@1.0.0 (Plans/storage-plan.md#SP-594).
+  - dt_worktree_created_source: RP-RUNTIME-365D@1.0.0 (Plans/storage-plan.md#SP-595).
+  - dt_worktree_deleted_source: RP-WORKTREE-TOMBSTONE-365D@1.0.0 (Plans/storage-plan.md#SP-596).
+  - dt_usage_event_application_source: RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (Plans/storage-plan.md#SP-594).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0", "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0", "RP-RUNTIME-365D@1.0.0", "RP-TELEMETRY-90D@1.0.0", "RP-WORKTREE-TOMBSTONE-365D@1.0.0", "dt_requirements_clarification_requested_source", "dt_usage_event_source", "dt_worktree_created_source", "dt_worktree_deleted_source", "dt_usage_event_application_source"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-508: Chat-bound wizard and revision records (retention deck 4 Q9)
+
+```yaml
+plan_unit_id: DL-508
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q9. The following 3 exact stored-value families receive the existing policies shown:
+
+  - revision_run: RP-CHAT-THREAD-LIFETIME@1.0.0 (Plans/storage-plan.md#SP-579).
+  - wizard_open_evidence: RP-CHAT-THREAD-LIFETIME@1.0.0 (Plans/storage-plan.md#wizard-opened-original-custody).
+  - wizard_seed_load_evidence: RP-CHAT-THREAD-LIFETIME@1.0.0 (Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-CHAT-THREAD-LIFETIME@1.0.0", "revision_run", "wizard_open_evidence", "wizard_seed_load_evidence"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-509: Memory housekeeping operation records (retention deck 4 Q10)
+
+```yaml
+plan_unit_id: DL-509
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q10. The following 6 exact stored-value families receive the existing policies shown:
+
+  - memory_dedup_sweep_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-630).
+  - memory_index_lexical_rebuild_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-632).
+  - memory_index_semantic_rebuild_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-634).
+  - memory_verification_sweep_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-636).
+  - memory_monthly_summary_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-638).
+  - memory_prune_archive_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/Contracts_V0.md#CV-658).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0", "memory_dedup_sweep_operation", "memory_index_lexical_rebuild_operation", "memory_index_semantic_rebuild_operation", "memory_verification_sweep_operation", "memory_monthly_summary_operation", "memory_prune_archive_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
 ```

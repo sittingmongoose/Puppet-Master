@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38488-L39198
+Source lines: L38579-L39293
 
-Source SHA256: `c7328f20a2fc64be53897a8c9c54878904bdd3342af494a62164ebd92d586a31`
+Source SHA256: `ba630d2b72c90b75de4bb712459b497deeba44040730302e1e590e8b279a96ad`
 
 ---
 
@@ -86,9 +86,9 @@ invariants.
   over messages or get clipped by header container boundaries.
 - **Concise Context More Details (APR-009, APR-061):** The initial view of Context More Details
   presents a concise, high-signal information hierarchy: active context window usage, current
-  token counts, pinned sources, and high-level Back Seat Driver (BSD) status. Detailed inspection
-  (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
-  placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
+  token counts, effective model/cost, useful compaction status and high-level Back Seat Driver (BSD) status.
+  Pinned-source lists and full prompt/source breakdowns are retired from this context surface (DL-475);
+  source accounting stays internal. Existing BSD configuration stays with its owner. Back Seat Driver's section is three plain facts and
   three native disclosures with no metric-card grid (DL-122, F3-580).
 
 Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide (DR-069); the structural rails of working activities stay as its carve-out.
@@ -205,7 +205,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   4. `web-routes` (Web search, scrape policies)
   5. `media-routes` (Image/audio generation routing)
   6. `back-seat-driver` (BSD sensitivity, stage bindings, catch-up policy)
-  7. `memory-context-instructions` (Context window, rehydration, instructions)
+  7. `memory-context-instructions` (Memory: one saved-note page; instructions, context and history live in their owners)
   8. `goals-crew-personas` (Agent rosters, personas, Goal V2 defaults)
   9. `permissions-filesafe` (File safe boundaries, tool approvals)
   10. `commands-shortcuts` (Keybindings, command palette)
@@ -424,20 +424,22 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Context Lens dropdown occupies a true in-flow layout row between the chat header and the transcript.
-  Context More Details presents a compact first view with deeper BSD and token diagnostics placed behind
-  intentional disclosures. Decorative left-edge accent bars, stripes, and pseudo-elements are strictly
-  prohibited across all Assistant and Settings surfaces, preserving only functional diff gutters, tree
-  connectors, and working structural rails.
+  The Context Lens dropdown occupies a true in-flow row between the chat header and transcript.
+  Context More Details keeps a compact first view of basic capacity/token/cost/effective-model
+  facts, useful compaction/transition status and existing high-level BSD status. Source composition,
+  pinned-source lists, full prompt breakdowns and raw/curated source inspection stay internal, with
+  no per-run inclusion receipt; BSD configuration retains its existing owner. Decorative left-edge
+  accents remain prohibited across Assistant and Settings surfaces, preserving functional diff
+  gutters, tree connectors and working structural rails.
 gui_related: true
 gui_classification_reason: Governs Context Lens in-flow placement, concise More Details hierarchy, and the complete elimination of decorative left stripes.
 depends_on: [F3-531, F3-534]
 unblocks: []
 acceptance_criteria:
-  - Context Lens renders in flow between header and transcript without clipping.
-  - Context More Details first view is compact with advanced BSD data behind disclosures.
-  - No decorative left stripes or pseudo-elements exist on Assistant or Settings cards.
-  - Functional tree connectors, diff gutters, and working activity rails are preserved.
+  - "Context Lens renders in flow between header and transcript without clipping."
+  - "Context More Details is compact and retains basic capacity/cost/model, useful compaction/transition and existing BSD status without pinned-source lists, prompt/source inspection or per-run inclusion receipts; source records remain internal."
+  - "No decorative left stripes or pseudo-elements exist on Assistant or Settings cards."
+  - "Functional tree connectors, diff gutters and working activity rails remain."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: lens_clipping_or_decorative_stripe_reintroduction
@@ -455,6 +457,7 @@ source_lineage:
   - APR-033
   - APR-034
   - APR-061
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "Context Lens"
   - "More Details"
@@ -462,6 +465,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not render decorative left-edge accent bars or stripes.
   - Do not float Context Lens over transcript content.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```

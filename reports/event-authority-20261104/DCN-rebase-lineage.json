@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.event_authority.dcn.rebase_lineage.v1",
+  "from_base": "16acf7594a3fe8559af89491b895f440b314b99e",
+  "to_base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321",
+  "note": "The round-1 to round-4 records name commits as they were before the sweep rebase. Those records stay as written. Use this map to reach the same change on the branch today. Trees were byte-identical for the checker inputs across the rebase.",
+  "commits": [
+    {
+      "before_rebase": "66480989f15aa8bf48fbd6c2dd2017caadc26c50",
+      "after_rebase": "0216428b0c556f8ec01b8fcf56d20c09a5c957f6",
+      "subject": "Prepare manual browser session and memory state history contracts"
+    },
+    {
+      "before_rebase": "cf5469dca011f0dc07e0566c0a6ca68f5d0bd4ef",
+      "after_rebase": "e69f74f303d0964ce7af5da6fdafcb0152840d99",
+      "subject": "Report DCN family grades, exclusions and guard-removal checks"
+    },
+    {
+      "before_rebase": "d7421ece0b3757b5659b92cda0d1bc42569d037b",
+      "after_rebase": "d79cfe943b5d52d88f9c2aa8424ed385c3c2cb25",
+      "subject": "Fix DCN Card 2 original custody, source joins and complete memory deltas"
+    },
+    {
+      "before_rebase": "08bb2d9f070bacc13154a1b684a6104913c30267",
+      "after_rebase": "f6a29504ce7f000b1ebfa8b20c8a0f30c9db7a41",
+      "subject": "Record DCN round 1 findings, family regrades and individual guard proofs"
+    },
+    {
+      "before_rebase": "0def7f9ac890bc3829dab891601c8ff1778912e6",
+      "after_rebase": "e523a8c155e894032b821bc7df58936f595fdf7e",
+      "subject": "Complete DCN no-event source snapshots and reject invalid timestamp offsets"
+    },
+    {
+      "before_rebase": "709435ea6959565f2d05d8a841ef5dfe41fb1d3b",
+      "after_rebase": "426fa8459291f873f32b89534a46ebdce248e318",
+      "subject": "Finalize DCN round 1 proof counts and review responses"
+    },
+    {
+      "before_rebase": "2d50d5de0fc61eee3c17ba22a9597231111ef148",
+      "after_rebase": "b5eab342d4fd5c472e0c2a6d9fb508eab47994c4",
+      "subject": "Require a Verified original for unchanged successful memory verification"
+    },
+    {
+      "before_rebase": "83b4c94950504b7085aa7c65b2a0712b1c51dcf5",
+      "after_rebase": "e807538d7bda5fe991bd7a5d30c161303b07e5d1",
+      "subject": "Record final DCN unchanged-verification and guard-removal proof"
+    },
+    {
+      "before_rebase": "ace2fabbb63f55d833db1383cf3e49b025396fd2",
+      "after_rebase": "03a1739233335596f82bc10d4f663bae7f27d013",
+      "subject": "Fix Card 2 memory completeness and canonical numeric retries"
+    },
+    {
+      "before_rebase": "585dc855196a4bb4fbc81ace71da46f8c9c3a71f",
+      "after_rebase": "0d785c6670c8e09842eca10e5b9d05af2415e4d4",
+      "subject": "Record DCN round 2 findings grades and complete guard proof"
+    },
+    {
+      "before_rebase": "eb4c782f744151d6eaf99208415eb974e4c0d079",
+      "after_rebase": "597be6b7d13609b2b9c597dc3938766c94bb5534",
+      "subject": "Fix memory.gist_state_changed nested facts and uncapped evidence"
+    },
+    {
+      "before_rebase": "ddd4e74e2707d4d225bf7c7bf1668d418cbc75dc",
+      "after_rebase": "b909b42f53ea0a477c7a6c92260bde4c839637b7",
+      "subject": "Record DCN round 3 findings grades and full guard proof"
+    },
+    {
+      "before_rebase": "a681b17257cee6f1ead2124f81cea378cb87600d",
+      "after_rebase": "dfba7bd5f7a14210cf51a658c822a4aaa4623698",
+      "subject": "Validate original Browser session facts on append retry and history"
+    },
+    {
+      "before_rebase": "9f06b6637914a718b4e091ce4bfa4005e83e824e",
+      "after_rebase": "32c2c7eb76413df01e7cec5980d9790add7e5a71",
+      "subject": "Reuse immutable derived values during Card 2 guard proofs"
+    },
+    {
+      "before_rebase": "aa07a2fcbeab5d07e44d8208bf95fb27ce20843d",
+      "after_rebase": "2f9373968bd5b14e6d6916ab49b1ad528b27badc",
+      "subject": "Require every original Browser session slot including nullable fields"
+    },
+    {
+      "before_rebase": "7b7bdd78a813b8a9a6925eb3e7f91c6dd190bf6b",
+      "after_rebase": "7c88373afe78def0ee7bcf59e36266773d4933fa",
+      "subject": "Keep nullable peers complete in session-class omission oracles"
+    },
+    {
+      "before_rebase": "de58b6e10c11ab249ec05f13a2bbbdd6f2f92f4b",
+      "after_rebase": "e66ad221d73bb8a8ba46501cde2827906cafa53a",
+      "subject": "Reuse immutable semantic digests during Card 2 removal checks"
+    },
+    {
+      "before_rebase": "c5acd8834e065ea3e56ce87becc4d70343c59a4c",
+      "after_rebase": "ce55b1b9208a1636db0d3b141280c2591fac14db",
+      "subject": "Refresh DCN round 4 grades guard proofs and actual validation results"
+    }
+  ]
+}

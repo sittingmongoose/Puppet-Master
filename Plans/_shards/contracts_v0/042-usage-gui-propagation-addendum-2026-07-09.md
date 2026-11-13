@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L20662-L20726
+Source lines: L22091-L22168
 
-Source SHA256: `974b4a737050357f760deafa8f6247c7679b93d6352a1c45684f72d219510105`
+Source SHA256: `ceebca4211052885a0bc5796d5cd888f7ebf7e9a5f7e60b2a0cc7927f29a8d8f`
 
 ---
 
@@ -20,16 +20,26 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  GUI Usage route/open payloads use typed object-first selectors. Event-primary callers normalize usage_event_ref into route_target.object_kind = usage_event and the canonical event object_id. PMConcept7 Ledger attempt rows normalize attempt_id into route_target.object_kind = usage_attempt and route_target.object_id = attempt_id, repeat attempt_id at top level, retain usage_event_ref plus UsageRecord/provider/runtime refs as correlation, and carry no OpenSubject. Event-primary Usage object routes likewise carry no OpenSubject. Thread_id, tier_id, timestamp, and run_id can filter or scope a view but cannot replace the selected event or attempt identity. Raw/Curated consumers share the same redaction contract: Curated receives normalized fields and Raw receives redacted refs/hashes/omitted counts/permission state, not unredacted provider payloads.
+  GUI Usage route/open payloads use typed object-first selectors. Event-primary callers normalize
+  usage_event_ref into route_target.object_kind = usage_event and the canonical event object_id.
+  PMConcept7 Ledger attempt rows normalize attempt_id into route_target.object_kind = usage_attempt
+  and route_target.object_id = attempt_id, repeat attempt_id at top level, retain usage_event_ref
+  plus UsageRecord/provider/runtime refs as correlation, and carry no OpenSubject. Event-primary
+  Usage object routes likewise carry no OpenSubject. Thread_id, tier_id, timestamp, and run_id can
+  filter or scope a view but cannot replace the selected event or attempt identity. Existing
+  non-chat diagnostic Raw/Curated consumers share the same redaction contract: Curated receives
+  normalized fields and Raw receives redacted refs/hashes/omitted counts/permission state, not
+  unredacted provider payloads.
 gui_related: true
 gui_classification_reason: Shared route/open payloads drive visible Usage, Ledger, chat, artifact, graph, and orchestrator navigation.
 depends_on: [CV-309, UF-087, UF-088]
 unblocks: [SP-234, WM-043]
 acceptance_criteria:
-  - Event-primary route payload fixtures fail if usage_event_ref bypasses object_kind = usage_event and object_id normalization; PMConcept7 Ledger fixtures fail unless attempt_id selects object_kind = usage_attempt and usage_event_ref remains correlation.
-  - Both Usage selector branches carry no OpenSubject and preserve applicable usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id.
-  - Cross-surface drill-through fixtures fail timestamp/run/thread/tier primary routing when a canonical event or attempt selector is available.
-  - Raw/Curated fixtures prove redacted Raw refs and normalized Curated fields share the same UsageRecord identity.
+  - "Event-primary route payload fixtures fail if usage_event_ref bypasses object_kind = usage_event and object_id normalization; PMConcept7 Ledger fixtures fail unless attempt_id selects object_kind = usage_attempt and usage_event_ref remains correlation."
+  - "Both Usage selector branches carry no OpenSubject and preserve applicable usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id."
+  - "Cross-surface drill-through fixtures fail timestamp/run/thread/tier primary routing when a canonical event or attempt selector is available."
+  - "Non-chat diagnostic Raw/Curated fixtures prove redacted Raw refs and normalized Curated fields share the same UsageRecord identity."
+  - "Shared fixture coverage verifies that non-chat diagnostics retain their redaction contract while chat context/message surfaces expose no source-composition, raw/curated source-inspection view or per-run inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py lint-contractrefs
@@ -51,6 +61,7 @@ source_lineage:
   - "Plans/storage-plan.md:109"
   - "Plans/UI_Command_Catalog.md:1121-1122"
   - "Plans/Runtime_Artifacts_Panel.md:316"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - route_target.object_kind = usage_event
   - route_target.object_kind = usage_attempt
@@ -72,4 +83,6 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/UI_Command_Catalog.md
   - Plans/storage-plan.md
+owner_boundary_notes:
+  - "Raw/Curated redaction and source-level inspection in this shared contract apply only to existing non-chat Usage/Ledger and expert diagnostic surfaces, not the chat context ring, Context Detail Pane or message-info UI. Chat keeps normalized capacity/cost/model/settlement facts and useful compaction status; source accounting and raw references remain internal."
 ```

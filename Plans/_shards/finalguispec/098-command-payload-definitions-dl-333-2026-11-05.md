@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L50376-L52066
+Source lines: L50501-L53082
 
-Source SHA256: `c7328f20a2fc64be53897a8c9c54878904bdd3342af494a62164ebd92d586a31`
+Source SHA256: `ba630d2b72c90b75de4bb712459b497deeba44040730302e1e590e8b279a96ad`
 
 ---
 
@@ -1698,4 +1698,895 @@ command_payload_definitions:
         target_command_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the stable command that ran"}
         result_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "the target command's own result, carried by reference; shape owned by that command"}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt for the executed action"}
+```
+
+### F3-700 - alert.acknowledged event boundary
+
+```yaml
+plan_unit_id: F3-700
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.acknowledged: unacknowledged or snoozed -> acknowledged; clear unread only; never resolve
+  the underlying condition. Current owner must prove the action is allowed, including permission, current subject
+  revision and currentness_basis_ref. Mute/snooze cannot suppress blocking confirmations or security-sensitive failures;
+  dismissal cannot clear a blocker. A refusal, stale result, no change, rollback or failed persistence produces
+  no event. F3-453 remains the one shared alert store; visible read is not domain acknowledgement; source access
+  and existing confirmation owners still apply. The complete newly authored per-family owner contract is Plans/storage-plan.md#SP-660,
+  payload Plans/event_payloads/attention/alert_acknowledged.schema.json. Its producer explicitly adopts SP-286/CV-339
+  full-value v2; its history consumer explicitly adopts SP-278/DL-076. Retention PENDING_RETENTION_DECISION; prepared
+  without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-701 - alert.dismissed event boundary
+
+```yaml
+plan_unit_id: F3-701
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.dismissed: unacknowledged, acknowledged or snoozed -> dismissed; rationale required; remove
+  inbox presentation only; no approval, denial, resolution or source deletion. Current owner must prove the action
+  is allowed, including permission, current subject revision and currentness_basis_ref. Mute/snooze cannot suppress
+  blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker. A refusal, stale result,
+  no change, rollback or failed persistence produces no event. F3-453 remains the one shared alert store; visible
+  read is not domain acknowledgement; source access and existing confirmation owners still apply. The complete newly
+  authored per-family owner contract is Plans/storage-plan.md#SP-661, payload Plans/event_payloads/attention/alert_dismissed.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-702 - alert.rule_muted event boundary
+
+```yaml
+plan_unit_id: F3-702
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.rule_muted: unmuted or expired -> muted for the exact Project rule; keep the issue visible
+  in its owning surface; expiry follows the original explicit deadline, never retry time. Current owner must prove
+  the action is allowed, including permission, current subject revision and currentness_basis_ref. Mute/snooze cannot
+  suppress blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker. A refusal, stale
+  result, no change, rollback or failed persistence produces no event. F3-453 remains the one shared alert store;
+  visible read is not domain acknowledgement; source access and existing confirmation owners still apply. The complete
+  newly authored per-family owner contract is Plans/storage-plan.md#SP-662, payload Plans/event_payloads/attention/alert_rule_muted.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-703 - alert.snoozed event boundary
+
+```yaml
+plan_unit_id: F3-703
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.snoozed: unacknowledged or acknowledged -> snoozed until snooze_until, strictly after ts;
+  keep original deadline on replay; never suppress blocking confirmations or security-sensitive failures. Current
+  owner must prove the action is allowed, including permission, current subject revision and currentness_basis_ref.
+  Mute/snooze cannot suppress blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker.
+  A refusal, stale result, no change, rollback or failed persistence produces no event. F3-453 remains the one shared
+  alert store; visible read is not domain acknowledgement; source access and existing confirmation owners still
+  apply. The complete newly authored per-family owner contract is Plans/storage-plan.md#SP-663, payload Plans/event_payloads/attention/alert_snoozed.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-704 - panel.redocked chat-only current action boundary
+
+```yaml
+plan_unit_id: F3-704
+unit_type: contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'panel.redocked: only cmd.panel.redock moves the current chat from detached_window to chat_column;
+  desktop Pop out/Dock back remain UCC-203/F3-637. CV-361/SP-330 already decide restart-unsaved host state and no
+  workspace.layout_changed. Durable audit evidence is separate from live host state: no Home revision advance, no
+  saved popped_out, no replayed OS effect or startup redock. F3-527 v1 fields are historical reader interpretation.
+  Full independent current 2.0.0 contract SP-664/CV-684 explicitly adopts SP-286/CV-339 and SP-278/DL-076. Prepared
+  without admission; retention PENDING_RETENTION_DECISION.'
+gui_related: true
+gui_classification_reason: Current chat pop-out action semantics.
+split_recommended: false
+depends_on:
+- SP-664
+- CV-684
+- F3-637
+- CV-361
+unblocks: []
+acceptance_criteria:
+- F3-704 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### F3-705 - panel.undocked chat-only current action boundary
+
+```yaml
+plan_unit_id: F3-705
+unit_type: contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'panel.undocked: only cmd.panel.undock moves the current chat from chat_column to detached_window;
+  desktop Pop out/Dock back remain UCC-203/F3-637. CV-361/SP-330 already decide restart-unsaved host state and no
+  workspace.layout_changed. Durable audit evidence is separate from live host state: no Home revision advance, no
+  saved popped_out, no replayed OS effect or startup redock. F3-527 v1 fields are historical reader interpretation.
+  Full independent current 2.0.0 contract SP-665/CV-685 explicitly adopts SP-286/CV-339 and SP-278/DL-076. Prepared
+  without admission; retention PENDING_RETENTION_DECISION.'
+gui_related: true
+gui_classification_reason: Current chat pop-out action semantics.
+split_recommended: false
+depends_on:
+- SP-665
+- CV-685
+- F3-637
+- CV-361
+unblocks: []
+acceptance_criteria:
+- F3-705 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### F3-706 - bundle.note_created Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-706
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for bundle.note_created 1.0.0 under DL-045 and DL-437, deck-2 Card 5.a option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts CV-077; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/bundle_note_created.payload.schema.json; its $id is pm.card5.bundle_note_created.payload.v1, version 1.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is bundle_id/doc_id/annotation_id/note_id plus immutable provenance; note_id is the existing note_record identity and annotation_id is its verified annotation identity, never a guessed alias. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.bundle.note.create through handlers::bundle_note::create is the exact owning handler after independently authenticated action authority. This is a newly named private binding of the already specified durable note action, not an additional public control. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "bundle.note_created", idempotency_key]); operation_digest=H and event_id=evt_bundle_note_created_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/bundle_note_created.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at bundle_note_created_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.bundle.note.create or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact transition: canonical note key absent -> one durable open annotation at original revision one, previous_state=null/prior_revision=0/before_record_ref=null; preserve the exact note id and document provenance in note_record.v1 and notes_index.{bundle_id}. One creation emits only bundle.note_created after original commit; no generic annotation or status event for this same creation. note_record.v1 compatibility lineage does not itself identify an EventRecord alias. An existing key, replay, failed creation or refused mapping precondition emits no second creation.
+
+  Consumers/checkpoints: newly authored projector.bundle_note_created.history@1.0.0 and reader.bundle_note_created.history@1.0.0 expose passive record-backed audit History for this exact family. Document/review History is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: bundle_note_created_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/bundle_note_created.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. bundle_note_created_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. bundle_note_created_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; no old schema was specified for this exact split event; unsupported/unversioned originals require governed validation/quarantine, never inferred aliases. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/bundle_note_created.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_created. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- bundle.note_created has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.a A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_created
+risk_class: event_authority
+reasoning_tier: high
+context_scope: bundle_note_created
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-437
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- bundle.note_created
+- DL-437
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-707 - bundle.note_status_changed Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-707
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for bundle.note_status_changed 1.0.0 under DL-045 and DL-437, deck-2 Card 5.a option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts CV-077; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/bundle_note_status_changed.payload.schema.json; its $id is pm.card5.bundle_note_status_changed.payload.v1, version 1.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is bundle_id/doc_id/annotation_id/note_id plus immutable provenance; note_id is the existing note_record identity and annotation_id is its verified annotation identity, never a guessed alias. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.bundle.note.change_status through handlers::bundle_note::change_status is the exact owning handler after independently authenticated action authority. This is a newly named private binding of the already specified durable note action, not an additional public control. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "bundle.note_status_changed", idempotency_key]); operation_digest=H and event_id=evt_bundle_note_status_changed_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/bundle_note_status_changed.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at bundle_note_status_changed_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.bundle.note.change_status or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact transition: existing canonical annotation at prior_revision -> its immediate successor, with unequal previous_state/state among open/addressed/still_open/cannot_apply/resolved, subject to the existing owner-allowed lifecycle transition. Preserve document provenance, note id and all other note content/anchor/targeted-revision lineage. Each real later committed status change emits only bundle.note_status_changed. Same state, stale revision, invalid allowed transition, replay or refused action emits nothing; no generic co-emission. The private operation authenticates the complete original note record before/after; omitted unrelated fields may not silently change.
+
+  Consumers/checkpoints: newly authored projector.bundle_note_status_changed.history@1.0.0 and reader.bundle_note_status_changed.history@1.0.0 expose passive record-backed audit History for this exact family. Document/review History is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: bundle_note_status_changed_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/bundle_note_status_changed.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. bundle_note_status_changed_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. bundle_note_status_changed_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; no old schema was specified for this exact split event; unsupported/unversioned originals require governed validation/quarantine, never inferred aliases. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/bundle_note_status_changed.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- bundle.note_status_changed has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.a A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed
+risk_class: event_authority
+reasoning_tier: high
+context_scope: bundle_note_status_changed
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-437
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- bundle.note_status_changed
+- DL-437
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-708 - bundle.annotation_state_changed Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-708
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for bundle.annotation_state_changed 1.0.0 under DL-045 and DL-437, deck-2 Card 5.a option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts CV-077; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/bundle_annotation_state_changed.payload.schema.json; its $id is pm.card5.bundle_annotation_state_changed.payload.v1, version 1.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is bundle_id/doc_id/annotation_id/note_id plus immutable provenance; note_id is the existing note_record identity and annotation_id is its verified annotation identity, never a guessed alias. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and transitions: there is no current producer, journal, effect, new append, retry append or dual emission under bundle.annotation_state_changed. Refuse every new-write request as compatibility_no_new_writes, including replay-only attempts. Preserve originally admitted originals and their exact original event identity, payload edition/bytes, timestamps, receipt and Storage source. Closed payload here is a decoded compatibility view, never a replacement of original bytes or a new historical append. The read classifier must prove original bundle/doc/annotation/note/provenance identities against independently held immutable pre/post snapshots and original receipt: absent pre-record plus original creation evidence maps to creation; existing pre-record with unequal allowed old/new status maps to status_change. Both require owner-verified source proof and explicit mapping approval from the responsible document/Storage owners. A claimed mapped_kind is checked against the original facts, never accepted as evidence. No timestamp guess, identifier similarity, replay of note commands, synthetic split append or duplicate co-emission is permitted. Ambiguous/unproved/unapproved old entries stay in a read-only inspection quarantine with original bytes and provenance, excluded from authoritative creation/status projections until the owners prove and approve the mapping. One verified change has one History entry under its retained original identity; reading never manufactures a split-family record. The owner proof/approval is a release precondition still NOT_RUN, not falsely claimed by a schema or synthetic fixture. Current generic writes are refused throughout preparation; before any split-writer activation the owners must prove/approve the inventory mapping and quarantine ambiguous entries as DL-437 requires. Withdrawal of this historical reader fences disclosure/publications but never erases the original or changes its retained meaning.
+
+  Consumers/checkpoints: newly authored projector.bundle_annotation_state_changed.history@1.0.0 and reader.bundle_annotation_state_changed.history@1.0.0 expose passive record-backed audit History for this exact family. Document/review History is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: bundle_annotation_state_changed_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/bundle_annotation_state_changed.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. No new operation value exists for the generic compatibility spelling. bundle_annotation_state_changed_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its compatibility mapping custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; the old general annotation spelling is historical-only under the verified mapping/inspection path above. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/bundle_annotation_state_changed.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- bundle.annotation_state_changed has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.a A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed
+risk_class: event_authority
+reasoning_tier: high
+context_scope: bundle_annotation_state_changed
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-437
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- bundle.annotation_state_changed
+- DL-437
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-709 - concern.assigned Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-709
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.assigned 2.0.0 under DL-045 and DL-438, deck-2 Card 5.b option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Only the authorized Puppet Master controller for that area records reassignment; users and workers request it. Within the same area of responsibility, require no added confirmation beyond existing rules. Crossing to another area requires **an authorized human for the outgoing area to approve and the receiving responsible owner (person, agent or component) to explicitly accept** before the change is saved. The outgoing concern owner has no additional veto merely for holding the old assignment. If either required confirmer is unavailable or declines, leave the old assignment in place. Save both confirmations, who gave each and in which role, old/new owners, reason and proof of permission. The controller recording the transfer cannot treat its own recording as either confirmation; if it is the receiving owner, it must separately record acceptance and still obtain the human’s approval. You see who approved and who accepted. If this reassignment also moves the concern to a wider area of responsibility, follow your selected 5.d rule as well, including its promotion recorder and required approvals.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_assigned.payload.schema.json; its $id is pm.card5.concern_assigned.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.assign through handlers::concern::assign is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.assigned", idempotency_key]); operation_digest=H and event_id=evt_concern_assigned_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_assigned.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_assigned_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.assign or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact effect: owner_kind/owner_ref change, identity and creator/resolver/lifecycle preserved. Same-area transfer has no additional confirmation beyond existing rules. Area comparison uses authenticated canonical responsibility scopes, never caller-supplied labels. Cross-area transfer requires outgoing authorized human approval and receiving owner explicit acceptance, each independently authenticated, tied to this original action, role, actor, scope and evidence. Recording is neither confirmation. The controller may separately accept as receiving owner (person/agent/component) but must still obtain outgoing human approval; unavailable/declined confirmer leaves old assignment untouched. Holding old assignment grants no veto. A wider target additionally requires the exact promotion controller/evidence/approval contract F3-711/DL-440; linked action custody proves both contracts before the same canonical commit, never a unilateral owner rewrite. Save old/new owners, reason, proof and who approved/accepted in which role.
+
+  Consumers/checkpoints: newly authored projector.concern_assigned.history@1.0.0 and reader.concern_assigned.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_assigned_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_assigned.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_assigned_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_assigned_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern assigned 1.0.0 schema in Plans/event_payloads/concern/concern_assigned.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_assigned.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.assigned. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.assigned has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.b A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.assigned
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_assigned
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-438
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.assigned
+- DL-438
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-710 - concern.evidence_linked Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-710
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.evidence_linked 2.0.0 under DL-045 and DL-439, deck-2 Card 5.c option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Let authorized users and the authorized Puppet Master controller add evidence through the concern action, after checking source access and the latest saved concern version. Ordinary additions need no extra confirmation. Removing or replacing evidence needs its separate authorized action. Save who linked what.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_evidence_linked.payload.schema.json; its $id is pm.card5.concern_evidence_linked.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.link_evidence through handlers::concern::link_evidence is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.evidence_linked", idempotency_key]); operation_digest=H and event_id=evt_concern_evidence_linked_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_evidence_linked.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_evidence_linked_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.link_evidence or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact effect: additive evidence links only, preserving existing evidence, identity, owner, lifecycle and all unrelated record facts. Authorized user or scoped authorized controller may record via cmd.concern.link_evidence, after source access and latest saved revision verification. Ordinary additions require no extra confirmation. Save who linked which immutable source in action_ref. Worker proposals grant no record permission. Destructive replacement/removal is refused by this action and requires its own separately authorized action; an already-linked-only set is no change and emits nothing.
+
+  Consumers/checkpoints: newly authored projector.concern_evidence_linked.history@1.0.0 and reader.concern_evidence_linked.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_evidence_linked_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_evidence_linked.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_evidence_linked_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_evidence_linked_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern evidence_linked 1.0.0 schema in Plans/event_payloads/concern/concern_evidence_linked.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_evidence_linked.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.evidence_linked has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.c A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_evidence_linked
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-439
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.evidence_linked
+- DL-439
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-711 - concern.promoted Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-711
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.promoted 2.0.0 under DL-045 and DL-440, deck-2 Card 5.d option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  The authorized Puppet Master controller records the move after required evidence and approval checks. Users request it or answer a required human approval; workers nominate. Ordinary automation stays automatic. Existing critical, security and governance approval rules still require their stated approval. You are asked only at a required human approval step. If this promotion also changes the responsible owner, follow your selected 5.b rule as well, including its reassignment recorder and transfer confirmations.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_promoted.payload.schema.json; its $id is pm.card5.concern_promoted.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.promote through handlers::concern::promote is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.promoted", idempotency_key]); operation_digest=H and event_id=evt_concern_promoted_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_promoted.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_promoted_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.promote or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact effect: authenticated wider responsibility scope, never merely a severity/display edit; retain concern identity/creator and existing canonical promotion/gate/evidence/receipt links under CV-315/SP-233. Authorized scoped controller records after gate/evidence/approval checks; user requests or answers a true required human approval and worker nominates. Ordinary automation remains automatic, with no routine added human prompt. Required critical/security/governance/HITL approvals remain mandatory. If responsible owner changes too, require the full F3-709/DL-438 transfer contract including outgoing-human approval and receiving-owner explicit acceptance; save linked transfer proof, never manufacture it from recording the promotion. Promotion and transfer obligations are validated together under the same owner transaction; neither event substitutes for the other distinct mutation.
+
+  Consumers/checkpoints: newly authored projector.concern_promoted.history@1.0.0 and reader.concern_promoted.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_promoted_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_promoted.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_promoted_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_promoted_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern promoted 1.0.0 schema in Plans/event_payloads/concern/concern_promoted.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_promoted.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.promoted. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.promoted has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.d A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.promoted
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_promoted
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-440
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.promoted
+- DL-440
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-712 - concern.reopened Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-712
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.reopened 2.0.0 under DL-045 and DL-441, deck-2 Card 5.e option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  The currently responsible, authorized concern owner records reopening on that new evidence. Users and workers may request it. Save the reason and prior closure history; ask for extra confirmation only where existing critical/human-approval policy requires it. Valid new evidence can reopen the issue without a routine prompt.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_reopened.payload.schema.json; its $id is pm.card5.concern_reopened.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.reopen through handlers::concern::reopen is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.reopened", idempotency_key]); operation_digest=H and event_id=evt_concern_reopened_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_reopened.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_reopened_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.reopen or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact transition: resolved|dismissed -> active on new current evidence invalidating that original closure. Recorder must be the currently responsible AND independently authorized owner (person/agent/component); assignment/creator title alone does not grant permission. Users and workers request; workers never record directly. Retain reason, new evidence, immutable prior-terminal ref and complete prior closure/lineage; do not overwrite old closure history. Extra confirmation only where existing critical/HITL policy requires it. Owner, scope, assessment, creator and evidence set remain unchanged unless their separately authorized linked actions commit; the reopening action records its new supporting evidence as immutable action custody, not an implicit evidence-removal action.
+
+  Consumers/checkpoints: newly authored projector.concern_reopened.history@1.0.0 and reader.concern_reopened.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_reopened_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_reopened.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_reopened_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_reopened_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern reopened 1.0.0 schema in Plans/event_payloads/concern/concern_reopened.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_reopened.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.reopened. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.reopened has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.e A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.reopened
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_reopened
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-441
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.reopened
+- DL-441
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-713 - concern.resolved Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-713
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.resolved 2.0.0 under DL-045 and DL-442, deck-2 Card 5.f option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  The authorized Puppet Master controller may choose and record seven evidence-backed outcomes: `fixed` (a genuine fix), `superseded` (replaced by a successor concern), `merged` (combined with another concern), `split` (divided into linked concerns), `invalidated` (shown to be invalid), `obsoleted_by_patch` (made obsolete by a patch), and `obsoleted_by_recovery` (made obsolete by recovery). Users and workers may request these outcomes but gain no recording permission. Only an authorized human may choose `accepted_risk` (accepting remaining risk), by an explicit decision that the controller records with the evidence and remaining risk. Every resolution requires current evidence that the underlying issue changed, a reason, and all existing critical/security/human approvals. Supersession, merge and split use guided, audited lineage actions and preserve links and history; they do not prove a fix. Any resulting transfer follows your selected 5.b rule, and any promotion to a wider area follows your selected 5.d rule. Acknowledge/dismiss stays separate and cannot erase a live blocker. You get controller choice and recording for all seven non-risk outcomes, and an explicit human choice for accepted risk.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_resolved.payload.schema.json; its $id is pm.card5.concern_resolved.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.resolve through handlers::concern::resolve is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.resolved", idempotency_key]); operation_digest=H and event_id=evt_concern_resolved_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_resolved.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_resolved_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.resolve or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact transition: active|acknowledged -> resolved with current evidence that the underlying issue changed, reason and required critical/security/human approvals. Authorized controller chooses/records fixed/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery. Only authorized human explicitly chooses accepted_risk; controller records the independently authenticated decision, remaining-risk ref and supporting evidence. Acknowledge/dismiss cannot erase a live blocker. Supersession/merge/split require guided audited lineage action and preserved links/history; these outcomes never prove a fix or clear a blocker by themselves. Existing blocker/gate owner revalidates the underlying issue separately; this event never edits blocking_effect_ref merely because it is terminal. Any transfer obeys F3-709/DL-438, any widening obeys F3-711/DL-440, with both obligations authenticated before commit. Save resolution_kind, resolver, resolution evidence, decision and lineage in the immutable action record and canonical owner's closure record; the event action_ref commits to those exact bytes. User/worker requests confer no recording permission.
+
+  Consumers/checkpoints: newly authored projector.concern_resolved.history@1.0.0 and reader.concern_resolved.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_resolved_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_resolved.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_resolved_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_resolved_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern resolved 1.0.0 schema in Plans/event_payloads/concern/concern_resolved.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_resolved.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.resolved has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.f A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_resolved
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-442
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.resolved
+- DL-442
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-714 - concern.updated Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-714
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.updated 2.0.0 under DL-045 and DL-443, deck-2 Card 5.g option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  The authorized Puppet Master controller records assessment changes within its permitted area, limited here to changes that neither reassign the responsible owner nor move the concern to a wider area. Users and workers request them. Save current evidence, exact saved version and reason for severity, category or authority changes. An authority assessment identifies the already-authorized role whose decision is needed; it grants no new action permission. A severity, category or authority change that amounts to a transfer follows your selected 5.b rule; one that amounts to promotion follows your selected 5.d rule, even when requested as part of an update. Any linked evidence addition, reopening or resolution follows 5.c, 5.e or 5.f respectively; an assessment update cannot perform those actions instead. Editing the screen’s display copy is insufficient. You see the current assessment, subject to existing human-approval rules.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_updated.payload.schema.json; its $id is pm.card5.concern_updated.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.update through handlers::concern::update is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.updated", idempotency_key]); operation_digest=H and event_id=evt_concern_updated_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_updated.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_updated_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.update or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact effect: assessment-only changes to severity/category/authority_ref within the permitted current area, exact current saved revision, nonempty real patch, evidence and reason retained. Controller records; user/worker requests. An authority assessment names an already-authorized deciding role and grants no action permission. Owner, responsibility area, lifecycle, evidence set, lineage, creator and blocking effect cannot change through this assessment operation. A requested owner transfer must use F3-709/DL-438, wider area F3-711/DL-440, evidence addition F3-710/DL-439, reopening F3-712/DL-441 or resolution F3-713/DL-442, with their separate recorders/confirmers. Screen/projection edits do not mutate canonical records; update_kind/changed_fields from old editions are historical compatibility only and confer no broader current write capability.
+
+  Consumers/checkpoints: newly authored projector.concern_updated.history@1.0.0 and reader.concern_updated.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_updated_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_updated.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_updated_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_updated_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern updated 1.0.0 schema in Plans/event_payloads/concern/concern_updated.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_updated.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.updated. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.updated has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.g A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.updated
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_updated
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-443
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.updated
+- DL-443
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```

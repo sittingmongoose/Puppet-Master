@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25492-L25625
+Source lines: L25607-L25746
 
-Source SHA256: `5be00385fb332d27e9b2e7b29ae5101b4031acc3777b8ed3e23faceb8dcf4b75`
+Source SHA256: `8086b31b97cf95f027d1bff2e2707c2d1424ab3520f50bbbc06cd64ffea726cf`
 
 ---
 
@@ -14,7 +14,7 @@ Packet `PM-WNC-2026-09-05-v1`. Notebook semantics are owned by `Plans/Working_No
 
 User corrections and additions are attributed revision-safe actions: a user edit creates a new attributed revision (CAS; a conflicting agent edit surfaces the stale-edit conflict instead of overwriting), in-flight requests keep their original receipt-bound bytes, and dependent future assembly revalidates or invalidates as necessary. Editing never claims to change bytes already sent.
 
-Context Detail and context controls disclose continuity truthfully: the Context Detail Pane shows notebook/capsule contributions as distinct source classes (separate from memory, history, and workflow state), requested/effective fresh-window transition reason and path, checkpoint status, omitted/truncated/redacted classes, and unknown native state labeled unknown — never fabricated. The context controls offer a separately labeled **fresh-context request** distinct from **Compact Now**: Compact Now remains compaction (`cmd.chat.compact_context`, unchanged); the fresh-context request is a new labeled affordance rendering truthful eligibility and disabled reasons (unsupported route, unsaved required checkpoint, deferred) and is never mislabeled as complete session deletion or `done.rotated`. Occupancy drops after a fresh window while cumulative usage and quota display stay correct per UF-099.
+Context Detail and context controls disclose continuity truthfully: basic capacity/cost/model information, requested/effective fresh-window transition reason and path, checkpoint status and useful compaction results remain visible, with unknown native state labelled unknown. Notebook/capsule contributions and memory/history/workflow source classes, inclusion records and per-source omission/truncation/redaction details remain internal for enforcement and debugging; they produce no user-facing source-composition view or per-run inclusion receipt. The context controls offer a separately labeled **fresh-context request** distinct from **Compact Now**: Compact Now remains compaction (`cmd.chat.compact_context`, unchanged); the fresh-context request is a new labeled affordance rendering truthful eligibility and disabled reasons (unsupported route, unsaved required checkpoint, deferred) and is never mislabeled as complete session deletion or `done.rotated`. Occupancy drops after a fresh window while cumulative usage and quota display stay correct per UF-099.
 
 ```yaml
 plan_unit_id: ACD-449
@@ -55,14 +55,20 @@ plan_unit_id: ACD-450
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: "Context Details discloses continuity truthfully: notebook/capsule contributions render as a distinct source class separate from memory, history, and workflow state; requested/effective fresh-window transition reason/path, checkpoint status, omitted/truncated/redacted source classes, and unknown native state render as unknown rather than fabricated. A separately labeled fresh-context request exists in context controls with truthful eligibility and disabled reasons; Compact Now remains compaction with unchanged semantics; fresh context is never labeled session deletion or done.rotated."
+canonical_text: Basic on-demand Context Details remains truthful about capacity/cost, fresh-context eligibility,
+  actual checkpoint/transition result, omitted/truncated/redacted data and unknown native state. Assembled
+  source-family charts, raw memory data and selection explanations stay internal diagnostics with full
+  restriction enforcement. Compact Now remains compaction, distinct from fresh context, session deletion
+  and done.rotated.
 gui_related: true
 gui_classification_reason: This unit is Context Details and context-control UI behavior.
 depends_on: [ACD-449, PP-085]
 unblocks: []
 acceptance_criteria:
-  - The user can distinguish notebook, memory, history, and workflow contributions.
-  - Fresh-context request and Compact Now are visibly distinct with truthful disabled reasons.
+- Basic on-demand Context Details remains truthful about capacity/cost, fresh-context eligibility, actual
+  checkpoint/transition result, omitted/truncated/redacted data and unknown native state. Assembled source-family
+  charts, raw memory data and selection explanations stay internal diagnostics with full restriction enforcement.
+  Compact Now remains compaction, distinct from fresh context, session deletion and done.rotated.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: misleading_disclosure
@@ -71,13 +77,13 @@ context_scope: assistant_chat
 implementation_surfaces: [Plans/assistant-chat-design.md, Plans/usage-feature.md, Plans/Prompt_Pipeline.md]
 node_compile_hint: {mode: gui_surface_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-X03
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A34
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A53
+- source_packet:PM-WNC-2026-09-05-v1:WNC-X03
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A34
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A53
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["Compact Now", "fresh-context request", "unknown", "done.rotated"]
 negative_constraints:
-  - Do not repurpose Compact Now as a fresh-context control.
-  - Do not render unknown native state as known.
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints: [Plans/assistant-chat-design.md, Plans/usage-feature.md]
 ```
 

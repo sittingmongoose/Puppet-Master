@@ -1,0 +1,62 @@
+{
+  "source_head": "f9a49734f1d92197b0cbc4d57cbf7e4c68dc4253",
+  "path": "scripts/pm_coordination_events.py",
+  "before_sha256": "876e462af70f189a6bee18a370094655ae87ab8940703a62d19fcbb395f4132f",
+  "after_sha256": "3c06169958b9b6f99edbc9ad021f45b42618bb605512c0c55d9568b15f69f944",
+  "changed_function": "timestamp_profile_failures",
+  "runtime_guard_predicates_changed": false,
+  "cause": "DO adds five board date-time nodes to the shared payload definitions; DCO census expects its fifteen coordination nodes.",
+  "fix": "Exclude only the three exact BOARD_MEMBERS from the DCO timestamp census; DO exact-copy validation and orchestrator timestamp consumers remain active. Unknown definitions and new DCO fields still fail.",
+  "status": "VERIFIED",
+  "application_head": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+  "validation": {
+    "boundary_probes": 4,
+    "coordination_exit": 0,
+    "unit_exit": 0,
+    "unit_tests": 57,
+    "wave2_exit": 0,
+    "number_corpus_exit": 0,
+    "guard_tables": 14,
+    "guard_proved": 119,
+    "guard_rows": 119,
+    "guard_missing": []
+  },
+  "validation_logs": [
+    {
+      "label": "RECHECK-DCO-census-probes",
+      "exit": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DCO-census-probes.log",
+      "sha256": "f39e57336824d4e844c9e8431b2579edf45864f54e8a0b0b087f8fe4f4ee32c6"
+    },
+    {
+      "label": "RECHECK-DO-coordination-events",
+      "exit": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DO-coordination-events.log",
+      "sha256": "79db659b2239953b1b48f003a3fb2f7ffe0592ea46062b4bbe407d4adbc67ebe"
+    },
+    {
+      "label": "RECHECK-DO-test-coordination",
+      "exit": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/RECHECK-DO-test-coordination.log",
+      "sha256": "e9dd7bc5a7e03379926e57892e20847a11269626793e880512993b91313b7f73"
+    },
+    {
+      "label": "DCO-wave2",
+      "exit": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/DCO-wave2.log",
+      "sha256": "a961a9428b5d3f2793445c89e18d0a4b0ede30e672083f105eb23fcd025796c6"
+    },
+    {
+      "label": "DCO-number-corpus",
+      "exit": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/DCO-number-corpus.log",
+      "sha256": "fb47b0f4546820788fe312e67bf130e1c6f1f97580ac250811ad7f744a9f1575"
+    },
+    {
+      "label": "DCO-guard",
+      "exit": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/extra/DCO-guard.log",
+      "sha256": "7b7f3e5dbae5cb1cea1085455b3cdd23bca2c67911a56f9f9b9554f597ccb390"
+    }
+  ]
+}

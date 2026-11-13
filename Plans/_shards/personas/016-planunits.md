@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L697-L3206
+Source lines: L691-L3227
 
-Source SHA256: `bb302a4ed23c3031347fe6dc2c6b9e371e054e2b59c4e239aeee0c564c32070e`
+Source SHA256: `a14c5b9c5e694e2fc888bb675dcc7a25d4f60eca214f24ba761bbdceaaef6409`
 
 ---
 
@@ -201,7 +201,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  A Persona is a persistent YAML-frontmatter Markdown behavior-and-runtime contract that shapes Agent or Subagent behavior and feeds compiled context plus effective runtime resolution.
+  A Persona is a persistent YAML-frontmatter Markdown behavior-and-runtime contract that shapes Agent or
+  Subagent behavior and feeds compiled context plus effective runtime resolution. Personas carry no
+  model/provider/preset/effort default under MD2 NEITHER; their remaining answer controls still pass
+  capability filtering.
 gui_related: true
 gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
 split_recommended: true
@@ -211,7 +214,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Persona remains persistent and user-editable until deletion.
-  - Persona metadata may include identity, instructions, permissions, skills, provider/model preferences, runtime control preferences, aliases, and UI-facing metadata.
+  - Persona metadata may include identity, instructions, permissions, skills, supported answer controls, aliases, and UI-facing metadata; it carries no model/provider/preset/effort preference.
   - The Agent/Subagent/Persona distinction table remains preserved.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -395,7 +398,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  PERSONA.md consists of YAML frontmatter followed by Markdown body, with frontmatter fields and enum/value meanings defined by the Personas schema.
+  PERSONA.md consists of YAML frontmatter followed by Markdown body; its frontmatter fields are id, name,
+  description, default_mode, default_permissions_profile, temperature, top_p, talkativeness,
+  default_skill_refs, disabled_plugins, preferred_tools, discouraged_tools, tool_usage_guidance, tags and
+  aliases, and the field definitions own each one's required, recommended or optional status and its enum
+  and value meanings. The tags field is a free string list: phase, task, subtask, iteration, cross-phase,
+  language, domain and framework are suggested kinds, not a closed enum. DL-474 confirms that Settings
+  row personas.library.persona-tags uses the same free tag input and existing Persona-owned storage.
+  Retired default_platform, default_model, default_variant and reasoning_effort fields are accepted only
+  by compatibility readers, disclosed and excluded from new writes; no selected Persona can change a
+  model or effort.
 gui_related: false
 gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
 split_recommended: false
@@ -454,7 +466,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Validation rejects invalid IDs, protected-ID shadowing, invalid enums, and unavailable references as specified.
-  - Provider/model/runtime controls are validated at resolution time.
+  - Remaining answer controls are capability-validated at resolution time; retired model/provider/preset/effort fields are inert compatibility reads.
   - requested_persona and effective_persona are the canonical runtime identity field names.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -538,10 +550,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Agent Config > Personas is the one primary Persona library, prompt browser and editor, realized
-  inside Settings as Settings › Personas & Crews by section 4. Other Settings pages route to that same
+  Agent Config > Personas is the one primary Persona library, prompt browser and editor, realized inside
+  Settings as Settings › Personas & Crews by section 4. Other Settings pages route to that same
   management surface. P-060 supplies its home, reach, whole-Project-version and Save feedback without
-  creating another editor.
+  creating another editor. Persona create/edit contains no model/provider/preset/depth fields; old values
+  are inspection-only with a link to the shared Defaults list. Cost and answer controls remain.
 gui_related: true
 gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
 split_recommended: false
@@ -816,16 +829,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Child Persona injection uses a reconstructed handoff bundle, and Persona default_mode applies below explicit run-envelope mode and above the system default.
+  Child Persona injection uses a reconstructed handoff bundle, and Persona default_mode applies
+  below explicit run-envelope mode and above the system default. Child handoff never copies private
+  parent/app-thread memory. Independently authorized helpers may read current Project and same-user
+  personal notes read-only under AMS-026/054 source restrictions, with no other-Project access,
+  mutation or helper-owned store.
 gui_related: false
 gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Child runs inject effective child Persona content resolved from PM storage.
-  - Child handoff includes current task, working context, required constraints, requested/effective runtime state, and effective context-shaping state.
-  - Run-envelope mode overrides Persona default_mode.
+  - "Child runs inject effective child Persona content resolved from PM storage."
+  - "Child handoff includes current task, working context, required constraints, requested/effective runtime state, and effective context-shaping state."
+  - "Run-envelope mode overrides Persona default_mode."
+  - "Authorized Project/personal-note read succeeds under the existing scope/source gates; private app-thread forwarding and helper writes remain refused."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -840,6 +858,7 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0028
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0029
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "reconstructed handoff bundle"
   - "do not forward Assistant memory"
@@ -847,7 +866,7 @@ preserved_exact_tokens:
   - "Explicit run-envelope `mode`"
   - "System default (`regular`)"
 negative_constraints:
-  - "Do not forward Assistant memory to child runs."
+  - "Do not copy private parent/app-thread memory into child handoffs or use a handoff to bypass source restrictions; authorized read-only Project/personal-note access remains permitted."
   - "Do not make a lossy child copy the only truth."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md"
@@ -1449,7 +1468,11 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Core Persona default model/provider/runtime controls appear as Auto in the UI and are stored as inherited/null fields unless a PM-owned definition sets a value; core definitions are user-immutable, explorer and bash are subagent-only, assistant and teacher are direct user-facing Personas, and other protected core Personas are chat-selectable unless a narrower owner rule forbids the surface.
+  Core Personas carry no model/provider/preset/effort defaults; use shared Models defaults and explicit
+  run choices. Old Auto/null selection fields are compatibility-read only and omitted from new writes.
+  Core definitions remain user-immutable and not deletable; explorer and bash remain subagent-only,
+  assistant and teacher direct user-facing, and other protected core Personas chat-selectable unless a
+  narrower owner forbids it.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Persona picker and UI default-control behavior.
 split_recommended: false
@@ -1458,9 +1481,9 @@ depends_on:
   - P-031
 unblocks: []
 acceptance_criteria:
-  - Auto defaults inherit according to Models_System.
-  - Core definitions are user-immutable and not deletable.
-  - Manual Persona picker eligibility preserves subagent-only and user-facing distinctions.
+- No core Persona model/provider/preset/effort setting is editable or used in resolution.
+- Core definitions remain user-immutable and not deletable.
+- Manual Persona picker eligibility preserves subagent-only and user-facing distinctions.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1589,7 +1612,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  general-purpose displays as General and is the broad core execution Persona for complex multi-step work requiring reading, reasoning, editing, command execution, verification, and follow-through, with boundaries against replacing read-only explorer, terminal-first bash, research Personas, or narrower specialty fits.
+  general-purpose displays as General and is the broad core execution Persona for complex multi-step work
+  requiring reading, reasoning, editing, command execution, verification, and follow-through, with
+  boundaries against replacing read-only explorer, terminal-first bash, research Personas, or narrower
+  specialty fits. The General Persona supplies no model/depth preference; ordinary defaults or an
+  explicit parent/run choice determine the model under Models §2.
 gui_related: false
 gui_classification_reason: This unit defines Persona behavior contract and routing fit rather than visual presentation.
 split_recommended: false
@@ -2110,7 +2137,7 @@ unblocks: []
 acceptance_criteria:
   - Provider-native files under .claude/agents, .cursor/agents, .github, or other provider-native directories are seed/import material only.
   - PM adaptation translates provider-native tools lists into PM permission/tool-preference metadata.
-  - Specialty model behavior defaults to Auto/inherit unless a PM-owned definition explicitly sets a provider/model preference.
+  - Specialties carry no model/provider/preset/effort preferences; normal model defaults and explicit run choices decide.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

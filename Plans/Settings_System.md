@@ -9,12 +9,12 @@
 Settings is one system with three coordinated parts. Ordinary values use the settings ladder in SSYS-002/059:
 
 1. the K3 Tome Tabs Settings shell;
-2. the 1010 ordinary setting rows in `Plans/settings_inventory.json`; and
+2. the ordinary setting rows in `Plans/settings_inventory.json`; and
 3. the full manager system for setup, policy, defaults, human-readable status, diagnostics, repair entry points, and owner-routed operational work.
 
 `Plans/settings_system_contracts.schema.json` is the strict Draft 2020-12 shape owner for Settings-owned records. `Plans/settings_system_contract_fixtures.json` freezes the five Settings command contracts, six route-only Onboarding/Guided Tour/Doctor UI actions, the 38-entry manager registry, three named visible-state projections, exact dispositions for all 80 older-packet command tokens, and positive/negative contract fixtures. Those machine files are canonical Plans contracts but remain schema/fixture evidence only; they do not prove a registered handler, production wiring, persistence execution, native rendering, or certification.
 
-This owner supersedes prior Settings presentation and ordinary-persistence clauses in `Plans/FinalGUISpec.md`, including the visible search-first shelves/bloom shell in F3-432 and the universal/global or inheritance implications in F3-438, F3-440, F3-442, F3-510, and F3-511. It retains the canonical 1010-ID inventory, the useful F3-433 fuzzy matching behavior, live owner-derived status, typed row renderers, ten built-in themes, and owner-routed deep links where this document incorporates them.
+This owner supersedes prior Settings presentation and ordinary-persistence clauses in `Plans/FinalGUISpec.md`, including the visible search-first shelves/bloom shell in F3-432 and the universal/global or inheritance implications in F3-438, F3-440, F3-442, F3-510, and F3-511. It retains the canonical inventory in `Plans/settings_inventory.json`, the useful F3-433 fuzzy matching behavior, live owner-derived status, typed row renderers, ten built-in themes, and owner-routed deep links where this document incorporates them.
 
 SSYS-002 owns Default → Everywhere → Computer (Device for screen rows) → optional Project → existing owner/chat/run/tab rungs, with Managed above them. SSYS-059 declares exceptions and combine rules; no-Project offered shared/Computer/Device writes work. Basic Dark is bundled fallback or pre-claim ephemeral only. Existing explicit choices and detached copied own values are never overwritten by a fresh seed. Manager objects and operational records remain with their owners.
 
@@ -42,7 +42,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Plan_Document_S
 
 | Domain | Canonical owner consumed by Settings | Settings role |
 |---|---|---|
-| Inventory IDs and row metadata | `Plans/settings_inventory.json` and `Plans/settings_inventory.schema.json` | Render and search all 1010 IDs; do not hardcode a second inventory. |
+| Inventory IDs and row metadata | `Plans/settings_inventory.json` and `Plans/settings_inventory.schema.json` | Render and search every live inventory ID; do not hardcode a second inventory. |
 | Theme palettes and shared GUI tokens | `Plans/FinalGUISpec.md` | Select and preview the ten built-in themes; do not fork palette truth. |
 | Physical persistence, recovery, and secret-store split | `Plans/storage-plan.md` | Submit exact level-bound settings transactions and show receipts; do not own storage engines. |
 | Permissions, FileSafe, and secret custody policy | `Plans/Permissions_System.md`, `Plans/FileSafe.md`, `Plans/Multi-Account.md` | Show policy/effective state and non-secret references; never hold raw credentials. |
@@ -212,20 +212,23 @@ plan_unit_id: SSYS-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Plans/settings_inventory.json remains the machine authority for the live ordinary setting IDs across 12 categories.
-  Settings binds rows to that registry and never substitutes K3 demo data, an embedded PMConcept snapshot, or
-  manager pseudo-rows. Managers, one-shot actions, status projections, diagnostics, setup workflows, and unavailable
-  capabilities are typed searchable destinations outside the ordinary-setting denominator and route to their owners.
-  The inventory layering field alone determines offered levels under SSYS-059. The legacy scope field remains
-  owner-rung metadata; its global/project members are not storage authority. The 1010 rows are the starting census;
-  additions require a recomputed exact count across the existing 12 categories. Amended Q22, Jared 2026-10-30
-  (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token
-  1011 is retained solely as pre-Q22 lineage. Q22/QA2 registry join (DL-257/DL-258): settings_inventory.retired_input_ids
-  names migration-only historical keys outside the active settings array. It contains general.visual.nier-mode,
-  is disjoint from active row IDs, adds no ordinary row/control/writer and does not count in the 1010-row census.
-  Placement retirement validation may consume this explicit catalog; arbitrary unknown IDs remain errors, and
-  current Settings request IDs still reject the retired key.
+canonical_text: 'Plans/settings_inventory.json remains the machine authority for the live ordinary setting
+  IDs across 12 categories. Settings binds rows to that registry and never substitutes K3 demo data, an
+  embedded PMConcept snapshot, or manager pseudo-rows. Managers, one-shot actions, status projections,
+  diagnostics, setup workflows, and unavailable capabilities are typed searchable destinations outside
+  the ordinary-setting denominator and route to their owners. The inventory layering field alone determines
+  offered levels under SSYS-059. The legacy scope field remains owner-rung metadata; its global/project
+  members are not storage authority. The 1010 rows are the starting census; additions require a recomputed
+  exact count across the existing 12 categories. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant
+  and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22
+  lineage. Q22/QA2 registry join (DL-257/DL-258): settings_inventory.retired_input_ids names migration-only
+  historical keys outside the active settings array. It contains general.visual.nier-mode, is disjoint
+  from active row IDs, adds no ordinary row/control/writer and does not count in the live inventory census.
+  Placement retirement validation may consume this explicit catalog; arbitrary unknown IDs remain errors,
+  and current Settings request IDs still reject the retired key. DL-475 retires 43 memory.* tuning/workbench
+  rows into retired_input_ids, outside live search, All Settings, Reset and transfer. The current census
+  is the unique IDs of settings_inventory.settings; historical numeric counts are lineage only. Eight
+  memory.* rows remain in their proper owners, not all on Memory.'
 gui_related: true
 gui_classification_reason: The inventory and destination-type split determines visible search results and Settings content.
 depends_on: [SSYS-001, F3-441]
@@ -234,7 +237,7 @@ acceptance_criteria:
 - A registry census finds the recomputed unique live ID count across 12 categories, including only admitted additions.
 - The rendered ordinary-setting denominator matches the registry exactly.
 - Manager/action/status/diagnostic/setup/unavailable results carry a non-setting result type and do not inflate
-  1010.
+  the live inventory census.
 validation_surfaces: [jq and schema census over Plans/settings_inventory.json, future result-type fixtures]
 risk_class: settings_inventory_or_denominator_drift
 reasoning_tier: high
@@ -247,6 +250,7 @@ source_lineage:
 - source_ref:chat:settings-canonical-owner-lane-2026-08-31
 - 'source_ref:projects-pass2-20261103:S1–S14; Jared: "I approve the outstanding questions with their recommended
   settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: [1011, 12 categories, ordinary settings, managers]
 negative_constraints:
 - Do not use K3 demo rows as runtime authority.
@@ -967,28 +971,32 @@ plan_unit_id: SSYS-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Settings ships as a full manager system rather than a 1010-row form or provider-only demo. The manager registry
-  is frozen as the exact 38-key machine registry in Plans/settings_system_contract_fixtures.json and includes
-  General Desktop and Appearance; Providers, Accounts, Models, and Installations; Web Routes; Media Routes; Back
-  Seat Driver; Memory and Context; Goals, Crew, Personas, and Owners; Permissions and FileSafe; Commands and Shortcuts;
-  Tools, MCP, Skills, Plugins, LSP, Formatters, and Toolchains; Testing and Debug policy; Files and Editor; Terminal;
-  Notifications and Sounds; Source Control and Actions & Pipelines; Browser and SCM dependencies; Storage, Retention,
-  Recovery, and Cleanup; Project History, Sessions, Artifacts, and Outputs; Settings Transfer; Servers, Hosts,
-  Environments, Clients, Remote Access, Project Hosting/Files/Sync/Move/Copy, SSH, Backup and Restore, Updates,
-  Readiness and Setup; Teacher and Help; Project Search Index; and DRY Method visible state. Concept presentation
-  may group or split these destinations into workspaces (one System workspace Server & Project Location over the
-  seven server/location keys; separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and Commands
-  & Shortcuts over tools-integrations and commands-shortcuts) without changing manager_id keys, routes, or details
-  paths (USER-SETTINGS-MANAGER-REFRESH-20260908), and may present canonical ordinary settings inline within the
-  manager workspace that owns their topic without changing manager_id keys or the inventory (USER-SETTINGS-MANAGER-REFRESH-20260909).
-  Each entry has one stable manager_id, owner route, lazy summary projection, supported actions, exact unavailable
-  reasons, and a details path; operational behavior remains in the retained owner. Amended Q22, Jared 2026-10-30
-  (DL-257): the current family/variant and inventory census supersede earlier counts. The 38 keys stay fixed.
-  SSYS-061 classifies each descriptor with scope_model and declared project_switch_ids, retaining owner-specific
-  fields and adding level/level_key for ordinary value targets. Project is conditionally required only by the
-  targeted Project level or owner operation. Saved setups is the visible name of project-defaults-templates; the
-  separate Project-owned Starters route adds no manager key.
+canonical_text: 'Settings ships as a full manager system rather than an inventory-only form or provider-only
+  demo. The manager registry is frozen as the exact 38-key machine registry in Plans/settings_system_contract_fixtures.json
+  and includes General Desktop and Appearance; Providers, Accounts, Models, and Installations; Web Routes;
+  Media Routes; Back Seat Driver; Memory and Context; Goals, Crew, Personas, and Owners; Permissions and
+  FileSafe; Commands and Shortcuts; Tools, MCP, Skills, Plugins, LSP, Formatters, and Toolchains; Testing
+  and Debug policy; Files and Editor; Terminal; Notifications and Sounds; Source Control and Actions &
+  Pipelines; Browser and SCM dependencies; Storage, Retention, Recovery, and Cleanup; Project History,
+  Sessions, Artifacts, and Outputs; Settings Transfer; Servers, Hosts, Environments, Clients, Remote Access,
+  Project Hosting/Files/Sync/Move/Copy, SSH, Backup and Restore, Updates, Readiness and Setup; Teacher
+  and Help; Project Search Index; and DRY Method visible state. Concept presentation may group or split
+  these destinations into workspaces (one System workspace Server & Project Location over the seven server/location
+  keys; separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and Commands & Shortcuts over
+  tools-integrations and commands-shortcuts) without changing manager_id keys, routes, or details paths
+  (USER-SETTINGS-MANAGER-REFRESH-20260908), and may present canonical ordinary settings inline within
+  the manager workspace that owns their topic without changing manager_id keys or the inventory (USER-SETTINGS-MANAGER-REFRESH-20260909).
+  Each entry has one stable manager_id, owner route, lazy summary projection, supported actions, exact
+  unavailable reasons, and a details path; the home applies lazy hydration, so summaries stay compact
+  and only the selected manager''s details load; operational behavior remains in the retained owner. Amended
+  Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts.
+  The 38 keys stay fixed. SSYS-061 classifies each descriptor with scope_model and declared project_switch_ids,
+  retaining owner-specific fields and adding level/level_key for ordinary value targets. Project is conditionally
+  required only by the targeted Project level or owner operation. Saved setups is the visible name of
+  project-defaults-templates; the separate Project-owned Starters route adds no manager key. DL-475 presents
+  memory-context-instructions as Memory, one page with no tabs or context workbench; the 38 stable manager
+  keys remain. Instructions and History/privacy are separate owner destinations; a chat Memory button
+  opens the same page as a sheet.'
 gui_related: true
 gui_classification_reason: The complete manager destination set and shared visible states define the Settings product surface.
 depends_on: [SSYS-004, SSYS-006, SSYS-011, SSYS-012, SSYS-013, SSYS-014]
@@ -997,7 +1005,7 @@ acceptance_criteria:
   - "The exact 38-entry manager registry covers every named family with stable identity and an explicit retained owner or named owner-gap disposition."
   - "Settings Home hydrates compact summaries first and one selected manager lazily; hidden managers release heavy state."
   - "Every manager action resolves to a registered owner command or remains unavailable with the exact reason."
-  - "Search can find all managers without counting them among the 1010 ordinary settings."
+  - "Search can find all managers without counting them among the ordinary settings in the inventory."
 validation_surfaces: [Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, future lazy-hydration tests, future owner-route coverage matrix]
 risk_class: incomplete_or_parallel_settings_manager_system
 reasoning_tier: high
@@ -1010,6 +1018,7 @@ source_lineage:
 - source_ref:chat:settings-canonical-owner-lane-2026-08-31
 - 'source_ref:projects-pass2-20261103:S1–S14; Jared: "I approve the outstanding questions with their recommended
   settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: [full manager system, lazy hydration, Settings Transfer, Readiness and Setup]
 negative_constraints: [Do not call Provider Manager plus a few rows a complete Settings system., Do not hydrate or probe all managers on startup., Do not invent manager-private mutation handlers.]
 owner_hints: [Plans/Settings_System.md, Plans/Shared_Integration_Runtime.md]
@@ -1561,69 +1570,20 @@ plan_unit_id: SSYS-059
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  The inventory layering object, not legacy scope, is the reviewed per-row authority: home, may_differ_by, computer_key,
-  combine, conditional careful_order, atomic_group and not_offered. home is everywhere, computer, device, project
-  or thing. may_differ_by never contains both computer and device. A Computer key is tagged server or execution_host,
-  not an ambiguous raw ID; Device uses client_id and Project uses actual project_id. Execution Environment is
-  exact resource context under a Computer, never a level. One PM native Client/local Server display name is linked
-  by ClientRecord.local_server_id, not identity collapse. Every live row is classified in order: owner thing fields
-  remain owner-held; host programs/folders/ports/hardware/network are Computer-only; paths about a Project's files
-  are Project-only; screen/keys/speakers are Everywhere/Device; same-for-you behavior is Everywhere-only; other
-  shared behavior/defaults are Everywhere/Computer/Project. No keyword-only census or automatic relocation of
-  keys is sufficient.
+canonical_text: |-
+  The inventory layering object, not legacy scope, is the reviewed per-row authority: home, may_differ_by, computer_key, combine, conditional careful_order, atomic_group and not_offered. home is everywhere, computer, device, project or thing. may_differ_by never contains both computer and device. A Computer key is tagged server or execution_host, not an ambiguous raw ID; Device uses client_id and Project uses actual project_id. Execution Environment is exact resource context under a Computer, never a level. One PM native Client/local Server display name is linked by ClientRecord.local_server_id, not identity collapse. Every live row is classified in order: owner thing fields remain owner-held; host programs/folders/ports/hardware/network are Computer-only; paths about a Project's files are Project-only; screen/keys/speakers are Everywhere/Device; same-for-you behavior is Everywhere-only; other shared behavior/defaults are Everywhere/Computer/Project. No keyword-only census or automatic relocation of keys is sufficient.
+  Named exceptions: general.visual.theme and general.visual.theme-mode are one atomic theme_pair offered Everywhere/Device/Project, always from one level and revision. general.visual.reduce-animations is Everywhere/Device/Project, with true more careful than false: OR the applicable own requests (or the factory default when all are absent) with the OS preference, including before first paint. Computer does not add a second motion rung. general.interaction.scope-labels is Everywhere-only, default false. ai.usage.usage-retention is Everywhere-only, default 90 days with daily totals kept. Project-relative compose/Dockerfile/artifact paths and branching.worktrees.worktree-base-dir stay Project-only; branch/protected-branch defaults and planning.testing.cap-* policy are shared, while installed capabilities are owner status. Program/proxy/port/Projects-folder values are tagged execution_host Computer values, never copied Project values. Ordinary most_specific resolves Default → Everywhere → Computer (Device on screen rows) → optional Project → existing owner/chat/run/tab rungs with Managed above all; unset is absent and falls through.
+  Only a declared safety list uses more_careful: safety.rules.permission-preset, safety.protection.filesafe-integration and the three existing scalar answers safety.rules.default-tool-permission, safety.approvals.doom-loop-action, safety.protection.external-dir-action, plus safety.rules.computer-use. The proposal’s four ask-or-allow wording is not an inventory of four pre-existing scalar IDs: there is no fourth scalar or generic internet-use ID at the starting pin. safety.rules.per-tool-permissions and safety.protection.web-tool-permissions remain per_item maps with the existing Permissions matching/deny semantics, not ordered scalar values or an invented internet toggle. PS-144 defines the per-answer Computer/Project protective combination under Permissions; the ordinary map object has no scalar careful_order. careful_order is required only for more_careful and lists actual row values from most to least careful: read_only, plan, regular, full for built-in profiles; deny, ask, allow for ternary permission answers; on before off for protection; true before false for Reduce motion. Custom profiles are not numerically ordered: when Computer and Project own choices both exist and either is custom, use Computer own and explain it. Everywhere/factory supplies fallback, never an additional protective comparison: compare only simultaneous Computer-own and Project-own safety choices; otherwise use the most specific offered own value or factory default. Everywhere is a default that a Project can loosen, subject to PS-144 repository-origin acceptance and mandatory/parent/managed ceilings. Resolution alone never accepts repository-origin loosening. Permission rule specificity remains Permissions-owned. Numeric capacity rows use computer_ceiling: min(requested Project/narrower value, Computer own cap), with no Computer own cap meaning no added ceiling; owner fixed limits still hold. per_item invokes the existing domain merge by stable name/ID and never invents structured field merges.
+  Every unoffered level has exactly one closed not_offered reason: names_a_program, names_a_folder, about_hardware, about_the_network, about_this_project, about_the_screen, not_about_the_screen, set_inside_a_thing, same_for_you or managed. The panel says why in plain words. Unknown classification, missing careful_order or incomplete reasons fail validation rather than offering an unsafe level. The seven canonical additions below replace the earlier proposal spellings. Plans/settings_inventory.json owns their reviewed classification and actual census; 1010 is the starting count, and those seven additions gave 1017 rows before the placement additions below, preserving 12 categories and 38 manager keys.
+  Canonical new rows are code.execution.projects-folder and code.execution.no-project-chats-folder, Computer-only with computer_key=execution_host and execution_host_home_relative defaults Projects and Puppet Master Chats; general.interaction.no-project-default-computer, Everywhere/Computer with computer_key=server and default local_if_claimed_else_main; safety.rules.cross-project-read-policy, Everywhere/Computer with computer_key=server and default ask_once_per_chat; safety.rules.allow-project-reading, Project-only default true; safety.rules.incoming-chat-messages, Project-only default ask_me; and safety.rules.computer-use, an Everywhere default with Computer and Project own values, computer_key=execution_host, combine=more_careful, careful_order deny, ask, allow and default ask. This permission answer is independent of desktop capability/readiness and exact per-chat/per-app/disclosure admission; an allow value alone never authorizes screen use. Host-relative paths resolve only against that actual Host's home; they are never portable copied paths. Earlier assistant.* spellings are source lineage, not extra rows or write aliases. The permission answers map once to Permissions-owned runtime keys; registration, defaults and readiness grant no read, incoming-message, tool or screen-use authority.
 
-  Named exceptions: general.visual.theme and general.visual.theme-mode are one atomic theme_pair offered Everywhere/Device/Project,
-  always from one level and revision. general.visual.reduce-animations is Everywhere/Device/Project, with true
-  more careful than false: OR the applicable own requests (or the factory default when all are absent) with
-  the OS preference, including before first paint. Computer does not add a second motion rung. general.interaction.scope-labels
-  is Everywhere-only, default false. ai.usage.usage-retention is Everywhere-only, default 90 days with daily totals
-  kept. Project-relative compose/Dockerfile/artifact paths and branching.worktrees.worktree-base-dir stay Project-only;
-  branch/protected-branch defaults and planning.testing.cap-* policy are shared, while installed capabilities
-  are owner status. Program/proxy/port/Projects-folder values are tagged execution_host Computer values, never
-  copied Project values. Ordinary most_specific resolves Default → Everywhere → Computer (Device on screen rows)
-  → optional Project → existing owner/chat/run/tab rungs with Managed above all; unset is absent and falls through.
+  SIR-056 adds seven reviewed code.execution rows, for 1024 inventory rows with the same 12 categories and 38 manager keys. auto-preset is Everywhere with optional Project override, default balanced (Balanced), alternatives fastest (Fastest) and keep_my_computer_free (Keep my computer free); it has no Computer or Device rung, avoiding candidate-dependent resolution. auto-weights is Everywhere-only, default balanced, with Advanced measure weights; has_the_files_already defaults to 0. in-use-less-often is Everywhere-only, default true. computer-level is Computer-only, computer_key=execution_host, default normal, choices prefer, normal, less_often and only_when_i_choose_it. work-placement is Project-only, default auto, alternatives auto and chosen; chosen is a person's scoped pin to that Project's default-computer and does not imply a single worker for all work. allowed-computers is Project-only, a person-edited set of stable execution_host_id bindings, default empty pending the registration decision; default-computer is Project-only, a stable execution_host_id, default null until registration records its reviewed value. An incomplete Project may remain pending, but executable Project work cannot dispatch without that allowed/default binding. The default is a tie-break in Auto and a pin only when chosen is requested. Registration never admits discovered Computers automatically.
 
-  Only a declared safety list uses more_careful: safety.rules.permission-preset, safety.protection.filesafe-integration
-  and the three existing scalar answers safety.rules.default-tool-permission, safety.approvals.doom-loop-action,
-  safety.protection.external-dir-action, plus safety.rules.computer-use. The proposal’s four
-  ask-or-allow wording is not an inventory of four pre-existing scalar IDs: there is no fourth scalar or generic
-  internet-use ID at the starting pin. safety.rules.per-tool-permissions and safety.protection.web-tool-permissions remain per_item
-  maps with the existing Permissions matching/deny semantics, not ordered scalar values or an invented internet
-  toggle. PS-144 defines the per-answer Computer/Project protective combination under Permissions; the ordinary map
-  object has no scalar careful_order. careful_order is required only for more_careful and lists actual row values
-  from most to least careful: read_only, plan, regular, full for built-in profiles; deny, ask, allow for ternary
-  permission answers; on before off for protection; true before false for Reduce motion. Custom profiles are not
-  numerically ordered: when Computer and Project own choices both exist and either is custom, use Computer own
-  and explain it. Everywhere/factory supplies fallback, never an additional protective comparison: compare
-  only simultaneous Computer-own and Project-own safety choices; otherwise use the most specific offered own
-  value or factory default. Everywhere is a default that a Project can loosen, subject to PS-144 repository-origin
-  acceptance and mandatory/parent/managed ceilings. Resolution alone never accepts repository-origin loosening.
-  Permission rule specificity remains Permissions-owned. Numeric capacity
-  rows use computer_ceiling: min(requested Project/narrower value, Computer own cap), with no Computer own cap
-  meaning no added ceiling; owner fixed limits still hold. per_item invokes the existing domain merge by stable
-  name/ID and never invents structured field merges.
+  All seven use most_specific for sparse own values and the same owner transaction path. auto-preset offers Everywhere/Project and omits Computer/Device with same_for_you/not_about_the_screen; auto-weights and in-use-less-often offer only Everywhere and omit Computer/Project as same_for_you and Device as not_about_the_screen. computer-level omits Everywhere/Project/Device as about_hardware; the three Project-only rows omit Everywhere/Computer/Device as about_this_project. Device is not a placement level and Environment remains exact runtime context. Every effective read uses SSYS-002/059; a task adds only minimums and its existing bounded pin state, never priority weights or persistent defaults. Computer levels are keyed to the resource Host, not the viewing Client or a display name. The no-project starter row and SRV-017 are unchanged. Allowed-Computer and default/pin edits use the topology owner with current authority/generations; Settings storage alone cannot grant trust, widen authority or start work.
 
-  Every unoffered level has exactly one closed not_offered reason: names_a_program, names_a_folder, about_hardware,
-  about_the_network, about_this_project, about_the_screen, not_about_the_screen, set_inside_a_thing, same_for_you
-  or managed. The panel says why in plain words. Unknown classification, missing careful_order or incomplete reasons
-  fail validation rather than offering an unsafe level. The seven canonical additions below replace the earlier proposal spellings. Plans/settings_inventory.json owns their reviewed
-  classification and actual census; 1010 is the starting count, and exactly these seven additions give 1017 rows,
-  preserving 12 categories and 38 manager keys.
+  DL-474 remains historical admission intent. DL-475 closes its Q2 owner questions: quiet Memory removes the proposed pin/conflict/helper/source settings, and Goals have no own Crew, named test profiles or completion-confirmation switch. Ordinary chat Persona/model and existing testing/pausing owners apply. No Q2 row is added; current census comes from settings_inventory.settings.
 
-  Canonical new rows are code.execution.projects-folder and code.execution.no-project-chats-folder,
-  Computer-only with computer_key=execution_host and execution_host_home_relative defaults Projects and
-  Puppet Master Chats; general.interaction.no-project-default-computer, Everywhere/Computer with
-  computer_key=server and default local_if_claimed_else_main; safety.rules.cross-project-read-policy,
-  Everywhere/Computer with computer_key=server and default ask_once_per_chat;
-  safety.rules.allow-project-reading, Project-only default true; safety.rules.incoming-chat-messages,
-  Project-only default ask_me; and safety.rules.computer-use, an Everywhere default with Computer and Project
-  own values, computer_key=execution_host, combine=more_careful, careful_order deny, ask, allow and default ask.
-  This permission answer is independent of desktop capability/readiness and exact per-chat/per-app/disclosure
-  admission; an allow value alone never authorizes screen use. Host-relative paths resolve only against that
-  actual Host's home; they are never portable copied paths. Earlier assistant.* spellings are source lineage, not extra rows or write aliases. The
-  permission answers map once to Permissions-owned runtime keys; registration, defaults and readiness grant
-  no read, incoming-message, tool or screen-use authority.
+  MD1 A and MD2 NEITHER declare a model-list exception: all Default models rows offer Everywhere and optional Project only, not Computer/Device. Keep the model and its optional effort as one atomic value from one level; inherit follows the named source pair, never a cross-level merge. Manually chosen account defaults remain thing-owned under Multi-Account, and helper/Persona/command saved model/depth settings retire. Computer capacity and authority ceilings still constrain actual execution. Census is the active unique inventory IDs after all accepted additions/removals, never the historical 1024 figure.
 gui_related: true
 gui_classification_reason: Defines user-visible Settings, Computer, panel or work-state behavior.
 depends_on:
@@ -1638,6 +1598,8 @@ acceptance_criteria:
 - Theme halves cannot resolve from different levels; motion combines Everywhere/Device/Project with OS.
 - Project-relative paths stay portable with that Project; Computer programs/paths/ports never become Everywhere
   or copied Project values.
+- "Placement rows offer only their reviewed levels and never Device; one Project preset override resolves before candidate evaluation."
+- "The same policy/default/allowed binding is owned once and new Project work defaults to Auto; no-project starter behavior is unchanged."
 validation_surfaces:
 - Plans/settings_system_contracts.schema.json
 - Plans/settings_system_contract_fixtures.json
@@ -1655,6 +1617,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md; cards S1–S3/S14
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md §3 A; pinned integration
   41d8119aec71789de7422018ea9c167e6c60a156
@@ -2348,7 +2311,7 @@ Each descriptor freezes title, purpose, owner refs or named owner gap, dispositi
 
 Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; until they do, the action is disabled with `command_not_registered` or `handler_unavailable` and dispatches nothing. SSYS-060 defines the application-only `settings.layer.changed` family, registered by DL-300; no writer emits it until its producer is adopted (requires_owner_adoption). This prose supplies no native producer or certification. If a retained owner requires persistence through EventRecord, its family must be independently admitted through Event Authority; absence remains `missing_event_registration`, never success.
 
-Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its `request_id`, `project_id`, `changed_setting_ids`, revisions and `receipt_ref` remain the current transaction join, not new event fields admitted here. A key spelling still grants no scope or writer authority; genuine application level transactions are admitted only by SSYS-002/059, independently of this unresolved key-to-inventory mapping. It does not match the current ordinary `setting_id` grammar and is not automatically the inventory ID `memory.assembly.dry-method-guard`; do not insert the owner key into `changed_setting_ids`, infer that alias, or claim the writer mapping is closed without explicit owner evidence. Until that key-to-valid-setting-ID and writer mapping is proven, the toggle remains disabled with the existing `owner_contract_missing` reason and dispatches no mutation command and performs no setting write. `cmd.settings.agent_rules.dry_method_default_guard.set` remains retired with no dispatch alias. Historical `settings.agent_rules.dry_method_default_guard.updated` records remain read-only source/history lineage until an explicit payload-compatible migration is separately established. This approved naming choice registers no EventRecord and supplies no missing producer, schema or checkpoint authority.
+Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its `request_id`, `project_id`, `changed_setting_ids`, revisions and `receipt_ref` remain the current transaction join, not new event fields admitted here. A key spelling still grants no scope or writer authority; genuine application level transactions are admitted only by SSYS-002/059, independently of this unresolved key-to-inventory mapping. It does not match the current ordinary `setting_id` grammar and is not automatically the inventory ID `memory.assembly.dry-method-guard`; do not insert the owner key into `changed_setting_ids`, infer that alias, or claim the writer mapping is closed without explicit owner evidence. Until that key-to-valid-setting-ID and writer mapping is proven, the toggle remains disabled with the existing `owner_contract_missing` reason and dispatches no mutation command and performs no setting write. `cmd.settings.agent_rules.dry_method_default_guard.set` remains retired with no dispatch alias. Historical `settings.agent_rules.dry_method_default_guard.updated` records remain read-only source/history lineage until an explicit payload-compatible migration is separately established. DL-408 retires `settings.updated` and `settings.theme.updated` as superseded by `settings.layer.changed`: no current writer emits either retired name. Every Settings change, including the Memory panel save-unverified switch and theme changes, uses only `settings.layer.changed` under SSYS-060 and DL-300, subject to existing owner-adoption requirements. Already written dedicated DRY-guard records stay readable without a payload rewrite. This naming answer does not enable the DRY guard or supply missing producer or checkpoint authority.
 
 The closed Settings disabled-reason vocabulary is the schema enum. `available` requires null reason and human text; `disabled` or `hidden` requires both an exact reason code and non-empty human explanation. A retained owner may attach owner evidence and an owner-specific detail ref but Settings does not copy the owner's raw enum into a competing Settings reducer.
 
@@ -2419,7 +2382,7 @@ ContractRef: ContractName:Plans/settings_system_contracts.schema.json, ContractN
 Minimum production coverage includes:
 
 - Draft 2020-12 meta-schema validation, fixture-pack validation, every positive record, every negative rejection, exact five-command/five-route-action registries, exact 38-manager census, three named visible-state projections, and exact 80-token command-disposition census;
-- inventory/schema census: 1010 unique IDs, 12 categories, no demo `value`, `status`, or `src` fields;
+- inventory/schema census: unique live IDs counted from `Plans/settings_inventory.json`, 12 categories, no demo `value`, `status`, or `src` fields;
 - exact wide and responsive host geometry at and around 1180, 960, 720, and 320 pixels;
 - level isolation, resolved first paint, saved/copy own-value precedence, pre-claim ephemeral Basic Dark, zero-Project shared/device writes, and exact missing-Project-target rejection;
 - fuzzy search, facet combinations, keyboard/pointer parity, match highlighting, and stable variable-height anchors;
@@ -2498,8 +2461,8 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans
 ## Forge/Backup/tsnet Settings consumer addendum - 2026-09-01
 
 The K3 Tome Tabs shell geometry and the exact 38-manager registry remain authoritative. This addendum changes dynamic
-owner content, grouping, and routes only. It does not revive a Settings bakeoff, change the 1010-ID ordinary-setting
-inventory, create a manager, or promote PMConcept7 fixtures into a native/runtime claim.
+owner content, grouping, and routes only. It does not revive a Settings bakeoff, change the ordinary-setting
+inventory in `Plans/settings_inventory.json`, create a manager, or promote PMConcept7 fixtures into a native/runtime claim.
 
 ### SSYS-026 - Provider, backup, and connector owner projections
 
@@ -2509,14 +2472,14 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Settings retains exactly 38 manager descriptors while presenting one visible Data Backup and Retention grouping
-  over three stable typed child/detail descriptors; extending the existing Source Control manager for separate
-  Forgejo, Gitea, repository-hosting, and automation-binding identity; and projecting Remote Access through one
-  normal human Tailscale card plus Advanced Connection engine detail. Every action routes to its semantic owner
-  with exact scope, target, generation, continuation, availability, disabled reason, and return focus. Settings
-  owns no forge adapter, Backup engine, scheduler, key service, connector process, auth broker, Doctor probe,
-  handler, or EventRecord family. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory
-  census supersede earlier counts.
+  Settings retains exactly 38 manager descriptors inside the retained K3 Tome Tabs shell while presenting one visible
+  Data Backup and Retention grouping over three stable typed child/detail descriptors; extending the existing Source
+  Control manager for separate Forgejo, Gitea, repository-hosting, and automation-binding identity; and projecting
+  Remote Access through one normal human Tailscale card plus Advanced Connection engine detail. Every action routes
+  to its semantic owner with exact scope, target, generation, continuation, availability, disabled reason, and
+  return focus. Settings owns no forge adapter, Backup engine, scheduler, key service, connector process, auth broker,
+  Doctor probe, handler, or EventRecord family. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant
+  and inventory census supersede earlier counts.
 
 
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
@@ -2524,7 +2487,7 @@ canonical_text: >-
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI,
   auth or mirror authority. SSYS-002/059 supply the shared level context; route-only managers retain their actual
   owner records and authority. FO-20 guided setup windows keep their current Glass material, family tokens, protected-auth
-  wording and return semantics while showing the exact Computer/Device/Project target.
+  wording and return semantics while showing the exact Computer/Device/Project target. AI service roster readiness follows F3-108 and DL-474: no chosen model shows Needs attention.
 gui_related: true
 gui_classification_reason: This unit defines visible K3 manager grouping, cards, actions, disabled states, exact routing,
   and protected handoff presentation.
@@ -2952,21 +2915,18 @@ plan_unit_id: SSYS-029
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Working Notebook preferences resolve through the SSYS-002 ladder as ordinary settings registered in the settings
-  inventory (memory.notebook.auto-capture, memory.notebook.resume-capsule, memory.notebook.capsule-budget-tokens,
-  memory.notebook.injection-budget-tokens) as static inventory registrations through the generic transaction.
-  Budgets are ceilings, not reservations. Disabling auto-capture does not grant sharing, clear notes, or disable
-  mandatory ledger/workflow checkpoints. Settings export/transfer never carries note bodies, and notebook bodies
-  remain in the Notebook owner, including application scratch; only defaults/budgets use Everywhere/Computer/Project.
+canonical_text: 'Working Notebook capture and resume are built in: true/true with internal 512-token capsule
+  and 1024-token injection ceilings, reduced by Prompt_Pipeline allocation. The four memory.notebook.*
+  inventory rows are retired; legacy inputs are read only for safe compatibility under SSYS-040, not exported
+  or shown as settings. Notebook bodies remain task notes in their owner, never memory/instruction proof
+  or Settings transfer content.'
 gui_related: true
 gui_classification_reason: These are user-visible Settings values rendered through existing settings surfaces.
 depends_on: [SSYS-028, WN-018]
 unblocks: []
 acceptance_criteria:
-- Setting IDs, types, defaults, and offered levels match the inventory schema.
-- A disable-auto-capture control never widens sharing or disables owned checkpoints.
-- Settings transfer contains no note bodies.
+- No notebook tuning rows in live Settings search, All Settings or transfer; task notes and checkpoints
+  remain source restricted.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
   - python3 scripts/pm-plans-verify.py json-syntax
@@ -2982,6 +2942,7 @@ source_lineage:
 - source_packet:PM-WNC-2026-09-05-v1:WNC-A14
 - 'source_ref:projects-pass2-20261103:S1–S14; Jared: "I approve the outstanding questions with their recommended
   settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["memory.notebook.auto-capture", "static inventory registrations", "ceilings, not reservations"]
 negative_constraints:
 - Do not confuse layered notebook defaults with a shared notebook body.
@@ -3429,20 +3390,23 @@ plan_unit_id: SSYS-035
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Under USER-SETTINGS-MANAGER-REFRESH-20260909 every manager-topic canonical setting appears once inside the manager
-  and tab that own its topic, as an inline canonical section before that manager's one Advanced disclosure,
-  with its Details inspector, search landing, All Settings entry, and change-refresh behaviour preserved.
-  The concept resolves placement by reference subgroup, keyword override, or hand placement.
-  Core settings stay on six plain pages; 10 of the 12 reference pages and the concept-only
-  Assistant page retire because every row they held now has a manager home; the planning domain keeps its id
-  with the label Planning. 674 inventory rows render inside managers, every one of the 891 live concept ids
-  renders exactly once and the retired Chat Layout row, the 892nd id, is never offered as a setting to change
-  (amended 2026-10-10, DL-187, SSYS-050; it read: every one of the 892 concept ids renders exactly once), and the five branching plan-limit ids remain visible in their
-  manager homes pending subgroup registration. The shared kit provides themed listboxes for every
-  select and menu, dot-plus-text status tokens instead of pills, hero side panels (identity header, facts,
-  progress rail, card sections revealed in a stagger, sticky footer), rosters that scroll inside their manager,
-  meter, order, and accordion primitives.
+canonical_text: 'Under USER-SETTINGS-MANAGER-REFRESH-20260909 every manager-topic canonical setting appears
+  once inside the manager and tab that own its topic, as an inline canonical section before that manager''s
+  one Advanced disclosure, with its Details inspector, search landing, All Settings entry, and change-refresh
+  behaviour preserved. The concept resolves placement by reference subgroup, keyword override, or hand
+  placement. Core settings stay on six plain pages; 10 of the 12 reference pages and the concept-only
+  Assistant page retire because every row they held now has a manager home; the planning domain keeps
+  its id with the label Planning. 674 inventory rows render inside managers, every one of the 891 live
+  concept ids renders exactly once and the retired Chat Layout row, the 892nd id, is never offered as
+  a setting to change (amended 2026-10-10, DL-187, SSYS-050; it read: every one of the 892 concept ids
+  renders exactly once), and the five branching plan-limit ids remain visible in their manager homes pending
+  subgroup registration. The shared kit provides themed listboxes for every select and menu, dot-plus-text
+  status tokens instead of pills, hero side panels (identity header, facts, progress rail, card sections
+  revealed in a stagger, sticky footer), rosters that scroll inside their manager, meter, order, and accordion
+  primitives. DL-475 removes retired memory.* rows from every placement, search result, All Settings view
+  and transfer allowlist; hiding them under More options is insufficient. Use settings_inventory.settings
+  as the current census, not the historical 674/891/892 counts. Supported kept controls appear once in
+  their owner homes.'
 gui_related: true
 gui_classification_reason: Governs where canonical settings render, the listbox and status presentation, side-panel anatomy, and roster scrolling across every Settings manager in the published concept.
 depends_on: [SSYS-033, SSYS-005, SSYS-006, SSYS-015, DL-187]
@@ -3468,10 +3432,11 @@ node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
 source_lineage:
-  - USER-SETTINGS-MANAGER-REFRESH-20260909
-  - USER-SETTINGS-MANAGER-REFRESH-20260908
-  - SSYS-033
-  - Concepts/pm7-tools/SETTINGS_REFRESH_README.md
+- USER-SETTINGS-MANAGER-REFRESH-20260909
+- USER-SETTINGS-MANAGER-REFRESH-20260908
+- SSYS-033
+- Concepts/pm7-tools/SETTINGS_REFRESH_README.md
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "exactly once"
   - "one Advanced disclosure"
@@ -3775,16 +3740,16 @@ The former 20-row Plan depth & questions group and 26-row Terminal & shell group
 
 | Manager | Tabs and groups in order (More options last) |
 |---|---|
-| Providers & Accounts | Services (every service, account and key, drawn by the service list); Models (Everyday model; A model for each job; Goals, helpers and small jobs; Presets and nicknames; More options: How models answer, Service features and caching, Work lanes and what ran); Limits & switching (Moving between accounts; Moving between services; More options: One run, and the switch log); Usage & budgets (Spending limits; Warnings; The Usage page; More options: Records and prices) |
+| Providers & Accounts | Services (every service, account and key, drawn by the service list); Models (Default models: Everyday, six building jobs, Naming new chats, Explaining things, Back Seat Driver and enabled media models; Presets and nicknames; More options: How models answer, Service features and caching, What actually ran as a run-history link); Limits & switching (Moving between accounts; Moving between services, including Service tried first; More options: One run, and the switch log); Usage & budgets (Spending limits; Warnings; The Usage page; More options: Records and prices) |
 | Web & Research | Abilities (each ability's web services apart from the AI model that decides what to look for, and its limits inside it); Search services; Limits & saving (Spending; Saved results); Network (offline mode, proxy with its fields shown only for a manual proxy, and the certificate bundle; More options: Your own servers) |
 | Media & Output | Abilities (the project switches above the list; each ability's switch, service and defaults inside it); Pictures & files (Pictures you share; Where results go; More options: Expert options) |
 | Toolchain | Language Servers (the server list; Language help; Code health gate; More options: Timing and limits); Formatters (the formatter list; Tidy code; More options: Formatter catalog); Agent Tools (no container rows) |
 | Skills; Plugins; MCP Servers | The list first, owning its search, Show, Sort, add, remove and per-item switches; then Skills: How skills are used, New skills, Share with other AI tools (More options: Size and display); Plugins: New plugins and updates, Limits and safety; MCP Servers: Servers from other apps, Connection defaults (More options: Refresh and secrets, What each server ended up with) |
 | Commands & Shortcuts | Shortcuts (one shortcut list in three groups, everywhere, in the message box and in the terminal, with clashes checked across all three; shortcut hints, with clash display on CS-081's warn policy; More options: Reset and back up); Commands (Safety; Your commands; More options: Defaults for new commands, Built-in names) |
 | Testing & Debug | Profiles (Running sessions); When to test (the one switch for all automated testing; Before merging); What it can test, was Browser & Native (Browser testing; Desktop and mobile apps; Behind the scenes; More options: Test tools and windows); Debug (Debug profiles; What debugging may do on its own; More options: Debug loop limits); History (Keeping proof) |
-| Context & Memory | Memories (the on/off switch heading the list); Context space (In chats; When space runs low; Working notebook; More options: Fine-tune context space, and In one chat, which only says that Squeeze now is in each chat's own menu); Instructions (Standing instructions; What you can see; Rule packs; More options: Prompt safety checks); Finding memories (When memories are used; How memories are matched); Keeping & privacy (How long memories last; Unconfirmed notes; Who else can read memories; More options: Tidy up); Sources |
-| Goals | Defaults, shown first (New Goals start with; Keeping an eye on progress; Scheduled runs; Progress view); Templates (kind of job set per template); Recovery (If something interrupts; Changing the plan; When a check fails); Checks (Before a Goal is called done; Goal evidence, with the receipt a finished Goal earns shown as a read-only line; More options: Stricter proof); no Active Goals tab |
-| Personas | Personas (Your personas; inside the selected persona: About this persona, How it answers, Model and cost, Tools and instructions; More options: Skipped settings); Crews (Crews; New crews start with; Crew Auto); Group work (BrainStorm: who takes part; BrainStorm: debate and vote; Review; Chat Room); Helpers (Helper agents; Which helpers; Keeping helpers safe; More options: Limits for all agents, Helper contracts); Defaults (Choosing a persona; In a chat) |
+| Memory | One page: memory switch, search, All / This project / Every project level filter, saved-note list, Add/Edit/Delete and collapsed Archived; the chat button opens the same page as a sheet. Instructions, History/privacy, capacity and Run limits stay outside it. |
+| Goals | Defaults, shown first (Keeping an eye on progress; Scheduled runs; Progress view); Templates (kind of job set per template); Recovery (If something interrupts; Changing the plan; When a check fails); Checks (Before a Goal is called done; Goal evidence, with the receipt a finished Goal earns shown as a read-only line; More options: Stricter proof); no Active Goals tab |
+| Personas | Personas (Your personas; inside the selected persona: About this persona, How it answers, Spending cap, Tools and instructions; More options: Skipped settings); Crews (Crews; New crews start with; Crew Auto); Group work (BrainStorm: who takes part; BrainStorm: debate and vote; Review; Chat Room); Helpers (Helper agents; Which helpers; Keeping helpers safe; More options: Limits for all agents, Helper contracts); Defaults (Choosing a persona; In a chat) |
 | Back Seat Driver | Overview (one Advisor group; More options: Expert options); Stages (Where the advisor watches); Findings |
 | Source Control | Code Services (each service connected through a guided set-up; GitHub sign-in inside GitHub; push access by SSH key or HTTPS token); Local Tools; Repositories (Create a new repository; Contribute to another project; Workspaces for chats; Before and after each run; More options: Workspace storage); Defaults & Safety (Git on this server: the name and email on changes, how Git signs in and signing changes, set up by Set up Git; Files that need care: big files and files never saved in history; How runs use version history; Safety, with protected branches as an editable list; Recovery; More options: Source Control panel); Actions & Pipelines (Pinned workflows; Keeping checks current) |
 | Built-in browser | Built-in browser; Signing in to websites; Screenshots and developer tools |
@@ -3837,13 +3802,13 @@ A manager keeps no second copy of a choice an inventory row makes; the inventory
 | Server & Project Location | a second SSH folders list | `code.execution.ssh-remotes` |
 | Settings Transfer | encrypted-archive and notes choices; Save and Load drawn twice | the inventory Save and Load actions; Merge or Replace; twin categories picked together |
 | Readiness & Doctor; Updates | Doctor's separate check buttons; Updates' own automatic-check switch, frequency and channel copies | one Check everything with a dated last-checkup line; `system.advanced.auto-update` with install-when-idle beneath it, catalogs following their switch, and the inventory frequency and channel rows |
-| Back Seat Driver | free-text model and persona boxes; the duplicate stage key/value list | pickers (Automatic plus signed-in models; the advisor persona plus your personas); each of the ten stages stored as inherit, off, auto or on (`Plans/Back_Seat_Driver.md` §23) in the concept-proposed `safety.approvals.bsd-stage-bindings` row, which stays a proposal under §19 |
+| Back Seat Driver | free-text model and persona boxes; the duplicate stage key/value list | the shared Back Seat Driver model/depth row under Models (Default follows Checking finished work) and the BSD Persona picker; each of the ten stages stored as inherit, off, auto or on (`Plans/Back_Seat_Driver.md` §23) in the concept-proposed `safety.approvals.bsd-stage-bindings` row, which stays a proposal under §19 |
 | Notifications & Sounds | the stats strip; a per-destination urgent switch, a global switch and an exceptions list | the Destinations, event and sound lists as the homes of `general.interaction.notification-destinations`, `general.interaction.notification-mapping` and `general.interaction.sound-mapping`; one getting-through-quiet-hours choice per destination |
 | Commands & Shortcuts | second copies of the shortcut search, hints, reset and save/load | the inventory rows and actions beside the one shortcut list, which writes the inventory map of changed keys |
 | Testing & Debug | the manager's own built-in-browser, visual-inspection and native-checks switches | the capability rows, read as Automatic, Always or Never |
-| Context & Memory | per-store lifetimes, the hard-coded decay table, the chat-history on/off switch and the preview's own result cap | the fade times; how much history is kept; the real retrieval limits |
-| Goals | the manager's own saving-progress, resume, retry, then, require-evidence, helper, Goal-model and ask-before-risky-steps copies | the Recovery and Checks rows, with helpers, the Goal model and risky-step approval shown as one line each with a way to where they live |
-| Personas | persona-scoped rows drawn once for every persona; the Defaults inheritance switches and Goals row | the persona-scoped rows inside the persona they belong to |
+| Memory | the old fade, verification, source, preview and cleanup workbench controls | Built-in fading and held archive-only upkeep; Instructions, History/privacy and Run limits retain their own controls. |
+| Goals | the manager’s saving-progress/resume/retry/then/evidence/approval copies, plus retired helper and Goal-owned model defaults | Recovery and Checks keep their admitted non-model owners. No helper/Goal worker/verifier model setting is offered; runs use their initiating chat choice and Models §2, with shared model defaults elsewhere. |
+| Personas | repeated Persona rows, obsolete Defaults inheritance switches and Goals row | Only surviving non-model fields live inside a Persona; old provider/model/preset/depth values are inert compatibility reads. Model/depth uses the shared defaults list or explicit run picker. |
 | Source Control | the manager's own branch name and worktree folder; the per-service default switch | `branching.worktrees.default-branch` and the workspace folder row for new repositories, clones, worktrees and runs; Make default; the Pinned workflows row; the safety level decides its three switches unless it is Custom |
 | Built-in browser | its own screenshot switch and Testing's copy; retention and redaction copies | one capture choice shown on both pages; Testing's run-evidence retention and `safety.protection.screenshot-redaction`, shown with a way to change them |
 | History | the manager's own keep-for copies, except temporary files | the chat, run-record, log and safe-point keep-for rows with their minimums; Testing's evidence retention |
@@ -3866,11 +3831,11 @@ No Settings action opens the generic "What this does" preview panel whose button
 
 A Settings search result for an action row, such as Restore home layout for `general.startup.reset-home-layout`, lands on that exact row and asks the row's own plain question; search never opens Details for an id that is not on the page it opens, which would draw an empty panel.
 
-Adding an MCP server, a plugin, a skill, a command, a shortcut, a persona, a crew, a Goal template, a language server, a formatter, a test profile, a debug profile, a permission profile, a server, an SSH computer or an SSH key, setting up a way in from away, moving or copying a workspace, copying, loading or saving settings, connecting a code service, setting up Git, creating a repository and contributing to another project are guided set-ups in one window over the dimmed page, in the onboarding wizard's form: the steps as a rail, one plain question per step, Back and Continue, and a click on the dimmed page never closes it. Each commits through its owner's command; the answers a row remembers are its inventory values.
+Adding an MCP server, a plugin, a skill, a command, a shortcut, a persona, a crew, a Goal template, a language server, a formatter, a debug profile, a permission profile, a server, an SSH computer or an SSH key, setting up a way in from away, moving or copying a workspace, copying, loading or saving settings, connecting a code service, setting up Git, creating a repository and contributing to another project are guided set-ups in one window over the dimmed page, in the onboarding wizard's form: the steps as a rail, one plain question per step, Back and Continue, and a click on the dimmed page never closes it. Each commits through its owner's command; the answers a row remembers are its inventory values.
 
 ### 7. Structured editors
 
-Lists and key/value settings open an editor that adds, removes and reorders items instead of a raw JSON or text box; items from a known set (services, personas, clusters, models) are picked rather than typed; nested data keeps a structured editor labelled as such; secret rows open a key panel that never shows the key, and notification destination addresses are entered and shown like keys (masked, kept on the server, with Replace). Rows that had a raw box get a small editor of their own: Words to always accept is a word list; reviewers are one persona per review round, picked from the library; Kubernetes logs start is one choice; what agents may do in each cluster is one entry per cluster with its namespaces and four switches; Unraid setup fields are entries with a kind, a name and a default; the publisher picture is an upload or a link; the context-space split adds up to 100 percent; rule documents open in an editor; per-tool and per-web-ability answers are fixed Allow, Ask and Block tables; Back Seat Driver's model and persona and the Commands defaults for new commands offer the signed-in models, real personas and profiles instead of free text. Fields inside a Settings panel carry their own label and help and no generic hover or focus tag over them; the panel's buttons keep theirs.
+Lists and key/value settings open an editor that adds, removes and reorders items instead of a raw JSON or text box; items from a known set (services, personas, clusters) are picked rather than typed; model rows reuse the chat picker and also accept an exact model name tested with one small call before saving (WL4 B), with no save on refusal or unreachable service; nested data keeps a structured editor labelled as such; secret rows open a key panel that never shows the key, and notification destination addresses are entered and shown like keys (masked, kept on the server, with Replace). Rows that had a raw box get a small editor of their own: Words to always accept is a word list; reviewers are one persona per review round, picked from the library; Kubernetes logs start is one choice; what agents may do in each cluster is one entry per cluster with its namespaces and four switches; Unraid setup fields are entries with a kind, a name and a default; the publisher picture is an upload or a link; rule documents open in an editor; per-tool and per-web-ability answers are fixed Allow, Ask and Block tables; Model defaults and explicit run choices reuse ACD-438 including its effort step; BSD Persona choice uses real Personas. New-command defaults offer Persona, mode and permissions profiles, never a saved model/provider/preset/depth field. Fields inside a Settings panel carry their own label and help and no generic hover or focus tag over them; the panel's buttons keep theirs.
 
 ### 8. Rows that describe one thing
 
@@ -3927,7 +3892,7 @@ that would reach an outside computer or service says so and, in the concept, is 
 - Settings sets defaults and does no live work: no view shows, starts, pauses or stops a live chat or Goal. Goals are
   started in the assistant chat or by the Planning Wizard, so Goals in Settings holds the defaults every new Goal
   starts with, templates (which can be created, edited, duplicated, exported and deleted) and the recovery and check
-  rules; memories kept for one chat read One chat and a new memory is kept for the project or for you; one chat's own
+  rules; saved notes have only This project and Every project levels, and private thread records stay internal; one chat's own
   actions, such as Squeeze now, live in that chat's menu.
 - A persona's tuning rows (Creativity, Word choice range, Spending cap) read Same as the project until the persona
   sets its own value, which is then set with a slider or amount that can go back to the project's; a persona-only row
@@ -3939,7 +3904,7 @@ that would reach an outside computer or service says so and, in the concept, is 
   `code.execution.ssh-keys` and `code.execution.server-sign-in`. The managers draw them in their own controls; the
   stored value is the inventory row's, so search, Details, All Settings and Settings Transfer reach them. A key row
   names a key in the SSH key list and never holds a private half.
-- Q22, Jared 2026-10-30 (DL-257), supersedes the 2026-09-28 three-row override admission: general.visual.nier-mode is retired and migrated on load; family nier and its two variants use general.visual.theme. The retained parts/background Adjust rows show only while a NieR theme is selected and use the existing editor. Current inventory count is 1010. Section 4.4 and SSYS-043 own migration, palette/font ownership and transition direction.
+- Q22, Jared 2026-10-30 (DL-257), supersedes the 2026-09-28 three-row override admission: general.visual.nier-mode is retired and migrated on load; family nier and its two variants use general.visual.theme. The retained parts/background Adjust rows show only while a NieR theme is selected and use the existing editor. The current inventory census is computed from the live IDs in `Plans/settings_inventory.json`. Section 4.4 and SSYS-043 own migration, palette/font ownership and transition direction.
 
 ```yaml
 plan_unit_id: SSYS-040
@@ -3948,32 +3913,47 @@ status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
   Every Settings view draws short everyday groups first, each in reading order with its master
-  switch first, and folds rarely changed groups into the view's one disclosure, labelled More options, at the
-  end. The plain pages are App & Input, Editor & Terminal (was Editor & Runtime), Containers (was Containers &
-  Execution), Planning & Interviews and Advanced Settings, and the page groups, manager tab groups and
-  canonical-id moves are those recorded in this section; they are presentation over unchanged manager keys,
-  routes, detail ids, command ids and inventory ids. Hand-written rows that repeat an inventory row and every
-  manager-owned copy of a choice an inventory row makes are retired: the inventory row, drawn once or bound into
-  its manager's own control, is the one control. Rows read in plain words: a decided label and sentence, else
-  the inventory label in sentence case with names kept; options read as words while the stored value is
-  unchanged; numbers show units and stay within bounds, including bounds that follow another setting; search
-  shows the row's own label. A row that depends on a switch or choice shows only while it applies. No action
-  opens a generic preview panel: each action row routes to its owner surface or runs a form, check, confirm,
-  list or order flow bound to the owner's command and availability. Lists, maps and structured values open
-  structured editors; rows that describe one account or service are edited inside it.
+  switch first, and folds rarely changed groups into the view's one disclosure, labelled More
+  options, at the end. The plain pages are App & Input, Editor & Terminal (was Editor & Runtime),
+  Containers (was Containers & Execution), Planning & Interviews and Advanced Settings, and the page
+  groups, manager tab groups and canonical-id moves are those recorded in this section; they are
+  presentation over unchanged manager keys, routes, detail ids, command ids and inventory ids.
+  Hand-written rows that repeat an inventory row and every manager-owned copy of a choice an
+  inventory row makes are retired: the inventory row, drawn once or bound into its manager's own
+  control, is the one control. Rows read in plain words: a decided label and sentence, else the
+  inventory label in sentence case with names kept; options read as words while the stored value is
+  unchanged; numbers show units and stay within bounds, including bounds that follow another
+  setting; search shows the row's own label. A row that depends on a switch or choice shows only
+  while it applies. No action opens a generic preview panel: each action row routes to its owner
+  surface or runs a form, check, confirm, list or order flow bound to the owner's command and
+  availability. Lists, maps and structured values open structured editors; rows that describe one
+  account or service are edited inside it. DL-475: Memory is one saved-note page, opened from
+  Settings and as that same page in the chat Memory button/wand sheet. It has one on/off switch,
+  search including archived notes, a level filter All / This project / Every project,
+  text/level/updated list rows, Add memory, Edit, Delete and collapsed Archived. Title is optional,
+  kind inferred. Delete all names the exact scope; deletion is distinct from Discard/archive and
+  cannot be silently undone from old chats. Verification, sources, pins, conflicts, ranking,
+  preview, upkeep and competing recovery controls stay off the page. Instructions, History/privacy,
+  chat capacity and Run limits remain separate. Fading reduces influence, archiving retains an old
+  note outside ordinary use, and deletion is a user action. Compatibility reads are defined in the
+  Memory compatibility table below; they grant no retired setting writer or source-access
+  relaxation. Jared, 2026-11-12 at 8:12 AM EST: "Keep them there". Rules for every project and Rules
+  for this project live in Settings > Personas & Crews > Defaults > Standing instructions, through
+  the existing instruction writer and source IDs; they are not Memory-page contents.
 gui_related: true
 gui_classification_reason: Governs the visible grouping, order, disclosure, labels, visibility, action routes and editors of every Settings page and manager.
 split_recommended: false
 depends_on: [SSYS-006, SSYS-013, SSYS-015, SSYS-020, SSYS-033, SSYS-035, DL-180]
 unblocks: []
 acceptance_criteria:
-  - Every manager view and plain page renders its everyday groups first and at most one More options disclosure, last; a landing from search, the page index or Details on a folded row opens it first.
-  - Plain-page and manager group orders and the canonical-id moves match this section; manager_id keys, routes, detail ids, command ids and inventory ids are unchanged.
-  - No retired hand-written row or manager-owned copy renders, and each inventory id still renders exactly once, a manager's bound control counting as its home; an inventory row retired by SSYS-050 renders nowhere.
-  - Every label, option, unit and search result reads in plain words while stored values and inventory titles stay unchanged and searchable; word defaults of toggles resolve by the on/off table without overwriting a saved choice.
-  - A dependent row hides only while its condition fails, keeps its stored value, stays findable, and never hides a blocking error, consent boundary, unavailable reason or requested/effective difference; Glass controls keep SSYS-010 disclosure.
-  - No Settings action opens a generic preview panel; each action row reaches its owner route or a flow that dispatches its owner command, or shows the owner's unavailable reason, and SSYS-013 operations route to their owner surface.
-  - List, key/value and structured rows open structured editors; no secret is rendered; per-account and per-service rows are edited inside their account or service.
+  - "Every manager view and plain page renders its everyday groups first and at most one More options disclosure, last; a landing from search, the page index or Details on a folded row opens it first."
+  - "Plain-page and manager group orders and the canonical-id moves match this section; manager_id keys, routes, detail ids, command ids and inventory ids are unchanged."
+  - "No retired hand-written row or manager-owned copy renders, and each inventory id still renders exactly once, a manager's bound control counting as its home; an inventory row retired by SSYS-050 renders nowhere."
+  - "Every label, option, unit and search result reads in plain words while stored values and inventory titles stay unchanged and searchable; word defaults of toggles resolve by the on/off table without overwriting a saved choice."
+  - "A dependent row hides only while its condition fails, keeps its stored value, stays findable, and never hides a blocking error, consent boundary, unavailable reason or requested/effective difference; Glass controls keep SSYS-010 disclosure."
+  - "No Settings action opens a generic preview panel; each action row reaches its owner route or a flow that dispatches its owner command, or shows the owner's unavailable reason, and SSYS-013 operations route to their owner surface."
+  - "List, key/value and structured rows open structured editors; no secret is rendered; per-account and per-service rows are edited inside their account or service."
+  - "Rules for every project and Rules for this project remain in Settings > Personas & Crews > Defaults > Standing instructions and write the existing canonical instruction sources."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: settings_information_architecture_or_duplicate_control_drift
@@ -3986,11 +3966,13 @@ node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
 source_lineage:
-  - Concepts/onboarding/opus-5.5/src/settings/o55/placement.d
-  - Concepts/onboarding/opus-5.5/src/settings/o55/rows.d
-  - Concepts/onboarding/opus-5.5/src/settings/kit.d/16-pages.js
-  - Concepts/onboarding/opus-5.5/src/settings/kit.d/65-flows.js
-  - SSYS-035
+- Concepts/onboarding/opus-5.5/src/settings/o55/placement.d
+- Concepts/onboarding/opus-5.5/src/settings/o55/rows.d
+- Concepts/onboarding/opus-5.5/src/settings/kit.d/16-pages.js
+- Concepts/onboarding/opus-5.5/src/settings/kit.d/65-flows.js
+- SSYS-035
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "More options"
   - "App & Input"
@@ -4074,31 +4056,36 @@ plan_unit_id: SSYS-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Settings sets defaults and runs guided set-ups; it does no live work. No Settings view shows, starts, pauses
-  or stops a live chat or Goal: Goals start in the assistant chat or the Planning Wizard, Goals in Settings holds
-  new-Goal defaults, templates, recovery and check rules, and one chat's own actions live in that chat's menu.
-  Every set-up listed in the presentation section's owner-routes subsection runs in the onboarding wizard's form
-  and ends with its result shown where it was started, changeable and removable. A permission profile carries
-  its four answers and its own rules, which form the profile layer above the project's rules and win rule by rule;
-  built-in profiles change only through a copy. SSH keys are one shared list that servers, SSH computers and Git's
-  sign-in attach from, never showing or moving a private half. Settings Transfer previews every change in plain
-  labels and values and never moves passwords, keys, sign-ins or device pairings. DL-271 weak-key eligibility,
-  2026-10-31: Choose a key may list a DSA or RSA-1024 key as Too weak to use, but it cannot be selected, used
-  as a default, advanced or installed. The refusal reads Older key type — too weak to use. Check this eligibility
-  before an existing authorization, matching prior profile or passphrase/unlock state; those cannot make a weak
-  key usable. A retained weak selection must be replaced by an owner-eligible key before the flow advances. Other
-  keys keep their existing owner checks, identity binding and custody; the shared list never exposes or moves
-  a private half.
+canonical_text: 'Settings sets defaults and runs guided set-ups; it does no live work. No Settings view
+  shows, starts, pauses or stops a live chat or Goal: Goals start in the assistant chat or the Planning
+  Wizard, Goals in Settings holds new-Goal defaults, templates, recovery and check rules, and one chat''s
+  own actions live in that chat''s menu. Every set-up listed in the presentation section''s owner-routes
+  subsection runs in the onboarding wizard''s form and ends with its result shown where it was started,
+  changeable and removable. A permission profile carries its four answers and its own rules, which form
+  the profile layer above the project''s rules and win rule by rule; built-in profiles change only through
+  a copy. SSH keys are one shared list that servers, SSH computers and Git''s sign-in attach from, never
+  showing or moving a private half. Settings Transfer previews every change in plain labels and values
+  and never moves passwords, keys, sign-ins or device pairings. DL-271 weak-key eligibility, 2026-10-31:
+  Choose a key may list a DSA or RSA-1024 key as Too weak to use, but it cannot be selected, used as a
+  default, advanced or installed. The refusal reads Older key type — too weak to use. Check this eligibility
+  before an existing authorization, matching prior profile or passphrase/unlock state; those cannot make
+  a weak key usable. A retained weak selection must be replaced by an owner-eligible key before the flow
+  advances. Other keys keep their existing owner checks, identity binding and custody; the shared list
+  never exposes or moves a private half.
 
 
-  DL-272 RV-5, 2026-11-01: SSH identity confirmation shows the fingerprint for comparison with a source the person
-  already trusts, such as the device’s settings or its administrator. If it cannot be confirmed, Stop and ask;
-  the picture or a reachable address is not verification. Username means the account allowed to connect by SSH.
-  Copying account choices follows SSYS-062/MA-074: reuse only the chosen account's existing destination-local
-  reference through its own connection, without rendering or moving any sign-in. Guided setup preserves FO-20
-  Glass materials and protected-auth fences while naming its level and actual Computer. No live Goal, Plan, Crew
-  or scheduled task becomes a Settings record.
+  DL-272 RV-5, 2026-11-01: SSH identity confirmation shows the fingerprint for comparison with a source
+  the person already trusts, such as the device’s settings or its administrator. If it cannot be confirmed,
+  Stop and ask; the picture or a reachable address is not verification. Username means the account allowed
+  to connect by SSH. Copying account choices follows SSYS-062/MA-074: reuse only the chosen account''s
+  existing destination-local reference through its own connection, without rendering or moving any sign-in.
+  Guided setup preserves FO-20 Glass materials and protected-auth fences while naming its level and actual
+  Computer. No live Goal, Plan, Crew or scheduled task becomes a Settings record. DL-475 removes the concept-only
+  New Goals start with, Run test profile and Ask me to confirm rows; they were never inventory rows. Goals
+  use the initiating chat Persona/model and never use Crews. Existing Let the assistant test its work
+  and Speed or thoroughness steer testing; no named test-profile contract or completion-confirmation switch
+  is added. Goals finish when proof is in, while existing pauses and user Stop remain authoritative. Crews,
+  plans, reviews and similar owners may start separate Goals with no parent edge.'
 gui_related: true
 gui_classification_reason: Governs which Settings views may act on live work and how every guided set-up, permission profile, SSH key and transfer is presented.
 split_recommended: false
@@ -4140,13 +4127,15 @@ source_lineage:
 - Concepts/onboarding/opus-5.5/src/settings/managers/53-transfer.js
 - Plans/Permissions_System.md#PRECEDENCE-LAYERS
 - 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock
-  4c6305553d; weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no
-  concept host, seeded situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e
-  confirms unconditional weak-key refusal.'
-- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
-  Source spellings are lineage, not product API.
-- 'source_ref:projects-pass2-20261103:S8–S11/N15; Jared: "I approve the outstanding questions with their recommended
-  settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
+  4c6305553d; weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage
+  only; no concept host, seeded situation, artificial delay or helper API is a product requirement. Lead
+  1031215509-a74e confirms unconditional weak-key refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md,
+  2026-11-01. Source spellings are lineage, not product API.
+- 'source_ref:projects-pass2-20261103:S8–S11/N15; Jared: "I approve the outstanding questions with their
+  recommended settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Make a copy"
   - "Same as the project"
@@ -4159,6 +4148,8 @@ negative_constraints:
 owner_hints:
   - Plans/Settings_System.md
   - Plans/Permissions_System.md
+stale_retired_dispositions:
+  - "One chat is retained only as historical/private-thread vocabulary; visible saved-note levels are exactly This project and Every project."
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS
@@ -4216,7 +4207,7 @@ canonical_text: >-
   NieR only; title-menu Adjust NieR… and Customize Pip… are ordinary aligned rows. NieR Mode is retired user-facing
   wording, retained only as source lineage. Q22/QA2 registry join (DL-257/DL-258): settings_inventory.retired_input_ids
   names migration-only historical keys outside the active settings array. It contains general.visual.nier-mode,
-  is disjoint from active row IDs, adds no ordinary row/control/writer and does not count in the 1010-row census.
+  is disjoint from active row IDs, adds no ordinary row/control/writer and does not count in the live inventory census.
   Placement retirement validation may consume this explicit catalog; arbitrary unknown IDs remain errors, and
   current Settings request IDs still reject the retired key. Live look selectors use the exact level/key resolver
   and single atomic pair; Q22 still has five families/ten variants and a tombstoned general.visual.nier-mode,
@@ -5281,64 +5272,8 @@ plan_unit_id: SSYS-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  The hosted 5.6 Pro chat uses the existing Settings inventory and transaction (DL-232, SSYS-028, SSYS-040, SSYS-042,
-  SSYS-050). general.interaction.working-activity-style offers only Orbit and Step Rail Simple as the product
-  preference, default Orbit. general.interaction.sound-effects is the one master switch, on by default (DL-107);
-  the chat speaker and Notifications & Sounds write that same value, and setup, Guided Tour and NieR sounds keep
-  following it. This port adds no chat-only mute or volume row. general.interaction.eli5-default resolves Default,
-  Everywhere, Computer, optional Project, then This chat; general.interaction.chat-eli5 remains a run-scoped chat
-  override, and inherit deletes it. ELI5 changes affect only future replies; the current stream and earlier replies
-  are unchanged. In the product, All chats and Project default in the chat sheet use Settings transactions targeting
-  Everywhere and that exact Project respectively; the chat's own Standard, Simple and Follow controls use cmd.chat.eli5.set
-  (UCC-175). New chat defaults uses the same application ELI5 value, not another row. ai.models.thread-title-model
-  is the naming policy, with Default, None or an available model id from its live catalog; the sheet and Settings
-  use the same value, preserving manual-name locks and first-message-only naming. general.interaction.assistant-mode
-  changes only how future chats start, never the mode of an existing chat. The sending rows general.interaction.submit-key,
-  queue-behavior, queue-size and composer-persist-unsent remain their existing owners; a bridge binds only behavior
-  its renderer supports and never claims an unimplemented preference works. general.interaction.chat-history-list
-  remains an admitted row and is shown as History in new workspaces, with Flyout or Pinned and default Flyout.
-  It seeds History only when a workspace has no saved choice; editing it never pins or unpins the current History,
-  resizes the column or writes the Home layout record. The current History pin uses ui.chat_column.pin_history;
-  Keep the chat open in narrow windows uses ui.chat_column.keep_open, and chat width uses cmd.workspace_layout.resize_surface.
-  None is a Settings row. Jared G1 B (2026-10-30): Activity Detail starts unpinned; its view-local Pin keeps it
-  open across thread switches with the new thread’s data, while unpinned detail closes on a switch (ACD-453/506).
-  No Activity pin Settings default is added. The host's look, fonts, Reduced Motion and NieR settings reach the
-  chat directly. A last-used chat model, effort or capability selection never becomes a global Settings default
-  merely because the standalone concept saved it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed;
-  it was never a hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply,
-  read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection only. Added
-  by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232), ratified by Jared on 2026-10-23 (DL-234):
-  general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded (Always open),
-  default Auto; Settings, New chat defaults and the composer capability menu's Thought Stream choice edit the
-  same row through the Settings transaction. It controls disclosure of reasoning supplied by the model and never
-  changes a reply or invents reasoning. Added the same day by Jared's answer (DL-234: "Default 8, adjustable in
-  settings."): general.interaction.thought-stream-lines is global and display-only, shown as Lines shown while
-  thinking right under Show thinking, with the choices 4, 6, 8, 12 and 16 lines and the default 8. It sets how
-  many of the latest lines Auto keeps in view while the model thinks and has no effect under Always open. Settings,
-  New chat defaults' second Thought Stream dropdown and the lines list in the composer's Thought Stream menu edit
-  the same row through the Settings transaction, and Settings refuses any other value; as with Thought Stream,
-  its global scope is the product contract, not proof that the project-only adapter supplies global storage. The
-  current-chat ELI5 control is shown only in the chat sheet, not on the Settings page or its search; its general.interaction.chat-eli5
-  inventory identity, run scope and override contract remain. The concept's existing project-only Settings adapter
-  cannot prove separate application and project persistence: the renderer keeps these layers separate and discloses
-  any session-only layer instead of creating a shadow store or claiming native scope support. At integrated concept
-  59ca2d4382, Settings persists the host project's ELI5 default, unscoped chats bind to that project, and switching
-  threads re-projects the appropriate project without copying an unrelated override. All chats ELI5 is a separate
-  session-only value; application-scope persistence remains unimplemented in this concept. The Thought Stream
-  row, New chat defaults and composer choice share the stored preference, and replies show the live thinking block
-  it drives (ACD-221, DL-234). Its global inventory scope is the product contract admitted by the lead, not proof
-  that this project-only adapter supplies global storage. History's initial-layout seed is built and preserves
-  a saved false or true. The Settings master sound, working style, naming policy and future-chat mode bindings
-  remain as reviewed; no additional layout, Activity pin, stand-in or family-take setting is admitted by final
-  reconciliation. Amended 2026-10-29 (S1–S9, G1; PM7): Admit SSYS-056’s pip-parts only for chat/onboarding extras
-  with no second sound or brand setting. Jared G1 B (2026-10-30) restores session view-local Pin/unpin without
-  a small view or Settings/layout write: pinned detail follows thread switches and unpinned detail closes on a
-  switch (ACD-506); History pin remains unchanged. Amended DL-260, Jared 2026-10-31: only real product behavior
-  remains an implementation requirement. The described session-only/project-bound HTML adapter and automatic binding
-  of unscoped chats are historical concept limitations, superseded for product behavior by SSYS-002/059 and the
-  app chat owner. No project stays genuinely null, uses real Everywhere/Computer and This chat values, and never
-  adopts a visible Project to satisfy storage.
+canonical_text: |-
+  The hosted 5.6 Pro chat uses the existing Settings inventory and transaction (DL-232, SSYS-028, SSYS-040, SSYS-042, SSYS-050). general.interaction.working-activity-style offers only Orbit and Step Rail Simple as the product preference, default Orbit. general.interaction.sound-effects is the one master switch, on by default (DL-107); the chat speaker and Notifications & Sounds write that same value, and setup, Guided Tour and NieR sounds keep following it. This port adds no chat-only mute or volume row. general.interaction.eli5-default resolves Default, Everywhere, Computer, optional Project, then This chat; general.interaction.chat-eli5 remains a run-scoped chat override, and inherit deletes it. ELI5 changes affect only future replies; the current stream and earlier replies are unchanged. In the product, All chats and Project default in the chat sheet use Settings transactions targeting Everywhere and that exact Project respectively; the chat's own Standard, Simple and Follow controls use cmd.chat.eli5.set (UCC-175). New chat defaults uses the same application ELI5 value, not another row. ai.models.thread-title-model is the naming policy, with Default, None or an available model id from its live catalog; the sheet and Settings use the same value, preserving manual-name locks and first- message-only naming. general.interaction.assistant-mode changes only how future chats start, never the mode of an existing chat. The sending rows general.interaction.submit-key, queue-behavior, queue-size and composer-persist-unsent remain their existing owners; a bridge binds only behavior its renderer supports and never claims an unimplemented preference works. general.interaction.chat-history-list remains an admitted row and is shown as History in new workspaces, with Flyout or Pinned and default Flyout. It seeds History only when a workspace has no saved choice; editing it never pins or unpins the current History, resizes the column or writes the Home layout record. The current History pin uses ui.chat_column.pin_history; Keep the chat open in narrow windows uses ui.chat_column.keep_open, and chat width uses cmd.workspace_layout.resize_surface. None is a Settings row. Jared G1 B (2026-10-30): Activity Detail starts unpinned; its view-local Pin keeps it open across thread switches with the new thread’s data, while unpinned detail closes on a switch (ACD-453/506). No Activity pin Settings default is added. The host's look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used chat model, effort or capability selection never becomes a global Settings default merely because the standalone concept saved it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed; it was never a hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply, read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232), ratified by Jared on 2026-10-23 (DL-234): general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded (Always open), default Auto; Settings, New chat defaults and the composer capability menu's Thought Stream choice edit the same row through the Settings transaction. It controls disclosure of reasoning supplied by the model and never changes a reply or invents reasoning. Added the same day by Jared's answer (DL-234: "Default 8, adjustable in settings."): general.interaction.thought-stream-lines is global and display-only, shown as Lines shown while thinking right under Show thinking, with the choices 4, 6, 8, 12 and 16 lines and the default 8. It sets how many of the latest lines Auto keeps in view while the model thinks and has no effect under Always open. Settings, New chat defaults' second Thought Stream dropdown and the lines list in the composer's Thought Stream menu edit the same row through the Settings transaction, and Settings refuses any other value; as with Thought Stream, its global scope is the product contract, not proof that the project-only adapter supplies global storage. The current-chat ELI5 control is shown only in the chat sheet, not on the Settings page or its search; its general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The concept's existing project-only Settings adapter cannot prove separate application and project persistence: the renderer keeps these layers separate and discloses any session-only layer instead of creating a shadow store or claiming native scope support. At integrated concept 59ca2d4382, Settings persists the host project's ELI5 default, unscoped chats bind to that project, and switching threads re-projects the appropriate project without copying an unrelated override. All chats ELI5 is a separate session-only value; application-scope persistence remains unimplemented in this concept. The Thought Stream row, New chat defaults and composer choice share the stored preference, and replies show the live thinking block it drives (ACD-221, DL-234). Its global inventory scope is the product contract admitted by the lead, not proof that this project-only adapter supplies global storage. History's initial-layout seed is built and preserves a saved false or true. The Settings master sound, working style, naming policy and future-chat mode bindings remain as reviewed; no additional layout, Activity pin, stand-in or family-take setting is admitted by final reconciliation. Amended 2026-10-29 (S1–S9, G1; PM7): Admit SSYS-056’s pip-parts only for chat/onboarding extras with no second sound or brand setting. Jared G1 B (2026-10-30) restores session view-local Pin/unpin without a small view or Settings/layout write: pinned detail follows thread switches and unpinned detail closes on a switch (ACD-506); History pin remains unchanged. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement. The described session-only/project-bound HTML adapter and automatic binding of unscoped chats are historical concept limitations, superseded for product behavior by SSYS-002/059 and the app chat owner. No project stays genuinely null, uses real Everywhere/Computer and This chat values, and never adopts a visible Project to satisfy storage. Naming Default resolves the smallest allowed runnable model on every new attempt, while None renders Off. After resolution, an unavailable frozen title request remains route_unavailable without silent substitution. Its row is in Default models with Everywhere/This project scope and the shared model/depth picker.
 gui_related: true
 gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false
@@ -5812,4 +5747,132 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [not_configured, stale_projection]
           gap_note: "No registration table states disabled reasons for this row; chosen from the closed set over the registration preconditions settings_registry_loaded && route_target_current (UI_Command_Catalog.md:11086): an unloaded settings registry maps to not_configured and a route target that is not current to stale_projection. SSYS-018 keeps handler_unavailable as the evidence boundary until the sole handler is observed; that is an error code, not a disabled code."
+```
+
+### Memory compatibility reads — DL-475
+
+This table is part of SSYS-040. The 43 retired IDs are compatibility input only: no live Settings request, search result, All Settings row, reset control or export/transfer entry accepts them. Preserve original saved values as migration history; never erase notes, legacy pin protections, evidence or retention holds while retiring controls. The current census is the unique IDs of `Plans/settings_inventory.json` settings.
+
+| Old input | Disposition | Compatibility read |
+|---|---|---|
+| `memory.assembly.app-rules` | Keep | Retain existing owner value, default and offered levels; route to Instructions. |
+| `memory.assembly.project-rules` | Keep | Retain existing owner value, default and offered levels; route to Instructions. |
+| `memory.assembly.instruction-visibility` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.assembly.rule-pack-display` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.assembly.dry-method-guard` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.instruction-budget-mode` | Hide | Use safe built-in owner behavior, initially "bounded"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.assembly.memory-capsule-budget` | Hide | Use the owner's existing internal default 350; no user editor. Preserve stored per-note protections and existing held upkeep rules. Preserve an explicitly saved smaller safety ceiling until safe owner migration; never silently expand capacity from it. |
+| `memory.assembly.max-injected-memories` | Hide | Use the owner's existing internal default 5; no user editor. Preserve stored per-note protections and existing held upkeep rules. Preserve an explicitly saved smaller safety ceiling until safe owner migration; never silently expand capacity from it. |
+| `memory.assembly.injected-context-breakdown` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.assembly.compiled-prompt-preview` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.assembly.integrity-tracking` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.import-cycle-detection` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.history-admission-gate` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.volatile-quarantine` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.cache-lineage` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.context-dedup` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.epoch-baseline` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.retention.enabled` | Keep | Retain existing owner value, default and offered levels; route to Memory (the only switch). |
+| `memory.retention.history-retention` | Keep | Retain existing owner value, default and offered levels; route to History/privacy. |
+| `memory.retention.retrieval-strategy` | Hide | Use safe built-in owner behavior, initially "hybrid"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.retrieval-mode` | Hide | Use safe built-in owner behavior, initially "automatic"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.rehydration` | Hide | Use safe built-in owner behavior, initially "lazy"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.retrieval-balance` | Hide | Use safe built-in owner behavior, initially 0.5; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.half-life-by-kind` | Hide | Use the complete AMS-031 kind-default table (not just the old partial map); keep existing note values/protections internally, with no user editor. |
+| `memory.retention.done-decay-multiplier` | Hide | Use the owner's existing internal default 0.5; no user editor. Preserve stored per-note protections and existing held upkeep rules. |
+| `memory.retention.auto-save-unverified` | Hide | Use safe built-in owner behavior, initially "on"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.verify-without-evidence` | Remove | Read historical values only for migration; force the bypass false even when old value was true. Explicit user statements use AMS-014 support, never a proof bypass. |
+| `memory.retention.pinned-unverified-injection` | Remove | Read historical values only for migration; force the bypass false even when old value was true. Explicit user statements use AMS-014 support, never a proof bypass. |
+| `memory.retention.gist-review-filter` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.retention.subagent-access` | Remove | Absent legacy default off is not an explicit refusal. An explicit saved privacy refusal becomes a Permissions read restriction; unresolved provenance stays denied. Built-in authorized reads follow AMS-026; no grant is minted by migration. |
+| `memory.retention.maintenance` | Hide | Ignore old action selection; use existing internal/support operations and preserve DL-403/444–447 holds. No job starts during migration. |
+| `memory.limits.run-token-budget` | Keep | Retain existing owner value, default and offered levels; route to Permissions > Run limits. |
+| `memory.limits.goal-token-budget` | Keep | Retain existing owner value, default and offered levels; route to Permissions > Run limits. |
+| `memory.limits.max-context-ktokens` | Keep | Retain existing owner value, default and offered levels; route to chat/model limits. |
+| `memory.limits.memory-context-window` | Hide | Use safe built-in owner behavior, initially "standard"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.auto-compress` | Hide | Use safe built-in owner behavior, initially "on"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.compaction-mode` | Hide | Use safe built-in owner behavior, initially "automatic"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.manual-compact` | Keep | Retain existing owner value, default and offered levels; route to the individual chat menu (action only). |
+| `memory.limits.compaction-loop-limit` | Hide | Use safe built-in owner behavior, initially 1; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.pressure-start-threshold` | Hide | Use safe built-in owner behavior, initially 70; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.pressure-aggressive-threshold` | Hide | Use safe built-in owner behavior, initially 85; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.low-context-warning` | Hide | Use safe built-in owner behavior, initially 15; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.large-block-threshold` | Hide | Use safe built-in owner behavior, initially 1200; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.compaction-immune-pct` | Hide | Use safe built-in owner behavior, initially 30; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.budget-buckets` | Hide | Use safe built-in owner behavior, initially {"immune": 30, "history": 30, "current_turn": 15, "tool_results": 20, "contingency": 5}; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.tool-result-policy` | Hide | Use safe built-in owner behavior, initially "full"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.local-llm-caps` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.notebook.auto-capture` | Hide | Use built-in default true; retain old value as migration history only. Keep task notes/checkpoints and sharing restrictions. |
+| `memory.notebook.resume-capsule` | Hide | Use built-in default true; retain old value as migration history only. Keep task notes/checkpoints and sharing restrictions. |
+| `memory.notebook.capsule-budget-tokens` | Hide | Use built-in default 512; retain old value as migration history only. Keep task notes/checkpoints and sharing restrictions. Preserve an explicitly saved smaller safety ceiling until safe owner migration; never silently expand capacity from it. |
+| `memory.notebook.injection-budget-tokens` | Hide | Use built-in default 1024; retain old value as migration history only. Keep task notes/checkpoints and sharing restrictions. Preserve an explicitly saved smaller safety ceiling until safe owner migration; never silently expand capacity from it. |
+
+Old non-inventory `memory.retrieval.preferPinned` and disagreement choices no longer select a policy; current instructions/facts and automatic relevance apply. Existing saved pins/protected-rule choices retain their protection internally. `memory.privacy.shareWithCrews=false`, explicit `memory.retention.subagent-access=off` and source-off values in `memory.sources` for Project files, Plans, Tool output, Manager records or Chat history become equivalent read-time Permissions/Context Lens restrictions on that source family and its derivatives, at the original scope/actor. A false source or privacy value never becomes true because the control vanished. A missing, ambiguous or unrepresentable restriction blocks affected reads until owner resolution; never silently restore access. Chat-history retention keeps its own owner value; deleting a conversation is not deleting or reviving a saved memory.
+
+Protected memories and old forgotten/recoverable records remain under approved retention; there is no new 30-day recovery promise, competing Forget/Restore workflow or expiry-driven deletion. General data export retains the existing exporter and truthful available scope, outside Memory.
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/assistant-memory-subsystem.md#AMS-033, ContractName:Plans/Permissions_System.md#PS-140
+
+### SSYS-077 - One Model Defaults List And Retired Input Handling
+
+```yaml
+plan_unit_id: SSYS-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: |-
+  Settings > Models contains one Default models list with Everywhere and This project tabs; no Computer or Device model-default rung. The six jobs include Easy, routine jobs, whose blank choice uses Everyday building. Naming defaults to the smallest allowed runnable model with Off available; explaining uses that same small-model policy and MS-117's no-silent-costly-fallback guard; Back Seat Driver follows Checking finished work. Enabled image/video/speech/music rows select concrete media routes, and Reading pictures names the first eligible bridge model, with no separate backup setting. Account defaults stay in that account's provider-manager detail and apply only to manually directed runs without an earlier model choice. Each row chooses model and depth together in the chat's floating picker, names its fallback source and current model/depth, and accepts a typed exact name only after one small call succeeds before saving. Refused or unreachable names never save; successful name acceptance proves no capability.
+  The 18 removed rows and the disposition of each saved value are registered in Plans/settings_inventory.json compatibility_reads, disjoint from live settings. Preserve old source bytes and historical requested/effective receipts; removed values never become new writes or silently copy into shared defaults. Read old helper/persona/command/Goal/role/lane/preset/policy fields as inert compatibility data with a retirement notice. The separate everyday effort may fold only into a supported explicit same-scope model pair under one owner preview/revision; a missing model or support keeps it inert. The old image provider/model pair needs a concrete validated route before becoming Making pictures. Legacy Computer model defaults and former explicit vision backup scalars are inspection-only and require reselection, never reinterpretation as current model defaults.
+  Search accepts old names as retirement explanations and links to applicable live replacement rows or run/build controls. No active obsolete row, reset target or editable All Settings control is recreated; compatibility inspection is clearly read-only and outside the active census. All Settings derives its active IDs from the registry. Transfer previews list each omitted retired ID with its reason, preserve originals, and never apply retired keys; model/depth pairs transfer atomically only at offered levels after destination route validation. Persona/command imports omit retired definition fields through their owner previews rather than treating them as supported runtime overrides. Canonical registry rows, search aliases, All Settings, Details, Reset, transfer and category census share that admission set.
+gui_related: true
+gui_classification_reason: Owns visible model/depth defaults, compatibility disclosure, Settings search and
+  transfer behavior.
+depends_on:
+- F3-441
+- MS-005
+- MS-057
+- MS-109
+- MA-013
+unblocks: []
+acceptance_criteria:
+- Every active model row uses the shared model/depth picker and only its offered levels.
+- Each retired model setting has a compatibility read disposition, no new writer, and an omission/retirement
+  explanation in search, All Settings and transfer.
+- Model and depth come from the same source/revision; inherited values never merge fields.
+- Typed exact names require a successful small call before save and do not gain unproven capabilities.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-settings-layering
+- python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+- python3 -m unittest discover -s tests -p test_pm_settings_draft_transfer.py
+risk_class: model_default_precedence_and_retirement_drift
+reasoning_tier: high
+context_scope: settings_models_batch3_20261112
+implementation_surfaces: &id001
+- Plans/settings_inventory.json
+- Plans/settings_inventory.schema.json
+- Plans/Settings_System.md
+- Plans/Models_System.md
+- Plans/Personas.md
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- settings-model-design-20261112:MD1-A/MD2-NEITHER/MD3-A/MD4-A/helpers
+- share/puppet-master/2026-11-11-model-selection-map/PACKET-v2.md
+- share/puppet-master/2026-11-11-work-lanes/PACKET.md
+preserved_exact_tokens:
+- Default models
+- This project
+- Everywhere
+- Easy, routine jobs
+- compatibility_reads
+- model/depth
+- small call
+negative_constraints:
+- Do not recreate removed model/depth controls through search, transfer, Reset or All Settings.
+- Do not use compatibility values to select a model, add a Computer rung, or silently change shared defaults.
+- Do not claim native implementation or resealed governance from static contracts.
+owner_hints: *id001
 ```

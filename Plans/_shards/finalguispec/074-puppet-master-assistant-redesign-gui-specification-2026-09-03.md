@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37966-L38300
+Source lines: L38055-L38391
 
-Source SHA256: `c7328f20a2fc64be53897a8c9c54878904bdd3342af494a62164ebd92d586a31`
+Source SHA256: `ba630d2b72c90b75de4bb712459b497deeba44040730302e1e590e8b279a96ad`
 
 ---
 
@@ -46,7 +46,8 @@ Directly after the quota-wait strip sits the dock (ACD-476): at most three one-l
 
 Attachments render inside their associated turn as compact visual objects and participate in the existing message-hover chrome: metadata and actions are hidden at rest on pointer-capable widths and always available at phone widths under the existing rule. There is no permanent `PNG · 2.8 MB` clutter. A project reference that changed since the message shows a compact stale badge on the object rather than a warning paragraph, with the historical revision explained on hover and both live and materialized versions in Details. Generated artifacts use the same card grammar and disclose version and producing workflow in Details.
 
-What a wand module attaches to an ordinary reply is one line each (F3-570): the files row under a reply that changed files (`Changed 3 files +5 −3 · Revert`), which is visible at rest, and the quiet ticks in the reply's meta row (a memory note taken; the rule note, `Followed 1 of your rules` for rules whose check the reply passed or `Missed 1 of your rules` when a check failed (DL-116); `Sent on schedule` on a message that a schedule sent; `Simple explanation` on a reply written in Simple), which follow that row's existing message-chrome visibility. Each finished reply's message actions may offer `Explain this reply simply`, which adds one simpler reply at the end of the thread and never rewrites the reply it explains (F3-581, DL-126).
+Ordinary reply chrome retains the files row for actual file changes, scheduled-message and Simple explanation state under their existing owners. Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown. A finished reply may still offer Explain this reply simply through F3-581; ordinary task evidence remains available.
+
 
 ### 6. Plan card
 
@@ -98,7 +99,8 @@ The quota wait strip described in section 4 links to Usage detail from its reset
 
 ### 14. Teach, Teacher, memory, ELI5, Debug and Revert
 
-`/teach`, natural language, the wand's `Teach…` and `Save as a rule…` all open the Teach sheet, prefilled with the proposed knowledge and its scope; the explicit capture card this sentence used to name is superseded and not planned (DL-127, F3-579). **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior. Its only chat traces are a quiet tick in the reply's meta row when a note is taken and one verified tick when a check later proves it; a note going out of date makes no chat noise. These satisfy this rule (F3-574).
+Teach entry points use the existing written-instruction step and never change the Persona to Teacher. Written rules live in Settings > Personas & Crews > Defaults > Standing instructions. A requested saved note uses the shared Memory page at This project or Every project, with Add/Edit/Delete and Archived, not an alternate Teach/verification document. Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown. Provenance, verification, inclusion and version history stay internal; no source/lock/conflict/rollback workbench or state faces appear.
+
 
 ELI5 is its own small sheet, opened from the wand's `ELI5` row, with the quick dot by the message box as the one-click on and off; a chat's own override replaces the project default, which replaces the app default that Settings owns (ACD-484, F3-581, DL-126). Switching ELI5 is not a one-shot "simplify this output" action and never rewrites a reply; the separate `Explain this reply simply` action on a finished reply writes one extra, simpler reply only when the user asks. The wand check this paragraph used to name is superseded. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes, the message overflow and the files row under the reply that changed files when eligible, previews the exact files in one compact confirm sheet before dispatching the canonical whole-turn revert, reports each outcome as one receipt line, and stays distinct from Rewind in the thread and message overflow (ACD-478, F3-574).
 

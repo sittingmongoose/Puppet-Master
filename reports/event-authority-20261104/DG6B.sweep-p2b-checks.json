@@ -1,0 +1,448 @@
+{
+ "implementation_head": "bd888a1efda365b32d5c78a3296f508e4bb8f604",
+ "numrule_merge": "3645b416a923f49b6c6f5c03fa5c43f344b77126",
+ "numrule_gated": "58c2816ff33365384d4039553f5efdb5370930e6",
+ "tool": "004bdedd632d9463f3535190a6ed5772338cdce1",
+ "native_execution": "NOT_RUN",
+ "ready_families": 0,
+ "status_counts": {
+  "ABSENT": 19,
+  "PASS": 171,
+  "PARTIAL": 38,
+  "CONFLICT": 0
+ },
+ "guard_tables": {
+  "tables": 78,
+  "rows": 176,
+  "borrowed": 35,
+  "cells": 1735,
+  "failed": 0,
+  "negatives": 2727,
+  "proved": 1735,
+  "suites": 820,
+  "masked": 0,
+  "unrelated_changes": 0,
+  "collection_findings": 0,
+  "problems": 0
+ },
+ "families": [
+  {
+   "family": "auth.github.authenticated",
+   "suites": 39,
+   "cells": 79,
+   "proved": 79,
+   "negatives": 123,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "auth.github.device_code.issued",
+   "suites": 39,
+   "cells": 79,
+   "proved": 79,
+   "negatives": 118,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "auth.github.disconnected",
+   "suites": 39,
+   "cells": 79,
+   "proved": 79,
+   "negatives": 118,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "auth.github.failed",
+   "suites": 39,
+   "cells": 79,
+   "proved": 79,
+   "negatives": 118,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "auth.github.token.polling",
+   "suites": 40,
+   "cells": 80,
+   "proved": 80,
+   "negatives": 119,
+   "borrowed": 3,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.created",
+   "suites": 52,
+   "cells": 118,
+   "proved": 118,
+   "negatives": 176,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.deleted",
+   "suites": 54,
+   "cells": 114,
+   "proved": 114,
+   "negatives": 173,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.exported",
+   "suites": 49,
+   "cells": 107,
+   "proved": 107,
+   "negatives": 157,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.imported",
+   "suites": 54,
+   "cells": 116,
+   "proved": 116,
+   "negatives": 173,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.selected",
+   "suites": 61,
+   "cells": 137,
+   "proved": 137,
+   "negatives": 217,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "persona.updated",
+   "suites": 53,
+   "cells": 118,
+   "proved": 118,
+   "negatives": 175,
+   "borrowed": 2,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.hook.blocked",
+   "suites": 38,
+   "cells": 78,
+   "proved": 78,
+   "negatives": 130,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.hook.error",
+   "suites": 37,
+   "cells": 77,
+   "proved": 77,
+   "negatives": 144,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.hook.invoked",
+   "suites": 37,
+   "cells": 77,
+   "proved": 77,
+   "negatives": 144,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.load_failed",
+   "suites": 37,
+   "cells": 77,
+   "proved": 77,
+   "negatives": 126,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.loaded",
+   "suites": 37,
+   "cells": 77,
+   "proved": 77,
+   "negatives": 126,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.permission.override",
+   "suites": 37,
+   "cells": 77,
+   "proved": 77,
+   "negatives": 126,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.tool.collision",
+   "suites": 37,
+   "cells": 77,
+   "proved": 77,
+   "negatives": 126,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "plugin.tool.registered",
+   "suites": 37,
+   "cells": 77,
+   "proved": 77,
+   "negatives": 126,
+   "borrowed": 1,
+   "failed_suites": []
+  },
+  {
+   "family": "shared",
+   "suites": 4,
+   "cells": 12,
+   "proved": 12,
+   "negatives": 12,
+   "borrowed": 0,
+   "failed_suites": []
+  }
+ ],
+ "checker_cli": [
+  {
+   "family": "auth.github.authenticated",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 175,
+   "round9_negatives": 16,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "18.75 s 257052 KB"
+  },
+  {
+   "family": "auth.github.device_code.issued",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 172,
+   "round9_negatives": 16,
+   "p2b_negatives": 183,
+   "p2b_positives": 48,
+   "time": "18.36 s 254956 KB"
+  },
+  {
+   "family": "auth.github.disconnected",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 172,
+   "round9_negatives": 16,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "18.54 s 254892 KB"
+  },
+  {
+   "family": "auth.github.failed",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 172,
+   "round9_negatives": 16,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "20.76 s 254752 KB"
+  },
+  {
+   "family": "auth.github.token.polling",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 173,
+   "round9_negatives": 16,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "19.38 s 254868 KB"
+  },
+  {
+   "family": "persona.created",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 231,
+   "round9_negatives": 48,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "23.08 s 256016 KB"
+  },
+  {
+   "family": "persona.deleted",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 235,
+   "round9_negatives": 42,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "22.90 s 254412 KB"
+  },
+  {
+   "family": "persona.exported",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 218,
+   "round9_negatives": 42,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "22.39 s 253244 KB"
+  },
+  {
+   "family": "persona.imported",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 236,
+   "round9_negatives": 42,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "22.26 s 254976 KB"
+  },
+  {
+   "family": "persona.selected",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 246,
+   "round9_negatives": 65,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "26.96 s 256552 KB"
+  },
+  {
+   "family": "persona.updated",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 234,
+   "round9_negatives": 46,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "21.25 s 254544 KB"
+  },
+  {
+   "family": "plugin.hook.blocked",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 175,
+   "round9_negatives": 18,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "19.08 s 256848 KB"
+  },
+  {
+   "family": "plugin.hook.error",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 180,
+   "round9_negatives": 18,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "19.26 s 255292 KB"
+  },
+  {
+   "family": "plugin.hook.invoked",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 180,
+   "round9_negatives": 18,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "19.98 s 254948 KB"
+  },
+  {
+   "family": "plugin.load_failed",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 173,
+   "round9_negatives": 18,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "18.67 s 255884 KB"
+  },
+  {
+   "family": "plugin.loaded",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 173,
+   "round9_negatives": 18,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "18.46 s 255068 KB"
+  },
+  {
+   "family": "plugin.permission.override",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 173,
+   "round9_negatives": 18,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "19.21 s 253564 KB"
+  },
+  {
+   "family": "plugin.tool.collision",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 173,
+   "round9_negatives": 18,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "18.13 s 254056 KB"
+  },
+  {
+   "family": "plugin.tool.registered",
+   "exit": 0,
+   "status": "pass",
+   "complete_path_negatives": 173,
+   "round9_negatives": 18,
+   "p2b_negatives": 171,
+   "p2b_positives": 41,
+   "time": "19.28 s 254560 KB"
+  }
+ ],
+ "number_self_test": {
+  "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+  "exit": 0,
+  "status": "pass",
+  "cases": 580,
+  "passes": 580,
+  "positives": 276,
+  "negatives": 304
+ },
+ "scope_all_self_test": {
+  "command": "python3 scripts/pm_event_numbers.py --self-test",
+  "exit": 1,
+  "status": "fail",
+  "case_execution": "NOT_RUN_ADMISSION_REFUSED",
+  "failures": [
+   {
+    "integration_check": "datetime_inventory_complete_and_classified"
+   }
+  ]
+ },
+ "datetime_inventory_gate": {
+  "command": "python3 scripts/pm_event_datetime_inventory.py",
+  "exit": 1,
+  "status": "fail",
+  "failure_rows": 205,
+  "note": "not called by the lane checker (Addendum 2); runs at batch-2 integration"
+ },
+ "shared_corpus": {
+  "spellings": 65,
+  "slots": [
+   "event_record.producer_sequence_id",
+   "event_record.sequence_id"
+  ],
+  "families": 19,
+  "route_runs": 2470,
+  "disagreements": 0
+ },
+ "fixture_expectation_changes": {
+  "history_custody": 266,
+  "timestamp_profile": 0,
+  "number_rule": 0
+ },
+ "complete_boundary_flips": {
+  "accepted": 7446,
+  "refused_later": 6094
+ }
+}

@@ -373,25 +373,20 @@ plan_unit_id: SRV-006
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: >-
-  Project Home Server, Connected Server, Execution Host, Execution Environment, Source Location, Client, endpoint,
-  and remote route are distinct identities. The Home Server is the default Execution Host when compatible; Shared
-  Integration Runtime owns execution assignment, leases, environment supervision, and handoff primitives. Changing
-  a Client, endpoint, route, Host, Environment, or Source Location is not Project Move. Project Sync and Backbone
-  alone owns verified Vault transfer and one-writer authority cutover. No automatic multi-Server failover or writable
-  offline Client replica is permitted. Settings home is a separate explicit role, not every Project Home Server.
-  The Computer display name groups a native Client and its actual local Server via ClientRecord.local_server_id;
-  their identity and authorization domains remain distinct. Settings levels are values, never new topology or
-  connector identities. An app thread fixes its actual work Server/Host after first message; only its admitted
-  conversion/Continue elsewhere route changes future scope.
+canonical_text: |-
+  Project Home Server, Connected Server, Execution Host, Execution Environment, Source Location, Client, endpoint, and remote route are distinct identities. New Project work defaults to Auto under SIR-056 among the Project's allowed Computers, with its default Computer used for equal-ranked choices. The Home Server remains the records home. Shared Integration Runtime owns execution assignment, leases, environment supervision, and handoff primitives. Changing a Client, endpoint, route, Host, Environment, or Source Location is not Project Move. Project Sync and Backbone alone owns verified Vault transfer and one-writer authority cutover. No automatic multi-Server failover or writable offline Client replica is permitted. Settings home is a separate explicit role, not every Project Home Server. The Computer display name groups a native Client and its actual local Server via ClientRecord.local_server_id; their identity and authorization domains remain distinct. Settings levels are values, never new topology or connector identities. An app thread fixes its actual work Server/Host after first message; only its admitted conversion/Continue elsewhere route changes future scope.
+
+  The no-project policy in SRV-017 and general.interaction.no-project-default-computer is unchanged: keep the Computer you are on under its claimed-local/main rule and first-message freeze.
 gui_related: true
 gui_classification_reason: Connected Server, Hosted On, Run On, route, Move Project, and execution status must be visibly distinguished.
 depends_on: [SRV-002, SIR-002, PSB-001]
 unblocks: [SRV-008, RAS-002]
 acceptance_criteria:
-  - Commands bind exact Server, Project, Host, Environment, source, and expected generation where applicable.
-  - Route or Client changes never mutate Project Home Server or start Project Move.
-  - Project Move consumes a verified recovery point and retains one-writer cutover and rollback under its owner.
+- Commands bind exact Server, Project, Host, Environment, source, and expected generation where applicable.
+- Route or Client changes never mutate Project Home Server or start Project Move.
+- Project Move consumes a verified recovery point and retains one-writer cutover and rollback under its owner.
+- "Auto chooses only an eligible allowed Computer and never performs Home Server failover."
+- "Project Auto does not change SRV-017 or the no-project starter-Computer setting."
 validation_surfaces: [future topology identity fixtures, future route-versus-move negative tests, future stale-owner fencing tests]
 risk_class: execution_or_movement_authority_drift
 reasoning_tier: high
@@ -399,6 +394,7 @@ context_scope: server_execution_movement_boundary
 implementation_surfaces: [Plans/Server_System.md, Plans/Shared_Integration_Runtime.md, Plans/Project_Sync_and_Backbone.md]
 node_compile_hint: {mode: execution_movement_boundary, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - source_ref:normalized-register:server-first-2026-08-31:C05-C09
 - source_ref:packet:01_FULL_THREAD_DECISION_REGISTER.md
 - 'source_ref:projects-pass2-20261103:S1/S7/N5/N17; Jared: "I approve the outstanding questions with their recommended

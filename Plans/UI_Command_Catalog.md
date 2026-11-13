@@ -1125,25 +1125,30 @@ Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
 
-### 2.8 Assistant memory (Gist Review) commands
-These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.
+### 2.8 Memory commands
 
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+Typed owner payloads and results are defined in AMS-141; the catalogue owns IDs and producer disposition.
+
+| Command ID | Owner contract | Effect | Surface |
 |---|---|---|---|
-| `cmd.chat.memory.verify` | `{ project_id, gist_id }` | `memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.edit` | `{ project_id, gist_id, patch }` | `memory.gist.updated` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.pin` | `{ project_id, gist_id, pinned }` | `memory.gist.pinned` or `memory.gist.unpinned` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.discard` | `{ project_id, gist_id }` | `memory.gist.discarded` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.updated` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.preview_capsule` | `{ project_id, thread_id? }` | no persisted domain event (preview computation only) | Assistant chat Gist Review panel |
-| `cmd.chat.memory.rebuild_lexical_index` | `{ project_id }` | `memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.rebuild_semantic_index` | `{ project_id }` | `memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.verification_sweep` | `{ project_id }` | `memory.verification_sweep.started`, `memory.verification_sweep.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.dedup_sweep` | `{ project_id }` | `memory.dedup_sweep.started`, `memory.dedup_sweep.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |
-| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |
+| `cmd.chat.memory.add` | AMS-141 | Durable new note and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.edit` | AMS-141 | New note version and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.delete` | AMS-141 | Durable deletion suppression and owner receipt | Shared Memory page / chat sheet |
+| `cmd.chat.memory.verify` | AMS-141 | Internal support validation only | No ordinary UI producer |
+| `cmd.chat.memory.pin` | AMS-141 | Legacy protected-state support only | No ordinary UI producer |
+| `cmd.chat.memory.discard` | AMS-141 | Legacy validity handling, never Delete | No ordinary UI producer |
+| `cmd.chat.memory.toggle_auto_save_unverified` | AMS-141 | Compatibility only; no ordinary write | No ordinary UI producer |
+| `cmd.chat.memory.preview_capsule` | AMS-141 | Internal debugging only | No ordinary UI producer |
+| `cmd.chat.memory.rebuild_lexical_index` | AMS-141 | Existing recovery operation | Internal/support only |
+| `cmd.chat.memory.rebuild_semantic_index` | AMS-141 | Existing recovery operation | Internal/support only |
+| `cmd.chat.memory.verification_sweep` | AMS-141 | Internal validity check | Internal/support only |
+| `cmd.chat.memory.dedup_sweep` | AMS-141 | Held pending DL-444/445 application/approvals | Internal/support only |
+| `cmd.chat.memory.summarize_monthly` | AMS-141 | Held archive-only operation | Internal/support only |
+| `cmd.chat.memory.prune_archive` | AMS-141 | Held archive-only operation | Internal/support only |
 
 Lineage pointer (DL-333): for each command here that UCC-230 routes, the Args schema column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
+DL-407 / AMS-130: verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation, including automatic changes through RealMemoryProvider. Requested or failed verification retains only its command result and emits no history event; a no-op emits none. The seven former command event names are retired only under the complete AMS-130/CV-785/SP-765 contract. Preparation grants no native append permission.
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
 
@@ -6221,7 +6226,12 @@ plan_unit_id: UCC-084
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Assistant memory Gist Review commands verify, edit, pin/unpin, discard, toggle auto-save unverified, and preview capsules with required project/gist/thread payloads, events, and Assistant chat Gist Review panel surface.
+canonical_text: Memory Add/Edit/Delete commands are cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete,
+  with typed scope/text/version and durable mutation result under AMS-141. The same Memory page in Settings
+  and the chat sheet produces them. Legacy Verify/Pin/Discard/toggle_auto_save_unverified/preview_capsule
+  IDs remain support/compatibility only, with no ordinary GUI, search or prompt-preview producer; they
+  cannot restore retired features or verification bypasses. Native handlers remain unavailable until evidence
+  closes wiring. DL-407 and AMS-130/CV-785/SP-765 replace the seven command history spellings with memory.gist_state_changed once per successful real mutation; requested or failed verification and no-ops retain only their command results. Under DL-408, the auto-save-unverified switch records only settings.layer.changed; settings.updated is retired as superseded.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -6232,9 +6242,8 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UCC-084 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Add/Edit/Delete use the strict AMS-141 schemas and return durable result/receipt before UI success.
+- No retired review, pin, candidate, capsule-preview or verification control remains in ordinary surfaces.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6248,27 +6257,26 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0045
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat.memory.verify
+- memory.gist_state_changed
 - cmd.chat.memory.edit
 - cmd.chat.memory.pin
 - cmd.chat.memory.discard
 - cmd.chat.memory.toggle_auto_save_unverified
 - cmd.chat.memory.preview_capsule
-- memory.gist.verification_requested
-- memory.gist.verified
-- memory.gist.verification_failed
-- memory.gist.updated
-- memory.gist.pinned
-- memory.gist.unpinned
-- memory.gist.discarded
 - settings.updated
+- settings.layer.changed
 - Assistant chat Gist Review panel
+- cmd.chat.memory.add
+- cmd.chat.memory.delete
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- settings.updated is retired as superseded by settings.layer.changed under DL-408.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -6280,7 +6288,11 @@ plan_unit_id: UCC-085
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Assistant memory maintenance commands rebuild lexical and semantic indexes, run verification and dedup sweeps, summarize monthly memory, and prune archives with project/month/policy payloads and lifecycle events.
+canonical_text: Assistant memory maintenance commands rebuild lexical and semantic indexes, run verification
+  and dedup sweeps, summarize monthly memory, and prune archives with project/month/policy payloads and
+  lifecycle events. DL-475 removes all Memory-panel cleanup producers. Existing commands remain internal/support
+  only and do not bypass DL-403/444–447 holds, archive-only preservation or saved pin protections; no
+  immediate automatic job is enabled.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -6307,6 +6319,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0045
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat.memory.rebuild_lexical_index
 - cmd.chat.memory.rebuild_semantic_index
@@ -7893,15 +7906,14 @@ plan_unit_id: UCC-104
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'Under DL-041, the DRY Method toggle''s eventual mutation path reuses cmd.settings.transaction.preview
+canonical_text: 'Under DL-408 (replacing DL-041 naming), the DRY Method toggle''s eventual mutation path reuses cmd.settings.transaction.preview
   and cmd.settings.transaction.apply from SSYS-018 and the Settings atomic mutation envelope. Until an owner-proven
   mapping from the exact guard key to a valid ordinary setting_id and its writer exists, the toggle is disabled
   with the existing owner_contract_missing reason and dispatches no mutation command or setting write. Preserve
   the exact guard identity app.agent_rules.dry_method_default_guard and values enabled | disabled_by_user.
-  The approved future event identity for this change is settings.updated, carrying that exact setting key and
+  The sole Settings change event identity for this change is settings.layer.changed, carrying that exact setting key and
   the existing transaction_id from pm.settings_transaction_result.v1, joined to request_id, project_id, changed_setting_ids,
-  revisions and receipt_ref under the current owner contract. Event Authority must independently admit a closed
-  payload and producer/consumer binding before emission; this naming choice does not register a family. The
+  revisions and receipt_ref under the current owner contract. The existing SSYS-060/DL-300 family and its owner-adoption prerequisites govern emission; DL-408 retires settings.updated as superseded and grants no missing writer authority. The
   historical settings.agent_rules.dry_method_default_guard.updated spelling is read-only source/history lineage,
   not an automatic alias or permission to rewrite old payloads. cmd.settings.agent_rules.dry_method_default_guard.set
   is retired source lineage, with no primary handler, production row or dispatch alias. Visible Settings >
@@ -7932,8 +7944,8 @@ acceptance_criteria:
   and dispatches zero mutation commands and writes zero setting values. After that prerequisite, the existing
   preview/apply sequence and enabled | disabled_by_user values apply; no per-setting command or handler is
   reintroduced.
-- Future settings.updated records preserve app.agent_rules.dry_method_default_guard and the existing committed
-  transaction identity after independent Event Authority admission; historical dedicated spellings remain read-only
+- Under DL-408, settings.layer.changed records preserve app.agent_rules.dry_method_default_guard and the existing committed
+  transaction identity under the existing family and owner-adoption prerequisites; historical dedicated spellings remain read-only
   without an assumed payload alias.
 - The visible command copy explains that disabling DRY only disables the default reuse-first guard.
 - Command handling preserves DRY receipt provenance and does not weaken non-DRY authority boundaries.
@@ -8633,16 +8645,22 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 
 ### Added GUI command families
 
+The Persona rows below preserve historical Project-only command sketches, not the active scope contract. UCC-214 and P-060 select each exact `persona_<operation>_request_v2` / `persona_<operation>_result_v2` from `Plans/projects_refresh_command_bindings.json`, including create/delete/export/import/select/update and the distinct-ID duplicate route. Each uses WorkflowScopeV2 (CV-365): the actual Server application scope has required-present null Project fields; actual Project operations retain real Project identity. Existing historical Project schemas remain unchanged. Save writes the current whole-record home under expected revision; `persona_patch` in the historical sketch does not grant per-field layering. No event is admitted here.
+
+The selected Persona result vocabulary is `requested_persona` / `effective_persona` (Personas section 10), never parallel `_id` runtime fields. The select result’s existing authenticated owner_result_ref carries original frozen resolution evidence (CV-691 persona_selected_resolution); historical `_id` spellings are read-only migration/source-lineage aliases and cannot authorize a current write or fresh Settings resolution. CV-691/P-124 supplies the exact event binding.
+
+**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.
+
 | Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |
 |---|---|---|---|---|
-| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
-| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
-| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
-| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.theme.updated` |
+| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.layer.changed` (DL-408) |
 | `cmd.persona.create` | `project_id`, `persona_spec`, `source_refs[]`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied`, `stale_projection` | `persona.created` |
 | `cmd.persona.update` | `project_id`, `persona_id`, `persona_patch`, `expected_persona_revision`, `idempotency_key` | `persona_id`, `persona_revision` | `stale_projection`, `invalid_args`, `permission_denied` | `persona.updated` |
 | `cmd.persona.delete` | `project_id`, `persona_id`, `expected_persona_revision`, `confirmation_token`, `idempotency_key` | `persona_id`, `terminal_state` | `blocked_state_required`, `permission_denied`, `stale_projection` | `persona.deleted` |
-| `cmd.persona.select` | `project_id`, `surface`, `persona_id`, `expected_persona_revision?` | `effective_persona_id`, `selection_scope` | `invalid_args`, `stale_projection` | `persona.selected` |
+| `cmd.persona.select` | `project_id`, `surface`, `persona_id`, `expected_persona_revision?` | `effective_persona`, `selection_scope` (canonical naming; old `_id` read alias only) | `invalid_args`, `stale_projection` | `persona.selected` |
 | `cmd.persona.duplicate` | `project_id`, `source_persona_id`, `new_name`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied` | `persona.created` |
 | `cmd.persona.import` | `project_id`, `source_ref`, `import_mode`, `authority_snapshot`, `idempotency_key` | `persona_id`, `persona_revision`, `import_receipt_ref` | `invalid_args`, `permission_denied`, `handler_unavailable` | `persona.imported` |
 | `cmd.persona.export` | `project_id`, `persona_id`, `format`, `redaction_profile` | `export_ref`, `persona_revision` | `invalid_args`, `permission_denied` | `persona.exported` |
@@ -8720,7 +8738,7 @@ plan_unit_id: UCC-108
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
+canonical_text: 'DL-408 retires settings.theme.updated as superseded by settings.layer.changed, the sole Settings change event including theme changes; existing owner-adoption requirements remain. The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
   send/stop, panel undock/redock, Orchestrator pause/resume, Dashboard widget, Free Models onboarding, launch-chain,
   runtime recovery, and FileManager command contracts with field-level payload, result, error, and receipt/event
   requirements. Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain canonical and
@@ -8730,7 +8748,7 @@ canonical_text: 'The FABLE GUI command repair registers missing theme, persona, 
   NieR (Q22), the Guided Tour bar''s Look menu and the NieR Mode editor compose cmd.settings.transaction.preview
   then cmd.settings.transaction.apply as UCC-120''s local affordances do; no theme family or NieR command is
   added. The application''s start and onboarding''s look previews (ui.onboarding.start, ui.onboarding.choose_look)
-  dispatch no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the one resolved Everywhere/Device/actual-Project
+  dispatch no cmd.theme.* and emit no settings.layer.changed: the pre-paint reads the one resolved Everywhere/Device/actual-Project
   theme pair; No project omits Project and never flashes a forced Basic Dark, while owner-declared factory/pre-claim
   fallback and nonpersistent onboarding preview remain (F3-468, DL-153). Amended 2026-10-09 (DL-180): from
   the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203);
@@ -8767,7 +8785,7 @@ acceptance_criteria:
 - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
 - No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's
   Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction
-  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated
+  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.layer.changed
   (F3-468, DL-153).
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
@@ -9803,37 +9821,37 @@ command_payload_definition_map:
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21889, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
   - command_id: cmd.docker.container.stats
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21890, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
   - command_id: cmd.git.worktree.merge
     catalog_unit: UCC-132
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, line: 13084, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
   - command_id: cmd.git.worktree.open_topology
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.git.worktree.repair
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.debug.record_verification
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   - command_id: cmd.debug.run_cleanup
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   unresolved_tokens: []
   non_definition_tokens:
   - token: cmd.docker.remove
@@ -10948,8 +10966,10 @@ command_payload_definition_map:
     canon_name: gist_id
     decision: DL-341
     evidence:
-      doc: Plans/UI_Command_Catalog.md
-      quote: '| `cmd.chat.memory.verify` | `{ project_id, gist_id }` |'
+      doc: Plans/assistant-memory-subsystem.md
+      unit: AMS-141
+      field: canonical_text
+      quote: gist_id and expected_revision
     note: 'DL-341 coordinator resolution 4: the memory item identity is gist_id in the catalog memory rows and in
       Plans/assistant-memory-subsystem.md (MemoryGist).'
   contested: []
@@ -16655,7 +16675,7 @@ ContractRef: ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/F
 
 This section consumes the Commands-owned CS-081 census without minting anything: zero catalog rows are added here. The eight `commands.*` typed local file actions (`commands.create`, `commands.update`, `commands.delete`, `commands.preview`, `commands.import_preview`, `commands.import_commit`, `commands.export`, `commands.reset_all`) are owner-local actions with sole future handler `handlers::commands::apply_local_action`, not UICommand primaries; per CS-060 minting authority and the WM-041 precedent they gain no catalog row and no production wiring row. Required guard: reject every per-command-name, per-binding, custom-command or shortcut namespace alias forbidden by the CS-081 contract, every ID minted from a preset name or binding identity, and every retired first-draft spelling (`commands.save_new`, `commands.save_override`, `commands.save_existing`).
 
-Control resolution over `route:settings/commands-shortcuts`: Create command commits through `commands.create`; hero-sheet fields (Text, Arguments hint, One line, Scope, Persona, Mode, Model, Permissions profile, Enabled) mutate through `commands.update`; Delete command unlinks through `commands.delete`; Preview (dry run) renders through `commands.preview` (inert: no read, shell, ask-flow, permission evaluation, or dispatch); the Import file choice binds a plan through `commands.import_preview`; the Import commit applies it through `commands.import_commit`; Export collects through `commands.export`; Reset applies through `commands.reset_all`. Shortcut add/change/remove/reset and shortcuts backup write the registered Project value `extensions.commands.keyboard-shortcuts` through `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` (collisions warn, never block); Show shortcut hints toggles `extensions.commands.shortcut-hints` through the same route; keyboard layout (S6) selects `extensions.commands.keyboard-layout` and palette visibility (S7) toggles `extensions.commands.command-palette-visibility` through the same route. Remaining selected controls (New command opener, row opens, lists, `Where command files live`, `Reserved shortcuts`, cheat sheet, `How commands work`, filters, sample input, resolved prompt, run preview, back navigation, modals-as-evidence) are view-only with no dispatch. File roots come from the action target scope plus project binding, never from the Settings scope selector. The seven UCC-165 primaries stay mapped exactly once each; no EventRecord, native handler, or runtime is claimed here.
+Control resolution over `route:settings/commands-shortcuts`: Create command commits through `commands.create`; hero-sheet fields (Text, Arguments hint, One line, Scope, Persona, Mode, Permissions profile, Enabled; no saved model/provider/preset/depth) mutate through `commands.update`; Delete command unlinks through `commands.delete`; Preview (dry run) renders through `commands.preview` (inert: no read, shell, ask-flow, permission evaluation, or dispatch); the Import file choice binds a plan through `commands.import_preview`; the Import commit applies it through `commands.import_commit`; Export collects through `commands.export`; Reset applies through `commands.reset_all`. Shortcut add/change/remove/reset and shortcuts backup write the registered Project value `extensions.commands.keyboard-shortcuts` through `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` (collisions warn, never block); Show shortcut hints toggles `extensions.commands.shortcut-hints` through the same route; keyboard layout (S6) selects `extensions.commands.keyboard-layout` and palette visibility (S7) toggles `extensions.commands.command-palette-visibility` through the same route. Remaining selected controls (New command opener, row opens, lists, `Where command files live`, `Reserved shortcuts`, cheat sheet, `How commands work`, filters, sample input, resolved prompt, run preview, back navigation, modals-as-evidence) are view-only with no dispatch. File roots come from the action target scope plus project binding, never from the Settings scope selector. MD2: old command model/model_override values are inert compatibility reads, omitted from new writes/imports; use the shared Defaults list or explicit run picker. The seven UCC-165 primaries stay mapped exactly once each; no EventRecord, native handler, or runtime is claimed here.
 
 ### UCC-166 - Commands Shortcuts Central Consumers
 
@@ -16664,31 +16684,86 @@ plan_unit_id: UCC-166
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: The 2026-09-26 central consumers reference the CS-081 eight-action commands.* typed local census with sole future handler handlers::commands::apply_local_action while adding zero catalog rows; shortcut, hints, layout, and palette controls bind registered Project values through the existing Settings transaction route, remaining controls are view-only, and rejected cmd.* spellings gain no primary.
+canonical_text: The 2026-09-26 central consumers reference the CS-081 eight-action commands.* typed local census
+  with sole future handler handlers::commands::apply_local_action while adding zero catalog rows; shortcut,
+  hints, layout, and palette controls bind registered Project values through the existing Settings transaction
+  route, remaining controls are view-only, and rejected cmd.* spellings gain no primary. Command create/edit
+  exposes no saved model/provider/preset/depth; old model/model_override source is read-only retirement inspection
+  and omitted by commit/import. Model/depth comes from the shared defaults list or explicit run picker.
 gui_related: true
-gui_classification_reason: This companion resolves every selected Commands and Shortcuts manager control to its typed local action, Settings value route, or view-only classification without adding a visible command.
-depends_on: [UCC-165, CS-081]
-unblocks: [WM-059]
+gui_classification_reason: This companion resolves every selected Commands and Shortcuts manager control to
+  its typed local action, Settings value route, or view-only classification without adding a visible command.
+depends_on:
+- UCC-165
+- CS-081
+unblocks:
+- WM-059
 acceptance_criteria:
-  - Zero catalog rows are added; the eight commands.* IDs appear only as referenced local actions with sole future handler handlers::commands::apply_local_action.
-  - Every selected mutating control resolves to a commands.* local action or to cmd.settings.transaction.preview/apply against extensions.commands.keyboard-shortcuts, extensions.commands.shortcut-hints, extensions.commands.keyboard-layout, or extensions.commands.command-palette-visibility.
-  - Presentation controls are classified view-only with no dispatch; file roots never follow the Settings scope selector.
-  - No row ID uses a per-command-name, per-binding, custom-command or shortcut namespace alias forbidden by the CS-081 contract, and no retired commands.save_* spelling is reused.
-  - The seven UCC-165 primaries stay mapped exactly once each; no EventRecord, native handler, or runtime is claimed.
-validation_surfaces: [Plans/touch_closure.json, Plans/settings_system_contract_fixtures.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-plan-index.py validate]
+- Zero catalog rows are added; the eight commands.* IDs appear only as referenced local actions with sole future
+  handler handlers::commands::apply_local_action.
+- Every selected mutating control resolves to a commands.* local action or to cmd.settings.transaction.preview/apply
+  against extensions.commands.keyboard-shortcuts, extensions.commands.shortcut-hints, extensions.commands.keyboard-layout,
+  or extensions.commands.command-palette-visibility.
+- Presentation controls are classified view-only with no dispatch; file roots never follow the Settings scope
+  selector.
+- No row ID uses a per-command-name, per-binding, custom-command or shortcut namespace alias forbidden by the
+  CS-081 contract, and no retired commands.save_* spelling is reused.
+- The seven UCC-165 primaries stay mapped exactly once each; no EventRecord, native handler, or runtime is
+  claimed.
+- No retired command model field is offered, written, imported as active configuration or applied during execution.
+validation_surfaces:
+- Plans/touch_closure.json
+- Plans/settings_system_contract_fixtures.json
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
 risk_class: central_admission_alias_collision_or_simulated_success
 reasoning_tier: high
 context_scope: commands_shortcuts_central_consumers
-implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/touch_closure.json]
-node_compile_hint: {mode: static_command_catalog_reference_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Commands_System.md#CS-081, Plans/commands_shortcuts_contracts.schema.json, Concepts/pm7-tools/settings_refresh/managers/24-commands.js, reports/packet-integration-completion-20260926/commands-shortcuts.md]
-preserved_exact_tokens: [commands.create, commands.update, commands.delete, commands.preview, commands.import_preview, commands.import_commit, commands.export, commands.reset_all, handlers::commands::apply_local_action, route:settings/commands-shortcuts, extensions.commands.keyboard-shortcuts, extensions.commands.shortcut-hints, extensions.commands.keyboard-layout, extensions.commands.command-palette-visibility, handler_unavailable, cmd.settings.transaction.preview, cmd.settings.transaction.apply, commands.save_new, commands.save_override, commands.save_existing]
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: static_command_catalog_reference_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Commands_System.md#CS-081
+- Plans/commands_shortcuts_contracts.schema.json
+- Concepts/pm7-tools/settings_refresh/managers/24-commands.js
+- reports/packet-integration-completion-20260926/commands-shortcuts.md
+- DL-476; settings batch3 fix round r1, 2026-11-12
+preserved_exact_tokens:
+- commands.create
+- commands.update
+- commands.delete
+- commands.preview
+- commands.import_preview
+- commands.import_commit
+- commands.export
+- commands.reset_all
+- handlers::commands::apply_local_action
+- route:settings/commands-shortcuts
+- extensions.commands.keyboard-shortcuts
+- extensions.commands.shortcut-hints
+- extensions.commands.keyboard-layout
+- extensions.commands.command-palette-visibility
+- handler_unavailable
+- cmd.settings.transaction.preview
+- cmd.settings.transaction.apply
+- commands.save_new
+- commands.save_override
+- commands.save_existing
 negative_constraints:
-  - Do not add a catalog row for any commands.* local action.
-  - Do not mint a cmd.* primary from a preset name, binding identity, or rejected alias.
-  - Do not claim a native dispatcher, handler, rendered control, receipt, event, or runtime from static reference.
-owner_hints: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Settings_System.md]
-owner_boundary_notes: [Commands System owns the local-action census and file semantics; Settings owns transaction execution; this catalog owns the control-resolution reference only.]
+- Do not add a catalog row for any commands.* local action.
+- Do not mint a cmd.* primary from a preset name, binding identity, or rejected alias.
+- Do not claim a native dispatcher, handler, rendered control, receipt, event, or runtime from static reference.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/Settings_System.md
+owner_boundary_notes:
+- Commands System owns the local-action census and file semantics; Settings owns transaction execution; this
+  catalog owns the control-resolution reference only.
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-081, ContractName:Plans/DRY_Rules.md#DR-042, ContractName:Plans/touch_closure.json
@@ -16857,12 +16932,12 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 | `run_dock` | The one to three lines above the composer that carry live runs and needs-you items; transcript-backed items follow ACD-476’s offscreen rule, owner-projected Work items use their own identity. | `cmd.collaboration.open`, `cmd.questionnaire.resume`, `cmd.chat.processes.open` |
 | `wonderer_workspace` | The BrainStorm Wonderer workspace, an editor-pane document like the run view (CWR-020). | `cmd.brainstorm.synthesize_plan`, `cmd.collaboration.pause`, `cmd.collaboration.resume`, `cmd.collaboration.research_lead` (DL-218) |
 | `questionnaire_card` | The existing questionnaire host's question and What we agreed cards; this surface ID is newly registered by UCC-206 under DL-218. | `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.grill_me.wrap_up`, `cmd.questionnaire.grill_me.confirm`, `cmd.questionnaire.grill_me.keep_going` |
-| `memory_proposal_line` | The one in-chat line that proposes a memory for review (AMS-047). | `cmd.chat.teach.open_memory` |
+| `memory_save_receipt` | Saved to memory · View after a durable save; opens the shared Memory page with the saved note selected (DL-475). | `cmd.chat.teach.open_memory` |
 | `bsd_note` | The Back Seat Driver advisor note in the transcript, with its catch-up, failure and safety lines (BSD-030). | `cmd.bsd.finding.open`, `cmd.bsd.assignment.resume`, `cmd.bsd.assignment.retry`, `cmd.chat.open_thread_context_details` |
 | `schedule_sheet` | The Schedule Message sheet. The wand row only opens it; its primary commits. | `cmd.chat.schedule_message` |
 | `scheduled_message_card` | A scheduled message in the transcript (SQR-012). | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.chat.open_thread` |
 | `schedule_manager` | The Scheduled and Automations manager. | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.execution_window.update`, `cmd.execution_window.cancel`, `cmd.chat.open_thread`, `cmd.chat.plan.open_version` (a build row's Open plan, DL-157) |
-| `memory_sheet` | The Memory sheet. | `cmd.chat.memory.verify`, `cmd.chat.memory.pin`, `cmd.chat.memory.discard`, `cmd.chat.memory.preview_capsule`, `cmd.chat.memory.toggle_auto_save_unverified`, `cmd.chat.teach.capture` |
+| `memory_sheet` | The same Memory page as Settings, opened as a sheet (DL-475). | `cmd.chat.memory.add`, `cmd.chat.memory.edit`, `cmd.chat.memory.delete` |
 | `message_files_row` | The files row under an assistant message that changed files (ACD-478). It opens the Revert confirm sheet, which is not a command. | none of its own; it leads to `revert_confirm` |
 | `revert_confirm` | The Revert confirm sheet over the turn's change manifest (ACD-478). | `cmd.chat.revert` |
 | `chat_header` | The chat header title and its states (ACD-479). | `cmd.chat.thread.regenerate_title` |
@@ -16883,9 +16958,9 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 - `cmd.chat.plan.build_with_crew`: the Crew configuration sheet in Build With Crew mode is its GUI producer. That sheet's Start dispatches this command and never `cmd.collaboration.start`; one atomic PlanRun and CrewRun (MODAL-013).
 - `cmd.chat.revert`: only the `revert_confirm` primary dispatches it. The sheet is the confirmation, and the `expected_turn_manifest_sha256` it sends is the hash of the manifest the sheet shows. Opening the sheet from `message_files_row`, the wand row, Changes or the message menu is not a command. The outcome is the FileSafe restore outcome; there is no `kept` outcome and no conflict-dismissal outcome, and leaving the files as they are is a local dismiss that writes no record. "See what's blocking it" only opens the Revert document at that file.
 - `cmd.chat.thread.regenerate_title`: gains the `chat_header` surface. Its label is set by UCC-173 (DL-134).
-- `cmd.chat.teach.capture` opens the Teach sheet from the wand and the Memory sheet, and carries `mode` (`new`, or `correct` for editing an existing rule). The sheet's save is `cmd.chat.teach.confirm` with the `TeachConfirmRequest` fields of ACD-477; its Cancel, ×, Escape and scrim are `cmd.chat.teach.cancel`.
-- `cmd.chat.teach.open_memory` stays the one memory route: the wand's "Memory…" and the proposal line's Review both reach it.
-- `cmd.chat.memory.preview_capsule`: "See what your next message will include" on the `memory_sheet` is this row, a preview computation with no persisted domain event.
+- `cmd.chat.teach.capture` opens the separate Teach sheet from the wand and Instructions, and carries `mode` (`new`, or `correct` for editing an existing rule). The sheet's save is `cmd.chat.teach.confirm` with the `TeachConfirmRequest` fields of ACD-477; its Cancel, ×, Escape and scrim are `cmd.chat.teach.cancel`.
+- `cmd.chat.teach.open_memory` stays the one memory route: the wand's "Memory…", the chat-header Memory button and the successful-save View reach the same Memory page; the old proposal line is retired (DL-475).
+- DL-475 retires the user-facing capsule preview; its compatibility/support definition has no ordinary producer.
 - `cmd.questionnaire.resume`: BrainStorm "Answer now" on `run_dock` and on `brainstorm_card` opens the existing questionnaire. While the questionnaire family is `candidate_not_registered`, both render disabled with `command_not_registered`.
 - `cmd.runtime.approve` and `cmd.runtime.decline`: a needs-you decision is taken only on its `workflow_card`. The `run_dock` line points to the card and never takes a permission decision.
 
@@ -16898,37 +16973,39 @@ plan_unit_id: UCC-169
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'The controls this unit covers add source surfaces, not commands; the redesign''s nine new
-  command identities are registered in UCC-171 and UCC-174 (CDRY-022, CDRY-023). New surfaces: run_dock, wonderer_workspace,
-  memory_proposal_line, bsd_note, schedule_sheet, scheduled_message_card, schedule_manager, memory_sheet, message_files_row,
-  revert_confirm and chat_header. Existing surfaces join more rows: mode_menu, natural_language and plan_schedule
-  produce cmd.collaboration.configure; wand produces cmd.chat.teach.open_memory and cmd.chat.teach.capture;
-  brainstorm_card and run_dock produce cmd.questionnaire.resume for BrainStorm "Answer now", disabled with
-  command_not_registered while the family is candidate_not_registered; workflow_card alone produces cmd.runtime.approve,
-  cmd.runtime.decline and cmd.permissions.review_request; review and Chat Room cards and panels produce cmd.chat.todos.open.
-  memory_sheet produces cmd.chat.memory.preview_capsule, a preview computation with no persisted domain event.
-  cmd.chat.plan.build_with_crew is produced by the Crew sheet in Build With Crew mode and never decomposes
-  into cmd.collaboration.start. cmd.chat.revert is dispatched only by revert_confirm, whose expected_turn_manifest_sha256
-  is the hash of the manifest it shows; there is no kept or conflict-dismissal outcome. chat_header produces
-  cmd.chat.thread.regenerate_title, whose label UCC-173 sets. cmd.chat.teach.capture carries mode new or correct;
-  the Teach sheet saves through cmd.chat.teach.confirm and closes through cmd.chat.teach.cancel. Every added
-  surface takes the UCC-156 availability and disabled-reason obligation. The Plan card''s Cancel schedule control
-  produces cmd.execution_window.cancel from plan_card (SQR-013, DL-138), alongside schedule_manager; it cancels
-  only the future execution schedule through the existing request, never an already-running plan. PM7 S5: wand
-  Pip… is one Settings-editor producer, ui.settings.pip_editor.open; part/preset changes reuse UCC-120 Settings
-  transactions, no chat capability or new mutation command.
-
-
-  Current projects-refresh contract: The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration
-  kinds, participant/message actions and Crew Auto admit explicit app siblings and original exact Project contracts.
-  Scope, original accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config
-  revisions and canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew
-  bindings. No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification
-  is revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and
-  Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults to linked
-  new destination records after safe stop/fence. The exact consumer contract is UCC-218/WM-104 and Plans/projects_refresh_command_bindings.json.
-  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
-  remain as specified; unavailable handlers remain handler_unavailable.'
+canonical_text: 'The controls this unit covers add source surfaces, not commands; the redesign''s nine
+  new command identities are registered in UCC-171 and UCC-174 (CDRY-022, CDRY-023). New surfaces: run_dock,
+  wonderer_workspace, memory_save_receipt, bsd_note, schedule_sheet, scheduled_message_card, schedule_manager,
+  memory_sheet, message_files_row, revert_confirm and chat_header. Existing surfaces join more rows: mode_menu,
+  natural_language and plan_schedule produce cmd.collaboration.configure; wand produces cmd.chat.teach.open_memory
+  and cmd.chat.teach.capture; brainstorm_card and run_dock produce cmd.questionnaire.resume for BrainStorm
+  "Answer now", disabled with command_not_registered while the family is candidate_not_registered; workflow_card
+  alone produces cmd.runtime.approve, cmd.runtime.decline and cmd.permissions.review_request; review and
+  Chat Room cards and panels produce cmd.chat.todos.open. DL-475: memory_sheet is the shared Memory page
+  and produces cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete. The chat_header Memory
+  button, wand and successful-save memory_save_receipt View produce cmd.chat.teach.open_memory, the same
+  shared-page route; the save receipt selects the saved note. No memory_proposal_line or memory preview
+  producer remains. Teach stays separate in Instructions. cmd.chat.plan.build_with_crew is produced by
+  the Crew sheet in Build With Crew mode and never decomposes into cmd.collaboration.start. cmd.chat.revert
+  is dispatched only by revert_confirm, whose expected_turn_manifest_sha256 is the hash of the manifest
+  it shows; there is no kept or conflict-dismissal outcome. chat_header produces cmd.chat.thread.regenerate_title,
+  whose label UCC-173 sets. cmd.chat.teach.capture carries mode new or correct; the Teach sheet saves
+  through cmd.chat.teach.confirm and closes through cmd.chat.teach.cancel. Every added surface takes the
+  UCC-156 availability and disabled-reason obligation. The Plan card''s Cancel schedule control produces
+  cmd.execution_window.cancel from plan_card (SQR-013, DL-138), alongside schedule_manager; it cancels
+  only the future execution schedule through the existing request, never an already-running plan. PM7
+  S5: wand Pip… is one Settings-editor producer, ui.settings.pip_editor.open; part/preset changes reuse
+  UCC-120 Settings transactions, no chat capability or new mutation command. Current projects-refresh
+  contract: The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration kinds, participant/message
+  actions and Crew Auto admit explicit app siblings and original exact Project contracts. Scope, original
+  accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config revisions and
+  canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew bindings.
+  No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification is
+  revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and
+  Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults
+  to linked new destination records after safe stop/fence. The exact consumer contract is UCC-218/WM-104
+  and Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay resources and all unrelated
+  PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable handlers remain handler_unavailable.'
 gui_related: true
 gui_classification_reason: Names the visible sheets, cards, dock lines and header that produce existing commands,
   and their disabled states.
@@ -16953,17 +17030,13 @@ unblocks:
 - UCC-172
 - CS-086
 acceptance_criteria:
-- The Plan card and schedule manager are admitted producers of cmd.execution_window.cancel, with unchanged
-  cancellation custody.
-- Each surface in the two tables appears in the production wiring surface list of every row it names, and in
-  no other row because of this addendum.
-- run_dock never produces cmd.runtime.approve, cmd.runtime.decline or cmd.permissions.review_request.
-- Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start.
-- cmd.chat.revert has no kept outcome and is dispatched only from revert_confirm.
-- BrainStorm Answer now renders disabled with command_not_registered while the questionnaire family is candidate_not_registered.
-- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
-  refusal and the exact command/local/tool binding from UCC-218; no native/event/governance proof follows from
-  static closure.
+  - "The Plan card and schedule manager are admitted producers of cmd.execution_window.cancel, with unchanged cancellation custody."
+  - "Every current producer in the current tables appears in the production wiring surface list of its owner row. Retired compatibility rows admit no ordinary producer, source preview, memory-use decoration or verification/pinning control."
+  - "run_dock never produces cmd.runtime.approve, cmd.runtime.decline or cmd.permissions.review_request."
+  - "Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start."
+  - "cmd.chat.revert has no kept outcome and is dispatched only from revert_confirm."
+  - "BrainStorm Answer now renders disabled with command_not_registered while the questionnaire family is candidate_not_registered."
+  - "Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return refusal and the exact command/local/tool binding from UCC-218; no native/event/governance proof follows from static closure."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -16987,6 +17060,8 @@ source_lineage:
   lines B-CMD-03, B-CMD-04, B-ACD-12
 - Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - cmd.execution_window.cancel
 - plan_card
@@ -17026,6 +17101,7 @@ negative_constraints:
   receipt surfaces; UCC-172, UCC-173 and UCC-175 carry the owner's answers and the lead's rulings on these.
 - Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
   authority.
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md
@@ -17047,7 +17123,7 @@ In the closure wave on 2026-09-27, three of them were settled. The owner confirm
 
 ### UCC-170 - Wand Module Command Census
 
-The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign initially admitted 188 product controls. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing that historical census to 195; S5 adds Pip… as a Settings disposition for the current total of 196; the retired Ask Everyone remains classified as No producer.
+The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign initially admitted 188 product controls. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing that historical census to 195; S5 adds Pip… as a Settings disposition for the current total of 196; the retired Ask Everyone remains classified as No producer, and DL-475 makes See which rule and Ask for a fix No producer too (rule checks stay internal).
 
 Each control has exactly one of these dispositions:
 - **Command**: it dispatches the named row unchanged.
@@ -17264,11 +17340,22 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Turn back on (automations paused by you) | New, `cmd.runtime.automation_pause.set` with paused false (UCC-174, DL-136). This and the switch are the only controls that clear the pause. | `schedule_manager` |
 | Done in the manager | View | `schedule_manager` |
 
-**Memory (11)**
+**Memory (current, DL-475)**
 
 | Control | Disposition | Surfaces |
 |---|---|---|
-| Wand "Memory…"; Review on the proposal line | Command, `cmd.chat.teach.open_memory` | `wand`, `memory_proposal_line` |
+| Wand Memory, chat-header Memory and successful Saved to memory · View | Existing cmd.chat.teach.open_memory; the same page/sheet, selecting the saved note for View | wand, chat_header, memory_save_receipt |
+| On/off | Existing Settings-bound memory.retention.enabled through the Settings owner | memory_sheet |
+| Search, This project / Every project, list selection and Archived | Local view state in the same Memory page/sheet | memory_sheet |
+| Add, Edit, Delete | Existing cmd.chat.memory.add, cmd.chat.memory.edit, cmd.chat.memory.delete with their typed scope/revision/commit contracts | memory_sheet |
+
+**Retired Memory mapping (compatibility only; no ordinary UI producers)**
+
+Every row below preserves historical command/surface vocabulary only. None produces an ordinary GUI control, receipt or preview, and none overrides the current table or UCC-169/171 under DL-475. Existing support/compatibility codecs remain subject to their owners.
+
+| Historical control | Historical disposition (not a current producer) | Historical surface |
+|---|---|---|
+| Wand "Memory…", chat-header Memory button and Saved to memory · View | Command, `cmd.chat.teach.open_memory` | `wand`, `chat_header`, `memory_save_receipt` |
 | Tabs, filter, selecting a row | View | `memory_sheet` |
 | "See what your next message will include" | Command, `cmd.chat.memory.preview_capsule` | `memory_sheet` |
 | Verify, Pin or Unpin, Discard | Command, `cmd.chat.memory.verify`, `cmd.chat.memory.pin` (pinned), `cmd.chat.memory.discard` | `memory_sheet` |
@@ -17285,15 +17372,15 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Control | Disposition | Surfaces |
 |---|---|---|
 | Opening Teach: the wand's "Teach…", /teach, natural language, "Save as a rule…", "Teach a rule" | Command, revised, `cmd.chat.teach.capture`. Every entry opens the Teach sheet (DL-127, UCC-172). | `slash`, `natural_language`, `message_menu`, `wand`, `teach_document` |
-| Rule text, examples, scope, "safe for my other projects", Locked, Replace or Keep both | Draft (`TeachConfirmRequest`, including locked, UCC-172) | `teach_capture` |
+| Written rule text and its existing owner scope | Draft in the instruction owner; no lock/conflict/source/rollback chooser. Saved notes use AMS-141 instead. | `teach_capture` |
 | Save rule; Save and replace; Save as version 2 | Command, `cmd.chat.teach.confirm` | `teach_capture` |
 | Cancel, ×, Escape, scrim | Command, `cmd.chat.teach.cancel` | `teach_capture` |
-| Receipt "Rule saved · View" | Command, `cmd.chat.teach.open_memory` | `teach_receipt` |
-| "See what your next message will include" in the taught-rules document | Command, `cmd.chat.memory.preview_capsule` | `teach_document` |
-| Edit a rule | Command, `cmd.chat.teach.capture` with mode correct | `teach_document`, `memory_sheet` |
-| Lock, Unlock | New, `cmd.chat.teach.set_lock` (UCC-171) | `teach_document` |
-| Turn off, and its confirmation "Keep it" or "Turn off" | New, `cmd.chat.teach.revoke` (UCC-171). Keep it is View. | `teach_document`, `memory_sheet` |
-| "From your message"; Open the original message | View. Open the original message is `cmd.chat.open_thread` with route_target message. | `teach_document` |
+| Receipt "Rule saved · View" | Existing Instructions navigation; separate from the saved-note Memory page (DL-475) | `teach_receipt` |
+| "See what your next message will include" in the taught-rules document | Retired by DL-475; no ordinary producer. cmd.chat.memory.preview_capsule is internal compatibility/support only. | — |
+| Edit a written rule | Existing instruction owner, `cmd.chat.teach.capture` with mode correct; absent from Memory | `teach_document` |
+| Lock, Unlock | Retired ordinary control (DL-475); exact command remains internal compatibility only. | — |
+| Turn off a written rule, and its confirmation "Keep it" or "Turn off" | Existing instruction owner, `cmd.chat.teach.revoke` (UCC-171). Keep it is View; absent from Memory. | `teach_document` |
+| Historical "From your message" source control | Retired ordinary control; retained source identity stays internal. | — |
 | Export | New, `cmd.chat.memory.export`, one export for memory notes and taught rules (UCC-171) | `teach_document` |
 
 **Revert Last Agent Edit (10)**
@@ -17343,34 +17430,46 @@ plan_unit_id: UCC-170
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'The wand-module command census classifies all 196 product controls of the redesigned Assistant wand
-  modules: the accepted control census plus the ELI5 dot, "Explain this reply simply" and the "Pause all automations"
-  switch, which the closure answers add (DL-126, DL-136), plus See which rule and Ask for a fix on the taught-rule note
-  (DL-138), plus the Chat Room setup check and run switch for Pause between rounds (DL-231). Ask Everyone has No producer
-  because Start starts round 1; cmd.chat_room.next_round is only the user''s start of a round at the switch-on between-round
-  wait. Automatic starts dispatch nothing. The setup check is a workflow_modal draft; the run switch is cmd.collaboration.reconfigure
-  with set_pause_between_rounds from chat_room_card or chat_room_panel (UCC-207), taking effect at the next round boundary
-  without cancelling a turn. Each control is exactly one of Command (an existing row), Command revised (an existing row
-  with a named revision), New (a UCC-171 or UCC-174 row), Draft, View, Settings (owner transaction), No producer (retired
-  by a named decision, or not drawn in the product) or Open (a named unanswered card or follow-up; none remains). Review
-  and BrainStorm have no wand producer of cmd.collaboration.configure (DL-119). End discussion is cmd.chat_room.end;
-  advisor-note Dismiss is cmd.bsd.finding.dismiss; Don''t wait is cmd.bsd.catch_up.release; Turn off and Lock are cmd.chat.teach.revoke
-  and cmd.chat.teach.set_lock; memory and taught-rule Export is cmd.chat.memory.export; the Wonderer''s Check it is cmd.collaboration.research_lead;
-  cmd.brainstorm.research_lead is its BrainStorm-only compatibility alias (DL-218). Send Findings To Agent is cmd.review.send_findings_to_agent
-  and fills the message box (DL-125). Every Teach entry opens the Teach sheet (DL-127). Recovery buttons use Retry and
-  Recover (DL-118). The ELI5 sheet''s choices and the ELI5 dot are cmd.chat.eli5.set with on, off or inherit from eli5_sheet
-  and composer; the wand''s ELI5 row only opens the sheet; the sheet''s All chats and project levels are Settings on
-  general.interaction.eli5-default; and "Explain this reply simply" is cmd.chat.eli5.explain_reply (DL-126). The "Pause
-  all automations" switch and Turn back on are cmd.runtime.automation_pause.set with paused true and false (DL-136).
-  The Crew Auto receipt''s Change is cmd.chat.crew_auto.open_config from crew_auto_receipt (DL-135). The Crew Auto sheet''s
-  primary is cmd.chat.crew_auto.set with scope project; the chat''s Crew Auto check is cmd.chat.crew_auto.set with scope
-  thread and never opens the sheet first; Allow Crews in this chat is retired into that check (DL-120, CWR-038). A Chat
-  Room message sent mid-round is cmd.collaboration.message with delivery_mode queue, or steer for Send now (DL-112, CWR-024).
-  No control is Open. The Followed or Missed note is saved reply metadata, not an extra action. See which rule is view
-  state; Ask for a fix on message_chrome dispatches cmd.review.send_findings_to_agent with taught_rule_check and obeys
-  UCC-172''s empty-composer, source-thread and no-send contract (DL-138). Amended 2026-10-29 (PM7): S5: census now has
-  196 dispositions, adding wand Pip… → SSYS-056 editor (Settings disposition, no command). Earlier 195 totals are historical.
-  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
+canonical_text: >-
+  The wand-module command census classifies all 196 product controls of the redesigned Assistant
+  wand modules: the accepted control census plus the ELI5 dot, "Explain this reply simply" and the
+  "Pause all automations" switch, which the closure answers add (DL-126, DL-136), plus See which
+  rule and Ask for a fix on the taught-rule note (DL-138; both No producer since DL-475), plus the
+  Chat Room setup check and run switch for Pause between rounds (DL-231). Ask Everyone has No producer because Start starts round
+  1; cmd.chat_room.next_round is only the user's start of a round at the switch-on between-round
+  wait. Automatic starts dispatch nothing. The setup check is a workflow_modal draft; the run switch
+  is cmd.collaboration.reconfigure with set_pause_between_rounds from chat_room_card or
+  chat_room_panel (UCC-207), taking effect at the next round boundary without cancelling a turn.
+  Each control is exactly one of Command (an existing row), Command revised (an existing row with a
+  named revision), New (a UCC-171 or UCC-174 row), Draft, View, Settings (owner transaction), No
+  producer (retired by a named decision, or not drawn in the product) or Open (a named unanswered
+  card or follow-up; none remains). Review and BrainStorm have no wand producer of
+  cmd.collaboration.configure (DL-119). End discussion is cmd.chat_room.end; advisor-note Dismiss is
+  cmd.bsd.finding.dismiss; Don't wait is cmd.bsd.catch_up.release; Turn off uses the instruction
+  owner cmd.chat.teach.revoke; cmd.chat.teach.set_lock is retained internal compatibility with no
+  ordinary Lock/Unlock control; memory and taught-rule Export is cmd.chat.memory.export; the
+  Wonderer's Check it is cmd.collaboration.research_lead; cmd.brainstorm.research_lead is its
+  BrainStorm-only compatibility alias (DL-218). Send Findings To Agent is
+  cmd.review.send_findings_to_agent and fills the message box (DL-125). Every Teach entry opens the
+  Teach sheet (DL-127). Recovery buttons use Retry and Recover (DL-118). The ELI5 sheet's choices
+  and the ELI5 dot are cmd.chat.eli5.set with on, off or inherit from eli5_sheet and composer; the
+  wand's ELI5 row only opens the sheet; the sheet's All chats and project levels are Settings on
+  general.interaction.eli5-default; and "Explain this reply simply" is cmd.chat.eli5.explain_reply
+  (DL-126). The "Pause all automations" switch and Turn back on are cmd.runtime.automation_pause.set
+  with paused true and false (DL-136). The Crew Auto receipt's Change is
+  cmd.chat.crew_auto.open_config from crew_auto_receipt (DL-135). The Crew Auto sheet's primary is
+  cmd.chat.crew_auto.set with scope project; the chat's Crew Auto check is cmd.chat.crew_auto.set
+  with scope thread and never opens the sheet first; Allow Crews in this chat is retired into that
+  check (DL-120, CWR-038). A Chat Room message sent mid-round is cmd.collaboration.message with
+  delivery_mode queue, or steer for Send now (DL-112, CWR-024). No control is Open. DL-475 retires
+  the Followed or Missed note, See which rule and Ask for a fix on message_chrome: rule checks stay
+  internal (AMS-053), no ordinary reply shows a rule-check receipt, and both controls are No
+  producer. The taught_rule_check source variant of cmd.review.send_findings_to_agent remains typed
+  internal compatibility without a GUI producer (UCC-172); Send Findings To Agent keeps its
+  review_card and review_panel producers. Amended 2026-10-29
+  (PM7): S5: census now has 196 dispositions, adding wand Pip… → SSYS-056 editor (Settings
+  disposition, no command). Earlier 195 totals are historical. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.
 gui_related: true
 gui_classification_reason: "Classifies every visible control of the redesigned sheets, cards, dock, run view, header and managers."
 split_recommended: false
@@ -17384,6 +17483,8 @@ acceptance_criteria:
   - "The setup Pause between rounds check is Draft; only the run switch dispatches set_pause_between_rounds through reconfigure."
   - "No Open control is given a command, surface or label before its card or follow-up is answered."
   - "No wand row produces cmd.collaboration.configure for Review or BrainStorm."
+  - "Legacy Teach lock identities do not create an ordinary Lock/Unlock producer or placeholder."
+  - "No ordinary reply produces a Followed or Missed note, See which rule or Ask for a fix (DL-475); taught_rule_check stays internal compatibility."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -17408,6 +17509,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-01"
   - "Plans/Decision_Log.md#DL-112, #DL-118, #DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-134, #DL-135, #DL-136"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - cmd.chat_room.next_round
 - set_pause_between_rounds
@@ -17448,7 +17550,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-169, ContractName:Plan
 
 DL-130 adds all seven new commands. The rows below follow the 2026-09-03 registration columns. An alias census ran over all live `Plans/**` at `origin/main` 3c132c7f3f before registration (CDRY-001). It found no existing command with any of these seven IDs, and no existing row with the same effect under another name.
 
-The six primary rows are canonical owner requests with one named sole future target; DL-218 makes the BrainStorm research row the compatibility alias in UCC-205. None of them asserts that a native dispatcher, handler, runtime, receipt or rendered control exists. Each row starts `handler_unavailable`, and its GUI controls stay disabled with `command_not_registered` until the central command contract layer, Event Authority, storage registration and production wiring close for that row. No page-local handler, alias or toast may simulate success. Mutating rows apply the §2.0B projection-freshness gating clause before dispatch, read their owner availability and exact disabled reason from their state selectors, give identical keyboard and pointer behaviour, and return to the initiating route and focus. The owning documents define what each command does. This catalog registers the identity, the contract names and the producers.
+The six primary rows are canonical owner requests with one named sole future target; DL-218 makes the BrainStorm research row the compatibility alias in UCC-205. None of them asserts that a native dispatcher, handler, runtime, receipt or rendered control exists. Each row starts `handler_unavailable`; current ordinary controls stay disabled with `command_not_registered` until their admission closes. DL-475 permanently retires the ordinary `cmd.chat.teach.set_lock` control, including disabled placeholders; its identity/codecs remain internal compatibility only. No page-local handler, alias or toast may simulate success. Mutating rows apply the §2.0B projection-freshness gating clause before dispatch, read their owner availability and exact disabled reason from their state selectors, give identical keyboard and pointer behaviour, and return to the initiating route and focus. The owning documents define what each command does. This catalog registers the identity, the contract names and the producers.
 
 | Command ID | Label | Description | Preconditions | command_kind | Owner | Request → Result | Sole future target |
 |---|---|---|---|---|---|---|---|
@@ -17457,7 +17559,7 @@ The six primary rows are canonical owner requests with one named sole future tar
 | `cmd.bsd.finding.dismiss` | Dismiss Advice | Closes one emitted Back Seat Driver finding for its current evidence. It stays closed across restart; changed evidence may raise it again as a new finding. It never touches the primary run. | `bsd_finding_present && finding_state == emitted && expected_epoch_current` | `domain_action` | `Plans/Back_Seat_Driver.md` | `BSDFindingDismissRequest` → `BSDFindingDismissResult` | `handlers::bsd::finding_dismiss` |
 | `cmd.bsd.catch_up.release` | Don't Wait | Releases the current catch-up wait at this boundary, so the primary continues at once. The advisor keeps reviewing and its later notes arrive normally. It never pauses or stops Back Seat Driver. | `bsd_assignment_present && catch_up_state == waiting && expected_epoch_current` | `domain_action` | `Plans/Back_Seat_Driver.md` | `BSDCatchUpReleaseRequest` → `BSDCatchUpReleaseResult` | `handlers::bsd::catch_up_release` |
 | `cmd.chat.teach.revoke` | Turn Off Rule | Turns off one taught rule by setting its `revoked_at`. The rule stays in history, and older versions do not come back. | `teaching_present && teaching_not_revoked && expected_revision_current` | `domain_action` | `Plans/assistant-memory-subsystem.md` | `TeachRevokeRequest` → `TeachRevokeResult` | `handlers::assistant_memory::teach_revoke` |
-| `cmd.chat.teach.set_lock` | Lock Rule | Sets or clears the user lock on one taught rule. Only the user can change a locked rule. | `teaching_present && expected_revision_current` | `domain_action` | `Plans/assistant-memory-subsystem.md` | `TeachLockRequest` → `TeachLockResult` | `handlers::assistant_memory::teach_set_lock` |
+| `cmd.chat.teach.set_lock` | Internal legacy lock identity; no visible label | Compatibility/protection only, with no ordinary producer or placeholder. Retained locked records remain protected. | `teaching_present && expected_revision_current` | `domain_action` | `Plans/assistant-memory-subsystem.md` | `TeachLockRequest` → `TeachLockResult` | `handlers::assistant_memory::teach_set_lock` |
 | `cmd.chat.memory.export` | Export Memory | Exports the project's memory notes, its taught rules, or both, through the artifact owner. There is one export for both. | `assistant_memory_available && artifact_export_available` | `domain_action` | `Plans/assistant-memory-subsystem.md` | `MemoryExportRequest` → `ArtifactExportResult` | `handlers::assistant_memory::export` |
 
 Source surfaces for these rows:
@@ -17465,14 +17567,14 @@ Source surfaces for these rows:
 - `cmd.brainstorm.research_lead`: compatibility inputs from `wonderer_workspace` and `brainstorm_panel`; normalize to the canonical `wonderer_workspace` or `workflow_panel` origin under UCC-205 before all gates.
 - `cmd.bsd.finding.dismiss`: `bsd_note`, `bsd_details`.
 - `cmd.bsd.catch_up.release`: `bsd_note`.
-- `cmd.chat.teach.revoke`: `teach_document`, `memory_sheet`.
-- `cmd.chat.teach.set_lock`: `teach_document`.
-- `cmd.chat.memory.export`: `memory_sheet`, `teach_document`.
+- `cmd.chat.teach.revoke`: the existing written-instruction owner (`teach_document`), never `memory_sheet`.
+- `cmd.chat.teach.set_lock`: no ordinary source surface (DL-475); internal compatibility/protection only.
+- `cmd.chat.memory.export`: general data export and `teach_document` (Instructions); no Memory-page Export panel (DL-475).
 
 Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
 Some request fields are fixed here:
-- `TeachLockRequest` carries `locked`: true locks the rule and false unlocks it. Lock and Unlock are the two faces of the one row.
+- Legacy `TeachLockRequest.locked` remains an internal compatibility/protection codec; it produces no ordinary Lock/Unlock control.
 - `MemoryExportRequest` carries `scope`, which is exactly one of `gists`, `teachings` and `all`.
 
 `cmd.runtime.automation_stop.set` is not registered and never will be. It was the audit's draft name for the "Pause all automations" command. DL-136 approved that command as `cmd.runtime.automation_pause.set`, and UCC-174 registers it under that name.
@@ -17482,29 +17584,37 @@ plan_unit_id: UCC-171
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'DL-130 adds seven command rows, each a domain_action with one owner, one request and result
-  contract and one sole future target, and each registered after an alias census over live Plans found no collision:
-  cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not cancelled), cmd.brainstorm.research_lead
-  (Collaborative_Workflows; now the DL-218 alias of cmd.collaboration.research_lead), cmd.bsd.finding.dismiss
-  and cmd.bsd.catch_up.release (Back_Seat_Driver), and cmd.chat.teach.revoke, cmd.chat.teach.set_lock and cmd.chat.memory.export
-  (assistant-memory-subsystem). TeachLockRequest carries locked; MemoryExportRequest carries scope gists, teachings
-  or all. Each row starts handler_unavailable and its controls stay disabled with command_not_registered until
-  central registration, Event Authority, storage and production wiring close. cmd.runtime.automation_stop.set,
-  the audit''s draft name for the pause, is never registered; DL-136 registers the pause as cmd.runtime.automation_pause.set
-  in UCC-174.
-
-
-  Current projects-refresh contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
-  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only Planning Wizard,
-  PRD Builder and Orchestrator retain no-project workflow gates; Project-native actions still require actual
-  targets. Build At atomically commits one frozen schedule/window, creates no run, and never dispatches execution_window.create
-  a second time. Server-owned timers preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target
-  version and fresh authority/Stop checks. App operational pause has independent real Server custody and user-only
-  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly re-admits mapped
-  frozen targets with fresh consent/epochs; no automatic resume, latest-version substitution or duplicate occurrence.
-  The exact consumer contract is UCC-219/WM-105 and Plans/projects_refresh_command_bindings.json. Historical
-  schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified;
-  unavailable handlers remain handler_unavailable.'
+canonical_text: >-
+  DL-130 adds seven command rows, each a domain_action with one owner, one request and result
+  contract and one sole future target, and each registered after an alias census over live Plans
+  found no collision: cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not
+  cancelled), cmd.brainstorm.research_lead (Collaborative_Workflows; now the DL-218 alias of
+  cmd.collaboration.research_lead), cmd.bsd.finding.dismiss and cmd.bsd.catch_up.release
+  (Back_Seat_Driver), and cmd.chat.teach.revoke, cmd.chat.teach.set_lock and cmd.chat.memory.export
+  (assistant-memory-subsystem). TeachLockRequest carries locked; MemoryExportRequest carries scope
+  gists, teachings or all. Each row starts handler_unavailable. Only current ordinary controls may
+  render disabled with command_not_registered until central registration, Event Authority, storage
+  and production wiring close; the retained lock command renders no control.
+  cmd.runtime.automation_stop.set, the audit's draft name for the pause, is never registered; DL-136
+  registers the pause as cmd.runtime.automation_pause.set in UCC-174.  Current projects-refresh
+  contract: All six Plan/Deep Plan strategies, exact approved versions, agent/goal_driven/Crew
+  Build, Build At and scheduled messages/tasks work in app scope through existing owners. Only
+  Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; Project-native
+  actions still require actual targets. Build At atomically commits one frozen schedule/window,
+  creates no run, and never dispatches execution_window.create a second time. Server-owned timers
+  preserve DST/grace/missed-policy/idempotency, frozen text/attachments/target version and fresh
+  authority/Stop checks. App operational pause has independent real Server custody and user-only
+  clear, never a Settings value or missing-as-off. N25 stops/fences source work and explicitly
+  re-admits mapped frozen targets with fresh consent/epochs; no automatic resume, latest-version
+  substitution or duplicate occurrence. The exact consumer contract is UCC-219/WM-105 and
+  Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay resources and all
+  unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable handlers
+  remain handler_unavailable. DL-475 relocates cmd.chat.memory.export to general data export and
+  Instructions; Memory itself has no Export panel. The existing exporter, ArtifactExportResult,
+  pointer evidence and exact authorization remain. No duplicate exporter or all-Project/private-chat
+  enumeration is admitted. DL-475 retains cmd.chat.teach.set_lock and legacy locked request fields
+  for internal compatibility/protection only; no ordinary lock/unlock control is rendered or
+  restored by registration.
 gui_related: true
 gui_classification_reason: Registers the commands behind visible End discussion, Check it, Dismiss, Don't wait,
   Turn off, Lock and Export buttons and their disabled states.
@@ -17521,16 +17631,11 @@ unblocks:
 - CDRY-022
 - WM-063
 acceptance_criteria:
-- Each of the seven rows names exactly one owner document, one request contract, one result contract and one
-  sole future target.
-- Each row's controls render disabled with command_not_registered until its registration, Event Authority,
-  storage and production wiring close.
-- No row, alias or wiring entry exists for cmd.runtime.automation_stop.set; the pause is registered only as
-  cmd.runtime.automation_pause.set (UCC-174).
-- cmd.chat_room.end never settles a room as cancelled.
-- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
-  refusal and the exact command/local/tool binding from UCC-219; no native/event/governance proof follows from
-  static closure.
+  - "Each of the seven rows names exactly one owner document, one request contract, one result contract and one sole future target."
+  - "Each current ordinary control renders disabled; the retained lock command has no ordinary control with command_not_registered until its registration, Event Authority, storage and production wiring close."
+  - "No row, alias or wiring entry exists for cmd.runtime.automation_stop.set; the pause is registered only as cmd.runtime.automation_pause.set (UCC-174)."
+  - "cmd.chat_room.end never settles a room as cancelled."
+  - "Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return refusal and the exact command/local/tool binding from UCC-219; no native/event/governance proof follows from static closure."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -17554,6 +17659,9 @@ source_lineage:
 - 'Plans/Decision_Log.md#DL-130, #DL-136'
 - Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - cmd.chat_room.end
 - cmd.brainstorm.research_lead
@@ -17589,11 +17697,11 @@ This unit adds the surfaces and row revisions that were waiting on the owner's a
 - Every way into Teach opens the same Teach sheet: /teach (`slash`), a natural-language request, the wand's "Teach…", "Save as a rule…" in the message menu, and "Teach a rule" in the taught-rules document. Each dispatches `cmd.chat.teach.capture`.
 - `teach_capture` names that sheet. There is no separate capture card in the chat.
 - The row's description "Captures a durable user→Puppet Master teaching from a slash command, natural language, or the message menu" is superseded as follows: it opens the Teach sheet with a pending capture from any of those entries, and it writes no memory.
-- `TeachConfirmRequest` gains `locked`, the sheet's Locked choice, so a rule can be saved locked. After the save, only `cmd.chat.teach.set_lock` changes the lock.
+- Legacy `TeachConfirmRequest.locked` and `cmd.chat.teach.set_lock` remain internal compatibility/protection only; the current sheet has no Locked choice or lock/unlock action.
 
 **Two new surfaces.**
-- `teach_document`, the taught-rules document, produces `cmd.chat.teach.capture` ("Teach a rule", and Edit with mode correct), `cmd.chat.memory.preview_capsule`, `cmd.chat.teach.set_lock`, `cmd.chat.teach.revoke` and `cmd.chat.memory.export`.
-- `teach_receipt`, the one receipt line that a confirmed change leaves in the chat, produces `cmd.chat.teach.open_memory`.
+- `teach_document` is the existing written-instruction destination for explicit capture/edit/revocation and general export. It produces no lock, source-inspection or saved-note preview control; Memory stays separate.
+- `teach_receipt`, the explicit rule-change receipt, opens Instructions; it is no longer a saved-note Memory producer (DL-475).
 
 **Crew Auto (DL-119, DL-120, DL-135).**
 - `cmd.chat.crew_auto.open_config` is produced by three controls: the "Crew Auto settings…" row in `multi_agent_menu`, the "Settings…" link in the Crew sheet (`workflow_modal`), and the Change control of the Crew Auto note in the chat (`crew_auto_receipt`).
@@ -17615,37 +17723,42 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Every Teach entry (slash, natural language, the wand, the message menu and teach_document) dispatches
-  cmd.chat.teach.capture and opens the one Teach sheet, which teach_capture names; there is no in-chat
-  capture card and capture writes no memory (DL-127). TeachConfirmRequest gains locked; afterwards only
-  cmd.chat.teach.set_lock changes the lock (DL-130). teach_document produces cmd.chat.teach.capture,
-  cmd.chat.memory.preview_capsule, cmd.chat.teach.set_lock, cmd.chat.teach.revoke and
-  cmd.chat.memory.export; teach_receipt produces cmd.chat.teach.open_memory.
-  cmd.chat.crew_auto.open_config is produced by the Crew Auto settings… row in multi_agent_menu and by
-  the Crew sheet's Settings… link in workflow_modal, and by the Change control of the Crew Auto note
-  on crew_auto_receipt, the one line Crew Auto is on for this project that turning Crew Auto on for
-  the project leaves in that chat (DL-135, CWR-038); Manage Defaults… is unchanged, and Review and
-  BrainStorm have no wand producer (DL-119). cmd.chat.crew_auto.set carries scope project or thread:
-  the Crew Auto sheet's primary sends project with the rules and the team in one request, and a chat's
-  Crew Auto check sends thread, setting only that chat's override and never opening the sheet first;
-  Allow Crews in this chat is retired into that check (DL-120, CWR-038).
-  cmd.review.send_findings_to_agent fills the empty composer and never sends, returns
-  ComposerBufferResult and refuses with composer_not_empty (DL-125). eli5_sheet and the inherit value
-  are settled by DL-126 and added in UCC-175.
-  DL-138 reuses cmd.review.send_findings_to_agent for Ask for a fix on message_chrome.
-  ReviewSendFindingsRequest keeps its existing review variant and adds a disjoint taught_rule_check
-  source variant carrying thread_id, reply_message_id and nonempty missed_teaching_refs, whose
-  memory_id and normalized_fact_sha256 identify failed checks on that reply's persisted context record.
-  source_kind is review_findings or taught_rule_check, with no invented review-run or finding IDs. ComposerBufferResult keeps source-specific lineage in metadata. Both
-  variants require the source thread's empty composer, refuse composer_not_empty and never send or
-  execute the fix; only the user sends. CWR-031 and AMS-053 own these source contracts.
+  Every Teach entry (slash, natural language, the wand, the message menu and teach_document)
+  dispatches cmd.chat.teach.capture and opens the one Teach sheet, which teach_capture names; there
+  is no in-chat capture card and capture writes no memory (DL-127). Legacy
+  TeachConfirmRequest.locked and cmd.chat.teach.set_lock retain internal compatibility/protection
+  only (DL-475), with no ordinary lock/unlock control. teach_document produces only the existing
+  requested instruction edits/revocation and general export; it does not produce lock, preview or
+  saved-note source controls; teach_receipt opens Instructions, not the saved-note Memory page
+  (DL-475). cmd.chat.crew_auto.open_config is produced by the Crew Auto settings… row in
+  multi_agent_menu and by the Crew sheet's Settings… link in workflow_modal, and by the Change
+  control of the Crew Auto note on crew_auto_receipt, the one line Crew Auto is on for this project
+  that turning Crew Auto on for the project leaves in that chat (DL-135, CWR-038); Manage Defaults…
+  is unchanged, and Review and BrainStorm have no wand producer (DL-119). cmd.chat.crew_auto.set
+  carries scope project or thread: the Crew Auto sheet's primary sends project with the rules and
+  the team in one request, and a chat's Crew Auto check sends thread, setting only that chat's
+  override and never opening the sheet first; Allow Crews in this chat is retired into that check
+  (DL-120, CWR-038). cmd.review.send_findings_to_agent fills the empty composer and never sends,
+  returns ComposerBufferResult and refuses with composer_not_empty (DL-125). eli5_sheet and the
+  inherit value are settled by DL-126 and added in UCC-175. The historical DL-138 Ask for a fix on
+  message_chrome is retired from ordinary replies. Internal compatibility retains the typed source
+  without a GUI producer. ReviewSendFindingsRequest keeps its existing review variant and adds a
+  disjoint taught_rule_check source variant carrying thread_id, reply_message_id and nonempty
+  missed_teaching_refs, whose memory_id and normalized_fact_sha256 identify failed checks on that
+  reply's persisted context record. source_kind is review_findings or taught_rule_check, with no
+  invented review-run or finding IDs. ComposerBufferResult keeps source-specific lineage in
+  metadata. Internal compatibility variants require the source thread's empty composer, refuse
+  composer_not_empty and never send or execute the fix; only the user sends. CWR-031 and AMS-053 own
+  these source contracts. DL-475 removes the preview_capsule GUI producer and routes the explicit
+  Teach receipt to Instructions rather than the saved-note Memory editor. General data export
+  retains the existing memory exporter.
 gui_related: true
 gui_classification_reason: "Names the visible Teach sheet entries, taught-rules document, receipt, Crew Auto rows and note, and Send Findings behaviour."
 split_recommended: false
 depends_on: [UCC-169, UCC-171, ACD-477, CWR-038]
 unblocks: [UCC-170, UCC-175, WM-063]
 acceptance_criteria:
-  - "Ask for a fix reuses the existing command with saved reply/check identities, never fabricated review findings, and refuses to overwrite a non-empty composer."
+  - "Review findings reuse the existing command and empty-composer/no-send owner; taught_rule_check remains internal compatibility with no ordinary reply/fix-link producer."
   - "Every Teach entry opens the same Teach sheet through cmd.chat.teach.capture, and no in-chat capture card exists."
   - "cmd.review.send_findings_to_agent never sends a message and refuses with composer_not_empty when the composer holds text."
   - "No wand producer of cmd.collaboration.configure exists for Review or BrainStorm."
@@ -17666,11 +17779,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f sections 4.1 (REV-5, REV-10, REV-11, REV-15) and 4.2"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMD-04"
-  - "Plans/Decision_Log.md#DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-135"
-  - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/commands.md sha256:1f1544580d18467a03931d8e208fbe24a253e3c4b97f14cdcd5b4f1acf7e2c6f
+  sections 4.1 (REV-5, REV-10, REV-11, REV-15) and 4.2
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493
+  lines B-CMD-03, B-CMD-04
+- 'Plans/Decision_Log.md#DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-135'
+- Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "source_kind"
   - "review_findings"
@@ -17721,10 +17839,10 @@ The owner's answers set the labels below. Each label that has changed supersedes
 | The helper, Coordinator and Review-partial recovery rows, and a Revert after a conflict | Retry, not "Try again" or "Check again" | DL-118 |
 | A Revert that needs recovery | Recover, not "Open recovery" | DL-118 |
 | `cmd.chat.crew_auto.open_config` | The command label stays Configure Crew Auto. The wand row reads "Crew Auto settings…", and "Manage Defaults…" is unchanged. | DL-119 |
-| The seven UCC-171 rows | End Discussion, Check It, Dismiss Advice, Don't Wait, Turn Off Rule, Lock Rule (the control reads Lock or Unlock), Export Memory | DL-130 |
+| The seven UCC-171 rows | End Discussion, Check It, Dismiss Advice, Don't Wait, Turn Off Rule, internal-only legacy Lock Rule identity (no control), general Export Memory | DL-130 |
 
 The following are display words only; the data keeps its own words:
-- "Notes it took" is shown for Gist Review.
+- Memory is the saved-note page label. Notes it took and Gist Review remain historical identifiers only (DL-475).
 - "snapshot" is shown for the frozen target pack.
 - "helpers" is shown for participants (DL-124).
 
@@ -17737,13 +17855,14 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   cmd.chat.thread.regenerate_title is labelled Name it for me, superseding Regenerate Title, and
-  cmd.brainstorm.synthesize_plan is labelled Write the plan, superseding Synthesize Plan (DL-134). The
-  collaboration sheets' Settings-transaction control is labelled Save as default (DL-134, label only).
-  Recovery buttons say Retry and Recover, never Try again, Check again or Open recovery (DL-118).
-  cmd.chat.crew_auto.open_config keeps the label Configure Crew Auto; its wand row reads Crew Auto
-  settings… and Manage Defaults… is unchanged (DL-119). The seven new rows are labelled End Discussion,
-  Check It, Dismiss Advice, Don't Wait, Turn Off Rule, Lock Rule and Export Memory (DL-130). Gist
-  Review, frozen target pack and participant keep their data words and show Notes it took, snapshot and
+  cmd.brainstorm.synthesize_plan is labelled Write the plan, superseding Synthesize Plan (DL-134).
+  The collaboration sheets' Settings-transaction control is labelled Save as default (DL-134, label
+  only). Recovery buttons say Retry and Recover, never Try again, Check again or Open recovery
+  (DL-118). cmd.chat.crew_auto.open_config keeps the label Configure Crew Auto; its wand row reads
+  Crew Auto settings… and Manage Defaults… is unchanged (DL-119). The seven new rows are labelled
+  End Discussion, Check It, Dismiss Advice, Don't Wait, Turn Off Rule, the internal-only legacy Lock
+  Rule identity and Export Memory (DL-130). The saved-note page shows Memory; Gist Review and Notes
+  it took are historical identities only. Frozen target pack and participant retain snapshot and
   helpers. DL-138 sets cmd.chat_room.summarize to Summarize Now (formerly Summarize Room), and
   cmd.review.run_again to Run Another Review (formerly Run Review Again).
 gui_related: true
@@ -17756,6 +17875,7 @@ acceptance_criteria:
   - "The regenerate-title and synthesize-plan rows show Name it for me and Write the plan, and the old labels appear only as superseded history."
   - "No recovery button says Try again, Check again or Open recovery."
   - "Gist Review, frozen target pack and participant remain the data words."
+  - "No ordinary producer labels a surface Notes it took/Gist Review or offers a lock/unlock control; Memory is the saved-note page label."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -17774,6 +17894,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-05"
   - "Plans/Decision_Log.md#DL-118, #DL-119, #DL-124, #DL-130, #DL-134"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "DL-138"
   - "Run Another Review"
@@ -18133,7 +18254,7 @@ The 5.6 Pro chat round (DL-140 to DL-151, FinalGUISpec F3-584 to F3-597, F3-616,
 | A setup sheet's dropdown trigger, pressed again (F3-568) | View | collaboration and wand sheets |
 | Schedule Message send-time track (F3-592) | Draft (already in the Schedule Message table above) | `schedule_sheet` |
 | Technical details (F3-617) | View on a setup sheet's Advanced page; no producer anywhere else | collaboration sheets, Back Seat Driver sheet |
-| Show raw data on a record | View | message and scheduled-message records, Memory |
+| Show raw data on a record | Existing non-Memory diagnostic view only; absent from Memory and ordinary reply/context surfaces | owner-admitted diagnostic records only |
 | Hover tags, their press-to-close, and activity preview dwell (F3-590, F3-523) | Presentation, no command (UIW-013) | every chat surface |
 | NieR family and Adjust choices (F3-589, DL-257) | Settings owner SSYS-043 through cmd.settings.transaction.preview/apply. | Settings |
 

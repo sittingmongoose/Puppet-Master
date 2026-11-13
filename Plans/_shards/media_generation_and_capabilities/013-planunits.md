@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L1140-L6217
+Source lines: L1145-L6230
 
-Source SHA256: `9539f6d43a5bd1956ca4f7350026d0a12c52571967fd736b20270c9fe83d9403`
+Source SHA256: `abbe7955eb2492e271b9acd2109b60adec8bb157229bee863f206b57ba69825d`
 
 ---
 
@@ -1126,7 +1126,15 @@ plan_unit_id: MGAC-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Media routing resolves provider/runtime, auth family, concrete media-capable runtime surface, and requested/effective runtime snapshot through the product-wide shared runtime identity model, not feature-local runtime-state fields.
+canonical_text: >-
+  Media routing resolves provider/runtime, auth family, concrete media-capable runtime surface, and
+  requested/effective runtime snapshot through the product-wide shared runtime identity model, not
+  feature-local runtime-state fields. Enabled image/video/tts/music generation uses the one per-kind
+  model/depth row in Settings > Models, with concrete route eligibility, This project then Everywhere and
+  no route until chosen; a per-request model_override retains priority and changes no default. Reading
+  pictures names the first bridge route; automatic further fallback remains MS-116 policy/disclosure
+  gated, with no separately saved backup. Former provider-only or backup-only scalar values are
+  compatibility reads requiring review rather than an inferred model or silently repurposed primary.
 gui_related: false
 gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
 split_recommended: true

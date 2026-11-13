@@ -85,6 +85,24 @@
     }
     return out.slice();
   };
+  /* Keep the service's access as a projection of its default account. Legacy accounts get a
+     snapshot before another account can become default; an unknown replacement never borrows its key. */
+  const rememberDefaultAccess = f => {
+    if (!connected(f) || !f.defaultAccount || f.defaultAccount === 'None') return;
+    f.accountAccess = f.accountAccess || {};
+    f.accountAccess[f.defaultAccount] = {
+      via: f.pushVia || 'ssh', keyId: f.pushKeyId || '', ssh: f.ssh,
+      checked: f.lastCheck, lastTest: f.lastTest, pushAccess: f.pushAccess, scopes: (f.scopes || []).slice()
+    };
+  };
+  const restoreDefaultAccess = f => {
+    const access = (f.accountAccess || {})[f.defaultAccount];
+    Object.assign(f, access ? {
+      pushVia: access.via, pushKeyId: access.keyId || '', ssh: access.ssh,
+      lastCheck: access.checked || '', lastTest: access.lastTest || 'Passed',
+      pushAccess: access.pushAccess || 'Ready', scopes: (access.scopes || []).slice()
+    } : { pushVia: '', pushKeyId: '', ssh: 'Not tested', lastCheck: '', lastTest: 'Not run', pushAccess: 'Not set up', scopes: [] });
+  };
   const statusLabel = f => connected(f) ? 'Connected' : f.status === 'needs-signin' ? 'Needs sign-in' : 'Not connected';
   const statusTone = f => connected(f) ? 'ready' : f.status === 'needs-signin' ? 'attention' : 'off';
   const hasSignIn = f => /oauth|sign-in|entra|app/i.test(f.auth || '');
@@ -95,7 +113,11 @@
   const refresh = () => PM51.refresh(ID, { swap: false });
   let migratePins = () => {};
   const repoPill = r => r.state === 'Clean' ? PM51.pill('Ready') : r.state === 'Checking' ? PM51.pill('Checking') : PM51.pill('Needs attention');
-  const repoAddress = r => r.address ? r.address : r.forge === 'Local' ? 'This server only' : r.forge === 'GitHub' ? `github.com/${(byId('github') || {}).defaultAccount || 'you'}/${r.name}` : `${r.name} on ${r.forge}`;
+  /* A repository's address is where it lives on its service; signing out of the service does not move it. A
+     GitHub repository without a saved address is read from the account signed in (never 'None' after a Disconnect,
+     which pins every address first). */
+  const ghOwner = () => { const g = byId('github'); return g && connected(g) && g.defaultAccount && g.defaultAccount !== 'None' ? g.defaultAccount : 'you'; };
+  const repoAddress = r => r.address ? r.address : r.forge === 'Local' ? 'This server only' : r.forge === 'GitHub' ? `github.com/${ghOwner()}/${r.name}` : `${r.name} on ${r.forge}`;
   const repoWorktrees = r => worktrees().filter(w => (w.repo || (repos()[0] || {}).name) === r.name);
   const ownerLabel = w => { const m = /^Goal\s+(\S+)$/.exec(String(w.owner || '')); if (!m) return w.owner === 'User' ? 'You' : w.owner; const g = (state.activeGoals || []).find(x => x.id === m[1]); return g ? `Goal: ${g.name}` : 'A Goal'; };
 
@@ -206,7 +228,9 @@
   function disconnect(f) {
     const accs = accountList(f);
     PM51.confirm(`Disconnect ${f.name}?`, `Puppet Master forgets the ${accs.length > 1 ? `${accs.length} accounts` : `${f.defaultAccount} account`} signed in here. Your repositories on ${f.name} are not touched.`, 'Disconnect', () => {
-      Object.assign(f, { status: 'not-connected', accounts: 0, accountNames: [], defaultAccount: 'None', scopes: [], ssh: 'Not tested', lastTest: 'Not run', pushAccess: 'Not set up', lastCheck: '' });
+      /* the repositories stay where they are: keep each one's address before the account that named it is forgotten */
+      repos().forEach(r => { if (!r.address && r.forge === f.name && r.forge !== 'Local') r.address = repoAddress(r); });
+      Object.assign(f, { status: 'not-connected', accounts: 0, accountNames: [], defaultAccount: 'None', accountAccess: {}, pushVia: '', pushKeyId: '', scopes: [], ssh: 'Not tested', lastTest: 'Not run', pushAccess: 'Not set up', lastCheck: '' });
       if (cfg().service === f.name) cfg().service = 'None';
       saveState(); refresh(); PM51.toast('Disconnected', f.name, 'warning');
     }, true);
@@ -472,9 +496,13 @@
   PM51.on('source-account-disconnect', el => {
     const f = byId(ds(el, 'id')), name = ds(el, 'name');
     if (!f || !name) return;
+    rememberDefaultAccess(f);
+    const previousDefault = f.defaultAccount;
     const names = accountList(f).filter(x => x !== name);
     if (!names.length) { disconnect(f); return; }
     Object.assign(f, { accountNames: names, accounts: names.length, defaultAccount: f.defaultAccount === name ? names[0] : f.defaultAccount });
+    if (f.accountAccess) delete f.accountAccess[name];
+    if (previousDefault !== f.defaultAccount) restoreDefaultAccess(f);
     saveState(); refresh();
     PM51.toast('Account disconnected', `${name} is signed out of ${f.name}. ${names.length} account${names.length === 1 ? '' : 's'} left.`, 'warning');
   });
@@ -540,13 +568,13 @@
   const hostOf = f => f.instanceUrl ? String(f.instanceUrl).replace(/^https?:\/\//, '').replace(/\/.*$/, '') : f.id === 'github' ? 'github.com' : f.id === 'gitlab' ? 'gitlab.com' : f.id === 'bitbucket' ? 'bitbucket.org' : f.id === 'azure' ? 'ssh.dev.azure.com' : (API[f.id] || f.name);
   const sys = () => PM51.sysSsh;
   /* the one-time default: a service that already pushes over SSH names the key it uses */
-  const pushKey = f => { if (f.pushKeyId === undefined && f.pushAccess === 'Ready' && sys() && sys().keys().length) f.pushKeyId = (sys().keys().find(k => !k.old) || sys().keys()[0]).id; return sys() && f.pushKeyId ? sys().keyById(f.pushKeyId) : null; };
+  const pushKey = f => { const id = sys() ? (sys().forgeKeyId ? sys().forgeKeyId(f) : f.pushKeyId) : ''; return id ? sys().keyById(id) : null; };
   const gitTarget = (f, account) => ({ kind: 'git', name: f.name, host: hostOf(f), account: account || f.defaultAccount, canAdd: connected(f) || !!account });
   const accessText = f => f.pushAccess !== 'Ready' ? 'Not set up yet' : f.pushVia === 'https' ? 'HTTPS with a token in the keychain' : pushKey(f) ? `SSH key ${pushKey(f).name}` : 'SSH key';
   function gitAccess(f) {
     if (!sys()) { PM51.toast('SSH keys are not available', 'Open Server & Project Location once, then try again.', 'info'); return; }
     sys().keyWizard({ target: gitTarget(f), keyId: pushKey(f) ? pushKey(f).id : '', refreshWith: () => { saveState(); refresh(); },
-      onDone: id => { Object.assign(f, { pushAccess: 'Ready', pushKeyId: id, pushVia: 'ssh', ssh: 'Healthy', lastTest: 'Passed' }); } });
+      onDone: id => { Object.assign(f, { pushAccess: 'Ready', pushKeyId: id, pushVia: 'ssh', ssh: 'Healthy', lastTest: 'Passed' }); rememberDefaultAccess(f); } });
   }
   function connectWizard(f, reauth) {
     const S = sys(), on = connected(f), browser = hasSignIn(f);
@@ -576,9 +604,18 @@
            starts it — and the count is drawn from the list, so the count and the names can never disagree.
            A legacy count (accounts: 2, no accountNames) already shows a placeholder slot; the add starts from
            those slots and appends. It never replaces them with defaultAccount alone, and never lowers the count. */
+        if (on) rememberDefaultAccess(f);
         const prior = on ? accountList(f) : [];
         const names = !on ? (d.account ? [d.account] : []) : (d.account && !prior.includes(d.account) ? prior.concat(d.account) : prior.slice());
-        Object.assign(f, { status: 'active', accountNames: names, accounts: names.length, defaultAccount: on && !reauth ? (names.includes(f.defaultAccount) && f.defaultAccount ? f.defaultAccount : names[0]) : (d.account || f.defaultAccount), scopes: ['Repository', 'Reviews', 'Automation'], ssh: d.via === 'ssh' ? 'Healthy' : 'Not used', lastTest: 'Passed', pushAccess: 'Ready', pushVia: d.via, pushKeyId: keyId, lastCheck: 'Just now' });
+        /* An added account joins the list and keeps its own Git access (accountAccess); the service's permissions,
+           SSH state and push access stay the default account's, so adding one never rewrites them. A first connect or
+           a reauthorize sets them, since that account is then the one used by default. */
+        const adding = on && !reauth;
+        const access = { via: d.via, keyId, ssh: d.via === 'ssh' ? 'Healthy' : 'Not used', checked: 'Just now', lastTest: 'Passed', pushAccess: 'Ready', scopes: ['Repository', 'Reviews', 'Automation'] };
+        if (adding) {
+          Object.assign(f, { status: 'active', accountNames: names, accounts: names.length, defaultAccount: names.includes(f.defaultAccount) && f.defaultAccount ? f.defaultAccount : names[0] });
+          if (d.account) f.accountAccess = Object.assign({}, f.accountAccess || {}, { [d.account]: access });
+        } else Object.assign(f, { status: 'active', accountNames: names, accounts: names.length, defaultAccount: d.account || f.defaultAccount, scopes: ['Repository', 'Reviews', 'Automation'], ssh: access.ssh, lastTest: 'Passed', pushAccess: 'Ready', pushVia: d.via, pushKeyId: keyId, lastCheck: 'Just now', accountAccess: Object.assign({}, f.accountAccess || {}, d.account ? { [d.account]: access } : {}) });
         if (!cfg().service || cfg().service === 'None') cfg().service = f.name;
         PM51.setSel(ID, f.id); saveState(); refresh();
         PM51.toast(`${f.name} connected`, `Signed in as ${d.account}. Example only: nothing was sent to ${f.name}.`, 'info');
@@ -666,7 +703,24 @@
   PM51.owner(ID, id => { if (GH.includes(id)) { PM51.setTab(ID, 'services'); if (byId('github')) PM51.setSel(ID, 'github'); return; } const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab); });
   [PRESET, FORCE, W + 'default-branch', W + 'worktree-base-dir', 'ai.accounts.github-host-policy', W + 'pre-merge-tests'].forEach(id => PM51.watch(id, () => refresh()));
   /* the pins that lived on each workflow move into the Pinned workflows row once */
-  migratePins = () => { const s0 = sc(); if (s0.o55Pins) return; s0.o55Pins = true; const was = workflows().filter(w => w.pinned).map(w => w.name); workflows().forEach(w => { delete w.pinned; }); if (was.length && !pinned().length && commitSettingValue(PIN, was)) saveState(); };
+  /* FO-164: the fixture's workflows carry their old pins again on every load (Source Control's state is not part of the
+     saved project), so "moved once" is remembered in the saved project itself (state.o55Migrations, which TOME.save
+     keeps and Reset settings to defaults leaves alone). Each load strips the old flags; only the first one moves them
+     into the row. Before this, a load after a reset (the row back to none) pinned them again. */
+  migratePins = () => {
+    const M = state.o55Migrations || (state.o55Migrations = {});
+    const was = workflows().filter(w => w.pinned).map(w => w.name);
+    workflows().forEach(w => { delete w.pinned; });
+    if (M.pins || sc().o55Pins) { M.pins = true; return; }
+    M.pins = true; sc().o55Pins = true;
+    if (was.length && !pinned().length) commitSettingValue(PIN, was);
+    saveState();
+  };
+  /* R9: they move at load (and after any reload of the saved state), not when the Actions tab first draws, so the
+     Pinned workflows row reads the same list everywhere (All Settings, search, Details) from the start */
+  const pm51SourceEnsureStateShape = ensureStateShape;
+  ensureStateShape = function () { const r = pm51SourceEnsureStateShape.apply(this, arguments); try { migratePins(); } catch (e) { /* never block boot */ } return r; };
+  try { migratePins(); } catch (e) { /* the Actions tab moves them on its first draw */ }
 
   /* ---------- actions: tools ------------------------------------------ */
   PM51.on('source-select-tool', el => { PM51.setSel(TOOL_SEL, ds(el, 'id')); state.resourceRosterOpen = false; refresh(); });

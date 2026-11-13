@@ -64,12 +64,30 @@ def all_prepared_snapshot():
     registry["families"] = [row for row in registry["families"] if row["family_id"] in baseline_ids]
     # Re-frozen 2026-09-23 (was 4f701c95..., last true at 4fe66204bd) after the six landed goal v3
     # adoptions named in scripts/pm_emit_only_event_contract.py; same value as its prefix hash.
-    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "a27cf49b63d364ae0d6d6f62b0ebc8d3ebe9e66df6de8e58814d099194d81050":
+    # Re-frozen 2026-11-05 (was a27cf49b..., last true just before c0d688db9f) after three landed registry
+    # changes moved it: c0d688db9f and 634412b3ac (workspace.layout_changed 2.0.0, DL-188) and 102a7e99e8
+    # (lane F-d added scope_policy, payload_versions and payload_selection_policy to eleven goal rows). The
+    # preservation check just below still judges each changed row against its reviewed successor.
+    # Re-frozen 2026-11-04 (was a27cf49b..., last true at d86090abd9) after two owner-approved row changes
+    # inside the upstream40: DL-188's workspace.layout_changed 2.0.0 row (c0d688db9f, 634412b3ac) and DL-300's
+    # eleven Goal application editions (102a7e99e8, admitted 5375bfd2a7). The reviewed-successor check below
+    # still requires those exact current rows; pm-browser-event-admission.py accepts them by exact digest.
+    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "2fe49c025e4db8adc9183a3f32c393333c203f375d9a047cc7a98d48c6f8776e":
         raise AssertionError("Synthetic admission fixture requires the unchanged live upstream40")
     preservation, failures = GATE.preexisting_preservation(context[0], registry["families"])
     if len(registry["families"]) != 40 or failures or not preservation["current_preexisting_rows_match_reviewed_successors"]:
         raise AssertionError("Synthetic admission fixture requires the exact reviewed current upstream40")
     return context, registry
+
+
+class Upstream40PinTests(unittest.TestCase):
+    def test_snapshot_refuses_one_changed_live_row(self):
+        registry = copy.deepcopy(GATE.load_json("Plans/event_family_registry.json"))
+        baseline_ids = set(CONTEXT[0]["preexisting_family_ids"])
+        next(row for row in registry["families"] if row["family_id"] in baseline_ids)["family_revision"] = "9.9.9"
+        with registry_snapshot(registry):
+            with self.assertRaisesRegex(AssertionError, "unchanged live upstream40"):
+                all_prepared_snapshot()
 
 
 class BrowserPreexistingPreservationTests(unittest.TestCase):

@@ -16,9 +16,9 @@
 #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) 30px; }
 #panel-settings .setting-row.o55-row.is-wide .setting-control { grid-column: 1 / 2; grid-row: 2; justify-content: flex-start; max-width: none; }
 #panel-settings .setting-row.o55-row.is-wide .o55-about { grid-column: 2; grid-row: 1; }
-#panel-settings .o55-changed { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 650; letter-spacing: .02em; color: var(--k3-accent-ink); }
+#panel-settings .o55-changed { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 650; letter-spacing: .02em; color: var(--k3-accent-ink); }
 #panel-settings .o55-changed i { width: 6px; height: 6px; border-radius: 50%; background: var(--k3-accent); box-shadow: 0 0 0 3px var(--k3-accent-soft); }
-#panel-settings .o55-risk { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 650; color: var(--k3-amber); }
+#panel-settings .o55-risk { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 650; color: var(--k3-amber); }
 #panel-settings .o55-risk svg { width: 12px; height: 12px; }
 #panel-settings .setting-row.o55-row.is-flash { animation: o55RowFlash 1.8s var(--k3-ease-out); }
 @keyframes o55RowFlash { 0%, 30% { background: color-mix(in srgb, var(--k3-accent) 16%, transparent); } 100% { background: transparent; } }
@@ -105,6 +105,7 @@
 #panel-settings .o55-kv-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 30px; gap: 6px; margin-bottom: 6px; font-size: 11px; font-weight: 650; color: var(--k3-text-3); text-transform: uppercase; letter-spacing: .05em; }
 #panel-settings .o55-kv-list { display: flex; flex-direction: column; gap: 6px; }
 #panel-settings .o55-kv-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 30px; gap: 6px; align-items: center; }
+#panel-settings .o55-kv-key { font-size: 12.5px; color: var(--k3-text-1); overflow-wrap: anywhere; }
 #panel-settings .o55-kv-add { margin-top: 12px; }
 #panel-settings .o55-json { width: 100%; min-height: 220px; font-family: var(--mono-font, ui-monospace, monospace); font-size: 12px; line-height: 1.5; resize: vertical; }
 

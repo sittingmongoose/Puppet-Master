@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/memory_maintenance/event_record.v1.schema.json",
+  "description": "Current Storage sequence_id adopts SP-236 exact uint64 independently of the producer safe-integer subset. Both retained envelope editions keep frozen integer-json-v1 and their unchanged reader definitions. Edition dispatch is closed and has no caller recipe selector.",
+  "$defs": {
+    "current": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        {
+          "properties": {
+            "sequence_id": {
+              "maximum": 18446744073709551615
+            }
+          }
+        }
+      ]
+    },
+    "compatibility": {
+      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/event_record_1_0_0_compatibility_reader"
+    },
+    "historical_current": {
+      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+    }
+  }
+}

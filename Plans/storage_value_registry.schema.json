@@ -288,10 +288,6 @@
           "minimum": 1
         },
         "cardinality_scope": {
-          "type": [
-            "string",
-            "null"
-          ],
           "enum": [
             null,
             "instance",
@@ -468,14 +464,7 @@
           "else": {
             "properties": {
               "cardinality_scope": {
-                "enum": [
-                  "instance",
-                  "project",
-                  "thread",
-                  "run",
-                  "session",
-                  "logical_key"
-                ]
+                "type": "string"
               }
             }
           }

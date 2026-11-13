@@ -1,0 +1,2105 @@
+{
+ "description": "Static stand-in for Storage SP-1101 sealed write custody of the one Storage instance the DS synthetic retained readers read: per original ref, the SHA-256 of the sealed EVENT_VALUE record bytes (and Case-L legacy source), the sealed binding and the write recipe; recorded by scripts/pm_ds_retained.py --write-custody from the committed fixture world. Not native custody.",
+ "resource_manifests": {
+  "browser@2.0.0": "b3d84bd65cabea50bc98dfb53d18000301d4eeb2f3e42a4fd868ad0338354f47",
+  "browser@3.0.0": "d3f82f6a03813aec87bcd4846761be37f960fcae2d9c9a942777794a16622a28",
+  "compaction@2.0.0": "eb8f4a9b124d724707bc742597ac3de57735fe1542b1756cce6a5ba28675631d",
+  "compaction@3.0.0": "88e278dc8a1b0e674dfde048bfc8c0d8badbe55fa79f1ba8d7bffc5152ce957a",
+  "layout@2.0.0": "c93a45c5826ca0983d9200cbef4643e7dd8423e74b4d7aa20f98791f83b74024",
+  "layout@3.0.0": "840781ae639fe4832f61df48372e2b19784ace56a504200877d3051c89b768ae"
+ },
+ "schema_id": "pm.ds.original_custody.v1",
+ "sealed": [
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "17e6e8e3ad7337a0386248e8905e3ab48d1f3b7fce2f5ca10982c508c8b28573",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-other",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "360cfb46dd575fad23e2fafdfe9852a418d10566108e3ba1355ea13774c024b4",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "375232689b747207b3a4ff877f02bc45a1664b774a8cd92b356f45ac3dc50ce5",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "390b886db8df51200a56bcd5093510a9188d507e89b78e9b37fea8fc7c4bd6ac",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "4431a0453e207e777229fdfba8da8ca8fa3dc9148567fcfde0f11c46052b9316",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "476300f6f4b1db8af02d0171190cd1454c07f658d09b9bd3a913c62d7af645ed",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.navigation.generation_changed",
+   "payload_schema_id": "pm.browser_event.navigation_generation_changed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "520046f49c3978e6b93d0e040518a46adaa8c5b4388532bc343e704051083b97",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "6350c7c4e63fe9a5adebd8dff7ae0fafd888d8157502000ad60e99398ce3be83",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "6f99aaa11d547b87e05cafe11a558bd513f60b2290270da6ab4b2ac2d3fa8770",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "78173d2463d60a333f81fbe9d0c04261a3441987e9fe064157eb6b3222f1eb1c",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "7e69d07cf8bdb62a57d390a907de1809c7022bfacc99613c7ddc1638590888a6",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "8c74039dddb5c90cd906d055e871c0ca0af8e144eff4030512e3c7a2d6ccb051",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "8e59966aa1fddb01662dad2b858b0af7d18c62ebe3f172d14137ddbe152a1d78",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "9e852161695e3320b2e9dabbe27dae2940b704e07502d13a80fdce36205ae973",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "a31f4392014c4895668041b870d909b7d0bb3cea359932ef3944533cc6d3dc1c",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "d559b5225f52f4e900665f6a9da041609e6e0c8444225b739ff99fa30e827259",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "wrong-envelope-project",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "d9389cc41823560fd6c23ccc717e552b2259a6e9a2103cf703796f975cfb9da7",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "f0f9e3c2601efbbf54021d6e6c42e4d9a1c46fd40e1d80c79eecc9e61c7b4849",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "f6a23ab323e3a0411ca1ea3e87fd0f2396a78a7622dd257962f3bc96b0f44157",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "f7e6dfbd0b9133d809124aa1c23612fddba01b76c0174c6701ef228948c52571",
+   "ref": "event-browser-1",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-10",
+    "owner_operation_id": "correlation-browser-10",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.controller_lease.takeover_requested",
+   "payload_schema_id": "pm.browser_event.controller_lease_takeover_requested.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "689b07bf4589ff4acad9676ef837f77d0dfa03583cc51a45f8669a96e2b144e8",
+   "ref": "event-browser-10",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-11",
+    "owner_operation_id": "correlation-browser-11",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.controller_lease.takeover_completed",
+   "payload_schema_id": "pm.browser_event.controller_lease_takeover_completed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "575750e12056184d131c563cfea40a67575da2ce38292dfd7488845cb2d2efe6",
+   "ref": "event-browser-11",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-12",
+    "owner_operation_id": "correlation-browser-12",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.navigation.generation_changed",
+   "payload_schema_id": "pm.browser_event.navigation_generation_changed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "dbe9870f8c8f229e88171698354a043097bab27aec9c2e0a9151ccb97248c231",
+   "ref": "event-browser-12",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-13",
+    "owner_operation_id": "correlation-browser-13",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.document.generation_changed",
+   "payload_schema_id": "pm.browser_event.document_generation_changed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "762ab47ccb997eb8bb11ada11860635c3eb8449ae9ae04d227ccc510cdcbd101",
+   "ref": "event-browser-13",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-14",
+    "owner_operation_id": "correlation-browser-14",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.representation.captured",
+   "payload_schema_id": "pm.browser_event.representation_captured.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "d975b062ee95e23444fd1400c3a173dbea11aac0d657f37d6071202a322c4c6e",
+   "ref": "event-browser-14",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-15",
+    "owner_operation_id": "correlation-browser-15",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.representation.delta_created",
+   "payload_schema_id": "pm.browser_event.representation_delta_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "0ed37c5585bdc4bed3119fec2ca85d91ac9ebf5c35fae583548a33cc32a6bcae",
+   "ref": "event-browser-15",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-16",
+    "owner_operation_id": "correlation-browser-16",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.representation.queried",
+   "payload_schema_id": "pm.browser_event.representation_queried.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "0814501bb380239ff0839a58c6318ad51b905973daece70f58ef429020425bda",
+   "ref": "event-browser-16",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-17",
+    "owner_operation_id": "correlation-browser-17",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.representation.invalidated",
+   "payload_schema_id": "pm.browser_event.representation_invalidated.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "81f16b65ad09a6a0bca131262fbee88189cea7ac20d24a8275c2c81caade583d",
+   "ref": "event-browser-17",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-18",
+    "owner_operation_id": "correlation-browser-18",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.script.compile_started",
+   "payload_schema_id": "pm.browser_event.script_compile_started.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "9303d3272d00e4486587b299a4627e0cd22b8744cf470c0675f14ada83d0f94c",
+   "ref": "event-browser-18",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-19",
+    "owner_operation_id": "correlation-browser-19",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.script.compiled",
+   "payload_schema_id": "pm.browser_event.script_compiled.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "cec063047b9e4296d521bbfbd0e61b7e8f01d58fefa5cf51f98915b09f92aa0c",
+   "ref": "event-browser-19",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-2",
+    "owner_operation_id": "correlation-browser-2",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "0397b80775017fecae9a3b64a0c1c1bc27f7e9cc86030a22f73e3fc5c36d5be1",
+   "ref": "event-browser-2",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-2",
+    "owner_operation_id": "correlation-browser-2",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.page.activated",
+   "payload_schema_id": "pm.browser_event.page_activated.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "10ea18a641a49021ec7af1158ae58c39fb752a14b4cad8cba26049df9e631a3d",
+   "ref": "event-browser-2",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-2",
+    "owner_operation_id": "correlation-browser-2",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "13182632287eb54f060e47ad75fea13343b0ee6341439c8a7f33d406a7cfcd54",
+   "ref": "event-browser-2",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-2",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.closed",
+   "payload_schema_id": "pm.browser_event.workspace_closed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "180ef51e624ab1409dc62b1e949196f007b51e00cce21b8c166abfc828203b18",
+   "ref": "event-browser-2",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-2",
+    "owner_operation_id": "correlation-browser-2",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.page.created",
+   "payload_schema_id": "pm.browser_event.page_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "462fb14099a6399f6e6e451b2829f75cc6b5e61775c24ebd047ef43b8ad68e2b",
+   "ref": "event-browser-2",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-2",
+    "owner_operation_id": "correlation-browser-2",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.page.created",
+   "payload_schema_id": "pm.browser_event.page_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "504fe388dc0971c1dd50064a1238d218b9f999902e084336af59d4f464de40b9",
+   "ref": "event-browser-2",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-2",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "f77e3ac693900c58be2bb637cc9c42ad9b656b65e4db22fd9c5152dd06775687",
+   "ref": "event-browser-2",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-20",
+    "owner_operation_id": "correlation-browser-20",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.script.compile_failed",
+   "payload_schema_id": "pm.browser_event.script_compile_failed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "1d7012675dbaf96c61e89e81f70103706ac548a229daa9b008082cc3feca7d65",
+   "ref": "event-browser-20",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-21",
+    "owner_operation_id": "correlation-browser-21",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.execution_strategy.selected",
+   "payload_schema_id": "pm.browser_event.execution_strategy_selected.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "f1deadc31536a7fbfab3d9a2cfe0eaeb4e9324720778c4b5940e3d2e311b4401",
+   "ref": "event-browser-21",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-22",
+    "owner_operation_id": "correlation-browser-22",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.execution_strategy.fallback_selected",
+   "payload_schema_id": "pm.browser_event.execution_strategy_fallback_selected.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "3b28a8d69412d5b59d3d50bef81502c1f6cbb012bd65647914c0e5452055292a",
+   "ref": "event-browser-22",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-23",
+    "owner_operation_id": "correlation-browser-23",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.started",
+   "payload_schema_id": "pm.browser_event.program_started.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "b2a7eb6329a83422dc549eaa425a818602d076ac013d416f290a6ff3c7ac4c17",
+   "ref": "event-browser-23",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-24",
+    "owner_operation_id": "correlation-browser-24",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.checkpointed",
+   "payload_schema_id": "pm.browser_event.program_checkpointed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "332fe526b8347d7a63cfa78a9698af5305c40c60cada68463f17f7d8d3ed4d8d",
+   "ref": "event-browser-24",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-25",
+    "owner_operation_id": "correlation-browser-25",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.paused",
+   "payload_schema_id": "pm.browser_event.program_paused.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "bc9b4b78ef0e72aec96c8bec49b238175ef4e77c301d8c54d226ebd4ddc67433",
+   "ref": "event-browser-25",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-26",
+    "owner_operation_id": "correlation-browser-26",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.resumed",
+   "payload_schema_id": "pm.browser_event.program_resumed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "e086e1f7af3edb4c5f246b872b4597cb28aeceb59cef96f2ba8426947fa4bd8e",
+   "ref": "event-browser-26",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-27",
+    "owner_operation_id": "correlation-browser-27",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.completed",
+   "payload_schema_id": "pm.browser_event.program_completed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "6cc0ae7abd10f88e0a948c3b3478de218390a0f8b86f61d52127d043c93dc940",
+   "ref": "event-browser-27",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-28",
+    "owner_operation_id": "correlation-browser-28",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.failed",
+   "payload_schema_id": "pm.browser_event.program_failed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "1e3a17a8fb85bd2db52d9634e27ed3669bafc237ee29461c09ce9e093dd3f625",
+   "ref": "event-browser-28",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-29",
+    "owner_operation_id": "correlation-browser-29",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.cancelled",
+   "payload_schema_id": "pm.browser_event.program_cancelled.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "8cac39d5c72d773dd6a753aa8dc425870445163edd885a03dc4ee23a5bd9ed8d",
+   "ref": "event-browser-29",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-3",
+    "owner_operation_id": "correlation-browser-3",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.closed",
+   "payload_schema_id": "pm.browser_event.workspace_closed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "ed114aa5fbc401e03c4243562e488add7097c68e84348993ba5653675f6938cc",
+   "ref": "event-browser-3",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-30",
+    "owner_operation_id": "correlation-browser-30",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.segment.started",
+   "payload_schema_id": "pm.browser_event.program_segment_started.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "f35d015bd61e3169ce1ddf10ec56fa4ebe70f4b02d707712e131bc2d05a605b9",
+   "ref": "event-browser-30",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-31",
+    "owner_operation_id": "correlation-browser-31",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.segment.checkpointed",
+   "payload_schema_id": "pm.browser_event.program_segment_checkpointed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "60251e69989442e70add7514072682a74de3dfbc2f52fbe4b90648c3405d9817",
+   "ref": "event-browser-31",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-32",
+    "owner_operation_id": "correlation-browser-32",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.segment.completed",
+   "payload_schema_id": "pm.browser_event.program_segment_completed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "4eed57347beea9a2e990cfa76474aaac0adf5a7aeb23a7fb33cc4724f801f3ad",
+   "ref": "event-browser-32",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-33",
+    "owner_operation_id": "correlation-browser-33",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.segment.failed",
+   "payload_schema_id": "pm.browser_event.program_segment_failed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "a55651a834e84f935124de3b54a49a10f36c7b905bd02f0268a2a349adbbfc24",
+   "ref": "event-browser-33",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-34",
+    "owner_operation_id": "correlation-browser-34",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.segment.timed_out",
+   "payload_schema_id": "pm.browser_event.program_segment_timed_out.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "575f3de74faf77bbce0f0b8164d435dda07dbfb43d3cf00b568ea5d33bea702f",
+   "ref": "event-browser-34",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-35",
+    "owner_operation_id": "correlation-browser-35",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.timeout.stopped",
+   "payload_schema_id": "pm.browser_event.program_timeout_stopped.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "8bdd1d44d2cbeb771f93b428fab8d33a3657604f9fff1610ec647b04060d188a",
+   "ref": "event-browser-35",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-36",
+    "owner_operation_id": "correlation-browser-36",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.timeout.effects_reconciled",
+   "payload_schema_id": "pm.browser_event.program_timeout_effects_reconciled.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "0b1931376658de28e63a1ee7d82d9cb01b41c53f9aadc2b786d6127c5c9e522a",
+   "ref": "event-browser-36",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-37",
+    "owner_operation_id": "correlation-browser-37",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program.timeout.effect_state_unknown",
+   "payload_schema_id": "pm.browser_event.program_timeout_effect_state_unknown.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "a48a8657fd04185a1bbe47c9dff6c4cb89ea1b206172b6c7a83c213124736680",
+   "ref": "event-browser-37",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-38",
+    "owner_operation_id": "correlation-browser-38",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program_workspace.created",
+   "payload_schema_id": "pm.browser_event.program_workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "fd8e9003a53a36bc84311d8f32199598563e0b0fc265ee1d8698005feb186a3e",
+   "ref": "event-browser-38",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-39",
+    "owner_operation_id": "correlation-browser-39",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program_workspace.updated",
+   "payload_schema_id": "pm.browser_event.program_workspace_updated.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "3bc15f4fe184478948efed1036a0beacc0a28435bef0b47170f2ce9cd3f09095",
+   "ref": "event-browser-39",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-4",
+    "owner_operation_id": "correlation-browser-4",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.page.created",
+   "payload_schema_id": "pm.browser_event.page_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "a9bc7ede1e96f9b7fbd09724d8a4d1bf4907fb5987283186ac9de7318435ede4",
+   "ref": "event-browser-4",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-40",
+    "owner_operation_id": "correlation-browser-40",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program_workspace.checkpointed",
+   "payload_schema_id": "pm.browser_event.program_workspace_checkpointed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "b5a4d264fa72e8eeda1607f2ecc5e5a57d75e71840cda56ccee8ecf3cfe2dba8",
+   "ref": "event-browser-40",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-41",
+    "owner_operation_id": "correlation-browser-41",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program_workspace.spilled",
+   "payload_schema_id": "pm.browser_event.program_workspace_spilled.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "8e5075980612faccfcac94cf00633b1ff317ea55ca7b4c67b73737902310c2a0",
+   "ref": "event-browser-41",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-42",
+    "owner_operation_id": "correlation-browser-42",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.program_workspace.closed",
+   "payload_schema_id": "pm.browser_event.program_workspace_closed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "8b45cf6fd13e6cc45b9a8573a416a0556cd51f547e8971b1d798a2d51047cd5d",
+   "ref": "event-browser-42",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-43",
+    "owner_operation_id": "correlation-browser-43",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.screenshot.model_attachment_selected",
+   "payload_schema_id": "pm.browser_event.screenshot_model_attachment_selected.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "9954d45ed2eb4b283d60f548fd7793c5b55305d3f837a2072d3f30e770738332",
+   "ref": "event-browser-43",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-44",
+    "owner_operation_id": "correlation-browser-44",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.screenshot.skipped",
+   "payload_schema_id": "pm.browser_event.screenshot_skipped.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "8fe35bf31da75fd7a6daf503e62e32d325011e7a26f9f4008e822c1b079ec804",
+   "ref": "event-browser-44",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-45",
+    "owner_operation_id": "correlation-browser-45",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.route.fetch_selected",
+   "payload_schema_id": "pm.browser_event.route_fetch_selected.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "74d66b0083afb290f322605f1fed1a0d43eb736c8fbf14ad363080ebe8c72c30",
+   "ref": "event-browser-45",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-46",
+    "owner_operation_id": "correlation-browser-46",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.route.browser_escalated",
+   "payload_schema_id": "pm.browser_event.route_browser_escalated.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "ca82e5070f1cd730a91e7409bdebea60fdde16245bc7b0af16bc942f0e43d45d",
+   "ref": "event-browser-46",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-47",
+    "owner_operation_id": "correlation-browser-47",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.routine.generated",
+   "payload_schema_id": "pm.browser_event.routine_generated.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "a6cdfd612bd6861a0c9cffc9c8dab317969c257662c8986e557a3cef82847539",
+   "ref": "event-browser-47",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-48",
+    "owner_operation_id": "correlation-browser-48",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.routine.validated",
+   "payload_schema_id": "pm.browser_event.routine_validated.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "ad0ee36adc8ae9a1e451dcceffb128249db450099aad0d5849a5fb65cd6af19d",
+   "ref": "event-browser-48",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-49",
+    "owner_operation_id": "correlation-browser-49",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.routine.promoted",
+   "payload_schema_id": "pm.browser_event.routine_promoted.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "bddd1ab43f74b6a28dbd0f74abc5977b66aefe31de5f904fbacd187f092022a4",
+   "ref": "event-browser-49",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-5",
+    "owner_operation_id": "correlation-browser-5",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.page.activated",
+   "payload_schema_id": "pm.browser_event.page_activated.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "892c240cc53554bd51b71c00741335322ae7536e952a636a4d8594bc30176dcf",
+   "ref": "event-browser-5",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-50",
+    "owner_operation_id": "correlation-browser-50",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.routine.invalidated",
+   "payload_schema_id": "pm.browser_event.routine_invalidated.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "c9ea32a26392d85902027c30be4681e2afcb61fccf03e872052dac892f0b00c7",
+   "ref": "event-browser-50",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-51",
+    "owner_operation_id": "correlation-browser-51",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.routine.disabled",
+   "payload_schema_id": "pm.browser_event.routine_disabled.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "4cff238569ed64eb4218732d2022e1467d01855baeecb0c27061d5cf8db50eae",
+   "ref": "event-browser-51",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-52",
+    "owner_operation_id": "correlation-browser-52",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.session.reconstructed_on_host",
+   "payload_schema_id": "pm.browser_event.session_reconstructed_on_host.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "4fa225558a71fde77fa9e0919ea6676ac6bea5cf49a6d944f8fa698d245ded7e",
+   "ref": "event-browser-52",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-53",
+    "owner_operation_id": "correlation-browser-53",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.session.interrupted",
+   "payload_schema_id": "pm.browser_event.session_interrupted.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "bbee93dcce88f34eb61d978a843bf7c687c96d5d84da0e23a86fbcd34a42d1b7",
+   "ref": "event-browser-53",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-6",
+    "owner_operation_id": "correlation-browser-6",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.page.closed",
+   "payload_schema_id": "pm.browser_event.page_closed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "56a11e663dc6138ef24246d4aee23005a0f58bfc1552c5838852bce028b98cf3",
+   "ref": "event-browser-6",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-7",
+    "owner_operation_id": "correlation-browser-7",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.controller_lease.granted",
+   "payload_schema_id": "pm.browser_event.controller_lease_granted.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "efcceb43a76b0004b81721b0c64b20236024d8a0be0e14b6a42846612c7f6755",
+   "ref": "event-browser-7",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-8",
+    "owner_operation_id": "correlation-browser-8",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.controller_lease.renewed",
+   "payload_schema_id": "pm.browser_event.controller_lease_renewed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "6fa44cfc087b7fa36f3a416c6e375f9f151cff10f439cc2885cc4d60c7b70e44",
+   "ref": "event-browser-8",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-9",
+    "owner_operation_id": "correlation-browser-9",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.controller_lease.lost",
+   "payload_schema_id": "pm.browser_event.controller_lease_lost.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "667d3194e2a46415dfe22a555914bc4ea95c63ba0bfe524860cce36f8ee7d9c7",
+   "ref": "event-browser-9",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "b008c477d7f2a4f002664cdd46538d7e0c77a580f5fc636bf1e901ca22e8895d",
+   "ref": "event-browser-retry",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v0",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "2885fce684069580cc6ef4b08a9cf9a3bc5cfb1247156fef7325893f15e7d952",
+   "ref": "event-ds-p2b-recipe-v0",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "6650e837a7bf0cfee32622f30973b6200d4e63e54efa0ba3de9fd909c34b962b",
+   "ref": "event-ds-p2b-retained-broad-times",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "fabeb81c266aa6d7e7448054867c191397bd1f57dcd79e9147bfae70b2a970d8",
+   "ref": "event-ds-p2b-retained-float-stock",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "typed-integer",
+    "source": "none"
+   },
+   "record_sha256": "bcc99d47d26652b4ee71ac89197a10ac261c666d003231820094cc6ede7d4f99",
+   "ref": "event-ds-p2b-retained-float-typed",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "3e554fd4dc02199406560faf840a673b04965d010ab28860ca1601a6bfb09c3a",
+   "ref": "event-ds-p2b-retained-storage-offset",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "0c7a95f5c6e07d16e37bfe235d9a5b3ffc3f871618af49beb2f040c4c0605f66",
+   "ref": "event-ds-p2b-sealed-base",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "browser-transition-1",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "6c06d8449437db04006093865f047fdec9e2684abf837d6a7752d6c64ff774f8",
+   "ref": "event-ds-p2b-wrong-edition",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "compaction:4d82c6fc2e68223f019a2b04bebe9f7b530db80fd2bd853ee861f61ea41e7986",
+    "owner_operation_id": "correlation:fixture:compact",
+    "project_id": "project_fixture_alpha",
+    "scope_kind": "project"
+   },
+   "event_type": "context.compaction.completed",
+   "payload_schema_id": "pm.context_compaction_completed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "typed-integer",
+    "source": "none"
+   },
+   "record_sha256": "cc7672f96e07a38e875b230614a2e39d67405b8a517bb1593545219b71a26d39",
+   "ref": "evt_compaction_12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "compaction:4d82c6fc2e68223f019a2b04bebe9f7b530db80fd2bd853ee861f61ea41e7986",
+    "owner_operation_id": "correlation:fixture:compact",
+    "project_id": "project_fixture_alpha",
+    "scope_kind": "project"
+   },
+   "event_type": "context.compaction.completed",
+   "payload_schema_id": "pm.context_compaction_completed.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "typed-integer",
+    "source": "none"
+   },
+   "record_sha256": "fb15353a1bf0b9ab2089eac8c61ee63725484a20dc3dac90aeb9f051458870e3",
+   "ref": "evt_compaction_12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "owner_operation_id": "correlation:fixture",
+    "project_id": "project-fixture",
+    "scope_kind": "project"
+   },
+   "event_type": "workspace.layout_changed",
+   "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "typed-integer",
+    "source": "none"
+   },
+   "record_sha256": "23f8efedab062402a4434734f8cb6cd8ef7580696faed369be70f4e90ba194fb",
+   "ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "owner_operation_id": "correlation:fixture",
+    "project_id": "project-fixture",
+    "scope_kind": "project"
+   },
+   "event_type": "workspace.layout_changed",
+   "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "27e91133fcc5515342ad2afe119b06843b86b09543832899a0f1fdaf182cdf2d",
+   "ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "owner_operation_id": "correlation:fixture",
+    "project_id": "project-fixture",
+    "scope_kind": "project"
+   },
+   "event_type": "workspace.layout_changed",
+   "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "typed-integer",
+    "source": "none"
+   },
+   "record_sha256": "39a47cc7718ed05effa2c6af242c716adb57a730cfde310cd03bf10579db1aae",
+   "ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "owner_operation_id": "correlation:fixture",
+    "project_id": "project-fixture",
+    "scope_kind": "project"
+   },
+   "event_type": "workspace.layout_changed",
+   "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "582cbbd209aa238ed7311b8fc55e6752c6f326741a2fa942762ba30c8064a34b",
+   "ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "owner_operation_id": "correlation:fixture",
+    "project_id": "project-foreign",
+    "scope_kind": "project"
+   },
+   "event_type": "workspace.layout_changed",
+   "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "76da830412ce41eaba9dc7dddbd59675d0d63627d957e5bd4844198833380491",
+   "ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "owner_operation_id": "correlation:fixture",
+    "project_id": "project-fixture",
+    "scope_kind": "project"
+   },
+   "event_type": "workspace.layout_changed",
+   "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "889d6b8268c59d54dbea4e290896b79838860fd9897d40e1aa15c6eba6d5e01d",
+   "ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "owner_operation_id": "correlation:fixture",
+    "project_id": "project-fixture",
+    "scope_kind": "project"
+   },
+   "event_type": "workspace.layout_changed",
+   "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "d5fd576f5346f5dc0453f04cf5f88e15b1224690815f8f91b45bf23970038a0f",
+   "ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+    "owner_operation_id": "correlation:fixture",
+    "project_id": "project-fixture",
+    "scope_kind": "project"
+   },
+   "event_type": "workspace.layout_changed",
+   "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "3.0.0",
+    "payload": "original-json-schema",
+    "source": "none"
+   },
+   "record_sha256": "dffcd1829f643e8c42b5665adf5ca2a3ea7cb437bd70fde077a96dc36f6033c3",
+   "ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+   "source_sha256": null
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "18187a66a88ab96fa868f987de25d7ec98f9de1510a6054c57a9d17b4d4b40e0",
+   "ref": "legacy-event-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+   "source_sha256": "9721b99fb5411fa00b52b3e21b11dde20962262a8b6328f0d81ca31023e5b646"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "43a8f6a3ba193843a9bae0a907b54c3a8525ee024b00e1945e89ddc1319d6188",
+   "ref": "legacy-event-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+   "source_sha256": "9721b99fb5411fa00b52b3e21b11dde20962262a8b6328f0d81ca31023e5b646"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "8866d04c39332b717e3c0f794e87588f38cb2bc4107d3934eb299b353be42f22",
+   "ref": "legacy-event-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+   "source_sha256": "9721b99fb5411fa00b52b3e21b11dde20962262a8b6328f0d81ca31023e5b646"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "foreign-project",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "e92b4849cecd91104869b81bee067c894f9c5055f25feafc449d29423d9b0d4c",
+   "ref": "legacy-event-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+   "source_sha256": "9721b99fb5411fa00b52b3e21b11dde20962262a8b6328f0d81ca31023e5b646"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "eeff4d3ce18fe2a95367f89645d953ecb7063ac08b1f17d9f41e5b3e691a80a5",
+   "ref": "legacy-event-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+   "source_sha256": "9721b99fb5411fa00b52b3e21b11dde20962262a8b6328f0d81ca31023e5b646"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "eeff4d3ce18fe2a95367f89645d953ecb7063ac08b1f17d9f41e5b3e691a80a5",
+   "ref": "legacy-event-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+   "source_sha256": "df5f0956568e3da58c85a367b4dc0de824c49af7b9a432baebe373c90d754154"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "eeff4d3ce18fe2a95367f89645d953ecb7063ac08b1f17d9f41e5b3e691a80a5",
+   "ref": "legacy-event-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+   "source_sha256": "a642e88bb8d37edd249058a39731653526200f332262e7ee3fea7b8e9634183a"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:3af7d31943f50fc781484540464179a55c95412bcc8ecdea8c6d8c63dc2a1073",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.created",
+   "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "2ede1e551ddec8c206d20d7c6ea486a281b4ba1fd7ab5202b8e67254d1ad2f3c",
+   "ref": "legacy-event-v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "source_sha256": "9721b99fb5411fa00b52b3e21b11dde20962262a8b6328f0d81ca31023e5b646"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "acc6a013bacf12881b9d9966a0112c31a9a850b5a67a9e2dcbb51705b8b01233",
+   "ref": "legacy-event-v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "source_sha256": "f2051c9c9292f3cbc95e3207b94eb7a0a584fbc40c888748e82186d233bccd81"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "7cfc74d9c4ed3ca83ee3d803c8159ca2eaf763aed546891d719c352186d70cb3",
+   "ref": "legacy-event-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+   "source_sha256": "f2051c9c9292f3cbc95e3207b94eb7a0a584fbc40c888748e82186d233bccd81"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "8136c4ae8fb5dd824ff6d606db27c74b094868c2303fb3030c1a3cc423115489",
+   "ref": "legacy-event-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+   "source_sha256": "f2051c9c9292f3cbc95e3207b94eb7a0a584fbc40c888748e82186d233bccd81"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "b543c700fa402a0c13fd779a902227b198d42aa6c6d34bb0abf682a3f14b1da2",
+   "ref": "legacy-event-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+   "source_sha256": "f2051c9c9292f3cbc95e3207b94eb7a0a584fbc40c888748e82186d233bccd81"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "foreign-project",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "cd5942638b08123f98b51a227d026eea8ce37521868e99d2f285873fa441bfef",
+   "ref": "legacy-event-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+   "source_sha256": "f2051c9c9292f3cbc95e3207b94eb7a0a584fbc40c888748e82186d233bccd81"
+  },
+  {
+   "binding": {
+    "idempotency_key": "legacy-envelope-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+    "owner_operation_id": "correlation-browser-1",
+    "project_id": "project-browser",
+    "scope_kind": "project"
+   },
+   "event_type": "browser.workspace.reset",
+   "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+   "recipe": {
+    "edition": "ds-retained.v1",
+    "envelope": "2.0.0",
+    "payload": "original-json-schema",
+    "source": "case-l-1.0.0"
+   },
+   "record_sha256": "e026e8ca3570463f406813a7df577df62eeacf1e8b7635f67cf9be42b4e2e3d8",
+   "ref": "legacy-event-v1:c7a4650ae20aa76cc6769527611fffef96706f02533b1aa2bda7aa4687b93d28",
+   "source_sha256": "f2051c9c9292f3cbc95e3207b94eb7a0a584fbc40c888748e82186d233bccd81"
+  }
+ ],
+ "storage_instance_id": "ds-retained-store"
+}

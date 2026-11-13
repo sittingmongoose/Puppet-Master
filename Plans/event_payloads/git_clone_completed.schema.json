@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_payload.git_clone_completed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "repo_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "workspace_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "host_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "environment_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "source_location_ref": {
+      "type": "string",
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])",
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
+    },
+    "operation_receipt_ref": {
+      "type": "string",
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])",
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
+    },
+    "completed_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 40
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation_id",
+    "project_id",
+    "repo_id",
+    "workspace_id",
+    "host_id",
+    "environment_id",
+    "source_location_ref",
+    "operation_receipt_ref",
+    "completed_at_utc"
+  ]
+}

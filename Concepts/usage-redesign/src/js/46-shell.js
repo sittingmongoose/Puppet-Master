@@ -157,6 +157,8 @@
     syncHosted(v);
   }
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { syncSpeed(); });
+  /* and when Settings' Animation speed changes (FO-153), not only with the look */
+  window.addEventListener('pm-animation-speed', function () { syncSpeed(); });
   if (PMU.boards && PMU.boards.each) PMU.boards.each(function (b) { if (b !== PMU.board && PMU.motion) syncHosted(String(PMU.motion.speed())); });
   function render() {
     if (!app) return;

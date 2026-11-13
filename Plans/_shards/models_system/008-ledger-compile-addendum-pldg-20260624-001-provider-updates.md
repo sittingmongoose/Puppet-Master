@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L292-L538
+Source lines: L294-L540
 
-Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
+Source SHA256: `a8901a6843745dc49f40c03da85f00aa1306700643610fcdce92d9611afeef13`
 
 ---
 
@@ -115,7 +115,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Thinking effort is a global user-selectable intent that resolves through provider/model-specific support. PM must store requested effort separately from supported variants and effective wire mapping, then disclose honored, skipped, clamped, unsupported, and partially supported outcomes. Current transforms include Claude Code print-mode thinking models, Antigravity model-specific choices, Codex/OpenAI `model_reasoning_effort`, Cursor model/route caveats, GitHub Copilot `reasoning_effort` only where the hosted model supports it, Kimi `thinking` and `reasoning_effort` with `xhigh|max -> high`, Z.AI/Zhipu preserved thinking plus GLM-5.2 `high|max`, MiniMax M3 `none|thinking`, MiniMax M2 defaults, and Alibaba/Qwen `enable_thinking` as an explicit PM-owned verification gap.
+  Thinking effort is part of the model selection intent, chosen inside the model picker, and resolves through provider/model-specific support. PM must store requested effort separately from supported variants and effective wire mapping, then disclose honored, skipped, clamped, unsupported, and partially supported outcomes. Current transforms include Claude Code print-mode thinking models, Antigravity model-specific choices, Codex/OpenAI `model_reasoning_effort`, Cursor model/route caveats, GitHub Copilot `reasoning_effort` only where the hosted model supports it, Kimi `thinking` and `reasoning_effort` with `xhigh|max -> high`, Z.AI/Zhipu preserved thinking plus GLM-5.2 `high|max`, MiniMax M3 `none|thinking`, MiniMax M2 defaults, and Alibaba/Qwen `enable_thinking` as an explicit PM-owned verification gap.
 gui_related: false
 gui_classification_reason: Provider/model transform and effective-wire behavior; GUI consumes the state but does not own it.
 depends_on: [MS-113]

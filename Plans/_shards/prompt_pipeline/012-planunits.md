@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L678-L3510
+Source lines: L679-L3546
 
-Source SHA256: `86f90ffb90e7a36627ac597c83f64e1fbb1e31f0064d56eed4f7e4e54c16783d`
+Source SHA256: `e06820f39984155b76fbf5b529767c6b2fc416edbdc50469b1909fe8f248050f`
 
 ---
 
@@ -636,8 +636,10 @@ status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
   The compiled prompt includes an Instruction Bundle with active execution context, requested/effective overlay, Persona IDs, rules context, tool policy, Injected Context breakdown, and active Investigation Context summary when applicable.
-gui_related: true
-gui_classification_reason: This unit includes user-visible Injected Context and Debug investigation bundle surfaces.
+gui_related: false
+gui_classification_reason: >-
+  Internal Instruction Bundle assembly and enforcement; the separate Debug Investigation Context
+  presentation remains with its existing GUI owner.
 split_recommended: false
 depends_on:
   - "PP-008"
@@ -660,6 +662,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0012
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "INSTRUCTION-BUNDLE"
   - "InstructionBundleAssembly"
@@ -673,7 +676,8 @@ preserved_exact_tokens:
   - "tool-policy snapshot"
   - "Injected Context breakdown"
   - "active Investigation Context summary"
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md"
 owner_hints:
@@ -1300,18 +1304,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  The GUI exposes an Injected Context breakdown per run or turn, including paths, byte counts, truncation reason, and a safe preview of compiled prompt sections for transparency and debugging.
+  Injected Context paths/byte counts, inclusion/omission and truncation records and compiled
+  prompt/section previews remain internal for enforcement and debugging. Chat context surfaces show
+  capacity, cost, effective model information and useful compaction/transition status. Source
+  composition, Curated/Raw source inspection, raw source payloads and per-run inclusion receipts
+  remain internal for enforcement/debugging and are not user-facing.
 gui_related: true
-gui_classification_reason: This unit defines GUI inspection and user-visible prompt transparency behavior.
+gui_classification_reason: >-
+  Defines the user-facing status versus internal compiled-context diagnostics boundary.
 split_recommended: false
 depends_on:
   - "PP-014"
   - "PP-024"
 unblocks: []
 acceptance_criteria:
-  - "GUI Injected Context Transparency remains addressable as a fine-grained Prompt Pipeline PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+  - "Basic capacity/cost/effective-model facts and useful compaction/truncation status remain available on demand."
+  - "Internal records preserve source paths, inclusion/byte counts, truncation reason/order and permissioned compiled prompt diagnostics."
+  - "The GUI exposes no source-composition chart, safe/raw/curated compiled prompt preview or per-run/turn inclusion receipt; the historical unit title supplies no GUI obligation."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -1325,6 +1334,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0021"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "GUI"
   - "Injected Context"
@@ -1332,7 +1342,8 @@ preserved_exact_tokens:
   - "truncation reason"
   - "safe preview"
   - "compiled prompt"
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/FinalGUISpec.md"
 owner_hints:
@@ -1499,45 +1510,52 @@ plan_unit_id: PP-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
-canonical_text: >-
-  Prompt Pipeline preserves persona_selection_source as the canonical requested-Persona source enum and adds runtime_selection_source plus a human-readable selection_reason for inspectors and audit history.
+canonical_text: Prompt Pipeline keeps persona_selection_source as the independent requested-Persona enum. Current
+  runtime_selection_source records model sources from Models §2, including a manually selected account_default
+  only when eligible; it preserves human-readable selection_reason. Historical persona_preference/provider_default
+  source tokens are inert reads, never current model selection candidates.
 gui_related: false
 gui_classification_reason: This unit defines resolver source metadata rather than visual presentation.
 split_recommended: false
 depends_on:
-  - "PP-029"
+- PP-029
 unblocks: []
 acceptance_criteria:
-  - "Selection Source And Reason Enumeration remains addressable as a fine-grained Prompt Pipeline PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- Selection Source And Reason Enumeration remains addressable as a fine-grained Prompt Pipeline PlanUnit.
+- ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions,
+  owner/consumer boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by
+  this PlanUnit.
 validation_surfaces:
-  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-  - "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: prompt_pipeline_drift
 reasoning_tier: standard
 context_scope: prompt_pipeline
 implementation_surfaces:
-  - "Plans/Prompt_Pipeline.md"
+- Plans/Prompt_Pipeline.md
 node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0025"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0025
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "persona_selection_source"
-  - "runtime_selection_source"
-  - "manual_ui"
-  - "surface_default"
-  - "config_default"
-  - "persona_preference"
-  - "auto_family_pool"
-  - "fallback"
-  - "selection_reason"
+- persona_selection_source
+- runtime_selection_source
+- manual_ui
+- surface_default
+- config_default
+- persona_preference
+- auto_family_pool
+- fallback
+- selection_reason
 negative_constraints: []
 preserved_contractrefs: []
 owner_hints:
-  - "Plans/Prompt_Pipeline.md"
+- Plans/Prompt_Pipeline.md
+compatibility_only_notes:
+- The preserved persona_preference token is historical read vocabulary only, not a model-default source.
 ```
 
 ### PP-032 - Requested Persona Precedence Non-Rewrite
@@ -1752,56 +1770,73 @@ plan_unit_id: PP-036
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
-canonical_text: >-
-  The resolver uses the source/request/execution settings model, preserves requested versus effective display values, accepts Persona, override, default, policy, capability, account/profile, worktree, and execution-role inputs, follows the deterministic resolver matrix, and emits requested/effective platform, model, variant, auth mode, account, role, reason, matrix entry, and worker policy fields.
+canonical_text: 'The source/request/execution resolver preserves requested/effective runtime identity and follows
+  exactly Models §2 for model/depth: explicit run model/depth override -> scoped build-owner policy -> surface/stage
+  built-in default -> manually selected account default -> This project -> Everywhere/factory. Apply the account
+  default only when the person directed the run to that account and no earlier model was selected; automatic
+  rotation ignores it. Persona choice contributes only surviving non-model response/tool/permission controls,
+  never provider/model/preset/effort defaults. Last-used and provider-default model sources are retired. Preserve
+  capability, account binding, worktree and execution-role gates and all requested/effective emit fields; historical
+  source-order tokens are readable without becoming current resolver authority.'
 gui_related: false
 gui_classification_reason: This unit defines resolver mechanics and emitted fields rather than visual presentation.
 split_recommended: false
 depends_on:
-  - "PP-034"
+- PP-034
+- MS-005
+- MA-013
 unblocks: []
 acceptance_criteria:
-  - "Three Axis Resolver Emit Shape remains addressable as a fine-grained Prompt Pipeline PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- Three Axis Resolver Emit Shape remains addressable as a fine-grained Prompt Pipeline PlanUnit.
+- ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions,
+  owner/consumer boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by
+  this PlanUnit.
 validation_surfaces:
-  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-  - "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: prompt_pipeline_drift
 reasoning_tier: standard
 context_scope: prompt_pipeline
 implementation_surfaces:
-  - "Plans/Prompt_Pipeline.md"
+- Plans/Prompt_Pipeline.md
 node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0028"
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0030"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0030
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "source"
-  - "request"
-  - "execution"
-  - "working_directory"
-  - "FileSafe"
-  - "tool cwd"
-  - "explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global default -> last-used state when permitted -> provider default"
-  - "requested_platform"
-  - "effective_platform"
-  - "requested_model"
-  - "effective_model"
-  - "requested_variant"
-  - "effective_variant"
-  - "requested_auth_mode"
-  - "effective_auth_mode"
-  - "resolver_matrix_entry"
-  - "worker_policy_display"
+- source
+- request
+- execution
+- working_directory
+- FileSafe
+- tool cwd
+- explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global
+  default -> last-used state when permitted -> provider default
+- requested_platform
+- effective_platform
+- requested_model
+- effective_model
+- requested_variant
+- effective_variant
+- requested_auth_mode
+- effective_auth_mode
+- resolver_matrix_entry
+- worker_policy_display
 negative_constraints:
-  - "Prompt assembly may reference execution_unit_context but does not inject a separate worktree prompt block merely to make tools operate in the worktree."
+- Prompt assembly may reference execution_unit_context but does not inject a separate worktree prompt block
+  merely to make tools operate in the worktree.
+- Do not admit a retired Persona, command, last-used or provider-default model source into the current resolver.
 preserved_contractrefs: []
 owner_hints:
-  - "Plans/Prompt_Pipeline.md"
-  - "Plans/FileSafe.md"
+- Plans/Prompt_Pipeline.md
+- Plans/FileSafe.md
+compatibility_only_notes:
+- The preserved exact-token chain containing Persona preference, last-used state when permitted and provider
+  default is historical inert source-lineage only; it must not drive current selection.
 ```
 
 ### PP-037 - P5 Export Resolver Gap Packet

@@ -1,0 +1,674 @@
+{
+ "schema": "pm.event_authority.batch2_fix1_verification.v1",
+ "head": "fb24402e4e5a3914a2c47aea27a65f1154fc604b",
+ "guard_tool": {
+  "gated": "004bdedd63",
+  "scripts/pm_guard_isolation.py": "byte-identical to 004bdedd63 at head"
+ },
+ "environment": "every command serial within its job, under systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0, started at >= 12 GiB available",
+ "commands": [
+  {
+   "label": "SHARED-numbers-scope",
+   "exit": 0,
+   "seconds": 1,
+   "log_sha256": "3e81a92755d356cfe5d3d84cc01c8ed2023ebbe614a4407c93c1789607950754",
+   "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+   "summary": {
+    "status": "pass",
+    "positives": 276,
+    "negatives": 304,
+    "failures": 0
+   }
+  },
+  {
+   "label": "SHARED-datetime-selftest",
+   "exit": 0,
+   "seconds": 0,
+   "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "command": "python3 scripts/pm_event_datetime.py --self-test",
+   "note": "NOT CREDITED: scripts/pm_event_datetime.py has no entry point, so --self-test imports the module and exits 0 with no output. The CV-1101 date-time self-test runs inside pm_event_numbers.py --self-test (scope all, regression_checks): row SHARED-numbers-all-tracked."
+  },
+  {
+   "label": "DCH-checker",
+   "exit": 0,
+   "seconds": 363,
+   "log_sha256": "12c9f8611a64d4dd9b162314055972b2eebf416f006f86d030e04dfcd096ce88",
+   "command": "python3 -B scripts/pm_dch_events.py",
+   "summary": {
+    "status": "pass",
+    "checks": 44594,
+    "failures": 0
+   }
+  },
+  {
+   "label": "DCH-stop",
+   "exit": 0,
+   "seconds": 30,
+   "log_sha256": "4d26cd7b3dfe2174cfbe5a2eaf4fd35bd582fcb104da11edf0c5e1daefdb75d2",
+   "command": "python3 -B scripts/pm_dch_stop.py",
+   "summary": {
+    "status": "pass",
+    "checks": 4612,
+    "cases": 2264,
+    "failures": 0
+   }
+  },
+  {
+   "label": "DCH-tables",
+   "exit": 0,
+   "seconds": 0,
+   "log_sha256": "4ca895fe3b477166859649f0b5ae9327eb01faeebe87bf09d7618d81cff48a8f",
+   "command": "python3 scripts/pm-dch-table-generate.py scripts --check"
+  },
+  {
+   "label": "DCN-checker",
+   "exit": 0,
+   "seconds": 496,
+   "log_sha256": "4d2409b35fbb1dc3bf0735011b7415b3158b25fa0027781ea0cd3125bc9b7fd0",
+   "command": "python3 scripts/pm_card2_events.py --output $L/DCN-checker.json",
+   "summary": {
+    "status": "PASS",
+    "positives": 283,
+    "negatives": 16702,
+    "p2a_controls": 71,
+    "rows_refused_first": 501
+   }
+  },
+  {
+   "label": "DCN-tables",
+   "exit": 0,
+   "seconds": 1,
+   "log_sha256": "17dee3a0ea20c4fc3923f47e62af0ad836138cb78f119044315df270b843f1b6",
+   "command": "python3 scripts/pm-card2-table-generate.py --check"
+  },
+  {
+   "label": "DCN-p2a",
+   "exit": 0,
+   "seconds": 14,
+   "log_sha256": "edf52db354665239e8515d05496d83b0296a4b427c8f3fedc04163e072b1b723",
+   "command": "python3 scripts/pm-card2-p2a-cases.py --check",
+   "summary": {
+    "witnesses": 359,
+    "controls": 71,
+    "failures": 0
+   }
+  },
+  {
+   "label": "DS15-checker",
+   "exit": 0,
+   "seconds": 109,
+   "log_sha256": "9eff541bb0fabd0eeda2b6d2e71bb2f71ce6df2ccd5730e9f7da1c94c60efb4c",
+   "command": "python3 scripts/pm-ds15-event-contracts.py",
+   "summary": {
+    "status": "pass",
+    "sealed_originals": 225,
+    "custody_stores": 3
+   }
+  },
+  {
+   "label": "DS15-deck2-browser.context_shared",
+   "exit": 0,
+   "seconds": 2,
+   "log_sha256": "d2fcb64761dc10ac521586f79b677e2a399de4a95223493d788d7d4af9ec5a34",
+   "command": null,
+   "summary": {
+    "status": "pass",
+    "cases": 126
+   }
+  },
+  {
+   "label": "DS15-deck2-browser.context_share_revoked",
+   "exit": 0,
+   "seconds": 3,
+   "log_sha256": "973261cb63fe0f35139e1d143e1b3ec0ebb3fdfdbab40cb15a247216364118a7",
+   "command": null,
+   "summary": {
+    "status": "pass",
+    "cases": 121
+   }
+  },
+  {
+   "label": "DS15-deck2-catalog.update.started",
+   "exit": 0,
+   "seconds": 3,
+   "log_sha256": "04614cf0be964114f55353ef6d457ee375f196421220880d48710028f733a35f",
+   "command": null,
+   "summary": {
+    "status": "pass",
+    "cases": 197
+   }
+  },
+  {
+   "label": "DS15-deck2-catalog.update.completed",
+   "exit": 0,
+   "seconds": 4,
+   "log_sha256": "062b8f973b93b26b83c380221325a106fa2b2386649f9650db41161032065ec2",
+   "command": null,
+   "summary": {
+    "status": "pass",
+    "cases": 197
+   }
+  },
+  {
+   "label": "DS15-deck2-catalog.remove.started",
+   "exit": 0,
+   "seconds": 3,
+   "log_sha256": "4d6a087410d4ef0ebcb44bc73381bcda4a3f5fdc72bc6efc89d587c751e3db5a",
+   "command": null,
+   "summary": {
+    "status": "pass",
+    "cases": 180
+   }
+  },
+  {
+   "label": "DS15-deck2-catalog.remove.completed",
+   "exit": 0,
+   "seconds": 3,
+   "log_sha256": "12ae0cb4e770e04e0f56ee3f9d19f256631eee94c7e73746e436972649eef714",
+   "command": null,
+   "summary": {
+    "status": "pass",
+    "cases": 180
+   }
+  },
+  {
+   "label": "DS15-deck2-tool.custom_headless.skipped",
+   "exit": 0,
+   "seconds": 3,
+   "log_sha256": "09eec28b488efacfcfbb6ae8e6343ed37bed66cef598e012f300a5820e062964",
+   "command": null,
+   "summary": {
+    "status": "pass",
+    "cases": 129
+   }
+  },
+  {
+   "label": "DS15-p2b",
+   "exit": 0,
+   "seconds": 2,
+   "log_sha256": "5e50de735531286466f94fb60e0cbfc86da6828e667829dbbe2005a298111eb7",
+   "command": "python3 scripts/pm_ds15_p2b_cases.py --check",
+   "summary": {
+    "status": "pass",
+    "positives": 10,
+    "negatives": 38,
+    "witnesses": 48
+   }
+  },
+  {
+   "label": "DS15-p2a",
+   "exit": 0,
+   "seconds": 5,
+   "log_sha256": "7274450b8f7537f9558439e7622ad1ad72982a534d988367f32fbc7e688335bd",
+   "command": "python3 scripts/pm_ds15_p2a_cases.py --check",
+   "summary": {
+    "status": "pass",
+    "witnesses": 82
+   }
+  },
+  {
+   "label": "DS15-tables",
+   "exit": 0,
+   "seconds": 0,
+   "log_sha256": "ac9815c96ffbc8be22e1732d8899f12cbececc680c21f89a274cbc304197fc7e",
+   "command": "python3 scripts/pm-ds15-table-generate.py scripts --check"
+  },
+  {
+   "label": "DCO-coordination-events",
+   "exit": 0,
+   "seconds": 6,
+   "log_sha256": "79db659b2239953b1b48f003a3fb2f7ffe0592ea46062b4bbe407d4adbc67ebe",
+   "command": "python3 scripts/pm_coordination_events.py",
+   "summary": {
+    "status": "pass",
+    "failures": 0
+   }
+  },
+  {
+   "label": "DCO-test-coordination",
+   "exit": 0,
+   "seconds": 72,
+   "log_sha256": "f4d610402e42cf3bebd99970667d700296b7d15dcf569c736cbd35fbc6c0d46a",
+   "command": "python3 -m unittest discover -s tests -p test_pm_coordination_events.py",
+   "summary": {
+    "tests": 57,
+    "ok": true
+   }
+  },
+  {
+   "label": "DCO-number-corpus",
+   "exit": 0,
+   "seconds": 0,
+   "log_sha256": "fb47b0f4546820788fe312e67bf130e1c6f1f97580ac250811ad7f744a9f1575",
+   "command": "python3 scripts/pm_coordination_number_corpus.py",
+   "summary": {
+    "status": "pass",
+    "agree": 16,
+    "crash": 0
+   }
+  },
+  {
+   "label": "DCO-wave2",
+   "exit": 0,
+   "seconds": 32,
+   "log_sha256": "a961a9428b5d3f2793445c89e18d0a4b0ede30e672083f105eb23fcd025796c6",
+   "command": "python3 -B scripts/pm_coordination_wave2.py",
+   "summary": {
+    "status": "pass",
+    "failures": 0
+   }
+  },
+  {
+   "label": "DCO-guard-run",
+   "exit": 0,
+   "seconds": 632,
+   "log_sha256": "7b7f3e5dbae5cb1cea1085455b3cdd23bca2c67911a56f9f9b9554f597ccb390",
+   "command": "env PYTHONPATH=scripts python3 -B -u scripts/pm_coordination_guard_run.py",
+   "summary": {
+    "tables_pass": 14,
+    "rows": 119,
+    "missing": []
+   }
+  },
+  {
+   "label": "DM-checker",
+   "exit": 0,
+   "seconds": 172,
+   "log_sha256": "b31ee655e122e188fa617b43bf7cc97f531910b375f958efb5deea1468c687e7",
+   "command": "python3 -B scripts/pm-small-owner-events.py",
+   "summary": {
+    "status": "PASS",
+    "assertions": 55599
+   }
+  },
+  {
+   "label": "DX-tables",
+   "exit": 0,
+   "seconds": 1,
+   "log_sha256": "1c3491343bb48fa8c3137a19b471ad0b811e9a01434b31d98ac5802073afc7c9",
+   "command": "python3 scripts/pm-executor-table-generate.py --check"
+  },
+  {
+   "label": "DX-p2a",
+   "exit": 0,
+   "seconds": 1,
+   "log_sha256": "df906240d749926f9c7d1f583d6a2ce6ffe5ead66200fb94a456782820527e42",
+   "command": "python3 scripts/pm-executor-p2a-cases.py --check",
+   "summary": {
+    "status": "pass",
+    "witnesses": 110
+   }
+  },
+  {
+   "label": "DX-semantics",
+   "exit": 0,
+   "seconds": 72,
+   "log_sha256": "86bc6d94a48956252a3b9cb58b52b3cb3c3a7d8029107af4e4893c27a5d628b7",
+   "command": "python3 scripts/pm_executor_event_semantics.py",
+   "summary": {
+    "status": "pass",
+    "historical_read_cases": 1377,
+    "failures": 0
+   }
+  },
+  {
+   "label": "DX-contracts",
+   "exit": 0,
+   "seconds": 7,
+   "log_sha256": "2268a78af639b061cc94bff13219c199c3feaaa84063078830532f5d798f5728",
+   "command": "python3 scripts/pm_executor_event_contracts.py",
+   "summary": {
+    "status": "pass",
+    "failures": 0
+   }
+  },
+  {
+   "label": "DM-tables-regen-diff",
+   "exit": 0,
+   "seconds": 0,
+   "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "command": "bash -c 'python3 scripts/pm-small-owner-table-generate.py >/dev/null && git diff --exit-code -- scripts/pm_small_owner_table_*.py'"
+  },
+  {
+   "label": "SHARED-datetime-inventory",
+   "exit": 1,
+   "seconds": 12,
+   "log_sha256": "d4bfabe87c7212e06e04540e494a467ba8aeea45587f26c01d733a3d21249fa0",
+   "command": "python3 scripts/pm_event_datetime_inventory.py",
+   "summary": {
+    "status": "fail",
+    "nodes": 0,
+    "unclassified_nodes": 0,
+    "failures": 255
+   },
+   "note": "NOT CREDITED: run with the ignored audit inputs present; a PNG aborts the scan (scan_exclusions_invalid, T209), so all 254 nodes read missing. Rerun on a tracked-files-only tree: SHARED-datetime-inventory-tracked."
+  },
+  {
+   "label": "SHARD-check",
+   "exit": 0,
+   "seconds": 27,
+   "log_sha256": "7da2c2397b239dd0ed23a315f1db1f44846b9c666bf8ec77ecf15d2ac6e46ce0",
+   "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+   "summary": {
+    "status": "pass",
+    "shards_checked": 3704,
+    "failures": 0
+   }
+  },
+  {
+   "label": "SHARED-datetime-inventory-tracked",
+   "exit": 0,
+   "seconds": 93,
+   "log_sha256": "aea67d829783ea2e8191dfa5e41c9c7df068ec3d14483c3cfc0ff5bb19b096e4",
+   "command": "python3 scripts/pm_event_datetime_inventory.py",
+   "summary": {
+    "status": "pass",
+    "nodes": 254,
+    "unclassified_nodes": 0,
+    "failures": 0
+   }
+  },
+  {
+   "label": "SHARED-numbers-all-tracked",
+   "exit": 0,
+   "seconds": 638,
+   "log_sha256": "5f8ac03d616f91f25a96ce1724458946010238a975904f7c03cdf0de2a2cfd09",
+   "command": "python3 scripts/pm_event_numbers.py --self-test",
+   "summary": {
+    "status": "pass",
+    "positives": 6939,
+    "negatives": 6687,
+    "failures": 0
+   }
+  }
+ ],
+ "guards": [
+  {
+   "lane": "DCH",
+   "summary": "/home/sittingmongoose/pm-scratch/ea-batch2-fix1-resume/out/dch-guards/summary.json",
+   "summary_sha256": "bf81082bcbc3688b544a209268a3268f6e5e0572230b6e2644126174522e4569",
+   "findings": 0,
+   "counts": null,
+   "seconds": 1276.3,
+   "suites": [
+    {
+     "phase": "rn_recipe",
+     "proved": 6,
+     "rows": 6,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [],
+     "unproved": []
+    },
+    {
+     "phase": "rn_receipt",
+     "proved": 2,
+     "rows": 2,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [],
+     "unproved": []
+    },
+    {
+     "phase": "rn_original",
+     "proved": 1,
+     "rows": 1,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [],
+     "unproved": []
+    },
+    {
+     "phase": "sc_project_bytes",
+     "proved": 0,
+     "rows": 1,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [
+      "SC13_decoded_bytes"
+     ],
+     "unproved": [
+      "SC13_decoded_bytes"
+     ]
+    },
+    {
+     "phase": "cp_family_entailed",
+     "proved": 0,
+     "rows": 4,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [
+      "CP29_value_event_type",
+      "CP30_event_event_type",
+      "CP32_consumer",
+      "CP33_projector"
+     ],
+     "unproved": [
+      "CP29_value_event_type",
+      "CP30_event_event_type",
+      "CP32_consumer",
+      "CP33_projector"
+     ]
+    },
+    {
+     "phase": "cs_pointer_bounds",
+     "proved": 0,
+     "rows": 2,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [
+      "CS04_pointer_encodable",
+      "CS05_pointer_size"
+     ],
+     "unproved": [
+      "CS04_pointer_encodable",
+      "CS05_pointer_size"
+     ]
+    },
+    {
+     "phase": "st_pointer_bounds",
+     "proved": 0,
+     "rows": 2,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [
+      "SV11_pointer_encodable",
+      "SV12_pointer_size"
+     ],
+     "unproved": [
+      "SV11_pointer_encodable",
+      "SV12_pointer_size"
+     ]
+    },
+    {
+     "phase": "st_index_entailed",
+     "proved": 0,
+     "rows": 2,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [
+      "IX22_record_event_type",
+      "IX24_row_sequence_type"
+     ],
+     "unproved": [
+      "IX22_record_event_type",
+      "IX24_row_sequence_type"
+     ]
+    }
+   ],
+   "totals": {
+    "proved": 274,
+    "rows": 285,
+    "masked": 0,
+    "lane_matrix": 0,
+    "tables_fail": [
+     "sc_project_bytes",
+     "cp_family_entailed",
+     "cs_pointer_bounds",
+     "st_pointer_bounds",
+     "st_index_entailed"
+    ]
+   }
+  },
+  {
+   "lane": "DCN",
+   "summary": "/home/sittingmongoose/pm-scratch/ea-batch2-fix1-resume/out/dcn-guards/summary.json",
+   "summary_sha256": "056239e1cdea8a0f1012b0a84b2f353f1ba0bc610f367f2091f1b653b5d56f52",
+   "findings": 0,
+   "counts": {
+    "accepted": 354,
+    "cases": 17056,
+    "judged_errors": 0,
+    "refused": 16702
+   },
+   "seconds": 493.4,
+   "suites": [
+    {
+     "phase": "recipe",
+     "proved": 2,
+     "rows": 2,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [],
+     "unproved": []
+    },
+    {
+     "phase": "entailed_recipe_resolved",
+     "proved": null,
+     "rows": 1,
+     "masked": null,
+     "lane_matrix": 0,
+     "without_negative": [
+      "recipe_resolved"
+     ],
+     "unproved": []
+    }
+   ]
+  },
+  {
+   "lane": "DS15",
+   "summary": "/home/sittingmongoose/pm-scratch/ea-batch2-fix1-resume/out/ds15-guards/summary-faa88bb1b928.json",
+   "summary_sha256": "ccb10dc9b6e5f648d792dab24ec0e1426deaa8a7c120fd96f8af8c6acf147dab",
+   "findings": 129,
+   "counts": {
+    "accepted": 15853,
+    "refused": 23690,
+    "witnesses": 39543
+   },
+   "seconds": 133.1,
+   "suites": [
+    {
+     "phase": "rd_recipe",
+     "proved": 4,
+     "rows": 4,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [],
+     "unproved": []
+    },
+    {
+     "phase": "rd_resolve",
+     "proved": 1,
+     "rows": 1,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [],
+     "unproved": []
+    },
+    {
+     "phase": "rd_resolve_entailed",
+     "proved": null,
+     "rows": 4,
+     "masked": null,
+     "lane_matrix": 0,
+     "without_negative": [
+      "SX03_original_sealed",
+      "SX04_original_authentic",
+      "SX06_recipe_known",
+      "SX07_dispatch_other"
+     ],
+     "unproved": []
+    }
+   ]
+  },
+  {
+   "lane": "DM",
+   "summary": "/home/sittingmongoose/pm-scratch/ea-batch2-fix1-resume/out/dm-guards/summary.json",
+   "summary_sha256": "70dddd803105524cac0c8cf98ac26d1d8f0a5c28e19ddd3fcb6135959d46a178",
+   "findings": 0,
+   "counts": {
+    "accepted": 151358,
+    "p2a_witnesses": [
+     "WR09-producer-witness",
+     "WR10-semantic",
+     "WR14-time-payload",
+     "PB01_receipt_delivery_bool",
+     "PB02_terminal_delivery_bool",
+     "PL11-storage-body-type",
+     "PL14-descriptor-integer",
+     "FV03-preimage",
+     "FV05-commitment-stored",
+     "PL01-body-codec",
+     "PL02-storage-body-codec",
+     "FV01-requested-integer",
+     "CP01-checkpoint-integer",
+     "CP02-durable-token",
+     "CP03-selected-token",
+     "PB04-append-policy",
+     "RD01-state-integer",
+     "RT04-not-replay-only",
+     "RT08-producer-integer",
+     "RS03-authority-integer",
+     "RS14-incoming-event",
+     "RE01-envelope-schema",
+     "RB01-state-integer",
+     "RP01-original-digest-str",
+     "RF01-current-str",
+     "RF02-selected-str",
+     "RP02-retry-digest-str",
+     "WR26-storage-clocks",
+     "RS22-storage-clocks",
+     "RS23-ack-clock"
+    ],
+    "records": 175525,
+    "refused": 24167
+   },
+   "seconds": 825.9,
+   "suites": [
+    {
+     "phase": "resolve",
+     "proved": 26,
+     "rows": 26,
+     "masked": 0,
+     "lane_matrix": 12,
+     "without_negative": [],
+     "unproved": []
+    }
+   ]
+  },
+  {
+   "lane": "DX",
+   "summary": "/home/sittingmongoose/pm-scratch/ea-batch2-fix1-resume/out/dx-guards/summary-6ce59aba65fe.json",
+   "summary_sha256": "f34792af30c83ba96cf4c075bbb112f1ca89226c8ae43bc27a2876d6a55c65f4",
+   "findings": 0,
+   "counts": {
+    "accepted": 13520,
+    "refused": 12594,
+    "traces": 231,
+    "witnesses": 26345
+   },
+   "seconds": 439.5,
+   "suites": [
+    {
+     "phase": "recipe_binding",
+     "proved": 5,
+     "rows": 5,
+     "masked": 0,
+     "lane_matrix": 0,
+     "without_negative": [],
+     "unproved": []
+    }
+   ]
+  }
+ ]
+}

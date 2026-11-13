@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7236
+Source lines: L6718-L7528
 
-Source SHA256: `76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647`
+Source SHA256: `4787625103f0742db48e5e1df0b815768830e76ff8d6391196a237197cf8c511`
 
 ---
 
@@ -115,29 +115,54 @@ plan_unit_id: ATS-080
 unit_type: acceptance_gate
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: |-
-  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use their final canonical IDs in Plans/settings_inventory.json; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
+canonical_text: 'Acceptance checks every live inventory row against SSYS-059''s reviewed classification, offered-level/key/combine/atomic/not_offered
+  contract and the actual census. Seven approved additions use their final canonical IDs in Plans/settings_inventory.json;
+  1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative
+  paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile
+  fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default
+  may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling
+  still hold.
 
-  Test the single writer/home/mirror and per-setting CAS: independent edits succeed, same-setting/stale preview fails, offline writes queue nothing, join shows alternatives and supports 30-day Undo, home transfer requires old-writer fencing, and same raw IDs from different key domains never collide. Stale indexes disclose as-of rather than fabricating Varies. No credential/content leakage in mirrors/index/history/events/exports. Q5 keeps general.interaction.thread-archive-days zero as non-offered compatibility only, never an auto-archive offer. Retired Goal worker/verifier rows stay non-offered pending their explicit owner retirement. The five already missing branching.plan/deep-plan subgroup declarations are reported as a pre-existing census defect, not repaired by inventing another category or silently changing the denominator. Human origin edits, agent narrowest/mode handling and protected Always/source acceptance remain distinct.
 
-  Detached own_values/effective_values copy tests exact disjoint selectors, owner things/readback/eligible compensation, chosen account readiness and no install/trust/keys/paths/live-body transfer. New-registry draft rebind/listing and Later/connect-only exclusions use real owner joins. Same-Computer unchosen account never reuses sign-in. App auth keeps protected pre-identity and exact Client/Host/return.
+  Test the single writer/home/mirror and per-setting CAS: independent edits succeed, same-setting/stale preview
+  fails, offline writes queue nothing, join shows alternatives and supports 30-day Undo, home transfer requires
+  old-writer fencing, and same raw IDs from different key domains never collide. Stale indexes disclose as-of
+  rather than fabricating Varies. No credential/content leakage in mirrors/index/history/events/exports. Q5
+  keeps general.interaction.thread-archive-days zero as non-offered compatibility only, never an auto-archive
+  offer. Goal worker/verifier rows are retired under Models §2 and GRS-049, not pending independent defaults.
+  The five already missing branching.plan/deep-plan subgroup declarations are reported as a pre-existing census
+  defect, not repaired by inventing another category or silently changing the denominator. Human origin edits,
+  agent narrowest/mode handling and protected Always/source acceptance remain distinct.
 
-  Model acceptance uses Plans/Models_System.md's accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
+
+  Detached own_values/effective_values copy tests exact disjoint selectors, owner things/readback/eligible
+  compensation, chosen account readiness and no install/trust/keys/paths/live-body transfer. New-registry draft
+  rebind/listing and Later/connect-only exclusions use real owner joins. Same-Computer unchosen account never
+  reuses sign-in. App auth keeps protected pre-identity and exact Client/Host/return.
+
+
+  Current model acceptance follows Models §2’s fixed named-source order: explicit run model/depth, scoped owner
+  policy, surface/stage default, eligible manually selected account default, This project, Everywhere/factory.
+  Persona, command-saved model, Computer defaults, last-used state and provider defaults are not model selection
+  sources. Conservative/Standard/Aggressive cannot reorder or omit a current rung. Historical tier-version
+  bytes and V2 strategy_tier_allowed codec probes remain historical read compatibility only, never proof of
+  current routing. Preserve account/capability/authority clamps and owner merge semantics; no new model router
+  or native proof follows.'
 gui_related: false
-gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
-  not visual implementation.
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract
+  acceptance, not visual implementation.
 depends_on:
 - DR-084
 - DR-085
 - DR-089
 unblocks: []
 acceptance_criteria:
-- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact Project
-  fixtures unchanged.
-- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
-  scenarios as pass.
-- Run the adopted static contract checks against the current owner and companion editions;
-  no new runtime proof follows from these checks.
+- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact
+  Project fixtures unchanged.
+- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating
+  omitted scenarios as pass.
+- Run the adopted static contract checks against the current owner and companion editions; no new runtime proof
+  follows from these checks.
 validation_surfaces:
 - scripts/pm-projects-refresh-contracts.py
 risk_class: missing_scope_semantics_or_false_certification
@@ -155,6 +180,7 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#ATS-080
 - /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - own_values
 - effective_values
@@ -162,8 +188,8 @@ preserved_exact_tokens:
 - 30-day
 - Conservative
 negative_constraints:
-- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse failures
-  by refreshing a baseline, or reseal governance in this pass.
+- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse
+  failures by refreshing a baseline, or reseal governance in this pass.
 owner_hints:
 - Plans/Settings_System.md#SSYS-059
 - Plans/Settings_System.md#SSYS-060
@@ -171,6 +197,9 @@ owner_hints:
 - Plans/Settings_System.md#SSYS-065
 - Plans/Models_System.md#MS-099
 - Plans/Multi-Account.md#MA-074
+compatibility_only_notes:
+- Conservative/Standard/Aggressive and the old scoped_owner_ladder_v2 numeric matrix survive only as historical
+  codecs; current model sources use Models §2.
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-059, ContractName:Plans/Settings_System.md#SSYS-060, ContractName:Plans/Settings_System.md#SSYS-062, ContractName:Plans/Settings_System.md#SSYS-065, ContractName:Plans/Models_System.md#MS-099, ContractName:Plans/Multi-Account.md#MA-074
@@ -532,3 +561,261 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-360 — DO exact-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-360
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Each of OSI-680 through OSI-704 independently adopts its exact-family fixture in
+  Plans/orchestrator_event_contract_fixtures.json and python3 scripts/pm-orchestrator-event-contracts.py.
+  Run its positive payloads for every admitted scope, then individually remove every required field,
+  add an unknown field, change schema version, use a foreign scope, zero occurrence, invalid UTC,
+  absent Project identity or fabricated application Project. Every negative refuses.
+  Identity vectors preserve a retry and distinguish operation, occurrence, Server, thread, run and family.
+  OSI-681..683 and OSI-686..704 application vectors decode CV-366's exact application@1 Server and
+  original-operation observation component; the incompatible do1 application key refuses. Project
+  identity and project~base64url partitions remain exact. Same identity with changed full semantics
+  conflicts. OSI-681 tests inline content at 16,384 UTF-8 bytes, oversized ASCII and multibyte text,
+  missing/both body representations, closed SP-337 BLAKE3/byte-size/media-type references and secrets.
+  Each board family validates both scope editions against its actual coordination_event_records
+  member (SP-720..722), preserving all old members and rejecting missing members, source/append
+  edition drift, foreign Server/thread/crew/run/operation/message joins and false Run anchors.
+  OSI-699 tests a new attempt after failure, blockage and interruption independently, with terminal,
+  permission, parent-ceiling, Stop, deadline, resume/reroute/replacement and attempt-counter refusals.
+  All twenty-five families have full selected EventRecord@2.0.0 append/retry and joined generic
+  checkpoint/read-token vectors. Reject replay_only_not_appendable before append or retry; compare
+  each recorded project~ partition with its actual Project encoding. Use the exact EventRecord
+  producer-semantic RFC8785 field set, exclude Storage sequence/observed/persisted metadata, return
+  the original complete result on equal semantics and reject changed caller semantics without append.
+  Run every family's S1..S10 authored failure (each requires exit 1); success-labelled failures reject.
+  Enforce the complete inline MessagePack payload budget, exact ASCII/multibyte boundaries and
+  valid external SP-337 pack bytes, digest/length/media and bytes/index durability witnesses.
+  Missing/forged references, foreign Storage checkpoints, every changed token member, source/index
+  mismatch and a nonmatching append's frontier advance refuse. Enforce the phase count predicate,
+  retry counter/cause/current-source join, truncation ordering and existing board priority enum on
+  the actual selected payload. Validate full closed application originals/input/wrappers for every
+  board contract, including missing/foreign fields. Application posts select CV-740/SP-723's complete
+  governed V2 message/source/wrapper graph with genuine original headers/body/routing and separate
+  accepted-source/stage/semantic/physical commitments; frozen Project/V1 resources remain exact.
+  All V1/V2 application board consumers require accepted original pre-publication stages and resolved
+  original stage request/result/evidence joins; refuse each refused/not-reached/unknown stage,
+  absent request/result/evidence, foreign witness/method/operation and forged accepted-source/physical hash.
+  Admission-dependent event append/first receipt stays not_reached until actual admission.
+  Every family/scope runs 1.0, -0, 1e0 and 01 number-input refusals, synchronized event/retry controls,
+  actual RFC8785 identity/observation preimages and equal-semantic JCS digest checks.
+  Apply the shared CV-1100 calls only at current input boundaries before schema, identity, source
+  hash and retry comparison: `loads_current_json` at raw ingress, `current_integer` at every schema
+  integer slot with its own bounds, and `qualified_jcs` on the producer projection and identity preimage. The fixture loader preserves retained EventRecords, receipts and
+  typed source/wrapper values under their original selected codec without rewriting their numbers.
+  For every family, file-backed retained originals resolve through the SP-1101 RetainedDispatcher:
+  sealed custody authenticates the exact original bytes and selects ea-do-json-v1 or ea-do-rfc8785-v2,
+  whose frozen verifier recomputes key/ID and source commitment; the disclosed recipe label and evidence
+  are joined against custody, and a coherent forgery of the original's bytes refuses. Recompute with that
+  recipe only; unknown or unproven fallback refuses. The shared number corpus runs through the complete
+  append and retry routes, CV-1101 profiles are witnessed per payload and Storage timestamp field, and
+  `python3 scripts/pm_event_numbers.py --self-test --scope numbers` passes.
+  Exercise old 1.0, 1e0 and 1e20 originals, both recipes and compatibility reads through complete main,
+  exact original-result recovery/retry bytes, and forged IDs/keys with every Storage observation synced.
+  Foreign/unverified recipe evidence, withdrawn readers and invalid current number inputs still refuse.
+  Sweep all families for exact types before comparisons: string booleans/numbers, null, arrays and
+  nested objects; include payload/schema, producer context, receipt, durability and exit-code boundaries.
+  Join each board's declared family/schema/envelope to its unchanged selected complete EventRecord.
+  Eagerly resolve every declared selected $ref, including dormant optional branches and actual stored
+  compositions, with exact offline URIs and scoped JSON Pointers; unresolved resources/fragments refuse.
+  Every family runs retained originally-valid history after live producer state/writer admission changes,
+  supported compatibility reads, forged/unproven/foreign originals and exact-family withdrawal/publication
+  fences with an unchanged valid generic checkpoint. Current disclosure access/deletion/hold still applies.
+  Prove every lane guard by removing it in an isolated in-memory checker, showing its own single-defect
+  negatives pass and unrelated negatives still refuse; keep the full guard-removal table in the report.
+  Restore all production guards; no bypass flag or weakened production guard is permitted.
+  Native obligations remain NOT_RUN per family: race the exact producer predicate with cancellation,
+  commit referenced content before append, crash before and after first receipt, resolve full value on
+  uncertain acknowledgment, reject same-key changed semantics, replay without its semantic effect,
+  reject stale full SP-278 token even on nonmatching append, and fence changed permissions/deletion/hold,
+  restore and withdrawn/unsupported editions. Each fixture contract names its own predicate and reader;
+  a sibling pass supplies no evidence. Static success grants no admission or native execution proof.
+gui_related: false
+gui_classification_reason: Contract and source-authority verification.
+depends_on: [OSI-680, OSI-681, OSI-682, OSI-683, OSI-684, OSI-685, OSI-686, OSI-687, OSI-688, OSI-689, OSI-690, OSI-691, OSI-692, OSI-693, OSI-694, OSI-695, OSI-696, OSI-697, OSI-698, OSI-699, OSI-700, OSI-701, OSI-702, OSI-703, OSI-704]
+unblocks: []
+acceptance_criteria:
+- Every exact family has positive and negative static cases; native obligations stay NOT_RUN until executed.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [scripts/pm-orchestrator-event-contracts.py]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: [NOT_RUN, SP-278, SP-286]
+negative_constraints: [No registry admission or native proof follows.]
+owner_hints: [Plans/Automated_Testing_System.md]
+```
+
+
+<a id="ATS-335"></a>
+### ATS-335 - DG6B per-family oracle obligations
+
+```yaml
+plan_unit_id: ATS-335
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  DG6B per-family oracle obligations. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [CV-690, SP-670, SP-671]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+Each following family owns its own cases in Plans/dg6b_event_contract_fixtures.json; scripts/pm-dg6b-event-contracts.py validates schemas, exact-family identity, original retry stability, changed-payload conflict, wrong scope/identity, and poll slow_down cadence. These static models do not execute native producers.
+
+- `auth.github.authenticated`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `auth.github.device_code.issued`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `auth.github.disconnected`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `auth.github.failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `auth.github.token.polling`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.hook.blocked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.hook.error`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.hook.invoked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.load_failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.loaded`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.permission.override`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.tool.collision`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+- `plugin.tool.registered`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. The `auth.github.authenticated` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `auth.github.device_code.issued` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `auth.github.disconnected` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `auth.github.failed` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `auth.github.token.polling` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.hook.blocked` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.hook.error` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.hook.invoked` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.load_failed` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.loaded` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.permission.override` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.tool.collision` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. The `plugin.tool.registered` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives change only requested_account_ref or effective_account_ref against its authenticated source; the peer stays unchanged and independent Storage bytes match the changed envelope.
+
+For `plugin.hook.blocked` (PLUG-131), ATS-335 also requires positive cases for `pre_tool_invoke`, `pre_attempt_start`, `pre_node_dispatch` and schema/semantic rejection of `post_tool_invoke` and `post_attempt_complete` Block-shaped observations. Such observations never block execution or append this event. The full DG6B checker executes these negatives. Native observation/dispatch proof remains NOT_RUN.
+
+
+<a id="ATS-336"></a>
+### ATS-336 - DG6B Persona exact-family oracle obligations
+
+```yaml
+plan_unit_id: ATS-336
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  DG6B Persona exact-family oracle obligations. Newly authored exact-family technical contracts under DL-045, prepared without admission;
+  existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+gui_related: false
+gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
+depends_on: [DL-045, SP-672, CV-691]
+unblocks: []
+acceptance_criteria:
+- Exact-family positive and negative oracles pass; admission and retention remain separately gated.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+- `persona.created`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. The `persona.created` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.deleted`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. The `persona.deleted` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.exported`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Event writer_current=false refuses independently of source access and definition_writer_current; authorized read-only source export with current event writer passes. The `persona.exported` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.imported`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. The `persona.imported` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.selected`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Coherent frozen-source tier/tier_id and wrong thread/run/node/attempt/actor lineage refuse; metadata-only null and five actual lineage-owner positives pass. The `persona.selected` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+
+- `persona.updated`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension, missing operation, unsupported version, scope/Server/Project/partition substitution, mirrored write, unauthorized source/access, stale original/result, changed semantic bytes, unknown version, withdrawn writer/reader and missing original receipt. Family-specific protected-ID, confirmation, CAS, export/import receipt and frozen selection tests are in the fixture row and full checker. Native owner effect -> result/readback -> append -> first-receipt custody -> terminal publication, each crash cut, coherent backup/restore, withdrawal and deletion/access tests remain NOT_RUN. The full append/retry oracle validates the canonical EventRecord and actual original-source actor/Server/scope/receipt joins; current replay_policy=dedupe_by_idempotency_key, projector_replay_only rejection as replay_only_not_appendable, exact CV-366 application keys (including 4111-character UTF-8 boundary), permitted encoded Project scope, SP-337 16383/16384/16385 byte transport stages and authenticated reference integrity/currentness, trailing-LF identifiers, storage metadata excluded from semantic retry and generic durable-token storage joins. Every negative must fail the full checker with a nonzero exit when inserted as a positive; a success exit cannot certify a refusal. Separate complete append and retained-history negatives isolate each requested/effective account join with authentic matching Storage bytes; protected target IDs cannot be marked unprotected for mutation, and selection uses the owner source enum.
+ The `persona.updated` full checker eagerly resolves every $ref/$dynamicRef across all selected schema resources, including unused definitions and unselected branches, before instance validation; any unresolved reference fails. It measures every constructed physical operation in canonical MessagePack, tests inline and closed SP-337 operation-reference recovery, and refuses oversized physical values, missing/corrupt references and authenticated wrong payload/receipt custody. Full logical operation boundaries at 16383/16384/16385 bytes are separately exercised for auth.github.authenticated; all nineteen exercise the byte-stage cutoff and real physical operation values. Frozen-at-write retained-history positives survive changed current live state; forged provenance, missing retention, revoked access, deleted body and withdrawn family/consumer negatives refuse. Each of standing checks 1 through 10 has an independent full-process negative mutation per family; exit 0 never counts as refusal.
+
+### ATS-285 - Debug family independent event oracles
+
+```yaml
+plan_unit_id: ATS-285
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Nine prepared exact families in Plans/debug_investigation_event_fixtures.json have independent
+  closed-payload, identity, Project join, replay/idempotency, original-receipt, custody, compatibility
+  and withdrawal oracles in scripts/pm-debug-investigation-events.py. DL-428 state_changed covers all
+  six Failed reasons and rejects every other failure pairing, separates failed_cleanup, compares original
+  before-state/phase, refuses terminal in-place restart and preserves historical opening/new-linked-work
+  semantics. DL-429 instrumentation_state_changed covers every approved transition row and each source
+  alternative, all eight legal pairs, whole-lane never-needed proof, verified removal including detach,
+  exact visible leftovers/recovery, retry authorization/count/attempt ceiling, pending handoff acceptance,
+  retained responsibility on failure, no second unaccepted handoff, no cleaned restart, restore/permission/overlap
+  guards and immutable original detail joins. Each current writer/retry refuses projector_replay_only;
+  every family has its own missing-field/version/unknown-field, encoded project partition, changed semantic
+  digest, native custody/CAS/permission/withdrawal obligations and none_required transient-checkpoint
+  assertion. The pre-existing seven contracts and mode-resolution cases retain their prior scope. Eagerly
+  resolve every schema reference, including unvisited definitions; malformed references fail the whole
+  checker. Retained original positives ignore current live transition state and current-writer replay
+  policy while forged or withdrawn originals refuse. scripts/pm-debug-investigation-standing-checks.py
+  promotes each family's bad candidates and rejects successful exits masquerading as failure. Static fixtures
+  use projected original facts; they never prove native receipt, proof dereference, payload-pack, writer
+  exclusion, recovery, CAS or effects. Those obligations remain authored and NOT_RUN. Number, physical
+  and date-time checks call the shared helpers of CV-1100, SP-1100 and CV-1101 (current_integer at every
+  companion-schema integer slot with its schema bounds, qualified RFC 8785 identity and producer digests,
+  EVENT_VALUE inline sizes, exact uint64 Storage metadata, date_time with the EventRecord profile and with
+  CV-253 storage_utc_z), and the shared number corpus runs through the complete checker. Every refusal is
+  a named guard-table row proved by the shared guard-isolation tool. No local number, date-time or proof
+  helper is introduced.
+gui_related: false
+gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
+  its surface.
+depends_on:
+- CV-570
+- CV-571
+- CV-572
+- CV-573
+- CV-574
+- CV-575
+- CV-576
+- CV-577
+- SP-570
+- CV-578
+unblocks: []
+acceptance_criteria:
+- Exact family remains unadmitted until its own integration landing and all open product cells close.
+- Named positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-debug-investigation-events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_debug_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-123
+- reports/event-authority-20261104/DDBG.md
+- Plans/Decision_Log.md#DL-428
+- Plans/Decision_Log.md#DL-429
+preserved_exact_tokens:
+- ATS-285
+negative_constraints:
+- No admission, retention decision, native readiness or governance seal.
+```
+
+<a id="collaboration-event-oracles-dl-090-2026-11-04"></a>

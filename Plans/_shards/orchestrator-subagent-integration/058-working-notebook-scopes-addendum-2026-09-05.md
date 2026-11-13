@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31900-L32165
+Source lines: L31942-L32202
 
-Source SHA256: `efa0d584b565514addf6b0c0c42d53bf36adf36ce886cfdafbae81600129d900`
+Source SHA256: `a133f042952f4fcc9a3c09116e3be09aedb89fb31b629307226749b368332653`
 
 ---
 
@@ -164,9 +164,12 @@ canonical_text: App Crew/subagents reuse AgentCoordinator and its versioned stor
   no-project bucket per Server mirrors counterpart coordination caps, retention and holds. N25 settles/fences source
   registrations, operations and claims; destination registrations/claims and checkpoint coverage are newly admitted,
   never copied epoch numbers. No active-agents.json or agent-messages.json mirror or export becomes scheduling truth.
-  CV-366 selects app.coordination_append.v1 with OriginalCoordinationAppendSource and AgentMessageApplicationV1/CoordinationProjectionApplicationV1;
-  SP-351 owns its explicit app physical keys and counterpart policy joins. Both canonical AgentMessage description
-  sites consume that same selected app definition. Original storage.coordination_append.v1 Project source and read/checkpoint
+  CV-740 selects app.coordination_append.v2 with OriginalCoordinationAppendSourceV2 and AgentMessageApplicationV2
+  for current application board posts; SP-723 selects its V2 wrapper/key/codec and original read/backup/restore graph.
+  Both canonical AgentMessage producer/consumer description sites select that same complete edition. CV-366's
+  app.coordination_append.v1 and AgentMessageApplicationV1/CoordinationProjectionApplicationV1 remain explicit
+  supported historical selections and the current existing read/archive source witnesses; no V1 header invention.
+  SP-351's counterpart retention/hold policies and sole coordinator/payload store remain unchanged. Original storage.coordination_append.v1 Project source and read/checkpoint
   resources remain exact; no nullable reinterpretation or copied checkpoint admits an app append.
 gui_related: true
 gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
@@ -221,19 +224,10 @@ plan_unit_id: OSI-441
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: A real Planning Wizard/Orchestrator Project build consumes the Permissions-owned human-approved
-  BuildGrant at parent/child admission and immediately before each grant-authorized local or remote effect dispatch.
-  CreatedResourceManifest supplies verified stable resource identity. Receipts keep authority_kind=human|mode|build_grant;
-  ordinary YOLO publication is policy auto-allow, never a forged human yes. What the build did reads the shared
-  owner receipts and exact targets. Bind exact Project, approved Plan revision/hash, build/run/task, enumerated
-  action/resource/target, permission generation and Stop/revocation epochs; a child may narrow but never mint, expand
-  or transfer the grant. Verified created-resource manifest identity is required before grant-covered cleanup; a
-  same name or named pre-existing resource gives no deletion authority. Shared History/ObservableWork shows each
-  remote action/target/result and Stop, with Undo only where supported. Ordinary YOLO push/publish follows Plans/Permissions_System.md's mode-aware
-  admission without a second generic yes. A no-project Goal, Crew, Assistant Plan or scheduled task has ordinary
-  app authority and cannot issue or inherit another Project build grant through a message, conversion, receipt or
-  parent label. Protected trust/auth/secrets, paid signup, currentness, capabilities, FileSafe and retained Y1 boundaries
-  remain under Permissions. No grant creates an Orchestrator run outside a real Project.
+canonical_text: |-
+  A real Planning Wizard/Orchestrator Project build consumes the Permissions-owned human-approved BuildGrant at parent/child admission and immediately before each grant-authorized local or remote effect dispatch. CreatedResourceManifest supplies verified stable resource identity. Receipts keep authority_kind=human|mode|build_grant; ordinary YOLO publication is policy auto-allow, never a forged human yes. What the build did reads the shared owner receipts and exact targets. Bind exact Project, approved Plan revision/hash, build/run/task, enumerated action/resource/target, permission generation and Stop/revocation epochs; a child may narrow but never mint, expand or transfer the grant. Verified created-resource manifest identity is required before grant-covered cleanup; a same name or named pre-existing resource gives no deletion authority. Shared History/ObservableWork shows each remote action/target/result and Stop, with Undo only where supported. Ordinary YOLO push/publish follows Plans/Permissions_System.md's mode-aware admission without a second generic yes. A no-project Goal, Crew, Assistant Plan or scheduled task has ordinary app authority and cannot issue or inherit another Project build grant through a message, conversion, receipt or parent label. Protected trust/auth/secrets, paid signup, currentness, capabilities, FileSafe and retained Y1 boundaries remain under Permissions. No grant creates an Orchestrator run outside a real Project.
+
+  The build's location scope follows PS-147's current person-allowed Project Computers, including later human additions; it is not one machine frozen for the build. Each parent/child dispatch separately freezes one exact SIR-056 selection and rechecks current allowed membership, Plan/source compatibility and all grant/permission/Stop/revocation evidence. A Computer allowance cannot widen the child's account, route, operation or resource subset. A new Computer/device identity still asks in YOLO. Historical exact-location grant records remain historical until the governed successor contracts are admitted.
 gui_related: true
 gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
 depends_on:
@@ -258,6 +252,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#O1-O3; Y1
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
 - 'Jared, 2026-11-03: I approve the outstanding questions with their recommended settings.'

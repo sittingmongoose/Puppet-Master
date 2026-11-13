@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L9952-L10023
+Source lines: L9952-L10035
 
-Source SHA256: `dc1aae046c22b416b6e298461970289c3cb8e59d9d378dd3f8e6bfcfdea81c2a`
+Source SHA256: `07f421deae2ade55fa8d42be15441bb8a345d113941bdaa45093c6ee45521caa`
 
 ---
 
@@ -17,7 +17,18 @@ plan_unit_id: PS-140
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: Source restrictions propagate to all derived context surfaces (notes, summaries, capsules, handoffs, search projections, caches) and are enforced at read time on every path including direct-ID reads. Paraphrase, relabel, partial quote, or export cannot widen access; conservative exclusion/rebuild applies when dependency isolation is unavailable; already-sent bytes are disclosed, never claimed recalled. Denied existence is not leaked through error differentials, counts, or titles, and blind-phase material stays inaccessible across direct read, search, import, capsule, and shared-note routes until the workflow owner releases it.
+canonical_text: 'Source restrictions propagate to all derived context surfaces (notes, summaries, capsules,
+  handoffs, search projections, caches) and are enforced at read time on every path including direct-ID
+  reads. Paraphrase, relabel, partial quote, or export cannot widen access; conservative exclusion/rebuild
+  applies when dependency isolation is unavailable; already-sent bytes are disclosed, never claimed recalled.
+  Denied existence is not leaked through error differentials, counts, or titles, and blind-phase material
+  stays inaccessible across direct read, search, import, capsule, and shared-note routes until the workflow
+  owner releases it. DL-475: Crews, reviews and the chat assistant''s other helpers may read the current
+  Project''s notes and the same user''s personal Every project notes, read-only under current actor/source/phase
+  permissions. No helper-owned memory, other-Project access or private app-thread access follows. Summaries
+  and handoffs inherit restrictions; paraphrase cannot widen them. Existing source-off/privacy choices
+  migrate to equivalent or stricter read restrictions before any read. Removing Memory source switches
+  never restores access; unknown migrations stay denied until explicit owner resolution.'
 gui_related: false
 gui_classification_reason: Restriction propagation is permission behavior, not GUI work.
 depends_on: [PS-120, WN-010]
@@ -35,9 +46,10 @@ context_scope: permission_contracts
 implementation_surfaces: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/Working_Notebook.md]
 node_compile_hint: {mode: permission_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-H05
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-H02
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N12
+- source_packet:PM-WNC-2026-09-05-v1:WNC-H05
+- source_packet:PM-WNC-2026-09-05-v1:WNC-H02
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N12
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["derived", "read-time", "conservatively", "already sent", "not permission"]
 negative_constraints:
   - Do not declassify derived content by paraphrase or partial quote.

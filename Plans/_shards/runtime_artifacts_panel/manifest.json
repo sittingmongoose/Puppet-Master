@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-08T11:19:17Z",
+  "generated_at_utc": "2026-11-13T00:34:44Z",
   "index_path": "Plans/_shards/runtime_artifacts_panel/00-index.md",
-  "index_sha256": "7c1025c74f021631a62184bd9bc1406a15aa8c780b4d69e62e8d8cfa5f7f7026",
+  "index_sha256": "03784090973e9a39b33dec12d369725830a41b2a6fee8eae123ad3c77066ec0b",
   "manifest_path": "Plans/_shards/runtime_artifacts_panel/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/runtime_artifacts_panel/001-preamble.md",
-      "sha256": "d79eb9867a36e1c799505ded72f20dd85a30c7b6211c873379c36a12c3f94ade",
+      "sha256": "f79c33bb568bb1db39c5cb77e747274fb9b1fbdff3c9436cff03bdb244989371",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/runtime_artifacts_panel/002-canonical-owner-section-requirements.md",
-      "sha256": "238a5a0e26bd5c3af7eda43f8f65ac3823639866a1959b0a1b19619090499fa4",
+      "sha256": "b11e5115c5dc3cef633b60ee0f9135a18d44d79ed2944a44a3b1c20da604f7fa",
       "shard_id": "002",
       "source_line_end": 16,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Purpose and scope",
       "path": "Plans/_shards/runtime_artifacts_panel/003-1.-purpose-and-scope.md",
-      "sha256": "b36fc2757d120a07a0db134ac8a058cd5b53ef8f724a0be22d80aa67f8293042",
+      "sha256": "29f1d4e089b78c12dc890ffa0e9f6b6a12170834bb95b13399cb35a8490312cf",
       "shard_id": "003",
       "source_line_end": 45,
       "source_line_start": 18,
@@ -35,7 +35,7 @@
     {
       "heading": "3. Mechanism: one event type per artifact type",
       "path": "Plans/_shards/runtime_artifacts_panel/004-3.-mechanism-one-event-type-per-artifact-type.md",
-      "sha256": "bc7715478c6b93c41b46068ca0e76000313b4c42f64c8e0bd455733c1f230b5a",
+      "sha256": "fb54e5a4be546e1dcab16f7f53a0f7c16edfde215983514ad9b1f34c26ee2ca5",
       "shard_id": "004",
       "source_line_end": 72,
       "source_line_start": 46,
@@ -44,7 +44,7 @@
     {
       "heading": "4. redb key and projector",
       "path": "Plans/_shards/runtime_artifacts_panel/005-4.-redb-key-and-projector.md",
-      "sha256": "9d15eed7873fb0208a77fc46436bd7a085d3f90e9b868787cf2a5fcfdc353344",
+      "sha256": "b526b7e6862d8f6bffa38726f3ced48b94fbe746be4b5588e46b272857c1d422",
       "shard_id": "005",
       "source_line_end": 191,
       "source_line_start": 74,
@@ -53,7 +53,7 @@
     {
       "heading": "5A. Debug investigation grouping, manifests, and exports",
       "path": "Plans/_shards/runtime_artifacts_panel/006-5a.-debug-investigation-grouping-manifests-and-exports.md",
-      "sha256": "1b041745fb61b2e2a696f2c7248f4b90c92fcef6339316eb25c1bbc9399f455b",
+      "sha256": "bdbea37a8fb5b467b243091a6860e00a63ab60df6dfaa9749babf703fed3b128",
       "shard_id": "006",
       "source_line_end": 262,
       "source_line_start": 193,
@@ -62,7 +62,7 @@
     {
       "heading": "6. reasoning_tokens and cost_usage",
       "path": "Plans/_shards/runtime_artifacts_panel/007-6.-reasoning_tokens-and-cost_usage.md",
-      "sha256": "34727191c9e60c7962aeb8937a41621ec403522866c12c66b5c87e72370ff517",
+      "sha256": "e9b640252a434b969f447d9c3916a023c8c868f245b7c510adc07768813f1306",
       "shard_id": "007",
       "source_line_end": 289,
       "source_line_start": 264,
@@ -71,7 +71,7 @@
     {
       "heading": "7. JSON schemas (all required)",
       "path": "Plans/_shards/runtime_artifacts_panel/008-7.-json-schemas-all-required.md",
-      "sha256": "d6c2321d93a616a2eb4612ea555b28e3702ba46895511ed0ec14b3aa0bb4638e",
+      "sha256": "e22df68815eda4115809671766b0f8708ec48ea5e4b70eb280eb1ac2e7899b0c",
       "shard_id": "008",
       "source_line_end": 324,
       "source_line_start": 290,
@@ -80,7 +80,7 @@
     {
       "heading": "8. Browser recordings",
       "path": "Plans/_shards/runtime_artifacts_panel/009-8.-browser-recordings.md",
-      "sha256": "71d0ce266a9bd8d244234ce2b4067417da308e08d417ecaf8eea67be7b570472",
+      "sha256": "2a3d177c2f7dbcc4afa4988bdf17a6880172c4ff53b8f61906cba63f5d5b1584",
       "shard_id": "009",
       "source_line_end": 360,
       "source_line_start": 326,
@@ -89,7 +89,7 @@
     {
       "heading": "9. All differentiators MVP",
       "path": "Plans/_shards/runtime_artifacts_panel/010-9.-all-differentiators-mvp.md",
-      "sha256": "3b8a54912635b4948bba2ad32cf7096791bd318b47796965bcc0a2531c7581ae",
+      "sha256": "12dbf4a94d7c764dfbf6dc1c6c7302c410c8107fadd3de81e3a2722890192191",
       "shard_id": "010",
       "source_line_end": 366,
       "source_line_start": 362,
@@ -98,7 +98,7 @@
     {
       "heading": "10. References",
       "path": "Plans/_shards/runtime_artifacts_panel/011-10.-references.md",
-      "sha256": "aaaa8353a2ecf69b5227ac30df9c47828f4043b82eff1948ac8ddb182483d407",
+      "sha256": "4693e43fef9584d1c70f0353fe282f8e953dc145511016fa8c2169e5375419e4",
       "shard_id": "011",
       "source_line_end": 374,
       "source_line_start": 368,
@@ -107,7 +107,7 @@
     {
       "heading": "Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
       "path": "Plans/_shards/runtime_artifacts_panel/012-cross-surface-operation-receipt-linkage-addendum-2026-03-12.md",
-      "sha256": "3890b345896c886d3c307e5c92813e97b1c4381c5c207547112bdbac3954dada",
+      "sha256": "07c05e18ee83cf429d8d7a913e8a6c184792233551c53be2293be34688d2389c",
       "shard_id": "012",
       "source_line_end": 406,
       "source_line_start": 376,
@@ -116,7 +116,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/runtime_artifacts_panel/013-owner-consumer-map.md",
-      "sha256": "e2dd967731bd43031421cef35173c36a14f9e5deb3937083ab07d72f5294bf2d",
+      "sha256": "ef30200d2f981a0c6e7412d700631643d4c03db412f7675143d90d2c08074625",
       "shard_id": "013",
       "source_line_end": 412,
       "source_line_start": 408,
@@ -125,7 +125,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/runtime_artifacts_panel/014-planunits.md",
-      "sha256": "b8d4f1bc4feec39b3e2d1c831eeecda64f72cf17aef2df5fa903cab211161b9a",
+      "sha256": "65b8a5c36b7c89ca2258f710559e5bef3376936b99878e57ea96a8238ff41f7c",
       "shard_id": "014",
       "source_line_end": 420,
       "source_line_start": 414,
@@ -134,7 +134,7 @@
     {
       "heading": "Known-37 recovery artifact projection - 2026-07-18",
       "path": "Plans/_shards/runtime_artifacts_panel/015-known-37-recovery-artifact-projection-2026-07-18.md",
-      "sha256": "c17be6a9bdf5aac675c43fe73b3e051ce0334a90edd6729d501f1054417989f7",
+      "sha256": "9171a82c9456f1ad87dc03a01bb03b0b359ffb3af22a651b70e63420591203b1",
       "shard_id": "015",
       "source_line_end": 426,
       "source_line_start": 422,
@@ -143,7 +143,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/runtime_artifacts_panel/016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "1793a49fff9f763a46f90914952c2940402635a8cb6abcd6f79158fc5e345e34",
+      "sha256": "55aae7f4f0889e0b9edd28384de7794ce67f557bc40d7795b9dab73e2a766070",
       "shard_id": "016",
       "source_line_end": 653,
       "source_line_start": 428,
@@ -152,7 +152,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/runtime_artifacts_panel/017-migration-coverage.md",
-      "sha256": "38a8f389f1c3f1d38a3a0b8c89a53acfaf4e190d1ccf136a41160bd81dedc72d",
+      "sha256": "44a27e80c563f9e1d50bb1a9c3368195f18f60df66d1b28366600fea1f1146fe",
       "shard_id": "017",
       "source_line_end": 665,
       "source_line_start": 655,
@@ -161,7 +161,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/runtime_artifacts_panel/018-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "94b7b5de80a3b4943e3f456b30bcd253f8382d759631fbdd31b15ebffaf31f33",
+      "sha256": "9a0a839d9f2f0608187a50882f64dc65ce14ae3ed76d5de5c75412b96a94c19e",
       "shard_id": "018",
       "source_line_end": 704,
       "source_line_start": 667,
@@ -170,7 +170,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-002",
       "path": "Plans/_shards/runtime_artifacts_panel/019-ledger-compile-addendum-pldg-20260614-002.md",
-      "sha256": "4aa539e251e51352a5010c86577bfb837848e46c0eeb1deefeb632eef1a7f939",
+      "sha256": "9410f1b8032aa83a9ecb5d3d0636ed80b579f40549986172fd919c8b448a5e18",
       "shard_id": "019",
       "source_line_end": 758,
       "source_line_start": 706,
@@ -179,223 +179,232 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/runtime_artifacts_panel/020-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "5c316184cc866e539e12aa39fe4201f92bf19f2fab4e3d9d832cb8cc97ffa8b8",
+      "sha256": "f9ec82b2ae73fd5e803846cd4d4a6d892aabb24e267b53d9d3cb3aeb91a1bfe1",
       "shard_id": "020",
-      "source_line_end": 839,
+      "source_line_end": 840,
       "source_line_start": 760,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/runtime_artifacts_panel/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "ce41aa902daf7c9e8a167f8a76c4d337ba303efb1ec12a0d32fdd7b50bf513cb",
+      "sha256": "c1b4b029334f7da8e5ec8cbd6ece9a7efa2c3cfa8c13637028afbbcce3f17acf",
       "shard_id": "021",
-      "source_line_end": 904,
-      "source_line_start": 841,
+      "source_line_end": 905,
+      "source_line_start": 842,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/runtime_artifacts_panel/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "376da98d485c7448d562c02bd4e765e2109ca187bd20b47e2c291308bc77f405",
+      "sha256": "c24b3fd3f78ba2658ab0b7589a6799ad2335929bb930e7c9b46fa7271d6605ae",
       "shard_id": "022",
-      "source_line_end": 964,
-      "source_line_start": 907,
+      "source_line_end": 965,
+      "source_line_start": 908,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/runtime_artifacts_panel/023-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "b51ef2d3495887c257abbc94113b9ba3aec207a4b2e7ba658923a9acc0a27629",
+      "sha256": "32d2a3be06d5277ebeb83393e0f677acd6e74b368632a7b1564bc33fbdd84e80",
       "shard_id": "023",
-      "source_line_end": 1011,
-      "source_line_start": 966,
+      "source_line_end": 1012,
+      "source_line_start": 967,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/runtime_artifacts_panel/024-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "ac9c0ed137e9269e6db96187aec55cfcbb3cf107fda5195632b381dd6994215e",
+      "sha256": "c9bd25d23517a61657e6c5c9730562c22719fb30af854400daeeeb0fab30a7c4",
       "shard_id": "024",
-      "source_line_end": 1424,
-      "source_line_start": 1014,
+      "source_line_end": 1425,
+      "source_line_start": 1015,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/runtime_artifacts_panel/025-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "9eeef1b05a97bad08dfc97318c7bc38377a0ecd8e3e598aa7ef884b21743d7a1",
+      "sha256": "fb69283158ac437b9f4c5fb17d78c7d25d458f97ad7e0f53508cf142a09b5407",
       "shard_id": "025",
-      "source_line_end": 1617,
-      "source_line_start": 1426,
+      "source_line_end": 1618,
+      "source_line_start": 1427,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260629-001-feature-name",
       "path": "Plans/_shards/runtime_artifacts_panel/026-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
-      "sha256": "5bfc01fe386b0db052f1e71307a197c5497bff935d71edb7efcd01e28fedf7ab",
+      "sha256": "684d63b368fc538b5b809029f1357d5b43f0b4b8a84dc81fe6c75dd7b97f746c",
       "shard_id": "026",
-      "source_line_end": 1736,
-      "source_line_start": 1619,
+      "source_line_end": 1737,
+      "source_line_start": 1620,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/runtime_artifacts_panel/027-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "5f77d45c9382c889928513b61bdde9c6ea347237bd25b9097f35d5ee3f8ff975",
+      "sha256": "6e09bf8679f72c0942f036bfea275cdd65e42912656a20a0086c086651a704d7",
       "shard_id": "027",
-      "source_line_end": 1833,
-      "source_line_start": 1738,
+      "source_line_end": 1834,
+      "source_line_start": 1739,
       "split_rule": "heading-##"
     },
     {
       "heading": "Usage Artifact Schema Strictness Addendum - 2026-07-09",
       "path": "Plans/_shards/runtime_artifacts_panel/028-usage-artifact-schema-strictness-addendum-2026-07-09.md",
-      "sha256": "b6e9262fd11c45333bf0c5a57bf5ff0b897a135fb2470e575de56cb4235b20e1",
+      "sha256": "109319aec9578467a4892c006951096f901785efdee9bda8e05ab0803f552825",
       "shard_id": "028",
-      "source_line_end": 1919,
-      "source_line_start": 1835,
+      "source_line_end": 1920,
+      "source_line_start": 1836,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/runtime_artifacts_panel/029-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "d43b267c1a837e97106ddb59e4ce74a2ecfd79af45a6b9d672c0a9f3229b3680",
+      "sha256": "71ede4743d6de6f399940a4fbae37876d3d37bf70634225d09022626bb2a7dc2",
       "shard_id": "029",
-      "source_line_end": 1940,
-      "source_line_start": 1921,
+      "source_line_end": 1941,
+      "source_line_start": 1922,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/runtime_artifacts_panel/030-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "51ad8cf0518dd5f5ef80a062a61ba4d8bbf88fd406003bb0644aec4a1bb32b0a",
+      "sha256": "ce4b73662fcedc6e84b9458b1947391fc0aa9627c4adffb316c0d676b5fce797",
       "shard_id": "030",
-      "source_line_end": 1947,
-      "source_line_start": 1941,
+      "source_line_end": 1948,
+      "source_line_start": 1942,
       "split_rule": "heading-##"
     },
     {
       "heading": "Usage GUI Propagation Addendum - 2026-07-09",
       "path": "Plans/_shards/runtime_artifacts_panel/031-usage-gui-propagation-addendum-2026-07-09.md",
-      "sha256": "f589de7fa5f4583cb87fb2fc92d31e9d9b9671e1b946a1e3382f5548330d83e3",
+      "sha256": "f74259c56ac94270b44d2555bc59a313a01763d3288b837e36c7b18295d56208",
       "shard_id": "031",
-      "source_line_end": 2026,
-      "source_line_start": 1949,
+      "source_line_end": 2027,
+      "source_line_start": 1950,
       "split_rule": "heading-##"
     },
     {
       "heading": "Case L Durable-State Consumer Addendum - 2026-07-17",
       "path": "Plans/_shards/runtime_artifacts_panel/032-case-l-durable-state-consumer-addendum-2026-07-17.md",
-      "sha256": "fe94fb2074967a2de5d9560cfc68d712b07c4585b87a3b744da794b9ee10854a",
+      "sha256": "d0ec91a9c58f84e7df7b5b0edd673333c132febded7cdf168b022390eec49e1b",
       "shard_id": "032",
-      "source_line_end": 2237,
-      "source_line_start": 2028,
+      "source_line_end": 2238,
+      "source_line_start": 2029,
       "split_rule": "heading-##"
     },
     {
       "heading": "Cozy Shelves Panel Reconciliation Addendum - 2026-07-27",
       "path": "Plans/_shards/runtime_artifacts_panel/033-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
-      "sha256": "32ca594451b44c5e1bc67431827ecd5006afd3e44067600b3ab120c2d522aafa",
+      "sha256": "33d237509f5befa99f5fc52ac0d058b033bad323d794d6f9d6ace9e96440b670",
       "shard_id": "033",
-      "source_line_end": 2484,
-      "source_line_start": 2239,
+      "source_line_end": 2485,
+      "source_line_start": 2240,
       "split_rule": "heading-##"
     },
     {
       "heading": "Runtime Artifact Event Authority Owner Contract - 2026-09-01",
       "path": "Plans/_shards/runtime_artifacts_panel/034-runtime-artifact-event-authority-owner-contract-2026-09-01.md",
-      "sha256": "e699ba9d5370a2c0b423015d1599cc144bfd31459fe723ca096e401cb5fdec64",
+      "sha256": "7a6c7b292c5b28aaee6f144742e1404222a238a236a564946d4d3363ea6d5500",
       "shard_id": "034",
-      "source_line_end": 2664,
-      "source_line_start": 2486,
+      "source_line_end": 2668,
+      "source_line_start": 2487,
       "split_rule": "heading-##"
     },
     {
       "heading": "Run & Debug Revival Addendum - 2026-07-27",
       "path": "Plans/_shards/runtime_artifacts_panel/035-run-debug-revival-addendum-2026-07-27.md",
-      "sha256": "0306b3b83fea545b8a0ffe0278249fe903b26016588ffaa842456e4958021dcf",
+      "sha256": "a02742488ddc68d15d9b0b5748bcf09351667a363b78c1ad5c677e418aac7a3a",
       "shard_id": "035",
-      "source_line_end": 2718,
-      "source_line_start": 2666,
+      "source_line_end": 2722,
+      "source_line_start": 2670,
       "split_rule": "heading-##"
     },
     {
       "heading": "Additive Correction v4 \u2014 Plan Revisions, Embeds, And Execution Reports (2026-09-03)",
       "path": "Plans/_shards/runtime_artifacts_panel/036-additive-correction-v4-plan-revisions-embeds-and-execution-repor.md",
-      "sha256": "84d2e14fceae395b583a6534658dd521ef59c481ba552a9be2c15a794c687440",
+      "sha256": "46151d0068800d0004c19808b0b19f9932dfe003090f2d91be8740a8841fe936",
       "shard_id": "036",
-      "source_line_end": 2811,
-      "source_line_start": 2720,
+      "source_line_end": 2815,
+      "source_line_start": 2724,
       "split_rule": "heading-##"
     },
     {
       "heading": "Notebook Artifact Reference Addendum (2026-09-05)",
       "path": "Plans/_shards/runtime_artifacts_panel/037-notebook-artifact-reference-addendum-2026-09-05.md",
-      "sha256": "2f077d4a7186cd3d575d2f1b24a6a796f0590aa212c4ac7eac1d72d6db69aa74",
+      "sha256": "273c2806b745f1acaad2e773df643d2aa8ce69263f366312430c220062feecab",
       "shard_id": "037",
-      "source_line_end": 2848,
-      "source_line_start": 2813,
+      "source_line_end": 2852,
+      "source_line_start": 2817,
       "split_rule": "heading-##"
     },
     {
       "heading": "RAP-056 \u2014 Existing Recording Playback and Watch Bindings",
       "path": "Plans/_shards/runtime_artifacts_panel/038-rap-056-existing-recording-playback-and-watch-bindings.md",
-      "sha256": "85178a534872aa76ca1e5e15f3953322689d0ba1b2bfeb21e032b390a2bebd30",
+      "sha256": "4476ee9fc763c3b69632f1f79a281621d69c78bae268882f28b0309bf33dda78",
       "shard_id": "038",
-      "source_line_end": 2909,
-      "source_line_start": 2850,
+      "source_line_end": 2913,
+      "source_line_start": 2854,
       "split_rule": "heading-##"
     },
     {
       "heading": "Restore-point created passive record reader",
       "path": "Plans/_shards/runtime_artifacts_panel/039-restore-point-created-passive-record-reader.md",
-      "sha256": "6e17b779f42cbe3c5ffe3ad3ad45b6b49fb93e4df2d76a71022bdcc0b7f8d84f",
+      "sha256": "473cb766a4f9079be9d9952d22e429ea396c4db563fd1c62c731a3d0ca9b94ba",
       "shard_id": "039",
-      "source_line_end": 3016,
-      "source_line_start": 2912,
+      "source_line_end": 3020,
+      "source_line_start": 2916,
       "split_rule": "heading-##"
     },
     {
       "heading": "Deleted restore-point evidence admission",
       "path": "Plans/_shards/runtime_artifacts_panel/040-deleted-restore-point-evidence-admission.md",
-      "sha256": "f2b2bcece62e9ea50de4b108812dff40c91682a15456dc9c458255944211e808",
+      "sha256": "d95a93f5814bec74b05dd61674166eee2aa982198c7d9e27e9abd5a7904b686b",
       "shard_id": "040",
-      "source_line_end": 3082,
-      "source_line_start": 3019,
+      "source_line_end": 3086,
+      "source_line_start": 3023,
       "split_rule": "heading-##"
     },
     {
       "heading": "Expired restore-point evidence admission",
       "path": "Plans/_shards/runtime_artifacts_panel/041-expired-restore-point-evidence-admission.md",
-      "sha256": "0088ed4192704949bb598b9c728ca78b993194aa07c61203d9dda50deb56f408",
+      "sha256": "9e2eee47cacf94b20091363dfbb7804502dcd62d9ea65adad92b2f8f5073b2d7",
       "shard_id": "041",
-      "source_line_end": 3145,
-      "source_line_start": 3085,
+      "source_line_end": 3149,
+      "source_line_start": 3089,
       "split_rule": "heading-##"
     },
     {
       "heading": "DL-180 to DL-185 \u2014 The Artifact Viewer Is A Tab Kind (2026-10-09)",
       "path": "Plans/_shards/runtime_artifacts_panel/042-dl-180-to-dl-185-the-artifact-viewer-is-a-tab-kind-2026-10-09.md",
-      "sha256": "af54bef1e5d47d0a17e0be2da14735a4ad91aec6484b9206aba8e413c7510d60",
+      "sha256": "52e265cdee5cda6bfc8921bb9737d9db2619605278b8890078095fd3ee7fb310",
       "shard_id": "042",
-      "source_line_end": 3265,
-      "source_line_start": 3147,
+      "source_line_end": 3269,
+      "source_line_start": 3151,
       "split_rule": "heading-##"
     },
     {
       "heading": "Command payload definitions (DL-333, 2026-11-05)",
       "path": "Plans/_shards/runtime_artifacts_panel/043-command-payload-definitions-dl-333-2026-11-05.md",
-      "sha256": "7cbd4f876c7401fdfecc71cb1afbcc7cb7bc41b45383f911bf5dc6ef0297f4ab",
+      "sha256": "929352c8601a7e16717a48f1f11fc9afda81a2b51f36943ad630b34b64615038",
       "shard_id": "043",
-      "source_line_end": 3632,
-      "source_line_start": 3267,
+      "source_line_end": 3636,
+      "source_line_start": 3271,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime artifact event contracts prepared without admission \u2014 2026-11-04",
+      "path": "Plans/_shards/runtime_artifacts_panel/044-runtime-artifact-event-contracts-prepared-without-admission-2026.md",
+      "sha256": "fc88caa94431f2abf54aea24cdfeb4a6e9b149520e9abe083c505f1ad8ba8a1e",
+      "shard_id": "044",
+      "source_line_end": 4410,
+      "source_line_start": 3639,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 3632,
+    "line_count": 4410,
     "path": "Plans/Runtime_Artifacts_Panel.md",
-    "sha256": "2f4d5adbe876e8cd92c268839c3fe83180f293de378709fea1c78e56f59b8b34"
+    "sha256": "e60a3b3617415814a310669986eb1c687eda077a38b9a2d20cb2daf9fabc9610"
   }
 }

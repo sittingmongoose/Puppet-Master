@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L893-L1241
+Source lines: L893-L1246
 
-Source SHA256: `76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647`
+Source SHA256: `4787625103f0742db48e5e1df0b815768830e76ff8d6391196a237197cf8c511`
 
 ---
 
@@ -177,13 +177,16 @@ plan_unit_id: ATS-014
 unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: Teach/Teacher tests cover help icon launching a new Teacher thread with current-surface context,
-  /teach and natural-language summon/disambiguation, low-end model default and GUI setting states, requested/effective
-  model disclosure, PM knowledge source disclosure, missing coverage callout, guided overlay happy path and degraded
-  states, mutation confirmation, activity cards, memory capture save/cancel/scope/conflict/revoke/unlock, Teacher
-  handoff, responsive/overflow/keyboard/screen-reader behavior, Teach Help/Glossary coverage, and a PM knowledge
-  pressure test over PM concepts, workflows, settings, models, capabilities, permissions, history, artifacts, Personas,
-  skills/plugins, Orchestrator behavior, and Teach memory.
+canonical_text: >-
+  Teach/Teacher tests cover help icon launching a new Teacher thread with current-surface context,
+  /teach and natural-language summon/disambiguation, low-end model default and GUI setting states,
+  requested/effective model disclosure, PM knowledge source disclosure, missing coverage callout,
+  guided overlay happy path and degraded states, mutation confirmation, activity cards, explicit
+  saved-note capture save/cancel and the two allowed levels, Add/Edit/Delete/Archived, absence of
+  conflict/lock/rollback controls and memory-use decorations, Teacher handoff,
+  responsive/overflow/keyboard/screen-reader behavior, Teach Help/Glossary coverage, and a PM
+  knowledge pressure test over PM concepts, workflows, settings, models, capabilities, permissions,
+  history, artifacts, Personas, skills/plugins, Orchestrator behavior, and Teach memory.
 gui_related: true
 gui_classification_reason: Validates GUI/thread/help/source/model/memory/handoff behavior across Teach surfaces.
 depends_on:
@@ -196,10 +199,11 @@ depends_on:
 - UCC-102
 unblocks: []
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage."
+  - "Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this compile."
+  - "Teach/Teacher saved-note cases reuse the one Memory page and AMS-141 owner at This project or Every project; legacy thread/private scopes and lock/conflict fields do not create UI controls."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -235,6 +239,7 @@ source_lineage:
 - chat:work-through-teach-gaps
 - chat:collaboration-style-correction
 - Plans/Personas.md#P-040-teacher-core-persona
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0101
 - atom-0110

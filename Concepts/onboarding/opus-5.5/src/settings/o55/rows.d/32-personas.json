@@ -164,50 +164,6 @@
    "per": "persona",
    "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
-  "personas.tuning.default-platform": {
-   "label": "Preferred AI service",
-   "options": {
-    "inherit": "Same as the project"
-   },
-   "choices": [
-    "inherit"
-   ],
-   "per": "persona",
-   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
-  },
-  "personas.tuning.default-model": {
-   "label": "Preferred model",
-   "options": {
-    "inherit": "Same as the project"
-   },
-   "choices": [
-    "inherit"
-   ],
-   "per": "persona",
-   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
-  },
-  "personas.tuning.default-variant": {
-   "label": "Faster or smarter edition",
-   "options": {
-    "inherit": "Same as the project",
-    "fast": "Faster",
-    "powerful": "Smarter"
-   },
-   "per": "persona",
-   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
-  },
-  "personas.tuning.reasoning-effort": {
-   "label": "Thinking effort",
-   "options": {
-    "inherit": "Same as the project",
-    "minimal": "Minimal",
-    "low": "Low",
-    "medium": "Medium",
-    "high": "High"
-   },
-   "per": "persona",
-   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
-  },
   "personas.tuning.cost-budget": {
    "label": "Spending cap",
    "help": "Over-budget models are skipped with a note. 0 = no cap.",
@@ -429,6 +385,7 @@
   },
   "branching.crew.brainstorm-question-limit": {
    "label": "Questions it may ask you",
+   "help": "The most questions a BrainStorm may ask you before it plans. Grill Me adds its extra questions to these.",
    "min": 1,
    "max": 60,
    "step": 1,
@@ -436,6 +393,7 @@
   },
   "branching.crew.grill-me-question-extension": {
    "label": "Extra questions in Grill Me",
+   "help": "Added to a plan's or a BrainStorm's own limit. In a crew or a Chat Room it is the whole limit.",
    "min": 0,
    "max": 60,
    "step": 1,
@@ -541,6 +499,7 @@
   },
   "branching.subagents.parallel-subagents": {
    "label": "Let helpers work side by side",
+   "help": "Each in its own copy of the files, instead of taking turns.",
    "when": {
     "id": "branching.subagents.enable-subagents",
     "truthy": true
@@ -572,6 +531,7 @@
   },
   "branching.subagents.write-isolation-mode": {
    "label": "Extra write protection",
+   "help": "Restrict helpers further: only the lead edits, helpers suggest patches, or each helper gets its own copy.",
    "options": {
     "none": "None",
     "parent-only writer": "Only the lead edits files",
@@ -703,7 +663,7 @@
      },
      {
       "label": "Reads and writes",
-      "help": "Reads the project, writes only its workspace",
+      "help": "Reads the project, writes only in its own copy of the files",
       "value": "Read and write"
      },
      {

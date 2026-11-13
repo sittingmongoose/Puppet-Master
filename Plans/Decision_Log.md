@@ -5886,6 +5886,334 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **9.c** se
 
 **Supersession and boundaries:** Chooses delivery only for subagent.cancel_requested, which is outside the 148-name list and earlier grants. No persisted family is authorized. Existing sibling cancellation delivery, group-failure and sibling-terminal contracts remain; the exclusion record is separate wave-3 work.
 
+### DL-453: 47 lasting-change histories stay permanently
+
+**Card item:** E-CARDS-3 **1.a**. **Question:** Should these 47 histories stay permanently, for seven years or for 90 days?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **1.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+- **Permanent:** no expiry by age or count. The already defined safe metadata, identifiers, hashes and references stay in these entries; their payload fields and redaction rules do not change. Deleting the described file, object or chat does not remove this separate history or preserve the deleted content. For Project records, explicit **Delete Puppet Master project data** removes them under existing protection rules; **Remove project from list** does not. Application records remain subject to their existing authorized data-deletion rules; this deck adds no app-data delete control. Finite disk budgets still apply: storage pressure refuses new history writes.
+
+For every option, protection for the latest 25 runs applies where the existing rule requires it. Holds and required references can keep history past its ordinary expiry; they grant no visibility or access. Existing Settings may lengthen an eligible history window, never shorten it below the chosen minimum. Original approvals, saved results, prompt text, documents, media and backup generations keep their own lifetimes.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep all 47 types **permanently**, using the deletion and storage-pressure rules above. You can inspect the safe history after seven years and after the described object or chat is deleted, subject to current access and explicit Project/app-data deletion. There is no age or count expiry and no new count allowance.
+
+**Sources:** `S1306` (surveys/W3RT/QUESTIONS.md:11-74); `S1298` (decision-answers/E-CARDS-1.as-presented-578a6774.md:57-61); `S1299` (decision-answers/E-CARDS-1.as-presented-578a6774.md:63-93); `S1268` (b6332f391a78:Plans/Decision_Log.md:4414-4501); `S1262` (73f2231a9ec1:Plans/Decision_Log.md:649-660); `S1282` (73f2231a9ec1:Plans/storage-plan.md:17403-17427); `S1301` (decision-answers/E-CARDS-2.as-presented-6db25be3.md:105-172); `S1310` (1e57a68b0a24:reports/event-authority-20261105/W3A.md:1-17); `S1312` (11ba6d0dd400:reports/event-authority-20261105/W3B.md:1-17); `S1314` (b836cba089bb:reports/event-authority-20261105/W3C.md:1-17); `S1316` (a6749a55292b:reports/event-authority-20261105/W3D.md:1-17); `S1318` (fc141476bf57:reports/event-authority-20261105/W3E.md:1-17); `S1322` (feb55826eb7c:reports/event-authority-20261105/W3G.md:1-17). Exact per-family owner and retention passages: Appendix A and `SOURCES.jsonl`.
+
+**Supersession and boundaries:** Assigns permanent retention to exactly the 47 additional lasting-change history types in Appendix A item 1.a. It extends the deck-1 permanent pattern to these new names without widening any earlier population; original objects, receipts, documents and chats keep their own lifetimes, and no count allowance is created.
+
+### DL-454: 33 routine histories stay 90 days from the first durable save
+
+**Card item:** E-CARDS-3 **2.a**. **Question:** Should these 33 routine histories stay for 90 days, seven years or permanently?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **2.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+- **90 days:** counted from the entry's first successful save that survives a restart. Retrying, reprocessing old history or restoring a backup never restarts it.
+
+- **Bounded counts:** Project entries share the existing **2,000,000 per Project** allowance for the selected seven-year or 90-day class. They get no fresh allowance per item. For a bounded option outside Projects, each item proposes **one separate 2,000,000-entry allowance**, shared by that item's eligible types in one Puppet Master Server's saved history, shared by its connected Clients. It is separate from every other item and all previously approved application allowances. Project-only names gain no outside-Project edition, and no entry is counted in both allowances.
+
+- **When a bounded allowance fills:** remove only expired entries with no legal/investigation hold, required recovery or source reference, rollback obligation or protected backup. Never drop unexpired entries to make room. If nothing eligible can free room, refuse new history writes. The underlying feature keeps its existing recording and safety requirements.
+
+For every option, protection for the latest 25 runs applies where the existing rule requires it. Holds and required references can keep history past its ordinary expiry; they grant no visibility or access. Existing Settings may lengthen an eligible history window, never shorten it below the chosen minimum. Original approvals, saved results, prompt text, documents, media and backup generations keep their own lifetimes.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep all 33 types for **90 days** from their first successful save that survives a restart, without resetting on retry, reprocessing or restore. Project entries share the existing 2,000,000-entry 90-day allowance. Approve one separate 2,000,000-entry application allowance for this item's 29 application-eligible types. Delete only expired unprotected entries; refuse new writes if full and nothing may expire. You get recent history; older unprotected observations disappear.
+
+**Sources:** `S1307` (surveys/W3RT/QUESTIONS.md:75-124); `S1299` (decision-answers/E-CARDS-1.as-presented-578a6774.md:63-93); `S1269` (c81490e38cdd:Plans/Decision_Log.md:4712-4735); `S1329` (9b76338594c6:Plans/storage-plan.md:17491-17502); `S1263` (73f2231a9ec1:Plans/Decision_Log.md:1415-1466); `S1282` (73f2231a9ec1:Plans/storage-plan.md:17403-17427); `S1310` (1e57a68b0a24:reports/event-authority-20261105/W3A.md:1-17); `S1312` (11ba6d0dd400:reports/event-authority-20261105/W3B.md:1-17); `S1314` (b836cba089bb:reports/event-authority-20261105/W3C.md:1-17); `S1318` (fc141476bf57:reports/event-authority-20261105/W3E.md:1-17). Exact per-family owner and retention passages: Appendix A and `SOURCES.jsonl`.
+
+**Supersession and boundaries:** Assigns 90 days from the first durable save to exactly the 33 routine history types in Appendix A item 2.a, with this item’s one separate 2,000,000-entry application allowance for its 29 application-eligible types. Project entries share the existing 90-day allowance under the DL-415 clock. No earlier allowance is widened.
+
+### DL-455: 24 operational, security and recovery histories stay seven years
+
+**Card item:** E-CARDS-3 **3.a**. **Question:** Should these 24 histories stay for seven years, permanently or for 90 days?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **3.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+- **Seven years:** exactly **2,555 days**, counted from the original saved change this entry records. A start entry's clock starts when that start is first saved; it does not wait for a future finish. Retrying, reprocessing old history or restoring a backup never restarts it.
+
+- **Bounded counts:** Project entries share the existing **2,000,000 per Project** allowance for the selected seven-year or 90-day class. They get no fresh allowance per item. For a bounded option outside Projects, each item proposes **one separate 2,000,000-entry allowance**, shared by that item's eligible types in one Puppet Master Server's saved history, shared by its connected Clients. It is separate from every other item and all previously approved application allowances. Project-only names gain no outside-Project edition, and no entry is counted in both allowances.
+
+- **When a bounded allowance fills:** remove only expired entries with no legal/investigation hold, required recovery or source reference, rollback obligation or protected backup. Never drop unexpired entries to make room. If nothing eligible can free room, refuse new history writes. The underlying feature keeps its existing recording and safety requirements.
+
+For every option, protection for the latest 25 runs applies where the existing rule requires it. Holds and required references can keep history past its ordinary expiry; they grant no visibility or access. Existing Settings may lengthen an eligible history window, never shorten it below the chosen minimum. Original approvals, saved results, prompt text, documents, media and backup generations keep their own lifetimes.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep all 24 types for **seven years** from the original saved change each entry records. A recorded start begins its own clock when that start is first saved; it never waits for the operation's later finish. Retrying, reprocessing or restoring never resets it. Project entries share the existing 2,000,000-entry seven-year allowance. Approve one separate 2,000,000-entry application allowance for this item's 16 application-eligible types. Remove only expired unprotected entries; refuse new writes if full and nothing may expire. Older operational history may disappear after seven years.
+
+**Sources:** `S1308` (surveys/W3RT/QUESTIONS.md:125-165); `S1298` (decision-answers/E-CARDS-1.as-presented-578a6774.md:57-61); `S1299` (decision-answers/E-CARDS-1.as-presented-578a6774.md:63-93); `S1276` (c81490e38cdd:Plans/Decision_Log.md:4880-4905); `S1279` (c81490e38cdd:Plans/Decision_Log.md:4958-4983); `S1280` (c81490e38cdd:Plans/Decision_Log.md:4984-5009); `S1282` (73f2231a9ec1:Plans/storage-plan.md:17403-17427); `S1310` (1e57a68b0a24:reports/event-authority-20261105/W3A.md:1-17); `S1312` (11ba6d0dd400:reports/event-authority-20261105/W3B.md:1-17); `S1314` (b836cba089bb:reports/event-authority-20261105/W3C.md:1-17); `S1318` (fc141476bf57:reports/event-authority-20261105/W3E.md:1-17); `S1322` (feb55826eb7c:reports/event-authority-20261105/W3G.md:1-17). Exact per-family owner and retention passages: Appendix A and `SOURCES.jsonl`.
+
+**Supersession and boundaries:** Assigns seven years from the original saved change to exactly the 24 operational, security and recovery history types in Appendix A item 3.a, with this item’s one separate 2,000,000-entry application allowance for its 16 application-eligible types. Project entries share the existing seven-year allowance. Original approvals, receipts and recovery evidence keep their independent rules.
+
+### DL-456: Four session-prompt request histories live with their target chat
+
+**Card item:** E-CARDS-3 **4.a**. **Question:** Should these four request histories go with their target chat, stay permanently or last 90 days?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **4.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep these four histories **as long as the target chat exists**, in both Project and application chats. Count them together with every other family using that chat's existing **250,000-entry shared limit**; continue in a linked continuation of the same chat's history, kept and deleted with that chat, instead of silently dropping history. Deleting the target chat hides them immediately, purges unheld active copies within **24 hours** and backup bytes within **30 days**. A hold delays purge and never restores visibility. You can inspect the outcomes for as long as that chat remains; no new application allowance is needed.
+
+**Sources:** `S1309` (surveys/W3RT/QUESTIONS.md:166-185); `S1299` (decision-answers/E-CARDS-1.as-presented-578a6774.md:63-93); `S1265` (73f2231a9ec1:Plans/Decision_Log.md:1741-1789); `S1267` (73f2231a9ec1:Plans/Decision_Log.md:2106-2150); `S1330` (2663667e1434:Plans/storage-plan.md:17423-17425); `S1286` (2663667e1434:Plans/storage_value_registry.json:557-572); `S1283` (73f2231a9ec1:Plans/storage-plan.md:17504-17508); `S1320` (90c3dfac181c:reports/event-authority-20261105/W3F.md:1-17). Exact per-family owner and retention passages: Appendix A and `SOURCES.jsonl`.
+
+**Supersession and boundaries:** Binds the four session_prompt request histories to the target chat in Project and application chats, counted under that chat’s existing 250,000-entry shared limit with continuation instead of silent drops. No new application allowance is created; prompt text keeps its own deletion rule.
+
+### DL-457: Question-budget refusal history stays seven years
+
+**Card item:** E-CARDS-3 **5.a**. **Question:** Should the question-budget refusal history last seven years, go with its chat or stay permanently?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **5.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep this one history type for **seven years (2,555 days)** from the first successful save of the actual refusal and next-step result that survives a restart. Where the event itself is the only saved refusal, its first successful save that survives a restart is that save; an independently existing original result uses its own proved first-save time. Never wait for planning or a future execution run to finish, and never restart the clock on retry, reprocessing old history, reconfiguration or restore. Project entries share the existing 2,000,000-entry seven-year allowance. Approve **one separate 2,000,000-entry allowance outside Projects**, in one Puppet Master Server's saved history shared by its connected Clients, across this type's Plan, Deep Plan and question-bank sources together. No fresh allowance per chat, workflow, participant or question source. Remove only expired unprotected entries; refuse new history writes if full and none may expire. Ordinary chat/Plan deletion does not shorten this separate content-free history's window; explicit Project/app-data deletion and current access rules still apply.
+
+**Sources:** `S1350` (90c3dfac181c:Plans/Contracts_V0.md:25725-25743); `S1351` (reviews/W3F-sol/REVIEW-phase1-recheck.md:64-75); `S1349` (90c3dfac181c:reports/event-authority-20261105/W3F.md:1-33); `S1358` (9b76338594c6:Plans/storage-plan.md:17443-17453); `S1356` (decision-answers/E-CARDS-1.as-presented-578a6774.md:40-95); `S1276` (c81490e38cdd:Plans/Decision_Log.md:4880-4905); `S1280` (c81490e38cdd:Plans/Decision_Log.md:4984-5009); `S1281` (c81490e38cdd:Plans/Decision_Log.md:5581-5848); `S1366` (9b76338594c6:Plans/storage-plan.md:17423-17425).
+
+**Supersession and boundaries:** Assigns seven years to the one question-budget refusal history type across ordinary Plan, Deep Plan and the shared question banks, with one separate 2,000,000-entry application allowance across its sources together. It changes no question budget and grants no permission to build; the shared question bank and original question records keep their own policies.
+
+### DL-458: One cross-chat revoke entry lasts until the last affected chat is deleted
+
+**Card item:** E-CARDS-3 **6.a**. **Question:** For one Stop sharing history entry affecting several chats, should it last until the last affected chat is deleted or only until the first?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **6.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Card’s presented context (not Jared’s words):**
+
+**What is already settled:** the first deck's sharing group says “Shared context (3): Chat”; Storage applies it to the three exact sharing-history types. The broader Browser split already gives its separate prepared Browser populations permanent metadata or one year after a real run. Deck 1 explicitly said Jared had not been asked to rule on that split, so it remains in force. It supplies no governing-chat combination or mixed-chat progress-marker rule for the cases below. No broad Browser-retention vote is reopened here.
+
+For **A or B**, use the actual recipient chats whose grants that original action removed, fixed at that action; later shares do not reset or enlarge that set. Count the one logical history entry once in **each affected chat's existing shared 250,000-entry allowance**, in Project and application chats alike. At the limit, continue in a linked continuation of that same chat's history; do not drop history or duplicate the revoke event. There is no new app-wide allowance. Holds preserve only required custody and never visibility. Explicit Project/app-data deletion still applies.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep the one history entry **until the last affected recipient chat is deleted**. Deleting one chat hides its route to this history immediately and gives it no continuing access; other surviving affected chats may still inspect the permitted, content-free original. When the last chat is deleted, hide the remaining history immediately, purge unheld active copies within **24 hours** and backup bytes within **30 days**. Holds can delay physical purge. Nothing in the history keeps a deleted chat's page content alive.
+
+**Sources:** `S1356` (decision-answers/E-CARDS-1.as-presented-578a6774.md:40-95); `S1357` (9b76338594c6:Plans/storage-plan.md:17469-17475); `S1354` (8791f549ae15:Plans/Section15_MVP_Promoted_Features_Spec.md:13965-13972); `S1366` (9b76338594c6:Plans/storage-plan.md:17423-17425); `S1352` (drafts/DS15/DS15.md:92-103).
+
+**Supersession and boundaries:** Assigns the cross-chat case of browser.context_share_revoked to the last affected recipient chat’s lifetime, counted once in each affected chat’s existing shared allowance. Histories tied to one recipient keep the existing Chat rule; the broader Browser split stays in force and no broad Browser-retention vote is reopened.
+
+### DL-459: Browser reader checkpoints keep a replaced copy seven days
+
+**Card item:** E-CARDS-3 **6.b**. **Question:** How long should the two Browser history readers keep a replaced reader copy: seven days, 90 days or seven years?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **6.b** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+**Common boundary for all options:** keep the **current copy while that exact reader needs it**, with no age expiry while current. Keep at most **three copies together per reader, for one Project or for one Server's history outside Projects**: the current copy plus any copies being built or replaced. The two readers have separate three-copy limits; no limit resets per source chat, and there is no 2,000,000-entry event allowance here. When a genuine replacement makes a new copy current, or the reader is withdrawn, the previously current copy's clock starts at that moment; saving progress, retries and restores never start or restart it. Remove a replaced copy only when its chosen window has ended and it has no hold or required reference. A copy that was being built and was discarded without ever becoming current is removed through the existing authorized cleanup once it is shown never to have been used and its references and protections are cleared; it needs no window and no made-up retirement time. If all three copies must remain, refuse another build or replacement until a copy can lawfully be removed. An existing current copy may keep saving progress only while it still passes the reader's checks against the retained original history. If the reader needs a rebuild to pass those checks, keep the last saved copy and show the affected reader as unavailable until a lawful rebuild is possible. A lost copy means checking retained original history again; it never recreates missing original events.
+
+Chat deletion still hides the deleted chat's history immediately. Purge its unheld references from active reader copies within **24 hours** and backups within **30 days**; if a mixed copy cannot satisfy that by removing those references lawfully, discard the whole affected copy and rebuild only from retained, permitted original history. A missing complete source makes that reader unavailable, not permission to resurrect deleted history. Holds can delay physical purge without restoring access. Deleting the owning Project/app data follows its existing rules. These source-deletion limits override a copy's remaining ordinary window; none of A/B/C lengthens an event, receipt, page or chat lifetime.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep a replaced copy for **seven days (604,800 seconds)** after it stops being current, under the common rules above. This follows the existing rule for disposable reader checkpoints. You keep a short recovery history; older unprotected copies are rebuilt when needed.
+
+**Sources:** `S1353` (8791f549ae15:Plans/Section15_MVP_Promoted_Features_Spec.md:13913-13920); `S1354` (8791f549ae15:Plans/Section15_MVP_Promoted_Features_Spec.md:13965-13972); `S1355` (57c28f706e10:Plans/storage-plan.md:19584-19605); `S1359` (57c28f706e10:Plans/storage_value_registry.json:175-190); `S1360` (57c28f706e10:Plans/storage-plan.md:20297-20330); `S1361` (57c28f706e10:Plans/storage-plan.md:21215-21221); `S1366` (9b76338594c6:Plans/storage-plan.md:17423-17425); `S1352` (drafts/DS15/DS15.md:92-103).
+
+**Supersession and boundaries:** Assigns the two Browser reader checkpoint keys a seven-day window for a replaced copy under the common three-copy boundary, with the current copy kept while its reader needs it. This is a saved-value rule, not an event allowance, and it extends no source event, receipt, page or chat lifetime.
+
+### DL-460: Blocked-command history outside Projects gets its own allowance and scoped rule
+
+**Card item:** E-CARDS-3 **7.a**. **Question:** Should blocked-command history outside Projects get its own 2,000,000-entry allowance and the scoped deletion/protection rule above?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **7.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+**What you already approved:** the second deck selected seven-year troubleshooting history for refused commands, guard-startup failures and refused paths; it selected permanent proof for refused destructive overrides and requests for those overrides. Its seven-year condition says “keep 2,555 days from the saved original refusal, override request or startup-failure result, up to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and preserves the entry after the described file or chat is deleted. Project proof is removed only by explicit **Delete Puppet Master project data** under the existing protections; **Remove project from list** retains it. At full storage, new entries are refused. These lifetimes and protections stay decided.
+
+**Proposed common boundary for A on each item:** count and store the named history in **one Puppet Master Server's saved application history, shared by all its connected Clients**. No count resets per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely under its already approved Project rule. Shared counting grants no access to another person's history or linked content. The three bounded A choices each propose their **own separate 2,000,000-entry allowance** for that one type, separate from each other, the other items and every previously approved application allowance. The two permanent A choices have **no age or count limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer. Every choice still obeys the Server's existing finite disk budget, with no new byte limit or reserved disk allocation.
+
+**Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion, removing a Project from the list, disconnecting a Client, and history reaching capacity do not authorize deletion of this separate application history. Automatic expiry cleanup may remove only expired entries free of **every** legal/investigation hold, active source/reference, recovery, preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has no automatic expiry cleanup.
+
+Earlier removal requires an **explicit, separately confirmed deletion request from a person authorized for that Server's data**, naming that Server and this item's exact FileSafe application history. Existing Storage ownership, permission, scope and destructive-intent checks must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient. Persist the content-free deletion record and hide the selected history immediately; purge unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections above preserve required custody until lawfully released, without restoring visibility or clearing a hold. Restore applies the deletion record before exposing history. If identity, permission, scope or protected references cannot be proved, refuse the deletion. This is a proposed authorization rule for the selected history, using the existing scoped Storage deletion mechanism; it grants no application-wide wipe permission or new delete control. Owners must bind that exact rule before recording. Original approvals, action results, snapshots, recovery journals and linked bodies keep their independent retention and access rules.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Give this one type of **blocked-command history its own 2,000,000-entry allowance outside Projects**, across the one Server and all connected Clients above. Keep the already chosen **2,555 days** from the saved original refusal or startup-failure result's first successful save that survives a restart. Retry, reprocessing, restart recovery, restore and later observations never reset that original clock. Use this item's proposed deletion/protection rule above. Only expired unprotected entries free ordinary capacity; never evict unexpired or protected entries to make room. If the count is full with no eligible expiry, or the existing disk budget prevents a safe save, refuse the new history entry. You get seven-year application troubleshooting history; expired unprotected entries can disappear, while ordinary file/chat/Project deletion does not shorten this separate history's window. A separately authorized confirmed deletion follows the rule above.
+
+**Sources:** `S1276` (c81490e38cdd:Plans/Decision_Log.md:4880-4905); `S1377` (a10cfa6d834f:Plans/storage-plan.md:29528-29530); `S1370` (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388` (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382` (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1375` (reviews/DF-sol/REVIEW-cycle7.md:71-99); `S1386` (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+**Supersession and boundaries:** Completes the outside-Project counting, capacity and authorized-deletion rule that DL-422 expressly reserved for filesafe.command_denied: its own 2,000,000-entry Server-wide allowance under the already chosen 2,555-day clock and the scoped deletion/protection rule. The seven-year lifetime and Project rule are unchanged.
+
+### DL-461: Override-refusal proof outside Projects uses Server-wide capacity and deletion rules
+
+**Card item:** E-CARDS-3 **7.b**. **Question:** Should permanent override-refusal proof outside Projects use the proposed Server-wide capacity and authorized-deletion rules?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **7.b** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+**What you already approved:** the second deck selected seven-year troubleshooting history for refused commands, guard-startup failures and refused paths; it selected permanent proof for refused destructive overrides and requests for those overrides. Its seven-year condition says “keep 2,555 days from the saved original refusal, override request or startup-failure result, up to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and preserves the entry after the described file or chat is deleted. Project proof is removed only by explicit **Delete Puppet Master project data** under the existing protections; **Remove project from list** retains it. At full storage, new entries are refused. These lifetimes and protections stay decided.
+
+**Proposed common boundary for A on each item:** count and store the named history in **one Puppet Master Server's saved application history, shared by all its connected Clients**. No count resets per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely under its already approved Project rule. Shared counting grants no access to another person's history or linked content. The three bounded A choices each propose their **own separate 2,000,000-entry allowance** for that one type, separate from each other, the other items and every previously approved application allowance. The two permanent A choices have **no age or count limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer. Every choice still obeys the Server's existing finite disk budget, with no new byte limit or reserved disk allocation.
+
+**Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion, removing a Project from the list, disconnecting a Client, and history reaching capacity do not authorize deletion of this separate application history. Automatic expiry cleanup may remove only expired entries free of **every** legal/investigation hold, active source/reference, recovery, preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has no automatic expiry cleanup.
+
+Earlier removal requires an **explicit, separately confirmed deletion request from a person authorized for that Server's data**, naming that Server and this item's exact FileSafe application history. Existing Storage ownership, permission, scope and destructive-intent checks must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient. Persist the content-free deletion record and hide the selected history immediately; purge unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections above preserve required custody until lawfully released, without restoring visibility or clearing a hold. Restore applies the deletion record before exposing history. If identity, permission, scope or protected references cannot be proved, refuse the deletion. This is a proposed authorization rule for the selected history, using the existing scoped Storage deletion mechanism; it grants no application-wide wipe permission or new delete control. Owners must bind that exact rule before recording. Original approvals, action results, snapshots, recovery journals and linked bodies keep their independent retention and access rules.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep this one type of **override-refusal proof permanently outside Projects**, with **no age or count expiry**, in the Server-wide application boundary above. Use this item's proposed authorized-deletion and protection rule. If the Server's disk budget prevents a safe new save, refuse the new history entry and retain the old proof; no existing bucket donates room. You can inspect permitted proof beyond seven years and after the described file or chat is deleted, unless this history itself is explicitly deleted under that rule. The existing FileSafe safety behavior stays in force.
+
+**Sources:** `S1373` (c81490e38cdd:Plans/Decision_Log.md:4906-4930); `S1378` (a10cfa6d834f:Plans/storage-plan.md:29594-29596); `S1370` (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388` (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382` (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1383` (57c28f706e10:Plans/storage_value_registry.json:94-110); `S1386` (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+**Supersession and boundaries:** Completes the outside-Project capacity and authorized-deletion rule that DL-423 expressly reserved for filesafe.destructive_override_denied: permanent proof with no age or count expiry in the Server-wide boundary. The permanent lifetime and Project rule are unchanged; no existing bucket donates room.
+
+### DL-462: Override-request proof outside Projects uses Server-wide capacity and deletion rules
+
+**Card item:** E-CARDS-3 **7.c**. **Question:** Should permanent override-request proof outside Projects use the proposed Server-wide capacity and authorized-deletion rules?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **7.c** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+**What you already approved:** the second deck selected seven-year troubleshooting history for refused commands, guard-startup failures and refused paths; it selected permanent proof for refused destructive overrides and requests for those overrides. Its seven-year condition says “keep 2,555 days from the saved original refusal, override request or startup-failure result, up to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and preserves the entry after the described file or chat is deleted. Project proof is removed only by explicit **Delete Puppet Master project data** under the existing protections; **Remove project from list** retains it. At full storage, new entries are refused. These lifetimes and protections stay decided.
+
+**Proposed common boundary for A on each item:** count and store the named history in **one Puppet Master Server's saved application history, shared by all its connected Clients**. No count resets per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely under its already approved Project rule. Shared counting grants no access to another person's history or linked content. The three bounded A choices each propose their **own separate 2,000,000-entry allowance** for that one type, separate from each other, the other items and every previously approved application allowance. The two permanent A choices have **no age or count limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer. Every choice still obeys the Server's existing finite disk budget, with no new byte limit or reserved disk allocation.
+
+**Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion, removing a Project from the list, disconnecting a Client, and history reaching capacity do not authorize deletion of this separate application history. Automatic expiry cleanup may remove only expired entries free of **every** legal/investigation hold, active source/reference, recovery, preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has no automatic expiry cleanup.
+
+Earlier removal requires an **explicit, separately confirmed deletion request from a person authorized for that Server's data**, naming that Server and this item's exact FileSafe application history. Existing Storage ownership, permission, scope and destructive-intent checks must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient. Persist the content-free deletion record and hide the selected history immediately; purge unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections above preserve required custody until lawfully released, without restoring visibility or clearing a hold. Restore applies the deletion record before exposing history. If identity, permission, scope or protected references cannot be proved, refuse the deletion. This is a proposed authorization rule for the selected history, using the existing scoped Storage deletion mechanism; it grants no application-wide wipe permission or new delete control. Owners must bind that exact rule before recording. Original approvals, action results, snapshots, recovery journals and linked bodies keep their independent retention and access rules.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Keep this one type of **override-request proof permanently outside Projects**, with **no age or count expiry**, in the Server-wide application boundary above. Use this item's proposed authorized-deletion and protection rule. If the Server's disk budget prevents a safe new save, refuse the new history entry and retain the old proof; no existing bucket donates room. You can inspect permitted proof beyond seven years and after the described file or chat is deleted, unless this history itself is explicitly deleted under that rule. The existing FileSafe safety behavior stays in force.
+
+**Sources:** `S1374` (c81490e38cdd:Plans/Decision_Log.md:4932-4956); `S1379` (a10cfa6d834f:Plans/storage-plan.md:29727-29729); `S1370` (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388` (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382` (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1383` (57c28f706e10:Plans/storage_value_registry.json:94-110); `S1386` (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+**Supersession and boundaries:** Completes the outside-Project capacity and authorized-deletion rule that DL-424 expressly reserved for filesafe.destructive_override_requested: permanent proof with no age or count expiry in the Server-wide boundary. The permanent lifetime and Project rule are unchanged; no existing bucket donates room.
+
+### DL-463: Guard-startup-failure history outside Projects gets its own allowance and scoped rule
+
+**Card item:** E-CARDS-3 **7.d**. **Question:** Should guard-startup-failure history outside Projects get its own 2,000,000-entry allowance and the scoped deletion/protection rule above?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **7.d** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+**What you already approved:** the second deck selected seven-year troubleshooting history for refused commands, guard-startup failures and refused paths; it selected permanent proof for refused destructive overrides and requests for those overrides. Its seven-year condition says “keep 2,555 days from the saved original refusal, override request or startup-failure result, up to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and preserves the entry after the described file or chat is deleted. Project proof is removed only by explicit **Delete Puppet Master project data** under the existing protections; **Remove project from list** retains it. At full storage, new entries are refused. These lifetimes and protections stay decided.
+
+**Proposed common boundary for A on each item:** count and store the named history in **one Puppet Master Server's saved application history, shared by all its connected Clients**. No count resets per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely under its already approved Project rule. Shared counting grants no access to another person's history or linked content. The three bounded A choices each propose their **own separate 2,000,000-entry allowance** for that one type, separate from each other, the other items and every previously approved application allowance. The two permanent A choices have **no age or count limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer. Every choice still obeys the Server's existing finite disk budget, with no new byte limit or reserved disk allocation.
+
+**Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion, removing a Project from the list, disconnecting a Client, and history reaching capacity do not authorize deletion of this separate application history. Automatic expiry cleanup may remove only expired entries free of **every** legal/investigation hold, active source/reference, recovery, preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has no automatic expiry cleanup.
+
+Earlier removal requires an **explicit, separately confirmed deletion request from a person authorized for that Server's data**, naming that Server and this item's exact FileSafe application history. Existing Storage ownership, permission, scope and destructive-intent checks must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient. Persist the content-free deletion record and hide the selected history immediately; purge unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections above preserve required custody until lawfully released, without restoring visibility or clearing a hold. Restore applies the deletion record before exposing history. If identity, permission, scope or protected references cannot be proved, refuse the deletion. This is a proposed authorization rule for the selected history, using the existing scoped Storage deletion mechanism; it grants no application-wide wipe permission or new delete control. Owners must bind that exact rule before recording. Original approvals, action results, snapshots, recovery journals and linked bodies keep their independent retention and access rules.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Give this one type of **guard-startup-failure history its own 2,000,000-entry allowance outside Projects**, across the one Server and all connected Clients above. Keep the already chosen **2,555 days** from the saved original refusal or startup-failure result's first successful save that survives a restart. Retry, reprocessing, restart recovery, restore and later observations never reset that original clock. Use this item's proposed deletion/protection rule above. Only expired unprotected entries free ordinary capacity; never evict unexpired or protected entries to make room. If the count is full with no eligible expiry, or the existing disk budget prevents a safe save, refuse the new history entry. You get seven-year application troubleshooting history; expired unprotected entries can disappear, while ordinary file/chat/Project deletion does not shorten this separate history's window. A separately authorized confirmed deletion follows the rule above.
+
+**Sources:** `S1279` (c81490e38cdd:Plans/Decision_Log.md:4958-4983); `S1380` (a10cfa6d834f:Plans/storage-plan.md:29793-29795); `S1370` (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388` (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382` (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1375` (reviews/DF-sol/REVIEW-cycle7.md:71-99); `S1386` (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+**Supersession and boundaries:** Completes the outside-Project counting, capacity and authorized-deletion rule that DL-425 expressly reserved for filesafe.guard_init_failed: its own 2,000,000-entry Server-wide allowance under the already chosen 2,555-day clock and the scoped deletion/protection rule. The seven-year lifetime and Project rule are unchanged.
+
+### DL-464: Denied-path history outside Projects gets its own allowance and scoped rule
+
+**Card item:** E-CARDS-3 **7.e**. **Question:** Should denied-path history outside Projects get its own 2,000,000-entry allowance and the scoped deletion/protection rule above?
+
+Jared’s verbatim answer:
+
+> The rest I will defer to your recommendations.
+
+SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build), 2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`, SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of E-CARDS-3.md.” Item **7.e** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all twelve items."
+
+**Approved scope and conditions from the presented cards:**
+
+**What you already approved:** the second deck selected seven-year troubleshooting history for refused commands, guard-startup failures and refused paths; it selected permanent proof for refused destructive overrides and requests for those overrides. Its seven-year condition says “keep 2,555 days from the saved original refusal, override request or startup-failure result, up to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and preserves the entry after the described file or chat is deleted. Project proof is removed only by explicit **Delete Puppet Master project data** under the existing protections; **Remove project from list** retains it. At full storage, new entries are refused. These lifetimes and protections stay decided.
+
+**Proposed common boundary for A on each item:** count and store the named history in **one Puppet Master Server's saved application history, shared by all its connected Clients**. No count resets per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely under its already approved Project rule. Shared counting grants no access to another person's history or linked content. The three bounded A choices each propose their **own separate 2,000,000-entry allowance** for that one type, separate from each other, the other items and every previously approved application allowance. The two permanent A choices have **no age or count limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer. Every choice still obeys the Server's existing finite disk budget, with no new byte limit or reserved disk allocation.
+
+**Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion, removing a Project from the list, disconnecting a Client, and history reaching capacity do not authorize deletion of this separate application history. Automatic expiry cleanup may remove only expired entries free of **every** legal/investigation hold, active source/reference, recovery, preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has no automatic expiry cleanup.
+
+Earlier removal requires an **explicit, separately confirmed deletion request from a person authorized for that Server's data**, naming that Server and this item's exact FileSafe application history. Existing Storage ownership, permission, scope and destructive-intent checks must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient. Persist the content-free deletion record and hide the selected history immediately; purge unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections above preserve required custody until lawfully released, without restoring visibility or clearing a hold. Restore applies the deletion record before exposing history. If identity, permission, scope or protected references cannot be proved, refuse the deletion. This is a proposed authorization rule for the selected history, using the existing scoped Storage deletion mechanism; it grants no application-wide wipe permission or new delete control. Owners must bind that exact rule before recording. Original approvals, action results, snapshots, recovery journals and linked bodies keep their independent retention and access rules.
+
+**Exact approved option text from the presented cards:**
+
+- **A (recommended):** Give this one type of **denied-path history its own 2,000,000-entry allowance outside Projects**, across the one Server and all connected Clients above. Keep the already chosen **2,555 days** from the saved original refusal or startup-failure result's first successful save that survives a restart. Retry, reprocessing, restart recovery, restore and later observations never reset that original clock. Use this item's proposed deletion/protection rule above. Only expired unprotected entries free ordinary capacity; never evict unexpired or protected entries to make room. If the count is full with no eligible expiry, or the existing disk budget prevents a safe save, refuse the new history entry. You get seven-year application troubleshooting history; expired unprotected entries can disappear, while ordinary file/chat/Project deletion does not shorten this separate history's window. A separately authorized confirmed deletion follows the rule above.
+
+**Sources:** `S1280` (c81490e38cdd:Plans/Decision_Log.md:4984-5009); `S1381` (a10cfa6d834f:Plans/storage-plan.md:29859-29861); `S1370` (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388` (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382` (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1375` (reviews/DF-sol/REVIEW-cycle7.md:71-99); `S1386` (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+**Supersession and boundaries:** Completes the outside-Project counting, capacity and authorized-deletion rule that DL-426 expressly reserved for filesafe.path_denied: its own 2,000,000-entry Server-wide allowance under the already chosen 2,555-day clock and the scoped deletion/protection rule. The seven-year lifetime and Project rule are unchanged.
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -11353,6 +11681,1631 @@ source_lineage:
 preserved_exact_tokens:
 - i approve all of it
 - 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-453 - 47 lasting-change histories stay permanently
+
+```yaml
+plan_unit_id: DL-453
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **1.a**. **Question:** Should these 47 histories stay permanently, for
+  seven years or for 90 days?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **1.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  - **Permanent:** no expiry by age or count. The already defined safe metadata, identifiers, hashes
+  and references stay in these entries; their payload fields and redaction rules do not change.
+  Deleting the described file, object or chat does not remove this separate history or preserve the
+  deleted content. For Project records, explicit **Delete Puppet Master project data** removes them
+  under existing protection rules; **Remove project from list** does not. Application records remain
+  subject to their existing authorized data-deletion rules; this deck adds no app-data delete
+  control. Finite disk budgets still apply: storage pressure refuses new history writes.
+
+
+  For every option, protection for the latest 25 runs applies where the existing rule requires it.
+  Holds and required references can keep history past its ordinary expiry; they grant no visibility
+  or access. Existing Settings may lengthen an eligible history window, never shorten it below the
+  chosen minimum. Original approvals, saved results, prompt text, documents, media and backup
+  generations keep their own lifetimes.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep all 47 types **permanently**, using the deletion and storage-pressure
+  rules above. You can inspect the safe history after seven years and after the described object or
+  chat is deleted, subject to current access and explicit Project/app-data deletion. There is no age
+  or count expiry and no new count allowance.
+
+
+  **Sources:** `S1306` (surveys/W3RT/QUESTIONS.md:11-74); `S1298`
+  (decision-answers/E-CARDS-1.as-presented-578a6774.md:57-61); `S1299`
+  (decision-answers/E-CARDS-1.as-presented-578a6774.md:63-93); `S1268`
+  (b6332f391a78:Plans/Decision_Log.md:4414-4501); `S1262`
+  (73f2231a9ec1:Plans/Decision_Log.md:649-660); `S1282`
+  (73f2231a9ec1:Plans/storage-plan.md:17403-17427); `S1301`
+  (decision-answers/E-CARDS-2.as-presented-6db25be3.md:105-172); `S1310`
+  (1e57a68b0a24:reports/event-authority-20261105/W3A.md:1-17); `S1312`
+  (11ba6d0dd400:reports/event-authority-20261105/W3B.md:1-17); `S1314`
+  (b836cba089bb:reports/event-authority-20261105/W3C.md:1-17); `S1316`
+  (a6749a55292b:reports/event-authority-20261105/W3D.md:1-17); `S1318`
+  (fc141476bf57:reports/event-authority-20261105/W3E.md:1-17); `S1322`
+  (feb55826eb7c:reports/event-authority-20261105/W3G.md:1-17). Exact per-family owner and retention
+  passages: Appendix A and `SOURCES.jsonl`.
+
+
+  **Supersession and boundaries:** Assigns permanent retention to exactly the 47 additional
+  lasting-change history types in Appendix A item 1.a. It extends the deck-1 permanent pattern to
+  these new names without widening any earlier population; original objects, receipts, documents and
+  chats keep their own lifetimes, and no count allowance is created.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Assigns permanent retention to exactly the 47 additional lasting-change history types in Appendix
+  A item 1.a. It extends the deck-1 permanent pattern to these new names without widening any
+  earlier population; original objects, receipts, documents and chats keep their own lifetimes, and
+  no count allowance is created.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-454 - 33 routine histories stay 90 days from the first durable save
+
+```yaml
+plan_unit_id: DL-454
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **2.a**. **Question:** Should these 33 routine histories stay for 90 days,
+  seven years or permanently?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **2.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  - **90 days:** counted from the entry''s first successful save that survives a restart. Retrying,
+  reprocessing old history or restoring a backup never restarts it.
+
+
+  - **Bounded counts:** Project entries share the existing **2,000,000 per Project** allowance for
+  the selected seven-year or 90-day class. They get no fresh allowance per item. For a bounded
+  option outside Projects, each item proposes **one separate 2,000,000-entry allowance**, shared by
+  that item''s eligible types in one Puppet Master Server''s saved history, shared by its connected
+  Clients. It is separate from every other item and all previously approved application allowances.
+  Project-only names gain no outside-Project edition, and no entry is counted in both allowances.
+
+
+  - **When a bounded allowance fills:** remove only expired entries with no legal/investigation
+  hold, required recovery or source reference, rollback obligation or protected backup. Never drop
+  unexpired entries to make room. If nothing eligible can free room, refuse new history writes. The
+  underlying feature keeps its existing recording and safety requirements.
+
+
+  For every option, protection for the latest 25 runs applies where the existing rule requires it.
+  Holds and required references can keep history past its ordinary expiry; they grant no visibility
+  or access. Existing Settings may lengthen an eligible history window, never shorten it below the
+  chosen minimum. Original approvals, saved results, prompt text, documents, media and backup
+  generations keep their own lifetimes.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep all 33 types for **90 days** from their first successful save that
+  survives a restart, without resetting on retry, reprocessing or restore. Project entries share the
+  existing 2,000,000-entry 90-day allowance. Approve one separate 2,000,000-entry application
+  allowance for this item''s 29 application-eligible types. Delete only expired unprotected entries;
+  refuse new writes if full and nothing may expire. You get recent history; older unprotected
+  observations disappear.
+
+
+  **Sources:** `S1307` (surveys/W3RT/QUESTIONS.md:75-124); `S1299`
+  (decision-answers/E-CARDS-1.as-presented-578a6774.md:63-93); `S1269`
+  (c81490e38cdd:Plans/Decision_Log.md:4712-4735); `S1329`
+  (9b76338594c6:Plans/storage-plan.md:17491-17502); `S1263`
+  (73f2231a9ec1:Plans/Decision_Log.md:1415-1466); `S1282`
+  (73f2231a9ec1:Plans/storage-plan.md:17403-17427); `S1310`
+  (1e57a68b0a24:reports/event-authority-20261105/W3A.md:1-17); `S1312`
+  (11ba6d0dd400:reports/event-authority-20261105/W3B.md:1-17); `S1314`
+  (b836cba089bb:reports/event-authority-20261105/W3C.md:1-17); `S1318`
+  (fc141476bf57:reports/event-authority-20261105/W3E.md:1-17). Exact per-family owner and retention
+  passages: Appendix A and `SOURCES.jsonl`.
+
+
+  **Supersession and boundaries:** Assigns 90 days from the first durable save to exactly the 33
+  routine history types in Appendix A item 2.a, with this item’s one separate 2,000,000-entry
+  application allowance for its 29 application-eligible types. Project entries share the existing
+  90-day allowance under the DL-415 clock. No earlier allowance is widened.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+- DL-415
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Assigns 90 days from the first durable save to exactly the 33 routine history types in Appendix A
+  item 2.a, with this item’s one separate 2,000,000-entry application allowance for its 29
+  application-eligible types. Project entries share the existing 90-day allowance under the DL-415
+  clock. No earlier allowance is widened.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-455 - 24 operational, security and recovery histories stay seven years
+
+```yaml
+plan_unit_id: DL-455
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **3.a**. **Question:** Should these 24 histories stay for seven years,
+  permanently or for 90 days?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **3.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  - **Seven years:** exactly **2,555 days**, counted from the original saved change this entry
+  records. A start entry''s clock starts when that start is first saved; it does not wait for a
+  future finish. Retrying, reprocessing old history or restoring a backup never restarts it.
+
+
+  - **Bounded counts:** Project entries share the existing **2,000,000 per Project** allowance for
+  the selected seven-year or 90-day class. They get no fresh allowance per item. For a bounded
+  option outside Projects, each item proposes **one separate 2,000,000-entry allowance**, shared by
+  that item''s eligible types in one Puppet Master Server''s saved history, shared by its connected
+  Clients. It is separate from every other item and all previously approved application allowances.
+  Project-only names gain no outside-Project edition, and no entry is counted in both allowances.
+
+
+  - **When a bounded allowance fills:** remove only expired entries with no legal/investigation
+  hold, required recovery or source reference, rollback obligation or protected backup. Never drop
+  unexpired entries to make room. If nothing eligible can free room, refuse new history writes. The
+  underlying feature keeps its existing recording and safety requirements.
+
+
+  For every option, protection for the latest 25 runs applies where the existing rule requires it.
+  Holds and required references can keep history past its ordinary expiry; they grant no visibility
+  or access. Existing Settings may lengthen an eligible history window, never shorten it below the
+  chosen minimum. Original approvals, saved results, prompt text, documents, media and backup
+  generations keep their own lifetimes.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep all 24 types for **seven years** from the original saved change each
+  entry records. A recorded start begins its own clock when that start is first saved; it never
+  waits for the operation''s later finish. Retrying, reprocessing or restoring never resets it.
+  Project entries share the existing 2,000,000-entry seven-year allowance. Approve one separate
+  2,000,000-entry application allowance for this item''s 16 application-eligible types. Remove only
+  expired unprotected entries; refuse new writes if full and nothing may expire. Older operational
+  history may disappear after seven years.
+
+
+  **Sources:** `S1308` (surveys/W3RT/QUESTIONS.md:125-165); `S1298`
+  (decision-answers/E-CARDS-1.as-presented-578a6774.md:57-61); `S1299`
+  (decision-answers/E-CARDS-1.as-presented-578a6774.md:63-93); `S1276`
+  (c81490e38cdd:Plans/Decision_Log.md:4880-4905); `S1279`
+  (c81490e38cdd:Plans/Decision_Log.md:4958-4983); `S1280`
+  (c81490e38cdd:Plans/Decision_Log.md:4984-5009); `S1282`
+  (73f2231a9ec1:Plans/storage-plan.md:17403-17427); `S1310`
+  (1e57a68b0a24:reports/event-authority-20261105/W3A.md:1-17); `S1312`
+  (11ba6d0dd400:reports/event-authority-20261105/W3B.md:1-17); `S1314`
+  (b836cba089bb:reports/event-authority-20261105/W3C.md:1-17); `S1318`
+  (fc141476bf57:reports/event-authority-20261105/W3E.md:1-17); `S1322`
+  (feb55826eb7c:reports/event-authority-20261105/W3G.md:1-17). Exact per-family owner and retention
+  passages: Appendix A and `SOURCES.jsonl`.
+
+
+  **Supersession and boundaries:** Assigns seven years from the original saved change to exactly the
+  24 operational, security and recovery history types in Appendix A item 3.a, with this item’s one
+  separate 2,000,000-entry application allowance for its 16 application-eligible types. Project
+  entries share the existing seven-year allowance. Original approvals, receipts and recovery
+  evidence keep their independent rules.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Assigns seven years from the original saved change to exactly the 24 operational, security and
+  recovery history types in Appendix A item 3.a, with this item’s one separate 2,000,000-entry
+  application allowance for its 16 application-eligible types. Project entries share the existing
+  seven-year allowance. Original approvals, receipts and recovery evidence keep their independent
+  rules.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-456 - Four session-prompt request histories live with their target chat
+
+```yaml
+plan_unit_id: DL-456
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **4.a**. **Question:** Should these four request histories go with their
+  target chat, stay permanently or last 90 days?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **4.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep these four histories **as long as the target chat exists**, in both
+  Project and application chats. Count them together with every other family using that chat''s
+  existing **250,000-entry shared limit**; continue in a linked continuation of the same chat''s
+  history, kept and deleted with that chat, instead of silently dropping history. Deleting the
+  target chat hides them immediately, purges unheld active copies within **24 hours** and backup
+  bytes within **30 days**. A hold delays purge and never restores visibility. You can inspect the
+  outcomes for as long as that chat remains; no new application allowance is needed.
+
+
+  **Sources:** `S1309` (surveys/W3RT/QUESTIONS.md:166-185); `S1299`
+  (decision-answers/E-CARDS-1.as-presented-578a6774.md:63-93); `S1265`
+  (73f2231a9ec1:Plans/Decision_Log.md:1741-1789); `S1267`
+  (73f2231a9ec1:Plans/Decision_Log.md:2106-2150); `S1330`
+  (2663667e1434:Plans/storage-plan.md:17423-17425); `S1286`
+  (2663667e1434:Plans/storage_value_registry.json:557-572); `S1283`
+  (73f2231a9ec1:Plans/storage-plan.md:17504-17508); `S1320`
+  (90c3dfac181c:reports/event-authority-20261105/W3F.md:1-17). Exact per-family owner and retention
+  passages: Appendix A and `SOURCES.jsonl`.
+
+
+  **Supersession and boundaries:** Binds the four session_prompt request histories to the target
+  chat in Project and application chats, counted under that chat’s existing 250,000-entry shared
+  limit with continuation instead of silent drops. No new application allowance is created; prompt
+  text keeps its own deletion rule.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Binds the four session_prompt request histories to the target chat in Project and application
+  chats, counted under that chat’s existing 250,000-entry shared limit with continuation instead of
+  silent drops. No new application allowance is created; prompt text keeps its own deletion rule.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-457 - Question-budget refusal history stays seven years
+
+```yaml
+plan_unit_id: DL-457
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **5.a**. **Question:** Should the question-budget refusal history last
+  seven years, go with its chat or stay permanently?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **5.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep this one history type for **seven years (2,555 days)** from the first
+  successful save of the actual refusal and next-step result that survives a restart. Where the
+  event itself is the only saved refusal, its first successful save that survives a restart is that
+  save; an independently existing original result uses its own proved first-save time. Never wait
+  for planning or a future execution run to finish, and never restart the clock on retry,
+  reprocessing old history, reconfiguration or restore. Project entries share the existing
+  2,000,000-entry seven-year allowance. Approve **one separate 2,000,000-entry allowance outside
+  Projects**, in one Puppet Master Server''s saved history shared by its connected Clients, across
+  this type''s Plan, Deep Plan and question-bank sources together. No fresh allowance per chat,
+  workflow, participant or question source. Remove only expired unprotected entries; refuse new
+  history writes if full and none may expire. Ordinary chat/Plan deletion does not shorten this
+  separate content-free history''s window; explicit Project/app-data deletion and current access
+  rules still apply.
+
+
+  **Sources:** `S1350` (90c3dfac181c:Plans/Contracts_V0.md:25725-25743); `S1351`
+  (reviews/W3F-sol/REVIEW-phase1-recheck.md:64-75); `S1349`
+  (90c3dfac181c:reports/event-authority-20261105/W3F.md:1-33); `S1358`
+  (9b76338594c6:Plans/storage-plan.md:17443-17453); `S1356`
+  (decision-answers/E-CARDS-1.as-presented-578a6774.md:40-95); `S1276`
+  (c81490e38cdd:Plans/Decision_Log.md:4880-4905); `S1280`
+  (c81490e38cdd:Plans/Decision_Log.md:4984-5009); `S1281`
+  (c81490e38cdd:Plans/Decision_Log.md:5581-5848); `S1366`
+  (9b76338594c6:Plans/storage-plan.md:17423-17425).
+
+
+  **Supersession and boundaries:** Assigns seven years to the one question-budget refusal history
+  type across ordinary Plan, Deep Plan and the shared question banks, with one separate
+  2,000,000-entry application allowance across its sources together. It changes no question budget
+  and grants no permission to build; the shared question bank and original question records keep
+  their own policies.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Assigns seven years to the one question-budget refusal history type across ordinary Plan, Deep
+  Plan and the shared question banks, with one separate 2,000,000-entry application allowance across
+  its sources together. It changes no question budget and grants no permission to build; the shared
+  question bank and original question records keep their own policies.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-458 - One cross-chat revoke entry lasts until the last affected chat is deleted
+
+```yaml
+plan_unit_id: DL-458
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **6.a**. **Question:** For one Stop sharing history entry affecting several
+  chats, should it last until the last affected chat is deleted or only until the first?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **6.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Card’s presented context (not Jared’s words):**
+
+
+  **What is already settled:** the first deck''s sharing group says “Shared context (3): Chat”;
+  Storage applies it to the three exact sharing-history types. The broader Browser split already
+  gives its separate prepared Browser populations permanent metadata or one year after a real run.
+  Deck 1 explicitly said Jared had not been asked to rule on that split, so it remains in force. It
+  supplies no governing-chat combination or mixed-chat progress-marker rule for the cases below. No
+  broad Browser-retention vote is reopened here.
+
+
+  For **A or B**, use the actual recipient chats whose grants that original action removed, fixed at
+  that action; later shares do not reset or enlarge that set. Count the one logical history entry
+  once in **each affected chat''s existing shared 250,000-entry allowance**, in Project and
+  application chats alike. At the limit, continue in a linked continuation of that same chat''s
+  history; do not drop history or duplicate the revoke event. There is no new app-wide allowance.
+  Holds preserve only required custody and never visibility. Explicit Project/app-data deletion
+  still applies.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep the one history entry **until the last affected recipient chat is
+  deleted**. Deleting one chat hides its route to this history immediately and gives it no
+  continuing access; other surviving affected chats may still inspect the permitted, content-free
+  original. When the last chat is deleted, hide the remaining history immediately, purge unheld
+  active copies within **24 hours** and backup bytes within **30 days**. Holds can delay physical
+  purge. Nothing in the history keeps a deleted chat''s page content alive.
+
+
+  **Sources:** `S1356` (decision-answers/E-CARDS-1.as-presented-578a6774.md:40-95); `S1357`
+  (9b76338594c6:Plans/storage-plan.md:17469-17475); `S1354`
+  (8791f549ae15:Plans/Section15_MVP_Promoted_Features_Spec.md:13965-13972); `S1366`
+  (9b76338594c6:Plans/storage-plan.md:17423-17425); `S1352` (drafts/DS15/DS15.md:92-103).
+
+
+  **Supersession and boundaries:** Assigns the cross-chat case of browser.context_share_revoked to
+  the last affected recipient chat’s lifetime, counted once in each affected chat’s existing shared
+  allowance. Histories tied to one recipient keep the existing Chat rule; the broader Browser split
+  stays in force and no broad Browser-retention vote is reopened.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+- DL-433
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Assigns the cross-chat case of browser.context_share_revoked to the last affected recipient
+  chat’s lifetime, counted once in each affected chat’s existing shared allowance. Histories tied to
+  one recipient keep the existing Chat rule; the broader Browser split stays in force and no broad
+  Browser-retention vote is reopened.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-459 - Browser reader checkpoints keep a replaced copy seven days
+
+```yaml
+plan_unit_id: DL-459
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **6.b**. **Question:** How long should the two Browser history readers keep
+  a replaced reader copy: seven days, 90 days or seven years?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **6.b** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **Common boundary for all options:** keep the **current copy while that exact reader needs it**,
+  with no age expiry while current. Keep at most **three copies together per reader, for one Project
+  or for one Server''s history outside Projects**: the current copy plus any copies being built or
+  replaced. The two readers have separate three-copy limits; no limit resets per source chat, and
+  there is no 2,000,000-entry event allowance here. When a genuine replacement makes a new copy
+  current, or the reader is withdrawn, the previously current copy''s clock starts at that moment;
+  saving progress, retries and restores never start or restart it. Remove a replaced copy only when
+  its chosen window has ended and it has no hold or required reference. A copy that was being built
+  and was discarded without ever becoming current is removed through the existing authorized cleanup
+  once it is shown never to have been used and its references and protections are cleared; it needs
+  no window and no made-up retirement time. If all three copies must remain, refuse another build or
+  replacement until a copy can lawfully be removed. An existing current copy may keep saving
+  progress only while it still passes the reader''s checks against the retained original history. If
+  the reader needs a rebuild to pass those checks, keep the last saved copy and show the affected
+  reader as unavailable until a lawful rebuild is possible. A lost copy means checking retained
+  original history again; it never recreates missing original events.
+
+
+  Chat deletion still hides the deleted chat''s history immediately. Purge its unheld references
+  from active reader copies within **24 hours** and backups within **30 days**; if a mixed copy
+  cannot satisfy that by removing those references lawfully, discard the whole affected copy and
+  rebuild only from retained, permitted original history. A missing complete source makes that
+  reader unavailable, not permission to resurrect deleted history. Holds can delay physical purge
+  without restoring access. Deleting the owning Project/app data follows its existing rules. These
+  source-deletion limits override a copy''s remaining ordinary window; none of A/B/C lengthens an
+  event, receipt, page or chat lifetime.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep a replaced copy for **seven days (604,800 seconds)** after it stops
+  being current, under the common rules above. This follows the existing rule for disposable reader
+  checkpoints. You keep a short recovery history; older unprotected copies are rebuilt when needed.
+
+
+  **Sources:** `S1353` (8791f549ae15:Plans/Section15_MVP_Promoted_Features_Spec.md:13913-13920);
+  `S1354` (8791f549ae15:Plans/Section15_MVP_Promoted_Features_Spec.md:13965-13972); `S1355`
+  (57c28f706e10:Plans/storage-plan.md:19584-19605); `S1359`
+  (57c28f706e10:Plans/storage_value_registry.json:175-190); `S1360`
+  (57c28f706e10:Plans/storage-plan.md:20297-20330); `S1361`
+  (57c28f706e10:Plans/storage-plan.md:21215-21221); `S1366`
+  (9b76338594c6:Plans/storage-plan.md:17423-17425); `S1352` (drafts/DS15/DS15.md:92-103).
+
+
+  **Supersession and boundaries:** Assigns the two Browser reader checkpoint keys a seven-day window
+  for a replaced copy under the common three-copy boundary, with the current copy kept while its
+  reader needs it. This is a saved-value rule, not an event allowance, and it extends no source
+  event, receipt, page or chat lifetime.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+- DL-433
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Assigns the two Browser reader checkpoint keys a seven-day window for a replaced copy under the
+  common three-copy boundary, with the current copy kept while its reader needs it. This is a
+  saved-value rule, not an event allowance, and it extends no source event, receipt, page or chat
+  lifetime.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-460 - Blocked-command history outside Projects gets its own allowance and scoped rule
+
+```yaml
+plan_unit_id: DL-460
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **7.a**. **Question:** Should blocked-command history outside Projects get
+  its own 2,000,000-entry allowance and the scoped deletion/protection rule above?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **7.a** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **What you already approved:** the second deck selected seven-year troubleshooting history for
+  refused commands, guard-startup failures and refused paths; it selected permanent proof for
+  refused destructive overrides and requests for those overrides. Its seven-year condition says
+  “keep 2,555 days from the saved original refusal, override request or startup-failure result, up
+  to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and
+  preserves the entry after the described file or chat is deleted. Project proof is removed only by
+  explicit **Delete Puppet Master project data** under the existing protections; **Remove project
+  from list** retains it. At full storage, new entries are refused. These lifetimes and protections
+  stay decided.
+
+
+  **Proposed common boundary for A on each item:** count and store the named history in **one Puppet
+  Master Server''s saved application history, shared by all its connected Clients**. No count resets
+  per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely
+  under its already approved Project rule. Shared counting grants no access to another person''s
+  history or linked content. The three bounded A choices each propose their **own separate
+  2,000,000-entry allowance** for that one type, separate from each other, the other items and every
+  previously approved application allowance. The two permanent A choices have **no age or count
+  limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer.
+  Every choice still obeys the Server''s existing finite disk budget, with no new byte limit or
+  reserved disk allocation.
+
+
+  **Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion,
+  removing a Project from the list, disconnecting a Client, and history reaching capacity do not
+  authorize deletion of this separate application history. Automatic expiry cleanup may remove only
+  expired entries free of **every** legal/investigation hold, active source/reference, recovery,
+  preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has
+  no automatic expiry cleanup.
+
+
+  Earlier removal requires an **explicit, separately confirmed deletion request from a person
+  authorized for that Server''s data**, naming that Server and this item''s exact FileSafe
+  application history. Existing Storage ownership, permission, scope and destructive-intent checks
+  must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient.
+  Persist the content-free deletion record and hide the selected history immediately; purge
+  unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections
+  above preserve required custody until lawfully released, without restoring visibility or clearing
+  a hold. Restore applies the deletion record before exposing history. If identity, permission,
+  scope or protected references cannot be proved, refuse the deletion. This is a proposed
+  authorization rule for the selected history, using the existing scoped Storage deletion mechanism;
+  it grants no application-wide wipe permission or new delete control. Owners must bind that exact
+  rule before recording. Original approvals, action results, snapshots, recovery journals and linked
+  bodies keep their independent retention and access rules.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Give this one type of **blocked-command history its own 2,000,000-entry
+  allowance outside Projects**, across the one Server and all connected Clients above. Keep the
+  already chosen **2,555 days** from the saved original refusal or startup-failure result''s first
+  successful save that survives a restart. Retry, reprocessing, restart recovery, restore and later
+  observations never reset that original clock. Use this item''s proposed deletion/protection rule
+  above. Only expired unprotected entries free ordinary capacity; never evict unexpired or protected
+  entries to make room. If the count is full with no eligible expiry, or the existing disk budget
+  prevents a safe save, refuse the new history entry. You get seven-year application troubleshooting
+  history; expired unprotected entries can disappear, while ordinary file/chat/Project deletion does
+  not shorten this separate history''s window. A separately authorized confirmed deletion follows
+  the rule above.
+
+
+  **Sources:** `S1276` (c81490e38cdd:Plans/Decision_Log.md:4880-4905); `S1377`
+  (a10cfa6d834f:Plans/storage-plan.md:29528-29530); `S1370`
+  (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388`
+  (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382`
+  (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1375` (reviews/DF-sol/REVIEW-cycle7.md:71-99);
+  `S1386` (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+
+  **Supersession and boundaries:** Completes the outside-Project counting, capacity and
+  authorized-deletion rule that DL-422 expressly reserved for filesafe.command_denied: its own
+  2,000,000-entry Server-wide allowance under the already chosen 2,555-day clock and the scoped
+  deletion/protection rule. The seven-year lifetime and Project rule are unchanged.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-422
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Completes the outside-Project counting, capacity and authorized-deletion rule that DL-422
+  expressly reserved for filesafe.command_denied: its own 2,000,000-entry Server-wide allowance
+  under the already chosen 2,555-day clock and the scoped deletion/protection rule. The seven-year
+  lifetime and Project rule are unchanged.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-461 - Override-refusal proof outside Projects uses Server-wide capacity and deletion rules
+
+```yaml
+plan_unit_id: DL-461
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **7.b**. **Question:** Should permanent override-refusal proof outside
+  Projects use the proposed Server-wide capacity and authorized-deletion rules?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **7.b** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **What you already approved:** the second deck selected seven-year troubleshooting history for
+  refused commands, guard-startup failures and refused paths; it selected permanent proof for
+  refused destructive overrides and requests for those overrides. Its seven-year condition says
+  “keep 2,555 days from the saved original refusal, override request or startup-failure result, up
+  to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and
+  preserves the entry after the described file or chat is deleted. Project proof is removed only by
+  explicit **Delete Puppet Master project data** under the existing protections; **Remove project
+  from list** retains it. At full storage, new entries are refused. These lifetimes and protections
+  stay decided.
+
+
+  **Proposed common boundary for A on each item:** count and store the named history in **one Puppet
+  Master Server''s saved application history, shared by all its connected Clients**. No count resets
+  per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely
+  under its already approved Project rule. Shared counting grants no access to another person''s
+  history or linked content. The three bounded A choices each propose their **own separate
+  2,000,000-entry allowance** for that one type, separate from each other, the other items and every
+  previously approved application allowance. The two permanent A choices have **no age or count
+  limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer.
+  Every choice still obeys the Server''s existing finite disk budget, with no new byte limit or
+  reserved disk allocation.
+
+
+  **Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion,
+  removing a Project from the list, disconnecting a Client, and history reaching capacity do not
+  authorize deletion of this separate application history. Automatic expiry cleanup may remove only
+  expired entries free of **every** legal/investigation hold, active source/reference, recovery,
+  preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has
+  no automatic expiry cleanup.
+
+
+  Earlier removal requires an **explicit, separately confirmed deletion request from a person
+  authorized for that Server''s data**, naming that Server and this item''s exact FileSafe
+  application history. Existing Storage ownership, permission, scope and destructive-intent checks
+  must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient.
+  Persist the content-free deletion record and hide the selected history immediately; purge
+  unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections
+  above preserve required custody until lawfully released, without restoring visibility or clearing
+  a hold. Restore applies the deletion record before exposing history. If identity, permission,
+  scope or protected references cannot be proved, refuse the deletion. This is a proposed
+  authorization rule for the selected history, using the existing scoped Storage deletion mechanism;
+  it grants no application-wide wipe permission or new delete control. Owners must bind that exact
+  rule before recording. Original approvals, action results, snapshots, recovery journals and linked
+  bodies keep their independent retention and access rules.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep this one type of **override-refusal proof permanently outside
+  Projects**, with **no age or count expiry**, in the Server-wide application boundary above. Use
+  this item''s proposed authorized-deletion and protection rule. If the Server''s disk budget
+  prevents a safe new save, refuse the new history entry and retain the old proof; no existing
+  bucket donates room. You can inspect permitted proof beyond seven years and after the described
+  file or chat is deleted, unless this history itself is explicitly deleted under that rule. The
+  existing FileSafe safety behavior stays in force.
+
+
+  **Sources:** `S1373` (c81490e38cdd:Plans/Decision_Log.md:4906-4930); `S1378`
+  (a10cfa6d834f:Plans/storage-plan.md:29594-29596); `S1370`
+  (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388`
+  (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382`
+  (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1383`
+  (57c28f706e10:Plans/storage_value_registry.json:94-110); `S1386`
+  (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+
+  **Supersession and boundaries:** Completes the outside-Project capacity and authorized-deletion
+  rule that DL-423 expressly reserved for filesafe.destructive_override_denied: permanent proof with
+  no age or count expiry in the Server-wide boundary. The permanent lifetime and Project rule are
+  unchanged; no existing bucket donates room.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-423
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Completes the outside-Project capacity and authorized-deletion rule that DL-423 expressly
+  reserved for filesafe.destructive_override_denied: permanent proof with no age or count expiry in
+  the Server-wide boundary. The permanent lifetime and Project rule are unchanged; no existing
+  bucket donates room.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-462 - Override-request proof outside Projects uses Server-wide capacity and deletion rules
+
+```yaml
+plan_unit_id: DL-462
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **7.c**. **Question:** Should permanent override-request proof outside
+  Projects use the proposed Server-wide capacity and authorized-deletion rules?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **7.c** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **What you already approved:** the second deck selected seven-year troubleshooting history for
+  refused commands, guard-startup failures and refused paths; it selected permanent proof for
+  refused destructive overrides and requests for those overrides. Its seven-year condition says
+  “keep 2,555 days from the saved original refusal, override request or startup-failure result, up
+  to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and
+  preserves the entry after the described file or chat is deleted. Project proof is removed only by
+  explicit **Delete Puppet Master project data** under the existing protections; **Remove project
+  from list** retains it. At full storage, new entries are refused. These lifetimes and protections
+  stay decided.
+
+
+  **Proposed common boundary for A on each item:** count and store the named history in **one Puppet
+  Master Server''s saved application history, shared by all its connected Clients**. No count resets
+  per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely
+  under its already approved Project rule. Shared counting grants no access to another person''s
+  history or linked content. The three bounded A choices each propose their **own separate
+  2,000,000-entry allowance** for that one type, separate from each other, the other items and every
+  previously approved application allowance. The two permanent A choices have **no age or count
+  limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer.
+  Every choice still obeys the Server''s existing finite disk budget, with no new byte limit or
+  reserved disk allocation.
+
+
+  **Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion,
+  removing a Project from the list, disconnecting a Client, and history reaching capacity do not
+  authorize deletion of this separate application history. Automatic expiry cleanup may remove only
+  expired entries free of **every** legal/investigation hold, active source/reference, recovery,
+  preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has
+  no automatic expiry cleanup.
+
+
+  Earlier removal requires an **explicit, separately confirmed deletion request from a person
+  authorized for that Server''s data**, naming that Server and this item''s exact FileSafe
+  application history. Existing Storage ownership, permission, scope and destructive-intent checks
+  must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient.
+  Persist the content-free deletion record and hide the selected history immediately; purge
+  unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections
+  above preserve required custody until lawfully released, without restoring visibility or clearing
+  a hold. Restore applies the deletion record before exposing history. If identity, permission,
+  scope or protected references cannot be proved, refuse the deletion. This is a proposed
+  authorization rule for the selected history, using the existing scoped Storage deletion mechanism;
+  it grants no application-wide wipe permission or new delete control. Owners must bind that exact
+  rule before recording. Original approvals, action results, snapshots, recovery journals and linked
+  bodies keep their independent retention and access rules.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep this one type of **override-request proof permanently outside
+  Projects**, with **no age or count expiry**, in the Server-wide application boundary above. Use
+  this item''s proposed authorized-deletion and protection rule. If the Server''s disk budget
+  prevents a safe new save, refuse the new history entry and retain the old proof; no existing
+  bucket donates room. You can inspect permitted proof beyond seven years and after the described
+  file or chat is deleted, unless this history itself is explicitly deleted under that rule. The
+  existing FileSafe safety behavior stays in force.
+
+
+  **Sources:** `S1374` (c81490e38cdd:Plans/Decision_Log.md:4932-4956); `S1379`
+  (a10cfa6d834f:Plans/storage-plan.md:29727-29729); `S1370`
+  (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388`
+  (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382`
+  (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1383`
+  (57c28f706e10:Plans/storage_value_registry.json:94-110); `S1386`
+  (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+
+  **Supersession and boundaries:** Completes the outside-Project capacity and authorized-deletion
+  rule that DL-424 expressly reserved for filesafe.destructive_override_requested: permanent proof
+  with no age or count expiry in the Server-wide boundary. The permanent lifetime and Project rule
+  are unchanged; no existing bucket donates room.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-424
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Completes the outside-Project capacity and authorized-deletion rule that DL-424 expressly
+  reserved for filesafe.destructive_override_requested: permanent proof with no age or count expiry
+  in the Server-wide boundary. The permanent lifetime and Project rule are unchanged; no existing
+  bucket donates room.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-463 - Guard-startup-failure history outside Projects gets its own allowance and scoped rule
+
+```yaml
+plan_unit_id: DL-463
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **7.d**. **Question:** Should guard-startup-failure history outside
+  Projects get its own 2,000,000-entry allowance and the scoped deletion/protection rule above?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **7.d** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **What you already approved:** the second deck selected seven-year troubleshooting history for
+  refused commands, guard-startup failures and refused paths; it selected permanent proof for
+  refused destructive overrides and requests for those overrides. Its seven-year condition says
+  “keep 2,555 days from the saved original refusal, override request or startup-failure result, up
+  to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and
+  preserves the entry after the described file or chat is deleted. Project proof is removed only by
+  explicit **Delete Puppet Master project data** under the existing protections; **Remove project
+  from list** retains it. At full storage, new entries are refused. These lifetimes and protections
+  stay decided.
+
+
+  **Proposed common boundary for A on each item:** count and store the named history in **one Puppet
+  Master Server''s saved application history, shared by all its connected Clients**. No count resets
+  per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely
+  under its already approved Project rule. Shared counting grants no access to another person''s
+  history or linked content. The three bounded A choices each propose their **own separate
+  2,000,000-entry allowance** for that one type, separate from each other, the other items and every
+  previously approved application allowance. The two permanent A choices have **no age or count
+  limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer.
+  Every choice still obeys the Server''s existing finite disk budget, with no new byte limit or
+  reserved disk allocation.
+
+
+  **Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion,
+  removing a Project from the list, disconnecting a Client, and history reaching capacity do not
+  authorize deletion of this separate application history. Automatic expiry cleanup may remove only
+  expired entries free of **every** legal/investigation hold, active source/reference, recovery,
+  preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has
+  no automatic expiry cleanup.
+
+
+  Earlier removal requires an **explicit, separately confirmed deletion request from a person
+  authorized for that Server''s data**, naming that Server and this item''s exact FileSafe
+  application history. Existing Storage ownership, permission, scope and destructive-intent checks
+  must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient.
+  Persist the content-free deletion record and hide the selected history immediately; purge
+  unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections
+  above preserve required custody until lawfully released, without restoring visibility or clearing
+  a hold. Restore applies the deletion record before exposing history. If identity, permission,
+  scope or protected references cannot be proved, refuse the deletion. This is a proposed
+  authorization rule for the selected history, using the existing scoped Storage deletion mechanism;
+  it grants no application-wide wipe permission or new delete control. Owners must bind that exact
+  rule before recording. Original approvals, action results, snapshots, recovery journals and linked
+  bodies keep their independent retention and access rules.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Give this one type of **guard-startup-failure history its own
+  2,000,000-entry allowance outside Projects**, across the one Server and all connected Clients
+  above. Keep the already chosen **2,555 days** from the saved original refusal or startup-failure
+  result''s first successful save that survives a restart. Retry, reprocessing, restart recovery,
+  restore and later observations never reset that original clock. Use this item''s proposed
+  deletion/protection rule above. Only expired unprotected entries free ordinary capacity; never
+  evict unexpired or protected entries to make room. If the count is full with no eligible expiry,
+  or the existing disk budget prevents a safe save, refuse the new history entry. You get seven-year
+  application troubleshooting history; expired unprotected entries can disappear, while ordinary
+  file/chat/Project deletion does not shorten this separate history''s window. A separately
+  authorized confirmed deletion follows the rule above.
+
+
+  **Sources:** `S1279` (c81490e38cdd:Plans/Decision_Log.md:4958-4983); `S1380`
+  (a10cfa6d834f:Plans/storage-plan.md:29793-29795); `S1370`
+  (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388`
+  (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382`
+  (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1375` (reviews/DF-sol/REVIEW-cycle7.md:71-99);
+  `S1386` (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+
+  **Supersession and boundaries:** Completes the outside-Project counting, capacity and
+  authorized-deletion rule that DL-425 expressly reserved for filesafe.guard_init_failed: its own
+  2,000,000-entry Server-wide allowance under the already chosen 2,555-day clock and the scoped
+  deletion/protection rule. The seven-year lifetime and Project rule are unchanged.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-425
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Completes the outside-Project counting, capacity and authorized-deletion rule that DL-425
+  expressly reserved for filesafe.guard_init_failed: its own 2,000,000-entry Server-wide allowance
+  under the already chosen 2,555-day clock and the scoped deletion/protection rule. The seven-year
+  lifetime and Project rule are unchanged.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-464 - Denied-path history outside Projects gets its own allowance and scoped rule
+
+```yaml
+plan_unit_id: DL-464
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-3 **7.e**. **Question:** Should denied-path history outside Projects get its
+  own 2,000,000-entry allowance and the scoped deletion/protection rule above?
+
+
+  Jared’s verbatim answer:
+
+
+  > The rest I will defer to your recommendations.
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): “So A on all 12 items of
+  E-CARDS-3.md.” Item **7.e** selects **A**. The presented deck’s fast-reply rule is: "`approve all`
+  selects **A** on all twelve items."
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **What you already approved:** the second deck selected seven-year troubleshooting history for
+  refused commands, guard-startup failures and refused paths; it selected permanent proof for
+  refused destructive overrides and requests for those overrides. Its seven-year condition says
+  “keep 2,555 days from the saved original refusal, override request or startup-failure result, up
+  to 2,000,000 records per Project.” Its permanent condition says “no expiry by age or count” and
+  preserves the entry after the described file or chat is deleted. Project proof is removed only by
+  explicit **Delete Puppet Master project data** under the existing protections; **Remove project
+  from list** retains it. At full storage, new entries are refused. These lifetimes and protections
+  stay decided.
+
+
+  **Proposed common boundary for A on each item:** count and store the named history in **one Puppet
+  Master Server''s saved application history, shared by all its connected Clients**. No count resets
+  per chat, Client, person, root, restart or workflow; a record belonging to a Project stays solely
+  under its already approved Project rule. Shared counting grants no access to another person''s
+  history or linked content. The three bounded A choices each propose their **own separate
+  2,000,000-entry allowance** for that one type, separate from each other, the other items and every
+  previously approved application allowance. The two permanent A choices have **no age or count
+  limit**, as already chosen; imposing a 2,000,000-entry expiry on proof would reopen that answer.
+  Every choice still obeys the Server''s existing finite disk budget, with no new byte limit or
+  reserved disk allocation.
+
+
+  **Proposed deletion and protection rule within each A:** ordinary file, chat or Project deletion,
+  removing a Project from the list, disconnecting a Client, and history reaching capacity do not
+  authorize deletion of this separate application history. Automatic expiry cleanup may remove only
+  expired entries free of **every** legal/investigation hold, active source/reference, recovery,
+  preserved/recent-run, rollback, maintenance and protected-backup obligation. Permanent proof has
+  no automatic expiry cleanup.
+
+
+  Earlier removal requires an **explicit, separately confirmed deletion request from a person
+  authorized for that Server''s data**, naming that Server and this item''s exact FileSafe
+  application history. Existing Storage ownership, permission, scope and destructive-intent checks
+  must authorize it; a chat owner, a reference or a Project-delete request alone is insufficient.
+  Persist the content-free deletion record and hide the selected history immediately; purge
+  unprotected active copies within **24 hours** and backup bytes within **30 days**. The protections
+  above preserve required custody until lawfully released, without restoring visibility or clearing
+  a hold. Restore applies the deletion record before exposing history. If identity, permission,
+  scope or protected references cannot be proved, refuse the deletion. This is a proposed
+  authorization rule for the selected history, using the existing scoped Storage deletion mechanism;
+  it grants no application-wide wipe permission or new delete control. Owners must bind that exact
+  rule before recording. Original approvals, action results, snapshots, recovery journals and linked
+  bodies keep their independent retention and access rules.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Give this one type of **denied-path history its own 2,000,000-entry
+  allowance outside Projects**, across the one Server and all connected Clients above. Keep the
+  already chosen **2,555 days** from the saved original refusal or startup-failure result''s first
+  successful save that survives a restart. Retry, reprocessing, restart recovery, restore and later
+  observations never reset that original clock. Use this item''s proposed deletion/protection rule
+  above. Only expired unprotected entries free ordinary capacity; never evict unexpired or protected
+  entries to make room. If the count is full with no eligible expiry, or the existing disk budget
+  prevents a safe save, refuse the new history entry. You get seven-year application troubleshooting
+  history; expired unprotected entries can disappear, while ordinary file/chat/Project deletion does
+  not shorten this separate history''s window. A separately authorized confirmed deletion follows
+  the rule above.
+
+
+  **Sources:** `S1280` (c81490e38cdd:Plans/Decision_Log.md:4984-5009); `S1381`
+  (a10cfa6d834f:Plans/storage-plan.md:29859-29861); `S1370`
+  (decision-answers/E-CARDS-2.as-presented-6db25be3.md:107-174); `S1388`
+  (c81490e38cdd:Plans/Decision_Log.md:4784-4806); `S1382`
+  (9b76338594c6:Plans/storage-plan.md:17491-17504); `S1375` (reviews/DF-sol/REVIEW-cycle7.md:71-99);
+  `S1386` (57c28f706e10:Plans/storage-plan.md:17504-17516).
+
+
+  **Supersession and boundaries:** Completes the outside-Project counting, capacity and
+  authorized-deletion rule that DL-426 expressly reserved for filesafe.path_denied: its own
+  2,000,000-entry Server-wide allowance under the already chosen 2,555-day clock and the scoped
+  deletion/protection rule. The seven-year lifetime and Project rule are unchanged.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-426
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Completes the outside-Project counting, capacity and authorized-deletion rule that DL-426
+  expressly reserved for filesafe.path_denied: its own 2,000,000-entry Server-wide allowance under
+  the already chosen 2,555-day clock and the scoped deletion/protection rule. The seven-year
+  lifetime and Project rule are unchanged.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards3_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (program thread pm7-build),
+  2026-11-05T17:02:41Z, relayed to the stream E lead by pm7-build (mail 1105170345-d5f2). Answer
+  file:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-3_20261105.md`.
+  Cards as presented:
+  `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md`,
+  SHA-256 `a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f`. Source aliases below
+  are the presented deck’s own S-aliases, resolved inline in each Sources line.'
+preserved_exact_tokens:
+- The rest I will defer to your recommendations.
+- a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f
 negative_constraints:
 - Do not treat the coordinator reading or presented card context as Jared’s quoted words.
 - This record itself changes no owner contract, registry, validator, admission record or governance seal.
@@ -29603,4 +31556,729 @@ preserved_exact_tokens:
 - BLOCKED
 owner_hints:
 - Plans/Planning_Ledger_System.md
+```
+
+
+### DL-473 - Auto Placement And Person-Allowed Project Computers
+
+```yaml
+plan_unit_id: DL-473
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared's decisions, verbatim (2026-11-09):
+  - Who wins: "Person's pin wins".
+  - A build's computers: "Any allowed computer. It should work similar to the way T3 does it where we have a number of parameters to give certain devices priority. Like ram, cpu or storage. We would need to talk through that priority system."
+  - Offline mid-task: "Wait, then safe retry".
+  - No-project chats: "Keep the computer you're on".
+  - Controls: "Presets + Advanced (Recommended)".
+  - Measures in Balanced: "Free CPU and memory (Recommended), Free disk space, Queued work (Recommended)".
+  - A computer in use: "Yes, count it as Less often (Recommended)".
+  - Levels: "As proposed (Recommended)".
+
+  Each Project has a default Computer and new Project work defaults to Auto. SIR-056 owns the single placement policy: must-haves gate before ranking; levels Prefer/Normal/Less often/Only when I choose it; Balanced default, Fastest and Keep my computer free presets; Everywhere weights and optional Project preset override. Tasks add only minimums, never priority. Keyboard activity or battery power demotes to Less often by default, with an off setting. Has the files already was not chosen for Balanced; it exists only as an Advanced slider with default 0. Tie-break is Project default Computer then stable execution_host_id order, unchanged by rename. Why this computer accompanies Auto → <Computer> or Chosen: <Computer> with chooser and requested/effective differences.
+
+  A person's pin binds agents unless the person lets them choose. Agents may pin one task or choose Auto only within allowed Computers; they never change Project/Everywhere defaults. PS-147/148 grants authorize the Project's current person-allowed Computers, including a Computer the person allows later, while each dispatch freezes one exact selection and rechecks authority. A new Computer/device identity still asks even in YOLO. Started work waits/resumes on its Computer; only a safe checkpoint, reconciliation and old-owner fencing permit retry elsewhere. Unstarted independent work may use Auto elsewhere. Home Server remains the records home and never automatically fails over. SRV-017 and general.interaction.no-project-default-computer remain unchanged.
+
+  The must-haves are answering/trusted identity, Project allowance, files or permission to fetch, actual-worker sign-ins/tools, task minimums and not drained. Absolute memory/disk floors in GB, running-task reservations and leased browsers/recordings/phones/exclusive GPU slots remain governor gates. Quota belongs to an account, not a Computer. Related chains, fair caps, measured file latency/health, timing-sensitive versus heavy work, OS-correct memory and durable-runner/restart risk feed existing admission and truthful explanation; none widens authority. Precise scoring calibration and governed grant/context/typed-command successors remain implementation prerequisites, not fabricated native support. Prose precedes inventory/schema/fixture companions; no governance reseal is authorized.
+gui_related: true
+gui_classification_reason: Defines visible placement choices, controls and explanations.
+depends_on: [SRV-006, SIR-056, PS-147, PS-148, SSYS-059, PJCT-012]
+unblocks: []
+acceptance_criteria:
+- "Accepted Jared quotes remain verbatim and each owner preserves the human pin, allowed-set and no-project boundaries."
+- "Owner prose and companion records do not claim native placement, grant migration or governance readiness."
+validation_surfaces: [future placement gate/ranking/pin/recovery fixtures, scripts/pm-plan-index.py]
+risk_class: placement_authority_and_duplicate_effects
+reasoning_tier: high
+context_scope: project_work_placement
+implementation_surfaces: [Plans/Decision_Log.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+preserved_exact_tokens: ["Person's pin wins", "Wait, then safe retry", "Keep the computer you're on", "Presets + Advanced (Recommended)", "Why this computer"]
+negative_constraints:
+- No placement widens authority or changes the Project Home Server.
+- No native readiness or governance seal is inferred from accepted prose.
+```
+
+### DL-474 - Settings Admission, Free Persona Tags And Truthful Service Readiness
+
+```yaml
+plan_unit_id: DL-474
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q2, Q3 and Q4 on 2026-11-11 at 17:08:56 UTC. Each signed answer records choice ["A"] and an empty note. The selected card labels, verbatim, are:
+  - Q2: "Make them real settings".
+  - Q3: "Free tags, with suggestions".
+  - Q4: "Keep 'Needs attention'".
+
+  Q2 approves making Prefer pinned memories, When memories disagree, Crews can read project memories, the four memory source switches (Project files, Plans, Tool output and Manager records), a new Goal's Persona, a new Goal's Crew, Run test profile and Ask me to confirm searchable, explainable and resettable Settings choices. Admission must carry the semantic owner's actual values, default, scope and offered levels through SSYS-004/059 and the existing writer. The answer supplies no missing value/default/level rules and cannot by itself invent them or override AMS-026/054 memory isolation or Goal V2 ownership. Owner gaps must be adjudicated before the affected rows are registered; demo defaults and page-local state are source lineage only. Chat history already has memory.retention.history-retention and is not a fifth new source row.
+
+  Q2 disposition in this batch: 0 Q2 rows admitted. Approved but unregistered, pending these owner questions:
+  - Prefer pinned memories: whether AMS-020's pinned ranking boost may be switched off at all, the off and on scoring meaning, default and offered levels.
+  - When memories disagree: a retrieval-time disagreement policy, its values, default and offered levels; per-capture Teach resolution is not that policy.
+  - Crews can read project memories: an owner-approved successor to AMS-026/054 naming exactly what a Crew may read and what stays private, with values, default, levels and the command and storage contract.
+  - Project files, Plans, Tool output and Manager records source switches: whether each gates retrieval, capture or evidence use, with default and levels, without letting required context or verification evidence go missing.
+  - A new Goal's Persona and a new Goal's Crew: inherit the ordinary thread choice or seed a distinct preference; reference, default, none and inherit meaning, and levels, without adding GoalRecordV2 fields or starting collaboration by setting alone.
+  - Run test profile: a test-profile record and selection contract, default and levels, and absence and deletion behavior for completion evidence.
+  - Ask me to confirm: whether and how a human completion confirmation joins caller evidence, default and levels, and approval, cancellation and replay behavior.
+
+  Q3 follows Personas P-010: personas.library.persona-tags is a free string tag input with suggested kinds phase, task, subtask, iteration, cross-phase, language, domain and framework, plus arbitrary freeform tags. The inventory's old seam/package/lane/node/cross-seam choices are replaced as suggestions, not migrated into a closed enum or used to rewrite existing free tags. Persona-owned scope, default empty list and existing layering remain.
+
+  Q4 keeps Needs attention for AI roster services with no model chosen. F3-108 and SSYS-026 consume actual owner readiness; this records the existing behavior rather than introducing a second status engine or a new setting.
+
+  The How runs pause option is labelled Without pausing; its stored value hands-off, default and behavior remain. The Hands-off development permission profile keeps its distinct name. Current census prose refers to the unique live IDs in Plans/settings_inventory.json; historical admission counts remain lineage.
+gui_related: true
+gui_classification_reason: Records Settings search/reset admission, free tag input and visible roster/option labels.
+depends_on: [SSYS-004, SSYS-059, P-010, F3-108, SSYS-026]
+unblocks: []
+acceptance_criteria:
+- The signed A choices and exact selected labels are preserved with source hashes.
+- Inventory admission uses owner-defined values/defaults/levels; unresolved owners do not acquire invented policy.
+- This batch admits 0 Q2 rows and lists each pending owner question; a later decision admits each row only after its question is answered.
+- Persona tags remain free input with the owner suggestions and existing record ownership.
+- No chosen model renders Needs attention from owner readiness.
+- Without pausing retains the stored value hands-off and does not rename the permission profile.
+validation_surfaces:
+- scripts/pm-settings-layering-check.py
+- scripts/pm7-build-check.py
+- scripts/pm7-canon-check.py
+- future native Settings/owner search, Details, Reset and readiness evidence; not_run
+risk_class: settings_owner_default_scope_and_presentation_drift
+reasoning_tier: high
+context_scope: settings_canon_batch_20261111
+implementation_surfaces: [Plans/settings_inventory.json, Plans/Settings_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q2.json; SHA-256 c06a7ce177aa44ede2f3b875bf2b7462815558344a34c33f6a85290875336950; answered 2026-11-11T17:08:56.662Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q2.json; SHA-256 09f6c10d2b01830210cb3e635fd5dbca911ca76a8df1b415487db2f412763afe; selected label: Make them real settings"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q3.json; SHA-256 3da29e33a83120b34ab8c3509372e2eb27f7d89b9d55f1ec63774f58653e6d76; answered 2026-11-11T17:08:56.685Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q3.json; SHA-256 4fbdf63b756d689e3c19a62f1e8ea0e1050f97a383617cb1fed224e2997b200d; selected label: Free tags, with suggestions"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q4.json; SHA-256 c645fa80be83f6013d0e52dbc79b845c39a354149bc0a764962088ea9067d36f; answered 2026-11-11T17:08:56.754Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q4.json; SHA-256 13eb1adbd7b3a66da20cd406e5e2bbce067687e57453d46bb60842a9a0a68265; selected label: Keep 'Needs attention'"
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-settings-canon-batch.md"
+preserved_exact_tokens:
+- Make them real settings
+- Free tags, with suggestions
+- Keep 'Needs attention'
+- personas.library.persona-tags
+- Without pausing
+- hands-off
+negative_constraints:
+- Do not derive owner policy or offered levels from concept demo defaults.
+- Do not expand Crew memory access, Goal V2 fields or runtime authority from Settings admission intent.
+- Do not infer native implementation, readiness or a governance seal from this decision.
+owner_hints: [Plans/Settings_System.md, Plans/assistant-memory-subsystem.md, Plans/Goal_Runtime_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+```
+
+### DL-475 - Quiet Memory, Authorized Helper Reads And Goals Rulings
+
+```yaml
+plan_unit_id: DL-475
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared's 2026-11-11 decisions, relayed verbatim by pm7-build: "ok that memory system looks good"
+  (about 11:05 PM EST); "No named sets"; "No switch"; "goals may not use crews at all. Goals run
+  with whatever the persona and model was in the chat thread that started it. crews could spawn
+  goals though, same for plans or reviews and some of the other systems." (Goals about 7:30 PM EST).
+  The approved quiet Memory design supersedes DL-474's still-open Q2 memory choices: one Memory
+  page, This project and Every project levels, one memory switch, search/level
+  filter/list/Add/Edit/Delete/Archived; the chat Memory button opens that same page as a sheet.
+  Personal notes can live at Every project, resolving MEM-SCOPE. The Assistant remains
+  writer/manager; Crews, reviews and chat helpers may read Project and personal notes read-only
+  under source restrictions. Private app-thread memory stays private; no helper-owned store or
+  other-Project access follows. Saved to memory · View appears only after a real save; memory-use
+  chips/counts/preview/ribbon/ranking/pin/conflict/source/verification UI and ordinary
+  Followed/Missed rule receipts retire. Fading and archive-only upkeep stay built in, preserving
+  saved pin protections and DL-403/444–447 holds. Delete is a real user action with durable
+  suppression against silent recreation from old chats. No new memory database, service or
+  per-helper store is introduced.  DL-474's Q2 Goals questions are closed: no new-Goal Persona/Crew
+  default, no named test profiles and no Ask me to confirm completion switch. Goals use their
+  initiating chat Persona/model, never use Crews, and finish when proof is in while existing pauses
+  remain. Existing Let the assistant test its work and Speed or thoroughness steer testing. Crews,
+  plans, reviews and similar systems may start separate Goals with no parent edge under GRS-052. The
+  concept drops New Goals start with, Run test profile and Ask me to confirm; these three were never
+  Plans inventory rows. DL-474 remains history, not a current list of unanswered Q2 questions.
+  Retire 43 memory.* inventory rows from search, All Settings and transfer; eight remain in their
+  proper owners. SSYS-040 defines all 51 dispositions/compatibility reads and source-off/privacy
+  migration to equivalent or stricter read restrictions. Existing storage architecture, bounded
+  context, source/currentness and native admission gates remain. This decision authorizes these
+  owner contracts and required companion alignment, not native implementation or governance
+  resealing. Follow-up, Jared 2026-11-12 at 8:12 AM EST: "Keep them there". Rules for every project
+  and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions.
+  The existing application/project instruction writer and storage remain; Memory does not become
+  their editor. Ordinary Memory/Teach capture has no lock, conflict, source or rollback controls;
+  retained legacy protection and codecs remain internal.
+gui_related: true
+gui_classification_reason: Records the approved Memory page/reply behavior and removes concept-only Goals controls.
+depends_on:
+- DL-474
+- AMS-026
+- AMS-054
+- AMS-141
+- SSYS-040
+- GRS-046
+- GRS-052
+unblocks: []
+acceptance_criteria:
+  - "All Q2 memory and Goals questions in DL-474 have the explicit dispositions above."
+  - "The exact Jared quotes are preserved; DL-474 remains unchanged history."
+  - "No source restriction is relaxed, private app thread shared, held cleanup enabled or native readiness inferred."
+  - "Jared’s exact follow-up \"Keep them there\" is preserved, and both named rule editors remain in Settings > Personas & Crews > Defaults > Standing instructions."
+validation_surfaces:
+- scripts/pm-settings-layering-check.py
+- scripts/pm-command-payload-defs-check.py
+- scripts/pm-new-contracts-verify.py
+- scripts/pm7-build-check.py
+risk_class: memory_privacy_deletion_and_goal_execution
+reasoning_tier: high
+context_scope: settings_batch2_20261112
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+- Plans/Settings_System.md
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-settings-batch2.md
+- share/puppet-master/2026-11-11-memory-review/PACKET.md#3-proposed-pm-design
+- share/puppet-master/2026-11-11-memory-review/mock/README.md
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+preserved_exact_tokens:
+- ok that memory system looks good
+- No named sets
+- No switch
+- goals may not use crews at all. Goals run with whatever the persona and model was in the chat thread that started
+  it. crews could spawn goals though, same for plans or reviews and some of the other systems.
+- Memory
+- This project
+- Every project
+- Saved to memory
+- "Keep them there"
+negative_constraints:
+- No Goal uses a Crew.
+- No new database, memory service or per-helper store.
+- No source-off/privacy choice silently restores access.
+- No native implementation or governance seal is inferred.
+```
+
+### DL-476 - One Model Defaults List And Jared Model Answers
+
+```yaml
+plan_unit_id: DL-476
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered the model-design questions at about 11:55 PM EST on 2026-11-11, relayed by pm7-build in the settings batch 3 brief. The answers, verbatim as relayed, are:
+  MD1: "A".
+  MD2: "NEITHER".
+  MD3: "A".
+  MD4: "A".
+  Helper agents, verbatim: "If a helper is a subagent, then the main agent should be able to choose any model it wants at any effort level that is available. There shouldnt be a separate setting for it, if it needs a default, it can follow the other default settings like a regular agent would."
+  The which-wins line, verbatim: "What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere."
+  The accepted design is one list in Settings > Models, with thinking depth chosen inside each model picker. MD1 A permits the same list for This project with Everywhere fallback. MD2 NEITHER removes Persona model/service/preset/effort and command model fields, not merely their priority: old definitions remain compatibility-read only. MD3 A activates an account's own model/depth only when the person sends the run to that account and no earlier source names a model. MD4 A makes Reading pictures the first bridge choice with no separately saved backup; later automatic fallback still requires policy permission and disclosure. The helper model and helper-depth rows are removed; a parent may choose any allowed runnable model/effort within existing parent and policy ceilings, otherwise normal defaults apply.
+  Behaviour: keep build-internal scoped owner policy and a page's built-in default as technical detail, remove the old Persona, Computer, last-used and provider-default model sources, and retire configurable resolution policy and stored default variants. Preserve all parent/managed/capability/account/currentness/cost gates and requested/effective receipts. Presets stay picker/key shortcuts. Keep the six jobs including Easy, routine jobs, separate checking from cheap implementation, naming on the smallest available model with Off, explaining with its small-model and no-silent-costly-fallback guard, BSD following Checking finished work, and per-kind picture/video/speech/music models. WL4 = B remains accepted: test an exact typed model name with one small call before saving; a refused or unreachable name is never saved, and acceptance proves no capability.
+  Behaviour: retire 18 model-related rows with the compatibility reads in settings_inventory.json; admit Easy, routine jobs, one account model/depth field and three enabled-media model rows. Search, All Settings, transfer, Reset and census derive their active admission from that inventory. Old values remain inspectable, never an extra selection source or new write authority. The PRD Builder, Wizard, building and Scout read the common defaults and allow run overrides; their screen redesign is separate.
+  Wording: this one Decision_Log entry records both P17 and E13; it does not reseal governance or claim native runtime proof.
+gui_related: true
+gui_classification_reason: Owns visible model/depth defaults, compatibility disclosure, Settings search and
+  transfer behavior.
+depends_on:
+- SSYS-077
+- MS-005
+- MS-109
+- F3-396
+unblocks: []
+acceptance_criteria:
+- The exact MD1 A, MD2 NEITHER, MD3 A, MD4 A, helper words and plain order are preserved.
+- Removed settings remain compatible reads without active model precedence or new writes.
+- Every model picker includes its supported depth and WL4 B validation.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-settings-layering
+- python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+- python3 -m unittest discover -s tests -p test_pm_settings_draft_transfer.py
+risk_class: model_default_precedence_and_retirement_drift
+reasoning_tier: high
+context_scope: settings_models_batch3_20261112
+implementation_surfaces: &id001
+- Plans/Models_System.md
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/settings_inventory.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- settings-model-design-20261112:MD1-A/MD2-NEITHER/MD3-A/MD4-A/helpers
+- share/puppet-master/2026-11-11-model-selection-map/PACKET-v2.md
+- share/puppet-master/2026-11-11-work-lanes/PACKET.md
+preserved_exact_tokens:
+- MD1
+- MD2
+- NEITHER
+- MD3
+- MD4
+- There shouldnt be a separate setting for it
+- WL4 = B
+- Easy, routine jobs
+negative_constraints:
+- Do not preserve Persona, command or helper-owned model/depth defaults.
+- Do not silently reinterpret historical source tiers, old backup values or old Computer model preferences.
+owner_hints: *id001
+```
+
+### DL-500: Rebuildable bookmarks (retention deck 4 Q1)
+
+```yaml
+plan_unit_id: DL-500
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q1. The following 34 exact stored-value families receive the existing policies shown:
+
+  - alert_acknowledged_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-660).
+  - alert_dismissed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-661).
+  - alert_rule_muted_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-662).
+  - alert_snoozed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-663).
+  - panel_redocked_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-664).
+  - panel_undocked_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-665).
+  - concern_created_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-666).
+  - bundle_note_created_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-706).
+  - bundle_note_status_changed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-707).
+  - bundle_annotation_state_changed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-708).
+  - concern_assigned_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-709).
+  - concern_evidence_linked_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-710).
+  - concern_promoted_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-711).
+  - concern_reopened_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-712).
+  - concern_resolved_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-713).
+  - concern_updated_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/FinalGUISpec.md#F3-714).
+  - ds15_doctor_custom_headless_checked_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-640).
+  - ds15_live_session_started_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-642).
+  - ds15_live_step_updated_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-643).
+  - ds15_live_artifact_created_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-644).
+  - ds15_live_session_completed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-645).
+  - ds15_live_session_degraded_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-646).
+  - ds15_browser_context_captured_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-647).
+  - ds15_dev_session_started_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-648).
+  - ds15_dev_session_stopping_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-649).
+  - ds15_dev_session_stopped_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-650).
+  - ds15_dev_session_restarting_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-651).
+  - ds15_preview_session_started_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-652).
+  - ds15_preview_session_refreshed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-653).
+  - ds15_preview_session_stopped_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-654).
+  - ds15_catalog_install_started_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-657).
+  - ds15_catalog_install_completed_checkpoint: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-658).
+  - memory_index_lexical_selector: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-632).
+  - memory_index_semantic_selector: RP-PROJECTION-3GEN@1.0.0 (Plans/storage-plan.md#SP-634).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-PROJECTION-3GEN@1.0.0", "alert_acknowledged_checkpoint", "alert_dismissed_checkpoint", "alert_rule_muted_checkpoint", "alert_snoozed_checkpoint", "panel_redocked_checkpoint", "panel_undocked_checkpoint", "concern_created_checkpoint", "bundle_note_created_checkpoint", "bundle_note_status_changed_checkpoint", "bundle_annotation_state_changed_checkpoint", "concern_assigned_checkpoint", "concern_evidence_linked_checkpoint", "concern_promoted_checkpoint", "concern_reopened_checkpoint", "concern_resolved_checkpoint", "concern_updated_checkpoint", "ds15_doctor_custom_headless_checked_checkpoint", "ds15_live_session_started_checkpoint", "ds15_live_step_updated_checkpoint", "ds15_live_artifact_created_checkpoint", "ds15_live_session_completed_checkpoint", "ds15_live_session_degraded_checkpoint", "ds15_browser_context_captured_checkpoint", "ds15_dev_session_started_checkpoint", "ds15_dev_session_stopping_checkpoint", "ds15_dev_session_stopped_checkpoint", "ds15_dev_session_restarting_checkpoint", "ds15_preview_session_started_checkpoint", "ds15_preview_session_refreshed_checkpoint", "ds15_preview_session_stopped_checkpoint", "ds15_catalog_install_started_checkpoint", "ds15_catalog_install_completed_checkpoint", "memory_index_lexical_selector", "memory_index_semantic_selector"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-501: Alert, concern, bundle-note and panel operations (retention deck 4 Q2)
+
+```yaml
+plan_unit_id: DL-501
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q2. The following 15 exact stored-value families receive the existing policies shown:
+
+  - alert_acknowledged_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-660).
+  - alert_dismissed_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-661).
+  - alert_rule_muted_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-662).
+  - alert_snoozed_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-663).
+  - panel_redocked_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-664).
+  - panel_undocked_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-665).
+  - concern_created_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/storage-plan.md#SP-666).
+  - bundle_note_created_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-706).
+  - bundle_note_status_changed_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-707).
+  - concern_assigned_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-709).
+  - concern_evidence_linked_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-710).
+  - concern_promoted_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-711).
+  - concern_reopened_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-712).
+  - concern_resolved_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-713).
+  - concern_updated_operation: RP-OPERATIONAL-2555D@1.0.0 (Plans/FinalGUISpec.md#F3-714).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-OPERATIONAL-2555D@1.0.0", "alert_acknowledged_operation", "alert_dismissed_operation", "alert_rule_muted_operation", "alert_snoozed_operation", "panel_redocked_operation", "panel_undocked_operation", "concern_created_operation", "bundle_note_created_operation", "bundle_note_status_changed_operation", "concern_assigned_operation", "concern_evidence_linked_operation", "concern_promoted_operation", "concern_reopened_operation", "concern_resolved_operation", "concern_updated_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-502: GitHub sign-in operation history (retention deck 4 Q3)
+
+```yaml
+plan_unit_id: DL-502
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q3. The following 5 exact stored-value families receive the existing policies shown:
+
+  - auth_github_authenticated_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  - auth_github_device_code_issued_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  - auth_github_disconnected_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  - auth_github_failed_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  - auth_github_token_polling_operation: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-670).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0", "auth_github_authenticated_operation", "auth_github_device_code_issued_operation", "auth_github_disconnected_operation", "auth_github_failed_operation", "auth_github_token_polling_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-503: Plugin operation history (retention deck 4 Q4)
+
+```yaml
+plan_unit_id: DL-503
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q4. The following 8 exact stored-value families receive the existing policies shown:
+
+  - plugin_hook_blocked_operation: RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_hook_error_operation: RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_hook_invoked_operation: RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_load_failed_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_loaded_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_permission_override_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_tool_collision_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  - plugin_tool_registered_operation: RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-671).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0", "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0", "plugin_hook_blocked_operation", "plugin_hook_error_operation", "plugin_hook_invoked_operation", "plugin_load_failed_operation", "plugin_loaded_operation", "plugin_permission_override_operation", "plugin_tool_collision_operation", "plugin_tool_registered_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-504: Persona operation history (retention deck 4 Q5)
+
+```yaml
+plan_unit_id: DL-504
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q5. The following 6 exact stored-value families receive the existing policies shown:
+
+  - persona_created_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_deleted_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_exported_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_imported_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_selected_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  - persona_updated_operation: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-672).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-CONFIG-CURRENT@1.0.0", "persona_created_operation", "persona_deleted_operation", "persona_exported_operation", "persona_imported_operation", "persona_selected_operation", "persona_updated_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-505: Current alert, rule and preview state (retention deck 4 Q6)
+
+```yaml
+plan_unit_id: DL-505
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q6. The following 3 exact stored-value families receive the existing policies shown:
+
+  - shared_alert_state: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-660).
+  - shared_alert_rule_state: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-660).
+  - ds15_preview_subject_ui_state: RP-CONFIG-CURRENT@1.0.0 (Plans/storage-plan.md#SP-656).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-CONFIG-CURRENT@1.0.0", "shared_alert_state", "shared_alert_rule_state", "ds15_preview_subject_ui_state"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-506: Developer session record (retention deck 4 Q7)
+
+```yaml
+plan_unit_id: DL-506
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q7. The following 1 exact stored-value families receive the existing policies shown:
+
+  - dev_session_record: RP-DEBUG-30D@1.0.0 (Plans/storage-plan.md#SP-655).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-DEBUG-30D@1.0.0", "dev_session_record"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-507: Dev-tool source records (retention deck 4 Q8)
+
+```yaml
+plan_unit_id: DL-507
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q8. The following 5 exact stored-value families receive the existing policies shown:
+
+  - dt_requirements_clarification_requested_source: RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-588).
+  - dt_usage_event_source: RP-TELEMETRY-90D@1.0.0 (Plans/storage-plan.md#SP-594).
+  - dt_worktree_created_source: RP-RUNTIME-365D@1.0.0 (Plans/storage-plan.md#SP-595).
+  - dt_worktree_deleted_source: RP-WORKTREE-TOMBSTONE-365D@1.0.0 (Plans/storage-plan.md#SP-596).
+  - dt_usage_event_application_source: RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (Plans/storage-plan.md#SP-594).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0", "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0", "RP-RUNTIME-365D@1.0.0", "RP-TELEMETRY-90D@1.0.0", "RP-WORKTREE-TOMBSTONE-365D@1.0.0", "dt_requirements_clarification_requested_source", "dt_usage_event_source", "dt_worktree_created_source", "dt_worktree_deleted_source", "dt_usage_event_application_source"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-508: Chat-bound wizard and revision records (retention deck 4 Q9)
+
+```yaml
+plan_unit_id: DL-508
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q9. The following 3 exact stored-value families receive the existing policies shown:
+
+  - revision_run: RP-CHAT-THREAD-LIFETIME@1.0.0 (Plans/storage-plan.md#SP-579).
+  - wizard_open_evidence: RP-CHAT-THREAD-LIFETIME@1.0.0 (Plans/storage-plan.md#wizard-opened-original-custody).
+  - wizard_seed_load_evidence: RP-CHAT-THREAD-LIFETIME@1.0.0 (Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-CHAT-THREAD-LIFETIME@1.0.0", "revision_run", "wizard_open_evidence", "wizard_seed_load_evidence"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-509: Memory housekeeping operation records (retention deck 4 Q10)
+
+```yaml
+plan_unit_id: DL-509
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q0 of retention deck 4 on 2026-11-12, about 11:30 AM EST. His answer, verbatim: "Accept all (Recommended)".
+
+  The question as pm7-build asked it, verbatim: "Stream E's batch 2 can't land until 86 kinds of stored records each have a keep-rule. E recommends existing rules: rebuildable bookmarks keep the latest 3 (older dropped after 7 days); records of what people did with alerts, concerns and notes kept 7 years; GitHub sign-in history 7 years; plugin hook runs 90 days, but plugin load/permission changes 7 years; persona changes and current alert or panel state keep current plus one earlier version (90 days); dev sessions 30 days; model-usage records 90 days, worktree records 1 year, clarification requests 7 years; wizard and revision records last as long as their chat; background memory upkeep records 7 years. Holds still pause deletion everywhere. Accept all of them?".
+
+  That answer accepts option A of Q10. The following 6 exact stored-value families receive the existing policies shown:
+
+  - memory_dedup_sweep_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-630).
+  - memory_index_lexical_rebuild_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-632).
+  - memory_index_semantic_rebuild_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-634).
+  - memory_verification_sweep_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-636).
+  - memory_monthly_summary_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/storage-plan.md#SP-638).
+  - memory_prune_archive_operation: RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 (Plans/Contracts_V0.md#CV-658).
+  For these exact stored values this decision supersedes earlier pending retention statements in their owner units and companions. Existing policy definitions retain their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Referenced source content, memory originals and separate event retention bindings retain their own rules. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named stored-value row uses its exact approved existing policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm-implementation-readiness.py, scripts/pm-shared-runtime-storage-materialize.py]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck4
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/RETENTION-DECK4.md; SHA-256 bb9396004ea06099f46debe9f2bf3adf3d3749b353ffdc8b1b16e390d73fe33d; Jared answer relayed by pm7-build mail 1112163308-4bd4"
+preserved_exact_tokens: ["Accept all (Recommended)", "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0", "memory_dedup_sweep_operation", "memory_index_lexical_rebuild_operation", "memory_index_semantic_rebuild_operation", "memory_verification_sweep_operation", "memory_monthly_summary_operation", "memory_prune_archive_operation"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
 ```

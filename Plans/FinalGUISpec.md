@@ -2422,7 +2422,7 @@ The registry below is preserved as an owner-routing and search/migration lineage
 | Tab | Final GUI responsibility | Owner detail |
 |---|---|---|
 | General | App-wide theme, appearance, onboarding, and ordinary preference rows | FinalGUISpec plus storage settings keys |
-| Models / Providers | Model, provider, account, runtime, Default Crew, and Goal Mode worker/verifier-adjudicator selector entrypoints | Models_System, Multi-Account, Goal_Runtime_System, provider docs, Agent Config |
+| Models / Providers | Model/depth defaults, provider, account, runtime and Persona-only Default Crew entrypoints | Models_System, Multi-Account, Goal_Runtime_System, provider docs, Agent Config |
 | Tiers (retired alias) | Compatibility/search alias only; visible execution navigation uses Nodes, Packages, Lanes, Seams, or Branching surfaces | Orchestrator, Run Graph, Worktree, and node/package/lane owner docs |
 | Branching | Git/worktree policy, branch defaults, merge/push posture, and recovery entrypoints | WorktreeGitImprovement and GitHub integration docs |
 | Verification | Validation pass settings, report visibility, and gate/run quality preferences | chain-wizard, Project Output Artifacts, and Progression Gates docs |
@@ -2479,7 +2479,7 @@ carries apply there unchanged; legacy redirects from Settings to Agent Config be
 
 Agent Config owns the visible provider/model/account/instruction management surface and mirrors Skills owner vocabulary for Skills, Personas, bundled, protected_core, catalog_installed, manual_import, project_local, global_local, pm_enhanced, disabled, and ready_with_warnings rows. Agent Config rows expose source/readiness and recovery context, while Settings remains the durable preference surface.
 
-The Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, default model, tool posture, and output format defaults applied automatically while that persona is active), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.
+The Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, supported non-model answer controls, tool posture, and output format defaults applied while that persona is active; no model, provider, preset or depth field), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Persona/provider/model/preset/effort fields retired by MD2 are inert compatibility reads only: preserve old bytes and historical receipts, omit them from new writes and imports, never apply them as model defaults or recreate editable fields. Choose model/depth through Settings > Models > Default models or the run picker under Models §2. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.
 
 Agent Config `/data` records include a durable `provider_entry` row with `provider_entry_id`, `runtime_platform_id`, `model_provider_id`, provider family, account/profile identity, and `auth_surface` auth-state metadata. Richer provider fields extend the visible `/provider` row without renaming the existing `auth_surface` or account/provider auth-state terms.
 
@@ -2491,7 +2491,7 @@ Selection and failover explanations use a stable reason-code family: `manual_pin
 
 Requested/effective persona and `/model/variant/runtime` controls show project-owned multi-account policy, effective account selection, and provider-gap disclosure together: provider capability rows distinguish `honored`, `skipped`, and `clamped` states while preserving the `/effective` runtime value.
 
-Default Crew default-config is an Agent-Config feature-surface. The panel exposes enable/disable, ordered crew members, per-member default-model and provider/runtime (`/provider`) selectors, and the first-run crew confirmation UX. Before launch, that confirmation resolves each member's model -> provider/runtime mapping and reconfirms it whenever mappings or `/defaults/restrictions` materially change; if Copilot is selected for any member, the visible confirmation normalizes the whole crew to Copilot and explains the crew-level provider constraint.
+Default Crew default-config is an Agent-Config feature-surface. The panel exposes enable/disable and ordered Persona-only crew defaults, with no per-member model/runtime defaults. Each invocation opens the Crew sheet, seeded from Everyday building (Review from Checking finished work; other rows from Everyday model), where model and depth can be changed for that invocation. Before launch, that confirmation resolves each member's model -> provider/runtime mapping and reconfirms it whenever mappings or `/defaults/restrictions` materially change; if Copilot is selected for any member, the visible confirmation normalizes the whole crew to Copilot and explains the crew-level provider constraint.
 
 #### 7.4.8A Docker Manager Panel Spec
 
@@ -2687,7 +2687,7 @@ Layout:
 
 Chat context and message detail requirements:
 - The chat-header context indicator is the GUI entrypoint for thread context state. Hover opens the lightweight usage/status module, `More Details` focuses or opens the thread-scoped context-detail editor tab (amended 2026-10-09, DL-180: a context tab, `context:<threadId>`, F3-635, placed by F3-634), and click may reveal `Compact Now` without dispatching compaction until the user chooses that action.
-- The context-detail tab is keyed by thread and live-updates as thread data changes. Its top-level header summary is followed by a top-level view toggle with `Curated` and `Raw`; `Curated` contains Overview, Breakdown, and Messages, while Raw exposes serialized payloads and provider/runtime debugging data through the shared Contracts and Usage rules.
+- The context-detail tab is keyed by thread and live-updates basic capacity/cost/model information, cache/limit facts and useful compaction/transition status. DL-475 retires its `Curated`/`Raw` source-inspection toggle, assembled-source Breakdown and serialized payload views. Source records remain internal for enforcement and debugging; no source-composition chart or per-run inclusion receipt is shown.
 - Message rows expose an under-message icon row for copy, message actions, and message-level info-popover access. The info-popover consumes the closed field and label rules from Assistant Chat and Contracts, including runtime identity fields for provider, model, persona, account, requested/effective state, and `/model/persona/account` inspector disclosure where material.
 
 
@@ -4283,7 +4283,7 @@ Support states:
 - `partially supported`
 - `unsupported`
 
-For each control (platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents), the editor must:
+For each surviving non-model Persona control (temperature/top_p/talkativeness/tool-permission coupling/subagent eligibility), the editor must:
 - show normal editing when supported,
 - show warning styling and explanatory tooltip when partially supported,
 - show disabled control plus explanation when unsupported.
@@ -4298,13 +4298,9 @@ Minimum provider rows to display:
 
 ### 19.2 Persona editor fields (expanded)
 
-In addition to existing Persona fields, the editor must support:
-- `default_platform`
-- `default_model`
-- `default_variant`
+The editor supports only the surviving non-model Persona fields below. Persona/provider/model/preset/effort fields retired by MD2 are inert compatibility reads only: preserve old bytes and historical receipts, omit them from new writes and imports, never apply them as model defaults or recreate editable fields. Choose model/depth through Settings > Models > Default models or the run picker under Models §2.
 - `temperature`
 - `top_p`
-- `reasoning_effort`
 - `talkativeness`
 - `preferred_tools`
 - `discouraged_tools`
@@ -4323,8 +4319,8 @@ In addition to existing Persona fields, the editor must support:
 
 
 The editor should be able to communicate states like:
-- `Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.`
-- `Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented.`
+- `Claude Code: Persona prompt/response controls follow route support; unavailable temperature/top_p controls are skipped with a reason. Model and effort are chosen in the run picker or defaults list.`
+- `Cursor CLI: Persona prompt/rules steering and non-model controls follow the concrete route capability snapshot; model and effort are not Persona preferences.`
 - `Direct/API providers: strongest support for exact runtime controls.`
 
 ### 19.4 Surface-level Persona controls
@@ -4387,7 +4383,7 @@ If a control is skipped, the UI must disclose it in at least one of:
 - Every disclosure must include: control name, requested value, effective value (if any), and human-readable reason.
 - When a limitation is known before execution, render the control disabled or warning-badged in place; do not let the user believe it is actionable.
 - When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.
-- Disclosures must name the provider explicitly (for example: `Claude Code ignored reasoning_effort=high; provider does not support that control on this model`).
+- Disclosures must name the provider explicitly (for example: `Claude Code skipped temperature; this transport does not expose that Persona control`). Run-requested effort disclosure remains in the model picker/run history owner; it is not a Persona field.
 
 ### 19.8 Interview/Builder/Orchestrator mapping editors
 
@@ -11466,8 +11462,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Settings provider and web rows preserve row-level health/error disclosure, last-failure
-  messaging, availability, support-tier visibility, readiness state, provider identity, and
-  contextual help without moving provider routing ownership out of Tools.
+  messaging, availability plus support-tier visibility in Settings, availability plus support-tier
+  visibility in /web help/autocomplete, readiness state, provider identity, and contextual help
+  without moving provider routing ownership out of Tools. Jared confirms Needs attention for an AI service with no model chosen (DL-474, 2026-11-11); the roster consumes owner readiness rather than storing a second status.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Settings row disclosure and help/autocomplete behavior.
@@ -11926,9 +11923,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Agent-Config setup copy separates setup success from operational evidence, exposes stable
-  selection and failover reason codes plus requested/effective runtime controls, and owns Default
-  Crew default-config confirmation and provider constraint explanation.
+  Agent-Config setup copy separates setup success from operational evidence, exposes stable selection and
+  failover reason codes plus requested/effective runtime controls, and owns Default Crew default-config
+  confirmation and provider constraint explanation. Default Crew now stores only ordered Personas and
+  enablement. Per-member model/runtime defaults retire; the invocation sheet still resolves and confirms
+  each row, including existing Copilot whole-crew normalization.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible setup, failover, provider-gap, and Default Crew controls.
@@ -12808,22 +12807,26 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
-  context detail tabs, curated/raw views, under-message actions, and info-popovers that follow
-  Assistant Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
-  Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and failed
-  command-result states.
-  Amended 2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind (`context:<threadId>`,
-  F3-635), opened and placed by F3-634 in a home panel.
+  context detail tabs, basic capacity/cost/model and useful compaction status, under-message
+  actions, and info-popovers that follow Assistant Chat and Contracts label rules, including visible
+  progress and failure/degraded feedback for explicit Compact Now actions plus already-running,
+  cancelled, no-op, unavailable, retry, reload, completed, and failed command-result states. Amended
+  2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind
+  (`context:<threadId>`, F3-635), opened and placed by F3-634 in a home panel. DL-475 keeps basic
+  on-demand capacity/cost/model facts and Squeeze now, but moves assembled-source charts, raw memory
+  data and memory-selection explanations to internal debugging. Curated/raw source-family inspection
+  is no ordinary user surface.
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
 depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "The covered source span remains losslessly available for exact-text audit."
+  - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+  - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Thread context/message surfaces expose no source-composition, Curated/Raw source inspection or per-run inclusion receipt; source accounting stays internal."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -12836,9 +12839,11 @@ node_compile_hint:
   mode: thread_context_detail_and_message_info_surfaces
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0084"
-- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance"
-- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0084
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - "More Details"
 - "Compact Now"
@@ -12856,6 +12861,7 @@ negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
 - "Compact Now failure must not be silent or logs-only."
 - "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.failed or completion EventRecord is emitted for that failed outcome."
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The former context.compaction.failed event implication remains retired; completion-only admission under ACD-461 / SP-259 does not authorize a failed event or a completion event for failure."
@@ -14536,10 +14542,11 @@ plan_unit_id: F3-164
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Context management combines thread context, Investigation Context, editor/file references, and
-  review/document references with stable identity, owner surface, canonical usage/state counters,
-  token summaries, and visible pruning, compaction, and restoration disclosure.
+canonical_text: Context management combines thread context, Investigation Context, editor/file references,
+  and review/document references with stable identity, owner surface, canonical usage/state counters,
+  token summaries, and visible pruning, compaction, and restoration disclosure. DL-475 keeps capacity/cost
+  and useful transition/compaction results on demand; assembled-source breakdowns, raw data and memory-selection
+  explanations are internal debugging only. No source-family chart or used-memory list is shown.
 gui_related: true
 gui_classification_reason: Context disclosure and context surfaces are user-visible GUI behavior despite the source span inference being false.
 split_recommended: false
@@ -14562,7 +14569,8 @@ node_compile_hint:
   mode: context_management_provenance_and_disclosure
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0106"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0106
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - "Investigation Context"
 - "editor/file references"
@@ -21206,54 +21214,56 @@ plan_unit_id: F3-283
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona editor shows provider support states `supported`, `partially supported`, and
-  `unsupported` for Persona controls and renders normal editing, warning styling/tooltips, or
-  disabled controls with explanations for Claude Code, Cursor CLI, OpenCode, and Direct/API
-  providers.
+canonical_text: The Persona editor shows supported, partially supported and unsupported states only for surviving
+  non-model answer, prompt, tool and permission controls. Route support governs editing/warnings/disabled explanations.
+  Model/provider/preset/variant/depth fields are retired; their old exact-token list is inert compatibility
+  vocabulary, not an editor field set.
 gui_related: true
-gui_classification_reason: >-
-  This unit defines the visible Persona editor compatibility matrix.
+gui_classification_reason: This unit defines the visible Persona editor compatibility matrix.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: persona_editor_compatibility_state_matrix
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0169"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0169
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "Persona editor"
-- "supported"
-- "partially supported"
-- "unsupported"
-- "platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents"
-- "warning styling"
-- "explanatory tooltip"
-- "disabled control plus explanation"
-- "Claude Code"
-- "Cursor CLI"
-- "OpenCode"
-- "Direct/API providers"
+- Persona editor
+- supported
+- partially supported
+- unsupported
+- platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents
+- warning styling
+- explanatory tooltip
+- disabled control plus explanation
+- Claude Code
+- Cursor CLI
+- OpenCode
+- Direct/API providers
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- The preserved platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents
+  list records the old mixed field set only; model/provider/variant/effort entries are retired.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-284 - Talkativeness Support State Rule
@@ -21311,52 +21321,59 @@ plan_unit_id: F3-285
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona editor supports fields for default platform/model/variant, temperature, top_p,
-  reasoning_effort, talkativeness, preferred/discouraged tools, tool usage guidance, and
-  aliases.
+canonical_text: 'The Persona editor supports temperature, top_p, talkativeness, preferred/discouraged tools,
+  tool usage guidance and aliases subject to provider capability and existing authority limits. It has no default
+  platform, model, preset/variant or reasoning-effort/depth field. Persona/provider/model/preset/effort fields
+  retired by MD2 are inert compatibility reads only: preserve old bytes and historical receipts, omit them
+  from new writes and imports, never apply them as model defaults or recreate editable fields. Choose model/depth
+  through Settings > Models > Default models or the run picker under Models §2.'
 gui_related: true
-gui_classification_reason: >-
-  This unit defines visible Persona editor fields despite the source inference being false.
+gui_classification_reason: Defines visible non-model Persona authoring fields and inert old-data retirement
+  disclosure.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: expanded_persona_editor_field_set
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0170"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0170
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "default_platform"
-- "default_model"
-- "default_variant"
-- "temperature"
-- "top_p"
-- "reasoning_effort"
-- "talkativeness"
-- "preferred_tools"
-- "discouraged_tools"
-- "tool_usage_guidance"
-- "aliases"
-negative_constraints: []
-compatibility_only_notes: []
+- default_platform
+- default_model
+- default_variant
+- temperature
+- top_p
+- reasoning_effort
+- talkativeness
+- preferred_tools
+- discouraged_tools
+- tool_usage_guidance
+- aliases
+negative_constraints:
+- Do not preselect a model/provider/preset/depth by activating or importing a Persona.
+compatibility_only_notes:
+- default_platform, default_model, default_variant and reasoning_effort are preserved exact tokens for inert
+  old-data inspection only.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-286 - Talkativeness Labels And Enum Values
@@ -21423,43 +21440,45 @@ plan_unit_id: F3-287
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Persona compatibility panel can communicate provider-specific support examples for Claude
-  Code, Cursor CLI, and Direct/API providers.
+canonical_text: Persona compatibility copy describes only surviving non-model Persona controls using concrete
+  route capability evidence. Claude Code, Cursor CLI and Direct/API examples must not imply that a Persona
+  owns a model or effort default. Model/depth selection belongs to the common defaults list or run picker.
 gui_related: true
-gui_classification_reason: >-
-  This unit preserves visible Persona compatibility copy examples.
+gui_classification_reason: This unit preserves visible Persona compatibility copy examples.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: persona_compatibility_panel_copy_examples
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0171"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0171
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-- "Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings."
-- "Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented."
-- "Direct/API providers: strongest support for exact runtime controls."
+- 'Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.'
+- 'Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited
+  or undocumented.'
+- 'Direct/API providers: strongest support for exact runtime controls.'
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-288 - Requested Effective Persona Surface Identity Boundary
@@ -27377,16 +27396,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings must expose a Goal Mode option with two separate model selections: one for the worker model and one for the verifier/adjudicator model. The verifier/adjudicator model is configured separately from ordinary worker execution. Settings may present inheritance as a convenience only when the inherited worker model satisfies the required certification-tier policy; strong-certification goals must block rather than merely warn if verifier/adjudicator requirements cannot be met.
+  The two Goal Mode worker and verifier/adjudicator model selectors are retired with the Goal role cast.
+  Goals use the ordinary Assistant chat choice, and independent checking uses the Review sheet and
+  Checking finished work default. Read old ai.models.goal-worker-model and ai.models.goal-verifier-model
+  as inert compatibility data only, never reconstituting Goal-owned model or certification-tier policy.
+  No Goals model selectors appear in Settings, search, All Settings, reset or new transfer writes.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings GUI controls for Goal Mode model selection.
 depends_on:
-  - GRS-010
+- GRS-049
+- MS-108
 unblocks: []
 acceptance_criteria:
-  - Goal Mode settings include separate worker and verifier/adjudicator model selectors.
-  - The UI does not collapse verifier/adjudicator and worker model choice into one setting.
-  - Any inheritance UI reflects the runtime requirement that certification-tier policy must be satisfied.
+- No separate Goal worker/verifier model selector is exposed.
+- Goals use the ordinary chat model and independent Review selections remain separate work requests.
+- Old saved selectors remain inspectable as retired compatibility data without affecting a run.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Settings GUI review
@@ -27415,8 +27439,7 @@ preserved_exact_tokens:
   - "verifier/adjudicator model"
   - "must block, not merely warn"
 negative_constraints:
-  - Do not collapse Goal Mode worker and verifier/adjudicator model selection into one setting.
-  - Do not present verifier/adjudicator inheritance as valid when certification-tier policy is not satisfied.
+- Do not recreate retired Goal model-role or certification-tier settings.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Goal_Runtime_System.md
@@ -27432,26 +27455,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings must expose Orchestrator Goal Runtime policy controls without becoming the policy owner. Capability-lane bindings cover low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier, and each lane binds to configured providers, accounts, and model profiles rather than hardcoded defaults. Settings also exposes subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory; verification policy controls for verification strictness, validators by WorkNode type, independent review, evidence-span requirements, completion receipt requirements, repair-loop policy, and degraded-mode behavior; write policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults; and Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction. Missing required lane or policy configuration surfaces an unconfigured-lane or typed blocked state with recovery actions before a GoalRun can silently choose arbitrary runtime behavior.
+  Settings must expose Orchestrator Goal Runtime policy controls without becoming the policy owner. The one Default models list offers Planning and supervising, Everyday building, Easy, routine jobs, Design and layout, The hardest jobs and Checking finished work, resolved through Models_System MS-109 with configured providers, accounts and model profiles. A blank job names its inherited source and current model/depth; Easy, routine jobs follows Everyday building and never checks work. The old capability-lane binding editor and helper model/depth rows are retired. Settings also exposes subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory; verification policy controls for verification strictness, validators by WorkNode type, independent review, evidence-span requirements, completion receipt requirements, repair-loop policy, and degraded-mode behavior; write policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults; and Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction. A required job with no usable model after named inheritance, or a missing required policy, surfaces a typed blocked state with recovery actions before dispatch; no arbitrary runtime behavior is selected.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings controls and blocked-state recovery for model/provider lane binding.
 depends_on:
-  - F3-393
-  - MS-109
-  - PS-115
-  - GRS-027
-  - OSI-428
-  - W-071
-  - RAP-027
+- MS-109
+- PS-115
+- GRS-049
+- OSI-428
+- W-071
+- RAP-027
 unblocks: []
 acceptance_criteria:
-  - Settings expose capability-lane bindings for low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier.
-  - Lane selectors bind to configured providers, accounts, and model profiles.
+  - Settings expose the six MS-109 job defaults, including Easy, routine jobs, with model/depth chosen in the shared overlay picker.
+  - Job selectors bind to configured providers, accounts and model profiles; blank rows disclose their named source and effective pair.
   - Settings expose subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent use.
   - Settings expose verification strictness, validators by WorkNode type, independent review, evidence-span, completion receipt, repair-loop policy, and degraded-mode controls.
   - Settings expose write-policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults.
   - Settings expose Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction.
-  - Missing required lanes surface an unconfigured-lane blocked state and recovery path.
+  - A required job with no usable model after inheritance surfaces a typed blocked state and recovery path.
   - The GUI does not imply provider-specific default models, own runtime policy semantics, or authorize arbitrary fallback selection.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -27518,7 +27540,7 @@ preserved_exact_tokens:
   - "redaction"
 negative_constraints:
   - Do not hardcode provider or model defaults.
-  - Do not silently select arbitrary models when a required lane is missing.
+  - Do not silently select arbitrary models when a required job has no usable model.
   - Do not let Settings replace Models, Permissions, Worktree, Goal Runtime, Subagent, or Runtime Artifacts policy authority.
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -27668,51 +27690,59 @@ plan_unit_id: F3-396
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Settings exposes the six plans-to-code model controls named by Models_System: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model.
-  Settings copy must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop; legacy source may refer to the same loop as audit/repair/audit. Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or search, not as visible model controls.
-  Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control.
+canonical_text: |-
+  Settings exposes seven plans-to-code controls in one Default models list: Default Model, Overseer Model, Worker Model, Low-Effort Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to- repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model. Settings copy must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop; legacy source may refer to the same loop as audit/repair/audit. Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or search, not as visible model controls. Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control. Low-Effort Worker Model is labelled Easy, routine jobs and inherits Everyday building when blank; it is restricted to small, low-risk, non-design implementation, never checking. The list has Everywhere and This project tabs, then naming, explaining, BSD and enabled media rows. Every Settings model picker reuses the chat composer picker as ACD-438 defines it: one open picker keeps the model list visible while showing the selected route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are chosen and committed as one atomic value; the same picker stays open throughout model and depth choice. A model without supported levels shows none, and unknown capability stays unknown. Settings saves the pair atomically in the row’s declared scope, with no separate effort Settings row and no page reflow. Blank rows name their fallback source and current model/depth. Exact unlisted names require one small successful call before saving; a refused or unreachable name is never saved, and acceptance proves no capability. Helpers have no model or depth Settings row, and Persona/command model fields are removed. Presets and nicknames remain below the list, with What actually ran a visible run-history link. The PRD Builder, Planning Wizard, building and Scout use the common defaults and allow overrides; no redesign of those screens is specified here.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings labels and help text for model routing.
-depends_on: [MS-110]
-unblocks: [OP-023]
+depends_on:
+- MS-110
+- ACD-438
+unblocks:
+- OP-023
 acceptance_criteria:
-  - Settings displays exactly the six named controls for this flow.
-  - No Executor Model control is shown.
-  - GUI/frontend and high-effort roles have clear Settings labels without exposing internal subrole sprawl.
-  - Auditor settings copy describes an audit-to-repair loop until certified or critical block; legacy Pass 1 / Pass 2 / Pass 3 labels are compatibility/search aliases only, not model selectors.
+- 'Settings displays exactly seven named controls for this flow: Everyday model and the six jobs.'
+- No Executor Model control is shown.
+- GUI/frontend and high-effort roles have clear Settings labels without exposing internal subrole sprawl.
+- Auditor settings copy describes an audit-to-repair loop until certified or critical block; legacy Pass 1 / Pass 2 / Pass 3 labels are compatibility/search aliases only, not model selectors.
+- 'Every Settings model picker reuses the chat composer picker as ACD-438 defines it: one open picker keeps the model list visible while showing the selected route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are chosen and committed as one atomic value; the same picker stays open throughout model and depth choice. A model without supported levels shows none, and unknown capability stays unknown.'
+- A route without proven effort levels shows no effort choices; unknown capability stays unknown.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py run-gates
-  - future Settings model selector review
+- python3 scripts/pm-plans-verify.py run-gates
+- future Settings model selector review
 risk_class: settings_model_role_drift
 reasoning_tier: standard
 context_scope: model_settings_gui
-implementation_surfaces: [Plans/FinalGUISpec.md, Plans/Models_System.md]
-node_compile_hint: {mode: settings_model_role_controls, create_worknodes: false}
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
+node_compile_hint:
+  mode: settings_model_role_controls
+  create_worknodes: false
 source_lineage:
-  - pldg-20260617-001-plans-to-code-handoff:atom-0018
-  - pldg-20260617-001-plans-to-code-handoff:atom-0021
-  - pldg-20260617-001-plans-to-code-handoff:atom-0022
-  - pldg-20260617-001-plans-to-code-handoff:atom-0023
-  - pldg-20260617-001-plans-to-code-handoff:corr-0001
-  - pldg-20260617-001-plans-to-code-handoff:corr-0003
+- pldg-20260617-001-plans-to-code-handoff:atom-0018
+- pldg-20260617-001-plans-to-code-handoff:atom-0021
+- pldg-20260617-001-plans-to-code-handoff:atom-0022
+- pldg-20260617-001-plans-to-code-handoff:atom-0023
+- pldg-20260617-001-plans-to-code-handoff:corr-0001
+- pldg-20260617-001-plans-to-code-handoff:corr-0003
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Default Model"
-  - "Overseer Model"
-  - "Worker Model"
-  - "GUI / Frontend Worker Model"
-  - "High-Effort Worker Model"
-  - "Auditor Model"
-  - "Auditor audit-to-repair loop"
-  - "audit/repair/audit"
-  - "critical block"
-  - "No Executor Model"
+- Default Model
+- Overseer Model
+- Worker Model
+- GUI / Frontend Worker Model
+- High-Effort Worker Model
+- Auditor Model
+- Auditor audit-to-repair loop
+- audit/repair/audit
+- critical block
+- No Executor Model
 negative_constraints:
-  - Do not expose a long list of internal subrole settings.
-  - Do not create an Executor Model setting.
+- Do not expose a long list of internal subrole settings.
+- Do not create an Executor Model setting.
 owner_hints:
-  - Plans/FinalGUISpec.md
-  - Plans/Models_System.md
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
 ```
 
 ### F3-397 - Animated Plan Compile Tab UX
@@ -28646,13 +28676,16 @@ plan_unit_id: F3-403
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Teach/Teacher uses the Assistant Chat window/thread model rather than a detached teaching app. Help
-  icons on major surfaces launch a new Teacher thread with current-surface context. Teacher thread presentation
-  includes persona badge, low-end/fast model source, context/model chips, source/context disclosure, activity cards,
-  footer status where relevant, and thread states such as working, unread, blocked, degraded, draft, archived, or
-  handoff. Guided GUI overlay uses highlight/spotlight, anchored captions, Back, Next, Stop, Let me try, and Do
-  it controls, confirmation for mutations, degraded state recovery, keyboard and screen-reader accessibility, responsive
-  behavior, and no stale target stepping.
+canonical_text: >-
+  Teach/Teacher uses the Assistant Chat window/thread model rather than a detached teaching app.
+  Help icons on major surfaces launch a new Teacher thread with current-surface context. Teacher
+  thread presentation includes persona badge, low-end/fast model source, capacity/cost/model
+  information and useful compaction status, with source/context records internal and no composition
+  inspector or per-run inclusion receipt, activity cards, footer status where relevant, and thread
+  states such as working, unread, blocked, degraded, draft, archived, or handoff. Guided GUI overlay
+  uses highlight/spotlight, anchored captions, Back, Next, Stop, Let me try, and Do it controls,
+  confirmation for mutations, degraded state recovery, keyboard and screen-reader accessibility,
+  responsive behavior, and no stale target stepping.
 gui_related: true
 gui_classification_reason: Defines visible help icons, Teacher thread chrome, source panels, overlay captions, controls,
   degraded states, and responsive/accessibility behavior.
@@ -28663,10 +28696,10 @@ depends_on:
 unblocks:
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage."
+  - "Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this compile."
+  - "Teacher chat has no user-facing context source composition, raw/curated inspection or per-run inclusion receipt; ordinary task evidence remains available."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -28709,6 +28742,8 @@ source_lineage:
 - Concepts/PMConcept.html#chat-thread-sidebar
 - Concepts/PMConcept.html#switchToChatThread
 - chat:pmconcept-gui-reference
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0103
 - atom-0104
@@ -28811,39 +28846,38 @@ preserved_exact_tokens:
 - runtime popovers
 - activity cards
 negative_constraints:
-- Do not bury Teach behind only slash commands.
-- Do not add a loud or decorative help affordance that competes with primary workflow controls.
-- Do not launch Teacher without current-surface context.
-- Do not create a detached Teacher-only shell that hides standard Assistant Chat controls.
-- Do not omit requested/effective persona or model disclosure from the Teacher thread.
-- Do not make Teacher launch a modal that blocks normal navigation as the only path.
-- Do not use raw cursor/click automation as the teaching UI.
-- Do not obscure the target control with the explanatory caption.
-- Do not allow Teacher to click destructive/mutating controls without confirmation and permission gates.
-- Do not fork labels between surfaces.
-- Do not make context help available only from the full Help page.
-- Do not include generic examples when current surface context is available.
-- Do not silently mutate an existing non-Teacher thread into Teacher mode.
-- Do not lose the originating surface/control context during launch.
-- Do not require users to know `/teach` before discovering help.
-- Do not invent a separate chat product surface for Teacher.
-- Do not hide requested/effective Persona/model state.
-- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
-- Do not obscure the target control with the explanation caption.
-- Do not make the overlay inaccessible without keyboard or screen-reader fallback.
-- Do not trap the user in the overlay without Stop/return-to-chat.
-- Do not keep stepping through a stale or missing UI target.
-- Do not hide permission/capability/model degraded states.
-- Do not turn degraded guidance into generic apology text without a next action.
-- Do not treat PMConcept.html as final or canonical UI truth.
-- Do not copy the concept HTML/CSS directly into canonical Plans or implementation.
-- Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile.
-- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
-- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
-- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
-- Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details.
-- Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility
-  checks.
+  - "Do not bury Teach behind only slash commands."
+  - "Do not add a loud or decorative help affordance that competes with primary workflow controls."
+  - "Do not launch Teacher without current-surface context."
+  - "Do not create a detached Teacher-only shell that hides standard Assistant Chat controls."
+  - "Do not omit requested/effective persona or model disclosure from the Teacher thread."
+  - "Do not make Teacher launch a modal that blocks normal navigation as the only path."
+  - "Do not use raw cursor/click automation as the teaching UI."
+  - "Do not obscure the target control with the explanatory caption."
+  - "Do not allow Teacher to click destructive/mutating controls without confirmation and permission gates."
+  - "Do not fork labels between surfaces."
+  - "Do not make context help available only from the full Help page."
+  - "Do not include generic examples when current surface context is available."
+  - "Do not silently mutate an existing non-Teacher thread into Teacher mode."
+  - "Do not lose the originating surface/control context during launch."
+  - "Do not require users to know `/teach` before discovering help."
+  - "Do not invent a separate chat product surface for Teacher."
+  - "Do not hide requested/effective Persona/model state."
+  - "Do not show Save as taught memory unless the content is eligible and user confirmation is still required."
+  - "Do not obscure the target control with the explanation caption."
+  - "Do not make the overlay inaccessible without keyboard or screen-reader fallback."
+  - "Do not trap the user in the overlay without Stop/return-to-chat."
+  - "Do not keep stepping through a stale or missing UI target."
+  - "Do not hide permission/capability/model degraded states."
+  - "Do not turn degraded guidance into generic apology text without a next action."
+  - "Do not treat PMConcept.html as final or canonical UI truth."
+  - "Do not copy the concept HTML/CSS directly into canonical Plans or implementation."
+  - "Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile."
+  - "Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher."
+  - "Keep Teacher Persona/model and capacity/cost/compaction information when launching from Help or a summon; ordinary PM task evidence stays attributable, without memory-use citations, context inspection or per-run source receipts."
+  - "Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant."
+  - "Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details."
+  - "Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility checks."
 owner_hints:
 - Plans/FinalGUISpec.md
 - Plans/UI_Command_Catalog.md
@@ -29753,7 +29787,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord and usage_event_ref remain the accounting and rollup identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total. Amended 2026-10-31 (DL-270, UF-108): every surface above reads redb rollups that update as each usage.event lands and never scans raw usage events; a single usage_event_ref or attempt_id drill-through is a keyed lookup, and the Parquet archive is queried only on demand (SP-341). Raw/debug affordances resolve raw_payload_ref through the payload store (SP-337) and will open the record inspector (F3-666) once their own production wiring rows land. This unit adds no retention control: the existing Keep usage history for setting is unchanged, and daily usage totals are kept whatever it says.
+  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail
+  Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay,
+  and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state
+  matrix. A numeric cell is not only a number: it carries value, value_state, source_class,
+  source_confidence, source_authority, settlement_status, projection_freshness, projection_health,
+  last_updated or observed_at_utc, reason, and raw/debug redaction availability only on existing
+  non-chat diagnostic surfaces. UsageRecord and usage_event_ref remain the accounting and rollup
+  identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt
+  row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id,
+  timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses
+  provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits`
+  and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits
+  remain credits and never become tokens, cost, quota, or provider_total. Amended 2026-10-31
+  (DL-270, UF-108): every surface above reads redb rollups that update as each usage.event lands and
+  never scans raw usage events; a single usage_event_ref or attempt_id drill-through is a keyed
+  lookup, and the Parquet archive is queried only on demand (SP-341). On existing non-chat
+  Usage/Ledger and expert diagnostic surfaces only, Raw/debug affordances resolve raw_payload_ref
+  through the payload store (SP-337) and will open the record inspector (F3-666) once their own
+  production wiring rows land. This unit adds no retention control: the existing Keep usage history
+  for setting is unchanged, and daily usage totals are kept whatever it says.
 gui_related: true
 gui_classification_reason: Defines visible Usage, Dashboard, settings, graph, orchestrator, and artifact rendering behavior.
 depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
@@ -29767,6 +29820,7 @@ acceptance_criteria:
   - Provider/settings and model rows show Antigravity CLI `antigravity_cli`/`agy` usage, quota, credits, statusline, disabled bucket, and G1 credit states without inferring counters from model names or login status.
   - Raw/debug affordances show redaction_status, provider_payload_hash, raw_payload_ref, omitted count, and permissioned-unavailable state rather than unredacted payload content; a raw_payload_ref resolves through the payload store (SP-337) and will open the record inspector (F3-666) once its own production wiring row lands.
   - No Usage page, Ledger room, Dashboard-hosted Usage widget or chat context summary scans raw usage events; per-event drill-through is a keyed lookup.
+  - "Shared fixture coverage verifies that non-chat diagnostics retain their redaction contract while chat context/message surfaces expose no source-composition, raw/curated source-inspection view or per-run inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shard-plans.py --check
@@ -29796,6 +29850,7 @@ source_lineage:
   - "https://github.com/anomalyco/opencode/issues/30649"
   - "https://github.com/cline/cline/issues/11037"
   - "https://github.com/google-antigravity/antigravity-cli/issues/46"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - value_state
   - source_class
@@ -29821,6 +29876,8 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/Widget_System.md
   - Plans/Runtime_Artifacts_Panel.md
+owner_boundary_notes:
+  - "Raw/Curated redaction and source-level inspection in this shared contract apply only to existing non-chat Usage/Ledger and expert diagnostic surfaces, not the chat context ring, Context Detail Pane or message-info UI. Chat keeps normalized capacity/cost/model/settlement facts and useful compaction status; source accounting and raw references remain internal."
 ```
 
 ## PMConcept6 Concept Promotion Addendum - 2026-07-11
@@ -30196,22 +30253,18 @@ plan_unit_id: F3-424
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Chat mode, model, and effort popouts render as body-portaled overlays above stream overflow
-  clipping so they are never clipped by the scrollport; the persona dropdown remains inline
-  with an overflow flip when it would exit the viewport. Footer FAB items reveal with a
-  spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as
-  instant show and hide with no animation.
+canonical_text: |-
+  Chat mode popouts and the one combined model/depth picker render as body-portaled overlays above stream overflow clipping so they are never clipped by the scrollport; the persona dropdown remains inline with an overflow flip when it would exit the viewport. Footer FAB items reveal with a spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as instant show and hide with no animation.
 gui_related: true
 gui_classification_reason: This unit defines visible chat overlay layering and motion behavior.
 split_recommended: false
 depends_on: [F3-422, ACD-438]
 unblocks: []
 acceptance_criteria:
-- "Mode, model, and effort popouts render above stream overflow clipping in both chat mounts and are never clipped by the scrollport."
-- "The persona dropdown remains inline and flips its opening direction when it would overflow the viewport."
-- "FAB items reveal with a spring stagger; reduced motion renders instant show and hide."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Mode popouts and the combined model/depth picker render above stream overflow clipping in both chat mounts and are never clipped by the scrollport.
+- The persona dropdown remains inline and flips its opening direction when it would overflow the viewport.
+- FAB items reveal with a spring stagger; reduced motion renders instant show and hide.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -31966,7 +32019,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias.
+  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain- language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias. The registry carries the exact seven Case L Storage & Retention rows that section 15.6 owns: system.advanced.chat-history-retention, system.advanced.runtime-history-days, system.advanced.diagnostic-history-days, system.advanced.released-safe-point-days, system.advanced.preserved-terminal-runs, system.advanced.request-storage-compaction and system.advanced.inspect-holds-quarantine; their row contracts are section 15.6's, and deletion and hold rules remain storage-owned. Settings batch 3 (models), Jared 2026-11-12, removes the 18 model-related rows registered in settings_inventory.json compatibility_reads and admits Easy, routine jobs, one per-account model/depth default, and video/speech/music model rows. The live census is derived from unique active inventory IDs, never a dated fixed number. Retired values have read-only compatibility inspection/omission notices, no active search/All Settings/reset controls or new transfer writes. The image provider row folds into the single Making pictures route; independent effort folds into the everyday model choice. Model picker metadata and model/depth value shape are owned by settings_inventory.schema.json.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -31974,7 +32027,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - "Plans/settings_inventory.json parses as JSON and conforms to Plans/settings_inventory.schema.json (schema_id pm.settings_inventory.v1); schema conformance is enforced by this unit's acceptance criteria, not a machine gate."
-  - "The registry contains 1010 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
+  - "The registry contains the complete unique live setting IDs counted from Plans/settings_inventory.json across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
   - "The demo runtime fields value, status, and src appear in no registry row and are excluded by the schema."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -35853,41 +35906,47 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and Diagnostics
-  disclosure ladder from the Usage owner into a balanced widget workspace whose track count follows the board's
-  measured width on the 12, 20, 24 and 30 track ladder of UF-094, which replaces the earlier fixed twelve-track
-  board (DL-176). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
-  information, every size preset shows a complete content tier, and facts a size cannot show fold behind "N more"
-  with hover and Details rather than being dropped (UF-096). Curated defaults,
-  provider-heavy narrow-and-tall cards, partial-row alignment, semantic size identities, complete-or-hidden
-  content tiers, chart and meter lanes, source-confidence copy, Raw versus Curated views, Context details, and
-  humanized Ledger labels must remain readable at supported sizes. Wider or taller widgets earn their footprint
-  with additional columns, facts, or rows; routine internal body scrolling, clipped labels, partial next-tier
-  content, and empty decorative width are not accepted product states. Content tiers respond to the widget body's
-  measured rendered width rather than nominal grid spans, and reorder placeholders use the measured physical
-  width and height without persisting those preview spans. Vertical charts reserve a measured in-plot label
-  region and paint exactly one visible value for every painted bar, including zero bars, while keeping every
-  label inside the plot and collision-free. Labels remain horizontally associated with their own bars and may
-  use measured vertical lanes when direct-above placement would collide; no datum is suppressed. Tiny charts
-  retain the complete ordered series in accessible text. Chart values use the metric's declared
-  display unit and formatter, including currency formatting for attempt-charge integer cents, and the chart title
-  plus Latest and distinct peak facts remain complete in one row or a narrow two-row composition. An active
-  reorder ghost stays visibly above the workspace until cleanup.
-  Every room remains reachable at every supported width, and Source authority mounts 7/8/9 cards (amended 2026-10-17, DL-228; earlier exactly 4/6/8; DL-230: a Usage widget is a card) for
-  At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
-  the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation and continuation
-  identity, and reuses `cmd.settings.open` with the typed Settings target
-  `target_type=setting`, `setting_id=ai.accounts.provider-connections`; UF-090, UF-092, and CBP-028 retain policy ownership, so installation and
-  authentication remain separate and the GUI starts no automatic acquisition or silent reroute.
-  PMConcept7 Ledger attempt controls dispatch `cmd.nav.open_usage_subject` only with stable `attempt_id` and
-  `usage_event_ref`, normalize to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep
-  the event/provider/account/runtime identities as correlation, and carry no `OpenSubject`. Event-primary callers
-  retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
-  inspector with no route command, receipt, or domain event. The Accounts room's explicit in-place controls are the
-  one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
-  a provider's Auto-switch toggle and switch level, and each account's own switch level (D43, 2026-10-10), are
-  bound Settings controls committed through the Settings owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
-  previews, its menus, marks, heroes, charts and motion are owned by F3-628.
+  PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and
+  Diagnostics disclosure ladder from the Usage owner into a balanced widget workspace whose track
+  count follows the board's measured width on the 12, 20, 24 and 30 track ladder of UF-094, which
+  replaces the earlier fixed twelve-track board (DL-176). Default boards use many narrow widgets,
+  every widget kind has narrow widths that show the same information, every size preset shows a
+  complete content tier, and facts a size cannot show fold behind "N more" with hover and Details
+  rather than being dropped (UF-096). Curated defaults, provider-heavy narrow-and-tall cards,
+  partial-row alignment, semantic size identities, complete-or-hidden content tiers, chart and meter
+  lanes, source-confidence copy, non-chat diagnostic Raw versus Curated views, basic chat
+  capacity/cost/model details, and humanized Ledger labels must remain readable at supported sizes.
+  Wider or taller widgets earn their footprint with additional columns, facts, or rows; routine
+  internal body scrolling, clipped labels, partial next-tier content, and empty decorative width are
+  not accepted product states. Content tiers respond to the widget body's measured rendered width
+  rather than nominal grid spans, and reorder placeholders use the measured physical width and
+  height without persisting those preview spans. Vertical charts reserve a measured in-plot label
+  region and paint exactly one visible value for every painted bar, including zero bars, while
+  keeping every label inside the plot and collision-free. Labels remain horizontally associated with
+  their own bars and may use measured vertical lanes when direct-above placement would collide; no
+  datum is suppressed. Tiny charts retain the complete ordered series in accessible text. Chart
+  values use the metric's declared display unit and formatter, including currency formatting for
+  attempt-charge integer cents, and the chart title plus Latest and distinct peak facts remain
+  complete in one row or a narrow two-row composition. An active reorder ghost stays visibly above
+  the workspace until cleanup. Every room remains reachable at every supported width, and Source
+  authority mounts 7/8/9 cards (amended 2026-10-17, DL-228; earlier exactly 4/6/8; DL-230: a Usage
+  widget is a card) for At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
+  the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation
+  and continuation identity, and reuses `cmd.settings.open` with the typed Settings target
+  `target_type=setting`, `setting_id=ai.accounts.provider-connections`; UF-090, UF-092, and CBP-028
+  retain policy ownership, so installation and authentication remain separate and the GUI starts no
+  automatic acquisition or silent reroute. PMConcept7 Ledger attempt controls dispatch
+  `cmd.nav.open_usage_subject` only with stable `attempt_id` and `usage_event_ref`, normalize to
+  `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep the
+  event/provider/account/runtime identities as correlation, and carry no `OpenSubject`.
+  Event-primary callers retain usage_event/usage_event_ref. Aggregate provider, account, and panel
+  cards open their existing local inspector with no route command, receipt, or domain event. The
+  Accounts room's explicit in-place controls are the one exception, and only as UF-093 and UF-107
+  set out: Use this account dispatches cmd.account.select_profile, and a provider's Auto-switch
+  toggle and switch level, and each account's own switch level (D43, 2026-10-10), are bound Settings
+  controls committed through the Settings owner's transaction; opening a card or its Details stays
+  local. The redesigned page's look, its move and resize previews, its menus, marks, heroes, charts
+  and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
 split_recommended: false
@@ -35899,7 +35958,8 @@ acceptance_criteria:
   - "The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder; every size preset of every widget kind shows a complete content tier, and facts a size cannot show fold behind N more with hover and Details."
   - "Each semantic size presents a complete tier or hides the tier entirely, chooses that tier from measured rendered width, and larger sizes reveal additional useful facts, rows, columns, or plots rather than blank area; reorder placeholders use measured rendered width and height rather than stale nominal spans, preview spans do not become settled layout fields, and supported curated sizes have no routine widget-body scrolling, clipped corners, value collisions, partial bars, bottom-content peeking, or partially exposed next-tier content."
   - "Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and display unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, and the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition; reorder ghosts remain above cards until cleanup."
-  - "Source authority/confidence, unknown versus zero, Raw/Curated redaction, Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged; only the Accounts room's Use this account and provider auto-switch controls dispatch, each through its existing owner."
+  - "Source authority/confidence, unknown versus zero, non-chat diagnostic Raw/Curated redaction and Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged; only the Accounts room's Use this account and provider auto-switch controls dispatch, each through its existing owner."
+  - "Shared fixture coverage verifies that non-chat diagnostics retain their redaction contract while chat context/message surfaces expose no source-composition, raw/curated source-inspection view or per-run inclusion receipt."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures"
@@ -35925,6 +35985,7 @@ source_lineage:
   - Plans/usage-feature.md#uf-093---usage-rooms-disclosure-and-local-projection-state
   - Plans/Widget_System.md#ws-017---kind-aware-curated-size-and-adaptive-content-contract
   - "Concepts/usage-redesign/src/js/40-board.js and 42-cards.js (the redesigned board's width classes, narrow tiers and size presets; source-lineage-only)"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens: [Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, Source authority, At a glance, Detailed, Diagnostics, Provider Setup Required, Host/Environment, cmd.settings.open, ai, ai.accounts.provider-connections, twelve-track, complete-or-hidden, Raw, Curated, N more]
 negative_constraints:
   - "Do not revive Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels."
@@ -35933,6 +35994,8 @@ negative_constraints:
   - "Do not bundle installation with authentication, start automatic acquisition, or silently reroute from Provider Setup Required."
   - "Do not route a provider/account/panel presentation ID, use usage_event_ref as the PMConcept7 Ledger attempt object_id, invent an unregistered aggregate-card object kind, or attach OpenSubject to either cmd.nav.open_usage_subject selector branch."
 owner_hints: [Plans/FinalGUISpec.md, Plans/usage-feature.md, Plans/Widget_System.md]
+owner_boundary_notes:
+  - "Raw/Curated redaction and source-level inspection in this shared contract apply only to existing non-chat Usage/Ledger and expert diagnostic surfaces, not the chat context ring, Context Detail Pane or message-info UI. Chat keeps normalized capacity/cost/model/settlement facts and useful compaction status; source accounting and raw references remain internal."
 ```
 
 ### F3-515 - Settled Interaction Event And Persistence Boundary
@@ -36036,19 +36099,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 uses one shared Assistant node, controller, transcript/thread store, draft/attachment state,
-  context state, and Context Detail Pane. Home seats that identity in its saved dock; other pages re-seat the
-  same identity in the right-side global host without remounting or losing state, and failed re-seating restores
-  the prior seat. The context ring exposes current-window use, effective window and loaded tokens, cache hit,
-  and source composition. Its compact menu offers Compact Now and More Details. Compact Now dispatches
-  cmd.chat.compact_context and projects the existing result, receipt, and compaction history. Successful committed
-  compaction emits exactly one context.compaction.completed under ACD-461 / SP-259; started, failed, soft-defer,
-  no-op, and every other noncommitted outcome remain event-silent. No context.compaction.started or
-  context.compaction.failed family is introduced.
-  The full-width status bar participates in layout, never covers content, and contains no notification or bell item.
-  Amended 2026-10-09 (DL-180): Home seats the Assistant in the chat column fixed on the right, as every page does
-  (F3-637); there is no saved Home dock, and the only move is Pop out, which keeps the same Assistant identity and Dock
-  back returns to the column.
+  PMConcept7 uses one shared Assistant node, controller, transcript/thread store, draft/attachment
+  state, context state, and Context Detail Pane. Home seats that identity in its saved dock; other
+  pages re-seat the same identity in the right-side global host without remounting or losing state,
+  and failed re-seating restores the prior seat. The context ring exposes current-window use,
+  effective window and loaded tokens, cache hit, estimated cost and effective model information. The
+  existing Context Detail Pane keeps basic capacity/cost/model and cache/limit facts plus useful
+  compaction/transition state and history. Source records and raw source payloads remain internal
+  for enforcement/debugging; no source-composition chart or per-run inclusion receipt is shown. Its
+  compact menu offers Compact Now and More Details. Compact Now dispatches cmd.chat.compact_context
+  and projects the existing result, receipt, and compaction history. Successful committed compaction
+  emits exactly one context.compaction.completed under ACD-461 / SP-259; started, failed,
+  soft-defer, no-op, and every other noncommitted outcome remain event-silent. No
+  context.compaction.started or context.compaction.failed family is introduced. The full-width
+  status bar participates in layout, never covers content, and contains no notification or bell
+  item. Amended 2026-10-09 (DL-180): Home seats the Assistant in the chat column fixed on the right,
+  as every page does (F3-637); there is no saved Home dock, and the only move is Pop out, which
+  keeps the same Assistant identity and Dock back returns to the column.
 gui_related: true
 gui_classification_reason: This unit governs the visible shared Assistant, Context ring/detail surfaces, and status bar continuity.
 split_recommended: false
@@ -36057,7 +36124,8 @@ unblocks: [F3-517, F3-518, ATS-037, ATS-038, ATS-040]
 acceptance_criteria:
   - "Exactly one Assistant node/controller/store identity exists and is re-seated across pages without transcript, draft, attachment, thread, or context loss."
   - "A failed or stale re-seat restores the Assistant in its column rather than creating a second Assistant or a blank seat (amended 2026-10-09, DL-180; the saved Home dock is retired)."
-  - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, source composition, Curated/Raw details, routing/fallback, limits, and compaction history."
+  - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, estimated cost, effective model/limit facts and useful compaction/transition state and history."
+  - "Source composition, Curated/Raw source inspection, serialized source payloads and per-run inclusion receipts are absent from the chat context surface; permissioned source records remain internal for enforcement/debugging."
   - "Compact Now uses cmd.chat.compact_context result and receipt projection, with exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259 and no event for any noncommitted outcome; More Details reuses the existing Context Detail Pane commands."
   - "The status bar spans the application layout, does not cover content, and has no notifications or bell affordance."
 validation_surfaces:
@@ -36082,13 +36150,16 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens: [Compact Now, More Details, Curated, Raw, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
 negative_constraints:
   - "Do not create a second authoritative Assistant, transcript store, context store, or Context Detail Pane. The per-thread render-page store (SP-338, ACD-242) is a derived, rebuildable projection of the one transcript store, not a second authority, and is allowed."
   - "Do not register context compaction lifecycle events merely to mirror a local working animation."
   - "Do not put notifications or a bell in the status bar."
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): \"Home seats that identity in its saved dock\" is retired; the chat column is fixed on the right on Home as on every page (F3-637)."
+  - "DL-475 retires source composition and Curated/Raw source inspection from chat context; the preserved Curated/Raw tokens retain historical lineage only."
 owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 ```
 
@@ -37438,57 +37509,75 @@ plan_unit_id: F3-527
 unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  panel.undocked and panel.redocked are independent persisted semantic transitions owned by the shared panel shell,
-  not aliases of workspace.layout_changed. panel.undocked occurs only after cmd.panel.undock has successfully moved
-  one identified panel from its settled workspace host into one identified detached window and the owner state is
-  durably committed. panel.redocked occurs only after cmd.panel.redock has successfully moved one identified
-  detached panel window into its settled target workspace host and the owner state is durably committed. The same
-  accepted command may also emit workspace.layout_changed only when it independently changes the settled workspace
-  layout; a shared correlation and an explicit nullable event reference relate the two records without collapsing
-  their identities. Preview movement, pickup, window creation/close attempts, dispatch acceptance, rejected or stale
-  owner results, persistence failure, cancellation, no-change settlement, and rollback emit neither panel event.
+canonical_text: 'Current precedence reconciliation: CV-361, SP-330, UCC-203 and F3-637 already restrict panel.undocked/panel.redocked
+  to desktop chat pop-out/return, never saved across restart and never co-emitting workspace.layout_changed or advancing
+  Home revision. The original generic-panel/monotonic-layout payloads remain immutable historical 1.0.0 reader inputs
+  only; their fields do not authorize current writes or host restoration. Newly authored independent current 2.0.0
+  technical contracts are F3-704/SP-664/CV-684 for panel.redocked and F3-705/SP-665/CV-685 for panel.undocked. Durable
+  operation/event/receipt custody audits the settled transient move without saving a layout. Preview, acceptance,
+  stale/refused/no-change, cancellation, failed persistence and rollback still emit neither event. Exact future
+  admission, retention and native verification remain required.'
 gui_related: true
-gui_classification_reason: This unit defines the durable semantics behind visible panel pop-out and redock actions while keeping all preview animation view-local.
+gui_classification_reason: This unit defines the durable semantics behind visible panel pop-out and redock actions
+  while keeping all preview animation view-local.
 split_recommended: false
-depends_on: [F3-515, UCC-147, CV-215, SP-001]
+depends_on:
+- F3-515
+- UCC-147
+- CV-215
+- SP-001
 unblocks: []
 acceptance_criteria:
-  - "panel.undocked validates only against pm.event.panel_undocked.v1 and requires cmd.panel.undock, panel/window/host identity, exact result and receipt references, monotonic layout revisions, settled-only truth, persistence truth, and the workspace-layout co-emission relationship."
-  - "panel.redocked validates only against pm.event.panel_redocked.v1 and requires cmd.panel.redock, panel/window/target-host identity, exact result and receipt references, monotonic layout revisions, settled-only truth, persistence truth, and the workspace-layout co-emission relationship."
-  - "workspace.layout_changed remains separately owned; it is co-emitted only where the same accepted transition also changes the settled workspace layout, and its event reference is required exactly when co-emission is true."
-  - "Cancellation, no-op, stale/rejected result, failed persistence, rollback, preview, and command acceptance produce no panel EventRecord and do not advance a projector checkpoint."
-  - "Static owner text and payload schemas do not authorize event append or dispatch; admission still requires the exact registry rows, storage binding, compatibility/retention/redaction rules, and executable positive/negative/replay/recovery fixtures."
+- Current chat-only transitions follow their own 2.0.0 contract and never the historical generic-panel writer requirements.
+- Both immutable 1.0.0 schemas remain stored-schema-dispatched historical readers; unknown versions fail closed.
+- No saved pop-out host, Home revision advance, workspace.layout_changed co-emission or startup redock is introduced.
+- No append or checkpoint advance before exact event-family admission; native tests NOT_RUN.
 validation_surfaces:
-  - Plans/event_payloads/panel_undocked.schema.json
-  - Plans/event_payloads/panel_redocked.schema.json
-  - Plans/event_family_registry.json
-  - Plans/storage-plan.md
-  - future panel transition producer, append/dedupe/replay/recovery, and projector fixtures
+- python3 scripts/pm-panel-event-contracts-check.py
+- Plans/event_payloads/panel_redocked.schema.json
+- Plans/event_payloads/panel_undocked.schema.json
 risk_class: panel_transition_alias_or_duplicate_event_drift
 reasoning_tier: high
 context_scope: settled_panel_host_transition_event_identity
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/event_payloads/panel_undocked.schema.json
-  - Plans/event_payloads/panel_redocked.schema.json
-  - Plans/event_family_registry.json
-  - Plans/storage-plan.md
-node_compile_hint: {mode: panel_transition_event_contract_only, create_worknodes: false, create_nodeseeds: false}
+- Plans/FinalGUISpec.md
+- Plans/event_payloads/panel_undocked.schema.json
+- Plans/event_payloads/panel_redocked.schema.json
+- Plans/event_family_registry.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: panel_transition_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - Plans/UI_Command_Catalog.md:8087
-  - Plans/UI_Command_Catalog.md:8088
-  - Plans/Contracts_V0.md:3414
-  - scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/PRIMARY_OWNER_DECISIONS.json
-preserved_exact_tokens: [panel.undocked, panel.redocked, workspace.layout_changed, cmd.panel.undock, cmd.panel.redock, settled_only, preview_state_included]
+- Plans/UI_Command_Catalog.md:8087
+- Plans/UI_Command_Catalog.md:8088
+- Plans/Contracts_V0.md:3414
+- scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/PRIMARY_OWNER_DECISIONS.json
+preserved_exact_tokens:
+- panel.undocked
+- panel.redocked
+- workspace.layout_changed
+- cmd.panel.undock
+- cmd.panel.redock
+- settled_only
+- preview_state_included
 negative_constraints:
-  - "Do not alias either panel event to workspace.layout_changed or infer either transition from layout persistence alone."
-  - "Do not emit a panel event for preview motion, window attempts, command acceptance, failure, rejection, cancellation, rollback, or no-change settlement."
-  - "Do not register a generic panel transition event with a subtype field."
-  - "Do not claim native producer, persistence, replay, runtime, buildability, or PNC-019 proof from this static owner/schema materialization."
+- Do not alias either panel event to workspace.layout_changed or infer either transition from layout persistence
+  alone.
+- Do not emit a panel event for preview motion, window attempts, command acceptance, failure, rejection, cancellation,
+  rollback, or no-change settlement.
+- Do not register a generic panel transition event with a subtype field.
+- Do not claim native producer, persistence, replay, runtime, buildability, or PNC-019 proof from this static owner/schema
+  materialization.
 owner_boundary_notes:
-  - "Final GUI owns panel-host transition semantics and presentation; Contracts owns EventRecord; storage owns admission, append, retention, dedupe, replay, and checkpoint rules."
-owner_hints: [Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/UI_Command_Catalog.md]
+- Final GUI owns panel-host transition semantics and presentation; Contracts owns EventRecord; storage owns admission,
+  append, retention, dedupe, replay, and checkpoint rules.
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/UI_Command_Catalog.md
 ```
 
 ## Forge/Backup/tsnet shared GUI consumer addendum - 2026-09-01
@@ -38001,7 +38090,8 @@ Directly after the quota-wait strip sits the dock (ACD-476): at most three one-l
 
 Attachments render inside their associated turn as compact visual objects and participate in the existing message-hover chrome: metadata and actions are hidden at rest on pointer-capable widths and always available at phone widths under the existing rule. There is no permanent `PNG · 2.8 MB` clutter. A project reference that changed since the message shows a compact stale badge on the object rather than a warning paragraph, with the historical revision explained on hover and both live and materialized versions in Details. Generated artifacts use the same card grammar and disclose version and producing workflow in Details.
 
-What a wand module attaches to an ordinary reply is one line each (F3-570): the files row under a reply that changed files (`Changed 3 files +5 −3 · Revert`), which is visible at rest, and the quiet ticks in the reply's meta row (a memory note taken; the rule note, `Followed 1 of your rules` for rules whose check the reply passed or `Missed 1 of your rules` when a check failed (DL-116); `Sent on schedule` on a message that a schedule sent; `Simple explanation` on a reply written in Simple), which follow that row's existing message-chrome visibility. Each finished reply's message actions may offer `Explain this reply simply`, which adds one simpler reply at the end of the thread and never rewrites the reply it explains (F3-581, DL-126).
+Ordinary reply chrome retains the files row for actual file changes, scheduled-message and Simple explanation state under their existing owners. Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown. A finished reply may still offer Explain this reply simply through F3-581; ordinary task evidence remains available.
+
 
 ### 6. Plan card
 
@@ -38053,7 +38143,8 @@ The quota wait strip described in section 4 links to Usage detail from its reset
 
 ### 14. Teach, Teacher, memory, ELI5, Debug and Revert
 
-`/teach`, natural language, the wand's `Teach…` and `Save as a rule…` all open the Teach sheet, prefilled with the proposed knowledge and its scope; the explicit capture card this sentence used to name is superseded and not planned (DL-127, F3-579). **It never changes the Persona to Teacher.** Teacher remains in the Persona picker as the Puppet-Master-explanation Persona. Ordinary automatic memory produces no constant pop-up; memory detail and history show source and verification under the existing owner behavior. Its only chat traces are a quiet tick in the reply's meta row when a note is taken and one verified tick when a check later proves it; a note going out of date makes no chat noise. These satisfy this rule (F3-574).
+Teach entry points use the existing written-instruction step and never change the Persona to Teacher. Written rules live in Settings > Personas & Crews > Defaults > Standing instructions. A requested saved note uses the shared Memory page at This project or Every project, with Add/Edit/Delete and Archived, not an alternate Teach/verification document. Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown. Provenance, verification, inclusion and version history stay internal; no source/lock/conflict/rollback workbench or state faces appear.
+
 
 ELI5 is its own small sheet, opened from the wand's `ELI5` row, with the quick dot by the message box as the one-click on and off; a chat's own override replaces the project default, which replaces the app default that Settings owns (ACD-484, F3-581, DL-126). Switching ELI5 is not a one-shot "simplify this output" action and never rewrites a reply; the separate `Explain this reply simply` action on a finished reply writes one extra, simpler reply only when the user asks. The wand check this paragraph used to name is superseded. Selecting Debug mode must open and demonstrate the full Investigation Context and its eight-phase progression rather than merely changing the selected mode, with fixtures for target binding, evidence, repair, verification, cleanup, attention required and failed cleanup recovery. `Revert Last Agent Edit` appears in the wand, Changes, the message overflow and the files row under the reply that changed files when eligible, previews the exact files in one compact confirm sheet before dispatching the canonical whole-turn revert, reports each outcome as one receipt line, and stays distinct from Rewind in the thread and message overflow (ACD-478, F3-574).
 
@@ -38563,9 +38654,9 @@ invariants.
   over messages or get clipped by header container boundaries.
 - **Concise Context More Details (APR-009, APR-061):** The initial view of Context More Details
   presents a concise, high-signal information hierarchy: active context window usage, current
-  token counts, pinned sources, and high-level Back Seat Driver (BSD) status. Detailed inspection
-  (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
-  placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
+  token counts, effective model/cost, useful compaction status and high-level Back Seat Driver (BSD) status.
+  Pinned-source lists and full prompt/source breakdowns are retired from this context surface (DL-475);
+  source accounting stays internal. Existing BSD configuration stays with its owner. Back Seat Driver's section is three plain facts and
   three native disclosures with no metric-card grid (DL-122, F3-580).
 
 Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide (DR-069); the structural rails of working activities stay as its carve-out.
@@ -38682,7 +38773,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   4. `web-routes` (Web search, scrape policies)
   5. `media-routes` (Image/audio generation routing)
   6. `back-seat-driver` (BSD sensitivity, stage bindings, catch-up policy)
-  7. `memory-context-instructions` (Context window, rehydration, instructions)
+  7. `memory-context-instructions` (Memory: one saved-note page; instructions, context and history live in their owners)
   8. `goals-crew-personas` (Agent rosters, personas, Goal V2 defaults)
   9. `permissions-filesafe` (File safe boundaries, tool approvals)
   10. `commands-shortcuts` (Keybindings, command palette)
@@ -38901,20 +38992,22 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Context Lens dropdown occupies a true in-flow layout row between the chat header and the transcript.
-  Context More Details presents a compact first view with deeper BSD and token diagnostics placed behind
-  intentional disclosures. Decorative left-edge accent bars, stripes, and pseudo-elements are strictly
-  prohibited across all Assistant and Settings surfaces, preserving only functional diff gutters, tree
-  connectors, and working structural rails.
+  The Context Lens dropdown occupies a true in-flow row between the chat header and transcript.
+  Context More Details keeps a compact first view of basic capacity/token/cost/effective-model
+  facts, useful compaction/transition status and existing high-level BSD status. Source composition,
+  pinned-source lists, full prompt breakdowns and raw/curated source inspection stay internal, with
+  no per-run inclusion receipt; BSD configuration retains its existing owner. Decorative left-edge
+  accents remain prohibited across Assistant and Settings surfaces, preserving functional diff
+  gutters, tree connectors and working structural rails.
 gui_related: true
 gui_classification_reason: Governs Context Lens in-flow placement, concise More Details hierarchy, and the complete elimination of decorative left stripes.
 depends_on: [F3-531, F3-534]
 unblocks: []
 acceptance_criteria:
-  - Context Lens renders in flow between header and transcript without clipping.
-  - Context More Details first view is compact with advanced BSD data behind disclosures.
-  - No decorative left stripes or pseudo-elements exist on Assistant or Settings cards.
-  - Functional tree connectors, diff gutters, and working activity rails are preserved.
+  - "Context Lens renders in flow between header and transcript without clipping."
+  - "Context More Details is compact and retains basic capacity/cost/model, useful compaction/transition and existing BSD status without pinned-source lists, prompt/source inspection or per-run inclusion receipts; source records remain internal."
+  - "No decorative left stripes or pseudo-elements exist on Assistant or Settings cards."
+  - "Functional tree connectors, diff gutters and working activity rails remain."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: lens_clipping_or_decorative_stripe_reintroduction
@@ -38932,6 +39025,7 @@ source_lineage:
   - APR-033
   - APR-034
   - APR-061
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "Context Lens"
   - "More Details"
@@ -38939,6 +39033,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not render decorative left-edge accent bars or stripes.
   - Do not float Context Lens over transcript content.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -40628,75 +40723,93 @@ plan_unit_id: F3-566
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules'' surfaces only,
-  this contract supersedes the presentation clauses of the 2026-09-03 redesign section''s section 10 (one shared modal
-  shell, the card that pops out to a full panel) and section 13 (the Schedule Message and Build At modals'' layout),
-  and Additive Correction v4''s statement that nothing authorises a broad restyle. Every behaviour clause stays and applies
-  to these surfaces unchanged: MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY, the current themes and their tokens.
-  Every configuration popup is a configuration sheet with one anatomy. The head has the module''s kind mark (no tile,
-  no box), a sentence-case title with the canonical name inside, one lead sentence and the close control, and no header
-  pill. The hero is the most important input, first and focused. Then a plate, a flat drawing of who is involved and
-  where the result goes (in the four collaboration kinds, the cast plate of F3-595, DL-149), over the roster or the module''s
-  equivalent; then the questions, numbered only where the order is real (1 to 4 in the four collaboration kinds, 1 to
-  3 in Crew Auto), each number drawn as a step tile (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying
-  what won''t happen, where the module has any (the Schedule Message sheet has none, DL-148); and one Advanced entry
-  that opens as a page inside the same sheet. Every control has a visible label and one helper line; options with descriptions
-  use the preserved dropdown trigger, and each description names the real difference between the options (for example
-  Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive and BrainStorm; BrainStorm
-  has no Quick strategy); a disabled control prints its reason in words. The foot holds the read-back sentence, always
-  true for the current settings, the estimate line (never $0.00), Cancel and one primary naming a verb, the canonical
-  name and a count; a disabled primary prints its reason, and a refused Start replaces the read-back with the refusal
-  and a route to the control that fixes it. A sheet whose changes apply at once shows only Done. Every sheet sits over
-  a flat scrim. On the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions
-  (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel.
-  The scrim is never blurred, and F3-431''s blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113,
-  DL-115): each theme family moves with its own motion personality, aligned with the transcript''s motion voices of ACD-475
-  (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet''s opening and closing and an in-chat card''s changes
-  take their family''s personality. Where a card takes part in a transcript beat (its family entrance, the fold), ACD-475
-  governs and the voice changes only path, easing and texture, never timing or order. This contract states the principle
-  only: the per-family duration and easing values are the design foundation''s tokens, recorded at the concept''s closing
-  step, and are not canon values. Reduce Motion lands every change at its end state instantly in every family. Sizes
-  are fixed per sheet: wide 1120 x 780 (the collaboration kinds, the Scheduled and Automations manager, Memory), standard
-  900 x 720 (Back Seat Driver, Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet (Revert,
-  ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5''s), always clamped inside the window (at most
-  its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open. The common case never
-  scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that fits
-  and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits its width (F3-601,
-  DL-154), and grows into spare height when the column is short; the roster scrolls in its own region only once its rows
-  no longer fit beside the plate''s floor, with Add a helper kept visible; the side column scrolls only below 1280 x
-  800; the hero field scrolls inside itself past three lines; below a 900 px sheet width the body becomes one column
-  that scrolls inside the sheet with head and foot fixed, the plate staying at the top of that column while its question
-  is on screen (F3-601); nothing overflows sideways. Hovering or focusing a control emphasises only the plate parts and
-  read-back phrases it affects, with no dimming, body recolouring, layout change or re-render (DL-259 FS-1). Kinds are
-  told apart by a kind mark drawn by shape, and each participant by its puppet, which replaced the cast mark (F3-594,
-  DL-149): a role prop, the theme family''s material and a puppet-drawn state, never initials or letters. Nothing draws
-  pills or capsules, side strips or vertical rules beside a block (columns are separated by space only), nested boxes,
-  uppercase micro-labels or emoji. Typography (J-1): every wand-module surface uses the theme''s own font with no separate
-  display face; the voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings) differ only
-  by size, weight and colour, and a quote is marked by quotation marks and the muted colour, never a different face.
-  Spacing (J-2) is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below
-  it (6 px inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container''s side edge;
-  controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at least 32 px tall; adjacent
-  controls sit at least 10 px apart, stacked controls 12 px, and a control 16 px from unrelated text on its line; a secondary
-  line under a row sits at least 6 px below it and 12 px above what follows; roster rows are at least 52 px tall; body
-  and helper text keep a line height of at least 1.45 and headlines 1.25. When space runs short, text wraps or ellipsizes
-  or a secondary element drops; padding and gaps never compress. DL-138 confirms this scope: theme durations govern sheets
-  and a card''s own changes; transcript entrances retain ACD-475''s shared timing and order. Wand cards that opt out
-  of the family entrance do not acquire a second entrance animation. Amended 2026-10-29 (PC1/PC2; PM7): The common sheet
-  header may add Pip holding the kind sign on a third string, 10 px lower than the first concept and level with Close.
-  Existing title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host
-  follows SSYS-056. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
-  SSYS-043 owns migration and retained Adjust controls. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
-  emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
-  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
-  in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes
-  the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each
-  retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only
-  a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion
-  settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every
-  sheet; there is no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
-  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
+canonical_text: 'Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules''
+  surfaces only, this contract supersedes the presentation clauses of the 2026-09-03 redesign section''s
+  section 10 (one shared modal shell, the card that pops out to a full panel) and section 13 (the Schedule
+  Message and Build At modals'' layout), and Additive Correction v4''s statement that nothing authorises
+  a broad restyle. Every behaviour clause stays and applies to these surfaces unchanged: MODAL, PART,
+  SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY, the current themes and their tokens. Every configuration
+  popup is a configuration sheet with one anatomy. The head has the module''s kind mark (no tile, no box),
+  a sentence-case title with the canonical name inside, one lead sentence and the close control, and no
+  header pill. The hero is the most important input, first and focused. Then a plate, a flat drawing of
+  who is involved and where the result goes (in the four collaboration kinds, the cast plate of F3-595,
+  DL-149), over the roster or the module''s equivalent; then the questions, numbered only where the order
+  is real (1 to 4 in the four collaboration kinds, 1 to 3 in Crew Auto), each number drawn as a step tile
+  (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying what won''t happen, where the module
+  has any (the Schedule Message sheet has none, DL-148); and one Advanced entry that opens as a page inside
+  the same sheet. Every control has a visible label and one helper line; options with descriptions use
+  the preserved dropdown trigger, and each description names the real difference between the options (for
+  example Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive and
+  BrainStorm; BrainStorm has no Quick strategy); a disabled control prints its reason in words. The foot
+  holds the read-back sentence, always true for the current settings, the estimate line (never $0.00),
+  Cancel and one primary naming a verb, the canonical name and a count; a disabled primary prints its
+  reason, and a refused Start replaces the read-back with the refusal and a route to the control that
+  fixes it. A sheet whose changes apply at once shows only Done. Every sheet sits over a flat scrim. On
+  the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions
+  (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured
+  panel. The scrim is never blurred, and F3-431''s blur budget admits this sheet blur and nothing more
+  (DL-139). Motion (DL-113, DL-115): each theme family moves with its own motion personality, aligned
+  with the transcript''s motion voices of ACD-475 (Basic: ink; Friendly: hop; Glass: depth; Retro: type),
+  so a sheet''s opening and closing and an in-chat card''s changes take their family''s personality. Where
+  a card takes part in a transcript beat (its family entrance, the fold), ACD-475 governs and the voice
+  changes only path, easing and texture, never timing or order. This contract states the principle only:
+  the per-family duration and easing values are the design foundation''s tokens, recorded at the concept''s
+  closing step, and are not canon values. Reduce Motion lands every change at its end state instantly
+  in every family. Sizes are fixed per sheet: wide 1120 x 780 (the collaboration kinds, the Scheduled
+  and Automations manager, Memory), standard 900 x 720 (Back Seat Driver, Schedule Message, Build At,
+  Teach) and compact 720 wide at a fixed height per sheet (Revert, ELI5 and the small raw-data and evidence
+  dialogs; F3-581 gives ELI5''s), always clamped inside the window (at most its width less 48 px and its
+  height less 40 px). A sheet never resizes or re-centres while open. The common case never scrolls at
+  1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that
+  fits and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits
+  its width (F3-601, DL-154), and grows into spare height when the column is short; the roster scrolls
+  in its own region only once its rows no longer fit beside the plate''s floor, with Add a helper kept
+  visible; the side column scrolls only below 1280 x 800; the hero field scrolls inside itself past three
+  lines; below a 900 px sheet width the body becomes one column that scrolls inside the sheet with head
+  and foot fixed, the plate staying at the top of that column while its question is on screen (F3-601);
+  nothing overflows sideways. Hovering or focusing a control emphasises only the plate parts and read-back
+  phrases it affects, with no dimming, body recolouring, layout change or re-render (DL-259 FS-1). Kinds
+  are told apart by a kind mark drawn by shape, and each participant by its puppet, which replaced the
+  cast mark (F3-594, DL-149): a role prop, the theme family''s material and a puppet-drawn state, never
+  initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a block (columns
+  are separated by space only), nested boxes, uppercase micro-labels or emoji. Typography (J-1): every
+  wand-module surface uses the theme''s own font with no separate display face; the voice roles (read-backs,
+  result and receipt headlines, pull-quotes, run-view headings) differ only by size, weight and colour,
+  and a quote is marked by quotation marks and the muted colour, never a different face. Spacing (J-2)
+  is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below
+  it (6 px inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container''s
+  side edge; controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at
+  least 32 px tall; adjacent controls sit at least 10 px apart, stacked controls 12 px, and a control
+  16 px from unrelated text on its line; a secondary line under a row sits at least 6 px below it and
+  12 px above what follows; roster rows are at least 52 px tall; body and helper text keep a line height
+  of at least 1.45 and headlines 1.25. When space runs short, text wraps or ellipsizes or a secondary
+  element drops; padding and gaps never compress. DL-138 confirms this scope: theme durations govern sheets
+  and a card''s own changes; transcript entrances retain ACD-475''s shared timing and order. Wand cards
+  that opt out of the family entrance do not acquire a second entrance animation. Amended 2026-10-29 (PC1/PC2;
+  PM7): The common sheet header may add Pip holding the kind sign on a third string, 10 px lower than
+  the first concept and level with Close. Existing title/kind/lead/close/focus/commit grammar remains;
+  presentation adds no feature or dispatch. Optional host follows SSYS-056. Amended Q22, Jared 2026-10-30
+  (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and
+  retained Adjust controls. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins
+  only at an actual control in its affects region, including an embedded plate control; plain text, empty
+  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the
+  shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge take accent,
+  and the linked read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity
+  or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims
+  unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis
+  changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet
+  hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
+  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
+  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback
+  icon. DL-475 overrides Memory-specific two-tab/verification/preview anatomy: the chat Memory button
+  and wand open the same single saved-note page used in Settings as a sheet. Memory is one saved-note
+  page, opened from Settings and as that same page in the chat Memory button/wand sheet. It has one on/off
+  switch, search including archived notes, a level filter All / This project / Every project, text/level/updated
+  list rows, Add memory, Edit, Delete and collapsed Archived. Title is optional, kind inferred. Delete
+  all names the exact scope; deletion is distinct from Discard/archive and cannot be silently undone from
+  old chats. Verification, sources, pins, conflicts, ranking, preview, upkeep and competing recovery controls
+  stay off the page. Instructions, History/privacy, chat capacity and Run limits remain separate.'
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
@@ -40747,12 +40860,15 @@ source_lineage:
   owner amendments J-1 and J-2, sections 2.2, 3.2, 3.5, 6.1-6.6
 - IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)
 - Plans/Decision_Log.md#DL-109
-- Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)
-- Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation 2026-10-01)
-- Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the
-  token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)
-- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
-  source evidence, not native APIs.'
+- Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card
+  n05, E-24)
+- Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation
+  2026-10-01)
+- Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card
+  n04, E-22; the token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling
+  linkStyle are source evidence, not native APIs.'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "DL-138"
   - "configuration sheet"
@@ -41038,32 +41154,25 @@ plan_unit_id: F3-570
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  What a wand module attaches to an ordinary reply is one line each, never a card. The files row
-  under a reply whose turn changed files ("Changed 3 files +5 −3 · Revert") is visible at rest and
-  offers Revert per ACD-478. The quiet ticks live in the reply's meta row and follow that row's
-  existing message-chrome visibility: a memory note taken (relaxing to its glyph alone after a few
-  seconds) and verified once a check proves it; the rule note for taught rules; Sent on schedule
-  on the user message a schedule sent; and Simple explanation on a reply written in Simple (F3-581, DL-126). The rule note follows DL-116 as the design lead's ruling of
-  2026-09-27 applied it and assistant-memory-subsystem AMS-053 defines following. It reads
-  "Followed 1 of your rules" for the included rules whose check the finished reply passed (the
-  number is how many); inclusion alone never earns it, and a rule whose check could not run earns
-  no tick. When any included rule failed its check the reply shows "Missed 1 of your rules" (the
-  number is how many failed), never hidden behind a Followed count, with a way to see which rule
-  was missed and a way to ask for a fix, which starts only when the user asks. A reply with no
-  passed or failed check shows no rule note. Each tick's and note's detail is in the app hover
-  card, never a native tooltip. A reply that changed files, took a note and carries a rule note
-  grows by at most 40 px.
+canonical_text: Ordinary reply module traces retain the changed-files/Revert row (ACD-478), Sent on schedule
+  on scheduled user messages and Simple explanation where applicable. Routine replies show no memory-use
+  citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers, verification
+  badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to memory · View
+  line appear; View opens the same Memory page as a sheet and highlights the saved note. Requested save/edit
+  confirmation stays brief. Task evidence and ordinary links remain available. Remove the legacy Noted-to-glyph
+  transition, Verified line, named-note hover and Followed/Missed rule-note producer. Internal inclusion/check
+  records remain.
 gui_related: true
 gui_classification_reason: "Defines the one-line traces the wand modules leave on ordinary replies."
 split_recommended: false
 depends_on: [F3-566, ACD-478, DL-116, AMS-053]
 unblocks: []
 acceptance_criteria:
-  - "The files row is visible without hover; ticks follow the meta row's visibility."
-  - "The traces on one reply add at most 40 px."
-  - "The rule note counts only included rules whose check the finished reply passed; a rule whose check could not run earns no tick."
-  - "A failed check shows \"Missed 1 of your rules\" with a way to see which rule and a way to ask for a fix, and is never hidden behind a Followed count."
+- Routine replies show no memory-use citations, chips, counts, previews, ribbons, permanent memory glyphs,
+  named-note hovers, verification badges or Followed/Missed rule receipts. Only after a durable save may
+  a brief Saved to memory · View line appear; View opens the same Memory page as a sheet and highlights
+  the saved note. Requested save/edit confirmation stays brief. Task evidence and ordinary links remain
+  available.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -41080,10 +41189,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C22 and C24, 7.10, 8.7, 8.10"
-  - "IMPACT-REGISTER B-FGS-04"
-  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
-  - "Plans/assistant-memory-subsystem.md#AMS-053"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 4.3 C22 and C24, 7.10, 8.7, 8.10
+- IMPACT-REGISTER B-FGS-04
+- Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
+- Plans/assistant-memory-subsystem.md#AMS-053
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "files row"
   - "Sent on schedule"
@@ -41093,10 +41204,7 @@ preserved_exact_tokens:
   - "AMS-053"
   - "Simple explanation"
 negative_constraints:
-  - "Do not render a reply trace as a card."
-  - "Do not hide the files row behind hover."
-  - "Do not show a rule as followed because it was included, or because its check could not run."
-  - "Do not show Used in place of the rule note."
+- Do not expose which memories or rules shaped an ordinary reply.
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -41305,30 +41413,28 @@ plan_unit_id: F3-574
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Revert Last Agent Edit has four entry points: the wand row, Changes, the message overflow and the
-  files row under the reply that changed files. All open one compact confirm sheet (F3-566) over
-  the turn's change manifest, whose file list scrolls inside itself past five files. Each row names
-  the file, a plain verb and its counts; a file the user changed since is marked on its row with a
-  route that only looks; the sheet promises one more check right before reverting. The foot holds
-  Cancel and a warm primary naming the count, which the confirm chord fires only when it has focus
-  (F3-568). An ineligible target shows its reason and no primary. The outcome follows ACD-478: the
-  files row's rewind motion plays only after a durable restored_clean, a conflict gets no shake and
-  says nothing was touched, and each outcome leaves one receipt line (F3-569). The word is always
-  Revert, never Undo, Rollback or Rewind. Memory in the chat is never a card and never a pop-up: a
-  quiet tick in the reply's meta row when a note is taken, one verified tick when a check proves it,
-  and no noise when a note goes out of date (F3-570); assistant-memory-subsystem AMS-047 owns the
-  one memory line that asks the user to review a proposal. This satisfies section 14's rule that
-  ordinary automatic memory produces no constant pop-up.
+canonical_text: 'Revert Last Agent Edit has four entry points: the wand row, Changes, the message overflow
+  and the files row under the reply that changed files. All open one compact confirm sheet (F3-566) over
+  the turn''s change manifest, whose file list scrolls inside itself past five files. Each row names the
+  file, a plain verb and its counts; a file the user changed since is marked on its row with a route that
+  only looks; the sheet promises one more check right before reverting. The foot holds Cancel and a warm
+  primary naming the count, which the confirm chord fires only when it has focus (F3-568). An ineligible
+  target shows its reason and no primary. The outcome follows ACD-478: the files row''s rewind motion
+  plays only after a durable restored_clean, a conflict gets no shake and says nothing was touched, and
+  each outcome leaves one receipt line (F3-569). The word is always Revert, never Undo, Rollback or Rewind.
+  Routine replies show no memory-use citations, chips, counts, previews, ribbons, permanent memory glyphs,
+  named-note hovers, verification badges or Followed/Missed rule receipts. Only after a durable save may
+  a brief Saved to memory · View line appear; View opens the same Memory page as a sheet and highlights
+  the saved note. Requested save/edit confirmation stays brief. Task evidence and ordinary links remain
+  available.'
 gui_related: true
 gui_classification_reason: "Defines the Revert confirm sheet and the memory traces in the chat."
 split_recommended: false
 depends_on: [ACD-478, F3-566, F3-570]
 unblocks: []
 acceptance_criteria:
-  - "Every Revert entry point opens the same confirm sheet and none dispatches a revert by itself."
-  - "The rewind plays only after a durable restored_clean."
-  - "Automatic memory adds no card and no pop-up to the chat."
+- Existing Revert entry/confirmation/receipt behavior remains. Memory follows the quiet save-only acknowledgment
+  rule.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -41344,8 +41450,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 8.10, 8.12"
-  - "IMPACT-REGISTER B-FGS-08 (NOW part)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 8.10, 8.12
+- IMPACT-REGISTER B-FGS-08 (NOW part)
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Revert Last Agent Edit"
   - "restored_clean"
@@ -41611,20 +41719,31 @@ plan_unit_id: F3-579
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: |-
-  Teach is a standard sheet of F3-566 and the only capture form: the wand's Teach…, /teach, natural-language intent and Save as a rule… all open it, prefilled with the rule text and its source, and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark, Teach Puppet Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the rule field, with example rules that fill it. Under it one safety line says either that no password or key was spotted or, in the warm tone, that the text looks like a password or key and must be removed to save. The plate is three nested rings, This thread inside the available This project ring inside Everywhere, each a button with a helper; Everywhere stays disabled with its reason until the tick "It's safe to use in my other projects" is set, and in correct mode the wider rings are disabled because an edit cannot widen a rule. A Locked tick says only the user can change the rule (ACD-481). Beside them, the rule card shows the rule exactly as it will be saved, with its scope, lock and source message; when a similar rule exists, the old and new wording are shown side by side with a choice between Replace the old rule and Keep both, and saving waits for it. The foot holds Cancel and one primary, Save rule, Save and replace or Save as version 2. In the chat each change is one receipt line of F3-569's grammar: Rule saved, Rule updated to a new version, Rule turned off, with several saves in a row coalesced into one line. Your rules is an editor document (the taught memory document): one row per rule with its words, its scope, lock and version, a state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock or Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher stays a Persona, and the sheet says Teach isn't the Teacher Persona. The note a reply carries for its taught rules is F3-570's rule note under DL-116 as AMS-053 defines following: it counts only rules whose check the finished reply passed, a failed check reads "Missed 1 of your rules" with a way to see which rule and a way to ask for a fix, and a check that could not run earns no tick. DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it. In No project omit the inapplicable Project ring; Everywhere is the existing public_safe user-taught scope, not a new Computer memory tier. Keep the public-safe checkbox, correction narrowing and source evidence; the display name changes no historical teaching record.
+canonical_text: >-
+  Teach is the standard F3-566 sheet for deliberate written instructions, reached by the wand Teach,
+  /teach, natural-language intent and Save as a rule through cmd.chat.teach.capture (ACD-477).
+  Opening or Cancel writes nothing; existing confirmation, secret/privacy screening, stale-revision
+  refusal and retained protections still apply. It edits through the existing instruction writer and
+  returns to Settings > Personas & Crews > Defaults > Standing instructions, where Rules for every
+  project and Rules for this project live. A Teacher answer offered as a saved note instead uses the
+  same Memory page and AMS-141 Add/Edit/Delete at This project or Every project. The old nested This
+  thread/project/Everywhere rings, public-safe scope tick, Locked checkbox, source/lock/version
+  preview, Replace/Keep both chooser and separate Your rules taught-memory document are retired.
+  Internal compatibility records and legacy protected-state custody remain, without ordinary
+  lock/unlock, conflict, source or rollback controls. Teacher remains a Persona, distinct from
+  Teach. Only a durable successful save may add Saved to memory · View to a reply; View opens the
+  one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail,
+  verification or Followed/Missed decoration is shown. Ordinary task evidence/links remain
+  available, and no No project view invents a Project or a Computer memory tier.
 gui_related: true
 gui_classification_reason: "Defines the Teach sheet, its chat receipts and the Your rules document."
 split_recommended: false
 depends_on: [F3-566, ACD-477, ACD-481, DL-127, DL-116, F3-570]
 unblocks: []
 acceptance_criteria:
-  - "Reopening retains the saved rule-check result, mixed results show one Missed-first line, and Ask for a fix only fills an empty composer until the user sends."
-  - "Every Teach entry point opens the Teach sheet; no inline capture card renders in the chat."
-  - "A reply's rule note never counts a rule as followed unless its check passed."
-  - "Every project cannot be chosen without the safe-for-other-projects tick, and correct mode cannot widen the scope."
-  - "A similar rule blocks saving until Replace the old rule or Keep both is chosen."
-  - "Turn off in Your rules asks inline and never opens a modal."
+  - "Every deliberate Teach entry uses the existing written-instruction owner and confirms before storage; saved notes use the one Memory page and AMS-141 at the two allowed levels."
+  - "No scope rings, public-safe tick, lock/conflict/source/rollback workbench, taught-memory duplicate document or automatic rule-use, rule-check or save/update receipt appears. A deliberate instruction save or edit confirms with the existing Rule saved · View Teach receipt, whose View opens Settings > Personas & Crews > Defaults > Standing instructions."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -41649,6 +41768,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F08,B-F13,C-F11
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -45972,14 +46093,15 @@ canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D
   ticks every 1 s for Working, Retrying, Fallback route and Waiting, and live breathe is 1.6 s or a 1-1.2 s stepped Retro/NieR
   blink. Step discs hide below 420 px, model below 700 px, Parent below 560 px, Read-only · live words below 440 px (the
   lock stays), and agent name below 360 px. Transcript saves agent reference, follow, open stretches and scroll top.
-  Context columns cap at 720 px, 960 px from a 960 px body; Source composition and Context growth appear side by side
-  and start open at that width until the reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles
+  Context columns cap at 720 px, 960 px from a 960 px body; basic capacity/cost/model facts and useful context
+  growth/compaction status adapt to that width without a Source composition or source-inspection section. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles
   use 3 columns from 360 px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1 below 300 px. Plan-limit rows
   have name, bar and a 128 px figure, with the bar on its own line below 460 px; the usage fact hides below 380 px. Growth
   charts are 168 px high; the source''s 131,000-token-limit fixture uses an axis to 140,000, gridlines at 0/50K/100K,
   ceiling 131,000 and turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and bad from 90 %. Context saves thread
-  reference, curated/raw view, open sections (null while width decides) and scroll top; sections are tokens, sources,
-  growth, route, limits, caps, cost and compaction. The six categorical colours are dark #3987e5 #d95926 #199e70 #c98500
+  reference, open sections (null while width decides) and scroll top; sections are tokens, growth, model/route,
+  limits, caps, cost and compaction. Old curated/raw selection and sources-section state are ignored on read,
+  never used to restore retired source composition, prompt inspection or per-run inclusion receipts. The six categorical colours are dark #3987e5 #d95926 #199e70 #c98500
   #d55181 #008300 and light #2a78d6 #eb6834 #1baf7a #eda100 #e87ba4 #008300; NieR''s charts part uses ink at .92/.72/.56/.42/.30/.20
   with hatching on even segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
   nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at 27 plus an ellipsis;
@@ -46016,7 +46138,8 @@ canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D
   with a yes or no submenu, Change setup... (on a Crew disabled until it is cancelled: "This Crew builds one plan version.
   Cancel it first.") or Run again with changes... once finished, Run another review (Review only), Download transcript
   and Open in new panel; a transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a
-  context tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
+  context tab has Preview compact, which shows only capacity, cost, model and compaction facts (raw and serialized context
+  stays internal, with no Redacted JSON action); a record has Show in chat, which reveals and marks the work row
   in its thread or says the message is not available, and Copy. Each row dispatches its content owner''s existing command
   or is view-local; none adds a command id here. Amended 2026-10-29 (PC5; PM7): Seat hues remain this one owner table.
   Pip reads them rather than owning another palette; gold crown/hat are role material and do not change the seat or status
@@ -46049,37 +46172,22 @@ unblocks:
 - G-030
 - ATS-075
 acceptance_criteria:
-- Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix
-  fail at start-up.
-- Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or
-  session id appears as text.
-- Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums.
-- A restored background tab is mounted only when first shown; serialized state above 16 KB is refused.
-- No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag
-  or animation settles.
-- Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold
-  and hide threshold.
-- Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own
-  overlay.
-- Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or
-  digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T,
-  Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
-  by this unit.
-- Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that
-  channel.
-- The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches
-  nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown.
-- Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration.
-- Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected;
-  F6 reaches the chat composer from every region.
-- Exactly the fifteen registered kinds and their stated identity prefixes are admitted; Goal, Activity Detail and setup
-  sheets are not centre-tab kinds.
-- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
-  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
-  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
-  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
-  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
+  - "Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix fail at start-up."
+  - "Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or session id appears as text."
+  - "Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums."
+  - "A restored background tab is mounted only when first shown; serialized state above 16 KB is refused."
+  - "No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag or animation settles."
+  - "Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold and hide threshold."
+  - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
+  - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
+  - "The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown."
+  - "Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration."
+  - "Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected; F6 reaches the chat composer from every region."
+  - "Exactly the fifteen registered kinds and their stated identity prefixes are admitted; Goal, Activity Detail and setup sheets are not centre-tab kinds."
+  - "DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism."
+  - "The thread Context tab retains basic capacity/cost/model and useful growth/compaction status, with no source composition, Curated/Raw source-inspection view or per-run inclusion receipt. Restoring old curated/raw or sources-section view state cannot restore those retired surfaces."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -46127,6 +46235,7 @@ source_lineage:
   (source lineage; not native certification)
 - 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
   1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - Open in new tab
 - output:<channel>
@@ -46161,6 +46270,7 @@ negative_constraints:
 - Do not show a tab, panel or session id in the interface.
 - Do not bind a panel action to Ctrl+K, a Ctrl+K chord, Ctrl+1..9 or a bare letter or digit.
 - Do not let a tab kind append its own overlay outside the one overlay root.
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes:
 - The concept's registration call, host API names, container name and z-index values are concept lineage; the
   stacking order is canon, its numbers are not.
@@ -49176,70 +49286,78 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  X1, X3, A1–A5, S8/S9; DL-235/DL-239. Pip is the Puppet Master brand: crossed control held by the user,
-  brace-shaped head, eyes joined by strings to underside screw eyes 5 units in from the sticks’ lower tips.
-  One solver joins both ends in every still and sampled moving pose; rods are opaque, rear rod
-  solid-shaded; NieR nodes square; Retro strings redraw pixelwise. The 24 px static title-bar mark takes no
-  click or state and yields to mark-only density without moving the bell. The favicon and release tile are
-  static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with manifest. Logical micro ≤18, small 19–40
-  and full >40 tiers remain consistent across DPR. Each look reads its tokens: Friendly vinyl, Glass clear
-  blue lens/rim/base without brow band, Basic flat single accent without cheeks, Retro pixel grids, NieR
-  ink/visor/diamond. NieR Pip shows eyes through the band on live and static marks, including title bar, app
-  icon and tray, at every size (X3 B, Jared 2026-10-30). Every animated asset has a
-  complete still base. The always-on tray (A2 B, Jared 2026-10-30) uses A3’s aggregate status faces across
-  Projects; waiting always wins
-  and complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS
+  X1, X3, A1–A5, S8/S9; DL-235/DL-239. Pip is the Puppet Master brand: crossed control held by the
+  user, brace-shaped head, eyes joined by strings to underside screw eyes 5 units in from the
+  sticks’ lower tips. One solver joins both ends in every still and sampled moving pose; rods are
+  opaque, rear rod solid-shaded; NieR nodes square; Retro strings redraw pixelwise. The 24 px static
+  title-bar mark takes no click or state and yields to mark-only density without moving the bell.
+  The favicon and release tile are static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with
+  manifest. Logical micro ≤18, small 19–40 and full >40 tiers remain consistent across DPR. Each
+  look reads its tokens: Friendly vinyl, Glass clear blue lens/rim/base without brow band, Basic
+  flat single accent without cheeks, Retro pixel grids, NieR ink/visor/diamond. NieR Pip shows eyes
+  through the band on live and static marks, including title bar, app icon and tray, at every size
+  (X3 B, Jared 2026-10-30). Every animated asset has a complete still base. The always-on tray (A2
+  B, Jared 2026-10-30) uses A3’s aggregate status faces across Projects; waiting always wins and
+  complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS
   notifications and Friendly’s app tile use Pip while in-app cards keep their kind marks and the
-  notification stack remains the only in-app notification entry. Individual agents consume F3-594’s Pip
-  primitive; small category marks consume robot. Mood mappings in glyph_catalog.json add no keys;
-  onboarding expressions remain illustration unless paired to an owner state. Brand, tray, icon,
-  notification faces and loader are independent of Pip parts. No per-instance stylesheet, random render
-  IDs, second kit or per-surface palette. A1/A3/X2 app/tray detail (2026-10-29): the fixed Basic Dark app
-  tile becomes a plain mark at 24 px and below. macOS tray is a template mark, Windows a colour mark.
-  Working may use the approved four-frame flip, below needs-you’s priority; effective Reduced Motion holds
-  its recognizable working rest frame, and every static NieR brand/app/tray mark remains static.
-  State/accessibility and aggregate precedence never depend on the motion. A5 full mood→default key table:
-  idle→idle; think/working→working; happy/done→complete; alert/wonder/needs-you→waiting; error/oops→failed;
-  sleep/paused→paused; watch→idle (decorative choice preview); wink→complete (once-only decorative Ready
-  sign-off); blocked→blocked; stopping→pending; stopped→skipped; lost→warning; scheduled→pending;
-  unsaved→change-modified. All 22 existing keys remain. Typed owner state overrides the default expression
-  association: queued sleep remains pending, Memory Unverified thinks with pending, reviewing/recovering
-  think with their own keys, mixed alert remains mixed, blocked oops stays blocked, empty sleeping
-  illustration creates no paused record, and illustrative oops never fabricates failure/attention. The
-  existing tour word pip-done is unrelated to Pip. A3 aggregate tray precedence across Projects, highest
-  first: waiting/needs-you > failed > blocked > working > paused > complete > idle. Blocked retains the
-  existing blocked key and its worried face, distinct from a question. Complete is a celebration eligible
-  for about 10 s only when no higher-priority work/attention remains; active work or a new ask immediately
-  supersedes it. Do not turn queued/dependency/illustrative states into questions or failures; preserve
-  lower-priority facts and freshness in the accessible summary. Never replace a stale projection with a
-  healthy zero. W1: Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier
-  selection across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
-  brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of title, app
-  and tray rest marks. A1/A3/X3, PM7 Step4, 2026-10-30: release asset names are app/puppet-master.ico
-  (16,20,24,32,48,64,128,256), app/puppet-master.icns, app/png/<size>.png (16 through 1024),
-  app/macos-1024.png and app/tile.svg. Tray exports use tray/macos/<key>-black.svg and -white.svg plus 16/32
-  PNGs, tray/windows/<key>.svg plus 16/20/24/32 PNGs, and working-flip SVGs from the shared micro Think
-  drawing. The fixed app-level tray set follows A1’s app-icon logic rather than a Project’s changing look:
-  macOS template ink, Windows Basic Dark colour; seven status faces and A3 precedence remain. The exported
-  manifest under the title lane icons directory is source/export evidence, not certification of a signed
-  native bundle. The shared brand owner supplies static and live marks and density variants; the title mark remains non-interactive.
-  A1/W1-40, PM7 Step4 audit: lock the Basic Dark release-asset EXPORT palette used when no live page is
-  painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
+  notification stack remains the only in-app notification entry. Individual agents consume F3-594’s
+  Pip primitive; small category marks consume robot. Mood mappings in glyph_catalog.json add no
+  keys; onboarding expressions remain illustration unless paired to an owner state. Brand, tray,
+  icon, notification faces and loader are independent of Pip parts. No per-instance stylesheet,
+  random render IDs, second kit or per-surface palette. A1/A3/X2 app/tray detail (2026-10-29): the
+  fixed Basic Dark app tile becomes a plain mark at 24 px and below. macOS tray is a template mark,
+  Windows a colour mark. Working may use the approved four-frame flip, below needs-you’s priority;
+  effective Reduced Motion holds its recognizable working rest frame, and every static NieR
+  brand/app/tray mark remains static. State/accessibility and aggregate precedence never depend on
+  the motion. A5 full mood→default key table: idle→idle; think/working→working; happy/done→complete;
+  alert/wonder/needs-you→waiting; error/oops→failed; sleep/paused→paused; watch→idle (decorative
+  choice preview); wink→complete (once-only decorative Ready sign-off); blocked→blocked;
+  stopping→pending; stopped→skipped; lost→warning; scheduled→pending; unsaved→change-modified. All
+  22 existing keys remain. Typed owner state overrides the default expression association: queued
+  sleep remains pending, retained Memory verification state is internal and produces no row face,
+  reviewing/recovering think with their own keys, mixed alert remains mixed, blocked oops stays
+  blocked, empty sleeping illustration creates no paused record, and illustrative oops never
+  fabricates failure/attention. The existing tour word pip-done is unrelated to Pip. A3 aggregate
+  tray precedence across Projects, highest first: waiting/needs-you > failed > blocked > working >
+  paused > complete > idle. Blocked retains the existing blocked key and its worried face, distinct
+  from a question. Complete is a celebration eligible for about 10 s only when no higher-priority
+  work/attention remains; active work or a new ask immediately supersedes it. Do not turn
+  queued/dependency/illustrative states into questions or failures; preserve lower-priority facts
+  and freshness in the accessible summary. Never replace a stale projection with a healthy zero. W1:
+  Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier selection
+  across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
+  brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of
+  title, app and tray rest marks. A1/A3/X3, PM7 Step4, 2026-10-30: release asset names are
+  app/puppet-master.ico (16,20,24,32,48,64,128,256), app/puppet-master.icns, app/png/<size>.png (16
+  through 1024), app/macos-1024.png and app/tile.svg. Tray exports use tray/macos/<key>-black.svg
+  and -white.svg plus 16/32 PNGs, tray/windows/<key>.svg plus 16/20/24/32 PNGs, and working-flip
+  SVGs from the shared micro Think drawing. The fixed app-level tray set follows A1’s app-icon logic
+  rather than a Project’s changing look: macOS template ink, Windows Basic Dark colour; seven status
+  faces and A3 precedence remain. The exported manifest under the title lane icons directory is
+  source/export evidence, not certification of a signed native bundle. The shared brand owner
+  supplies static and live marks and density variants; the title mark remains non-interactive.
+  A1/W1-40, PM7 Step4 audit: lock the Basic Dark release-asset EXPORT palette used when no live page
+  is painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
   rgba(255,255,255,.08). These fixed file-export values are distinct from live token-role mixing;
-  app/tray/favicon exports use this one palette rather than resampling per surface.
-  A4 A, PM7 Step4 review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
-  status-key mood mapping, with the kind glyph beside the title. It consumes the shared brand renderer and status/mood projection, never a second renderer or a new binding. OS notification branding remains a native integration requirement;
-  the concept tile does not certify OS delivery or a native notification bundle.
-  A5/PC2, PM7 companion review fix1, 2026-10-30 (Astra A6/Muse1): surface_status_faces.agents describes chat
-  agent rows. Working uses the public working mood, rendered as the distinct three-dot dots face by the
-  shared kit; think remains the intentional chat reviewing/recovering face. Platform rows consume the shared status-face mapping: working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These
-  are decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the plain-band drawing without eyes is legacy/gallery-only and no product caller may use it.
-  A1/A3/L4, PM7 companion review fix1, 2026-10-30 (Astra A1, title re-export): manifest.json in the title
-  lane icons bundle is SHA-256 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500, re-hashed
-  for all 141 files. Its two animated Working SVGs are byte-equal to the final kit at ff9476a5c8: micro
-  Think 1.95 s, separate rest/control/lid reduced-motion drawing. Static file bytes are unchanged; per-file
-  manifest provenance distinguishes them from the two new exports. This supersedes the earlier
-  export-manifest citation, not A1’s fixed palette or native-certification boundary.
+  app/tray/favicon exports use this one palette rather than resampling per surface. A4 A, PM7 Step4
+  review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
+  status-key mood mapping, with the kind glyph beside the title. It consumes the shared brand
+  renderer and status/mood projection, never a second renderer or a new binding. OS notification
+  branding remains a native integration requirement; the concept tile does not certify OS delivery
+  or a native notification bundle. A5/PC2, PM7 companion review fix1, 2026-10-30 (Astra A6/Muse1):
+  surface_status_faces.agents describes chat agent rows. Working uses the public working mood,
+  rendered as the distinct three-dot dots face by the shared kit; think remains the intentional chat
+  reviewing/recovering face. Platform rows consume the shared status-face mapping:
+  working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These are
+  decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the
+  plain-band drawing without eyes is legacy/gallery-only and no product caller may use it. A1/A3/L4,
+  PM7 companion review fix1, 2026-10-30 (Astra A1, title re-export): manifest.json in the title lane
+  icons bundle is SHA-256 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500,
+  re-hashed for all 141 files. Its two animated Working SVGs are byte-equal to the final kit at
+  ff9476a5c8: micro Think 1.95 s, separate rest/control/lid reduced-motion drawing. Static file
+  bytes are unchanged; per-file manifest provenance distinguishes them from the two new exports.
+  This supersedes the earlier export-manifest citation, not A1’s fixed palette or
+  native-certification boundary.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -49250,13 +49368,12 @@ depends_on:
 - SSYS-010
 unblocks: []
 acceptance_criteria:
-- Title mark is static and non-interactive at every density and DPR; no bell displacement.
-- All assets and live consumers share geometry/tokens and connected strings; static base remains visible without
-  CSS.
-- Always-on tray visibility and A3 priority agree with the shared work projection; minimize-to-tray affects Close only.
-- The ≤24 px app mark and macOS-template/Windows-colour tray exports match the kit; four-frame Working becomes
-  still under Reduced Motion/NieR.
-- Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence.
+  - "Title mark is static and non-interactive at every density and DPR; no bell displacement."
+  - "All assets and live consumers share geometry/tokens and connected strings; static base remains visible without CSS."
+  - "Always-on tray visibility and A3 priority agree with the shared work projection; minimize-to-tray affects Close only."
+  - "The ≤24 px app mark and macOS-template/Windows-colour tray exports match the kit; four-frame Working becomes still under Reduced Motion/NieR."
+  - "Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence."
+  - "Memory saved-note rows expose no delivery/verification state faces; retained verification-state accounting stays internal."
 validation_surfaces:
 - "scripts/pm-shard-plans.py"
 - "scripts/pm-plan-index.py"
@@ -49277,6 +49394,7 @@ source_lineage:
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 - "DL-260 source lineage only (no product API or implementation obligation): PMLogo.mark/svg/dataUrl/favicon/tierFor/period/kit/TRAY/trayFace/moodFor/onLook/STATUS_FACE, eyes:false, pm7-brand-mark, pm-brand-mark/pm-brand-word and app-name data-mode full|mark were concept API/markup spellings. The accepted Pip geometry, palette, status mappings and native export provenance remain product requirements."
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - '#121212'
 - '#E8E8E8'
@@ -49624,6 +49742,8 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
   D1–D14, G4/G8–G10, X1; DL-240–DL-255. The two status-bar controls open one platform-wide projection at Agents or Processes; Resources is its third tab, not a CPU/RAM bar indicator. Every Assistant thread, Orchestrator, Planning Wizard, PRD Builder, Scout, agent/subagent, process and scheduled run is in scope, with explicit Project/server/environment identity. Questions leads Agents, each question/agent listed once and counted in its owning surface group; Needs input leads Processes, running processes grouped under their starting agent, then Scheduled, Finished this session and collapsed read-only System services linking System status. Agent processes links select that owner’s process filter. Shared F3-477 ordering/row anatomy/freshness match the Agents deep rail and Home board; stale is one explicit strip, never healthy zeros. Subagents remain in their own chat domain and appear here as process owners, not duplicate process work. Resources replaces the old Task manager layout: sortable CPU/memory/ports table and inspector grouped by server/environment for the current Project plus shared computer/services (Q12), never one assumed machine. SIR-054 defines subordinate ProcessFacts and per-server samples. Sample only while Resources is open and visible, stop on close/hidden; unknown/stale is labelled. Agents/Processes/Resources are tabs only: no Side by side, no Home panel tab (deferred), no panel keyboard-shortcut/OS badge rollout in this build. Desktop Pop out moves the same view/state into one window; no second runtime, and unsupported clients show their reason. Floating panel, quit dialog and exit animations use DR-067’s overlay owner and near-opaque Glass menu plate. Stop per item and Stop all (thread/platform target list) use cmd.work.stop and D8 process-group semantics; restart/input/completion routing use UCC-210. Questions and process input remain separate counts over one needs-you set. G6 Clear finished is offered only on Processes and hides this view’s finished process/scheduled rows, never agents or owner records. Lost follows reconciliation, warning; Stopping uses pending until observed exit, Stopped skipped, Scheduled pending, Done complete, Failed failed with exit N. Live category glyphs robot/processes use the shared 2200 ms beat below needs-you, Reduced Motion lit/still; Q11 live rows animate under visibility/clock gates; individual agents use the shared loader. Design narrow and NieR readouts without hiding meaning; accessibility retains full words even in Numbers. G4/G8/D14 Resources tab head reuses gauge (no third new category glyph). While selected, visible and receiving current live samples, it shares the subtle 2200 ms category breath below needs-you; its internal drawing remains still. No active subscription, stale/unavailable data, hidden/offscreen/drag state or Reduced Motion uses a travelling loop; retain the lit recognizable rest pose and full freshness words. Resource rows remain still. Opening/closing visibility starts/stops only this tab’s host sampling subscription. D5/D6 repeat activation: clicking the status item whose tab is already open closes the panel through ui.work_panel.close and returns focus to that status item. Clicking the other item selects its tab in the same panel without a close/reopen; first activation opens its own tab. Keyboard activation is identical. Popped-out routing follows the same one-view identity and returns focus on close. D6: the popped-out desktop panel is one draggable, user-sized window preserving Project/tab/filter selection; it is a view of the same projection, not another runtime. Closing restores focus to its originating status item. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable owner navigation says why. The panel, detail views, status bar and reviewed Stop/Quit list consume DR-078’s one owner-backed work projection and shared renderer. Every local view binds its exact invoking platform or thread identity without creating a persistence key. Finished/failed process counts remain distinct from finished agent counts. Environment headings count all displayed state groups. Resource samples re-sort under the selected column, deferring row movement while the pointer/focus is in the table. Static fixtures do not certify native handlers or windows. G4/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Resources has Time after State; Time values use the shared clock and Time sorting compares run start times with stable title ties. Sample immediately on subscription and every 2 s only while open/visible; unknown/stale remains explicit. Narrow Resources keeps the omitted Time/Port/Started by facts reachable in the inspector and accessible description. The rail and Home Agents consumers use DR-078’s shared row/filter/summary renderer. Panel drags pause shared motion; release or pointer cancellation clears the drag gate and resumes eligible motion once. Per-kind completion defaults stay DL-248’s agent for scripts/tests/builds and user for server/db/watcher; Quiet remains an explicit choice. D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner is ui.work_panel.select with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents also binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation request to the resolved owner surface with work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command, a local clipboard request over the selected current command; clipboard refusal cannot report success. Open port reuses cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement, never an assumed client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation through the terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner routes. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+
+  Project task/WorkNode/child rows consume SIR-056's placement projection: Auto → <Computer> or Chosen: <Computer> with the person/agent chooser. Why this computer shows actual capacity/queue/floor/slot observations and their age, level/preset reasons and why alternatives were excluded. Requested/effective differences, waiting for a pinned/offline Computer and uncertain outcomes remain visible; a running row never appears migrated after a mere policy/route change. Reuse the same owner receipt in the panel, rail, Home and Details, without extra sampling loops; visible-only Resources sampling remains separate from admission telemetry. SRV-017 app rows retain their fixed Computer and no-project policy.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -49636,15 +49756,15 @@ depends_on:
 - DR-078
 unblocks: []
 acceptance_criteria:
-  - "The platform’s all-owner projection has exactly Agents/Processes/Resources, with separate Questions/Needs input groups and one row identity."
-  - "Resources covers at least two explicit servers/environments, samples only visible/open and labels unknown/stale values without fake zero."
-  - "Status items toggle their active view closed or select the other tab; close/pop-out preserve one view and deterministic focus."
-  - "Per-item/thread/platform stop, restart/input/delivery and view-local clear reach the declared owners; system services remain read-only."
-  - "Category robot/processes/gauge motion follows its stated live/rest/2200 ms/Reduced Motion rules; individual agents use Pip."
-  - "No CPU/RAM bar item, small Activity Detail, Side by side/Task manager layout, Home panel tab or new panel shortcut is introduced."
-  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
-  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
+- "The platform’s all-owner projection has exactly Agents/Processes/Resources, with separate Questions/Needs input groups and one row identity."
+- "Resources covers at least two explicit servers/environments, samples only visible/open and labels unknown/stale values without fake zero."
+- "Status items toggle their active view closed or select the other tab; close/pop-out preserve one view and deterministic focus."
+- "Per-item/thread/platform stop, restart/input/delivery and view-local clear reach the declared owners; system services remain read-only."
+- "Category robot/processes/gauge motion follows its stated live/rest/2200 ms/Reduced Motion rules; individual agents use Pip."
+- "No CPU/RAM bar item, small Activity Detail, Side by side/Task manager layout, Home panel tab or new panel shortcut is introduced."
+- "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+- "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
+- "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
 - "scripts/pm-shard-plans.py"
 - "scripts/pm-plan-index.py"
@@ -49661,6 +49781,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
@@ -49859,9 +49980,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  Projects is the shared quiet library/detail surface over PJCT-012’s single registry and owner project_summary. Cards/rows are semantic articles with labelled Open, Details and More; name, named Computer, full-path hover/copy and state words are accessible without colour. New Project is the primary entry. The title-bar switcher remains secondary and has the fixed No project row. The list distinguishes empty, filtered empty, archived, removed, missing folder, inaccessible and not-answering Computers; stale/partial sources never become healthy, zero or none. Owner attention selects one primary status and retains secondary reasons in Details, using the existing waiting > blocked > working > modified > idle projection where applicable; never conflate blocked and needs-you.
-  Safe shows local history, optional online copy and the last complete backup separately. Last verified means the Backup owner’s newest Structure verified-or-higher result with its level; show a newer failed/unverified attempt beside it without replacing last-good. Details routes to actual Source Control, Backup, Settings and location/move owners. Rename changes display metadata only. Locate/Update location revalidates an already-moved source; Move performs the PSB content transaction. Archive pauses its Backup schedule and protects last-good; unarchive restores eligibility without starting work. Remove is list-only; Delete data is separate protected Storage work. Import from another app remains visible as not here yet, with no dispatch.
+  Projects is the shared quiet library/detail surface over PJCT-012’s single registry and owner project_summary. Cards/rows are semantic articles with labelled Open, Details and More; name, records home, work choice, full-path hover/copy and state words are accessible without colour. New Project is the primary entry. The title-bar switcher remains secondary and has the fixed No project row. The list distinguishes empty, filtered empty, archived, removed, missing folder, inaccessible and not-answering Computers; stale/partial sources never become healthy, zero or none. Owner attention selects one primary status and retains secondary reasons in Details, using the existing waiting > blocked > working > modified > idle projection where applicable; never conflate blocked and needs-you.
+  Safe shows local history, optional online copy and the last complete backup separately. Standard retention follows the Backup owner (BRS-032); this surface does not define another retention policy. Last verified means the Backup owner’s newest Structure verified-or-higher result with its level; show a newer failed/unverified attempt beside it without replacing last-good. Details routes to actual Source Control, Backup, Settings and location/move owners. Rename changes display metadata only. Locate/Update location revalidates an already-moved source; Move performs the PSB content transaction. Archive pauses its Backup schedule and protects last-good; unarchive restores eligibility without starting work. Remove is list-only; Delete data is separate protected Storage work. Import from another app remains visible as not here yet, with no dispatch.
   Use existing spacing, picker, hover, overlay, loader, status and focus primitives in all ten looks, narrow windows and Reduced Motion. No Projects-specific runtime/health engine, invented counts or old header template is introduced.
+
+  Where work runs shows Auto by default for new Project work. Keep records home, the Project's default Computer and actual active Computers separate; never summarize the Project as <Project> works on <one Computer>. Details offers the reviewed allowed-Computer/default/preset controls through their existing topology/Settings owners. Show current worker names/count only from current owner facts, with explicit unknown/stale state. Work rows use Auto → <Computer> or Chosen: <Computer> with who chose it, and Why this computer opens the shared SIR-056 reasons and excluded alternatives. Retain both requested and effective placement when different. A person's pin wins; unavailable choices explain why and never quietly switch. Location controls grant no authority, move no Project content and never retarget frozen work. No-project starter behavior remains SRV-017.
 gui_related: true
 gui_classification_reason: Defines visible controls, layout, accessible states and exact returns.
 depends_on:
@@ -49874,6 +49997,7 @@ acceptance_criteria:
 - Every listed/filtered/recovery state uses current owner truth and exact target/return.
 - Open/Details/More are keyboard accessible with full-path access and truthful backup facts.
 - Remove, archive, rename and Delete data retain distinct effects.
+- "Projects and concurrent work show requested/effective choice, default, home and actual Computers distinctly, with accessible chooser and Why this computer."
 validation_surfaces:
 - scripts/pm-projects-refresh-contracts.py
 - scripts/pm-plan-index.py
@@ -49888,6 +50012,7 @@ node_compile_hint:
   create_nodeseeds: false
   runtime_enabled: false
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md
 - /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/E-requests.md#E-F02
@@ -52063,4 +52188,895 @@ command_payload_definitions:
         target_command_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the stable command that ran"}
         result_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "the target command's own result, carried by reference; shape owned by that command"}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt for the executed action"}
+```
+
+### F3-700 - alert.acknowledged event boundary
+
+```yaml
+plan_unit_id: F3-700
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.acknowledged: unacknowledged or snoozed -> acknowledged; clear unread only; never resolve
+  the underlying condition. Current owner must prove the action is allowed, including permission, current subject
+  revision and currentness_basis_ref. Mute/snooze cannot suppress blocking confirmations or security-sensitive failures;
+  dismissal cannot clear a blocker. A refusal, stale result, no change, rollback or failed persistence produces
+  no event. F3-453 remains the one shared alert store; visible read is not domain acknowledgement; source access
+  and existing confirmation owners still apply. The complete newly authored per-family owner contract is Plans/storage-plan.md#SP-660,
+  payload Plans/event_payloads/attention/alert_acknowledged.schema.json. Its producer explicitly adopts SP-286/CV-339
+  full-value v2; its history consumer explicitly adopts SP-278/DL-076. Retention PENDING_RETENTION_DECISION; prepared
+  without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-701 - alert.dismissed event boundary
+
+```yaml
+plan_unit_id: F3-701
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.dismissed: unacknowledged, acknowledged or snoozed -> dismissed; rationale required; remove
+  inbox presentation only; no approval, denial, resolution or source deletion. Current owner must prove the action
+  is allowed, including permission, current subject revision and currentness_basis_ref. Mute/snooze cannot suppress
+  blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker. A refusal, stale result,
+  no change, rollback or failed persistence produces no event. F3-453 remains the one shared alert store; visible
+  read is not domain acknowledgement; source access and existing confirmation owners still apply. The complete newly
+  authored per-family owner contract is Plans/storage-plan.md#SP-661, payload Plans/event_payloads/attention/alert_dismissed.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-702 - alert.rule_muted event boundary
+
+```yaml
+plan_unit_id: F3-702
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.rule_muted: unmuted or expired -> muted for the exact Project rule; keep the issue visible
+  in its owning surface; expiry follows the original explicit deadline, never retry time. Current owner must prove
+  the action is allowed, including permission, current subject revision and currentness_basis_ref. Mute/snooze cannot
+  suppress blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker. A refusal, stale
+  result, no change, rollback or failed persistence produces no event. F3-453 remains the one shared alert store;
+  visible read is not domain acknowledgement; source access and existing confirmation owners still apply. The complete
+  newly authored per-family owner contract is Plans/storage-plan.md#SP-662, payload Plans/event_payloads/attention/alert_rule_muted.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-703 - alert.snoozed event boundary
+
+```yaml
+plan_unit_id: F3-703
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.snoozed: unacknowledged or acknowledged -> snoozed until snooze_until, strictly after ts;
+  keep original deadline on replay; never suppress blocking confirmations or security-sensitive failures. Current
+  owner must prove the action is allowed, including permission, current subject revision and currentness_basis_ref.
+  Mute/snooze cannot suppress blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker.
+  A refusal, stale result, no change, rollback or failed persistence produces no event. F3-453 remains the one shared
+  alert store; visible read is not domain acknowledgement; source access and existing confirmation owners still
+  apply. The complete newly authored per-family owner contract is Plans/storage-plan.md#SP-663, payload Plans/event_payloads/attention/alert_snoozed.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-704 - panel.redocked chat-only current action boundary
+
+```yaml
+plan_unit_id: F3-704
+unit_type: contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'panel.redocked: only cmd.panel.redock moves the current chat from detached_window to chat_column;
+  desktop Pop out/Dock back remain UCC-203/F3-637. CV-361/SP-330 already decide restart-unsaved host state and no
+  workspace.layout_changed. Durable audit evidence is separate from live host state: no Home revision advance, no
+  saved popped_out, no replayed OS effect or startup redock. F3-527 v1 fields are historical reader interpretation.
+  Full independent current 2.0.0 contract SP-664/CV-684 explicitly adopts SP-286/CV-339 and SP-278/DL-076. Prepared
+  without admission; retention PENDING_RETENTION_DECISION.'
+gui_related: true
+gui_classification_reason: Current chat pop-out action semantics.
+split_recommended: false
+depends_on:
+- SP-664
+- CV-684
+- F3-637
+- CV-361
+unblocks: []
+acceptance_criteria:
+- F3-704 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### F3-705 - panel.undocked chat-only current action boundary
+
+```yaml
+plan_unit_id: F3-705
+unit_type: contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'panel.undocked: only cmd.panel.undock moves the current chat from chat_column to detached_window;
+  desktop Pop out/Dock back remain UCC-203/F3-637. CV-361/SP-330 already decide restart-unsaved host state and no
+  workspace.layout_changed. Durable audit evidence is separate from live host state: no Home revision advance, no
+  saved popped_out, no replayed OS effect or startup redock. F3-527 v1 fields are historical reader interpretation.
+  Full independent current 2.0.0 contract SP-665/CV-685 explicitly adopts SP-286/CV-339 and SP-278/DL-076. Prepared
+  without admission; retention PENDING_RETENTION_DECISION.'
+gui_related: true
+gui_classification_reason: Current chat pop-out action semantics.
+split_recommended: false
+depends_on:
+- SP-665
+- CV-685
+- F3-637
+- CV-361
+unblocks: []
+acceptance_criteria:
+- F3-705 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### F3-706 - bundle.note_created Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-706
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for bundle.note_created 1.0.0 under DL-045 and DL-437, deck-2 Card 5.a option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts CV-077; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/bundle_note_created.payload.schema.json; its $id is pm.card5.bundle_note_created.payload.v1, version 1.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is bundle_id/doc_id/annotation_id/note_id plus immutable provenance; note_id is the existing note_record identity and annotation_id is its verified annotation identity, never a guessed alias. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.bundle.note.create through handlers::bundle_note::create is the exact owning handler after independently authenticated action authority. This is a newly named private binding of the already specified durable note action, not an additional public control. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "bundle.note_created", idempotency_key]); operation_digest=H and event_id=evt_bundle_note_created_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/bundle_note_created.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at bundle_note_created_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.bundle.note.create or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact transition: canonical note key absent -> one durable open annotation at original revision one, previous_state=null/prior_revision=0/before_record_ref=null; preserve the exact note id and document provenance in note_record.v1 and notes_index.{bundle_id}. One creation emits only bundle.note_created after original commit; no generic annotation or status event for this same creation. note_record.v1 compatibility lineage does not itself identify an EventRecord alias. An existing key, replay, failed creation or refused mapping precondition emits no second creation.
+
+  Consumers/checkpoints: newly authored projector.bundle_note_created.history@1.0.0 and reader.bundle_note_created.history@1.0.0 expose passive record-backed audit History for this exact family. Document/review History is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: bundle_note_created_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/bundle_note_created.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. bundle_note_created_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. bundle_note_created_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; no old schema was specified for this exact split event; unsupported/unversioned originals require governed validation/quarantine, never inferred aliases. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/bundle_note_created.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_created. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- bundle.note_created has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.a A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_created
+risk_class: event_authority
+reasoning_tier: high
+context_scope: bundle_note_created
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-437
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- bundle.note_created
+- DL-437
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-707 - bundle.note_status_changed Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-707
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for bundle.note_status_changed 1.0.0 under DL-045 and DL-437, deck-2 Card 5.a option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts CV-077; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/bundle_note_status_changed.payload.schema.json; its $id is pm.card5.bundle_note_status_changed.payload.v1, version 1.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is bundle_id/doc_id/annotation_id/note_id plus immutable provenance; note_id is the existing note_record identity and annotation_id is its verified annotation identity, never a guessed alias. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.bundle.note.change_status through handlers::bundle_note::change_status is the exact owning handler after independently authenticated action authority. This is a newly named private binding of the already specified durable note action, not an additional public control. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "bundle.note_status_changed", idempotency_key]); operation_digest=H and event_id=evt_bundle_note_status_changed_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/bundle_note_status_changed.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at bundle_note_status_changed_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.bundle.note.change_status or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact transition: existing canonical annotation at prior_revision -> its immediate successor, with unequal previous_state/state among open/addressed/still_open/cannot_apply/resolved, subject to the existing owner-allowed lifecycle transition. Preserve document provenance, note id and all other note content/anchor/targeted-revision lineage. Each real later committed status change emits only bundle.note_status_changed. Same state, stale revision, invalid allowed transition, replay or refused action emits nothing; no generic co-emission. The private operation authenticates the complete original note record before/after; omitted unrelated fields may not silently change.
+
+  Consumers/checkpoints: newly authored projector.bundle_note_status_changed.history@1.0.0 and reader.bundle_note_status_changed.history@1.0.0 expose passive record-backed audit History for this exact family. Document/review History is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: bundle_note_status_changed_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/bundle_note_status_changed.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. bundle_note_status_changed_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. bundle_note_status_changed_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; no old schema was specified for this exact split event; unsupported/unversioned originals require governed validation/quarantine, never inferred aliases. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/bundle_note_status_changed.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- bundle.note_status_changed has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.a A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed
+risk_class: event_authority
+reasoning_tier: high
+context_scope: bundle_note_status_changed
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-437
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- bundle.note_status_changed
+- DL-437
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-708 - bundle.annotation_state_changed Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-708
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for bundle.annotation_state_changed 1.0.0 under DL-045 and DL-437, deck-2 Card 5.a option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts CV-077; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Save one note-created event for creation and one note-status-changed event for each later status change. Keep old entries under the general note-change name readable, but stop creating new entries under that name only after owners prove and approve how each old entry maps to creation/status history. Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came from. You see one history entry per change.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/bundle_annotation_state_changed.payload.schema.json; its $id is pm.card5.bundle_annotation_state_changed.payload.v1, version 1.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is bundle_id/doc_id/annotation_id/note_id plus immutable provenance; note_id is the existing note_record identity and annotation_id is its verified annotation identity, never a guessed alias. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and transitions: there is no current producer, journal, effect, new append, retry append or dual emission under bundle.annotation_state_changed. Refuse every new-write request as compatibility_no_new_writes, including replay-only attempts. Preserve originally admitted originals and their exact original event identity, payload edition/bytes, timestamps, receipt and Storage source. Closed payload here is a decoded compatibility view, never a replacement of original bytes or a new historical append. The read classifier must prove original bundle/doc/annotation/note/provenance identities against independently held immutable pre/post snapshots and original receipt: absent pre-record plus original creation evidence maps to creation; existing pre-record with unequal allowed old/new status maps to status_change. Both require owner-verified source proof and explicit mapping approval from the responsible document/Storage owners. A claimed mapped_kind is checked against the original facts, never accepted as evidence. No timestamp guess, identifier similarity, replay of note commands, synthetic split append or duplicate co-emission is permitted. Ambiguous/unproved/unapproved old entries stay in a read-only inspection quarantine with original bytes and provenance, excluded from authoritative creation/status projections until the owners prove and approve the mapping. One verified change has one History entry under its retained original identity; reading never manufactures a split-family record. The owner proof/approval is a release precondition still NOT_RUN, not falsely claimed by a schema or synthetic fixture. Current generic writes are refused throughout preparation; before any split-writer activation the owners must prove/approve the inventory mapping and quarantine ambiguous entries as DL-437 requires. Withdrawal of this historical reader fences disclosure/publications but never erases the original or changes its retained meaning.
+
+  Consumers/checkpoints: newly authored projector.bundle_annotation_state_changed.history@1.0.0 and reader.bundle_annotation_state_changed.history@1.0.0 expose passive record-backed audit History for this exact family. Document/review History is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: bundle_annotation_state_changed_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/bundle_annotation_state_changed.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. No new operation value exists for the generic compatibility spelling. bundle_annotation_state_changed_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its compatibility mapping custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; the old general annotation spelling is historical-only under the verified mapping/inspection path above. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/bundle_annotation_state_changed.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- bundle.annotation_state_changed has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.a A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed
+risk_class: event_authority
+reasoning_tier: high
+context_scope: bundle_annotation_state_changed
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-437
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- bundle.annotation_state_changed
+- DL-437
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-709 - concern.assigned Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-709
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.assigned 2.0.0 under DL-045 and DL-438, deck-2 Card 5.b option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Only the authorized Puppet Master controller for that area records reassignment; users and workers request it. Within the same area of responsibility, require no added confirmation beyond existing rules. Crossing to another area requires **an authorized human for the outgoing area to approve and the receiving responsible owner (person, agent or component) to explicitly accept** before the change is saved. The outgoing concern owner has no additional veto merely for holding the old assignment. If either required confirmer is unavailable or declines, leave the old assignment in place. Save both confirmations, who gave each and in which role, old/new owners, reason and proof of permission. The controller recording the transfer cannot treat its own recording as either confirmation; if it is the receiving owner, it must separately record acceptance and still obtain the human’s approval. You see who approved and who accepted. If this reassignment also moves the concern to a wider area of responsibility, follow your selected 5.d rule as well, including its promotion recorder and required approvals.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_assigned.payload.schema.json; its $id is pm.card5.concern_assigned.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.assign through handlers::concern::assign is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.assigned", idempotency_key]); operation_digest=H and event_id=evt_concern_assigned_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_assigned.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_assigned_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.assign or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact effect: owner_kind/owner_ref change, identity and creator/resolver/lifecycle preserved. Same-area transfer has no additional confirmation beyond existing rules. Area comparison uses authenticated canonical responsibility scopes, never caller-supplied labels. Cross-area transfer requires outgoing authorized human approval and receiving owner explicit acceptance, each independently authenticated, tied to this original action, role, actor, scope and evidence. Recording is neither confirmation. The controller may separately accept as receiving owner (person/agent/component) but must still obtain outgoing human approval; unavailable/declined confirmer leaves old assignment untouched. Holding old assignment grants no veto. A wider target additionally requires the exact promotion controller/evidence/approval contract F3-711/DL-440; linked action custody proves both contracts before the same canonical commit, never a unilateral owner rewrite. Save old/new owners, reason, proof and who approved/accepted in which role.
+
+  Consumers/checkpoints: newly authored projector.concern_assigned.history@1.0.0 and reader.concern_assigned.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_assigned_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_assigned.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_assigned_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_assigned_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern assigned 1.0.0 schema in Plans/event_payloads/concern/concern_assigned.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_assigned.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.assigned. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.assigned has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.b A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.assigned
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_assigned
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-438
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.assigned
+- DL-438
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-710 - concern.evidence_linked Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-710
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.evidence_linked 2.0.0 under DL-045 and DL-439, deck-2 Card 5.c option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  Let authorized users and the authorized Puppet Master controller add evidence through the concern action, after checking source access and the latest saved concern version. Ordinary additions need no extra confirmation. Removing or replacing evidence needs its separate authorized action. Save who linked what.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_evidence_linked.payload.schema.json; its $id is pm.card5.concern_evidence_linked.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.link_evidence through handlers::concern::link_evidence is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.evidence_linked", idempotency_key]); operation_digest=H and event_id=evt_concern_evidence_linked_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_evidence_linked.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_evidence_linked_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.link_evidence or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact effect: additive evidence links only, preserving existing evidence, identity, owner, lifecycle and all unrelated record facts. Authorized user or scoped authorized controller may record via cmd.concern.link_evidence, after source access and latest saved revision verification. Ordinary additions require no extra confirmation. Save who linked which immutable source in action_ref. Worker proposals grant no record permission. Destructive replacement/removal is refused by this action and requires its own separately authorized action; an already-linked-only set is no change and emits nothing.
+
+  Consumers/checkpoints: newly authored projector.concern_evidence_linked.history@1.0.0 and reader.concern_evidence_linked.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_evidence_linked_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_evidence_linked.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_evidence_linked_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_evidence_linked_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern evidence_linked 1.0.0 schema in Plans/event_payloads/concern/concern_evidence_linked.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_evidence_linked.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.evidence_linked has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.c A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_evidence_linked
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-439
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.evidence_linked
+- DL-439
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-711 - concern.promoted Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-711
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.promoted 2.0.0 under DL-045 and DL-440, deck-2 Card 5.d option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  The authorized Puppet Master controller records the move after required evidence and approval checks. Users request it or answer a required human approval; workers nominate. Ordinary automation stays automatic. Existing critical, security and governance approval rules still require their stated approval. You are asked only at a required human approval step. If this promotion also changes the responsible owner, follow your selected 5.b rule as well, including its reassignment recorder and transfer confirmations.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_promoted.payload.schema.json; its $id is pm.card5.concern_promoted.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.promote through handlers::concern::promote is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.promoted", idempotency_key]); operation_digest=H and event_id=evt_concern_promoted_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_promoted.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_promoted_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.promote or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact effect: authenticated wider responsibility scope, never merely a severity/display edit; retain concern identity/creator and existing canonical promotion/gate/evidence/receipt links under CV-315/SP-233. Authorized scoped controller records after gate/evidence/approval checks; user requests or answers a true required human approval and worker nominates. Ordinary automation remains automatic, with no routine added human prompt. Required critical/security/governance/HITL approvals remain mandatory. If responsible owner changes too, require the full F3-709/DL-438 transfer contract including outgoing-human approval and receiving-owner explicit acceptance; save linked transfer proof, never manufacture it from recording the promotion. Promotion and transfer obligations are validated together under the same owner transaction; neither event substitutes for the other distinct mutation.
+
+  Consumers/checkpoints: newly authored projector.concern_promoted.history@1.0.0 and reader.concern_promoted.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_promoted_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_promoted.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_promoted_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_promoted_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern promoted 1.0.0 schema in Plans/event_payloads/concern/concern_promoted.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_promoted.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.promoted. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.promoted has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.d A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.promoted
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_promoted
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-440
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.promoted
+- DL-440
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-712 - concern.reopened Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-712
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.reopened 2.0.0 under DL-045 and DL-441, deck-2 Card 5.e option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  The currently responsible, authorized concern owner records reopening on that new evidence. Users and workers may request it. Save the reason and prior closure history; ask for extra confirmation only where existing critical/human-approval policy requires it. Valid new evidence can reopen the issue without a routine prompt.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_reopened.payload.schema.json; its $id is pm.card5.concern_reopened.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.reopen through handlers::concern::reopen is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.reopened", idempotency_key]); operation_digest=H and event_id=evt_concern_reopened_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_reopened.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_reopened_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.reopen or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact transition: resolved|dismissed -> active on new current evidence invalidating that original closure. Recorder must be the currently responsible AND independently authorized owner (person/agent/component); assignment/creator title alone does not grant permission. Users and workers request; workers never record directly. Retain reason, new evidence, immutable prior-terminal ref and complete prior closure/lineage; do not overwrite old closure history. Extra confirmation only where existing critical/HITL policy requires it. Owner, scope, assessment, creator and evidence set remain unchanged unless their separately authorized linked actions commit; the reopening action records its new supporting evidence as immutable action custody, not an implicit evidence-removal action.
+
+  Consumers/checkpoints: newly authored projector.concern_reopened.history@1.0.0 and reader.concern_reopened.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_reopened_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_reopened.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_reopened_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_reopened_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern reopened 1.0.0 schema in Plans/event_payloads/concern/concern_reopened.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_reopened.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.reopened. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.reopened has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.e A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.reopened
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_reopened
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-441
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.reopened
+- DL-441
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-713 - concern.resolved Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-713
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.resolved 2.0.0 under DL-045 and DL-442, deck-2 Card 5.f option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  The authorized Puppet Master controller may choose and record seven evidence-backed outcomes: `fixed` (a genuine fix), `superseded` (replaced by a successor concern), `merged` (combined with another concern), `split` (divided into linked concerns), `invalidated` (shown to be invalid), `obsoleted_by_patch` (made obsolete by a patch), and `obsoleted_by_recovery` (made obsolete by recovery). Users and workers may request these outcomes but gain no recording permission. Only an authorized human may choose `accepted_risk` (accepting remaining risk), by an explicit decision that the controller records with the evidence and remaining risk. Every resolution requires current evidence that the underlying issue changed, a reason, and all existing critical/security/human approvals. Supersession, merge and split use guided, audited lineage actions and preserve links and history; they do not prove a fix. Any resulting transfer follows your selected 5.b rule, and any promotion to a wider area follows your selected 5.d rule. Acknowledge/dismiss stays separate and cannot erase a live blocker. You get controller choice and recording for all seven non-risk outcomes, and an explicit human choice for accepted risk.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_resolved.payload.schema.json; its $id is pm.card5.concern_resolved.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.resolve through handlers::concern::resolve is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.resolved", idempotency_key]); operation_digest=H and event_id=evt_concern_resolved_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_resolved.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_resolved_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.resolve or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact transition: active|acknowledged -> resolved with current evidence that the underlying issue changed, reason and required critical/security/human approvals. Authorized controller chooses/records fixed/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery. Only authorized human explicitly chooses accepted_risk; controller records the independently authenticated decision, remaining-risk ref and supporting evidence. Acknowledge/dismiss cannot erase a live blocker. Supersession/merge/split require guided audited lineage action and preserved links/history; these outcomes never prove a fix or clear a blocker by themselves. Existing blocker/gate owner revalidates the underlying issue separately; this event never edits blocking_effect_ref merely because it is terminal. Any transfer obeys F3-709/DL-438, any widening obeys F3-711/DL-440, with both obligations authenticated before commit. Save resolution_kind, resolver, resolution evidence, decision and lineage in the immutable action record and canonical owner's closure record; the event action_ref commits to those exact bytes. User/worker requests confer no recording permission.
+
+  Consumers/checkpoints: newly authored projector.concern_resolved.history@1.0.0 and reader.concern_resolved.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_resolved_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_resolved.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_resolved_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_resolved_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern resolved 1.0.0 schema in Plans/event_payloads/concern/concern_resolved.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_resolved.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.resolved has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.f A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_resolved
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-442
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.resolved
+- DL-442
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+```
+
+### F3-714 - concern.updated Card 5 exact-family contract
+
+```yaml
+plan_unit_id: F3-714
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: |-
+  Newly authored owner contract for concern.updated 2.0.0 under DL-045 and DL-443, deck-2 Card 5.g option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's answer was "i approve all of it". The as-presented deck's fast-reply rule selects A; the following is the card's option text, not a quotation attributed to Jared:
+
+  The authorized Puppet Master controller records assessment changes within its permitted area, limited here to changes that neither reassign the responsible owner nor move the concern to a wider area. Users and workers request them. Save current evidence, exact saved version and reason for severity, category or authority changes. An authority assessment identifies the already-authorized role whose decision is needed; it grants no new action permission. A severity, category or authority change that amounts to a transfer follows your selected 5.b rule; one that amounts to promotion follows your selected 5.d rule, even when requested as part of an update. Any linked evidence addition, reopening or resolution follows 5.c, 5.e or 5.f respectively; an assessment update cannot perform those actions instead. Editing the screen’s display copy is insufficient. You see the current assessment, subject to existing human-approval rules.
+
+  Authorized controller means Puppet Master's permitted coordinating software for that part of the work, including package and seam controllers. Responsible owner means the assigned person, agent or component; assignment alone grants no additional permission. Workers propose and never gain direct recording permission. Preserve access checks, current supporting evidence, allowed transitions, and all existing critical/security/governance/human-approval requirements. The creator, responsible owner, resolver, confirmer and recording controller remain distinct roles. A role spelling or ref is never an authorization credential.
+
+  Payload and scope: the exact closed schema is Plans/card5_event_contracts/concern_updated.payload.schema.json; its $id is pm.card5.concern_updated.payload.v2, version 2.0.0. Only Project EventRecord 2.0.0: scope_kind=project, project_id must join original command, record and independently verified Storage evidence. scope_partition is project~base64url_no_pad(UTF8(project_id)), with no active/focus/default Project or application substitution. Subject identity is concern_id; creator and original identity never change under assignment, promotion, reopening, resolution or assessment. Envelope actor_ref, occurred_at_utc=ts, correlation_id, idempotency_key and payload schema join the frozen original; original authenticated thread/run/node/attempt/account/parent/causation context joins independently or is explicit null, never parsed from opaque refs. Storage assigns sequence, observed/persisted timestamps and receipt offsets; payload/caller metadata cannot override them.
+
+  Producer and identity: cmd.concern.update through handlers::concern::update is the exact owning handler after independently authenticated action authority. UCC-147 retains its public command fields; the closed normalized action custody is private and grants no extra caller fields or privileges. H=lowercase SHA-256(canonical MessagePack [storage_instance_id, project_id, "concern.updated", idempotency_key]); operation_digest=H and event_id=evt_concern_updated_H. Subject ids are preserved from canonical owner state (creation allocates/fixes its original annotation identity once). Request digest=lowercase SHA-256(canonical MessagePack {original_command, payload, before, after}), containing every field, including authority/confirmations/evidence, exact original command, immutable before/after revision refs and facts. Frozen original schema Plans/card5_event_contracts/concern_updated.operation.schema.json is closed, private canonical authority. before/after are complete action snapshots of the fields defined by that schema plus immutable refs committing to the full owner records; they do not replace the full canonical record. A ref cannot stand in for readback/authentication. All shared copies and snapshot effects join field by field. Exact types precede comparisons; use the existing canonical MessagePack codec without coercion, a new numeric cap or a lane-local serializer. Numbers follow CV-1100/SP-1100 (loads_current_json, current_integer within each slot's own bounds, no lane cap); timestamps follow CV-1101 through the shared date_time predicate (EventRecord profile for payload ts, CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit. Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker, not optional jsonschema format support.
+
+  Ordering: exact event-family admission FIRST, before journal, body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable before effects. Authenticate membership, permissions/source access, actual current owner revision, single-writer lease, canonical allowed action and existing approval evidence under the same commit fence. Resolve immutable evidence/body refs and secret-screen all strings. Freeze prepared original with all four receipt/result refs null at concern_updated_operation.v1:{project_id}:{operation_digest}. Atomically whole-value-CAS the original owner revision and complete canonical after-record plus committed operation in ONE canonical-redb transaction; committed has owner_commit_ref/result_ref/dispatch_receipt_ref nonnull and original_append_result_ref null. Large dependent bodies must be durable and authenticated before this atomic commit. A failed/no-change/stale/refused action produces no event. Missing atomicity or ambiguous original commit fences the action.
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 and its full-value v2 successor. After independently authenticated original owner commit/readback, append only the frozen candidate; join original EventRecord, Storage/source identity, semantic payload, eleven-field first AppendReceipt and retained four-field original_append_result. Storage metadata is verified against the independently retained Storage record. Only whole-value committed->settled CAS with all four original refs nonnull publishes terminal success. Prepared abandonment requires authenticated commit/append absence; uncertain append remains fenced. Committed recovery resolves the ORIGINAL append, settled same-key/same-caller-body retries return its exact original result/receipt. Same scoped key with changed caller semantic body is idempotency_conflict; unavailable authoritative dedupe is dedupe_unavailable, zero effect. No renewed timestamp, reclassification, reconfirmation, second effect or append. Storage-assigned metadata does not participate in caller-body retry comparison. Replay and History never dispatch cmd.concern.update or any linked action. Current live facts do not invalidate a valid retained original or its exact retry; original admission/version/recipe selection must be independently authenticated, never selected by a caller.
+
+  Exact effect: assessment-only changes to severity/category/authority_ref within the permitted current area, exact current saved revision, nonempty real patch, evidence and reason retained. Controller records; user/worker requests. An authority assessment names an already-authorized deciding role and grants no action permission. Owner, responsibility area, lifecycle, evidence set, lineage, creator and blocking effect cannot change through this assessment operation. A requested owner transfer must use F3-709/DL-438, wider area F3-711/DL-440, evidence addition F3-710/DL-439, reopening F3-712/DL-441 or resolution F3-713/DL-442, with their separate recorders/confirmers. Screen/projection edits do not mutate canonical records; update_kind/changed_fields from old editions are historical compatibility only and confer no broader current write capability.
+
+  Consumers/checkpoints: newly authored projector.concern_updated.history@1.0.0 and reader.concern_updated.history@1.0.0 expose passive record-backed audit History for this exact family. Orchestrator concern History/inspector is the named operating consumer; it follows canonical source routes and never invokes an action from an event replay. Explicitly adopt SP-278/DL-076: concern_updated_checkpoint.v1:{project_id}:{storage_instance_id}, closed schema Plans/card5_event_contracts/concern_updated.checkpoint.schema.json. Complete CURRENT-selected EventRecord index and nine-field durable index_read_token, no persisted redb_snapshot_id. Before every scan/read/CAS join actual live Storage/redb snapshot, scope, source-selection/generation, publication and original event context. Scan all source sequences through the captured frontier; unsupported/corrupt/inadmissible originals are unavailable, not skipped. Atomically whole-value CAS prior token/publication/state/frontier/last_event_id to complete verified coverage in one derived-redb transaction. last_event_id is last exact match or null, through_sequence_id is scanned coverage; no accumulated event refs or unbounded checkpoint array. Registry absence forbids advance; withdrawal/unknown schemas fence it.
+
+  History request uses publication_id, exact durable token, unsigned after_sequence_id. Closed response is {publication_id,index_read_token,after_sequence_id,event_refs,complete} with at most 256 scanned source sequences, 64 matching refs and 16384 canonical MessagePack bytes for the COMPLETE response, adopting the existing bounded reader contract. Stop before an unreturned match; oversized individual metadata/ref is unavailable without skipped coverage. Empty filtered pages continue at last actually scanned sequence until the verified frontier; no empty success merely on a budget boundary. All retained matches remain reachable across pages. Cursor beyond frontier or stale continuation refuses. Rebuild stages a separate publication from verified retained CURRENT source and complete coverage; atomically withdraw old/publish new. Source-generation change requires SP-278 verified translation or a verified new publication and restarted traversal. Current permission/membership/source access, deletion tombstones and withdrawal are checked before disclosure and again after returning helpers. Authenticate original event/family/schema/receipt/source/publication against independent retained evidence; a hash/ref is not authority. A valid retained original remains readable after current owner state/roles change or live writer admission closes, including valid replay-only history. Historical guards never invoke current-writer action rules.
+
+  Custody and physical binding: original canonical note/concern/action/operation records and authenticated commit/first/full-value receipt/source dependencies are non-rebuildable authority. Mandatory coherent backup/restore preserves them together under one verified Storage/source recovery boundary; mixed or missing originals fence mutation/disclosure. Projections cannot recreate lost authority. No raw note/title/reason/source/credentials/private account text or absolute local path in event/journal/checkpoint; use authenticated immutable refs, secret-screen every string and recheck source access/deletion at resolution. Preserve all original anchors/provenance/closure/lineage fields. Existing record keys and storage classes remain owned by SP-095/SP-666/CV-315/SP-233; note_record.v1 is compatibility lineage, not a new note subsystem. concern_updated_operation uses canonical redb/coordination_and_storage advisory budget, canonical MessagePack and complete-value 16384-byte limit. concern_updated_checkpoint uses derived redb/event_log hard budget, canonical MessagePack and complete-value 16384-byte limit. Measure every stored value independently; oversized mandatory metadata refuses, never truncates. Event bodies above the 16 KiB inline limit use SP-337 payload_ref with verified BLAKE3 identity, byte size and media type, not inline base64; externalizing an event does not waive any operation/checkpoint bound. Pressure cannot silently evict canonical authority; derived eviction makes History unavailable until verified rebuild.
+
+  Retention: existing concern_record RP-AUTHORITY-INDEFINITE and linked-source/blocked-episode holds bind only those already governed records. This exact event, its original operation/action custody and its History checkpoint have retention_policy_ref=PENDING_RETENTION_DECISION: Case L-3/SP-026 audit-authority/ordinary-telemetry groups and checkpoint RP-PROJECTION-3GEN are candidates only until the retention owners bind the exact family. No new duration, deletion, compaction, auto-expiry or hold release is chosen. Retention stays PARTIAL.
+
+  Compatibility/withdrawal: keep all original payload bytes/ids/versions; original concern updated 1.0.0 schema in Plans/event_payloads/concern/concern_updated.schema.json remains immutable and selected only from independently authenticated original admission evidence; it is not a current 2.0.0 writer. Original valid history is interpreted with its authenticated write-time edition/recipe, not a caller-selected weaker recipe: the SP-1101 RetainedDispatcher resolves it from Storage's sealed custody, exact binding and an installed frozen recipe tuple that pins the edition's exact schema bytes (a legacy concern v1 edition keeps its original Draft 2020-12 type and number validation with the CV-1101 predicate installed); unavailable or unsupported originals refuse without fallback. StorageMigrationCoordinator installs each declared schema before activation; unknown editions/withdrawn sources disclose unavailable. Future versions require their own exact admission and verified projection rebuild. Close exact-family writer admission first, fence new mutations, settle existing original obligations under original custody without repeating effects, whole-value-CAS checkpoint withdrawn and refuse stale/staged/withdrawn publications; retained original read rights and legal deletion/holds remain owner-governed. No sibling/alias admission or current-writer permission follows.
+
+  Oracles: Plans/card5_event_contracts/concern_updated.fixtures.json and python3 scripts/pm-card5-event-contracts-check.py --family concern.updated. Test closed payload/operation, recomputed identity/digest, original command/snapshot joins, phase/order/admission/refusal/replay/retry custody, current permission/currentness and exact action roles, retained historical reads after live changes, forged/foreign/withdrawn controls, enforced types/formats/LF/reference closure and bounded read/Storage metadata. Each negative is built from a valid named base, with coherent copies/digests/keys; changed semantic body is distinguished from Storage-assigned metadata. Every refusal goes through guard-table rows proved by the gated guard tool scripts/pm_guard_isolation.py (004bdedd63), credited per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability is asserted.
+gui_related: true
+gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- concern.updated has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- Preserve exact Card 5.g A recording and confirmation roles without expansion.
+validation_surfaces:
+- python3 scripts/pm-card5-event-contracts-check.py --family concern.updated
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_updated
+implementation_surfaces:
+- Plans/card5_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-443
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- concern.updated
+- DL-443
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```

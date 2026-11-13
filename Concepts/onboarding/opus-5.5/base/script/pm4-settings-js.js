@@ -1715,9 +1715,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
       { id: 'ntfy', name: 'Phone alerts', type: 'ntfy', status: 'attention', address: 'pm-private-topic', urgent: true }
     ],
     agents: [
-      { id: 'completion', name: 'Goal completion agent', events: ['Goal completed', 'Goal failed'], destinations: ['In-app', 'System notifications'], escalation: 'Discord after 5 minutes', status: 'active' },
+      { id: 'completion', name: 'Goal completion agent', events: ['Goal completed'], destinations: ['In-app', 'System notifications'], escalation: 'Discord after 5 minutes', status: 'active' },
       { id: 'approval', name: 'Approval agent', events: ['Approval required', 'Agent blocked'], destinations: ['System notifications', 'Phone alerts'], escalation: 'Repeat urgent after 10 minutes', status: 'active' },
-      { id: 'provider', name: 'Provider health agent', events: ['Usage exhausted', 'Authentication expired'], destinations: ['In-app'], escalation: 'None', status: 'active' }
+      { id: 'provider', name: 'Provider health agent', events: ['Provider usage exhausted'], destinations: ['In-app'], escalation: 'None', status: 'active' }
     ],
     events: [
   {
@@ -2243,7 +2243,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     }catch(_e){base.settingsProjectionSource=window.PM_SETTINGS_REGISTRY?'owner_registry_read_failed':'concept_default_fixture';base.settingsProjectionReadOnly=!!window.PM_SETTINGS_REGISTRY;return base;}
   }
   function save(snapshot){
-    var k=key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
+    var k=key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null),o55Migrations:clone(snapshot&&snapshot.o55Migrations||{})};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
     if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{projectStore.setItem(k,JSON.stringify(owned));}catch(_e){}
     if(!bridgeDepth)applyPaint(snapshot);
   }
@@ -3621,7 +3621,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   function renderOwnerRedirects(section){
     const ids=(section.settings||[]).map(setting=>setting.id);
     if(!ids.some(id=>/^code\.execution\.(?:docker|container|registry|k8s)/.test(id)))return '';
-    return `<div class="owner-redirects"><span>Container values stay ordinary project Settings; live containers and exact execution identities remain in their owners.</span><button class="btn" data-action="open-docker-manager">Open Docker Manager</button><button class="btn" data-action="open-hosts-manager">Open Hosts</button></div>`;
+    return `<div class="owner-redirects"><span>Container values stay ordinary project Settings; live containers and exact execution identities remain in their owners.</span><button class="btn" data-action="open-docker-manager">Open Docker Manager</button><button class="btn" data-action="open-hosts-manager">Open Servers</button></div>`;
   }
 
   function renderSettingsSection(section, workspace, index) {
@@ -4970,9 +4970,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   function openDialog({ title, subtitle = '', body = '', saveLabel = 'Save changes', cancelLabel = 'Cancel', wide = false, onSave = null, onOpen = null }) {
     const returnTarget=captureTransientFocus();closeOverlay(false);
     const overlay=document.createElement('div');overlay.className='overlay';overlay._pmReturnFocus=returnTarget;
-    overlay.innerHTML=`<section class="dialog ${wide?'wide':''}" role="dialog" aria-modal="true" aria-label="${escAttr(title)}">
+    /* FO-154: a plain confirm carries its message in the subtitle, so it has no body at all. An empty
+       .dialog-body kept its 17px padding and drew a blank band between the head's rule and the footer's;
+       with nothing to show, the body is not rendered (and no-body drops the head's rule so the footer's
+       own rule stays the single divider). */
+    const hasBody=String(body==null?'':body).trim()!=='';
+    overlay.innerHTML=`<section class="dialog ${wide?'wide':''}${hasBody?'':' no-body'}" role="dialog" aria-modal="true" aria-label="${escAttr(title)}">
       <div class="dialog-head"><div class="dialog-head-copy"><div class="dialog-title">${escapeHtml(title)}</div>${subtitle?`<div class="dialog-sub">${escapeHtml(subtitle)}</div>`:''}</div><button class="icon-btn" data-action="close-overlay" aria-label="Close">${icon('close')}</button></div>
-      <form class="dialog-form"><div class="dialog-body">${body}</div><div class="dialog-footer"><button type="button" class="btn" data-action="close-overlay">${escapeHtml(cancelLabel)}</button>${onSave?`<button type="submit" class="btn primary">${escapeHtml(saveLabel)}</button>`:''}</div></form>
+      <form class="dialog-form">${hasBody?`<div class="dialog-body">${body}</div>`:''}<div class="dialog-footer"><button type="button" class="btn" data-action="close-overlay">${escapeHtml(cancelLabel)}</button>${onSave?`<button type="submit" class="btn primary">${escapeHtml(saveLabel)}</button>`:''}</div></form>
     </section>`;
     portalRoot().append(overlay);overlay.addEventListener('mousedown',e=>{if(e.target===overlay)closeOverlay();});
     const form=overlay.querySelector('form');
@@ -6216,10 +6221,16 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
     const request=Object.freeze({schema_id:'pm.pmconcept7.typed_consumer_request.v1',action_kind:kind,action_id:id,target_id:targetId,availability,disabled_reason:disabledReason,canonical_contract_status:canonicalContractStatus,exact_return:exactReturn,concept_simulation_only:true,native_binding:false});
     const result=Object.freeze({schema_id:'pm.pmconcept7.typed_consumer_result.v1',action_kind:kind,action_id:id,target_id:targetId,availability:request.availability,disabled_reason:request.disabled_reason,canonical_contract_status:canonicalContractStatus,handler_unavailable:true,outcome:command?'handler_unavailable':availability==='unavailable'?'unavailable':'concept_projection_opened',exact_return:exactReturn,concept_simulation_only:true,native_binding:false,event_record:'not_emitted',runtime_receipt:'not_issued',production_mutation_dispatched:false});
     pm7ServerGapLastEmission=Object.freeze({request,result});
-    if(present&&command)infoDrawer('Handler unavailable','The exact canonical command is visible, but this browser concept has no native owner handler and dispatches no mutation, domain event, or runtime receipt.',[['Command',id],['Availability','handler_unavailable'],['Disabled reason','handler_unavailable'],['Exact return',`${exactReturn.domain}/${exactReturn.workspace} · ${exactReturn.focus_id}`],['Concept simulation only','true'],['Native binding','false'],['EventRecord','Not emitted'],['Runtime receipt','Not issued']]);
-    else if(present)infoDrawer(labelForLocalAction(id),'Typed owner-local projection only. It preserves exact return/currentness evidence and performs no semantic owner mutation.',[['Local action',id],['Availability',availability],['Disabled reason',disabledReason],['Exact return',`${exactReturn.domain}/${exactReturn.workspace} · ${exactReturn.focus_id}`],['Concept simulation only','true'],['Native binding','false'],['EventRecord','Not emitted'],['Runtime receipt','Not issued']]);
+    /* What a person sees is plain words named by the button they pressed (safety #8, C N-2: these drawers printed
+       "Typed owner-local projection only…" and the evidence fields below); the typed request and result stay on
+       PM7_SERVER_GAP_CONSUMERS for tests and are never shown. */
+    const shownLabel=String((el&&el.textContent)||'').replace(/\s+/g,' ').trim()||labelForLocalAction(id);
+    const shows=PM7_LOCAL_ACTION_SHOWS[id]||'more about this';
+    if(present&&command)infoDrawer(shownLabel,'This needs the full app.',[],{intro:'The preview cannot do this, so nothing was changed.'});
+    else if(present)infoDrawer(shownLabel,`In the full app this shows ${shows}.`,[],{intro:'This preview has nothing to show here yet, so nothing was opened or changed.'});
     return pm7ServerGapLastEmission;
   }
+  const PM7_LOCAL_ACTION_SHOWS={'ui.project.open_details':'the project’s name, where it is kept and when it was made','ui.project.source_location.open_details':'the folder that holds the project’s files and the computer it is on','ui.update.app.open_logs':'what each update did, step by step, and anything that went wrong','ui.update.app.open_release_notes':'what is new in each version','ui.update.content.open_details':'which catalogs were updated, and when'};
   function labelForLocalAction(id){return id.split('.').slice(2).join(' ').replaceAll('_',' ').replace(/\b\w/g,match=>match.toUpperCase());}
   function pm7ConsumerPanel(title,controls){return `<section class="systems-contract-card pm7-server-gap-panel" data-server-gap-consumer-panel="${escAttr(title)}"><h3>${escapeHtml(title)}</h3><p>Exact typed routes only. Browser concept projection; native handlers and runtime receipts remain unavailable.</p><div class="plugin-action-row">${controls.join('')}</div></section>`;}
   function pm7IntegrationConsumerPanel(provider){const target=provider?.id||'selected-provider';return pm7ConsumerPanel('Integration owner-local evidence',[pm7ConsumerButton('local','ui.auth_profile.open_details','Profile details',{targetId:target}),pm7ConsumerButton('local','ui.credential_attachment.open_consumers','Credential consumers',{targetId:target}),pm7ConsumerButton('local','ui.credential_attachment.open_details','Attachment details',{targetId:target}),pm7ConsumerButton('local','ui.credential_source.open_details','Credential source',{targetId:target}),pm7ConsumerButton('local','ui.installation.open_details','Installation details',{targetId:target}),pm7ConsumerButton('local','ui.installation.open_logs','Installation logs',{targetId:target}),pm7ConsumerButton('local','ui.tool_package.open_provenance','Package provenance',{targetId:target}),pm7ConsumerButton('local','ui.tool_package.review_license','Review license',{targetId:target}),pm7ConsumerButton('command','cmd.auth_profile.rename','Rename profile',{targetId:target})]);}
@@ -6645,10 +6656,11 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
   }
 
   function confirmDialog(title, message, confirmLabel, onConfirm, danger = false) {
+    const warning = !!danger;
     return openDialog({
       title,
-      subtitle: message,
-      body: `<div class="alert-strip ${danger ? 'danger' : 'info'}">${icon(danger ? 'alert' : 'info')}<div>${escapeHtml(message)}</div></div>`,
+      subtitle: warning ? '' : message,
+      body: warning ? `<div class="alert-strip danger">${icon('alert')}<div>${escapeHtml(message)}</div></div>` : '',
       saveLabel: confirmLabel,
       onSave: () => { onConfirm?.(); return true; }
     });
@@ -7124,7 +7136,7 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       case 'manage-credential-reference': {const found=findSettingGlobal(ds(el,'setting')),project=window.PM7_SETTINGS_TOME.project();if(!found)return;if(!project){showToast('Select or create a project','No-project mode cannot open mutation-capable credential Settings.','warning');return;}const owner=window.PM_SETTINGS_CREDENTIALS&&window.PM_SETTINGS_CREDENTIALS.open;if(typeof owner==='function'){owner({project_id:project.id,setting_id:found.setting.id,mode:'reference_only'});return;}infoDrawer(found.setting.label,'Credential material is never rendered, copied into project Settings, or persisted by this concept. The native owner opens the OS credential store and returns only a redacted reference/status.',[['Setting ID',found.setting.id],['Storage owner','OS credential store / secure Settings owner'],['Project value','Redacted reference only'],['Owner UI','Not attached to this concept fixture']]);return;}
       case 'clear-all-settings-filters': {clearTimeout(allSettingsQueryTimer);allSettingsQueryTimer=0;allSettingsView.query='';allSettingsView.category='all';allSettingsView.exposure='all';allSettingsView.control='all';allSettingsView.applicability='all';allSettingsView.ownerStatus='all';allSettingsView.resultType='all';allSettingsView.scrollTop=0;renderApp({soft:true});return;}
       case 'open-docker-manager': {const target=document.querySelector('.activity-bar .icon[data-target="panel-docker"]');if(target){target.click();showToast('Docker Manager opened','Container operations remain outside Settings.','info');}else showToast('Docker Manager unavailable','The owner surface is not mounted in this host.','warning');return;}
-      case 'open-hosts-manager': state.serverTab='hosts';navigate('system','servers');return;
+      case 'open-hosts-manager': /* the computers are on Server & Project Location's Servers tab (the old Hosts tab is gone; B11 D2) */ if(window.PM51&&typeof window.PM51.setTab==='function')window.PM51.setTab('servers','servers');navigate('system','servers');return;
       case 'toggle-setting': {
         const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const next=!settingValue(found.setting);if(!commitSettingValue(id,next))return;refreshSettingRow(id);showToast('Setting updated',`${found.setting.label} is now ${next?'on':'off'}.`);return;
       }
@@ -7146,7 +7158,7 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       case 'browse-setting-path': {
         const found=findSettingGlobal(ds(el,'setting'));if(!found)return;const picker=window.PM_SETTINGS_PICK_PATH;
         if(typeof picker==='function'){const chosen=picker({project_id:window.PM7_SETTINGS_TOME.project()?.id||null,setting_id:found.setting.id,current_value:settingValue(found.setting)});if(typeof chosen==='string'&&commitSettingValue(found.setting.id,chosen)){saveState();renderApp();}return;}
-        openDialog({title:`Browse · ${found.setting.label}`,subtitle:'The native Slint picker binds this field to the selected project-scoped path.',body:formGrid([{label:'Path',name:'path',value:settingValue(found.setting),autofocus:true}]),saveLabel:'Use path',onSave:(_v,form)=>{const value=readForm(form).path;if(!commitSettingValue(found.setting.id,value))return false;saveState();renderApp();return true;}});return;
+        openDialog({title:`Browse · ${found.setting.label}`,subtitle:'Type the folder\u2019s path. In the app, Choose opens your computer\u2019s own folder picker.',body:formGrid([{label:'Path',name:'path',value:settingValue(found.setting),autofocus:true}]),saveLabel:'Use path',onSave:(_v,form)=>{const value=readForm(form).path;if(!commitSettingValue(found.setting.id,value))return false;saveState();renderApp();return true;}});return;
       }
       case 'open-structured-setting': {
         const found=findSettingGlobal(ds(el,'setting'));if(!found)return;const current=settingValue(found.setting),kind=found.setting.control;
@@ -12319,7 +12331,7 @@ window.PM51 = PM51;
 #panel-settings .form-help.is-error, #panel-settings .pm51-field-help.is-error { color: var(--k3-red); }
 #panel-settings .form-input[aria-invalid="true"], #panel-settings .form-textarea[aria-invalid="true"] { border-color: var(--k3-red); }
 #panel-settings .pm51-commands-ph { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; color: var(--k3-text-2); }
-#panel-settings .pm51-commands-ph code { font-family: var(--mono-font, ui-monospace, monospace); font-size: 10.5px; padding: 0 5px; border: 1px solid var(--k3-line); border-radius: 4px; background: var(--k3-bg-2); color: var(--k3-text-1); }
+#panel-settings .pm51-commands-ph code { font-family: var(--mono-font, ui-monospace, monospace); font-size: 11px; padding: 0 5px; border: 1px solid var(--k3-line); border-radius: 4px; background: var(--k3-bg-2); color: var(--k3-text-1); }
 #panel-settings .pm51-commands-ph-sep { color: var(--k3-text-3); }
 #panel-settings .pm51-commands-ph.pm51-field-help { display: flex; }
 #panel-settings .pm51-dialog-group { border: 1px solid var(--k3-line); border-radius: 10px; background: var(--k3-bg-2); }

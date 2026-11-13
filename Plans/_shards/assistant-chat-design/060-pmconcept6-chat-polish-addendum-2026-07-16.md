@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24706-L24938
+Source lines: L24818-L25053
 
-Source SHA256: `5be00385fb332d27e9b2e7b29ae5101b4031acc3777b8ed3e23faceb8dcf4b75`
+Source SHA256: `8086b31b97cf95f027d1bff2e2707c2d1424ab3520f50bbbc06cd64ffea726cf`
 
 ---
 
@@ -188,56 +188,59 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-### ACD-438 - Model To Effort Popout Chaining And Single-Overlay Invariant
+### ACD-438 - One Model And Depth Picker And Single-Overlay Invariant
 
 ```yaml
 plan_unit_id: ACD-438
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Selecting a model closes the model mini-popout and automatically opens the reasoning-effort
-  popout above the model button, offering High, Medium, and Low; selecting an effort closes
-  the popout. At most one of the thoroughness popout, mode popout, model popout, effort
-  popout, or the footer fan-out stack is open at a time. The effort labels High, Medium, and
-  Low are a distinct control from Plan Thoroughness and its Light, Balanced, and Comprehensive
-  labels.
+canonical_text: |-
+  The chat composer uses one open model/depth picker. Selecting a model keeps its list open and shows that concrete route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are committed together as one atomic value and apply on the next turn; a model without supported levels commits with no depth. The options come from Models §7.3/§10.4.1, ACD-424 and F3-400 capability truth. High, Medium and Low appear only when supported by that route; no proven levels means no depth choices or empty depth panel, and Unknown support is not inferred as Unsupported. At most one of the combined model/depth picker, mode, thoroughness or persona popouts, or the footer fan-out stack is open. Plan Thoroughness keeps its separate Light, Balanced and Comprehensive control. Every Settings model picker reuses this same interaction, with depth inside the one open picker, while saving the whole pair in its own declared scope.
 gui_related: true
-gui_classification_reason: Defines visible model and effort popout chaining behavior.
-depends_on: [ACD-424, ACD-035, F3-400, F3-318]
+gui_classification_reason: Defines the visible shared model/depth picker and single-overlay behavior.
+depends_on:
+- ACD-424
+- ACD-035
+- F3-400
+- F3-318
+- MS-115
 unblocks: []
 acceptance_criteria:
-  - "Model selection closes the model popout and opens the effort popout above the model button."
-  - "The effort popout offers High, Medium, and Low; selection closes the popout and applies on the next turn."
-  - "At most one of thoroughness, mode, model, effort popouts or the footer fan-out is open at a time."
-  - "Effort High/Medium/Low and Plan Thoroughness Light/Balanced/Comprehensive remain distinct controls with distinct labels."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The model list stays open while supported depth levels appear beside it on desktop and inside the same picker on phone; depth stays in this same open picker.
+- Only route-proven depth choices are offered; High/Medium/Low are not a universal enum. A model without proven levels shows no depth choices, and Unknown remains Unknown.
+- Model and depth commit atomically and apply on the next turn; Settings saves the whole pair in the selected row’s declared scope.
+- At most one combined model/depth picker, mode, thoroughness or persona popout, or footer fan-out is open at a time.
+- Effort and Plan Thoroughness Light/Balanced/Comprehensive remain distinct controls with distinct labels.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 risk_class: chat_header_contract_drift
 reasoning_tier: standard
 context_scope: assistant_chat_header
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
-  mode: chat_model_to_effort_popout_chaining
+  mode: chat_model_depth_picker
   create_worknodes: false
 source_lineage:
-  - "Plans/assistant-chat-design.md:2806"
-  - "Plans/assistant-chat-design.md:5112"
-  - "Plans/FinalGUISpec.md:20696"
-  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/assistant-chat-design.md:2806
+- Plans/assistant-chat-design.md:5112
+- Plans/FinalGUISpec.md:20696
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "High"
-  - "Medium"
-  - "Low"
+- High
+- Medium
+- Low
 negative_constraints:
-  - "Effort High/Medium/Low labels must not be merged with Plan Thoroughness Light/Balanced/Comprehensive."
+- Effort High/Medium/Low labels must not be merged with Plan Thoroughness Light/Balanced/Comprehensive.
 compatibility_only_notes:
-  - "Slint portability: chained popouts map to sequential native popup surfaces anchored to the model button; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
+- 'Slint portability: one native popup anchored to the model button contains both the model list and its supported depth choices; no arbitrary-content backdrop blur, no SVG filters, precomputed color math.'
+- The old fixed High/Medium/Low wording is limited by Models §7.3 and F3-400 route-supported capability truth. Jared’s approved v2 screenshots and the lead’s r2 correction define the current combined model/depth interaction.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 ```

@@ -1,0 +1,224 @@
+{
+  "schema_id": "pm.card2.original_custody.v1",
+  "schema_version": "1.0.0",
+  "claim_boundary": "Static stand-in for Storage's sealed write-time custody of DCN originals: the independent sealed lookup SP-1101 requires of finite fixtures. It is written on the writer side and read only by the composition in scripts/pm_card2_events.py (Card2OriginalOwner, install_frozen_recipes); a case under check never adds to it, and no case field (authentic, verified, a recipe name) selects a recipe. Native custody, authentication, durability and admission are NOT_RUN; DCN is prepared without admission and has one write-time recipe, card2@1; every original selects it only from its own sealed receipt. Batch 2 fix 1 negatives: operation-ambiguous originals have two receipts (recipe_ambiguous), operation-other-scope originals have only the receipt of the application-scope original at that event id (original_unavailable), and operation-other originals have none (original_unavailable).",
+  "recipes": {
+    "card2@1": {
+      "owner_edition": "1.0.0",
+      "registry_revision": "prepared_without_admission",
+      "envelope": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0"
+      },
+      "payload_schema_version": "1.0.0",
+      "description": "The only DCN write-time recipe: EventRecord 2.0.0 with the family payload editions of Plans/card2_event_contracts.json, CV-366 keys and the card2: event_id, the CV-317 producer projection qualified under CV-1100, SP-236 EVENT_VALUE physical bytes, CV-339 strict full-value v2 receipts, SP-278 binding digests and SP-337 inline-or-pack payload custody, with the CV-1101 field profiles below.",
+      "identity_recipe": {
+        "application": "cv366-application@1+card2-event-id",
+        "project": "cv366-card2@1+card2-event-id"
+      },
+      "producer_recipe": "cv317-producer-semantic-digest+cv1100-qualified-jcs",
+      "physical_profile": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+      "full_value_profile": "cv339-strict-full-value-v2",
+      "local_source_profile": "sp278-binding-msgpack-sha256",
+      "payload_profile": "sp337-inline-16kib-or-blake3-pack",
+      "timestamp_profiles": {
+        "envelope/occurred_at_utc": "event_record",
+        "envelope/observed_at_utc": "storage_utc_z",
+        "envelope/persisted_at_utc": "storage_utc_z",
+        "payload/ts": "event_record"
+      },
+      "resources": {
+        "Plans/card2_event_payloads.schema.json": "18fc9707a788ac7c42023019db6af46964d9593f536aaa3519d95a4f92c03537",
+        "Plans/event_record.schema.json": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+      }
+    },
+    "card2@0-unregistered": {
+      "owner_edition": "1.0.0",
+      "registry_revision": "prepared_without_admission",
+      "envelope": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0"
+      },
+      "payload_schema_version": "1.0.0",
+      "description": "Synthetic, never a DCN edition: the write-time recipe named by the sealed receipts below, for which this reader installs no frozen verifier. It models an original whose authentic custody selects a recipe the reader does not support, which SP-1101 refuses as unsupported without any fallback.",
+      "identity_recipe": {
+        "application": "card2@0-unregistered",
+        "project": "card2@0-unregistered"
+      },
+      "producer_recipe": "card2@0-unregistered",
+      "physical_profile": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+      "full_value_profile": "card2@0-unregistered",
+      "local_source_profile": "card2@0-unregistered",
+      "payload_profile": "card2@0-unregistered",
+      "timestamp_profiles": {},
+      "resources": {}
+    }
+  },
+  "stores": {
+    "11111111-1111-4111-8111-111111111111": {
+      "note": "Storage holds this Store's write custody. Each original's write-time recipe and pinned resources come only from the one sealed receipt below for that exact original (Store, scope, event type, event id); an original without one is original_unavailable and there is no Store default (SP-1101)."
+    }
+  },
+  "sealed_receipts": [
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564",
+      "event_type": "browser.session.created",
+      "recipe": "card2@0-unregistered",
+      "scope_kind": "project",
+      "resource_manifest_sha256": "c10294d3b43397fe9b4020fff5da3aad6202013c35a44e8dda9ae7303cbadd00"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564",
+      "event_type": "memory.gist_state_changed",
+      "recipe": "card2@0-unregistered",
+      "scope_kind": "project",
+      "resource_manifest_sha256": "c10294d3b43397fe9b4020fff5da3aad6202013c35a44e8dda9ae7303cbadd00"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564",
+      "event_type": "browser.session.created",
+      "scope_kind": "project",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564",
+      "event_type": "browser.session.created",
+      "scope_kind": "application",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e73746174655f6368616e676564",
+      "event_type": "browser.session.state_changed",
+      "scope_kind": "project",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e73746174655f6368616e676564",
+      "event_type": "browser.session.state_changed",
+      "scope_kind": "application",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e636c6f736564",
+      "event_type": "browser.session.closed",
+      "scope_kind": "project",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e636c6f736564",
+      "event_type": "browser.session.closed",
+      "scope_kind": "application",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e70726f6d6f746564",
+      "event_type": "browser.session.promoted",
+      "scope_kind": "project",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e70726f6d6f746564",
+      "event_type": "browser.session.promoted",
+      "scope_kind": "application",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e676564",
+      "event_type": "browser.session.takeover_state_changed",
+      "scope_kind": "project",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e676564",
+      "event_type": "browser.session.takeover_state_changed",
+      "scope_kind": "application",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564",
+      "event_type": "memory.gist_state_changed",
+      "scope_kind": "project",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564",
+      "event_type": "memory.gist_state_changed",
+      "scope_kind": "application",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564",
+      "event_type": "browser.session.created",
+      "scope_kind": "project",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:62726f777365722e73657373696f6e2e63726561746564",
+      "event_type": "browser.session.created",
+      "scope_kind": "project",
+      "recipe": "card2@0-unregistered",
+      "resource_manifest_sha256": "c10294d3b43397fe9b4020fff5da3aad6202013c35a44e8dda9ae7303cbadd00"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:62726f777365722e73657373696f6e2e63726561746564",
+      "event_type": "browser.session.created",
+      "scope_kind": "application",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564",
+      "event_type": "memory.gist_state_changed",
+      "scope_kind": "project",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d616d626967756f7573:6d656d6f72792e676973745f73746174655f6368616e676564",
+      "event_type": "memory.gist_state_changed",
+      "scope_kind": "project",
+      "recipe": "card2@0-unregistered",
+      "resource_manifest_sha256": "c10294d3b43397fe9b4020fff5da3aad6202013c35a44e8dda9ae7303cbadd00"
+    },
+    {
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+      "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f746865722d73636f7065:6d656d6f72792e676973745f73746174655f6368616e676564",
+      "event_type": "memory.gist_state_changed",
+      "scope_kind": "application",
+      "recipe": "card2@1",
+      "resource_manifest_sha256": "e63f2e562f838ffc6f770457e9f544b18aaff355fe57e896ea7a05dea48a5cea"
+    }
+  ]
+}

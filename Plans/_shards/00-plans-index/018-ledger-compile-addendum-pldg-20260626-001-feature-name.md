@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L4922-L5129
+Source lines: L4921-L5125
 
-Source SHA256: `5466826b89fbf926dc6617fdc15e90402df21ad440998f2c2329ca3ce506b4aa`
+Source SHA256: `03c22068ebf3fdef184df1d11c199f25d74fdf67302c12f9915a98ed4acd73fc`
 
 ---
 
@@ -91,6 +91,7 @@ source_lineage:
 - Concepts/PMConcept.html#composer-chip
 - Concepts/PMConcept.html#activity-card
 - Concepts/PMConcept.html#requested-effective-model
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0007
 - atom-0008
@@ -168,33 +169,29 @@ preserved_exact_tokens:
 - runtime popovers
 - activity cards
 negative_constraints:
-- Do not treat later miscellaneous items as already specified by this first item.
-- Do not collapse PRD Builder outputs, Planning Wizard outputs, Plan packs, and runtime artifacts into an anonymous
-  flat document list.
-- Do not treat mutable draft projections as the same thing as immutable approved packs or historical snapshots.
-- Do not show historical runs as ambiguous text summaries without stable run identity.
-- Do not lose links to artifacts, evidence, ledger records, usage, or receipts when a run becomes historical.
-- Do not let non-vision models guess image contents when a bridge is available.
-- Do not treat image input as image generation.
-- Do not compile this requirement to canonical Plans without a future explicit compile request.
-- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
-  in Personas.md.
-- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
-- Do not treat PMConcept.html as final or canonical UI truth.
-- Do not copy the concept HTML/CSS directly into canonical Plans or implementation.
-- Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile.
-- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
-- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
-- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
-- Do not use PMConcept History table columns as the final complete schema when accepted ledger History atoms specify
-  deeper document/run/package comparison.
-- Do not let concept-only tab naming override future canonical owner placement.
-- Do not make vision bridge artifacts feel like detached plugin output.
-- Do not hide requested/effective model or fallback state when the bridge uses a separate vision-capable route.
-- Do not replace accepted PM-owned permission/disclosure behavior with PMConcept demo-only controls.
-- Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details.
-- Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility
-  checks.
+  - "Do not treat later miscellaneous items as already specified by this first item."
+  - "Do not collapse PRD Builder outputs, Planning Wizard outputs, Plan packs, and runtime artifacts into an anonymous flat document list."
+  - "Do not treat mutable draft projections as the same thing as immutable approved packs or historical snapshots."
+  - "Do not show historical runs as ambiguous text summaries without stable run identity."
+  - "Do not lose links to artifacts, evidence, ledger records, usage, or receipts when a run becomes historical."
+  - "Do not let non-vision models guess image contents when a bridge is available."
+  - "Do not treat image input as image generation."
+  - "Do not compile this requirement to canonical Plans without a future explicit compile request."
+  - "Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases in Personas.md."
+  - "Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only."
+  - "Do not treat PMConcept.html as final or canonical UI truth."
+  - "Do not copy the concept HTML/CSS directly into canonical Plans or implementation."
+  - "Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile."
+  - "Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher."
+  - "Keep Teacher Persona/model and capacity/cost/compaction information when launching from Help or a summon; ordinary PM task evidence stays attributable, without memory-use citations, context inspection or per-run source receipts."
+  - "Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant."
+  - "Do not use PMConcept History table columns as the final complete schema when accepted ledger History atoms specify deeper document/run/package comparison."
+  - "Do not let concept-only tab naming override future canonical owner placement."
+  - "Do not make vision bridge artifacts feel like detached plugin output."
+  - "Do not hide requested/effective model or fallback state when the bridge uses a separate vision-capable route."
+  - "Do not replace accepted PM-owned permission/disclosure behavior with PMConcept demo-only controls."
+  - "Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details."
+  - "Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility checks."
 owner_hints:
 - Plans/PRD_Builder.md
 - Plans/Planning_Wizard.md

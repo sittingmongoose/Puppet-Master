@@ -1989,7 +1989,11 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # Q5c / DL-471 Q-ID6/Q-ID7b: +2 production-intent rows (1331 -> 1333):
         # existing-topology shell_view and Repair unavailable until its operation is defined.
         # No Touch row, profile, alias, exclusion, native handler or proof is added.
-        "production_wiring_entry_count": 1333,
+        # Settings batch 2 / DL-475 (quiet Memory, packet row 1): +2 production-intent rows
+        # (1333 -> 1335): catalog.chat_memory_add and catalog.chat_memory_delete, the Memory
+        # page's real Add and Delete beside the existing Edit. No Touch row, profile, alias,
+        # exclusion, native handler or proof is added.
+        "production_wiring_entry_count": 1335,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
