@@ -61,8 +61,26 @@ phase('rn_recipe', 'record_number_rule: retained-original recipe selection from 
      'a retained original belongs to a Store whose write custody the sealed receipt catalogue holds', 'original_unavailable',
      "value['store_descriptor_valid'] is True and value['store_in_custody'] is not True"),
     ('RN06_recipe_installed', '/provenance/source_value_sha256',
-     'the receipt-selected recipe has an installed frozen verifier', 'recipe_unsupported',
-     "value['store_in_custody'] is True and value['recipe_installed'] is not True"),
+     'the receipt-selected recipe and its pinned resources have an installed frozen verifier', 'recipe_unsupported',
+     "value['store_in_custody'] is True and value['receipt_count'] == 1 and value['recipe_installed'] is not True"),
+])
+# SP-1101 (batch 2 fix 1): a retained original's recipe comes only from the one sealed
+# receipt Storage wrote for that exact original. No receipt is the existing unavailable
+# contract and more than one is no single selection (unsupported); neither falls back
+# to strict-v4 or any other recipe, and the reader never creates a receipt.
+phase('rn_receipt', 'record_number_rule: exactly one sealed write receipt selects the retained original\'s recipe.', [
+    ('RN07_receipt_present', '/provenance/source_value_sha256',
+     'the sealed catalogue holds a write receipt for this exact original (Store and source commitment)', 'original_unavailable',
+     "value['store_in_custody'] is True and value['receipt_count'] == 0"),
+    ('RN08_receipt_unique', '/provenance/source_value_sha256',
+     'the sealed catalogue holds exactly one write receipt for this exact original', 'recipe_unsupported',
+     "value['store_in_custody'] is True and value['receipt_count'] != 0 and value['receipt_count'] != 1"),
+])
+phase('rn_original', 'resolve_original: the sealed receipt binds the original the reader read (shared RetainedDispatcher).', [
+    ('RO01_receipt_binding', '/provenance',
+     'the receipt\'s sealed binding (Storage instance, scope, Server, Project, event type, event and idempotency identity, '
+     'owner operation and source commitment) is the original read', 'original_unavailable',
+     "value['dispatch_refusal'] is not None"),
 ])
 
 # --------------------------------------------------------------- input types

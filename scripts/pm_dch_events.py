@@ -116,12 +116,18 @@ RETAINED_RECIPES = json.loads((ROOT/'Plans/dch_retained_recipes.json').read_text
 # This is the static adapter's independent Storage write-receipt catalogue,
 # never an input accepted from an event, caller, pack or checkpoint candidate.
 CUSTODY = json.loads((ROOT/'Plans/dch_write_recipe_receipts.json').read_text())
-RECIPE_RECEIPTS = {(r['storage_instance_id'], r['source_value_sha256']): r['recipe_id'] for r in CUSTODY['receipts']}
-# SP-1101 (sweep part 2B, S4): the Stores whose complete write custody the sealed
-# catalogue models. An original of any other Store is unavailable (RN05); within a
-# custody Store a receipt names the write-time recipe, and an original without a
-# legacy receipt was written by the current strict-v4 writer (the catalogue's own
-# declared current_recipe), never a weaker one.
+# Every sealed receipt of one exact original (Store + source commitment), in catalogue
+# order. More than one is no single selection; the catalogue never collapses them.
+RECIPE_RECEIPTS = {}
+for _receipt in CUSTODY['receipts']:
+    RECIPE_RECEIPTS.setdefault((_receipt['storage_instance_id'], _receipt['source_value_sha256']), []).append(_receipt)
+del _receipt
+# SP-1101 (sweep part 2B, S4; batch 2 fix 1): the Stores whose complete write custody
+# the sealed catalogue models. An original of any other Store is unavailable (RN05).
+# Within a custody Store the one sealed receipt Storage wrote for that exact original
+# names its write-time recipe and pinned resources and binds its identity, strict-v4
+# originals included. No receipt is unavailable (RN07) and more than one is
+# unsupported (RN08); neither falls back to strict-v4 or any other recipe.
 CUSTODY_STORES = frozenset(CUSTODY['custody_stores'])
 
 # Method B guard tables (sweep part 2A). Every product refusal of this checker
@@ -133,7 +139,7 @@ CUSTODY_STORES = frozenset(CUSTODY['custody_stores'])
 # ordered chain of phases; reused boundaries (types, body, scope, joins,
 # history) are phases of their callers.
 TABLE_PHASES = (
-    'rn_recipe', 'ty_a', 'ty_b', 'rb_route', 'rb_pack_a', 'rb_pack_b',
+    'rn_recipe', 'rn_receipt', 'rn_original', 'ty_a', 'ty_b', 'rb_route', 'rb_pack_a', 'rb_pack_b',
     'sc_app', 'sc_project_a', 'sc_project_b', 'sc_project_bytes',
     'jn_policy', 'jn_envelope_a', 'jn_envelope_b',
     'rt_inputs', 'rt_policy', 'rt_schema_file', 'rt_original', 'rt_dedupe', 'rt_identity', 'rt_semantic',
@@ -242,13 +248,15 @@ def encoded(value, rule=CURRENT_RULE):
 def record_number_rule(provenance=None):
     """Sole recipe selector for numbers, physical bytes and schema/format editions.
 
-    No provenance means a new write/current identity input: strict-v4. A retained
-    source uses the recipe its sealed write receipt binds to the independently
-    read Store + exact source commitment (SP-1101). An original of a Store outside
-    the sealed custody is unavailable (RN05) and a receipt whose recipe has no
-    installed frozen verifier is unsupported (RN06); neither falls back. Within a
-    custody Store, an original without a legacy receipt was written by the
-    catalogue's declared current writer (strict-v4), never a weaker recipe.
+    No provenance means a new write/current identity input: the current writer's
+    recipe; this ordinary new-write selection reads no receipt. A retained source
+    uses the recipe of the one sealed write receipt Storage wrote for the
+    independently read Store + exact source commitment (SP-1101), strict-v4
+    originals included. An original of a Store outside the sealed custody is
+    unavailable (RN05), an original with no receipt is unavailable (RN07), more
+    than one receipt is no single selection (RN08, unsupported) and a receipt
+    whose recipe or pinned resources have no installed frozen verifier is
+    unsupported (RN06); none falls back, and reading never creates a receipt.
     A claimed recipe is only checked against that authority; it never selects it.
     Production must read this mapping from protected original write receipts;
     this catalogue models those observations, not receipt authenticity execution.
@@ -268,8 +276,15 @@ def _record_number_rule(provenance):
     keyed = type(store) is str and type(digest) is str
     descriptor_valid = keyed and STORAGE_INSTANCE_VALIDATOR.is_valid(store)
     in_custody = store in CUSTODY_STORES if keyed else None
+    receipts = RECIPE_RECEIPTS.get((store, digest), []) if in_custody else None
+    receipt_count = len(receipts) if in_custody else None
+    installed = None
     if in_custody:
-        recipe = RECIPE_RECEIPTS.get((store, digest), CUSTODY['current_recipe'])
+        # Only the one sealed receipt of this exact original selects; none or several select nothing.
+        recipe = receipts[0]['recipe_id'] if receipt_count == 1 else None
+        if receipt_count == 1:
+            installed = (recipe in RECIPE_TUPLES and receipts[0].get('resource_manifest_sha256')
+                         == RECIPE_TUPLES[recipe].resource_manifest_sha256)
     elif keyed and not descriptor_valid:
         # Not a Store at all: TY02 refuses the malformed descriptor in the next
         # phase. The provisional current rule only parameterizes that type walk.
@@ -281,7 +296,8 @@ def _record_number_rule(provenance):
                               digest_type=type_name(digest), claim_present=claim_present,
                               claim=provenance['recipe_id'] if claim_present else None, receipt_recipe=recipe,
                               store_descriptor_valid=descriptor_valid,
-                              store_in_custody=in_custody, recipe_installed=recipe in RECIPE_TUPLES if in_custody else None))
+                              store_in_custody=in_custody, receipt_count=receipt_count, recipe_installed=installed))
+    require('rn_receipt', dict(store_in_custody=in_custody, receipt_count=receipt_count))
     return recipe
 
 
@@ -356,35 +372,52 @@ def original_binding(record, store, digest):
 class DchOriginalOwner:
     """Static original owner over the sealed write-receipt catalogue, never request data.
 
-    It returns the selection record_number_rule made from that catalogue (the
-    rn_recipe rows) for one original; it holds the sealed commitment and receipt,
-    not native original bytes.
+    It answers only from the one sealed receipt Storage wrote for this exact
+    original (Store + source commitment): the receipt's own sealed binding, the
+    installed tuple of its recipe and its own bytes. It never builds a receipt or
+    a binding from the record being read. It holds the sealed commitment and
+    receipt, not native original bytes.
     """
 
-    def __init__(self, record, store, digest, rule):
-        self.record, self.store, self.digest, self.rule = record, store, digest, rule
+    def __init__(self, store, digest):
+        self.store, self.digest = store, digest
 
     def authenticated_original(self, original_ref):
         if original_ref != self.store + '/' + self.digest:
             raise Refusal('original_missing')
-        receipt = qualified_jcs([self.store, self.digest, self.rule])
-        return OriginalCustody(binding=original_binding(self.record, self.store, self.digest),
-                               recipe=RECIPE_TUPLES[self.rule], record_bytes=self.digest.encode('utf-8'),
-                               result_bytes=receipt, receipt_bytes=receipt)
+        receipts = RECIPE_RECEIPTS.get((self.store, self.digest), [])
+        if len(receipts) != 1:
+            raise Refusal('original_unavailable')
+        receipt = receipts[0]
+        sealed = receipt.get('binding')
+        if type(sealed) is not dict:
+            raise Refusal('original_binding')
+        binding = OriginalBinding(**sealed)
+        receipt_bytes = qualified_jcs(receipt)
+        return OriginalCustody(binding=binding, recipe=RECIPE_TUPLES.get(receipt['recipe_id']),
+                               record_bytes=self.digest.encode('utf-8'), result_bytes=receipt_bytes,
+                               receipt_bytes=receipt_bytes)
 
 
 def resolve_original(provenance, record, rule, verify):
     """Resolve one retained original through RetainedDispatcher; verify() is its frozen verifier.
 
     verify() runs the selected recipe's complete original checks and either
-    returns True or raises the TableRefusal of its own row. A dispatcher refusal
-    is not reachable after the rn_recipe rows (defence in depth) and propagates.
+    returns True or raises the TableRefusal of its own row. The dispatcher
+    compares the receipt's sealed binding with the binding of the original read
+    before verify() runs; any dispatcher refusal is row RO01 (rn_original).
+    `rule` is the rn_recipe selection from that same receipt.
     """
     store, digest = provenance['storage_instance_id'], provenance['source_value_sha256']
     frozen = FrozenRecipe(lambda custody: verify() is True)
     installed = {RECIPE_TUPLES[name]: frozen for name in RECIPE_TUPLES}
-    RetainedDispatcher(DchOriginalOwner(record, store, digest, rule), installed).resolve(
-        store + '/' + digest, original_binding(record, store, digest), disclose=lambda binding: True)
+    reason = None
+    try:
+        RetainedDispatcher(DchOriginalOwner(store, digest), installed).resolve(
+            store + '/' + digest, original_binding(record, store, digest), disclose=lambda binding: True)
+    except Refusal as refusal:
+        reason = refusal.reason
+    require('rn_original', dict(dispatch_refusal=reason))
 
 
 def stored_validator(current, path, rule):
