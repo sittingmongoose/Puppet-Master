@@ -1,5 +1,5 @@
 {
-  "authority": "Static independently supplied Storage append-custody observations; never derived from reader claims or accepted into a native store.",
+  "authority": "Static independently supplied Storage append-custody observations; never derived from reader claims or accepted into a native store. Batch 2 fix 1 (SP-1101): every stored source or dependency body read inside a retained original carries its own entry too (the current writer sealed 43 of them with executor-jcs-binary64-v1); a body read there without one refuses (RB02), never taking the current recipe by default, and two receipts for one original cannot load.",
   "records": {
     "e3c6b5978a43be0c425417a2d188faa3c08d4a37c033845f0b6cdab399d98846": {
       "recipe_version": "executor-json-integer-v0",
@@ -2988,6 +2988,264 @@
         "evt_executor_ae36c9cd10d8a614425860f63c856427395a6c745ac009d5b465cdc8f8aa63e3"
       ],
       "write_time_edition": "DX-sweep-p2a"
+    },
+    "09e15e6cb27329ee87b1d7410f7096d32c0fb1d5107ce3dedb5cb504dfef71ad": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "09e15e6cb27329ee87b1d7410f7096d32c0fb1d5107ce3dedb5cb504dfef71ad",
+      "write_time_edition": "DX-current-control"
+    },
+    "1dd9f3453935594537cc1155ce0e6355f6076f5ede14331d5284d5f1f93221bf": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "1dd9f3453935594537cc1155ce0e6355f6076f5ede14331d5284d5f1f93221bf",
+      "write_time_edition": "DX-current-control"
+    },
+    "200a4deb211008e71bd5b516bedd5c935a64383c7c90fc439921d7af05e74a8e": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "200a4deb211008e71bd5b516bedd5c935a64383c7c90fc439921d7af05e74a8e",
+      "write_time_edition": "DX-current-control"
+    },
+    "2e8228e46b8906c00cea447d6e0ca34ea3e7021e8cd930372f0c340413e7f705": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "2e8228e46b8906c00cea447d6e0ca34ea3e7021e8cd930372f0c340413e7f705",
+      "write_time_edition": "DX-current-control"
+    },
+    "4241ee8c3d491a37561a1e72f3acf9910b8c3b557ffca715746871129e93ea6b": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "4241ee8c3d491a37561a1e72f3acf9910b8c3b557ffca715746871129e93ea6b",
+      "write_time_edition": "DX-current-control"
+    },
+    "4768c23484224c0f5ec38ef272d5a8e72d3aa3056b134090deb8a88b0391846b": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "4768c23484224c0f5ec38ef272d5a8e72d3aa3056b134090deb8a88b0391846b",
+      "write_time_edition": "DX-current-control"
+    },
+    "562acb61157e19b40540af9b9001c503ef1da8a137f7cd768660aa79e7285a5d": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "562acb61157e19b40540af9b9001c503ef1da8a137f7cd768660aa79e7285a5d",
+      "write_time_edition": "DX-current-control"
+    },
+    "5afcf65462b647363d2e0009515918bbeda730c5ace02976b4436508e023bf67": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "5afcf65462b647363d2e0009515918bbeda730c5ace02976b4436508e023bf67",
+      "write_time_edition": "DX-current-control"
+    },
+    "5dbab94b9c230340c17b3a2d944392bcb2ee7974d0a023398a0a0809552305f4": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "5dbab94b9c230340c17b3a2d944392bcb2ee7974d0a023398a0a0809552305f4",
+      "write_time_edition": "DX-current-control"
+    },
+    "6d147f04913535ce0e8aa7fa2904973ff3150844d2ab2744a3d46e4663e39d47": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "6d147f04913535ce0e8aa7fa2904973ff3150844d2ab2744a3d46e4663e39d47",
+      "write_time_edition": "DX-current-control"
+    },
+    "72723747e54d989f88b8ac500ded42b1d7559d28fa0bb38c9df2ee02771bcaba": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "72723747e54d989f88b8ac500ded42b1d7559d28fa0bb38c9df2ee02771bcaba",
+      "write_time_edition": "DX-current-control"
+    },
+    "79671d21afc632322661b90db567e6a71f3d5fbdb6b824d247512f8e80ac727b": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "79671d21afc632322661b90db567e6a71f3d5fbdb6b824d247512f8e80ac727b",
+      "write_time_edition": "DX-current-control"
+    },
+    "7c136e4e869d8fb84bc382f6165dc5ccb7c94a5e01a10f7410b11755c4fd07a9": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "7c136e4e869d8fb84bc382f6165dc5ccb7c94a5e01a10f7410b11755c4fd07a9",
+      "write_time_edition": "DX-current-control"
+    },
+    "82776c21f529ecbfcafde82e624fbd9f26cff031f45d641dbbe58127d75837e1": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "82776c21f529ecbfcafde82e624fbd9f26cff031f45d641dbbe58127d75837e1",
+      "write_time_edition": "DX-current-control"
+    },
+    "85346c3c7517ccd5ee06d3db6e5036ba2cdff2c0689b3b25c2b5dc313a41206f": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "85346c3c7517ccd5ee06d3db6e5036ba2cdff2c0689b3b25c2b5dc313a41206f",
+      "write_time_edition": "DX-current-control"
+    },
+    "873eb95da35a2b5ef451d7ce5601ef04bfa01ff27f2fe40740c57142d31e52e9": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "873eb95da35a2b5ef451d7ce5601ef04bfa01ff27f2fe40740c57142d31e52e9",
+      "write_time_edition": "DX-current-control"
+    },
+    "89176122b8133876a59cac6a73f244bfd7cb0d6359ee07b7e196d6c7a6bbcd2a": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "89176122b8133876a59cac6a73f244bfd7cb0d6359ee07b7e196d6c7a6bbcd2a",
+      "write_time_edition": "DX-current-control"
+    },
+    "916a91bb88c15a32913b4e1bed67d67f78f4bb39487e2f04ee99793702c44d0f": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "916a91bb88c15a32913b4e1bed67d67f78f4bb39487e2f04ee99793702c44d0f",
+      "write_time_edition": "DX-current-control"
+    },
+    "93548af98aff1184f45880f6d45f875db56544f92f042a0b6d1b27fd001e7974": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "93548af98aff1184f45880f6d45f875db56544f92f042a0b6d1b27fd001e7974",
+      "write_time_edition": "DX-current-control"
+    },
+    "9777ac4fee135409630bf1aa8ba33dfac29c24be6c8e629612962a37323d27ba": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "9777ac4fee135409630bf1aa8ba33dfac29c24be6c8e629612962a37323d27ba",
+      "write_time_edition": "DX-current-control"
+    },
+    "98c3200d30d2240a76ab99fa880f689983b8c8ee55928316186d48abe18cd4be": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "98c3200d30d2240a76ab99fa880f689983b8c8ee55928316186d48abe18cd4be",
+      "write_time_edition": "DX-current-control"
+    },
+    "9d82c8c2ce1954bbbde393d4f1b28a236b2c61a993670a43950af46440c037f2": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "9d82c8c2ce1954bbbde393d4f1b28a236b2c61a993670a43950af46440c037f2",
+      "write_time_edition": "DX-current-control"
+    },
+    "9f2f5885290529f56c00c04a28f5ee3c3e075b0365a4c8de513d69f342d56bed": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "9f2f5885290529f56c00c04a28f5ee3c3e075b0365a4c8de513d69f342d56bed",
+      "write_time_edition": "DX-current-control"
+    },
+    "a22a7a812b6f9a38a8d8e2747bed523faab5608dfc1f423d7f26eb14ae436b3b": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "a22a7a812b6f9a38a8d8e2747bed523faab5608dfc1f423d7f26eb14ae436b3b",
+      "write_time_edition": "DX-current-control"
+    },
+    "a4b91158249c647a71e033f4cf6cebc5d1be43b6140532c9b50c3a1f12d85b35": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "a4b91158249c647a71e033f4cf6cebc5d1be43b6140532c9b50c3a1f12d85b35",
+      "write_time_edition": "DX-current-control"
+    },
+    "a9702052ac08b30346d138a3e183d081f01865cfa977523785f1fc5b32cc5b31": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "a9702052ac08b30346d138a3e183d081f01865cfa977523785f1fc5b32cc5b31",
+      "write_time_edition": "DX-current-control"
+    },
+    "ac698e921d96804d69d2f7c9519b7855bc263c4f68fcef19b432815984b40b82": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "ac698e921d96804d69d2f7c9519b7855bc263c4f68fcef19b432815984b40b82",
+      "write_time_edition": "DX-current-control"
+    },
+    "ac94bded7a36580ecec5201073c8cd96c41f4966ca3255d9097a52a800e62380": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "ac94bded7a36580ecec5201073c8cd96c41f4966ca3255d9097a52a800e62380",
+      "write_time_edition": "DX-current-control"
+    },
+    "adc27f3107f054e395ce1e74ff41e0d8d23b3e1169319d9881591c5f47db1091": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "adc27f3107f054e395ce1e74ff41e0d8d23b3e1169319d9881591c5f47db1091",
+      "write_time_edition": "DX-current-control"
+    },
+    "ae3e2621cee63d059cd78f1f90520f2c782d506f708ac8c04fcb256c6fcaf0c0": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "ae3e2621cee63d059cd78f1f90520f2c782d506f708ac8c04fcb256c6fcaf0c0",
+      "write_time_edition": "DX-current-control"
+    },
+    "b2e6f5150214c526f44162e1034fadeec8caf8fc8331302568281b7b4bf029ed": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "b2e6f5150214c526f44162e1034fadeec8caf8fc8331302568281b7b4bf029ed",
+      "write_time_edition": "DX-current-control"
+    },
+    "b74fd3674b7a5eee57783d2ec11779c6928cece3dfc8c176b6cd16f8de3c5915": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "b74fd3674b7a5eee57783d2ec11779c6928cece3dfc8c176b6cd16f8de3c5915",
+      "write_time_edition": "DX-current-control"
+    },
+    "bd6e42b8944e01ae8c4e587ec4d79bf673dc188771fef1b60baf4c177df093cd": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "bd6e42b8944e01ae8c4e587ec4d79bf673dc188771fef1b60baf4c177df093cd",
+      "write_time_edition": "DX-current-control"
+    },
+    "bfe2c872013b5e0306b5dbb1d2a5ebb44ef7d92ce5b846d91e50f4131674d1fd": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "bfe2c872013b5e0306b5dbb1d2a5ebb44ef7d92ce5b846d91e50f4131674d1fd",
+      "write_time_edition": "DX-current-control"
+    },
+    "c04dd1534e30c2a66be4456859150c29d5c4f81187165d58d832cc12a1cbccb2": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "c04dd1534e30c2a66be4456859150c29d5c4f81187165d58d832cc12a1cbccb2",
+      "write_time_edition": "DX-current-control"
+    },
+    "c1cfed3a13d11db9103777de70bdffb97a66dfe5ee3726f9ee21526a126af30b": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "c1cfed3a13d11db9103777de70bdffb97a66dfe5ee3726f9ee21526a126af30b",
+      "write_time_edition": "DX-current-control"
+    },
+    "db2022c5b20cd980f89f6d0665070dacec470e19e262ff55f7db6e0dae42c5eb": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "db2022c5b20cd980f89f6d0665070dacec470e19e262ff55f7db6e0dae42c5eb",
+      "write_time_edition": "DX-current-control"
+    },
+    "e0e8a971303de66a80234703736faf63d8fa38d27a84c96ec522d469dd3ef5a2": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "e0e8a971303de66a80234703736faf63d8fa38d27a84c96ec522d469dd3ef5a2",
+      "write_time_edition": "DX-current-control"
+    },
+    "e86929117384c68e94ef6bd4fc23977f307de8708a4ffbb2048dd3fb05128acf": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "e86929117384c68e94ef6bd4fc23977f307de8708a4ffbb2048dd3fb05128acf",
+      "write_time_edition": "DX-current-control"
+    },
+    "ea97526cfe0bcd77ca9dbe7ce9a4f2e6b1ac296d239740ee8ea17005999b248e": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "ea97526cfe0bcd77ca9dbe7ce9a4f2e6b1ac296d239740ee8ea17005999b248e",
+      "write_time_edition": "DX-current-control"
+    },
+    "ead62ac0212d0286fbd89a2e97d0748896f1fea13846f0d47c00c0185d19e740": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "ead62ac0212d0286fbd89a2e97d0748896f1fea13846f0d47c00c0185d19e740",
+      "write_time_edition": "DX-current-control"
+    },
+    "ef369640f7063c0d7138282ce747f79b65cad2a500eead928f8f15588d012f2f": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "ef369640f7063c0d7138282ce747f79b65cad2a500eead928f8f15588d012f2f",
+      "write_time_edition": "DX-current-control"
+    },
+    "f3930ff657769afdc9afcc691ba675263e0b26f6de1e3f1dbc013af9b5fc5d88": {
+      "kind": "stored-source-or-dependency-body",
+      "recipe_version": "executor-jcs-binary64-v1",
+      "source_sha256": "f3930ff657769afdc9afcc691ba675263e0b26f6de1e3f1dbc013af9b5fc5d88",
+      "write_time_edition": "DX-current-control"
     }
   },
   "resource_manifests": {
