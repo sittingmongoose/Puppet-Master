@@ -26,7 +26,7 @@ export default async function(t){
     const read=()=>f.locator(HEAD).evaluate(h=>{
      const origin=h.getBoundingClientRect();
      const box=e=>{const r=e.getBoundingClientRect();return {x:r.x-origin.x,y:r.y-origin.y,w:r.width,h:r.height,client:e.clientWidth,scroll:e.scrollWidth};};
-     return {head:box(h),status:box(h.querySelector('strong')),caption:h.querySelector('.orbit-caption')?box(h.querySelector('.orbit-caption')):null,time:box(h.querySelector('.sub')),controls:box(h.querySelector('.working-controls')),icon:box(h.querySelector('.work-phase-icon'))};
+     return {head:box(h),status:{...box(h.querySelector('strong')),groupClient:h.querySelector('strong').parentElement.clientWidth,groupScroll:h.querySelector('strong').parentElement.scrollWidth},caption:h.querySelector('.orbit-caption')?box(h.querySelector('.orbit-caption')):null,time:box(h.querySelector('.sub')),controls:box(h.querySelector('.working-controls')),icon:box(h.querySelector('.work-phase-icon'))};
     });
     const key=[look,width,state].join('/'), closed=await read();geometry[key]=closed;
     if(reference){
@@ -40,7 +40,7 @@ export default async function(t){
      if(state==='Long status')h.querySelector('strong').textContent='Waiting for permission';
     },state);
     const r=await read();
-    await t.check(key+' status and time fit',r.status.scroll<=r.status.client&&r.time.scroll<=r.time.client,JSON.stringify(r));
+    await t.check(key+' status and time fit',r.status.scroll<=r.status.client&&r.time.scroll<=r.time.client&&r.status.groupScroll<=r.status.groupClient,JSON.stringify(r));
     await t.check(key+' caption has width',state==='Completed'?r.caption===null:!!r.caption&&r.caption.w>0,JSON.stringify(r.caption));
     await t.check(key+' controls on own row',r.controls.y>=Math.max(r.status.y+r.status.h,r.time.y+r.time.h,r.icon.y+r.icon.h)-.5,JSON.stringify(r));
     if(width===400&&state==='Working')await t.crop(look+'-expanded-400',HEAD,'FO-193: Working status, caption, timer and expanded demo controls');
