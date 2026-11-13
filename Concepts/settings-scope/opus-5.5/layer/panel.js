@@ -639,7 +639,9 @@
     const el = D.createElement('div');
     el.className = 'psx-wline' + (o.sub ? ' is-sub' : '') + (o.inUse ? ' is-inuse' : '') + (o.muted ? ' is-muted' : '');
     el.setAttribute('role', 'group');
-    const vtext = o.valueText != null ? o.valueText : vt(id, o.value);
+    let vtext = o.valueText != null ? o.valueText : vt(id, o.value);
+    /* Jared 2026-11-13: a model row's inherit says which model it is here ("Same as Everyday model (Claude Opus 4)") */
+    if (PSX.isModel(id) && o.value === 'inherit' && PSX.places) { const iw = PSX.places.inheritWords(id, o.level, o.key); if (iw && iw.model && vtext.indexOf(iw.label) >= 0) vtext = vtext.replace(iw.label, `${iw.label} (${iw.model})`); }
     el.setAttribute('aria-label', `${o.name}: ${vtext}${def.combine === 'computer_ceiling' && o.level === 'computer' ? ', at most' : ''}`);
     el.setAttribute('data-psx-line', k);
     const states = (o.states || []).map((s) => `<div class="psx-wstate${s.muted ? ' is-muted' : ''}">${s.key ? mark(s.key) : ''}<span>${esc(s.text)}</span></div>`).join('');
@@ -648,8 +650,14 @@
     else if (o.actions !== false) {
       const acts = D.createElement('div'); acts.className = 'psx-wacts';
       const why = blockedWrite({ level: o.level, key: o.key });
-      const noEdit = editorKind(id) === 'none' ? 'Change this one with the row’s own control' : null;
-      if (o.change !== false) acts.appendChild(btn(`Change`, `Change ${o.name}’s value`, `${k}:change`, why || noEdit, () => { editing = { id, level: o.level, key: o.key, value: o.value }; rerender(); }));
+      /* Jared 2026-11-13 (item 3): every line can be set. A map or a list of records opens the row's own editor for this
+         place (places.js openRow); a model row opens the shared model picker over the panel */
+      const kind = editorKind(id);
+      if (o.change !== false) acts.appendChild(btn(`Change`, kind === 'row' ? `Change ${o.name}’s value in ${label(id)}’s own editor` : `Change ${o.name}’s value`, `${k}:change`, why, () => {
+        if (kind === 'row') { PSX.places.openRow(id, o.level, o.key); return; }
+        editing = { id, level: o.level, key: o.key, value: o.value }; rerender();
+        if (kind === 'model') openPickerSoon();
+      }));
       if (o.removable) { const ra = def.home === 'computer' ? { label: 'Use what’s found', aria: `Make ${o.name} use what Puppet Master finds` } : removeAction(id, o.level, o.key, o.name); acts.appendChild(btn(ra.label, ra.aria, `${k}:same`, why, () => PSX.setOwn(id, { level: o.level, key: o.key }, undefined))); }
       if (acts.children.length) el.appendChild(acts);
     }
@@ -662,42 +670,134 @@
     b.addEventListener('click', (e) => { e.preventDefault(); if (b.getAttribute('aria-disabled') === 'true') { PSX.note({ title: 'Not now', body: why + '.', mark: /answer|back/.test(why) ? 'offline' : 'info' }); return; } run(); });
     return b;
   }
-  /* the row's own control type, inline: a list of choices, a number with its range, a switch, words, or a list of
-     words one per line. Values the inline editor can't hold as they are (a map, a list of records) are changed with the
-     row's own control. A draft survives the engine redrawing the panel; a value outside the row's range stays unsaved,
-     with the reason next to it. Enter saves, Esc cancels. */
+  /* the row's own control type, inline: the shared model picker (a model row), a number with the row's own limits (and
+     its automatic value, Model default and the like), a list of choices as the main control lists them, several
+     choices, a switch, words, or a list of words one per line. A value the inline editor can't hold (a key-value map,
+     a list of records) is changed in the row's own editor for that place ('row'). Jared 2026-11-13: the limits are the
+     main control's (places.js PSX.places.limits), and Save asks the same check the guard does, so a value outside them
+     is never kept on any path. A draft survives the engine redrawing the panel. Enter saves, Esc cancels. */
   function editorKind(id) {
-    const d = DEFAULTS[id], opts = PSX.optionsFor(id);
+    if (PSX.isModel(id)) return 'model';
+    if (PSX.places && PSX.places.isNicknames(id)) return 'nicknames';
+    const d = DEFAULTS[id];
+    const lim = PSX.places ? PSX.places.limits(id) : null;
+    if (lim && lim.kind === 'number') return 'number';
+    if (lim && lim.kind === 'multi') return 'multi';
+    if (lim && lim.kind === 'choices') return 'select';
+    const opts = PSX.optionsFor(id);
     if (opts && opts.length) return 'select';
     if (typeof d === 'boolean') return 'bool';
     if (typeof d === 'number') return 'number';
     if (id === 'memory.assembly.project-rules') return 'area';
-    if (Array.isArray(d)) return d.every((x) => typeof x === 'string') ? 'lines' : 'none';
-    if (d && typeof d === 'object') return 'none';
+    if (Array.isArray(d)) return d.every((x) => typeof x === 'string') ? 'lines' : 'row';
+    if (d && typeof d === 'object') return 'row';
     return 'text';
+  }
+  PSX.editorKind = editorKind;
+  // the picker opens as soon as its line's editor is drawn (Change, or a new line from + Set for…)
+  function openPickerSoon() {
+    setTimeout(() => {
+      const root = (PSX.panel.own && PSX.panel.own.isConnected ? PSX.panel.own : D.querySelector('#pm-settings-root .detail-inspector'));
+      const t = root && root.querySelector('[data-psx-mpick][data-psx-edit-control]');
+      if (t && !(PSX.places && PSX.places.isOpen())) t.click();
+    }, 40);
   }
   function editor(id, o) {
     const wrap = D.createElement('div'); wrap.className = 'psx-wedit';
     const s = PSX.engineSetting(id), cur = o.value === undefined ? PSX.resolve(id, S.ctx).value : o.value;
     const draft = editing && editing.draft !== undefined ? editing.draft : undefined;
-    let ctl, read;
+    const placeCtx = PSX.places ? PSX.places.ctxAt(o.level, o.key) : S.ctx;
+    let ctl, read, focusEl;
     const kind = editorKind(id);
-    if (kind === 'select') {
-      const opts = PSX.optionsFor(id);
+    if (kind === 'row') { setTimeout(() => { editing = null; PSX.places.openRow(id, o.level, o.key); rerender(); }, 0); return wrap; }
+    if (kind === 'model') {
+      // the shared model picker, over the panel: the trigger shows the choice, the overlay holds the models and the depth
+      ctl = PSX.places.trigger(id, Object.assign({}, o, { value: draft !== undefined ? draft : cur }));
+      ctl.addEventListener('click', (e) => { e.preventDefault(); PSX.places.picker(ctl, id, Object.assign({}, o, { value: ctl.__psxValue }), (v) => { if (editing) editing.draft = v; }); });
+      read = () => ctl.__psxValue;
+    } else if (kind === 'nicknames') {
+      /* the one Model nicknames list (Plans batch 4, DL-479): a nickname, and the model it means chosen with the shared
+         picker (no depth: presets hold a model with depth). The page's own row is still the old text box until stream F
+         redraws it, so the map is edited here, line by line */
+      const start = draft !== undefined ? JSON.parse(draft) : (cur && typeof cur === 'object' && !Array.isArray(cur) ? cur : {});
+      const pairs = Object.entries(start).map(([k, v]) => ({ nick: k, model: v }));
+      ctl = D.createElement('div'); ctl.className = 'psx-nicks'; ctl.setAttribute('role', 'group'); ctl.setAttribute('aria-label', `${label(id)} for ${o.name}`);
+      const keep = () => { if (editing) editing.draft = JSON.stringify(Object.fromEntries(pairs.filter((x) => x.nick.trim() || x.model).map((x) => [x.nick, x.model]))); };
+      const paint = (focusLast) => {
+        ctl.innerHTML = '';
+        if (!pairs.length) ctl.insertAdjacentHTML('beforeend', '<p class="psx-nick-empty">No nicknames here yet.</p>');
+        pairs.forEach((x, i) => {
+          const rowEl = D.createElement('div'); rowEl.className = 'psx-nick';
+          const inp = D.createElement('input'); inp.type = 'text'; inp.className = 'psx-input psx-nick-name'; inp.value = x.nick; inp.placeholder = 'Nickname'; inp.spellcheck = false; inp.setAttribute('aria-label', `Nickname ${i + 1}`);
+          inp.addEventListener('input', () => { x.nick = inp.value; keep(); });
+          inp.__psxCancel = () => cancel();
+          const tr = PSX.places.trigger(id, Object.assign({}, o, { value: x.model, noDepth: 'A nickname means a model; presets keep a model with its depth' }));
+          tr.removeAttribute('data-psx-edit-control'); tr.setAttribute('data-psx-nick', String(i));
+          tr.addEventListener('click', (e) => { e.preventDefault(); PSX.places.picker(tr, id, Object.assign({}, o, { value: x.model, noDepth: 'A nickname means a model; presets keep a model with its depth' }), (v) => { x.model = PSX.modelOf(v); keep(); }); });
+          const rm = D.createElement('button'); rm.type = 'button'; rm.className = 'psx-tb is-quiet psx-nick-rm'; rm.textContent = 'Remove'; rm.setAttribute('aria-label', `Remove ${x.nick || 'this nickname'}`);
+          rm.addEventListener('click', () => { pairs.splice(i, 1); keep(); paint(); });
+          rowEl.appendChild(inp); rowEl.appendChild(tr); rowEl.appendChild(rm); ctl.appendChild(rowEl);
+        });
+        const add = D.createElement('button'); add.type = 'button'; add.className = 'psx-tb psx-nick-add'; add.textContent = '+ Add a nickname'; add.setAttribute('data-psx-nick-add', '1');
+        add.addEventListener('click', () => { pairs.push({ nick: '', model: '' }); keep(); paint(true); });
+        ctl.appendChild(add);
+        if (focusLast) { const f = ctl.querySelectorAll('.psx-nick-name'); if (f.length) f[f.length - 1].focus(); }
+        const first = ctl.querySelector('.psx-nick-name') || add;
+        first.setAttribute('data-psx-edit-control', '1'); first.__psxCancel = () => cancel();
+      };
+      paint();
+      read = () => Object.fromEntries(pairs.filter((x) => x.nick.trim() || x.model).map((x) => [x.nick.trim(), x.model]));
+      focusEl = ctl.querySelector('[data-psx-edit-control]');
+    } else if (kind === 'select') {
+      const ch = PSX.places ? PSX.places.choices(id) : [];
+      const opts = id === 'general.visual.theme' || ch.length < 2 ? PSX.optionsFor(id) : ch.map((x) => PSX.places.typed(id, x));
       ctl = D.createElement('select'); ctl.className = 'psx-input psx-select';
       opts.forEach((v) => { const op = D.createElement('option'); op.value = JSON.stringify(v); op.textContent = vt(id, v); if (same(v, draft !== undefined ? JSON.parse(draft) : cur)) op.selected = true; ctl.appendChild(op); });
       read = () => JSON.parse(ctl.value);
+    } else if (kind === 'multi') {
+      const ch = PSX.places.choices(id).map((x) => PSX.places.typed(id, x));
+      const on0 = draft !== undefined ? JSON.parse(draft) : (Array.isArray(cur) ? cur : []);
+      ctl = D.createElement('div'); ctl.className = 'psx-multi'; ctl.setAttribute('role', 'group'); ctl.setAttribute('aria-label', `${label(id)} for ${o.name}`);
+      ch.forEach((v) => { const lb = D.createElement('label'); lb.className = 'psx-multi-opt'; const cb = D.createElement('input'); cb.type = 'checkbox'; cb.value = JSON.stringify(v); cb.checked = on0.some((x) => same(x, v)); const sp = D.createElement('span'); sp.textContent = W.PM51 && W.PM51.valueLabel ? W.PM51.valueLabel(id, v) : String(v); lb.appendChild(cb); lb.appendChild(sp); ctl.appendChild(lb); });
+      read = () => [...ctl.querySelectorAll('input:checked')].map((x) => JSON.parse(x.value));
+      ctl.addEventListener('change', () => { if (editing) editing.draft = JSON.stringify(read()); });
+      focusEl = ctl.querySelector('input') || null;
     } else if (kind === 'bool') {
       const on0 = draft !== undefined ? draft === 'true' : !!cur;
       ctl = D.createElement('button'); ctl.type = 'button'; ctl.className = 'toggle pm51-toggle' + (on0 ? ' on' : ''); ctl.setAttribute('role', 'switch'); ctl.setAttribute('aria-checked', on0 ? 'true' : 'false');
       ctl.addEventListener('click', () => { const on = ctl.getAttribute('aria-checked') !== 'true'; ctl.setAttribute('aria-checked', String(on)); ctl.classList.toggle('on', on); if (editing) editing.draft = String(on); });
       read = () => ctl.getAttribute('aria-checked') === 'true';
     } else if (kind === 'number') {
-      ctl = D.createElement('input'); ctl.type = 'number'; ctl.className = 'psx-input psx-num'; ctl.value = draft !== undefined ? draft : String(cur == null ? '' : cur);
-      if (s && Number.isFinite(+s.min)) ctl.min = String(s.min); else if (DEFAULTS[id] >= 0) ctl.min = DEF[id].combine === 'computer_ceiling' ? '1' : '0';
-      if (s && Number.isFinite(+s.max)) ctl.max = String(s.max);
-      ctl.step = Number.isInteger(DEFAULTS[id]) ? '1' : 'any';
-      read = () => (ctl.value === '' ? NaN : Number(ctl.value));
+      /* the main control's limits, in the units it shows (places.js): min, max and step on the box itself, the unit beside
+         it, and the row's automatic value (Model default, Provider default, the theme's own) as its own choice */
+      const lim = (PSX.places && PSX.places.limits(id, placeCtx)) || { lo: NaN, hi: NaN, step: null, scale: 1, unit: '', auto: [] };
+      const isAuto = (v) => lim.auto.some((x) => same(x, v)) || (lim.auto.length && (v === null || v === ''));
+      const autoNow = editing && editing.auto !== undefined ? editing.auto : isAuto(cur);
+      const box = D.createElement('div'); box.className = 'psx-numrow';
+      ctl = D.createElement('input'); ctl.type = 'number'; ctl.className = 'psx-input psx-num'; ctl.setAttribute('inputmode', 'decimal');
+      const n0 = isAuto(cur) ? '' : PSX.places ? PSX.places.shown(id, cur, lim) : cur;
+      ctl.value = draft !== undefined ? draft : (Number.isFinite(n0) ? String(n0) : String(n0 == null || Number.isNaN(n0) ? '' : n0));
+      if (Number.isFinite(lim.lo)) ctl.min = String(lim.lo);
+      if (Number.isFinite(lim.hi)) ctl.max = String(lim.hi);
+      ctl.step = lim.step ? String(lim.step) : (lim.whole ? '1' : 'any');
+      box.appendChild(ctl);
+      if (lim.unit) box.insertAdjacentHTML('beforeend', `<span class="psx-unit">${esc(lim.unit)}</span>`);
+      const range = Number.isFinite(lim.lo) && Number.isFinite(lim.hi) ? `From ${+lim.lo.toFixed(6)} to ${+lim.hi.toFixed(6)}` : Number.isFinite(lim.lo) ? `At least ${+lim.lo.toFixed(6)}` : Number.isFinite(lim.hi) ? `At most ${+lim.hi.toFixed(6)}` : '';
+      if (range) { box.insertAdjacentHTML('beforeend', `<span class="psx-range">${esc(range)}</span>`); ctl.setAttribute('aria-description', range); }
+      let autoBox = null;
+      if (lim.auto.length) {
+        const al = D.createElement('label'); al.className = 'psx-auto';
+        autoBox = D.createElement('input'); autoBox.type = 'checkbox'; autoBox.checked = !!autoNow; autoBox.setAttribute('data-psx-auto', '1');
+        const words = vt(id, lim.auto[0]); const sp = D.createElement('span'); sp.textContent = `Use ${/^(not set|)$/i.test(words) ? 'the automatic value' : words.charAt(0).toLowerCase() + words.slice(1)}`;
+        al.appendChild(autoBox); al.appendChild(sp);
+        // the number box shows only while a number is chosen (a disabled box is turned into a hover-only one by the page)
+        const sync = () => { box.hidden = autoBox.checked; if (editing) editing.auto = autoBox.checked; };
+        autoBox.addEventListener('change', sync); sync();
+        wrap.appendChild(al);
+      }
+      wrap.appendChild(box);
+      read = () => (autoBox && autoBox.checked ? lim.auto[0] : ctl.value === '' ? NaN : (PSX.places ? PSX.places.stored(id, Number(ctl.value), lim) : Number(ctl.value)));
+      ctl.__psxWrapped = true;
     } else if (kind === 'area' || kind === 'lines') {
       ctl = D.createElement('textarea'); ctl.className = 'psx-input psx-area'; ctl.rows = 3;
       ctl.value = draft !== undefined ? draft : kind === 'lines' ? (Array.isArray(cur) ? cur.join('\n') : '') : String(cur || '');
@@ -707,26 +807,31 @@
       ctl = D.createElement('input'); ctl.type = 'text'; ctl.className = 'psx-input psx-text'; ctl.value = draft !== undefined ? draft : String(cur == null ? '' : cur); ctl.spellcheck = false;
       read = () => ctl.value.trim();
     }
-    if (ctl.tagName !== 'BUTTON') ctl.addEventListener('input', () => { if (editing) editing.draft = ctl.value; });
+    focusEl = (kind === 'nicknames' ? ctl.querySelector('[data-psx-edit-control]') : focusEl) || ctl;
+    if (ctl.tagName === 'INPUT' || ctl.tagName === 'TEXTAREA') ctl.addEventListener('input', () => { if (editing) editing.draft = ctl.value; });
     if (ctl.tagName === 'SELECT') ctl.addEventListener('change', () => { if (editing) editing.draft = ctl.value; });
-    ctl.setAttribute('data-psx-edit-control', '1');
-    ctl.__psxCancel = () => cancel();
-    ctl.setAttribute('aria-label', `${label(id)} for ${o.name}`);
+    focusEl.setAttribute('data-psx-edit-control', '1');
+    focusEl.__psxCancel = () => cancel();
+    (kind === 'multi' ? ctl.querySelectorAll('input') : [ctl]).forEach((x) => { x.__psxCancel = () => cancel(); });
+    if (kind !== 'model' && kind !== 'nicknames') ctl.setAttribute('aria-label', `${label(id)} for ${o.name}`);
     const errId = PSX.uid('psx-err');
     const err = D.createElement('div'); err.className = 'psx-err'; err.id = errId; err.hidden = !(editing && editing.error);
     if (editing && editing.error) { err.innerHTML = `${mark('warning')}<span>${esc(editing.error)}. Nothing was saved.</span>`; ctl.setAttribute('aria-invalid', 'true'); ctl.setAttribute('aria-describedby', errId); }
     const save = () => {
       const v = read();
-      const bad = PSX.guard.invalid({ id, value: Number.isNaN(v) ? NaN : v }) || (Number.isNaN(v) ? 'It has to be a number' : null);
-      if (bad) { if (editing) editing.error = bad; err.hidden = false; err.innerHTML = `${mark('warning')}<span>${esc(bad)}. Nothing was saved.</span>`; ctl.setAttribute('aria-invalid', 'true'); ctl.setAttribute('aria-describedby', errId); try { ctl.focus(); } catch (e) { /* gone */ } return; }
+      // the same check the one write path makes, at this place (guard.js invalid, places.js check)
+      const bad = PSX.guard.invalid({ level: o.level, key: o.key, id, value: v }) || (Number.isNaN(v) ? 'It has to be a number' : null);
+      if (bad) { if (editing) editing.error = bad; err.hidden = false; err.innerHTML = `${mark('warning')}<span>${esc(bad)}. Nothing was saved.</span>`; ctl.setAttribute('aria-invalid', 'true'); ctl.setAttribute('aria-describedby', errId); try { focusEl.focus(); } catch (e) { /* gone */ } return; }
+      if (PSX.places) PSX.places.close();
       const key = `${o.level}:${o.key || ''}:change`; editing = null; PSX.panel.focusAfter = key; PSX.setOwn(id, { level: o.level, key: o.key }, v); rerender();
     };
-    const cancel = () => { const key = `${o.level}:${o.key || ''}:change`; editing = null; rerender({ focusKey: o.isNew ? 'add:' + o.level : key }); };
-    ctl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !(ctl.tagName === 'TEXTAREA' && e.shiftKey) && !(kind === 'lines' && !e.metaKey && !e.ctrlKey)) { e.preventDefault(); e.stopPropagation(); save(); }
+    const cancel = () => { if (PSX.places) PSX.places.close(); const key = `${o.level}:${o.key || ''}:change`; editing = null; rerender({ focusKey: o.isNew ? 'add:' + o.level : key }); };
+    const onKey = (e) => {
+      if (e.key === 'Enter' && !(e.target.tagName === 'TEXTAREA' && e.shiftKey) && !(kind === 'lines' && !e.metaKey && !e.ctrlKey) && kind !== 'model' && e.target.type !== 'checkbox' && e.target.tagName !== 'BUTTON') { e.preventDefault(); e.stopPropagation(); save(); }
       else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); cancel(); }
-    });
-    wrap.appendChild(ctl);
+    };
+    ctl.addEventListener('keydown', onKey);
+    wrap.appendChild(ctl.__psxWrapped ? wrap.querySelector('.psx-numrow') || ctl : ctl);
     wrap.appendChild(err);
     const acts = D.createElement('div'); acts.className = 'psx-wacts';
     acts.appendChild(btn('Save', `Save ${o.name}’s value`, `${o.level}:${o.key || ''}:save`, null, save));
@@ -756,7 +861,7 @@
     /* Astra max A1: a per_item row is decided item by item, so each own line says which items it decides here, and which
        of its items a more careful place overrules. Astra max A4: Reduce motion's own requests are ORed, so a request for
        full motion that less motion overrules says so */
-    const itemName = (k, v) => (r.perItem === 'rules' ? String(k) : String(vt(id, { [k]: v })).replace(/:.*$/, ''));
+    const itemName = (k, v) => (r.perItem === 'rules' || r.perItem === 'nicknames' ? String(k) : String(vt(id, { [k]: v })).replace(/:.*$/, ''));
     // the Everywhere line shows the default when Everywhere has no value of its own, so what the default decides is its
     const showsDefault = (lvl) => lvl === 'everywhere' && r.everywhere === undefined;
     const perStates = (lvl, key, inCtx) => {
@@ -874,6 +979,7 @@
     if (id === 'general.visual.reduce-animations') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule" data-psx-rule="motion">Less motion wins: if you ask for it everywhere, on a device or in a project that applies here, or your operating system does, motion is reduced.${r.motion && r.motion.os ? ' Your operating system asks for it now.' : ''}</p>`);
     // Astra max A1: how a per_item row's items combine, in its owner's words
     if (r.perItem === 'answers') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule" data-psx-rule="per-item">Each answer is decided on its own. A project’s or a computer’s own answer beats everywhere’s; when both have one for the same tool, the more careful is used: Block, then Ask me first, then Allow.</p>`);
+    if (r.perItem === 'nicknames') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule" data-psx-rule="per-item">Each nickname is decided on its own: a project’s line wins for that nickname, and nicknames set only everywhere still apply in the project.</p>`);
     if (r.perItem === 'rules') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule" data-psx-rule="per-item">The rules from every place apply together, checked top to bottom: everywhere’s first, then the computer’s, then the project’s. The last matching rule wins, so a project’s own rule beats the same rule from a computer or everywhere.</p>`);
     if (def.chats || (!c.project && off.everywhere && def.home !== 'computer')) {
       const n = PSX.resolve(id, { project: 'none', device: c.device, on: c.on });
@@ -931,8 +1037,11 @@
     PSX.menu(anchor, items, { label: level === 'project' ? 'Set for a project' : level === 'device' ? 'Set for a device' : 'Set for a computer', width: 280, search: items.length > 8 });
   }
   function startNew(id, level, key) {
+    // Jared 2026-11-13 (item 3): a map or a list of records goes to the row's own editor for that place
+    if (editorKind(id) === 'row') { PSX.places.openRow(id, level, key); return; }
     editing = { id, level, key, value: PSX.resolve(id, S.ctx).asked !== undefined ? PSX.resolve(id, S.ctx).asked : PSX.resolve(id, S.ctx).value, isNew: true };
     rerender();
+    if (editorKind(id) === 'model') { openPickerSoon(); return; }
     setTimeout(() => { const root = (PSX.panel.own && PSX.panel.own.isConnected ? PSX.panel.own : D.querySelector('#pm-settings-root .detail-inspector')); const f = root && root.querySelector('[data-psx-edit-control]'); if (f) f.focus(); }, 30);
   }
   function makeMenu(id, r, anchor) {
@@ -1135,6 +1244,7 @@
   W.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     if (W.PMR && W.PMR.menu && W.PMR.menu.isOpen()) return;   // the menu closes first, by itself
+    if (PSX.places && PSX.places.isOpen()) return;              // the model picker closes first, by itself (places.js)
     const a = D.activeElement;
     if (a && typeof a.__psxCancel === 'function') { e.preventDefault(); e.stopImmediatePropagation(); a.__psxCancel(); return; }
     const top = PSX.topSheet();
@@ -1143,5 +1253,5 @@
   PSX.on('redraw', () => rerender());
   PSX.on('fed', () => rerender());
   PSX.on('ctx', () => { editing = null; rerender(); });
-  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, ownerFacts, ownerOf, ACTION_OWNERS, own: null, ownId: null, focusAfter: null, rerender };
+  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, ownerFacts, ownerOf, ACTION_OWNERS, own: null, ownId: null, focusAfter: null, rerender, refresh: () => rerender(), editorKind };
 })(window);

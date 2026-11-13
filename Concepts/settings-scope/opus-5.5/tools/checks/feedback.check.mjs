@@ -4,7 +4,7 @@
 //   python3 Concepts/settings-scope/opus-5.5/tools/build_standalone.py $OUT
 //   browser-check run Concepts/settings-scope/opus-5.5/tools/checks/feedback.check.mjs \
 //     --config Concepts/pm7-tools/browser-check/browser-check.config.mjs --set page=$OUT/settings-scope-app.html
-// --set only=strip|rows|shake|acct|head|where|detail|copy|always runs one part; --set looks=basic-dark,... narrows the looks
+// --set only=strip|rows|shake|acct|head|where|detail|copy|always|jared1113 runs one part (jared1113: --set j1113=models,paths,limits); --set looks=basic-dark,... narrows the looks
 // (default Basic Dark, Retro Light and NieR Dark); --set lookShots=1 lists the review images under LOOK.
 // `strip` opens the page with the review strip (settings-scope.html beside the app page, or --set strip=<path>); the
 // account switch in `shake` is compared with bare PMConcept7 (Concepts/PMConcept7.html, or --set bare=<path>).
@@ -664,6 +664,129 @@ async function astraCopy(t) {
 		await run(t, () => window.PSX.closeSheets()); await settle(t, 300);
 	}
 	await reset(t);
+}
+
+/* ------------------------------------------------------------------ Jared's review, 2026-11-13 (items 1, 3 and 5)
+   `--set only=jared1113` runs the three parts; `--set j1113=models,paths,limits` narrows them, `--set j1113max=N` walks
+   only the first N rows of the paths part (a quick look; the proof run walks them all).
+   Every expectation is read from the main control or Plans' inventory, never from the layer's own answer: a model row is
+   the inventory's type model_picker with its option_labels.inherit; a row's choices are the ones its main control lists
+   (PM51.settingRows draws the row the way Settings does); a number's limits are its main control's box (min and max on
+   the input PM51.settingRows draws), or the main control's own number dialog's (PM51.rowMeta, then the engine setting's
+   own bounds), with the inventory's range ("0.0-2.0") over them. The paths go through real presses: the end of the
+   path (Change, + Set for…, the menu's place) is clicked, a value is typed, Save is pressed. */
+let J_INV_ROWS;
+const jInventory = (t) => {
+	if (J_INV_ROWS !== undefined) return J_INV_ROWS;
+	try {
+		const raw = JSON.parse(fs.readFileSync(path.resolve(t.args.inventory || 'Plans/settings_inventory.json'), 'utf8'));
+		J_INV_ROWS = {};
+		(raw.settings || []).forEach((r) => { if (r && r.id) J_INV_ROWS[r.id] = { type: r.type || null, options: r.options || null, labels: r.option_labels || null, picker: r.model_picker || null, may: (r.layering || {}).may_differ_by || [], home: (r.layering || {}).home || null, def: r.default }; });
+	} catch (e) { J_INV_ROWS = null; }
+	return J_INV_ROWS;
+};
+// the panel's current page (a page cross-fading out, .o55-leaving, can still hold the last row's buttons for a moment)
+const J_INSP = '#pm-settings-root .detail-inspector :is([data-psx-block="where"], .psx-wedit, [data-psx-block]):not(.o55-leaving *)';
+const J_PANEL = '#pm-settings-root .detail-inspector';
+/* Playwright brings a target into view with scrollIntoView, which also scrolls the app's overflow-hidden ancestors (tool
+   note E above): a press here first scrolls only the panel's own scroller, then puts any scrolled root back */
+const J_UNSCROLL = () => { for (let el = document.getElementById('pm-settings-root'); el; el = el.parentElement) { if (el.scrollTop && getComputedStyle(el).overflowY === 'hidden') el.scrollTop = 0; } if (document.scrollingElement && document.scrollingElement.scrollTop) document.scrollingElement.scrollTop = 0; };
+async function jPress(t, loc) {
+	await t.root.evaluate(J_UNSCROLL);
+	await loc.evaluate((el) => { if (window.__psxScrollTo) window.__psxScrollTo(el, 'center'); });
+	await loc.click();
+}
+// open one row's Details panel (programmatic, the way search and the row menu do); the presses that follow are real
+async function jOpen(t, id) {
+	await run(t, (i) => {
+		if (window.PSX.places && window.PSX.places.close) window.PSX.places.close();
+		const c = document.querySelector('#pm-settings-root .detail-inspector [data-psx-key$=":cancel"]'); if (c) c.click();
+		document.querySelectorAll('.drawer-wrap.is-open [data-action="close-overlay"]').forEach((b) => b.click());
+		window.PM51.revealSetting(i, { detail: true });
+	}, id);
+	return t.root.waitForFunction((i) => {
+		const insp = document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"]');
+		const page = insp && (insp.querySelector(':scope > .o55-insp-page:not(.o55-leaving)') || insp);
+		const code = page && page.querySelector('.o55-insp-tech code');
+		return !!(code && code.textContent.trim() === i && page.querySelector('[data-psx-block="where"]') && !document.querySelector('.drawer-wrap.is-open'));
+	}, id, { timeout: 8000, polling: 50 }).then(async () => { await t.root.evaluate(J_UNSCROLL); return true; }, () => false);
+}
+// clean up after one path: the picker, an inline edit, the row's own editor
+async function jClean(t) {
+	const hadRow = await run(t, () => !!document.querySelector('.drawer-wrap.is-open') || !!(window.PSX.places && window.PSX.places.editing));
+	await run(t, () => {
+		if (window.PSX.places && window.PSX.places.close) window.PSX.places.close();
+		const c = document.querySelector('#pm-settings-root .detail-inspector [data-psx-key$=":cancel"]'); if (c) c.click();
+		document.querySelectorAll('.drawer-wrap.is-open [data-action="close-overlay"]').forEach((b) => b.click());
+	});
+	await t.root.waitForFunction(() => !document.querySelector('.drawer-wrap.is-open, .psx-mpick') && !document.querySelector('#pm-settings-root .detail-inspector .psx-wedit') && !(window.PSX.places && window.PSX.places.editing), null, { timeout: 3000, polling: 50 }).catch(() => {});
+	// the row's own editor, once closed, puts the engine back on this context a moment later (places.js endRow)
+	if (hadRow) await settle(t, 450);
+}
+/* a path to a place, with real presses: + Set for a computer… / device… / project… and the first place it offers, or,
+   when every place already has its own, that place's Change. Returns { how, key } or null */
+async function jPath(t, level) {
+	// the Where block is drawn a frame after the panel: wait for this level's + Set for… (or a line's Change)
+	await t.root.waitForFunction((lv) => !!document.querySelector(`#pm-settings-root .detail-inspector [data-psx-block="where"]:not(.o55-leaving *) :is([data-psx-key="add:${lv}"], [data-psx-key^="${lv}:"][data-psx-key$=":change"])`), level, { timeout: 2500, polling: 50 }).catch(() => {});
+	const add = t.root.locator(`${J_INSP} [data-psx-key="add:${level}"]`).first();
+	if (await add.count()) {
+		// the menu that is open (one closing a moment ago is still in the page, .is-closing, until it is hidden); a press
+		// that landed as the panel was redrawn opens none, and is pressed once more
+		const menu = () => t.root.waitForFunction(() => !!document.querySelector('.pmr-menu.is-open:not(.is-closing) .pmr-mi'), null, { timeout: 2000, polling: 50 }).then(() => true, () => false);
+		await jPress(t, add);
+		let ok = await menu();
+		if (!ok && (await add.count())) { await jPress(t, add); ok = await menu(); }
+		if (ok) {
+			const item = t.root.locator('.pmr-menu.is-open:not(.is-closing)').last().locator('.pmr-mi:not([aria-disabled="true"]):not([disabled])').first();
+			if (await item.count()) { const name = (await item.innerText()).split('\n')[0].trim(); await item.click(); return { how: 'add', name }; }
+			await t.page.keyboard.press('Escape');
+		}
+	}
+	// a place that has its own already (or a computer row's own line): its Change
+	const ch = t.root.locator(`${J_INSP} [data-psx-key^="${level}:"][data-psx-key$=":change"]:not([aria-disabled="true"])`).first();
+	if (await ch.count()) { const k = (await ch.getAttribute('data-psx-key')).split(':')[1]; await jPress(t, ch); return { how: 'change', name: k }; }
+	return null;
+}
+/* what the path ended in: the picker over the page, the row's own editor for that place, or an inline editor */
+const J_EDITOR = () => {
+	const insp = document.querySelector('#pm-settings-root .detail-inspector');
+	const pick = document.querySelector('.psx-mpick');
+	const drawer = document.querySelector('.drawer-wrap.is-open .drawer');
+	const wedit = insp && insp.querySelector('.psx-wedit');
+	const line = wedit && wedit.closest('[data-psx-line]');
+	const ctl = wedit && wedit.querySelector('[data-psx-edit-control]');
+	const out = { pick: null, drawer: null, inline: null, line: line && line.getAttribute('data-psx-line') };
+	if (pick) {
+		const r = pick.getBoundingClientRect();
+		out.pick = { fixed: getComputedStyle(pick).position === 'fixed', inPanel: !!(insp && insp.contains(pick)), onScreen: r.top >= 0 && r.bottom <= innerHeight + 1 && r.left >= 0 && r.right <= innerWidth + 1, options: [...pick.querySelectorAll('[role="option"]')].map((o) => ({ value: o.getAttribute('data-value'), text: o.textContent.trim() })), text: pick.textContent, depth: !!pick.querySelector('.psx-mpick-depth') };
+	}
+	if (drawer) out.drawer = { save: !!drawer.querySelector('.pm51-panel-foot .btn.primary'), place: drawer.closest('.drawer-wrap') && (drawer.querySelector('[data-psx-place-edit]') || drawer.closest('[data-psx-place-edit]') || drawer.matches('[data-psx-place-edit]')) ? (drawer.getAttribute('data-psx-place-edit') || '') : null, banner: (drawer.querySelector('.psx-place-banner') || {}).textContent || '', title: (drawer.querySelector('.pm51-panel-title') || {}).textContent || '' };
+	if (wedit) {
+		const sel = wedit.querySelector('select'), num = wedit.querySelector('input[type="number"]'), txt = wedit.querySelector('input[type="text"], textarea'), sw = wedit.querySelector('[role="switch"]'), boxes = [...wedit.querySelectorAll('.psx-multi input[type="checkbox"]')], trig = wedit.querySelector('[data-psx-mpick]');
+		out.inline = { nicks: !!wedit.querySelector('.psx-nicks'), nickPickers: wedit.querySelectorAll('.psx-nicks [data-psx-mpick]').length, nickAdd: !!wedit.querySelector('[data-psx-nick-add]'), tag: ctl && ctl.tagName, save: !!wedit.querySelector('[data-psx-key$=":save"]'), select: sel ? [...sel.options].map((o) => o.value) : null, number: num ? { min: num.min, max: num.max, step: num.step } : null, text: txt ? txt.value : null, switch: !!sw, multi: boxes.length ? boxes.map((b) => b.value) : null, trigger: !!trig, auto: !!wedit.querySelector('[data-psx-auto]') };
+	}
+	return out;
+};
+/* the main control's own choices and limits for a row, read off the row Settings draws (PM51.settingRows) */
+const J_MAIN = (id) => {
+	const s = window.PM51.setting(id) || {}, m = (window.PM51.rowMeta && window.PM51.rowMeta(id)) || {};
+	const tpl = document.createElement('template'); tpl.innerHTML = window.PM51.settingRows([id]) || '';
+	const ctl = tpl.content.querySelector('.setting-control') || tpl.content;
+	const opts = [...ctl.querySelectorAll('select option')].map((o) => o.value);
+	const vals = opts.length ? opts : [...ctl.querySelectorAll('[data-value]')].map((b) => b.getAttribute('data-value'));
+	const num = ctl.querySelector('input[type="number"]');
+	const n = (v) => (v === '' || v == null ? NaN : Number(v));
+	return { control: s.control || null, choices: [...new Set(vals)], lo: num && num.min !== '' ? n(num.min) : n(m.min != null ? m.min : s.min), hi: num && num.max !== '' ? n(num.max) : n(m.max != null ? m.max : s.max), step: n(m.step != null ? m.step : s.step), scale: Number(m.scale) || 1, minFrom: !!m.minFrom || !!m.maxFrom, def: s.value };
+};
+const jWant = (t, part) => !t.args.j1113 || String(t.args.j1113).split(',').includes(part);
+const J_NUMERIC = ['number', 'slider', 'number-inherited', 'slider-inherited', 'stepper'];
+const jRange = (opts) => { if (!Array.isArray(opts) || opts.length !== 1 || typeof opts[0] !== 'string') return null; const m = /^\s*(-?\d+(?:\.\d+)?)\s*-\s*(-?\d+(?:\.\d+)?)\s*%?\s*$/.exec(opts[0]); return m ? [Number(m[1]), Number(m[2])] : null; };
+// press Save in the line, and answer a preview sheet with its own primary button when one opens (a safety row's)
+async function jSave(t, line) {
+	await jPress(t, t.root.locator(`${J_INSP} [data-psx-key="${line}:save"]`).first());
+	await settle(t, 250);
+	const sheet = t.root.locator('.psx-back:not([data-leaving]) .psx-sheet .psx-sheet-foot .btn.primary').first();
+	if (await sheet.count()) { await sheet.click(); await settle(t, 300); }
 }
 
 export default async function (t) {
@@ -1762,6 +1885,276 @@ export default async function (t) {
 
 	/* ------------------------------------------------------------------ the page Jared opens: the review strip
 	   (review A-r1 finding 1 and tool note A: a script error in the strip passed every check that loaded only the app) */
+	/* ------------------------------------------------------------------ Jared's review, 2026-11-13: items 1, 3 and 5 */
+	if (want(t, 'jared1113') && jWant(t, 'models')) await t.step('Jared 1113 #1: every model row’s Change and Set for… open the shared model picker over the page, with its inherit words, and set a model there', async () => {
+		const inv = jInventory(t);
+		await t.check('Plans’ inventory is read', !!inv, String(t.args.inventory || 'Plans/settings_inventory.json'));
+		if (!inv) return;
+		await reset(t); await run(t, HELPERS);
+		const ids = Object.keys(inv).filter((id) => inv[id].type === 'model_picker');
+		const FROM = Object.fromEntries(ids.map((id) => [id, inv[id].picker && inv[id].picker.inherit_from]));
+		const tally = { rows: ids.length, held: [], paths: 0, picker: 0, inherit: 0, saved: 0 };
+		for (const id of ids) {
+			const r = inv[id];
+			if (r.home === 'thing' || !(r.may || []).length) {
+				const info = await run(t, (i) => ({ onLadder: !!window.PSX.DEF[i], held: window.PSX.ownerHeld ? !!window.PSX.ownerHeld(i) : null }), id);
+				await t.check(`${id}: Plans’ inventory keeps it inside its owner (home: thing, no level), so it has no Set for… path and stays off the ladder`, !info.onLadder, JSON.stringify(info));
+				tally.held.push(id); continue;
+			}
+			if (!(await jOpen(t, id))) { await t.check(`${id}: its Details panel opens`, false, 'not opened'); continue; }
+			for (const level of ['everywhere'].concat(r.may.filter((l) => l !== 'everywhere'))) {
+				let p;
+				if (level === 'everywhere') {
+					const ch = t.root.locator(`${J_INSP} [data-psx-key="everywhere::change"]`).first();
+					if (!(await ch.count())) { await t.check(`${id} · Everywhere has a Change`, false, 'no Change'); continue; }
+					await jPress(t, ch); p = { how: 'change', name: 'Everywhere' };
+				} else p = await jPath(t, level);
+				if (!p) { await t.check(`${id} · ${level}: a Set for… path ends somewhere`, false, 'no path'); continue; }
+				tally.paths++;
+				await t.root.waitForFunction(() => !!document.querySelector('.psx-mpick') || !!document.querySelector('#pm-settings-root .detail-inspector .psx-wedit'), null, { timeout: 3000, polling: 50 }).catch(() => {});
+				await settle(t, 260);
+				const e = await run(t, J_EDITOR);
+				const where = `${id} · ${p.how === 'add' ? `+ Set for a ${level}… › ${p.name}` : `${p.name}’s Change`}`;
+				const pk = e.pick;
+				await t.check(`${where}: the shared model picker opens over the page (fixed, outside the panel, inside the window), never a plain list or a text box`, !!pk && pk.fixed && !pk.inPanel && pk.onScreen && !(e.inline && (e.inline.select || e.inline.text !== null)), JSON.stringify({ pick: pk && { fixed: pk.fixed, inPanel: pk.inPanel, onScreen: pk.onScreen, n: pk.options.length }, inline: e.inline }));
+				if (!pk) { await jClean(t); continue; }
+				tally.picker++;
+				// the inherit choice: the inventory's words and the model the named source resolves to at that place
+				const lab = r.labels && r.labels.inherit;
+				const want = await run(t, ([i, from, line]) => {
+					const P = window.PSX, [lvl, key] = String(line || 'everywhere:').split(':');
+					const ctx = lvl === 'project' ? { project: key, device: P.S.ctx.device, on: null } : lvl === 'computer' ? { project: 'none', device: P.S.ctx.device, on: key } : P.S.ctx;
+					let src = i, v = 'inherit', n = 0;
+					while (v === 'inherit' && n++ < 6) { src = from[src]; if (!src) return null; if (lvl === 'everywhere') { const ev = P.getAt(P.W, 'everywhere', null, src); v = ev !== undefined ? ev : P.DEFAULTS[src]; } else { const rr = P.DEF[src] ? P.resolve(src, ctx) : null; v = rr ? rr.value : P.DEFAULTS[src]; } }
+					return v === 'inherit' ? null : String(P.vt(src, v && typeof v === 'object' ? v.model : v)).split(' · ')[0];
+				}, [id, FROM, e.line]);
+				if (lab) {
+					const row = pk.options.find((o) => o.value === 'inherit');
+					const ok = !!row && row.text.includes(lab) && !!want && row.text.includes(want);
+					if (ok) tally.inherit++;
+					await t.check(`${where}: its inherit choice reads “${lab}” with the model it is here (${want})`, ok, JSON.stringify(row || pk.options.slice(0, 2)));
+				}
+				await t.check(`${where}: no choice says “Same as the project”`, !/Same as the project/.test(pk.text), pk.text.slice(0, 160));
+				const ownWords = (r.options || []).filter((o) => typeof o === 'string' && !/^<|choose a specific/i.test(o));
+				const models = pk.options.filter((o) => o.value && o.value.includes('/'));
+				const onlyOwn = /^media\.capabilities\.(video|tts|music)-model$/.test(id);
+				await t.check(`${where}: it lists the row’s own choices (${ownWords.join(', ') || 'none'})${onlyOwn ? '' : ' and the models you can use'}, with the thinking depth inside it`, ownWords.every((w) => pk.options.some((o) => o.value === w)) && (onlyOwn || models.length > 0) && pk.depth, JSON.stringify({ own: ownWords, models: models.length, depth: pk.depth }));
+				// a place's own: choose a model (and a depth when it has one), Done, Save; the value lands at that place
+				if (level !== 'everywhere' && e.line) {
+					const target = models[models.length - 1] || pk.options.find((o) => o.value !== 'inherit') || pk.options[0];
+					await t.root.locator(`.psx-mpick [role="option"][data-value="${target.value}"]`).first().click();
+					await settle(t, 120);
+					const dp = t.root.locator('.psx-mpick [data-depth]:not([data-depth=""])').last();
+					let effort = '';
+					if (await dp.count()) { effort = await dp.getAttribute('data-depth'); await dp.click(); await settle(t, 100); }
+					await t.root.locator('.psx-mpick [data-psx-mpick-done]').first().click();
+					await settle(t, 120);
+					await jSave(t, e.line);
+					const got = await run(t, ([lvl, key, i]) => JSON.stringify(window.PSX.getAt(window.PSX.W, lvl, key || null, i)), [...e.line.split(':'), id]);
+					const exp = JSON.stringify(effort ? { model: target.value, effort } : target.value);
+					if (got === exp) tally.saved++;
+					await t.check(`${where}: choosing ${target.value}${effort ? ` with ${effort} thinking` : ''} and Save keeps it for that place`, got === exp, `${got} (wanted ${exp})`);
+				}
+				await jClean(t);
+			}
+		}
+		/* Plans batch 4 (DL-479): when the inventory makes Model nicknames one per_item map, a project's line is set with a
+		   nickname and a model from the shared picker; a second line that normalizes the same is refused; each nickname
+		   resolves on its own */
+		const NK = 'ai.models.model-alias';
+		if (inv[NK] && inv[NK].type === 'keyvalue') {
+			await run(t, () => { window.PSX.setOwn('ai.models.model-alias', { level: 'everywhere', key: null }, { quick: 'anthropic/claude-sonnet-4', deep: 'anthropic/claude-opus-4' }, { quiet: true, confirmed: true }); });
+			if (await jOpen(t, NK)) {
+				const p = await jPath(t, 'project');
+				await t.root.waitForFunction(() => !!document.querySelector('#pm-settings-root .detail-inspector .psx-nicks'), null, { timeout: 3000, polling: 50 }).catch(() => {});
+				const e = await run(t, J_EDITOR);
+				await t.check(`${NK} (batch 4) · + Set for a project… › ${p && p.name}: a nickname list whose model side is the shared picker`, !!e.inline && e.inline.nicks && e.inline.nickAdd, JSON.stringify(e.inline));
+				if (e.inline && e.inline.nicks && e.line) {
+					const W0 = `${J_PANEL} .psx-wedit:not(.o55-leaving *)`;
+					await jPress(t, t.root.locator(`${W0} [data-psx-nick-add]`).first());
+					await t.root.locator(`${W0} .psx-nick-name`).last().fill('Deep');
+					await jPress(t, t.root.locator(`${W0} .psx-nick [data-psx-mpick]`).last());
+					await t.root.waitForFunction(() => !!document.querySelector('.psx-mpick'), null, { timeout: 3000, polling: 50 }).catch(() => {});
+					await settle(t, 200);
+					const pk = await run(t, J_EDITOR);
+					const opt = (pk.pick && pk.pick.options.find((o) => o.value === 'anthropic/claude-sonnet-4')) || (pk.pick && pk.pick.options.find((o) => o.value && o.value.includes('/')));
+					await t.check(`${NK} (batch 4): the model side opens the shared picker over the page, with no depth to set`, !!pk.pick && pk.pick.fixed && !pk.pick.inPanel && !!opt && /no depth|presets keep/i.test(pk.pick.text), JSON.stringify(pk.pick && { n: pk.pick.options.length, text: pk.pick.text.slice(-120) }));
+					if (opt) { await t.root.locator(`.psx-mpick [role="option"][data-value="${opt.value}"]`).first().click(); await t.root.locator('.psx-mpick [data-psx-mpick-done]').first().click(); await settle(t, 150); }
+					await jSave(t, e.line);
+					const [lvl, key] = e.line.split(':');
+					const got = await run(t, ([a, b]) => ({ own: window.PSX.getAt(window.PSX.W, a, b, 'ai.models.model-alias'), used: window.PSX.resolve('ai.models.model-alias', { project: b, device: 'here', on: null }).value }), [lvl, key]);
+					await t.check(`${NK} (batch 4): Save keeps ${key}’s own “Deep” line, and in ${key} “Deep” is its own while “quick” still comes from everywhere (per_item)`, !!got.own && got.own.Deep === (opt && opt.value) && got.used && got.used.Deep === (opt && opt.value) && got.used.quick === 'anthropic/claude-sonnet-4' && !('deep' in got.used && 'Deep' in got.used), JSON.stringify(got));
+					const dup = await run(t, ([b]) => { const P = window.PSX; return { tx: !!P.write([{ level: 'project', key: b, id: 'ai.models.model-alias', value: { 'fast model': 'anthropic/claude-opus-4', 'Fast-Model': 'anthropic/claude-sonnet-4' } }], {}, { silent: true }), why: (P.guard.why({ level: 'project', key: b, id: 'ai.models.model-alias', value: { 'fast model': 'anthropic/claude-opus-4', 'Fast-Model': 'anthropic/claude-sonnet-4' } }) || {}).text, hide: (P.guard.why({ level: 'everywhere', key: null, id: 'ai.models.model-alias', value: { 'anthropic/claude-opus-4': 'anthropic/claude-sonnet-4' } }) || {}).text, notModel: (P.guard.why({ level: 'everywhere', key: null, id: 'ai.models.model-alias', value: { zz: 'psx/not-a-model' } }) || {}).text }; }, [key]);
+					await t.check(`${NK} (batch 4): PSX.write refuses two nicknames that normalize the same, a nickname that is a model’s own name, and a model you can’t use`, !dup.tx && /already a nickname/.test(dup.why || '') && /hide that model/.test(dup.hide || '') && /isn’t a model/.test(dup.notModel || ''), JSON.stringify(dup));
+				}
+				await jClean(t);
+			} else await t.check(`${NK} (batch 4): its Details panel opens`, false, 'not opened');
+		}
+		await t.check(`${tally.rows} model rows in Plans’ inventory: ${tally.paths} Change and Set for… paths, ${tally.picker} opened the picker, ${tally.inherit} inherit choices named their model, ${tally.saved} places kept the chosen model; held by their owner: ${tally.held.join(', ') || 'none'}`, tally.rows >= 16 && tally.paths > 0 && tally.picker === tally.paths, JSON.stringify(tally));
+	});
+
+	if (want(t, 'jared1113') && jWant(t, 'paths')) await t.step('Jared 1113 #3: every adopted row’s Set for a computer… / device… / project… ends in an editor that can set that row’s value', async () => {
+		const inv = jInventory(t) || {};
+		await reset(t); await run(t, HELPERS);
+		const rows = await run(t, () => {
+			const P = window.PSX, order = Object.keys(window.PM51.placement.byId);
+			const ids = Object.keys(P.DEF).filter((id) => P.DEF[id].adopted || P.DEF[id].inventory).sort((a, b) => order.indexOf(a) - order.indexOf(b));
+			return ids.map((id) => { const off = P.offered(P.DEF[id]); return { id, levels: ['computer', 'device', 'project'].filter((l) => off[l]), home: P.DEF[id].home || null }; }).filter((r) => r.levels.length);
+		});
+		const max = Number(t.args.j1113max) || rows.length;
+		const walk = rows.slice(0, max);
+		const bad = { open: [], none: [], kind: [], save: [] }, kinds = {}, proved = {};
+		let paths = 0;
+		for (const row of walk) {
+			const { id } = row;
+			if (!(await jOpen(t, id))) { bad.open.push(id); continue; }
+			const main = await run(t, J_MAIN, id);
+			const r = inv[id] || {};
+			for (const level of row.levels) {
+				const p = await jPath(t, level);
+				if (!p) { bad.none.push(`${id} · ${level}: no + Set for… and no Change`); continue; }
+				paths++;
+				await t.root.waitForFunction(() => !!document.querySelector('.psx-mpick, .drawer-wrap.is-open .drawer') || !!document.querySelector('#pm-settings-root .detail-inspector .psx-wedit'), null, { timeout: 3000, polling: 50 }).catch(() => {});
+				await settle(t, 100);
+				const e = await run(t, J_EDITOR);
+				const d = main.def;
+				const objectish = (d && typeof d === 'object' && !Array.isArray(d)) || (Array.isArray(d) && !d.every((x) => typeof x === 'string')) || r.type === 'keyvalue' || main.control === 'keyvalue';
+				const numeric = !Array.isArray(d) && (J_NUMERIC.includes(main.control) || r.type === 'number' || r.type === 'slider');
+				let kind, ok, why = '';
+				const inl = e.inline;
+				if (r.type === 'model_picker') { kind = 'model'; ok = !!e.pick && !(inl && (inl.select || inl.text !== null)); }
+				// Plans batch 4 (DL-479): the one Model nicknames list, a map whose value side is a model (the shared picker)
+				else if (id === 'ai.models.model-alias' && r.type === 'keyvalue') { kind = 'nicknames'; ok = !!inl && inl.nicks && inl.nickAdd && inl.save; why = JSON.stringify(inl); }
+				else if (objectish) { kind = 'row’s own editor'; ok = !!e.drawer && e.drawer.save && e.drawer.place === `${level}:${(e.drawer.place || '').split(':')[1] || ''}` && /own value|everywhere value/.test(e.drawer.banner); why = JSON.stringify(e.drawer || inl); }
+				else if (numeric) { kind = 'number'; ok = !!inl && !!inl.number && inl.save; why = JSON.stringify(inl); }
+				else if (main.control === 'toggle' || typeof d === 'boolean') { kind = 'switch'; ok = !!inl && inl.switch && inl.save; }
+				else if (main.control === 'multiselect') { kind = 'several choices'; const got = inl && inl.multi ? inl.multi.map((v) => String(JSON.parse(v))).sort() : null; ok = !!got && JSON.stringify(got) === JSON.stringify(main.choices.map(String).sort()) && inl.save; why = JSON.stringify({ got, main: main.choices }); }
+				else if (['select', 'segmented', 'radio', 'swatches'].includes(main.control) && main.choices.length >= 2 && id !== 'general.visual.theme') { kind = 'a choice'; const got = inl && inl.select ? inl.select.map((v) => String(JSON.parse(v))).sort() : null; ok = !!got && JSON.stringify(got) === JSON.stringify(main.choices.map(String).sort()) && inl.save; why = JSON.stringify({ got: got && got.slice(0, 8), main: main.choices.slice(0, 8) }); }
+				else { kind = 'words'; ok = !!inl && inl.save && (inl.text !== null || !!inl.select || !!inl.switch) && !/\[object Object\]/.test(String(inl.text)); why = JSON.stringify(inl); }
+				kinds[kind] = (kinds[kind] || 0) + 1;
+				if (!ok) bad.kind.push(`${id} · ${level} (${kind}): ${why.slice(0, 160)}`);
+				// the first three paths of each kind are carried through: a value is set there and kept at that place
+				if (ok && (proved[kind] || 0) < 3 && kind !== 'model' && kind !== 'nicknames') {
+					const res = await (async () => {
+						if (kind === 'row’s own editor') { await t.root.locator('.drawer-wrap.is-open .pm51-panel-foot .btn.primary').first().click(); await settle(t, 600); const sh = t.root.locator('.psx-back:not([data-leaving]) .psx-sheet .psx-sheet-foot .btn.primary').first(); if (await sh.count()) { await sh.click(); await settle(t, 300); } const pl = e.drawer.place.split(':'); return run(t, ([lvl, key, i]) => window.PSX.getAt(window.PSX.W, lvl, key || null, i) !== undefined, [pl[0], pl[1], id]); }
+						const [lvl, key] = e.line.split(':');
+						const before = await run(t, ([a, b, i]) => JSON.stringify(window.PSX.getAt(window.PSX.W, a, b || null, i)), [lvl, key, id]);
+						const W0 = `${J_PANEL} .psx-wedit:not(.o55-leaving *)`;
+						if (kind === 'switch') await t.root.locator(`${W0} [role="switch"]`).first().click();
+						else if (kind === 'number') { const auto = t.root.locator(`${W0} [data-psx-auto]`).first(); if ((await auto.count()) && (await auto.isChecked())) await auto.click(); const lo = Number.isFinite(main.lo) ? main.lo : 1; await t.root.locator(`${W0} input[type="number"]`).first().fill(String(Number.isFinite(main.hi) ? Math.min(main.hi, Math.max(lo, lo + (main.step > 0 ? main.step : 1))) : lo + 1)); }
+						else if (kind === 'several choices') await t.root.locator(`${W0} .psx-multi input[type="checkbox"]`).first().click();
+						else if (kind === 'a choice') { const opts = await t.root.locator(`${W0} select option`).evaluateAll((os) => os.map((o) => ({ v: o.value, s: o.selected }))); const other = opts.find((o) => !o.s); if (other) await t.root.locator(`${W0} select`).first().selectOption(other.v); }
+						else { const box = t.root.locator(`${W0} input[type="text"], ${W0} textarea`).first(); if (await box.count()) await box.fill('psx-check-' + level); }
+						await jSave(t, e.line);
+						const after = await run(t, ([a, b, i]) => JSON.stringify(window.PSX.getAt(window.PSX.W, a, b || null, i)), [lvl, key, id]);
+						return after !== undefined && after !== before && after !== 'undefined';
+					})();
+					if (res) proved[kind] = (proved[kind] || 0) + 1; else bad.save.push(`${id} · ${level} (${kind})`);
+				}
+				await jClean(t);
+			}
+		}
+		await t.check(`${walk.length} of ${rows.length} adopted rows with a place to set: every Details panel opens`, bad.open.length === 0, bad.open.slice(0, 8).join(' | '));
+		await t.check(`${paths} Set for… paths: each reaches + Set for… or a place’s Change`, bad.none.length === 0, bad.none.slice(0, 8).join(' | '));
+		await t.check(`${paths} paths end in an editor of the row’s own kind that can set its value (${Object.entries(kinds).map(([k, n]) => `${n} ${k}`).join(', ')}): models in the shared picker, maps and lists of records in the row’s own editor for that place, numbers in a number box, lists in their own choices`, bad.kind.length === 0, `${bad.kind.length} wrong: ` + bad.kind.slice(0, 6).join(' | '));
+		await t.check(`set through the editor and kept at that place: ${Object.entries(proved).map(([k, n]) => `${n} ${k}`).join(', ')}`, bad.save.length === 0 && Object.keys(proved).length >= 5, bad.save.slice(0, 8).join(' | '));
+	});
+
+	if (want(t, 'jared1113') && jWant(t, 'limits')) await t.step('Jared 1113 #5: every bounded row refuses a value outside its main control’s limits, through the per-place editor and through PSX.write', async () => {
+		const inv = jInventory(t) || {};
+		await reset(t); await run(t, HELPERS);
+		const cands = await run(t, () => Object.keys(window.PSX.DEF).filter((id) => window.PM51.setting(id)));
+		const rows = [];
+		for (const id of cands) {
+			const r = inv[id] || {};
+			const main = await run(t, J_MAIN, id);
+			const numeric = !Array.isArray(main.def) && (J_NUMERIC.includes(main.control) || r.type === 'number' || r.type === 'slider');
+			if (!numeric) continue;
+			let lo = main.lo, hi = main.hi;
+			const rg = jRange(r.options);
+			if (rg) { lo = Number.isFinite(lo) ? Math.max(lo, rg[0] / main.scale) : rg[0] / main.scale; hi = Number.isFinite(hi) ? Math.min(hi, rg[1] / main.scale) : rg[1] / main.scale; }
+			if (!Number.isFinite(lo) && !Number.isFinite(hi)) continue;
+			rows.push({ id, lo, hi, scale: main.scale, step: main.step, def: main.def, range: !!rg });
+		}
+		// PSX.write, at every place each row offers: a value past its limits is refused with the reason, and nothing changes
+		const wr = await run(t, (rows) => {
+			const P = window.PSX, out = { n: 0, bad: [] };
+			const KEY = { everywhere: null, computer: 'homenas', device: 'iphone', project: 'harbor' };
+			for (const r of rows) {
+				const off = P.offered(P.DEF[r.id]);
+				const outside = Number.isFinite(r.hi) ? r.hi + Math.max(1, Math.abs(r.hi)) : r.lo - Math.max(1, Math.abs(r.lo));
+				const sfx = typeof r.def === 'string' ? (/^\s*-?\d+(?:\.\d+)?\s*(\D+)$/.exec(r.def) || [])[1] || '' : '';
+				const stored = sfx ? `${outside * r.scale}${sfx.trim()}` : (typeof r.def === 'string' && /^\s*-?\d/.test(r.def) ? String(outside * r.scale) : outside * r.scale);
+				for (const lvl of ['everywhere', 'computer', 'device', 'project']) {
+					if (!off[lvl] || (lvl === 'everywhere' && P.DEF[r.id].home === 'computer')) continue;
+					const key = KEY[lvl], before = JSON.stringify(P.getAt(P.W, lvl, key, r.id));
+					const why = P.guard.why({ level: lvl, key, id: r.id, value: stored });
+					const tx = P.write([{ level: lvl, key, id: r.id, value: stored }], {}, { silent: true });
+					out.n++;
+					const after = JSON.stringify(P.getAt(P.W, lvl, key, r.id));
+					if (tx || after !== before || !why || why.kind !== 'invalid') out.bad.push(`${r.id} at ${lvl}${key ? ' ' + key : ''}: ${JSON.stringify(stored)} ${tx ? 'was written' : 'not written'}, guard said ${why ? why.text : 'nothing'}`);
+				}
+			}
+			return out;
+		}, rows);
+		await t.check(`${rows.length} bounded rows (${rows.filter((r) => r.range).length} with a range in Plans’ inventory, Randomness 0.0-2.0 among them), ${wr.n} places: PSX.write refuses a value past the limits with the reason and changes nothing`, rows.length > 50 && rows.some((r) => r.id === 'ai.models.temperature') && wr.bad.length === 0, `${wr.bad.length} let through: ` + wr.bad.slice(0, 6).join(' | '));
+		// a list keeps to its choices, a model row to its models: PSX.write refuses anything else
+		const ch = await run(t, () => {
+			const P = window.PSX, out = { n: 0, bad: [] };
+			const KEY = { everywhere: null, computer: 'homenas', device: 'iphone', project: 'harbor' };
+			for (const id of Object.keys(P.DEF)) {
+				const s = window.PM51.setting(id) || {};
+				const isList = ['select', 'segmented', 'radio'].includes(s.control) && Array.isArray(s.options) && s.options.length >= 2;
+				const isMulti = s.control === 'multiselect' && Array.isArray(s.options) && s.options.length;
+				const isModel = P.layering && P.layering.types[id] === 'model_picker';
+				if (!isList && !isMulti && !isModel) continue;
+				const off = P.offered(P.DEF[id]), lvl = ['project', 'computer', 'device', 'everywhere'].find((l) => off[l]); if (!lvl) continue;
+				const value = isMulti ? ['psx-not-a-choice'] : isModel ? 'psx/not-a-model' : 'psx-not-a-choice';
+				const tx = P.write([{ level: lvl, key: KEY[lvl], id, value }], {}, { silent: true });
+				out.n++;
+				if (tx) out.bad.push(`${id} at ${lvl}`);
+			}
+			return out;
+		});
+		await t.check(`${ch.n} lists and model rows: PSX.write refuses a value that isn’t one of the main control’s choices`, ch.n > 100 && ch.bad.length === 0, `${ch.bad.length} let through: ` + ch.bad.slice(0, 8).join(' | '));
+		// the per-place editor, with real presses: type a value past the limits and press Save; then one inside them
+		const bad = [], kept = [];
+		let n = 0;
+		const max = Number(t.args.j1113max) || rows.length;
+		for (const r of rows.slice(0, max)) {
+			if (!(await jOpen(t, r.id))) { bad.push(`${r.id}: panel didn’t open`); continue; }
+			const levels = await run(t, (i) => { const off = window.PSX.offered(window.PSX.DEF[i]); return ['project', 'computer', 'device'].filter((l) => off[l]); }, r.id);
+			let p;
+			if (levels.length) p = await jPath(t, levels[0]);
+			else { const c = t.root.locator(`${J_INSP} [data-psx-key="everywhere::change"]`).first(); if (await c.count()) { await jPress(t, c); p = { how: 'change', name: 'Everywhere' }; } }
+			if (!p) { bad.push(`${r.id}: no path`); continue; }
+			await t.root.waitForFunction(() => !!document.querySelector('#pm-settings-root .detail-inspector .psx-wedit'), null, { timeout: 3000, polling: 50 }).catch(() => {});
+			const e = await run(t, J_EDITOR);
+			if (!e.inline || !e.line) { bad.push(`${r.id}: no inline editor (${JSON.stringify(e).slice(0, 80)})`); await jClean(t); continue; }
+			n++;
+			const W0 = `${J_PANEL} .psx-wedit:not(.o55-leaving *)`;
+			const auto = t.root.locator(`${W0} [data-psx-auto]`).first();
+			if ((await auto.count()) && (await auto.isChecked())) await auto.click();
+			const box = t.root.locator(`${W0} input[type="number"], ${W0} input[type="text"]`).first();
+			const [lvl, key] = e.line.split(':');
+			const before = await run(t, ([a, b, i]) => JSON.stringify(window.PSX.getAt(window.PSX.W, a, b || null, i)), [lvl, key, r.id]);
+			const outside = Number.isFinite(r.hi) ? r.hi + Math.max(1, Math.abs(r.hi)) : r.lo - Math.max(1, Math.abs(r.lo));
+			await box.fill(String(+outside.toFixed(6)));
+			await jPress(t, t.root.locator(`${J_INSP} [data-psx-key="${e.line}:save"]`).first());
+			await settle(t, 200);
+			const res = await run(t, ([a, b, i]) => ({ after: JSON.stringify(window.PSX.getAt(window.PSX.W, a, b || null, i)), err: ((document.querySelector('#pm-settings-root .detail-inspector .psx-err:not([hidden])') || {}).textContent || '').trim() }), [lvl, key, r.id]);
+			if (res.after !== before || !/can’t be|has to be/.test(res.err)) bad.push(`${r.id} at ${e.line}: typed ${+outside.toFixed(6)} → ${res.after === before ? 'not kept' : 'KEPT ' + res.after}, ${res.err ? '“' + res.err + '”' : 'no reason shown'}`);
+			// one inside them is kept, so the editor still sets the value
+			if (kept.length < 12 && res.after === before) {
+				const inside = Number.isFinite(r.lo) ? r.lo : r.hi;
+				const b2 = t.root.locator(`${W0} input[type="number"], ${W0} input[type="text"]`).first();
+				if (await b2.count()) { await b2.fill(String(inside)); await jSave(t, e.line); const after2 = await run(t, ([a, b, i]) => JSON.stringify(window.PSX.getAt(window.PSX.W, a, b || null, i)), [lvl, key, r.id]); if (after2 !== before && after2 !== undefined) kept.push(r.id); else bad.push(`${r.id}: ${inside}, inside the limits, was not kept (${after2})`); }
+			}
+			await jClean(t);
+		}
+		await t.check(`${n} bounded rows through the per-place editor (real presses): a value past the limits stays unsaved with its reason; ${kept.length} values inside them were kept`, n > 50 && bad.length === 0 && kept.length >= 8, `${bad.length} wrong: ` + bad.slice(0, 6).join(' | '));
+	});
+
 	if (want(t, 'strip')) await t.step('the review strip on settings-scope.html works', async () => {
 		const stripPath = t.args.strip || String(t.args.page || '').replace(/settings-scope-app\.html$/, 'settings-scope.html');
 		if (!stripPath || !/settings-scope\.html$/.test(stripPath)) { await t.check('the strip page is given (--set strip=<path to settings-scope.html>)', false, stripPath); return; }

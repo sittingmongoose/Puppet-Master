@@ -35,10 +35,14 @@ INVENTORY = HERE.parent.parent.parent / "Plans" / "settings_inventory.json"
 
 
 def layering(path):
-    """The part of Plans' inventory the layer reads: every row's id, type and layering, the group titles, the source."""
+    """The part of Plans' inventory the layer reads: every row's id, type, layering, options, option_labels, model_picker
+    and default, the group titles, the source."""
     raw = path.read_bytes()
     d = json.loads(raw)
-    rows = [{"id": r["id"], "type": r.get("type"), "layering": r["layering"]} for r in d.get("settings", []) if isinstance(r, dict) and r.get("id") and isinstance(r.get("layering"), dict)]
+    # Jared 2026-11-13: also each row's options (choices, or a range such as "0.0-2.0"), option_labels and model_picker
+    # block, so every per-place editor and the guard take the same limits and words as the main control
+    keep = ("options", "option_labels", "model_picker", "default")
+    rows = [dict({"id": r["id"], "type": r.get("type"), "layering": r["layering"]}, **{k: r[k] for k in keep if k in r}) for r in d.get("settings", []) if isinstance(r, dict) and r.get("id") and isinstance(r.get("layering"), dict)]
     if not rows:
         sys.exit(f"build_standalone: {path} has no rows with layering")
     groups = {f"{c['id']}.{g['id']}": g.get("title") for c in d.get("categories", []) for g in c.get("subgroups", [])}
