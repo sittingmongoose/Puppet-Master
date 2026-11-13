@@ -1,5 +1,181 @@
 # INT2 — batch-2 Event Authority integration
 
+## Batch 2 fix 1: retained readers (2026-11-13)
+
+**Branch `plans/ea-batch2-fix1-20261113`, head `fb24402e4e` (content; this report is the commit on top),** from `plans/ea-batch2-e41-20261113` at `2b5fc5279c` (the E4-1 edit on `cdfe628e70`). It answers Astra max finding 1 (`reviews/BATCH2-astra/REVIEW.md`): DCH's retained reader treated an original with no exact receipt as strict-v4 and accepted it. The fix covers that class across the batch: **a retained read now selects a recipe only from the one independently sealed receipt for that exact original**; no receipt, several receipts or a receipt bound to another original return the existing unavailable or unsupported result with the bytes untouched, and new-write selection stays separate. No landing, lock, `main` push, reseal or Decision Log entry. Native custody, authentication and admission stay NOT_RUN.
+
+- **Instances found and fixed: 6 lanes.** DCH (the finding), DCN, DS15, DCO, DM and DX. DMEM, DFM, DF, DC, DCW, DG6A, DG6B, DS, DT, DR, DO and DDBG already select from a per-original sealed record and refuse when it is missing; they are unchanged.
+- **Owner text:** 34 + 34 DCH passages and 17 strict-v5 notes, 6 + 6 DCN units, 7 DS15 SMPFS passages, 8 + 8 DM passages and 6 SP-320 coordination passages now state the per-original receipt rule and cite SP-1101. Every other rule in each passage is unchanged. DX's owner text already required it.
+- **Checks:** every touched lane's complete checker and family suites exit 0 (DCH 44,594 checks, DCN PASS, DS15 with its 7 deck-2 families, DCO checker, tests, corpus and wave 2, DM 55,599 assertions, DX semantics, contracts and p2a). The shared number scope passes, and so does the full shared corpus with the CV-1101 date-time self-test on a tracked-files-only tree: 13,626/13,626 cases, 1,276/1,276 owner checks. Shard check and index validate pass.
+- **Guard tool (`004bdedd63` bytes, unchanged at head):** DCH 274/285 rows proved (271/282 before, all three new rows proved), DCN `recipe` 2/2, DS15 `rd_recipe` 4/4 and `rd_resolve` 1/1, DM `resolve` 26/26, DX `recipe_binding` 5/5, DCO 119/119. Masked 0. No new unproved row; only the pre-existing by-construction and entailed rows are unproved.
+- **Dry landing:** exit 1, 0 blocking, 0 infrastructure, at `fb24402e4e` against fetched `origin/main` `6bd8294726`. The result is identical to the reviewed batch head: totals 6,279 / 6,279 / 32,482, all 33,082 on-branch rows governance staleness, and the same two non-stale `historical_successor_terminal_current_snapshot_invalid` rows on a path the branch does not touch.
+
+### Instances (class: a retained read picks a recipe by default, by Store recognition, or from shared identifiers)
+
+| Lane | Where (at `2b5fc5279c`) | What it did |
+|---|---|---|
+| DCH | `scripts/pm_dch_events.py:272`; `:370`; `:119`; `Plans/dch_write_recipe_receipts.json:3`; SP-610..626, CV-630..646 | `RECIPE_RECEIPTS.get((store, digest), CUSTODY['current_recipe'])`: no receipt meant strict-v4. The owner built the dispatch receipt itself from (Store, digest, rule) and took the binding from the record being read. The dict collapsed two receipts for one original into one. The owner text said "an original without a legacy receipt was written by the current strict-v4 writer". |
+| DCN | `scripts/pm_card2_events.py:1247`; `Plans/card2_original_custody.json:59` | `next(receipt for Store+event id, sealed['default_recipe'])`: no receipt meant card2@1. Four p2a controls were accepted only through that default. |
+| DS15 | `scripts/pm-ds15-event-contracts.py:814` (and its callers `:1367`, `:1376`, `:1396`, `:1405`); `Plans/ds15_original_custody.json` `stores.*.write_recipe`; SMPFS passages | The recipe every retained check ran with came from the Store's `write_recipe` for the family (Store recognition). The per-original seal was consulted only at the end, so one witness ran its checks with ds15-v1 while its own seal said ds15-v0. New appends went through the same custody selector. |
+| DCO | `scripts/pm_coordination_numbers.py:263` (`retained_record_verifies`), `:246`/`:270` | The retained reader built its own `OriginalCustody` from the presented bytes, with the SP-320 recipe by default and a binding derived from those bytes. |
+| DM | `scripts/pm-small-owner-events.py:674`, `:679`, `:686`, `:687`; DM CV/SP passages | `resolve_original` applied dm-retained-producer-v1 to every retained original, including ones the current CV-1100 writer wrote; no receipt named the recipe. |
+| DX | `scripts/pm_executor_event_semantics.py:179` (`record_rules`), `:1116` (`CustodyOwner`) | Inside a retained original's frozen verifier, every uncatalogued source or dependency body took `CURRENT_RECIPE` by default: 2,285 accepted retained reads did so (probe below). The owner defaulted a missing `recipe_version` the same way. |
+
+Checked and not instances (each selects from a per-original sealed record and refuses without one): DMEM `pm_memory_maintenance_events.py` (`ORIGINAL_CUSTODY`, `original_authority`/`recipe_ambiguous`), DFM `pm-filemanager-event-contracts.py` (`original_custody` by append key, `original_unavailable`), DF `pm_filesafe_event_authority.py` (`original_custody`, `original_missing`), DC `pm_collaboration_events.py` (composition seal by ref and commitment), DCW `pm_dcw_number_custody.py` (`_ISSUED` by event, bytes and receipt), DG6A `pm_dg6a_custody.py`, DG6B `pm_dg6b_original_custody.py`, DS `pm_ds_retained.py` (`original_ambiguous`), DT (sealed worlds), DR (`recorded_decoder` or no tuple), DO, and DDBG (sealed `recipe_ref` must equal the at-write recipe). DCO's retry path already selected from the dedupe record the writer stores at append.
+
+### Fixes (at `fb24402e4e` (content; this report is the commit on top))
+
+| Lane | Code | Catalogue and fixtures |
+|---|---|---|
+| DCH | `scripts/pm_dch_events.py:121` (every receipt per original, never collapsed); `:279` (selection from the one receipt; RN06 also checks the receipt's resource manifest); `:300` (`rn_receipt`: RN07 none → `original_unavailable`, RN08 several → `recipe_unsupported`); `:372` (`DchOriginalOwner` answers only from the sealed receipt: its binding, its recipe tuple, its own bytes); `:420` (`rn_original`: RO01, a dispatcher refusal such as a receipt bound to another original → `original_unavailable`); `scripts/pm-dch-table-generate.py:71`; `scripts/pm_dch_round7_oracles.py:125` (an original without a receipt stays a negative instead of being skipped). | `current_recipe` removed. Every receipt carries the original's SP-1101 binding and its recipe tuple's `resource_manifest_sha256` (null for raw-v0, which has no installed resources). 660 strict-v4 receipts were sealed for the originals the checker accepted only through the default (all 34 `retained_original` positives among them), and 1,538 for owner-invalid strict-v4 originals that reached the frozen verifier and refuse at their own verifier rows. One shared fake commitment (`cc…`, 17 different records) stays unsealed. 2,886 receipts in all. |
+| DCN | `scripts/pm_card2_events.py:1230` (`Card2OriginalOwner`: no Store default; the one receipt for Store, scope, event type and event id; none or another original's → `original_unavailable`, several → `recipe_ambiguous`); the `recipe_installed` row also refuses `recipe_ambiguous`; tables regenerated. | `default_recipe` removed. Every receipt carries `scope_kind` and its recipe's resource manifest. The 12 base originals have card2@1 receipts. |
+| DS15 | `scripts/pm-ds15-event-contracts.py:809` (`select_original_recipe` from the one receipt at the original ref with its CV-339 commitment); `:828` (`sealed_receipts`); `scripts/pm-ds15-table-generate.py:601` (`rd_recipe`: SX01, SX08 none → unavailable, SX09 several → unsupported, SX02); SX03, SX04 and SX06 moved to `rd_resolve_entailed` with their entailment; `:1351` (`NEW_WRITE_OPS`: a new append takes the writer's own recipe and reads no receipt); `scripts/pm-ds15-deck2-contracts.py:302`. | Stores record families only. The builder (`scripts/pm_ds15_p2b_cases.py:417`) seals every original a committed witness or deck-2 base/accepting case reads; 225 sealed originals (222 ds15-v1, 3 ds15-v0). |
+| DCO | `scripts/pm_coordination_numbers.py:251` (`SEALED_ORIGINALS`, `seal_original`, scoped `sealed_custody`); `:271` (`_SealedOwner`: none → `original_unavailable`, several → `recipe_ambiguous`); `:307` (`retained_refusal`). | `scripts/pm_coordination_events.py:1966`: the self-check seals its committed originals in a scoped custody before reading and checks that nothing stays sealed afterwards. |
+| DM | `scripts/pm-small-owner-events.py:49` (`CURRENT_RECIPE_ID = dm-cv1100-producer-v1`); `:509` (`sealed_write_receipts`); `:681` (`resolve_original` selects from the authority's sealed write receipt; RS24–RS26 refuse a missing, ambiguous or unknown one; digests and clock profiles follow the selection); writers seal with their own recipe; `scripts/pm-small-owner-table-generate.py:97`. | The 240 fixture authorities carry their write receipt: 16 `committed_authority` (current writer), 224 retained ones (dm-retained-producer-v1). |
+| DX | `scripts/pm_executor_event_semantics.py:53` (`_PINNED`); `:192` (inside a retained original every stored body needs its own entry; RB02 refuses otherwise); `:1202` (the frozen verifier pins its original's capture); `:1148` (no owner default); `:159` (`_unique_keys`: the catalogue refuses two receipts for one original instead of collapsing them). | 43 source/dependency bodies the committed retained reads use are sealed with the writer's recipe (`executor-jcs-binary64-v1`, `DX-current-control`); 404 entries. |
+
+### Fixture changes and new negatives
+
+**Expectations that changed, with the reason:**
+
+- **DCN p2a:** the four `p2b/sp1101/other-operation-control/*` controls were accepted only through the removed `default_recipe`. They are now `p2b/sp1101/missing-receipt/*` negatives (`recipe_custody`, `original_unavailable`).
+- **DS15 p2b:**
+  - `SX02-read-store-older-recipe` and `SX02-deck2-receipt-store-older-recipe` are removed: their Store-level ds15-v0 recipe no longer exists.
+  - `SX03-original-not-held-by-store` (read) now expects `SX08_receipt_present`/UNAVAILABLE instead of `SX03`/REFUSE, and its append-recovery twin expects SX08/REFUSE.
+  - The four `SX04-coherent-forgery-*` cases expect SX08: UNAVAILABLE for a read, REFUSE for a recovery. Storage never sealed their commitment, so the missing receipt refuses them before any retained check, under the existing unavailable contract.
+  - `SX06-original-sealed-under-older-recipe` expects `SX02_recipe_installed`/REFUSE: the selection now reads that ds15-v0 receipt itself.
+  - T13 and T14 (owner-invalid retained originals) are now sealed, so they still refuse at their frozen-verifier rows.
+- **DCH:** no committed expectation changed. Round 7's `current_history_format` negatives no longer drop silently when the selector returns nothing; that drop had cost 28 checks per family on the first run.
+
+**New negatives:**
+
+- **DCH, `Plans/dch_event_contract_fixtures.json`, 4 per fixture, 136 in all:**
+  - `strict_v4_original_without_receipt` → RN07;
+  - `legacy_original_missing_receipt` (a raw-v1 encoding) → RN07;
+  - `ambiguous_receipt` (strict-v4 and normalized-v2 receipts) → RN08;
+  - `receipt_for_other_original` (the receipt binds the other edition's original) → RO01.
+
+  A probe on the fixed tree confirms each refuses at exactly that row, and all 34 positives resolve through their own strict-v4 receipt with a matching binding.
+- **DCN p2a, 12:** `missing-receipt`, `ambiguous-receipt` and `receipt-for-other-original`, each for 2 families × retry/history.
+- **DS15 p2b, 3:** `SX09-original-sealed-twice` (read), `SX09-retry-original-sealed-twice` (recover) and `SX08-deck2-store-without-receipt`.
+- **DCO self-check, 4:** missing receipt, ambiguous receipt, receipt for another original, and no receipt left sealed after the scope.
+- **DM, 4 guard probes per family, 32 in all:** missing receipt, receipt for another original, ambiguous pair, unknown recipe.
+- **DX:**
+  - `nested-body-without-receipt` and `nested-body-receipt-for-other-original` per family (32), each refusing at the recipe binding;
+  - a duplicate-key catalogue load that must refuse.
+
+### Probes that found the instances
+
+Raw outputs are in `/home/sittingmongoose/pm-scratch/ea-batch2-fix1-resume/probes/`.
+
+- **DCH (`dch-defaults.json`):** the unmodified checker made 15,689 default selections over 2,233 distinct originals. 660 were accepted only that way, 1,539 reached the verifier and refused, and 34 refused before resolution.
+- **DCN (`dcn-defaults.json`):** 14 originals were accepted through `default_recipe`.
+- **DS15 (`ds15-store-select.json`):** one witness's Store said ds15-v1 while its own seal said ds15-v0.
+- **DM (`dm-writers.json`):** 17,706 resolutions where both producer digests coincide, and 64 that only the retained recipe matches. The fixed recipe was never contradicted by a fixture, but it was never selected by a receipt either.
+- **DX (`dx-nested2.out`, `dx-pinned.json`):** 2,285 accepted retained reads used 43 uncatalogued nested bodies under the current recipe.
+
+### Check results at `fb24402e4e` (content; this report is the commit on top)
+
+The consumer commands ran at `2a8229cf94`. That tree differs from the content head `fb24402e4e` only in `scripts/pm_event_datetime_exclusions.json`, which only the inventory gate and the full shared corpus read; both were rerun at `fb24402e4e` on a tracked-files-only tree. Each command ran serially under `MemoryMax=2G`, `MemorySwapMax=0`, started at ≥ 12 GiB available. Commands, exits, seconds and log SHA-256 are in `INT2-fix1-verification.json`.
+
+| Check | Exit | Result (baseline before the fix) |
+|---|---:|---|
+| `pm_event_numbers.py --self-test --scope numbers` | 0 | pass, 276 positives |
+| `pm_event_numbers.py --self-test` (all; carries the CV-1101 date-time self-test via `regression_checks`), tracked-only, `fb24402e4e` | 0 | pass, 13,626/13,626 cases, 1,276/1,276 owner checks |
+| `pm_event_datetime_inventory.py`, tracked-only, `fb24402e4e` | 0 | pass, 254 nodes, 0 unclassified, 0 failures (after the T198 exclusion refresh, commit `fb24402e4e`) |
+| `pm_dch_events.py` (complete, 17 families) | 0 | pass, 44,594 checks (44,458 + 136 new negatives) |
+| `pm_dch_stop.py` | 0 | pass, 4,612 checks |
+| `pm-dch-table-generate.py --check` | 0 | 80 modules, 285 rows current |
+| `pm_card2_events.py` | 0 | PASS: 283 positives, 71 controls, 16,702 negatives, 501 rows first-refused, none without a witness |
+| `pm-card2-table-generate.py --check`, `pm-card2-p2a-cases.py --check` | 0, 0 | 142 tables current; 359 witnesses, 71 controls (347/75 before), not stale |
+| `pm-ds15-event-contracts.py` | 0 | pass, 16 families, 225 sealed originals, 3 custody stores |
+| `pm-ds15-deck2-contracts.py --family F` (7) | 0 each | pass: 126, 121, 197, 197, 180, 180, 129 cases (unchanged) |
+| `pm_ds15_p2b_cases.py --check`, `pm_ds15_p2a_cases.py --check`, `pm-ds15-table-generate.py --check` | 0, 0, 0 | 48 witnesses (38 negative, 10 positive; 47 before); 82 witnesses; 168 tables, 393 rows current |
+| `pm_coordination_events.py`, `unittest test_pm_coordination_events` | 0, 0 | pass; 57 tests OK |
+| `pm_coordination_number_corpus.py`, `pm_coordination_wave2.py` | 0, 0 | 16 agree, 3 domain/refusal, 0 crashes, `retained_exact` true, `retained_forged` false; pass |
+| `pm-small-owner-events.py` (DM) | 0 | PASS, 55,599 assertions (55,535 + 64 new probe checks) |
+| `pm-small-owner-table-generate.py` then `git diff --exit-code` | 0 | generated tables equal the committed ones |
+| `pm-executor-table-generate.py --check`, `pm-executor-p2a-cases.py --check` | 0, 0 | current; 110 witnesses |
+| `pm_executor_event_semantics.py`, `pm_executor_event_contracts.py` | 0, 0 | pass, 1,377 historical reads (1,345 + 32 new negatives); pass |
+| `pm-shard-plans.py --check` | 0 | pass, 3,704 shards |
+
+Not credited:
+
+- `python3 scripts/pm_event_datetime.py --self-test`, the brief's date-time self-test command, exits 0 with no output. The module has no entry point, so the command only imports it. The CV-1101 self-test it names runs inside `pm_event_numbers.py --self-test` (all scope), which is credited above.
+- The inventory run in the consumer set had the ignored audit inputs present. A PNG aborts the scan (`scan_exclusions_invalid`, T209), so every node reads missing. That run gets no credit; the tracked-only run above replaces it.
+
+### Guard tool
+
+`scripts/pm_guard_isolation.py` at head is byte-identical to `004bdedd63`. Each run uses `--max-rss 2048 --pause-when-low 12 --resume-at 13`, and the credit below is copied from the tool's own summaries.
+
+- **DCH, all 80 tables:** 75 PASS. **274/285 rows proved**, against 271/282 before; the three new rows RN07, RN08 and RO01 are proved, and RN06's changed predicate is proved (`rn_recipe` 6/6). Masked 0, lane matrix 0, collection findings 0. The 5 FAIL tables are the same pre-existing `unproved_guards` tables, holding the same 11 rows: `sc_project_bytes`, `cp_family_entailed`, `cs_pointer_bounds`, `st_pointer_bounds` and `st_index_entailed`. Exit 1 for that reason only, as before. 36,073 witness calls; 1,276 s.
+- **DCN, `recipe` and `entailed_recipe_resolved`:** `recipe` PASS 2/2 (`recipe_custody`, `recipe_installed`). `recipe_resolved` stays entailed with its updated proof text (no negative by construction). Findings 0, judged errors 0, matrix 0. Exit 0.
+- **DS15, `rd_recipe`, `rd_resolve` and `rd_resolve_entailed`:** `rd_recipe` PASS 4/4 (SX01, SX02, SX08, SX09). `rd_resolve` PASS 1/1 (SX05). `rd_resolve_entailed` (SX03, SX04, SX06, SX07) has no negative by construction, with the entailment stated in each row's invariant. Lane matrix 0 on every suite. Exit 1 only for the entailed table, as in the lane's own run. The 129 `excluded_from_table_proof` collection findings are the lane's existing by-construction exclusions in other phases.
+- **DM, `resolve`:** PASS **26/26** (23 before, plus RS24–RS26), masked 0. 12 collected observations fail more than one row and are excluded from proof, the same 12 as the lane's run (35/23 before, 38/26 now). Every row they touch has a single-row witness. Exit 0.
+- **DX, `recipe_binding`:** PASS 5/5. Its predicates are unchanged, but which observations it sees changed, so it was rerun. Findings 0. Exit 0.
+- **DCO:** `pm_coordination_guard_run.py` gives 14 tables PASS, 119/119 rows, none missing, unchanged. DCO's retained reader is not a table phase.
+
+### Dry landing
+
+Run in a clean full local worktree (`/home/sittingmongoose/pm-worktrees/batch2-fix1-dry`, since removed) at exactly `fb24402e4e`. The 21 ignored audit and currentness inputs were hardlinked in from the rebase worktree and hash-verified, and the `tests/agent_packet_restrictions` symlink was present. Command, under `MemoryMax=2G`/`MemorySwapMax=0` through long-job:
+
+```sh
+PYTHONINTMAXSTRDIGITS=0 PYTHONDONTWRITEBYTECODE=1 TMPDIR=<run>/tmp \
+python3 scripts/pm-landing-check.py --base 6bd829472678026ff753a0edada9e1cc8df03edf --json \
+  --keep-check-reports <run>/subchecks \
+  --readiness-audit-root <worktree>/Plans/.audits/event-authority-2026-08-13-currentness
+```
+
+| Printed result | This branch (`fb24402e4e`) | Reviewed batch head (`cdfe628e70`) |
+|---|---:|---:|
+| Checker exit | 1 | 1 |
+| Blocking records | 0 | 0 |
+| Infrastructure failures/timeouts | 0 | 0 |
+| Pre-existing rows | 0 | 0 |
+| run-gates / audit-governance / plan-migration-validate failure totals | 6,279 / 6,279 / 32,482 | 6,279 / 6,279 / 32,482 |
+| Branch-associated rows (all staleness, 17 classes) | 33,082 | 33,082 |
+| New rows against baseline | 32,924 | 32,924 |
+| New rows not staleness | 2 | 2 |
+
+- **Baseline:** `48dd033447` is an ancestor of the base and 0.53 days older, so it is current.
+- **Grown buckets:** all 12 are staleness.
+- **Compared by total only:** the two audit-closure subchecks, 201 = 201, exactly as before.
+- **The two non-stale new rows:** `historical_successor_terminal_current_snapshot_invalid`, once under `run-gates/validate_plan_migration` and once under `audit-governance/plan_migration`. Both name `Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json`, which this branch does not change.
+- **Concepts drift:** main moved 53 commits since the batch base, all under `Concepts/` (35 paths). Those paths appear in the branch-path diff, but no failure names one.
+- **The tree:** unchanged by the run.
+
+A first dry at `2a8229cf94`, before the T198 exclusion refresh, gave the same result row for row. The checks changed no file.
+
+**Reseal request for Jared / the assigned governance worker:** unchanged from the batch's own request. This fix adds staleness only to documents and pinned files the batch already makes stale. No Spec Lock, `.evidence`, readiness or snapshot artifact was edited. Summary: `INT2-fix1-landing-summary.json`.
+
+### Regeneration
+
+`pm-shard-plans --generate`, then `pm-plan-index generate` with the ignored currentness edition hardlinked in from the rebase worktree (21 files, `inputs.sha256` verified), then `--check`. Only the shards of `Contracts_V0`, `storage-plan` and `Section15_MVP_Promoted_Features_Spec` changed (85, 110 and 31 files), plus five index files. Shard check: pass, 3,704 shards, 99 sources. `pm-plan-index.py validate`: top-level `status: pass`, 0 failures, 8,162 PlanUnits.
+
+### T198 refresh (commit `fb24402e4e`)
+
+The regenerated owner documents, their shards, `plan_units.jsonl` and five edited fixture files are containers holding content-pinned date-time scan exclusions. On a tracked-files-only tree the inventory gate failed: 254 `stale_scan_exclusion` rows plus the matching mentioning-container rows, with 0 unclassified nodes.
+
+INT2's sanctioned helpers ran in the same order the rebase worker used:
+
+- `inv_refresh.py` (projection): 0 rows changed, inventory self-pin unchanged.
+- `inv_classify.py`: 254 removed and 254 added, 659 before and after.
+
+The diff only re-pins `sha256` on the same 254 rows; path, origin, reason and citation are identical. Inventory gate after the refresh: pass, 254 nodes, 0 unclassified, 0 failures. No inventory node, NUMRULE tool code or mutation fixture changed. Records: `t198/refresh-dry.json`, `t198/classify.json`.
+
+### Stopped for Jared
+
+None. Notes for the lead and the recheck, no decision needed:
+
+1. **DM recipe label.** DM's current-writer recipe needed a name for its receipts. `dm-cv1100-producer-v1` labels the existing CV-1100 producer route; no new rule is introduced. The DM owner text now says each retained original verifies under the recipe its own receipt names: dm-retained-producer-v1 for the earlier writer, the current recipe for current-writer originals. That is what SP-1101 already requires.
+2. **DCO and SP-1101's discriminator allowance.** SP-1101 allows an existing immutable edition discriminator that uniquely selects the recipe. Coordination has only the SP-320 recipe, so its old default arguably met that allowance. The brief asks for a sealed per-original receipt in every case, so DCO now requires one.
+3. **Not recheck failures:**
+   - DS15 now returns UNAVAILABLE for a read of an unsealed coherent forgery, which used to be REFUSE. This is the brief's "missing selection → existing unavailable result".
+   - The brief's `pm_event_datetime.py --self-test` is a no-op. Its coverage runs in `pm_event_numbers.py --self-test`.
+   - Two tool items were seen again: T209 (ignored PNGs abort the inventory scan) and the DM multi-row exclusions.
+
+Evidence: `/home/sittingmongoose/pm-scratch/ea-batch2-fix1-resume/` (builders in `bin/`, probes, `runs/`, `out/` guard summaries, `dry/`). Compact copies with SHA256SUMS are in `drafts/INT2/fix1/`.
+
 ## Rebase onto main 9b212f7aa9 (2026-11-12)
 
 **The branch now sits on `origin/main` `9b212f7aa943508e76e7c8f27cc0d5104a5dec83`.** Content head `539cc75c96fd2972fbb7e1f82c4a25c02d1e427a`; this report is the one commit on top of it; the old head `659e53a306` is preserved by tag `ea-batch2-int-pre-rebase-20261112` (tag object `99a34854a1`) on both push URLs. Lane merge structure is unchanged: every lane, tool and deck merge keeps its approved head as second parent. No landing lock, `main` push, reseal, Spec Lock or `.evidence` edit. Native execution stays NOT_RUN; no family is admitted.
