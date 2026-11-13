@@ -86,6 +86,7 @@
     /* Stop starts: the cadence it starts in (the loops come with the markup, at that cadence's length); the pace is
        watched only while Stop shows (paceOn), and nothing is left armed once it has gone (paceOff) */
     if (s === 'stop' && lastSs !== 'stop') { flow = (now() - lastTok < QUIET || streaming(o.tid)) ? 'flowing' : 'waiting'; paceOn(); }
+    else if (s === 'stop') paceKeep();   // a chip that went missing for a moment switched both off (quiet, the observer)
     if (s !== 'stop') paceOff();
     if (s === 'queue' || s === 'full') { if (q) shownQ = q; }
     lastSs = s;
@@ -230,9 +231,12 @@
   /* Stop has started: watch for Settings' speed, start the quiet timer if words are arriving, and once the new loops
      exist (the markup is patched in after html() returns) note the speed they run at */
   function paceOn() {
+    paceKeep();
+    requestAnimationFrame(function () { var b = stopChip(); if (b) seen(loops(b)); });
+  }
+  function paceKeep() {
     watchOn();
     if (flow === 'flowing') armQuiet();
-    requestAnimationFrame(function () { var b = stopChip(); if (b) seen(loops(b)); });
   }
   function paceOff() {
     if (quietH) { var C = window.PM56_CLOCK; if (typeof quietH === 'object' && C && C.cancel) C.cancel(quietH); else clearTimeout(quietH); quietH = null; }

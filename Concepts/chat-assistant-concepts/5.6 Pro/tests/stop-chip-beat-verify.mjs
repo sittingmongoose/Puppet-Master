@@ -365,6 +365,20 @@ const CASES = {
 		assert.equal(W.glow().t.duration, 3200, 'NieR Mode off: the backlight comes back at the right length');
 		return `backlight ${b.animationName}`;
 	},
+	'a Stop chip missing for a moment (the quiet timer and the observer stop) is watched again from the next render': () => {
+		const W = start({}, true);
+		W.run(200);
+		W.set('shown', false); W.run(1200);                          // the quiet timer fires, finds no chip, switches all off
+		assert.deepEqual(W.armed(), { timers: 0, rafs: 0, observing: 0 }, 'off while no chip');
+		W.set('shown', true); W.render({ busy: true }); W.run(50);    // still Stop: the same run
+		assert.equal(W.armed().observing, 1, 'the observer is back');
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000);  // no words since: the quiet timer came back too
+		W.until(() => W.glyph() && W.glyph().place() != null && W.glyph().place() >= 0.3, 4000);
+		const before = W.glyph().place();
+		W.speed(0.6);
+		assert.ok(Math.abs(W.glyph().place() - before) < 1e-9, 'a speed change after it keeps the place');
+		return 'ok';
+	},
 	"another thread's words do not change the pace": () => {
 		const W = start({}, false);
 		W.run(1500);
