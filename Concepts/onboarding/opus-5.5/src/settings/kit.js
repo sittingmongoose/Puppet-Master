@@ -181,6 +181,11 @@ PM51.steps = (items, { start = 1, cls } = {}) => `<ol class="pm51-steps${cls ? '
 PM51.advanced = (body, { label, open, help } = {}) => `<details class="pm51-advanced" ${open ? 'open' : ''}><summary>${icon('chevron')}<span>${h(label || 'Advanced')}</span>${help ? `<small>${h(help)}</small>` : ''}</summary><div class="pm51-advanced-body">${body}</div></details>`;
 PM51.quiet = items => `<div class="pm51-quiet">${items.filter(Boolean).map(i => PM51.link(i)).join('')}</div>`;
 PM51.empty = (title, copy, action) => `<div class="empty-state pm51-empty"><div>${icon('info')}<div class="empty-title">${h(title)}</div>${copy ? `<div class="empty-copy">${h(copy)}</div>` : ''}${action ? `<div class="empty-actions">${PM51.btn(Object.assign({ primary: true }, action))}</div>` : ''}</div></div>`;
+/* A value shown in a scoped row's control with the button that changes it (Media's "Saves to" and Change, a service's
+   "Last check" and Check). The pair wraps on its own: the button drops under the value when both no longer fit on one
+   line, so the value keeps room for its longest word (FO-173). The row's control itself does not wrap, so a dropdown
+   and its neighbour elsewhere keep their one line. */
+PM51.valueWith = (text, btn, cls) => `<span class="o55-value-with"><span class="pm51-row-value${cls ? ' ' + a(cls) : ''}">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}</span>`;
 PM51.kv = pairs => `<div class="pm51-kv">${pairs.filter(Boolean).map(([k, v]) => `<div class="pm51-kv-row"><span>${h(k)}</span><span>${v == null ? '—' : h(String(v))}</span></div>`).join('')}</div>`;
 PM51.note = (text, tone) => `<p class="pm51-note${tone ? ' tone-' + a(tone) : ''}">${icon(tone === 'attention' ? 'alert' : 'info')}<span>${h(text)}</span></p>`;
 PM51.field = (label, control, help) => `<label class="pm51-field"><span class="pm51-field-label">${h(label)}</span>${control}${help ? `<span class="pm51-field-help">${h(help)}</span>` : ''}</label>`;

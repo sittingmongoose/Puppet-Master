@@ -224,7 +224,7 @@
 
   /* One row look everywhere in the detail: the kit's setting row, stacked when its value is a whole chain. */
   const orow = ({ label, help, control, wide, home }) => `<div class="setting-row o55-row o55-scoped${wide ? ' is-wide' : ''}"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${control}</div><span></span></div>`;
-  const valueWith = (text, btn) => `<span class="pm51-row-value">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}`;
+  const valueWith = (text, btn) => PM51.valueWith(text, btn);
   function detailFor(r) {
     const off = plain(r) === 'Off';
     const data = { route: r.id };

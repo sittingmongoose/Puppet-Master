@@ -170,7 +170,16 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
 /* In a list's detail pane (about 380px beside the list) a row's value and its button share the control column: the value
    keeps room to be read and the button drops under it, instead of the label or the value being squeezed to a sliver. */
 #panel-settings .pm51-detail .pm51-rows > .pm51-row > .pm51-row-control { flex-wrap: wrap; }
-#panel-settings .pm51-detail .pm51-row-control > .pm51-row-value { flex: 1 1 14ch; min-width: min(14ch, 100%); }
+/* FO-173: the value's least width is its longest word (a path such as "node_modules/.bin/prettier"), not 14ch: its
+   automatic minimum is that word, capped by its own max-width; a button that no longer fits beside it drops under it,
+   and the word breaks only where the value's own cap is narrower. */
+#panel-settings .pm51-detail .pm51-row-control > .pm51-row-value { flex: 1 1 14ch; overflow-wrap: break-word; }
+/* FO-173: a value in a scoped row's control beside its button (PM51.valueWith: Media › "Saves to" and Change): the
+   pair wraps on its own, so the button drops under the value when both no longer fit on one line and the value keeps
+   its whole width (at 860px the path had 154px beside Change against a 243px word and broke in three places). The
+   value breaks inside a word only when its own cap is narrower than the word. */
+#panel-settings .setting-control > .o55-value-with { display: flex; flex-wrap: wrap; align-items: center; justify-content: inherit; gap: 8px; min-width: 0; max-width: 100%; }
+#panel-settings .o55-value-with > .pm51-row-value { overflow-wrap: break-word; }
 #panel-settings .settings-section.o55-group.o55-sec-off { display: none; }
 /* The owner line a placed group names (placement `owner`): one quiet sentence and its buttons, drawn like a row
    inside the group, not as a boxed strip across its edges. */

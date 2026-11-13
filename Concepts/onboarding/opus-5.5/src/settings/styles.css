@@ -150,10 +150,14 @@
 
 /* ---- key/value, notes, fields ---------------------------------------------- */
 #panel-settings .pm51-kv { display: grid; grid-template-columns: minmax(0, 1fr); }
-#panel-settings .pm51-kv-row { display: grid; grid-template-columns: minmax(120px, 38%) minmax(0, 1fr); gap: 12px; padding: 7px 0; border-top: 1px solid var(--k3-line); font-size: 12px; }
+/* FO-173: a value keeps room for its longest word. The key keeps its column (38%, at least 120px); the value takes
+   the rest while its longest word fits there, and otherwise a line of its own under the key, the row's full width
+   (a path or a command such as "node_modules/.bin/prettier --stdin-filepath ${file}" in a 263px pane: the old
+   grid gave it 131px and broke the path anywhere). It breaks inside a word only when even the full row is narrower. */
+#panel-settings .pm51-kv-row { display: flex; flex-wrap: wrap; gap: 2px 12px; padding: 7px 0; border-top: 1px solid var(--k3-line); font-size: 12px; }
 #panel-settings .pm51-kv-row:first-child { border-top: 0; }
-#panel-settings .pm51-kv-row > span:first-child { color: var(--k3-text-3); }
-#panel-settings .pm51-kv-row > span:last-child { color: var(--k3-text-2); overflow-wrap: anywhere; }
+#panel-settings .pm51-kv-row > span:first-child { flex: 0 0 max(120px, 38%); min-width: 0; color: var(--k3-text-3); }
+#panel-settings .pm51-kv-row > span:last-child { flex: 1 1 0; max-width: 100%; color: var(--k3-text-2); overflow-wrap: break-word; }
 #panel-settings .pm51-note { display: flex; gap: 8px; align-items: flex-start; margin: 0; padding: 9px 11px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); font-size: 11.5px; color: var(--k3-text-2); line-height: 1.45; }
 #panel-settings .pm51-note svg { width: 14px; height: 14px; flex: 0 0 auto; margin-top: 1px; color: var(--k3-blue); }
 #panel-settings .pm51-note.tone-attention { border-color: rgba(247,189,99,.3); background: var(--k3-amber-soft); color: var(--k3-text-1); }
