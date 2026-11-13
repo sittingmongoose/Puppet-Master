@@ -3,8 +3,8 @@
 
 The recheck's 14 mutations (reviews/W3I-p2-recheck/evidence/w3i-mutate.py, M1..M14) are adapted to the restructured
 checker: each now targets the code that carries the same clause (a row's inputs, a frozen-verifier component, an owner
-schema keyword the checker validates in full, or the shared-call site). X1.. are this round's own mutations, each on a
-different row. For every mutation a scratch tree gets a mutated copy of scripts/pm_w3i_continuity_oracles.py and fresh
+schema keyword the checker validates in full, or the shared-call site). X1..X13 are fix 1's own mutations, each on a
+different row. Y1..Y16 are recheck 2's (reviews/W3I-p2-recheck2/evidence/r2-mutate.py), copied verbatim. For every mutation a scratch tree gets a mutated copy of scripts/pm_w3i_continuity_oracles.py and fresh
 copies of the lane's table generator; the shared modules and Plans/ are linked read-only. The suite is: regenerate the
 tables from the mutated spec, then run the complete checker. A mutation is killed when the suite exits non-zero.
 
@@ -102,6 +102,58 @@ MUTATIONS = [
     ('X13', 'eq template: type check dropped (1 == True, 0 == False)', 'withdrawal_once',
      "\"type(record['presented']) is not type(record['expected']) or record['presented'] != record['expected']\"",
      "\"record['presented'] != record['expected']\""),
+    # Recheck 2's 16 (reviews/W3I-p2-recheck2/evidence/r2-mutate.py), verbatim: Y1, Y2, Y3 and Y14 survived fix 1.
+    ('Y1', 'installed frozen verifier always returns True (the dispatcher never refuses original_verification)',
+     'retained_resolved / FROZEN_MAPS',
+     "    components = frozen_components(custody)\n    return all(component_holds(name, value) for name, value in components.items())\n",
+     "    components = frozen_components(custody)\n    return True\n"),
+    ('Y2', 'thread_id copy reads the source node_id', 'append_copy_thread',
+     "    ('thread', 'thread_id', lambda c: c['source']['thread_id']),\n",
+     "    ('thread', 'thread_id', lambda c: c['source']['node_id']),\n"),
+    ('Y3', 'effective_account_ref copy reads requested_account_ref', 'append_copy_effective_account',
+     "    ('effective_account', 'effective_account_ref', lambda c: c['source']['effective_account_ref']),\n",
+     "    ('effective_account', 'effective_account_ref', lambda c: c['source']['requested_account_ref']),\n"),
+    ('Y4', 'retired dataset name compared with itself', 'retired_dataset_name',
+     "[DATASET_PREFIX + core['index_read_token']['generation_id'] for core in CORES(c)]),",
+     "[core['index_read_token']['index_dataset_name'] for core in CORES(c)]),"),
+    ('Y5', 'projection publication_id compared with itself', 'projection_publication_id',
+     "    ('publication_id', lambda c: CK(c)['publication_id']),\n",
+     "    ('publication_id', lambda c: PROJ(c)['publication_id']),\n"),
+    ('Y6', 'checkpoint frontier compared with the token itself', 'checkpoint_frontier',
+     "EQ(TOK(c)['frontier_sha256'], c['frontier_sha256'])", "EQ(TOK(c)['frontier_sha256'], TOK(c)['frontier_sha256'])"),
+    ('Y7', 'cursor generation compared with itself', 'cursor_generation',
+     "EQ(CUR(c)['segment_generation'], SEL(c)['selected_segment_generation'])",
+     "EQ(CUR(c)['segment_generation'], CUR(c)['segment_generation'])"),
+    ('Y8', 'frozen source commitment compared with itself', 'frozen_source_commitment',
+     "out['source_commitment'] = (custody.binding.source_commitment, commitment)",
+     "out['source_commitment'] = (commitment, commitment)"),
+    ('Y9', 'retry semantic comparison never applies', 'retry_semantic',
+     "    when=lambda c, m: (RE_(c).get('event_id') == E(c)['event_id'] and\n",
+     "    when=lambda c, m: (False and\n"),
+    ('Y10', 'actor_kind compared with itself', 'append_fact_actor_kind',
+     "EQ(P(c)['actor_kind'], c['source']['principal_kind'])", "EQ(P(c)['actor_kind'], P(c)['actor_kind'])"),
+    ('Y11', 'group_digest anchored at the start only (re.match, trailing LF accepted)', 'append_custody_group_digest',
+     "V(fullmatch(RECEIPT_HEX_RE, CUSTODY(c)['group_digest']))",
+     "V(RECEIPT_HEX_RE.match(CUSTODY(c)['group_digest']) is not None)"),
+    ('Y12', 'frozen recipe family compared with itself', 'frozen_recipe_family',
+     "out['recipe_family'] = (custody.recipe.payload_schema_id, record['payload_schema_id'])",
+     "out['recipe_family'] = (record['payload_schema_id'], record['payload_schema_id'])"),
+    ('Y13', 'retry returned receipt compared with itself', 'retry_custody',
+     "EQ(c['retry_returned_receipt_hex'], m.get('sealed_matches')[0]['receipt_hex'])",
+     "EQ(c['retry_returned_receipt_hex'], c['retry_returned_receipt_hex'])"),
+    ('Y14', 'owner ignores original_ref (returns any sealed row)', 'retained_receipt_present',
+     "        matches = [r for r in self._store if type(r) is dict and r.get('original_ref') == original_ref]\n"
+     "        if not matches:\n            raise Refusal('original_receipt_missing')",
+     "        matches = [r for r in self._store if type(r) is dict]\n"
+     "        if not matches:\n            raise Refusal('original_receipt_missing')"),
+    ('Y15', 'checkpoint size limit doubled', 'checkpoint_size',
+     "{'presented': len(pack_value(c['checkpoint'])), 'limit': INLINE_LIMIT}, gates=('ck_phys_ok',))",
+     "{'presented': len(pack_value(c['checkpoint'])), 'limit': INLINE_LIMIT * 2}, gates=('ck_phys_ok',))"),
+    ('Y16', 'retired selection instance join dropped', 'retired_selection_instance',
+     "    lambda c, m: EQ([core['index_read_token']['source_selection']['storage_instance_id'] for core in CORES(c)],\n"
+     "                    [STORAGE_INSTANCE_ID] * len(CORES(c))),",
+     "    lambda c, m: EQ([STORAGE_INSTANCE_ID for core in CORES(c)],\n"
+     "                    [STORAGE_INSTANCE_ID] * len(CORES(c))),"),
 ]
 
 LANE_COPIES = ('scripts/pm_w3i_continuity_oracles.py', 'scripts/pm-w3i-table-generate.py')
@@ -164,7 +216,8 @@ def main():
               flush=True)
     shutil.rmtree(scratch)
     summary = {'baseline_clean': baseline[0] == 0 and baseline[1] == 0, 'mutations': len(MUTATIONS), 'killed': killed,
-               'own_rows': sorted({m[2] for m in MUTATIONS if m[0].startswith('X')}), 'results': results}
+               'own_rows': sorted({m[2] for m in MUTATIONS if m[0].startswith('X')}),
+               'recheck2_rows': sorted({m[2] for m in MUTATIONS if m[0].startswith('Y')}), 'results': results}
     if args.json:
         args.json.write_text(json.dumps(summary, indent=1) + '\n')
     print(json.dumps({k: v for k, v in summary.items() if k != 'results'}))
