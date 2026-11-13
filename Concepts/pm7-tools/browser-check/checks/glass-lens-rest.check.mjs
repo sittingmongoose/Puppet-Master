@@ -12,6 +12,9 @@
 //            held 1.1 s, then moves off the item (across the strip, so no scrub starts) and is released, which abandons
 //            the press: the lens travels there and back. Every frame of either travel, and every frame the press is held,
 //            must bend; once back at rest, no frame may;
+//   held     on Home, first: a press held 1.6 s on the Activity bar and on the page tabs (the control), past the
+//            600 ms travel, released on the item: every frame to the release bends, then the lens rests unbent; each
+//            frame records the app's chosen item (both choose at the release, the Activity bar 265-439 ms after it);
 //   scrub    Usage's range: pressed on its chosen button and slid 40 px, the lifted lens bends in every frame; slid
 //            back and released, it travels home and rests unbent;
 //   bead     the hover bead on two neighbouring Activity icons: resting unbent, bending in every frame it flows;
@@ -203,8 +206,9 @@ async function pressCheck(t, f, x, tag, { reducedMotion = false, hold = 1100 } =
 	const j = judge(await f.evaluate(() => window.__g.stop()));
 	const near = (a, b) => a && b && Math.abs(a.x - b.x) <= 1.5 && Math.abs(a.y - b.y) <= 1.5;
 	const back = near(j.end, x.box);
-	/* a strip whose app chooses on the press itself (the Activity bar opens its panel on pointerdown) keeps the lens on
-	   the pressed item: it rests there, and the original item is chosen again (a held click) to put the page back */
+	/* a strip whose app still chooses the pressed item when the press is released off it (the Activity bar: it chooses on
+	   the click, 265 to 439 ms AFTER the release, never on the press; the held rows' frames, R29 F1) keeps the lens on the
+	   pressed item: it rests there, and the original item is chosen again (a held click) to put the page back */
 	const chose = !back && j.relMoving === 0 && j.end && o && Math.abs((j.end.x + j.end.w / 2) - (o.x + o.w / 2)) <= o.w / 2 && Math.abs((j.end.y + j.end.h / 2) - (o.y + o.h / 2)) <= o.h / 2;
 	if (chose) {
 		const c = x.cur; await t.page.mouse.move(off.x + c.x + c.w / 2, off.y + c.y + c.h / 2); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
