@@ -125,23 +125,27 @@ const PROBE = () => {
 		},
 		/* every frame from now until stop(): is the lens moving, lifted (a scrub), bending; the phase is set by the
 		   pointer's own events, after glass.js's listeners have run */
-		watch(i) {
-			const l = this.all()[i]; this.frames = []; this.phase = 'before'; this.on = true;
+		/* chosen (optional): a selector for the strip's chosen item, read each frame, so a frame says what the app had
+		   chosen by then; tDown and tUp are the press's own event times */
+		watch(i, chosen) {
+			const l = this.all()[i]; this.frames = []; this.phase = 'before'; this.on = true; this.tDown = this.tUp = null;
 			if (!this.listening) {
 				this.listening = true;
-				document.addEventListener('pointerdown', () => { if (this.on) this.phase = 'held'; }, true);
-				document.addEventListener('pointerup', () => { if (this.on) this.phase = 'released'; }, true);
+				document.addEventListener('pointerdown', () => { if (this.on) { this.phase = 'held'; this.tDown = Math.round(performance.now()); } }, true);
+				document.addEventListener('pointerup', () => { if (this.on) { this.phase = 'released'; this.tUp = Math.round(performance.now()); } }, true);
 			}
+			const which = () => { const c = chosen && document.querySelector(chosen); return c ? (c.getAttribute('data-target') || c.getAttribute('aria-label') || c.textContent || '').trim().slice(0, 24) : ''; };
 			const tick = (ts) => {
 				if (!this.on) return;
 				const f = getComputedStyle(l).backdropFilter;
-				this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, fl: f && f !== 'none' ? f : '', b: box(l) });
+				this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, fl: f && f !== 'none' ? f : '', b: box(l), ch: chosen ? which() : undefined });
 				requestAnimationFrame(tick);
 			};
 			requestAnimationFrame(tick);
 			return !!l;
 		},
-		stop() { this.on = false; return this.frames; }
+		stop() { this.on = false; return this.frames; },
+		times() { return { tDown: this.tDown, tUp: this.tUp }; }
 	};
 };
 
@@ -217,6 +221,44 @@ async function pressCheck(t, f, x, tag, { reducedMotion = false, hold = 1100 } =
 	return j;
 }
 
+/* R29 F1 (2026-11-13): a press held well past its travel (--set heldMs=, 1600; the travel runs 600 ms), then released
+   ON the item, a real choice. Every frame from the press to the release bends, the frames after the travel has ended
+   included; after the release the lens rests unbent. Each frame also records the item the app has chosen by then, so
+   the run says whether the app chose during the hold or at the release; the original item is chosen back after. */
+async function heldCheck(t, f, x, tag, chosen) {
+	const off = await offsetOf(t, f), o = x.other, c = x.cur, holdMs = Number(t.args.heldMs || 1600);
+	const at = (b) => ({ x: off.x + b.x + b.w / 2, y: off.y + b.y + b.h / 2 });
+	await t.page.mouse.move(at(o).x, at(o).y); await t.page.waitForTimeout(450);
+	await f.evaluate(([i, sel]) => window.__g.watch(i, sel), [x.lens, chosen]);
+	await t.page.waitForTimeout(120);
+	await t.page.mouse.down(); await t.page.waitForTimeout(holdMs); await t.page.mouse.up();
+	await t.page.waitForTimeout(1500);
+	await f.evaluate(() => window.__g.settle(4000));
+	const fr = await f.evaluate(() => window.__g.stop()), tm = await f.evaluate(() => window.__g.times());
+	const held = fr.filter((z) => z.ph === 'held'), rel = fr.filter((z) => z.ph === 'released');
+	const lastMv = held.reduce((k, z, n) => (z.mv ? n : k), -1), still = held.slice(lastMv + 1);
+	const ch0 = fr.length ? fr[0].ch : '', k = fr.findIndex((z) => z.ch !== ch0);
+	const choseAt = k < 0 ? null : { phase: fr[k].ph, msAfterDown: tm.tDown != null ? fr[k].t - tm.tDown : null, from: ch0, to: fr[k].ch };
+	const relLast = rel.reduce((kk, z, n) => (z.mv ? n : kk), -1), after = rel.slice(relLast + 1);
+	const row = { frames: fr.length, heldMoving: held.filter((z) => z.mv).length, stillHeld: still.length, stillHeldFlat: still.filter((z) => !z.bend).length,
+		firstFlatMsAfterDown: (() => { const z = still.find((q) => !q.bend); return z && tm.tDown != null ? z.t - tm.tDown : null; })(),
+		holdMs: tm.tDown != null && tm.tUp != null ? tm.tUp - tm.tDown : null, choseAt, after: after.length, afterBent: after.filter((z) => z.bend).length };
+	row.sidePanel = await f.evaluate(() => { const v = document.querySelector('#sidePanelSlot > .side-panel-view.active'), sp = document.getElementById('sidePanelSlot'); return { open: !!(sp && sp.getBoundingClientRect().width > 4), view: v ? v.id : null }; });
+	const what = `${tag} ${x.strip} -> ${x.label || 'item'}`;
+	t.log(`held ${what}: ${JSON.stringify(row)}`);
+	/* every frame, for the report: ms after the press, phase, moving, bent, the app's chosen item */
+	try {
+		const { appendFileSync } = await import('node:fs'); const pathm = await import('node:path');
+		appendFileSync(pathm.join(t.run.dir, 'held-frames.jsonl'), JSON.stringify({ what, row, tDown: tm.tDown, tUp: tm.tUp, frames: fr.map((z) => [tm.tDown != null ? z.t - tm.tDown : z.t, z.ph, z.mv ? 1 : 0, z.bend ? 1 : 0, z.ch]) }) + '\n');
+	} catch (e) { t.log('held frames not written: ' + e); }
+	await t.check(`held: a press held past its travel bends in every frame until the release ${what}`, row.heldMoving >= 3 && row.stillHeld >= 30 && row.stillHeldFlat === 0, JSON.stringify(row));
+	await t.check(`held: after the release it rests unbent ${what}`, row.after >= 5 && row.afterBent === 0, JSON.stringify({ after: row.after, afterBent: row.afterBent }));
+	/* the original item chosen back (a held click), and the page left to settle */
+	await t.page.mouse.move(at(c).x, at(c).y); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+	await t.page.waitForTimeout(2500);
+	await f.evaluate(() => window.__g.settle(4000));
+}
+
 /* Usage's range: pressed on its chosen button, slid 40 px and back, released there */
 async function scrubCheck(t, f, x, tag) {
 	const off = await offsetOf(t, f), c = x.cur;
@@ -288,6 +330,20 @@ async function appPart(t, surface, W, H) {
 			await f.evaluate((p) => PM_PAGES.go(p), VIEWS[view] || view);
 			await t.page.waitForTimeout(2500);
 			await restCheck(t, f, tag, { W, H });
+			if (view === 'home') {
+				/* a press held well past its travel (R29 F1): the Activity bar, and the title bar's page tabs as the control */
+				for (const [sel, chosen] of [['#activityBar', '#activityBar .icon[data-lg-current]'], ['nav.page-tabs', 'nav.page-tabs .page-tab.active']]) {
+					await parkPointer(t.page, W, H); await t.page.waitForTimeout(600); await f.evaluate(() => window.__g.settle(4000));
+					/* the Activity bar's lens shows only while a side panel is open: an earlier choice may have shut it */
+					if (sel === '#activityBar' && await f.evaluate(() => { const sp = document.getElementById('sidePanelSlot'); return !(sp && sp.getBoundingClientRect().width > 4); })) {
+						const fi = await f.evaluate(() => { const i = document.querySelector('#activityBar .icon[data-target="panel-files"]'); if (!i) return null; const r = i.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; });
+						if (fi) { const off = await offsetOf(t, f); await t.page.mouse.move(off.x + fi.x + fi.w / 2, off.y + fi.y + fi.h / 2); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up(); await t.page.waitForTimeout(1500); await parkPointer(t.page, W, H); await f.evaluate(() => window.__g.settle(4000)); }
+					}
+					const xs = await f.evaluate(() => window.__g.targets()), x = xs.find((z) => z.strip === sel && z.other);
+					if (!x) { await t.check(`held: ${sel} has its lens and another item ${tag}`, false, JSON.stringify(xs.map((z) => ({ strip: z.strip, kind: z.kind, other: !!z.other, box: z.box })))); continue; }
+					await heldCheck(t, f, x, tag, chosen);
+				}
+			}
 			const xs = await presses(t, f, tag, { hold: Number(t.args.hold || 1100) });
 			if (view === 'usage') { const r = xs.find((x) => x.strip === '#pmuRange'); if (r) await scrubCheck(t, f, r, tag); else await t.check(`scrub: Usage's range has its lens ${tag}`, false, JSON.stringify(xs)); }
 			if (view === 'home') await beadCheck(t, f, tag);
