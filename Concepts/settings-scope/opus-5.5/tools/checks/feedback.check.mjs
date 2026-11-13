@@ -508,21 +508,22 @@ async function astraWhere(t) {
 /* ------------------------------------------------------------------ Astra max A2 (2026-11-13): table E2, both ways
    The check's own copy of the README's table E2 (when a command pattern is host-dependent), never the page's: each row
    with the examples the README gives, the review's five patterns that were saved Everywhere on 7150f6c5bc, every earlier
-   spelling (Sol max F1's seven, the reader's fourteen, the review's six controls), the patterns the rule reads
-   conservatively, and the portable controls. Every case is typed as your own pattern on npm test (a portable step, so
+   spelling (Sol max F1's seven, the reader's fourteen, the review's six controls), the words that are not paths (a web
+   address, an image or registry reference, a git ref: the lead's canon call on PS-144, the same day), and the portable
+   controls. Every case is typed as your own pattern on npm test (a portable step, so
    only the pattern decides), and asserts the places offered, the line saying why, and the save: a host-dependent
    pattern offers no Everywhere, the save guard keeps no Everywhere rule even when Everywhere is forced, and This computer
    is kept; a portable one offers Everywhere and keeps it */
 const E2 = {
-	rows: [[1, 'program'], [2, 'separator'], [3, 'relative'], [4, 'home'], [5, 'flag'], [6, 'file'], [7, 'filecmd'], [8, 'wildcard']],
+	rows: [[1, 'program'], [2, 'root'], [3, 'relative'], [4, 'separator'], [5, 'flag'], [6, 'file'], [7, 'filecmd'], [8, 'wildcard']],
 	// [pattern, the row the rule must name first, the word it must name]
 	table: [
 		['./scripts/release.sh v1.4.0', 1, './scripts/release.sh'], ['scripts/release', 1, 'scripts/release'], ['"/opt/tools/runner" test', 1, '/opt/tools/runner'], ['C:/Tools/runner test', 1, 'C:/Tools/runner'], ['\\\\nas\\share\\runner test', 1, '\\\\nas\\share\\runner'], ['$HOME/bin/runner', 1, '$HOME/bin/runner'],
-		['node scripts/release', 2, 'scripts/release'], ['npm --prefix=packages/app test', 2, 'packages/app'], ['git -C repos/loom status', 2, 'repos/loom'], ['gcc -I/usr/include x', 2, '/usr/include'], ['PATH=/opt/bin npm test', 2, '/opt/bin'], ['npm --prefix ~/x test', 2, '~/x'],
-		['prettier --write .', 3, '.'], ['cd ..', 3, '..'],
-		['cd ~', 4, '~'], ['cd $HOME', 4, '$HOME'], ['dir C:', 4, 'C:'],
-		['npm --prefix=release test', 5, 'release'], ['git -C repo status', 5, 'repo'], ['tsc -p tsconfig.json', 5, 'tsconfig.json'], ['cargo build --manifest-path Cargo.toml', 5, 'Cargo.toml'], ['docker build -f Dockerfile', 5, 'Dockerfile'],
-		['python3 build.py', 6, 'build.py'], ['bash deploy.sh *', 6, 'deploy.sh'], ['release.sh', 6, 'release.sh'],
+		['npm --prefix=/opt/release test', 2, '/opt/release'], ['gcc -I/usr/include x', 2, '/usr/include'], ['PATH=/opt/bin npm test', 2, '/opt/bin'], ['npm --prefix ~/x test', 2, '~/x'], ['cd ~', 2, '~'], ['cd $HOME', 2, '$HOME'], ['dir C:', 2, 'C:'], ['git diff /etc/hosts', 2, '/etc/hosts'], ['curl file:///etc/hosts', 2, 'file:///etc/hosts'],
+		['prettier --write .', 3, '.'], ['cd ..', 3, '..'], ['git diff ./src', 3, './src'],
+		['node scripts/release', 4, 'scripts/release'], ['npm --prefix=packages/app test', 4, 'packages/app'], ['git -C repos/loom status', 4, 'repos/loom'], ['git diff -- src/app', 4, 'src/app'], ['node .venv/bin/tool', 4, '.venv/bin/tool'], ['npm install @types/node', 4, '@types/node'], ['docker push jared/loom:1.4.0', 4, 'jared/loom:1.4.0'],
+		['npm --prefix=release test', 5, 'release'], ['git -C repo status', 5, 'repo'], ['git -C repo push origin feature/tags', 5, 'repo'], ['tsc -p tsconfig.json', 5, 'tsconfig.json'], ['cargo build --manifest-path Cargo.toml', 5, 'Cargo.toml'], ['docker build -f Dockerfile', 5, 'Dockerfile'],
+		['python3 build.py', 6, 'build.py'], ['bash deploy.sh *', 6, 'deploy.sh'], ['release.sh', 6, 'release.sh'], ['git log deploy.sh', 6, 'deploy.sh'],
 		['read *', 7, 'read'], ['rm -rf *', 7, 'rm'],
 		['*', 8, '*'], ['*-cli build', 8, '*-cli']
 	],
@@ -532,10 +533,16 @@ const E2 = {
 	earlier: ['npm --prefix=/opt/release test', 'npm --prefix=../other test', '"/opt/tools/runner" test', '"../tools/runner" test', 'C:/Tools/runner test', '.\\tools\\runner test', '\\\\nas\\share\\runner test',
 		'C:\\Tools\\runner test', 'npm --prefix ~/x test', '$HOME/bin/runner', '%USERPROFILE%\\bin\\runner.exe', 'tools/runner test', 'gcc -I/usr/include x', 'PATH=/opt/bin npm test', '//nas/share/runner', '~\\bin\\runner', 'node --require=./hook.js app', "npm --prefix='/opt/x' test", 'prettier --write .', 'tools\\runner test', 'npm --prefix="C:\\Program Files\\x" test',
 		'/opt/release', '"/opt/release tools/run"', 'C:/tools/release', '.\\scripts\\release.cmd', '\\\\nas\\share\\release.cmd', '"./scripts/release.js"', '/usr/local/bin/npm test'],
-	// read conservatively (README: a word with / or \ reads as a path): row 2
-	conservative: ['git push origin feature/tags', 'docker push ghcr.io/jared/loom:1.4.0', 'npm publish --registry=https://registry.npmjs.org', 'curl -fsSL https://bun.sh/install', 'npm install @types/node'],
-	// portable: the brief's four, then the earlier controls with no / or \
-	portable: ['npm test *', 'git status', 'cargo build', 'pytest -q', 'npm test', 'git push origin *', 'npm run build', 'NODE_ENV=production npm test', 'make -j8 test', 'cargo build --profile release', 'pytest -p no:cacheprovider', 'cargo test -p mycrate']
+	/* not a path (the README's "Not a path", the lead's canon call on PS-144): a web address, an image or registry
+	   reference whose first segment is a host name, a git ref. The first four were the controls the first version of E2
+	   read as paths; each is portable again */
+	notAPath: [['git push origin feature/tags', 'a git ref'], ['docker push ghcr.io/jared/loom:1.4.0', 'an image reference'], ['npm publish --registry=https://registry.npmjs.org', 'a web address'], ['curl -fsSL https://bun.sh/install', 'a web address'],
+		['curl https://example.com/a/b?c=d/e', 'a web address'], ['curl https://example.com/install.sh', 'a web address'], ['docker pull localhost:5000/app:dev', 'an image reference'], ['docker pull quay.io/org/app:1.0', 'an image reference'],
+		['git push -f origin feature/tags', 'a git ref'], ['git rebase origin/main', 'a git ref'], ['git diff main..feature/tags', 'a git ref'], ['git checkout -b feature/x', 'a git ref'], ['git -c core.pager=less log feature/tags', 'a git ref'], ['git push origin HEAD:refs/heads/feature/x', 'a git ref']],
+	// the page's own reading of single words: [word, kind or null]
+	kinds: [['https://bun.sh/install', 'web'], ['ghcr.io/jared/loom:1.4.0', 'image'], ['localhost:5000/app', 'image'], ['file:///etc/hosts', null], ['jared/loom:1.4.0', null], ['.venv/bin/tool', null], ['scripts.d/release', null], ['@types/node', null]],
+	// portable: the brief's four, then the earlier controls with no / or \, and git's -C after a subcommand
+	portable: ['npm test *', 'git status', 'cargo build', 'pytest -q', 'npm test', 'git push origin *', 'npm run build', 'NODE_ENV=production npm test', 'make -j8 test', 'cargo build --profile release', 'pytest -p no:cacheprovider', 'cargo test -p mycrate', 'git commit -C HEAD']
 };
 async function astraAlways(t, h) {
 	const { sh, open, typeOwn, ed, keptRules } = h;
@@ -546,13 +553,14 @@ async function astraAlways(t, h) {
 		return {
 			rows: P.paths && P.paths.rows ? P.paths.rows.map((r) => [r.row, r.why]) : null,
 			table: T.table.map(([p, row, word]) => { const x = host(p); return { p, want: [row, word], got: x ? [x.row, x.word] : null, editor: !!A && A.hostDependent(p, S.test) }; }).filter((x) => !x.got || x.got[0] !== x.want[0] || x.got[1] !== x.want[1] || !x.editor),
-			conservative: T.conservative.map((p) => ({ p, got: host(p) })).filter((x) => !x.got || x.got.row !== 2),
+			notAPath: T.notAPath.map(([p]) => p).filter((p) => !!host(p) || !A || A.hostDependent(p, S.test)),
+			kinds: T.kinds.filter(([w, k]) => !(P.paths && P.paths.notAPath) || P.paths.notAPath(w) !== k),
 			portable: T.portable.filter((p) => !!host(p) || (A && A.hostDependent(p, S.test)))
 		};
 	}, E2);
 	await t.check('Astra A2: the page’s one rule (PSX.paths.host) holds table E2’s eight rows, in the table’s order', JSON.stringify(unit.rows) === JSON.stringify(E2.rows), JSON.stringify(unit.rows));
-	await t.check(`Astra A2: each of table E2’s ${E2.table.length} examples is host-dependent by its own row, naming its word, and the editor’s classifier agrees`, !unit.table.length, JSON.stringify(unit.table));
-	await t.check(`Astra A2: the ${E2.conservative.length} patterns read conservatively (a branch, an image, a package scope, a web address) are host-dependent by row 2`, !unit.conservative.length, JSON.stringify(unit.conservative));
+	await t.check(`Astra A2: each of table E2’s ${E2.table.length} examples is host-dependent by its own row, naming its word, and the editor’s classifier agrees (git ref positions still take rows 2, 3 and 6)`, !unit.table.length, JSON.stringify(unit.table));
+	await t.check(`Follow-up (not a path, PS-144): the ${E2.notAPath.length} patterns naming a web address, an image or registry reference or a git ref are host-dependent by no row, and the page reads each kind of word as the table says (${E2.kinds.length} words)`, !unit.notAPath.length && !unit.kinds.length, JSON.stringify({ notAPath: unit.notAPath, kinds: unit.kinds }));
 	await t.check(`Astra A2: the ${E2.portable.length} portable controls (npm test *, git status, cargo build, pytest -q and the earlier ones) are host-dependent by no row`, !unit.portable.length, JSON.stringify(unit.portable));
 	// broad detection reads the same words: a directory flag's value counts with its flag
 	const broad = await run(t, () => { const A = window.PSX.approvals, S = Object.fromEntries(A.ASKS.map((x) => [x.id, x])); return { flagThenStar: A.isBroad('git -C repo *', S.test), subcommand: A.isBroad('git -C repo status *', S.test), script: A.isBroad('node scripts/release *', S.test) }; });
@@ -563,7 +571,7 @@ async function astraAlways(t, h) {
 	E2.witnesses.forEach((p) => add(p, 'host', 'the review’s saved witness'));
 	E2.table.forEach(([p, row]) => add(p, 'host', `table E2 row ${row}`));
 	E2.earlier.forEach((p) => add(p, 'host', 'an earlier spelling'));
-	E2.conservative.forEach((p) => add(p, 'host', 'read conservatively, row 2'));
+	E2.notAPath.forEach(([p, kind]) => add(p, 'portable', `not a path: ${kind}`));
 	E2.portable.forEach((p) => add(p, 'portable', 'a portable control'));
 	let shot = false;
 	for (const [pat, kind, why] of cases) {
@@ -593,7 +601,7 @@ async function astraAlways(t, h) {
 			await t.check(`Astra A2 (${why}): ${pat} offers This project, This computer and Everywhere with no line against it, and is kept Everywhere`, !!e && JSON.stringify(places) === JSON.stringify(['project', 'computer', 'everywhere']) && !e.note && kept.includes(`${pat} @ everywhere`), JSON.stringify({ places, line: e && e.noteText, kept }));
 		}
 	}
-	await t.check(`Astra A2: ${cases.length} cases walked through the editor and the save (${cases.filter((c) => c[1] === 'host').length} host-dependent, ${cases.filter((c) => c[1] === 'portable').length} portable)`, cases.length === new Set([...E2.witnesses, ...E2.table.map((x) => x[0]), ...E2.earlier, ...E2.conservative, ...E2.portable]).size && cases.length >= 60, String(cases.length));
+	await t.check(`Astra A2: ${cases.length} cases walked through the editor and the save (${cases.filter((c) => c[1] === 'host').length} host-dependent, ${cases.filter((c) => c[1] === 'portable').length} portable)`, cases.length === new Set([...E2.witnesses, ...E2.table.map((x) => x[0]), ...E2.earlier, ...E2.notAPath.map((x) => x[0]), ...E2.portable]).size && cases.length >= 60, String(cases.length));
 }
 
 /* ------------------------------------------------------------------ Astra max A3 (2026-11-13): Keep them fixed and screens
@@ -1243,22 +1251,28 @@ export default async function (t) {
 		await pic(t, 'copy-new-homenas', 'New Project › Start like tastebook on Home NAS: Copilot can’t be used there; accounts only, never secrets', '.psx-sheet.psx-copy');
 		await run(t, () => window.PSX.closeSheets());
 
-		/* review Sol max F2 (guided flows 3.07, SSYS-062): Keep them fixed, then one row (Profile in use) and one kind
-		   (Automation) unticked, then "Copy what recipe-app gets from Home NAS" (Helpers at once, Profile in use,
-		   FileSafe). The row and the kind stay out of the plan, the ticks, the counts and the preview; in Settings they stay
-		   out of the write too. FileSafe, which nobody unticked, still comes, so the opt-in is shown doing its part.
-		   Then the other order: the computer's values first, Profile in use unticked there, then Keep them fixed */
+		/* review Sol max F2 (guided flows 3.07), under SSYS-062 as the lead reads it (follow-up, 2026-11-13): "project_only_rows
+		   is off by default, as are copied instructions/build files/remotes and Computer-effective freeze". So Keep them fixed
+		   alone freezes nothing the source gets from its computer (Helpers at once, Profile in use and FileSafe come from
+		   Home NAS for recipe-app); only "Copy what recipe-app gets from Home NAS" brings them. Sol max F2's accepted design,
+		   in which Keep them fixed froze FileSafe already, is overturned. The walk: Keep them fixed (none of the three in the
+		   plan, the ticks, the count or the preview, which names them), then the Automation kind unticked, then the opt-in
+		   (the three listed), then Profile in use unticked there, then Keep them fixed off and on and the opt-in off and on:
+		   the row and the kind stay out of the plan, the ticks, the counts and the preview, and in Settings out of the write;
+		   FileSafe, which nobody unticked, comes with the opt-in. Then the other order: the opt-in first, Profile in use
+		   unticked there, then Keep them fixed, then the opt-in off */
 		const F2 = { row: 'safety.rules.permission-preset', kind: 'orchestrator_automation', fs: 'safety.protection.filesafe-integration', help: 'branching.subagents.max-parallel' };
 		const f2walk = async (where) => run(t, async ([F, where]) => {
 			const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), out = { where };
 			const sh = () => document.querySelector('.psx-sheet.psx-copy');
+			const THREE = [F.row, F.fs, F.help];
 			if (where === 'new') {
 				await P.command({ cmd: 'moment', id: 'copy-new' }); await wait(700);
 				const more = sh().querySelector('[data-act="more"]'); if (more) { more.click(); await wait(250); }
 				const r = sh().querySelector('input[name="psx-src"][value="recipe-app"]'); if (r) { r.click(); await wait(300); }
 			} else {
 				// a destination with none of the three as its own, so every one of them would be a change
-				const dst = P.PROJECTS.map((p) => p.id).find((p) => p !== 'recipe-app' && ![F.row, F.fs, F.help].some((id) => P.has(P.W.project[p], id)));
+				const dst = P.PROJECTS.map((p) => p.id).find((p) => p !== 'recipe-app' && !THREE.some((id) => P.has(P.W.project[p], id)));
 				out.dst = dst; P.setCtx({ project: dst }); await wait(500);
 				P.copy.open({ mode: 'settings', src: 'recipe-app' }); await wait(500);
 			}
@@ -1270,32 +1284,45 @@ export default async function (t) {
 			const kindBox = (k) => { const b = sh().querySelector(`input[data-act="kind"][data-kind="${k}"]`); const m = b && /(\d+) of (\d+)/.exec(b.closest('label').textContent); return b ? { of: m ? [+m[1], +m[2]] : null, checked: b.checked, mixed: b.indeterminate } : null; };
 			const ids = () => P.copy.plan().rows.map((x) => x.id);
 			const inKind = (list, k) => list.filter((id) => P.copy.kindOf(id) === k);
-			out.comp = [...sh().querySelectorAll('input[data-act="fromcomp"]')].map((x) => x.closest('label').textContent.replace(/\s+/g, ' ').trim())[0] || '';
-			// Keep them fixed, then Profile in use unticked, then the whole Automation kind unticked
+			const ticks = () => THREE.filter((id) => !!sh().querySelector(`input[data-id="${id}"]`));
+			const preview = async () => {
+				sh().querySelector('.psx-sheet-foot .btn.primary').click(); await wait(400);
+				const names = [...sh().querySelectorAll('li .psx-li-name')].map((x) => x.textContent.trim());
+				const o = { rows: names.length, row: names.some((x) => x.startsWith(P.label(F.row) + ':')), help: names.some((x) => x.startsWith(P.label(F.help) + ':')), kind: names.filter((x) => inKind(Object.keys(P.DEF), F.kind).some((id) => x.startsWith(P.label(id) + ':'))), fs: names.some((x) => x.startsWith(P.label(F.fs) + ':')), left: ((sh().querySelector('[data-k="leftout"]') || {}).textContent || '').trim(), compHeld: ((sh().querySelector('[data-k="compheld"]') || {}).textContent || '').replace(/\s+/g, ' ').trim() };
+				return o;
+			};
+			const back = async () => { const b = [...sh().querySelectorAll('.psx-sheet-foot .btn')].find((x) => x.textContent.trim() === 'Back'); if (b) { b.click(); await wait(350); } const a2 = sh().querySelector('details.psx-adv'); if (a2 && !a2.open) { sh().querySelector('details.psx-adv > summary').click(); await wait(250); } };
+			// 1. Keep them fixed alone: none of the three from Home NAS is frozen, and the preview names them
 			await click('input[data-act="fixed"]');
-			await openKind('permissions_security');
-			const rb0 = sh().querySelector(`input[data-id="${F.row}"]`); out.rowListed = !!rb0; out.rowWasOn = !!rb0 && rb0.checked;
-			if (rb0 && rb0.checked) await click(`input[data-id="${F.row}"]`);
+			await openKind('permissions_security'); await openKind(F.kind);
+			const p0 = P.copy.plan();
+			out.fixedOnly = { labels: THREE.map((id) => P.label(id)), plan: p0.rows.filter((x) => THREE.includes(x.id)).map((x) => `${x.id} (${x.from})`), held: (p0.compHeld || []).map((x) => x.id).sort(), ticks: ticks(), n: btnN(), T: P.copy.totals().n, fixedLabel: ((sh().querySelector('input[data-act="fixed"]') || { closest: () => null }).closest('label') || {}).textContent || '' };
+			out.fixedOnly.preview = await preview(); await back();
+			// 2. the Automation kind unticked
+			await openKind(F.kind);
 			const kb0 = sh().querySelector(`input[data-act="kind"][data-kind="${F.kind}"]`); out.kindWasOn = !!kb0 && kb0.checked;
 			if (kb0 && !kb0.checked) await click(`input[data-act="kind"][data-kind="${F.kind}"]`);
 			await click(`input[data-act="kind"][data-kind="${F.kind}"]`);
 			const i0 = ids();
-			out.before = { n: btnN(), T: P.copy.totals().n, row: i0.includes(F.row), kind: inKind(i0, F.kind).length, fs: i0.includes(F.fs) };
-			// then the computer's values
+			out.before = { n: btnN(), T: P.copy.totals().n, kind: inKind(i0, F.kind).length, three: i0.filter((id) => THREE.includes(id)) };
+			// 3. the computer's values, then Profile in use unticked among them
 			await click('input[data-act="fromcomp"]');
 			await openKind(F.kind); await openKind('permissions_security');
-			const i1 = ids();
-			out.after = { n: btnN(), T: P.copy.totals().n, row: i1.includes(F.row), kind: inKind(i1, F.kind), fs: i1.includes(F.fs) };
+			const rb0 = sh().querySelector(`input[data-id="${F.row}"]`); out.rowListed = !!rb0; out.rowWasOn = !!rb0 && rb0.checked;
+			if (rb0 && rb0.checked) await click(`input[data-id="${F.row}"]`);
+			// 4. Keep them fixed off and on, the opt-in off and on: the ticks hold
+			await click('input[data-act="fixed"]'); await click('input[data-act="fixed"]');
+			await click('input[data-act="fromcomp"]'); await click('input[data-act="fromcomp"]');
+			await openKind(F.kind); await openKind('permissions_security');
+			const i1 = ids(), p1 = P.copy.plan();
+			out.after = { n: btnN(), T: P.copy.totals().n, row: i1.includes(F.row), kind: inKind(i1, F.kind), fs: i1.includes(F.fs), fromComp: p1.rows.filter((x) => x.from === 'computer').map((x) => x.id) };
 			const rb1 = sh().querySelector(`input[data-id="${F.row}"]`); out.rowBox = rb1 ? rb1.checked : 'not listed';
 			const hb = sh().querySelector(`input[data-id="${F.help}"]`); out.helpBox = hb ? hb.checked : 'not listed';
 			out.kindBox = kindBox(F.kind); out.permBox = kindBox('permissions_security');
 			out.permOn = inKind(i1, 'permissions_security').length;
-			out.comes = (sh().querySelector('.psx-card') || {}).innerText || '';
 			out.compAfter = [...sh().querySelectorAll('input[data-act="fromcomp"]')].map((x) => x.closest('label').textContent.replace(/\s+/g, ' ').trim())[0] || '';
-			// the preview
-			sh().querySelector('.psx-sheet-foot .btn.primary').click(); await wait(400);
-			const names = [...sh().querySelectorAll('li .psx-li-name')].map((x) => x.textContent.trim());
-			out.preview = { rows: names.length, row: names.some((x) => x.startsWith(P.label(F.row) + ':')), kind: names.filter((x) => inKind(Object.keys(P.DEF), F.kind).some((id) => x.startsWith(P.label(id) + ':'))), fs: names.some((x) => x.startsWith(P.label(F.fs) + ':')), left: ((sh().querySelector('[data-k="leftout"]') || {}).textContent || '').trim() };
+			// 5. the preview, then in Settings the write
+			out.preview = await preview();
 			if (where === 'settings') {
 				const before = JSON.parse(JSON.stringify(P.W.project[out.dst] || {}));
 				sh().querySelector('.psx-sheet-foot .btn.primary').click(); await wait(1600);
@@ -1308,16 +1335,19 @@ export default async function (t) {
 			await reset(t);
 			const w = await f2walk(where);
 			const W2 = where === 'new' ? 'New Project › Like recipe-app' : `Copy settings into ${w.dst} from recipe-app`;
-			await t.check(`F2 (Sol max), ${W2}: the walk reached its controls (Keep them fixed listed Profile in use, ticked, and Automation was selected)`, w.src === 'recipe-app' && w.rowListed && w.rowWasOn && w.kindWasOn && !w.before.row && w.before.kind === 0 && w.before.fs, JSON.stringify(w));
-			await t.check(`F2 (Sol max), ${W2}: after Copy what recipe-app gets from Home NAS, the unticked Profile in use and the unticked Automation kind stay out of the plan; FileSafe still comes`, !w.after.row && !w.after.kind.length && w.after.fs, JSON.stringify(w.after));
-			await t.check(`F2 (Sol max), ${W2}: the ticks agree: Profile in use and Helpers at once unticked, Automation unticked, Permissions’ count is what the plan holds`, w.rowBox === false && w.helpBox === false && !!w.kindBox && !w.kindBox.checked && !w.kindBox.mixed && w.kindBox.of && w.kindBox.of[0] === 0 && !!w.permBox && w.permBox.of && w.permBox.of[0] === w.permOn, JSON.stringify({ rowBox: w.rowBox, helpBox: w.helpBox, kindBox: w.kindBox, permBox: w.permBox, permOn: w.permOn }));
-			await t.check(`F2 (Sol max), ${W2}: the counts: the button and the plan agree and nothing was added (FileSafe was already kept fixed); the opt-in says what stays as usual`, w.after.n === w.after.T && w.after.n === w.before.n && /Profile in use/.test(w.compAfter) && /stays as usual, as you chose/.test(w.compAfter), JSON.stringify({ before: w.before, after: { n: w.after.n, T: w.after.T }, comp: w.compAfter }));
-			await t.check(`F2 (Sol max), ${W2}: the preview lists neither Profile in use nor an Automation setting, lists FileSafe, and names what stays as usual`, w.preview.rows > 0 && !w.preview.row && !w.preview.kind.length && w.preview.fs && /Profile in use/.test(w.preview.left), JSON.stringify(w.preview));
-			if (where === 'settings') await t.check(`F2 (Sol max), ${W2}: Copy writes neither Profile in use nor an Automation setting into ${w.dst}, and writes FileSafe`, !!w.write && !w.write.row && !w.write.help && !w.write.kind.length && w.write.fs && w.write.n === w.after.T, JSON.stringify(w.write));
-			if (where === 'new') await pic(t, 'f2-preview', 'F2: New Project like recipe-app, Keep them fixed, Profile in use and Automation unticked, then the Home NAS values: the preview leaves both out and says so', '.psx-sheet.psx-copy');
+			const fo = w.fixedOnly;
+			await t.check(`Follow-up (SSYS-062: Computer-effective freeze is off by default), ${W2}: Keep them fixed alone freezes nothing recipe-app gets from Home NAS: Helpers at once, Profile in use and FileSafe are out of the plan, the ticks, the count and the preview, the preview names them as coming only with Copy what recipe-app gets from Home NAS, and Keep them fixed’s own line says so`,
+				!fo.plan.length && JSON.stringify(fo.held) === JSON.stringify([F2.help, F2.row, F2.fs].sort()) && !fo.ticks.length && fo.n === fo.T && !fo.preview.row && !fo.preview.fs && !fo.preview.help && /^Not kept fixed: /.test(fo.preview.compHeld) && /recipe-app gets them from Home NAS, and only “Copy what recipe-app gets from Home NAS” brings them\./.test(fo.preview.compHeld) && fo.labels.every((l) => fo.preview.compHeld.includes(l)) && /comes only with the next choice/.test(fo.fixedLabel), JSON.stringify(fo));
+			await t.check(`F2 (Sol max, under SSYS-062), ${W2}: the walk reached its controls (Automation was selected; with Copy what recipe-app gets from Home NAS on, Profile in use was listed and ticked)`, w.src === 'recipe-app' && w.kindWasOn && w.before.kind === 0 && !w.before.three.length && w.rowListed && w.rowWasOn, JSON.stringify({ kindWasOn: w.kindWasOn, before: w.before, rowListed: w.rowListed, rowWasOn: w.rowWasOn }));
+			await t.check(`F2 (Sol max, under SSYS-062), ${W2}: through Keep them fixed off and on and the opt-in off and on, the unticked Profile in use and the unticked Automation kind stay out of the plan; FileSafe comes, from Home NAS, with the opt-in only`, !w.after.row && !w.after.kind.length && w.after.fs && JSON.stringify(w.after.fromComp) === JSON.stringify([F2.fs]), JSON.stringify(w.after));
+			await t.check(`F2 (Sol max, under SSYS-062), ${W2}: the ticks agree: Profile in use and Helpers at once unticked, Automation unticked, Permissions’ count is what the plan holds`, w.rowBox === false && w.helpBox === false && !!w.kindBox && !w.kindBox.checked && !w.kindBox.mixed && w.kindBox.of && w.kindBox.of[0] === 0 && !!w.permBox && w.permBox.of && w.permBox.of[0] === w.permOn, JSON.stringify({ rowBox: w.rowBox, helpBox: w.helpBox, kindBox: w.kindBox, permBox: w.permBox, permOn: w.permOn }));
+			await t.check(`F2 (Sol max, under SSYS-062), ${W2}: the counts: the button and the plan agree, and the opt-in added exactly FileSafe; the opt-in says what stays as usual`, w.after.n === w.after.T && w.after.n === w.before.n + 1 && /Profile in use/.test(w.compAfter) && /stays as usual, as you chose/.test(w.compAfter), JSON.stringify({ before: w.before, after: { n: w.after.n, T: w.after.T }, comp: w.compAfter }));
+			await t.check(`F2 (Sol max, under SSYS-062), ${W2}: the preview lists neither Profile in use nor an Automation setting, lists FileSafe, names what stays as usual, and holds nothing back from Home NAS`, w.preview.rows > 0 && !w.preview.row && !w.preview.kind.length && w.preview.fs && /Profile in use/.test(w.preview.left) && !w.preview.compHeld, JSON.stringify(w.preview));
+			if (where === 'settings') await t.check(`F2 (Sol max, under SSYS-062), ${W2}: Copy writes neither Profile in use nor an Automation setting into ${w.dst}, and writes FileSafe`, !!w.write && !w.write.row && !w.write.help && !w.write.kind.length && w.write.fs && w.write.n === w.after.T, JSON.stringify(w.write));
+			if (where === 'new') await pic(t, 'f2-preview', 'F2 under SSYS-062: New Project like recipe-app, Keep them fixed, Automation unticked, then the Home NAS values with Profile in use unticked: the preview brings FileSafe only and says what stays as usual', '.psx-sheet.psx-copy');
 			await run(t, () => window.PSX.closeSheets()); await settle(t, 300);
 		}
-		// the other order: the computer's values first, Profile in use unticked among them, then Keep them fixed
+		// the other order: the computer's values first, Profile in use unticked among them, then Keep them fixed, then the opt-in off
 		await reset(t);
 		const rev = await run(t, async (F) => {
 			const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), out = {};
@@ -1334,9 +1364,13 @@ export default async function (t) {
 			sh().querySelector('input[data-act="fixed"]').click(); await wait(250);
 			out.afterFixed = P.copy.plan().rows.some((x) => x.id === F.row);
 			const rb2 = sh().querySelector(`input[data-id="${F.row}"]`); out.box = rb2 ? rb2.checked : 'not listed';
+			// the opt-in off again, Keep them fixed still on: none of the three is frozen
+			sh().querySelector('input[data-act="fromcomp"]').click(); await wait(250);
+			out.afterCompOff = P.copy.plan().rows.filter((x) => [F.row, F.fs, F.help].includes(x.id)).map((x) => `${x.id} (${x.from})`);
 			return out;
 		}, F2);
 		await t.check('F2 (Sol max), the other order: the Home NAS values list Profile in use with its own tick; unticked there, turning Keep them fixed on doesn’t bring it back', rev.listed && rev.wasOn && !rev.afterUntick && !rev.afterFixed && rev.box === false, JSON.stringify(rev));
+		await t.check('Follow-up (SSYS-062), the other order: with Keep them fixed still on, turning Copy what recipe-app gets from Home NAS off takes all three of its values out of the plan (Keep them fixed doesn’t freeze them)', Array.isArray(rev.afterCompOff) && !rev.afterCompOff.length, JSON.stringify(rev));
 		/* the same rule inside one kind: Keep them fixed on, the Automation kind unticked, then one of its rows ticked by
 		   itself. Only that row joins; the old build re-selected the whole kind, bringing back every row in it */
 		await reset(t);
@@ -1549,10 +1583,10 @@ export default async function (t) {
 			await t.check(`F1 (Sol max): the save guard keeps no Everywhere rule for ${pat} from an editor that still showed Everywhere, clears the place and says why`, !g.rules.some((r) => / @ everywhere$/.test(r)) && /Not kept/.test(g.note) && g.note.includes(word) && g.cleared, JSON.stringify(g));
 			if (pat === HOST7[0][0]) await pic(t, 'f1-guard', 'F1: the save guard refused Everywhere for npm --prefix=/opt/release test and said why', null);
 		}
-		/* controls: portable patterns still offer Everywhere with no line against them. Astra max A2: the four with a / that
-		   were controls here (a branch, an image, a registry and a web address) are read conservatively now, as README table
-		   E2 says, and astraAlways walks them as host-dependent; one is kept Everywhere */
-		const PORTABLE = ['npm test', 'npm test *', 'git push origin *', 'npm run build', 'NODE_ENV=production npm test', 'make -j8 test'];
+		/* controls: portable patterns still offer Everywhere with no line against them. A web address is not a path (the old
+		   reader took .sh in https://bun.sh/install for a script), nor is an image reference or a git ref: the lead's canon call on
+		   PS-144 (2026-11-13) put back the four controls the first version of table E2 had read as paths; one is kept Everywhere */
+		const PORTABLE = ['npm test', 'npm test *', 'git push origin *', 'npm run build', 'git push origin feature/tags', 'docker push ghcr.io/jared/loom:1.4.0', 'npm publish --registry=https://registry.npmjs.org', 'NODE_ENV=production npm test', 'make -j8 test', 'curl -fsSL https://bun.sh/install'];
 		await open('regular');
 		for (const pat of PORTABLE) {
 			await typeOwn('test', pat);

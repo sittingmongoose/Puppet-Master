@@ -298,7 +298,7 @@ path, and that suggestion is meant to cover the folder it names.
 | Rule | This project | This computer | Everywhere | Rests on |
 |---|---|---|---|---|
 | command rule that isn't host-dependent (`npm test *`, `git status`, `cargo build`, `pytest -q`) | offered | offered | offered | PS-144 "Always requires a person to choose the exact pattern and `This project`, `This computer` or `Everywhere`; nothing is preselected." |
-| host-dependent command rule: any row 1 to 6 of table E2 below holds for one of its words | offered | offered | **never** | PS-144 "Rules about a file, directory, executable location, root or other host-dependent target never offer Everywhere." |
+| host-dependent command rule: any row 1 to 6 of table E2 below holds for one of its words (a web address, an image or registry reference and a git ref are not paths) | offered | offered | **never** | PS-144 "Rules about a file, directory, executable location, root or other host-dependent target never offer Everywhere." |
 | …and, as a **concept choice**, rows 7 and 8 of E2: a pattern whose program is a file command (`read *`, `rm -rf *`) or a wildcard (`*`, `./scripts/*`) | offered | offered | **never** | Canon names targets, not commands. A file command acts on files of one computer, and a wildcard program can match a program by its path on one computer, so these are treated as about a location. |
 | folder rule | offered | offered | **never** | §6.1 "paths never offer Everywhere". |
 | (no project open) | hidden | | | §6.1 "no-project hides This project". |
@@ -306,47 +306,56 @@ path, and that suggestion is meant to cover the folder it names.
 Host-dependence comes from the pattern, which is what the rule is about (PS-144), never from the step it is typed on
 (round A-r4, N2): `git push origin *` typed on the release step offers Everywhere.
 
-**E2. When a command pattern is host-dependent** (Astra max A2, 2026-11-13). Two max reviews found a spelling the path
-reader missed (Sol: a path behind `=`, in quotes, `C:/`, `.\`, a UNC share; Astra: a relative folder or script with no
-dots or extension, `node scripts/release`, and a folder flag's single-name value, `git -C repo status`), so the reader
-is rebuilt as one rule over the pattern's words, from this table. `PSX.paths.host(pattern)` in `layer/world.js` holds
-the table as `HOST_ROWS`, one entry per row, and nothing else decides. The pattern is split as a shell splits it
-(quotes keep a word together and come off). The program word is the first word after `sudo`, `env` (with their flags)
-and any `NAME=value`; every other word, a `NAME=value` before the program included, is an argument. The pattern is
-host-dependent when any row holds for any word; the editor's line names the first such word, in pattern order, with its
-row's reason.
+**E2. When a command pattern is host-dependent** (Astra max A2, 2026-11-13; refined the same day). Two max reviews found
+a spelling the path reader missed (Sol: a path behind `=`, in quotes, `C:/`, `.\`, a UNC share; Astra: a relative folder
+or script with no dots or extension, `node scripts/release`, and a folder flag's single-name value, `git -C repo
+status`), so the reader is rebuilt as one rule over the pattern's words, from this table. `PSX.paths.host(pattern)` in
+`layer/world.js` holds the table as `HOST_ROWS` (one entry per row, in the table's order) and `NOT_A_PATH` (the three
+kinds below), and nothing else decides. The pattern is split as a shell splits it (quotes keep a word together and come
+off). The program word is the first word after `sudo`, `env` (with their flags) and any `NAME=value`; every other word,
+a `NAME=value` before the program included, is an argument, and the value of `--flag=value` or `NAME=value` (each part
+of a `,` `;` or `:` list) or of a glued `-I/usr/include` is read as its own part. The pattern is host-dependent when any
+row holds for any word; the editor's line names the first such word, in pattern order, with its row's reason.
 
 | Row | A word… | Examples (each one is a case in `feedback.check.mjs --set only=always`) | Why it is about one computer |
 |---|---|---|---|
 | 1 | is the program word, and holds `/` or `\`, starts with `~`, `.` or a drive, or is a variable then a separator | `./scripts/release.sh v1.4.0`, `scripts/release`, `"/opt/tools/runner" test`, `C:/Tools/runner test`, `\\nas\share\runner test`, `$HOME/bin/runner` | a shell runs it by its location, not from `PATH` (PS-144 "executable location") |
-| 2 | is an argument holding a path separator, `/` or `\`, anywhere: inside `--flag=value`, `NAME=value` or a glued `-I/usr/include` too | `node scripts/release`, `npm --prefix=packages/app test`, `git -C repos/loom status`, `gcc -I/usr/include x`, `PATH=/opt/bin npm test`, `tools\runner test` | a path: a file or a folder |
-| 3 | is an argument that is `.` or `..`, or starts with `./`, `../`, `.\` or `..\` | `prettier --write .`, `cd ..` | a place relative to the folder it runs in |
-| 4 | is an argument naming the home folder or a root with no separator: starts with `~` (`~`, `~user`), or is `$HOME`, `${HOME}`, `%USERPROFILE%`, `%HOMEPATH%`, `$env:USERPROFILE`, `$env:HOME`, a drive (`C:`), or starts with `file:` | `cd ~`, `cd $HOME`, `dir C:` | the home folder or a drive of one computer |
-| 5 | is the value of a directory or file flag (below), written `--flag=value` or `--flag value` | `npm --prefix=release test`, `git -C repo status`, `tsc -p tsconfig.json`, `cargo build --manifest-path Cargo.toml`, `docker build -f Dockerfile` | the flag says its value is a folder or a file |
-| 6 | names a script or program file by its extension: `.sh .bash .zsh .fish .ps1 .psm1 .bat .cmd .exe .py .js .mjs .cjs .ts .rb .pl .php .lua` | `python3 build.py`, `bash deploy.sh *`, `release.sh` | a file in the folder it runs in |
+| 2 | is an argument that starts at a root or the home folder: `/`, `\\host` or `//host`, `~` (`~user`), a drive (`C:`, `C:\`, `C:/`), `$HOME`, `${HOME}`, `%USERPROFILE%`, `%HOMEPATH%`, `$env:USERPROFILE`, `$env:HOME` (alone or then a separator), another variable then a separator, or `file:` | `npm --prefix=/opt/release test`, `gcc -I/usr/include x`, `PATH=/opt/bin npm test`, `npm --prefix ~/x test`, `cd ~`, `cd $HOME`, `dir C:`, `git diff /etc/hosts`, `curl file:///etc/hosts` | a root, a drive, a share or the home folder of one computer |
+| 3 | is an argument that is `.` or `..`, or starts with `./`, `../`, `.\` or `..\` | `prettier --write .`, `cd ..`, `git diff ./src` | a place relative to the folder it runs in |
+| 4 | is any other argument holding `/` or `\`: a bare relative path, unless it is one of the three kinds below | `node scripts/release`, `npm --prefix=packages/app test`, `git -C repos/loom status`, `git diff -- src/app`, `node .venv/bin/tool`, `npm install @types/node`, `docker push jared/loom:1.4.0` | a file or a folder relative to where it runs |
+| 5 | is the value of a directory or file flag (below), written `--flag=value` or `--flag value` | `npm --prefix=release test`, `git -C repo status`, `git -C repo push origin feature/tags`, `tsc -p tsconfig.json`, `cargo build --manifest-path Cargo.toml`, `docker build -f Dockerfile` | the flag says its value is a folder or a file |
+| 6 | names a script or program file by its extension: `.sh .bash .zsh .fish .ps1 .psm1 .bat .cmd .exe .py .js .mjs .cjs .ts .rb .pl .php .lua` | `python3 build.py`, `bash deploy.sh *`, `release.sh`, `git log deploy.sh` | a file in the folder it runs in |
 | 7, **concept choice** | is the program word and a file command: `read write edit list open cat less head tail ls cp mv rm rmdir mkdir touch chmod chown find grep tar zip unzip` | `read *`, `rm -rf *` | it works on the files of one computer |
-| 8, **concept choice** | is the program word and holds `*` | `*`, `./scripts/*`, `*.sh` | it can match a program by its location |
-| none | no row holds for any word | `npm test *`, `git status`, `cargo build`, `pytest -q`, `git push origin *`, `npm run build`, `NODE_ENV=production npm test`, `make -j8 test` | portable: Everywhere is offered |
+| 8, **concept choice** | is the program word and holds `*` | `*`, `*-cli build` | it can match a program by its location |
+| none | no row holds for any word | `npm test *`, `git status`, `cargo build`, `pytest -q`, `git push origin *`, `npm run build`, `NODE_ENV=production npm test`, `make -j8 test`, and the kinds below | portable: Everywhere is offered |
+
+**Not a path (row 4 doesn't hold for these).** PS-144 bars Everywhere for "a file, directory, executable location, root
+or other host-dependent target". A web address, an image or registry reference and a git ref are none of those (the
+lead's canon call, 2026-11-13, refining the first version of this table, which read every `/` as a path):
+
+| Kind | What it is | Examples (portable controls in the check) |
+|---|---|---|
+| a web address | a word or value with a scheme, `scheme://…`; `file:` is not one (it names a file: row 2) | `curl -fsSL https://bun.sh/install`, `npm publish --registry=https://registry.npmjs.org`, `curl https://example.com/a/b?c=d/e` |
+| an image or registry reference | its first segment, before the first `/`, is a host name: dot-separated labels ending in two or more letters (`ghcr.io`, `registry.npmjs.org`), or a name or address with a port (`localhost:5000`) | `docker push ghcr.io/jared/loom:1.4.0`, `docker pull localhost:5000/app:dev` |
+| a git ref | an argument of a git subcommand that takes refs (`push pull fetch checkout switch merge rebase branch tag log diff reset cherry-pick`), after the subcommand and before `--`; after `--` the words are paths again | `git push origin feature/tags`, `git push -f origin feature/tags`, `git rebase origin/main`, `git diff main..feature/tags`, `git checkout -b feature/x`, `git -c core.pager=less log feature/tags` |
+
+These lift row 4 only. Rows 2, 3 and 6 still hold for a git ref position (`git diff /etc/hosts`, `git diff ./src`,
+`git log deploy.sh`), and `file:` is row 2. For git, `-C` is a directory flag only before the subcommand (git's own "run
+in this folder"; after it, `git commit -C` names a commit), and `-f` is never one (git's `-f` is force). A Docker Hub
+image with no registry host (`jared/loom:1.4.0`) and a package scope (`@types/node`) can't be told from a relative path
+by their spelling, so they stay row 4: **concept choice**, choose This project or This computer for them.
 
 **The directory and file flags (row 5):** `-C`, `--prefix`, `--cwd`, `--dir`, `--directory`, `--root`, `--workdir`,
 `--chdir`, `-chdir`, `--git-dir`, `--work-tree`, `-f`, `--file`, `--config`, `--manifest-path`, `--project`; `-p` only
 after `tsc` or `vue-tsc` (elsewhere `-p` names a package, a port or a plugin); and any other long flag whose name ends in
-`dir`, `directory`, `path`, `file`, `folder` or `root` (`--target-dir`, `--env-file`, `--rootdir`,
-`--project-directory`), except a `--no-…` switch. Its value is the word after it, unless that word starts with `-`; a
-wildcard value counts (`git -C * status`).
-
-**What it reads conservatively (concept choice).** A word with a `/` or `\` can't be told from a relative path by its
-spelling (`feature/tags` reads like `scripts/release`), so row 2 holds for a branch, a package scope, an image name or a
-web address too: `git push origin feature/tags`, `npm install @types/node`, `docker push ghcr.io/jared/loom:1.4.0`,
-`npm publish --registry=https://registry.npmjs.org` and `curl -fsSL https://bun.sh/install` don't offer Everywhere (a
-web address can name this computer too: `http://localhost:3000`). Before this rule the last four were controls that
-offered it. A boolean `-f` reads the same way (`git push -f origin main`: `origin` is read as its value), and so does
-`--project` given an ID. Choose This project or This computer for these. Narrowing them loosens nothing canon asks for.
+`dir`, `directory`, `path`, `folder` or `root`, or in `-file` or `_file` (`--target-dir`, `--env-file`, `--rootdir`,
+`--project-directory`; `--profile` is not one), except a `--no-…` switch. Its value is the word after it, unless that
+word starts with `-`; a wildcard value counts (`git -C * status`). `--project` given an ID still reads as a folder.
 
 **One rule everywhere it is asked.** The editor's places, its line saying why, the line saying a chosen place was
 cleared, and the save guard (the same call on the exact pattern it would keep) read `PSX.paths.host`. Broad detection
-(F) reads the same words: a "named script" is a word rows 1, 2, 3 or 6 make host-dependent, and a flag's value counts
-with its flag (`git -C repo *` is a program word, flags, then `*`). The home read (B) asks the same row 4 words
+(F) reads the same words: a "named script" is a word rows 1, 2, 3, 4 or 6 make host-dependent, and a flag's value
+counts with its flag (`git -C repo *` is a program word, flags, then `*`). The home read (B) asks the same row 2 words
 (`PSX.paths.rootOf`), and so does `feed.js` for a Settings row whose value is an absolute path. Folder rules and the
 paths they are matched against are each written one way first (`PSX.paths.norm`: quotes off, `\` as `/`, one separator
 at a time, none at the end), so `/mnt/team-share/release-notes/` covers the folder it names.
@@ -449,6 +458,20 @@ has the numbers and the pictures).
   gave Off, the less careful. A switch's careful order is now read as its values, and the check asserts every
   more-careful row's order is made of values it can hold.
 
+**Follow-up, the same day (the lead's canon calls).**
+
+- **Not every `/` is a path.** PS-144 bars Everywhere for "a file, directory, executable location, root or other
+  host-dependent target". A web address, an image or registry reference whose first segment is a host name, and a git
+  ref are none of those. Table E2 now lists them under "Not a path": they lift row 4, the bare relative path, and
+  nothing else. The four controls the first version read as paths (`git push origin feature/tags`, the ghcr push, the npm
+  registry address, `curl -fsSL https://bun.sh/install`) offer Everywhere again. The review's five witnesses still don't.
+- **Computer-effective freeze is off by default** (SSYS-062: "project_only_rows is off by default, as are copied
+  instructions/build files/remotes and Computer-effective freeze"). Keep them fixed alone no longer freezes a value the
+  source has in use from its own computer; only "Copy what … gets from …" brings it. The preview names what it held
+  ("Not kept fixed: … recipe-app gets them from Home NAS, and only “Copy what recipe-app gets from Home NAS” brings
+  them"), and Keep them fixed's own line says so. This overturns Sol max F2's accepted design, in which Keep them fixed
+  froze those values too (its check said FileSafe "was already kept fixed").
+
 ## Sol max fixes (2026-11-12)
 
 The blind max review (`REVIEW-concept-A-max-sol.md`) found two defects; each was reproduced on `b5e34f24a5` by a new
@@ -478,7 +501,8 @@ check before it was fixed, and the same checks pass now. `CONCEPT-FIX-REPORT-A.m
   rule in Permissions, never in the file", a computer's own rules stay with that computer's rules, a project's are in
   its own `.puppet-master/permissions.toml`. It was the only row the path rule reached; Plans' inventory has no other
   row with an absolute-path value. The old global/project ladder is not back.
-- **F2, Copy what it gets from its computer restored a setting you had unticked.** The plan added the computer's values
+- **F2, Copy what it gets from its computer restored a setting you had unticked.** (*Since the Astra follow-up:* Keep
+  them fixed alone no longer freezes the computer's values at all, by SSYS-062; the tick rules below still hold.) The plan added the computer's values
   after the source's own values and before Keep them fixed's filter, so they skipped every kind and row exclusion:
   Profile in use, unticked and showing "Stays as usual", came back in the plan and the preview. Now the copy has one
   list of every setting it can bring, one row per setting id (its own values, then the computer's, then Keep them
