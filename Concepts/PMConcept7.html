@@ -7614,14 +7614,23 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animatio
 #panel-settings .hero-search input::placeholder { color: var(--k3-text-3); }
 #panel-settings .home-grid { max-width: 980px; margin: 22px auto 0; display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
 #panel-settings .home-panel { border: 1px solid var(--k3-line); border-radius: 14px; background: var(--k3-surface-1); overflow: hidden; box-shadow: inset 0 1px rgba(255,255,255,.022); }
-#panel-settings .home-panel-header { display: flex; align-items: center; gap: 10px; min-height: 45px; padding: 0 14px; border-bottom: 1px solid var(--k3-line); }
+/* FO-174: the header keeps the rows' horizontal inset (8 px since FO-159 round 3), so each row's icon or dot starts
+   under the card title and its chevron ends under the header meta, as they did on main at 14 px. */
+#panel-settings .home-panel-header { display: flex; align-items: center; gap: 10px; min-height: 45px; padding: 0 8px; border-bottom: 1px solid var(--k3-line); }
 #panel-settings .home-panel-title { font-size: 11px; font-weight: 700; }
 #panel-settings .home-panel-meta { margin-left: auto; color: var(--k3-text-3); font-size: 11px; }
 /* FO-159 round 3: the row's copy column keeps an 11 px line at every app state, the narrower Settings pane
-   (another panel open at 1280) included: the row's own inset and gaps give it the room, nothing else moves. */
+   (another panel open at 1280) included: the row's own inset and gaps give it the room, and the card header
+   above takes the same inset (FO-174). */
 #panel-settings .setup-row, #panel-settings .attention-row { display: flex; align-items: center; gap: 9px; width: 100%; padding: 12px 8px; border: 0; border-bottom: 1px solid var(--k3-line); background: transparent; color: var(--k3-text-2); text-align: left; cursor: pointer; transition: background-color var(--k3-dur-fast) var(--k3-ease-out), border-color var(--k3-dur-fast) var(--k3-ease-out), color var(--k3-dur-fast) var(--k3-ease-out), transform var(--k3-dur-fast) var(--k3-ease-out), box-shadow var(--k3-dur-fast) var(--k3-ease-out); }
 #panel-settings .setup-row:last-child, #panel-settings .attention-row:last-child { border-bottom: 0; }
 #panel-settings .setup-row:hover, #panel-settings .attention-row:hover { background: rgba(var(--accent-primary-rgb),.065); }
+/* FO-174: the "Show all explanations" drawer's section cards take the home headers' 8 px inline inset and their rows
+   keep main's 14 px, so each label still starts 14 px right of its section title as on main, and the copy keeps the
+   room FO-159 round 3 gave it (the drawer draws main's line count at 11 px). The drawer is pm51's (its body is
+   .pm51-panel-body, not .drawer-body); only this drawer puts setup rows straight into a .panel-card. */
+#panel-settings .drawer .panel-card:has(> .setup-row) { padding-inline: 8px; }
+#panel-settings .panel-card > .setup-row { padding-inline: 14px; }
 #panel-settings .setup-icon { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid rgba(var(--accent-primary-rgb),.20); border-radius: var(--k3-radius-md); background: var(--k3-accent-soft); color: var(--k3-accent); }
 #panel-settings .setup-copy { min-width: 0; flex: 1; }
 #panel-settings .setup-label { font-size: 11.5px; font-weight: 670; color: var(--k3-text-1); }
@@ -8098,12 +8107,6 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animatio
   #panel-settings .card-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   #panel-settings .route-grid { grid-template-columns: 1fr; }
   #panel-settings .library-grid { grid-template-columns: 1fr; }
-}
-
-/* FO-159 round 2: Home's setup and attention rows lose 12 px of inset to their dot, chevron and padding at this
-   width, which put "Sign in with Google to refresh its model list." on a second line at 11 px. The row's own
-   inset gives it back: no card, column or control moves. */
-@container settings-host (max-width: 900px) {
 }
 
 @container settings-host (max-width: 720px) {
