@@ -9,13 +9,15 @@
 // already has its row's whole room (then only a word wider than the row may break). It also must not be clipped
 // (its box inside its row, no scroll overflow, no ellipsis) and must be 11 px or more.
 // Cases: every Media ability (with Image Generation's "Saves to" path required), every Toolchain formatter and
-// language server (with Prettier's "Program" and its Advanced "Runs as" required), each with every <details> in the
-// detail opened. Cells: all ten looks, each chosen through Settings' own Theme and Light-or-dark rows and guarded as
+// language server (with Prettier's "Program" and its Advanced "Runs as" required), every server ("Identity", a
+// fingerprint; "Image"), every source service ("Fetch address", "Push address") and every backup destination
+// ("Location", a path), each with every <details> in the detail opened. Cells: all ten looks, each chosen through Settings' own Theme and Light-or-dark rows and guarded as
 // painted (helpers/settings-look.mjs), at 860x900 and 740x900 (the page opened at 1390x900 and resized). Both surfaces
 // (`--set sandbox=0` and `--set sandbox=1`).
-// Bite: fails main 6bd8294726 (the "Saves to" path and "Runs as" at 860 in every look); passes FO-173.
+// Bite: fails main 6bd8294726 (at 860 in every look: Saves to, Runs as, Identity, Image, Fetch and Push address,
+// Location; Pyright's Program in Retro at 740); passes FO-173.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-detail-values.check.mjs --set page=<build> --set sandbox=0
-//   --set looks=a,b   --set sizes=860x900   --set cases=media,toolchain   --set probe=1 (log every value)
+//   --set looks=a,b   --set sizes=860x900   --set cases=media,toolchain,servers,source,backup   --set probe=1 (log every value)
 //   --set shots=basic-dark,retro-light (normal surface: LOOK crops of the two named rows per look and size;
 //   --set build=<name> names them)   --set sweep=1 (also every chapter, workspace and manager tab, values as found)
 import { LOOKS } from '../browser-check.config.mjs';
@@ -122,6 +124,11 @@ async function pick(t, f, ws, it) {
 const CASES = {
 	media: { chapter: 'ai', ws: 'media', tabs: ['abilities'], need: [{ item: 'image-generation', label: 'Saves to', text: '.puppet-master/artifacts/images' }], shot: { item: 'image-generation', sel: '.setting-row:has(.o55-media-path)' } },
 	toolchain: { chapter: 'code', ws: 'toolchain', tabs: ['formatters', 'servers'], need: [{ item: 'prettier', label: 'Program', text: 'node_modules/.bin/prettier' }, { item: 'prettier', label: 'Runs as', text: 'node_modules/.bin/prettier --stdin-filepath ${file}' }], shot: { item: 'prettier', sel: '.pm51-advanced .pm51-kv' } },
+	/* found by --set sweep=1 on the first fix (Windows, 860): one-word values with a soft break inside them (after "…",
+	   after "-") stayed beside their key in pieces */
+	servers: { chapter: 'system', ws: 'servers', tabs: ['servers'], need: [{ label: 'Identity' }, { label: 'Image' }] },
+	source: { chapter: 'source', ws: 'source-manager', tabs: ['services'], need: [{ label: 'Fetch address' }, { label: 'Push address' }] },
+	backup: { chapter: 'system', ws: 'backup', tabs: ['destinations'], need: [{ label: 'Location' }] },
 };
 
 async function sized(t, f, w, h) {
@@ -172,9 +179,9 @@ for (const surface of ['normal', 'sandbox']) {
 								const { values } = await f.evaluate(VALUES, `[data-continuous-workspace-body="${c.ws}"] .pm51-detail`);
 								for (const v of values) {
 									seen.push({ ...v, where: `${tb} › ${it.name}` });
-									for (const n of c.need) if (n.item === it.id && v.label === n.label && v.text === n.text) found.add(`${n.label}: ${n.text}`);
+									for (const n of c.need) if ((!n.item || n.item === it.id) && v.label === n.label && (!n.text || v.text === n.text)) found.add(`${n.label}: ${n.text || ''}`);
 								}
-								if (shots.includes(look) && surface === 'normal' && c.shot.item === it.id) {
+								if (shots.includes(look) && surface === 'normal' && c.shot && c.shot.item === it.id) {
 									const el = f.locator(`[data-continuous-workspace-body="${c.ws}"] .pm51-detail ${c.shot.sel}`).first();
 									if (await el.count()) await t.crop(`${t.args.build || 'page'}-${look}-${size.id}-${name}`, el, name === 'media' ? 'Image Generation › "Saves to": the whole path on one line, Change beside it or under it' : 'Prettier › Advanced: "Runs as" never breaks inside node_modules/.bin/prettier');
 								}
@@ -185,7 +192,7 @@ for (const surface of ['normal', 'sandbox']) {
 						for (const x of bad) t.log(`${cell} ${name} FAIL | ${x.v.where} | ${x.v.kind} ${x.v.label}: "${x.v.text}" | ${x.why.join('; ')}`);
 						await t.check(`${cell} ${name}: every picked item's detail is shown under its own title (${picked - misses.length}/${picked})`, picked > 0 && misses.length === 0, `the detail never named: ${misses.join(', ')}`);
 						await t.check(`${cell} ${name}: the named values are drawn (${c.need.map((n) => n.label).join(', ')})`, found.size === c.need.length,
-							`missing: ${c.need.filter((n) => !found.has(`${n.label}: ${n.text}`)).map((n) => `${n.item} › ${n.label}`).join(', ')}`);
+							`missing: ${c.need.filter((n) => !found.has(`${n.label}: ${n.text || ''}`)).map((n) => `${n.item || 'any item'} › ${n.label}`).join(', ')}`);
 						await t.check(`${cell} ${name}: every detail value has room for its widest word or its row's whole width, unclipped, ${MIN_PX} px or more (${seen.length} values)`,
 							seen.length > 0 && bad.length === 0,
 							seen.length ? bad.slice(0, 4).map((x) => `${x.v.where} › ${x.v.label}: ${x.why.join('; ')}`).join(' | ') : 'no values measured');
