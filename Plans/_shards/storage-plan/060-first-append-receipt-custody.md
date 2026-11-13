@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22147-L22336
+Source lines: L22207-L22461
 
-Source SHA256: `0e06da463253cb707544ccee5f0286de6b78b84f50912448b0a3f01e3c9967ed`
+Source SHA256: `c757c0a7e52e53a6a73fe01fcf47c9ae9c81489e4bfbb2412e7f661d9e170058`
 
 ---
 
@@ -157,6 +157,7 @@ canonical_text: >-
   shared technical prerequisite only; event-specific adoption and native proof remain separate. New strict stored
   v2 retains the original complete EventRecord value commitment, exact v1/v2 read dispatch and explicit
   legacy-selector compatibility; full-value resolution is independently adopted.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
 gui_classification_reason: Defines Storage receipt custody and internal restore admission; existing recovery-shell disclosure remains separately owned.
 depends_on: [SP-230, SP-235, SP-236, CV-318, DL-045]
@@ -196,5 +197,69 @@ negative_constraints:
   - No new EventRecord fields, events, retention policy, generic journal/service, event-specific adoption, native proof or automatic depth closure.
   - No critical/MVP-array change, WorkNode, NodeSeed, readiness or governance seal.
 ```
+
+### SP-1101 - Authenticated Write-Time Recipe And Retained-Reader Dispatch
+
+```yaml
+plan_unit_id: SP-1101
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  The native original Storage/producer owner selects and authenticates one immutable recipe tuple for the original accepted record: original envelope and payload schema IDs/versions, original owner/source and registered family edition or registry revision, identity recipe, producer-semantic recipe, physical/full-value profile and any separately owned local source/payload profile needed to verify that record. Existing semantic-version/field-context recipe definitions are reused. Bind the selection through the existing actual original issuance/source/admission custody to the Storage instance, exact scope/Server/Project, event type and original event/idempotency identity, original owner operation and original value/source commitment. Copying a recipe name, hashing a caller-supplied tuple, setting `verified=true` or presenting an index checkpoint does not authenticate that binding.
+  CV-1101 owns the shared enforced EventRecord date-time predicate. The frozen original schema/resources select the applicable timestamp profile as part of this authenticated recipe dispatch; a request cannot choose a weaker profile. Owner-valid lowercase, offset and long-fraction history retains its exact spelling, while a skipped format check never authenticates invalid history.
+  Every retained reader and retry resolver first obtains that selection from the authenticated original owner. It uses exactly the frozen original schemas, lexical/type/number rules and hash preimages to verify and return the original bytes/results. A current caller cannot select the old recipe; a historical record cannot be validated by trying current then legacy until one passes. Current access/deletion/hold/withdrawal gates still control disclosure, and original currentness/receipt/source controls still apply to the actual downstream action. A later current writer’s numeric, format or live-state guard never runs on a retained original merely because the same event name is read.
+  A new incompatible number/format/hash rule receives an explicit governed successor recipe/edition and coordinated writer/reader adoption before current activation. Closed EventRecord fields are not extended ad hoc. Use an existing immutable schema/edition discriminator where it uniquely selects the recipe, otherwise the authentic original issuance/registry custody must select it; an old event timestamp alone is not sufficient. If an older original lacks enough authentic provenance to select exactly one supported recipe, retain its exact bytes and use the existing unavailable/unsupported contract; do not rehash/restamp/backfill, falsely mark it corrupt, fabricate provenance or select a weaker recipe. Valid authentic supported old originals remain readable. Unknown/foreign/ambiguous/forged selection refuses with zero append or canonical/domain effects.
+  This is a newly authored shared technical owner contract for existing identity/replay behavior under DL-045 and the separately permitted family scopes; family-specific adoption remains necessary. The recipe tuple also pins the exact original resource/edition bytes through the existing authenticated custody (including their original hashes); a rewritten URI, registry revision or same-named replacement resource is not the original recipe. No permanent owner-request mirror, new durable recipe family or new EventRecord field is introduced. CV-339's original eleven receipt fields and full-value tuple, SP-286's first issuance/replay interfaces, and SP-278's source/currentness/read-token controls remain unchanged.
+  A reference dispatcher installs the trusted original-owner resolver and supported exact tuple-to-frozen-verifier mapping at composition, outside untrusted request data. The owner authenticates original custody; each frozen verifier checks the complete original schema/identity/source/value/result/receipt joins with its original recipes. Unknown or ambiguous tuples cannot be probed through alternative verifiers. Ordinary current append and current retry inputs retain their current admission gates, including replay_only_not_appendable, while original receipt/history resolution applies frozen original validation. Current disclosure permission/deletion/hold/withdrawal is checked independently, and no retained read/retry remints first time, sequence, identity, bytes or effects. Missing provenance preserves exact bytes under the existing unavailable contract and is not a corruption finding.
+  Finite fixtures use an independent sealed lookup to model that boundary; a caller-controlled dictionary, historical flag, original_recipe field, verified boolean or recomputed self-hash is never a native custody proof. Native installation/activation, original owner authentication, durability, restore/withdrawal and every family adoption remain NOT_RUN here.
+gui_related: false
+gui_classification_reason: Defines exact numbers, byte profiles and original recipe custody; no visual presentation.
+depends_on:
+- CV-1100
+- SP-1100
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- |-
+  One exact supported recipe tuple resolves from authentic immutable original issuance/source/edition custody with Storage, scope, family, schema, operation, event, key and source/value joins.
+- Authentic old integral-float/exponent/negative-zero and large-metadata originals remain readable by their frozen
+  recipe after current grammar or live state changes.
+- Caller overrides, downgrade, foreign/forged/ambiguous/missing/unknown recipe or replaced resources refuse without
+  alternate dispatch, append or domain effects.
+- Current access/deletion/hold/withdrawal gates still apply; original result/receipt/bytes remain exact, with no
+  restamp, backfill or fabricated provenance.
+validation_surfaces:
+- python3 scripts/pm_event_numbers.py --self-test
+- Plans/event_number_recipe_corpus.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: numeric_identity_or_retained_recipe_drift
+reasoning_tier: high
+context_scope: event_authority_shared_number_recipe_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+- scripts/pm_event_numbers.py
+- Plans/event_number_recipe_corpus.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/NUMRULE/REPORT.md#4-proposed-owner-rule
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-1101
+negative_constraints:
+- No global numeric ceiling, alternate hash domain, envelope field, registry service, family admission or native
+  proof.
+- No rehash, restamp, backfill, current-then-legacy fallback or fabricated original custody.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1100, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/event_append_receipt_contracts.schema.json, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Decision_Log.md#DL-045
