@@ -1229,8 +1229,11 @@ def binding_of(e, record_bytes):
 
 class Card2OriginalOwner:
     """Storage's sealed custody at the requested Store (static stand-in). It answers from CUSTODY only:
-    the Store must be sealed, the write-time recipe is the Store's sealed receipt for that original or
-    its sealed default, and the binding is computed from the original record Storage holds."""
+    the Store must be sealed, and the write-time recipe and its pinned resources come only from the one
+    sealed receipt Storage wrote for that exact original (Store, scope, event type and event id), never
+    from a Store default (SP-1101). No receipt, or a receipt bound to another original, is
+    original_unavailable; more than one is recipe_ambiguous. The binding is computed from the original
+    record Storage holds."""
 
     def __init__(self, record, receipt):
         self.record, self.receipt = record, receipt
@@ -1240,13 +1243,18 @@ class Card2OriginalOwner:
             store, scope, event_type, event_id = [bytes.fromhex(x).decode() for x in ref[len('seglog:'):].split(':')]
         except (ValueError, UnicodeDecodeError):
             raise Refusal('original_query')
-        sealed = custody()['stores'].get(store)
-        if sealed is None:
+        if store not in custody()['stores']:
             raise Refusal('original_unavailable')
-        recipe_id = next((r['recipe'] for r in custody()['sealed_receipts']
-                          if r['storage_instance_id'] == store and r['event_id'] == event_id), sealed['default_recipe'])
+        at_id = [r for r in custody()['sealed_receipts'] if r['storage_instance_id'] == store and r['event_id'] == event_id]
+        receipts = [r for r in at_id if r['event_type'] == event_type and r['scope_kind'] == scope]
+        if not receipts:
+            raise Refusal('original_unavailable')
+        if len(receipts) != 1:
+            raise Refusal('recipe_ambiguous')
+        receipt = receipts[0]
         record_bytes = storage_value_bytes(self.record, profile=EVENT_VALUE)
-        return OriginalCustody(binding_of(self.record, record_bytes), recipe_tuple(recipe_id, event_type, scope),
+        return OriginalCustody(binding_of(self.record, record_bytes),
+                               recipe_tuple(receipt['recipe'], event_type, scope, receipt['resource_manifest_sha256']),
                                record_bytes, record_bytes, storage_value_bytes(self.receipt, profile=EVENT_VALUE))
 
 
@@ -1279,11 +1287,14 @@ def dispatch(c, recipes=None, **resolve):
 
 
 row('recipe', 'recipe_custody', 'original_unavailable', '/storage/event',
-    'Storage\'s sealed write custody holds the requested original\'s Store (SP-1101 owner; no case flag counts)',
+    'Storage\'s sealed write custody holds the requested original\'s Store and a sealed receipt for that exact original '
+    '(SP-1101 owner; no Store default and no case flag counts)',
     lambda c: not recipe_request(c) or dispatch(c) != 'original_unavailable', 'retry history')
 row('recipe', 'recipe_installed', 'recipe_unsupported', '/storage/event',
-    'the sealed write-time recipe tuple has an installed frozen verifier (SP-1101; no fallback, no probing)',
-    lambda c: not recipe_request(c) or dispatch(c) not in ('recipe_unknown', 'recipe_selection'), 'retry history')
+    'exactly one sealed receipt selects the write-time recipe tuple, which has an installed frozen verifier '
+    '(SP-1101; no fallback, no probing)',
+    lambda c: not recipe_request(c) or dispatch(c) not in ('recipe_unknown', 'recipe_selection', 'recipe_ambiguous'),
+    'retry history')
 
 
 # retry ------------------------------------------------------------------------------------
@@ -1508,8 +1519,9 @@ entailed('recipe_resolved', 'original_dispatch', '/storage/event',
          'dispatch() returns a reason other than ok only in these cases. (1) The request is unreadable or names another '
          'Store than its owner (recipe_request false): the candidate envelope/payload verdicts (an object payload, a family '
          'event_type and scope_kind are schema constants) or cand_source_storage_instance_id refuse. (2) original_unavailable '
-         'with a readable request: recipe_custody. (3) recipe_unknown/recipe_selection with a readable request: '
-         'recipe_installed. (4) original_binding: the shared dispatcher compares the binding computed from Storage\'s original '
+         '(a Store outside custody, no sealed receipt for the exact original, or a receipt bound to another original) '
+         'with a readable request: recipe_custody. (3) recipe_unknown/recipe_selection/recipe_ambiguous with a readable '
+         'request: recipe_installed. (4) original_binding: the shared dispatcher compares the binding computed from Storage\'s original '
          'with the one computed from the request, field by field. On history the request is the retained event, which equals '
          'Storage\'s record or historical_record refuses. On retry: storage_instance_id, server_id and owner_operation_id of '
          'both are joined to the shared owner (cand_/orig_source_* rows); event_type differs only for an original of another '

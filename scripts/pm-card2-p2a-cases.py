@@ -667,8 +667,17 @@ for base in [CRR, MEM_RETRY, CRH, MEMH]:
     add('sp1101/unsupported-recipe/' + family + '/' + where, base, 'recipe_installed',
         'a coherent original (operation-unregistered) whose sealed receipt names card2@0-unregistered, a recipe with no '
         'installed frozen verifier: recipe_unknown, with no fallback or probing', at_operation('operation-unregistered'))
-    accept('sp1101/other-operation-control/' + family + '/' + where, base, 'the same coherent change under another original '
-           'operation id with no sealed receipt: the Store\'s sealed card2@1 recipe; accepted', at_operation('operation-other'))
+    # Batch 2 fix 1 (SP-1101): a card2@1 original selects its recipe only from its own sealed receipt. The former
+    # other-operation control (accepted through the Store's card2@1 default) is now this negative.
+    add('sp1101/missing-receipt/' + family + '/' + where, base, 'recipe_custody',
+        'a coherent card2@1 original (operation-other) for which Storage sealed no receipt: original_unavailable, never the '
+        'card2@1 recipe by default', at_operation('operation-other'))
+    add('sp1101/ambiguous-receipt/' + family + '/' + where, base, 'recipe_installed',
+        'a coherent original (operation-ambiguous) with two sealed receipts (card2@1 and card2@0-unregistered): '
+        'recipe_ambiguous, no single selection and no probing', at_operation('operation-ambiguous'))
+    add('sp1101/receipt-for-other-original/' + family + '/' + where, base, 'recipe_custody',
+        'a coherent project original (operation-other-scope) whose only sealed receipt at its event id is the '
+        'application-scope original\'s: original_unavailable', at_operation('operation-other-scope'))
 
 
 def history_sequence(value):
