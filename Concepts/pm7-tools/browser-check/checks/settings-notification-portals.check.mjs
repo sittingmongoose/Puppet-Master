@@ -1,5 +1,6 @@
 // FO-171 breadth: the remaining reachable Notifications sheets/menus after the same native route.
 import route from './settings-sheet-in-view.check.mjs';
+import {guardPaintedLook} from '../helpers/settings-look.mjs';
 const live='#pm-settings-portals .drawer-wrap.is-open .drawer, #pm-settings-portals .overlay .dialog, .pm51-popout.is-open';
 async function press(t,b){
  for(let i=0;i<5;i++){const summary=b.locator('xpath=ancestor::details[not(@open)]/summary').last();if(!await summary.count())break;await summary.scrollIntoViewIfNeeded();await summary.click();await t.settle();}
@@ -25,7 +26,20 @@ async function box(t,f,label,w,h,close=true){
  return sheet;
 }
 async function checkLook(t,look){
-  const args={...t.args,looks:look,bite:'1'};const rt=new Proxy(t,{get(o,k){if(k==='args')return args;const v=Reflect.get(o,k,o);return typeof v==='function'?v.bind(o):v;}});await route(rt);
+  // A stationary pointer can enter a scheme tile when a resize moves Customize under it.
+  // Its first Escape then correctly cancels the hover preview. Leave the tiles before testing close.
+  const keyboard=new Proxy(t.page.keyboard,{get(o,k){
+   if(k==='press')return async(key,...rest)=>{
+    if(key==='Escape'){
+     const head=t.root.locator('.pmt-cz:not(.pmed-cz):not(.pmt-cz-parked):not([aria-hidden="true"]) .pmt-cz-head').first();
+     if(await head.isVisible())await head.hover();
+    }
+    return o.press(key,...rest);
+   };
+   const v=Reflect.get(o,k,o);return typeof v==='function'?v.bind(o):v;
+  }});
+  const page=new Proxy(t.page,{get(o,k){if(k==='keyboard')return keyboard;const v=Reflect.get(o,k,o);return typeof v==='function'?v.bind(o):v;}});
+  const args={...t.args,looks:look,bite:'1'};const rt=new Proxy(t,{get(o,k){if(k==='args')return args;if(k==='page')return page;const v=Reflect.get(o,k,o);return typeof v==='function'?v.bind(o):v;}});await route(rt);
   const f=t.root;await f.evaluate(()=>PM51.go('general','notifications'));await f.waitForSelector('[data-continuous-workspace-body="notifications"][data-workspace-mounted="true"]');await t.settle();
   const n=f.locator('[data-continuous-workspace-body="notifications"]');
   const tab=async label=>{await press(t,n.locator('.manager-tab',{hasText:new RegExp('^\\s*'+label+'\\s*$')}).first());};
@@ -33,6 +47,7 @@ async function checkLook(t,look){
   const menuItem=label=>f.locator('.pm51-popout.is-open .pm51-menu-item').filter({hasText:label}).first();
   for(const [w,h] of [[1280,900],[1390,900],[1920,1080]]){
    await t.viewport(w,h);
+   await guardPaintedLook(rt,f,look,`${look} ${w} breadth start`);
    for(const section of ['Destinations','Events','Quiet hours','History','Sounds']){
     await tab(section);await dropdowns(t,f,n,`${look} ${w} ${section} inline`,w,h);
    }
@@ -70,6 +85,7 @@ async function checkLook(t,look){
    }
    await press(t,action('dest-address'));await box(t,f,`${look} ${w} destination address`,w,h);
    await press(t,action('test'));await box(t,f,`${look} ${w} destination test`,w,h);
+   await guardPaintedLook(rt,f,look,`${look} ${w} breadth end`);
   }
 }
 export const tests=Object.fromEntries(['basic-light','friendly-dark','glass-dark','nier-dark'].map(look=>[look,t=>checkLook(t,look)]));
