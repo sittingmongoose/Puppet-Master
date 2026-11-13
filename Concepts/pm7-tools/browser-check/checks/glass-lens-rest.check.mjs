@@ -5,8 +5,9 @@
 // the pixel proof of the hand-over is separate, see the lane G report):
 //   rest     every lens with a box, after the page has settled and every lens animation has ended, computes no
 //            url() backdrop filter, and none in the page keeps one inline; the only resting backdrop filter is the
-//            Activity bar icon lens's plain saturate(1.12) (the lead's R2, 2026-11-13: it keeps the tint its filter
-//            gave it, so it comes to rest with no tint step), and every other lens computes none;
+//            Activity bar icon lens's plain saturate(1.12) and, while it shows, the hover bead's plain saturate(1.1)
+//            (the lead's R2, 2026-11-13: each keeps the tint its filter gave it, so it comes to rest with no tint
+//            step), and every other lens computes none;
 //   press    for every laid-out lens whose strip takes a press: the pointer goes down on the nearest other item and is
 //            held 1.1 s, then moves off the item (across the strip, so no scrub starts) and is released, which abandons
 //            the press: the lens travels there and back. Every frame of either travel, and every frame the press is held,
@@ -32,6 +33,8 @@ const VIEWS = { home: 'dashboard', usage: 'usage', settings: 'settings', wizard:
 const PROBE = () => {
 	/* the Activity bar icon lens's resting tint (glass.js KINDS.lensIcon.sat, restSat) */
 	const ICON_REST = 'saturate(1.12)';
+	/* the hover bead's while it shows (glass.css .lg-bead.on, KINDS.bead.sat) */
+	const BEAD_REST = 'saturate(1.1)';
 	const STRIPS = [
 		{ sel: 'nav.page-tabs', items: '.page-tab', scrub: true },
 		{ sel: '#pmuRange', items: ':scope > button', scrub: true },
@@ -83,7 +86,8 @@ const PROBE = () => {
 						if (this.laid(l)) {
 							laid++;
 							const f = getComputedStyle(l).backdropFilter, icon = l.getAttribute('data-lg-lens') === 'lensIcon';
-							if (f && f !== 'none' && !mv && (/url\(/.test(f) || !(icon && f === ICON_REST))) bad.set(l, { ...desc(l, i), filter: f, opacity: getComputedStyle(l).opacity });
+							const beadOn = l.classList.contains('lg-bead') && l.classList.contains('on');
+							if (f && f !== 'none' && !mv && (/url\(/.test(f) || !((icon && f === ICON_REST) || (beadOn && f === BEAD_REST)))) bad.set(l, { ...desc(l, i), filter: f, opacity: getComputedStyle(l).opacity });
 							if (icon && !mv && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden') icons.set(l, { ...desc(l, i), filter: f });
 						}
 						const s = l.style.getPropertyValue('backdrop-filter');
@@ -131,7 +135,7 @@ const PROBE = () => {
 			const tick = (ts) => {
 				if (!this.on) return;
 				const f = getComputedStyle(l).backdropFilter;
-				this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, b: box(l) });
+				this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, fl: f && f !== 'none' ? f : '', b: box(l) });
 				requestAnimationFrame(tick);
 			};
 			requestAnimationFrame(tick);
@@ -245,8 +249,8 @@ async function beadCheck(t, f, tag) {
 	const off = await offsetOf(t, f), c = (r) => ({ x: off.x + r.x + r.w / 2, y: off.y + r.y + r.h / 2 });
 	await t.page.mouse.move(c(pair[0]).x, c(pair[0]).y, { steps: 3 });
 	await t.page.waitForTimeout(700);
-	const rest1 = await f.evaluate(() => { const b = document.querySelector('i.lg-lens.lg-bead'); if (!b) return null; const s = getComputedStyle(b); return { on: b.classList.contains('on'), filter: s.backdropFilter, opacity: s.opacity }; });
-	await t.check(`bead: resting on an icon it bends nothing ${tag}`, !!rest1 && rest1.on && rest1.filter === 'none', JSON.stringify(rest1));
+	const rest1 = await f.evaluate(() => { const b = document.querySelector('i.lg-lens.lg-bead'); if (!b) return null; const s = getComputedStyle(b); return { on: b.classList.contains('on'), filter: s.backdropFilter, inline: b.style.getPropertyValue('backdrop-filter'), opacity: s.opacity }; });
+	await t.check(`bead: resting on an icon it bends nothing and keeps only its plain saturate(1.1) ${tag}`, !!rest1 && rest1.on && rest1.filter === 'saturate(1.1)' && !rest1.inline, JSON.stringify(rest1));
 	const i = await f.evaluate(() => window.__g.all().indexOf(document.querySelector('i.lg-lens.lg-bead')));
 	await f.evaluate((k) => window.__g.watch(k), i);
 	await t.page.waitForTimeout(80);
@@ -254,7 +258,7 @@ async function beadCheck(t, f, tag) {
 	await t.page.waitForTimeout(900);
 	const fr = await f.evaluate(() => window.__g.stop());
 	const mv = fr.filter((z) => z.mv), lastMv = fr.reduce((k, z, n) => (z.mv ? n : k), -1), after = fr.slice(lastMv + 1);
-	await t.check(`bead: it bends in every frame it flows to the neighbour, and rests unbent ${tag}`, mv.length >= 3 && mv.every((z) => z.bend) && after.length >= 5 && after.every((z) => !z.bend),
+	await t.check(`bead: it bends in every frame it flows to the neighbour, and rests unbent with its plain saturate(1.1) ${tag}`, mv.length >= 3 && mv.every((z) => z.bend) && after.length >= 5 && after.every((z) => !z.bend && z.fl === 'saturate(1.1)'),
 		JSON.stringify({ frames: fr.length, flowing: mv.length, flat: mv.filter((z) => !z.bend).length, after: after.length, afterBent: after.filter((z) => z.bend).length }));
 }
 
@@ -551,6 +555,62 @@ async function restcostPart(t, surface, W, H) {
 	await t.check('restcost: rows written', rows.length > 0, String(rows.length));
 }
 
+/* --set parts=beadpx (lane G, the lead's question on the bead, 2026-11-13): the hover bead's flow between two
+   neighbouring Activity icons on Home, per look, the rest of the page frozen: its last frame (end - 8.3 ms), the same
+   frame dressed as at rest (its live filter off; its resting tint on where the build keeps one) and the first frame
+   after the flow ended. PNGs and beadpx.json in the run folder. */
+async function beadPixelsPart(t, surface, W, H) {
+	const { writeFileSync } = await import('node:fs');
+	const pathm = await import('node:path');
+	const f = await t.app.open({});
+	await f.evaluate(PROBE);
+	await f.evaluate(() => document.fonts.ready.then(() => true));
+	await t.page.waitForTimeout(Number(t.args.settle ?? 8000));
+	const shot = async (name) => { const b = await t.page.screenshot({ type: 'png' }); writeFileSync(pathm.join(t.run.dir, name + '.png'), b); };
+	const beadState = () => f.evaluate(() => { const b = document.querySelector('i.lg-lens.lg-bead'); if (!b) return null; const r = b.getBoundingClientRect(); return { filter: getComputedStyle(b).backdropFilter, on: b.classList.contains('on'), box: { x: r.left, y: r.top, w: r.width, h: r.height } }; });
+	const out = {};
+	for (const look of list(t.args.looks, LOOKS)) {
+		await t.app.look(look);
+		await f.evaluate((p) => PM_PAGES.go(p), VIEWS.home);
+		await t.page.waitForTimeout(3000);
+		await parkPointer(t.page, W, H);
+		await f.evaluate(() => window.__g.settle());
+		const icons = await f.evaluate(() => [...document.querySelectorAll('#activityBar .icon[data-target]:not([data-lg-current])')]
+			.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 4 && r.height > 4; })
+			.map((e) => { const r = e.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; }));
+		let pair = null;
+		for (let i = 0; i + 1 < icons.length && !pair; i++) if (Math.hypot(icons[i + 1].x - icons[i].x, icons[i + 1].y - icons[i].y) < 100) pair = [icons[i], icons[i + 1]];
+		await t.check(`beadpx: two neighbouring Activity icons ${look}`, !!pair, JSON.stringify(icons));
+		if (!pair) continue;
+		const off = await offsetOf(t, f), c = (r) => ({ x: off.x + r.x + r.w / 2, y: off.y + r.y + r.h / 2 });
+		await t.page.mouse.move(c(pair[0]).x, c(pair[0]).y, { steps: 3 });
+		await t.page.waitForTimeout(900);
+		await f.evaluate(() => { const list = document.getAnimations(); window.__pre = new Set(list); list.forEach((a) => { try { if (a.playState === 'running' || a.playState === 'pending') a.pause(); } catch (e) { /* gone */ } }); });
+		await t.page.waitForTimeout(250);
+		const rec = out[look] = { from: pair[0], to: pair[1], frames: {} };
+		rec.frames.rest0 = await beadState(); await shot(`bead-${look}-r0-rest-on-first`);
+		await t.page.mouse.move(c(pair[1]).x, c(pair[1]).y);
+		rec.made = await f.evaluate(() => { const n = document.getAnimations().filter((a) => !window.__pre.has(a)); window.__new = n; n.forEach((a) => { try { a.pause(); } catch (e) { /* gone */ } }); return n.map((a) => (a.effect && a.effect.target ? (a.effect.target.className && a.effect.target.className.baseVal !== undefined ? a.effect.target.className.baseVal : String(a.effect.target.className)) : '?') + ':' + Math.round(a.effect ? a.effect.getComputedTiming().endTime : 0)); });
+		await f.evaluate(() => window.__new.forEach((a) => { try { a.currentTime = a.effect.getComputedTiming().endTime - 1000 / 120; } catch (e) { /* gone */ } }));
+		await t.page.waitForTimeout(300);
+		rec.frames.last = await beadState(); await shot(`bead-${look}-t4-last`);
+		const had = await f.evaluate(() => { const l = document.querySelector('i.lg-lens.lg-bead'), v = l.style.getPropertyValue('backdrop-filter'); if (v) { l.__pxKeep = [v, l.style.getPropertyValue('-webkit-backdrop-filter')]; l.style.removeProperty('backdrop-filter'); l.style.removeProperty('-webkit-backdrop-filter'); if (l.__lgRest) { l.style.setProperty('backdrop-filter', l.__lgRest, 'important'); l.style.setProperty('-webkit-backdrop-filter', l.__lgRest, 'important'); } } return !!v; });
+		if (had) {
+			await t.page.waitForTimeout(250); rec.frames.lastFlat = await beadState(); await shot(`bead-${look}-t4-last-flat`);
+			await f.evaluate(() => { const l = document.querySelector('i.lg-lens.lg-bead'), k = l.__pxKeep; l.__pxKeep = null; if (k) { l.style.setProperty('backdrop-filter', k[0], 'important'); l.style.setProperty('-webkit-backdrop-filter', k[1] || k[0], 'important'); } });
+			await t.page.waitForTimeout(150);
+		}
+		await f.evaluate(() => new Promise((r) => { window.__new.forEach((a) => { try { a.finish(); } catch (e) { /* gone */ } }); requestAnimationFrame(() => requestAnimationFrame(r)); }));
+		await t.page.waitForTimeout(250);
+		rec.frames.after = await beadState(); await shot(`bead-${look}-t5-after`);
+		await f.evaluate(() => document.getAnimations().forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (e) { /* gone */ } }));
+		await parkPointer(t.page, W, H); await t.page.waitForTimeout(600);
+		t.log(`beadpx ${look}: ${JSON.stringify({ made: rec.made, frames: Object.fromEntries(Object.entries(rec.frames).map(([k, v]) => [k, v && v.filter])) })}`);
+		await t.check(`beadpx: the bead flowed and its last frame bends ${look}`, !!(rec.frames.last && /url\(/.test(rec.frames.last.filter)) && had, JSON.stringify(rec.frames.last));
+	}
+	writeFileSync(pathm.join(t.run.dir, 'beadpx.json'), JSON.stringify(out, null, 1));
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const run = (part, fn) => async (t) => {
@@ -574,5 +634,6 @@ for (const surface of ['normal', 'sandbox']) {
 		tests[`PERF-4 lens pixels`] = named('pixels', pixelsPart);
 		tests[`PERF-4 lens film`] = named('film', filmPart);
 		tests[`PERF-4 lens resting tint cost`] = named('restcost', restcostPart);
+		tests[`PERF-4 bead pixels`] = named('beadpx', beadPixelsPart);
 	}
 }
