@@ -1795,11 +1795,13 @@
   }
   /* PERF-4 (Jared, 2026-11-12, choice B after before/after pictures): a lens bends what is under it only while it moves
      or is pressed. Its live SVG backdrop filter was kept while it rested, and Chrome runs that filter again for every
-     frame anything under the lens draws: the largest single cost of the Glass look (Glass Dark Home 94 ms a second of
-     the main and GPU threads at rest and 122 scrolling, Usage 126 / 140 / 123, Glass Light Home 172 / 143 / 148, lane E,
-     2026-11-11). At rest a lens draws the rim and tint it bakes (--lg-spec) with no backdrop filter; its bend there is
-     at most 1.4 px (buildLensMaps). Live while its travel runs (not the Reduce Motion fade), while it is scrubbed, and
-     while a press that sent it is held; each moment that changes one of those asks here, so nothing runs at rest. */
+     frame anything under the lens draws: the largest single cost of the Glass look (lane E, 2026-11-11). At rest a lens
+     draws the rim and tint it bakes (--lg-spec) with no backdrop filter; its bend there is at most 1.4 px
+     (buildLensMaps). Live while its travel runs (not the Reduce Motion fade), while it is scrubbed, and while a press
+     that sent it is held; each moment that changes one of those asks here, so nothing runs at rest. Measured (lane G,
+     A-B-B-A against main, Windows RTX 3090, 2026-11-13): the GPU thread 64 to 77 ms a second less at rest in Glass Dark
+     and Light (Home 85 / 81, Usage 124 / 73, Settings 84 / 72), 99 to 115 less under a pointer sweep, 95 to 108 less
+     scrolling; Basic Dark unchanged. */
   function lensLive(L) {
     L.lens.__lgLive = !!((L.anim && !L.reducedAnim) || L.dragging || (L.pending && !L.pending.up));
     lensBend(L.lens);
@@ -1808,7 +1810,8 @@
      SVG filter: over the bar's saturated blue its filter's saturate(1.12) is most of what the filter changes, and taking
      it off when the lens came to rest stepped the whole lens's tint in one frame (Glass Dark median (29,48,115) to
      (30,47,108), Glass Light red +3; lane G pixels, 2026-11-13; the lead's choice R2). At rest it then differs from the
-     moving lens only at its rim, by the bend. */
+     moving lens only at its rim, by the bend (at most 3 levels). Its price, Home at rest in one page load: 5.5 / 4.5 ms a
+     second of the GPU thread (Glass Dark / Light, paired medians of 6 rounds that swing by 20 to 30). */
   function lensBend(e) {
     /* the filter mount() keeps (__lgBf), worn while live in a mounted Glass lens, else its resting tint (__lgRest);
        unmount and unmountAll take an inline filter off by themselves, so one found gone is forgotten here */
