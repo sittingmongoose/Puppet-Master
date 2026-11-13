@@ -1,5 +1,45 @@
 # INT2 — batch-2 Event Authority integration
 
+## Landing note (batch 2)
+
+**What lands (2026-11-13):** the 18 sweep lanes, the deck-3 pair, retention deck 4 (DL-500..509), the landing-check change T32, the E4-1 edit (DL-475 alignment) and fix 1 (retained readers). The landing worker is `ea-land-batch2`, holding the landing lock.
+
+- **Base.** The reviewed head `7a4cdca9407533d42d076a0125eea73a5ca2bd14` sat on `main` `9b212f7aa9`. `main` then moved to `40635eae279affe889912a1547438e14ffad2812`, only under `Concepts/` (37 paths). Under the stream's Concepts-only rule the chain was rebuilt mechanically the same way as "Rebase onto main 9b212f7aa9" below: each of the 63 first-parent commits keeps its own tree with the new base's `Concepts` tree, its message, author, author date and second parents. Rebuilt content head: `b8ab49f73d03591f568afb8771c7aed8b6996428`; this note is the one commit on top.
+- **Byte-identical.** `git diff --binary --full-index 40635eae27 b8ab49f73d` and `git diff --binary --full-index 9b212f7aa9 7a4cdca940` have the same SHA-256, `96933a8b326df539ef5a5674f76b1f2ed680660557b7fed624249c75641ce26f`.
+- **Archive.** The reviewed head is kept by tag `archive/ea-batch2-reviewed-7a4cdca940` (tag object `b6a54ea623`) on both push URLs.
+
+### Reviews and verdicts
+
+| Review | Reviewed head | Verdict |
+|---|---|---|
+| Muse Wonder Full, reasoning max | `cdfe628e70` | **LANDING_READY_WITH_NOTES**. No REAL finding; N-items and two tool items only. |
+| GPT-6 Astra, reasoning max | `cdfe628e70` | NOT_READY on **one REAL** finding: DCH's retained reader selected a recipe without an authenticated per-original receipt. **Fixed by fix 1** (`fb24402e4e`; section "Batch 2 fix 1" below). Its other items are not REAL. |
+| GPT-6.1 Sol high, E4-1 quick recheck | `2b5fc5279c` | E's edit is right: the six passages and their companions remove the Memory-panel buttons and keep every other rule. Its **only blocker is stream C's text on `main`**, the Catalog lines below, which C fixes in its own landing after E lands. |
+| GPT-6.1 Sol high, fix-1 targeted recheck | `7a4cdca940` | **LANDING_READY_WITH_NOTES**. No REAL finding; Astra finding 1 is closed in all six changed lanes. |
+
+Reports: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/BATCH2-wonder/`, `BATCH2-astra/`, `BATCH2-e41-solhigh/` and `BATCH2-fix1-solhigh/`.
+
+### Jared's words on the landing-check change (T32), verbatim
+
+- "Approve (Recommended)" (2026-11-09, about 01:30Z).
+- "Small fix, recheck + Sol max (Recommended)" (2026-11-09, about 17:05Z).
+
+### Card E4-1
+
+**Jared answered A himself**, "Drop the buttons from the batch", on the AI Account Center Status tab at 2026-11-13T13:21:31Z. The signed answer is `/mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--E4-1.json` (SHA-256 `774b35c8ecec19966b2194c73f2d401db0e4af8fe8fb86dc7029c318f1c290e2`, ed25519 key `c112b38be1d32ea0`). DMEM's memory upkeep has no Memory-panel buttons, and maintenance stays internal or support-only, as DL-475 says.
+
+Before that, pm7-build had ruled A overnight under Jared's hand-off, per DL-475 (2026-11-13, 2:07 AM EST), and the E4-1 edit (`2b5fc5279c`) was made on that ruling. Jared's answer confirms it, so the edit stands unchanged.
+
+### Catalog lines stream C fixes in its own landing
+
+Stream C's text on `main` in `Plans/UI_Command_Catalog.md`, sources in UCC-230's live `owner_state_code_map`, still explain the Memory maintenance holds by panel buttons that DL-475 removes. This batch does not edit them. Line numbers are on this branch (on `main` `40635eae27`, three lines earlier):
+
+- **10581:** "DL-444 and DL-445: the duplicate sweep's automatic jobs and panel buttons stay unavailable until" approvals pass.
+- **10664:** "DL-403: memory maintenance waits for approved cutoffs, and the two maintenance buttons" stay unavailable.
+- **10667:** what "still holds the two maintenance commands" is explained by the old panel-button condition.
+
+C keeps the `dedup_hold_pending` and `maintenance_cutoffs_pending` mappings and the internal execution holds, and aligns only their explanations with DL-475.
+
 ## Batch 2 fix 1: retained readers (2026-11-13)
 
 **Branch `plans/ea-batch2-fix1-20261113`, head `fb24402e4e` (content; this report is the commit on top),** from `plans/ea-batch2-e41-20261113` at `2b5fc5279c` (the E4-1 edit on `cdfe628e70`). It answers Astra max finding 1 (`reviews/BATCH2-astra/REVIEW.md`): DCH's retained reader treated an original with no exact receipt as strict-v4 and accepted it. The fix covers that class across the batch: **a retained read now selects a recipe only from the one independently sealed receipt for that exact original**; no receipt, several receipts or a receipt bound to another original return the existing unavailable or unsupported result with the bytes untouched, and new-write selection stays separate. No landing, lock, `main` push, reseal or Decision Log entry. Native custody, authentication and admission stay NOT_RUN.
