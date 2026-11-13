@@ -336,7 +336,8 @@
    "cause": [
     "original_event",
     "date_time_utc_z"
-   ]
+   ],
+   "seal": true
   }
  },
  {
@@ -364,7 +365,8 @@
    "cause": [
     "envelope",
     "date_time_hour"
-   ]
+   ],
+   "seal": true
   }
  },
  {
@@ -839,52 +841,6 @@
   "extra": {}
  },
  {
-  "id": "SX02-read-store-older-recipe",
-  "family": "live.step.updated",
-  "parent": [
-   "sem",
-   "read-current"
-  ],
-  "operation": "read",
-  "changes": {
-   "storage_instance_id": "44444444-4444-4444-8444-444444444444"
-  },
-  "maintain": [
-   "store"
-  ],
-  "expect": {
-   "row": "SX02_recipe_installed",
-   "result": {
-    "result": "REFUSE",
-    "effects": 0
-   }
-  },
-  "extra": {}
- },
- {
-  "id": "SX02-deck2-receipt-store-older-recipe",
-  "family": "catalog.update.started",
-  "parent": [
-   "deck2",
-   "project"
-  ],
-  "operation": "read",
-  "changes": {
-   "storage_instance_id": "44444444-4444-4444-8444-444444444444"
-  },
-  "maintain": [
-   "store"
-  ],
-  "expect": {
-   "row": "SX02_recipe_installed",
-   "result": {
-    "result": "REFUSE",
-    "effects": 0
-   }
-  },
-  "extra": {}
- },
- {
   "id": "SX03-original-not-held-by-store",
   "family": "live.step.updated",
   "parent": [
@@ -899,9 +855,9 @@
    "store"
   ],
   "expect": {
-   "row": "SX03_original_sealed",
+   "row": "SX08_receipt_present",
    "result": {
-    "result": "REFUSE",
+    "result": "UNAVAILABLE",
     "effects": 0
    }
   },
@@ -920,9 +876,32 @@
   },
   "maintain": [],
   "expect": {
-   "row": "SX03_original_sealed",
+   "row": "SX08_receipt_present",
    "result": {
     "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
+  "id": "SX08-deck2-store-without-receipt",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "read",
+  "changes": {
+   "storage_instance_id": "66666666-6666-4666-8666-666666666666"
+  },
+  "maintain": [
+   "store"
+  ],
+  "expect": {
+   "row": "SX08_receipt_present",
+   "result": {
+    "result": "UNAVAILABLE",
     "effects": 0
    }
   },
@@ -943,9 +922,9 @@
    "cohere"
   ],
   "expect": {
-   "row": "SX04_original_authentic",
+   "row": "SX08_receipt_present",
    "result": {
-    "result": "REFUSE",
+    "result": "UNAVAILABLE",
     "effects": 0
    }
   },
@@ -966,7 +945,7 @@
    "cohere"
   ],
   "expect": {
-   "row": "SX04_original_authentic",
+   "row": "SX08_receipt_present",
    "result": {
     "result": "REFUSE",
     "effects": 0
@@ -989,9 +968,9 @@
    "commitments"
   ],
   "expect": {
-   "row": "SX04_original_authentic",
+   "row": "SX08_receipt_present",
    "result": {
-    "result": "REFUSE",
+    "result": "UNAVAILABLE",
     "effects": 0
    }
   },
@@ -1012,9 +991,9 @@
    "cohere"
   ],
   "expect": {
-   "row": "SX04_original_authentic",
+   "row": "SX08_receipt_present",
    "result": {
-    "result": "REFUSE",
+    "result": "UNAVAILABLE",
     "effects": 0
    }
   },
@@ -1063,7 +1042,7 @@
    "cohere"
   ],
   "expect": {
-   "row": "SX06_recipe_known",
+   "row": "SX02_recipe_installed",
    "result": {
     "result": "REFUSE",
     "effects": 0
@@ -1073,6 +1052,74 @@
    "seal_as": [
     "live.step.updated",
     "ds15-v0"
+   ]
+  }
+ },
+ {
+  "id": "SX09-original-sealed-twice",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "original/event/actor_ref": "actor:sealed-twice"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX09_receipt_unique",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "seal_as": [
+    "live.step.updated",
+    "ds15-v1"
+   ],
+   "seal_also": [
+    [
+     "live.step.updated",
+     "ds15-v0"
+    ]
+   ]
+  }
+ },
+ {
+  "id": "SX09-retry-original-sealed-twice",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "original/event/actor_ref": "actor:sealed-twice-retry"
+  },
+  "maintain": [
+   "cohere"
+  ],
+  "expect": {
+   "row": "SX09_receipt_unique",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {
+   "seal_as": [
+    "live.step.updated",
+    "ds15-v1"
+   ],
+   "seal_also": [
+    [
+     "live.step.updated",
+     "ds15-v0"
+    ]
    ]
   }
  },

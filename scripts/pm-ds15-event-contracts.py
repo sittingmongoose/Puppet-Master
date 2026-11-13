@@ -653,11 +653,12 @@ def shared_valid(kind_name, value, recipe):
 # ---------------------------------------------------------------------------
 # SP-1101 retained-original dispatch (sweep part 2B, S-N2). A retained reader or
 # retry resolver never picks the original's recipe itself:
-#   1. select_original_recipe (table rd_recipe) makes one selection from Storage's
-#      sealed write custody for the original's Storage instance and family, before
-#      any retained read; no custody means the existing unavailable contract, an
-#      uninstalled tuple means unsupported, and neither falls back to the current
-#      or another recipe. The selection fixes the frozen number rules and the
+#   1. select_original_recipe (table rd_recipe) makes one selection from the one
+#      sealed write receipt of the exact original (Storage instance, original ref,
+#      CV-339 commitment), before any retained read; no custody or no receipt means
+#      the existing unavailable contract, more than one receipt or an uninstalled
+#      tuple means unsupported, and none falls back to the current or another
+#      recipe; the Store records families, never a recipe (batch 2 fix 1). The selection fixes the frozen number rules and the
 #      CV-1101 date-time profiles (DATETIME_PROFILES) every later retained check uses.
 #   2. the frozen-recipe checks run in their existing order (schema, identity,
 #      copies, receipt, commitment), parameterized by that selection.
@@ -806,18 +807,34 @@ class DS15OriginalOwner:
 
 
 def select_original_recipe(c, d):
-    """Table rd_recipe: (frozen recipe, None) or (None, refusing row). One selection, from sealed custody."""
+    """Table rd_recipe: (frozen recipe, None) or (None, refusing row). One selection, from the one sealed write
+    receipt of this exact original (Storage instance, original ref, CV-339 full-value commitment), never from the
+    Store: a custody Store records which families it holds, not a recipe (batch 2 fix 1, SP-1101)."""
     custody = original_custody()
     storage_instance_id = d.get('storage_instance_id') if isinstance(d, dict) else None
     store = custody['stores'].get(storage_instance_id) if type(storage_instance_id) is str else None
     sealed = isinstance(store, dict) and c['event_type'] in store['families']
-    tuple_ = (recipe_tuple(c, store['write_recipe'], custody['manifests'][c['event_type']])
-              if sealed and c['event_type'] in custody['manifests'] else None)
-    installed = (tuple_ in installed_recipes()) if sealed else None
-    first = refusal('rd_recipe', {'custody_store': sealed, 'recipe_installed': installed})
+    receipts = sealed_receipts(storage_instance_id, d) if sealed else None
+    count = len(receipts) if sealed else None
+    tuple_ = (recipe_tuple(c, receipts[0][2], custody['manifests'][c['event_type']])
+              if count == 1 and c['event_type'] in custody['manifests'] else None)
+    installed = (tuple_ in installed_recipes()) if count == 1 else None
+    first = refusal('rd_recipe', {'custody_store': sealed, 'receipt_count': count, 'recipe_installed': installed})
     if first is not None:
         return None, first[0]
     return tuple_.identity_recipe, None
+
+
+def sealed_receipts(storage_instance_id, d):
+    """Every sealed write receipt for the exact original the reader fetched: at its original ref, with its CV-339
+    full-value commitment. An original whose commitment cannot be computed has none."""
+    try:
+        event = d['original']['event']
+        ref, commitment = event['event_id'], full_value_commitment(event)
+    except (Refusal, KeyError, TypeError, AttributeError, ValueError):
+        return []
+    return [entry for entry in original_custody()['sealed'].get((storage_instance_id, ref), [])
+            if entry[0].source_commitment == commitment]
 
 
 def original_bytes(d):
@@ -1329,15 +1346,29 @@ def refuse():
     return {'result': 'REFUSE', 'effects': 0}
 
 
+# Ordinary new-write selection stays separate from retained reads (SP-1101, batch 2 fix 1): a new append
+# ('payload', 'envelope_boundary') is written by the writer's own recipe, ds15-v1, and reads no receipt.
+NEW_WRITE_OPS = ('payload', 'envelope_boundary')
+
+
+def new_write_recipe():
+    """The recipe the writer writes a new original with; never a selection for a retained original."""
+    return V1
+
+
 def selected_recipe(c, op, d):
     """(frozen recipe, None) or (None, result): SP-1101 selection before the original is read (rd_recipe).
 
-    Missing sealed custody is the existing unavailable contract (UNAVAILABLE for a read, as for the reader
-    rows; a refusal elsewhere); an uninstalled recipe tuple refuses. Neither falls back to another recipe.
+    Missing sealed custody, or no sealed receipt for the exact original, is the existing unavailable contract
+    (UNAVAILABLE for a read, as for the reader rows; a refusal elsewhere); more than one receipt or an
+    uninstalled recipe tuple refuses. None falls back to another recipe.
     """
+    if op in NEW_WRITE_OPS:
+        return new_write_recipe(), None
     recipe, row = select_original_recipe(c, d)
     if recipe is None:
-        return None, (dict(UNAVAILABLE) if op == 'read' and row == 'SX01_custody_store' else refuse())
+        return None, (dict(UNAVAILABLE) if op == 'read' and row in ('SX01_custody_store', 'SX08_receipt_present')
+                      else refuse())
     return recipe, None
 
 

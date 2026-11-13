@@ -593,36 +593,47 @@ module('ev_outcome_domain', 'The retained owner outcome.', [
     ('OD01_outcome_v1', '/outcome_v1_domain', 'the retained owner outcome is inside the frozen ds15-v1 integer domain',
      'original_refused', "value['outcome_v1_domain'] is not True"),
 ])
-module('rd_recipe', 'SP-1101 recipe selection: one selection from Storage sealed write custody before any retained read '
-       '(sweep part 2B, S-N2).', [
+module('rd_recipe', 'SP-1101 recipe selection: one selection from the sealed write receipt of the exact original, before '
+       'any retained read (sweep part 2B, S-N2; batch 2 fix 1).', [
     ('SX01_custody_store', '/custody_store', "the original's Storage instance has sealed write custody for this family "
      '(else no authentic provenance: the existing unavailable contract, no fallback recipe)', 'original_unavailable',
      "value['custody_store'] is not True"),
-    ('SX02_recipe_installed', '/recipe_installed', 'the sealed write recipe tuple has an installed frozen verifier at this '
-     'head (else unsupported: never the current or another recipe)', 'recipe_unsupported',
-     "value['custody_store'] is True and value['recipe_installed'] is not True"),
+    ('SX08_receipt_present', '/receipt_count', 'that custody holds a sealed write receipt for this exact original (its '
+     'original ref and CV-339 full-value commitment); the Store never supplies a recipe (else the existing unavailable '
+     'contract, no fallback recipe)', 'original_unavailable',
+     "value['custody_store'] is True and value['receipt_count'] == 0"),
+    ('SX09_receipt_unique', '/receipt_count', 'exactly one sealed write receipt names the recipe of this exact original '
+     '(else no single selection: unsupported, never one of them)', 'recipe_unsupported',
+     "value['custody_store'] is True and value['receipt_count'] != 0 and value['receipt_count'] != 1"),
+    ('SX02_recipe_installed', '/recipe_installed', 'the recipe tuple of that one receipt has an installed frozen verifier '
+     'at this head (else unsupported: never the current or another recipe)', 'recipe_unsupported',
+     "value['custody_store'] is True and value['receipt_count'] == 1 and value['recipe_installed'] is not True"),
 ])
 module('rd_resolve', 'SP-1101 authenticated original: one RetainedDispatcher resolution through the sealed original owner '
        'of the Storage instance read, after the frozen-recipe checks (sweep part 2B, S-N2).', [
-    ('SX03_original_sealed', '/dispatch_refusal', 'this Storage instance holds a sealed original at the original ref '
-     '(RetainedDispatcher original_query)', 'original_refused', "value['dispatch_refusal'] == 'original_query'"),
-    ('SX04_original_authentic', '/dispatch_refusal', 'the fetched original bytes are the bytes sealed at that ref: their '
-     'CV-339 full-value commitment is the sealed one (RetainedDispatcher original_authority)', 'original_refused',
-     "value['dispatch_refusal'] == 'original_authority'"),
     ('SX05_original_verification', '/dispatch_refusal', 'the frozen verifier of the sealed recipe tuple recomputes the '
      'original: editions, family, payload join, commitment, producer digest and identity '
      '(RetainedDispatcher original_verification)', 'original_refused',
      "value['dispatch_refusal'] == 'original_verification'"),
-    ('SX06_recipe_known', '/dispatch_refusal', "the original's sealed recipe tuple has an installed frozen verifier "
-     '(RetainedDispatcher recipe_unknown; no other verifier is probed)', 'original_refused',
-     "value['dispatch_refusal'] == 'recipe_unknown'"),
 ])
 module('rd_resolve_entailed', 'SP-1101 dispatcher refusals this composition cannot produce first (entailed).', [
+    ('SX03_original_sealed', '/dispatch_refusal', 'this Storage instance holds a sealed original at the original ref '
+     '(RetainedDispatcher original_query); entailed: rd_recipe SX08 refuses first every original without a sealed '
+     'receipt at that ref with its exact commitment, which is what the sealed original owner looks up',
+     'original_refused', "value['dispatch_refusal'] == 'original_query'"),
+    ('SX04_original_authentic', '/dispatch_refusal', 'the fetched original bytes are the bytes sealed at that ref: their '
+     'CV-339 full-value commitment is the sealed one (RetainedDispatcher original_authority); entailed: SX08 selects '
+     'only by that same commitment, so a fetched original whose commitment has no receipt refuses there first',
+     'original_refused', "value['dispatch_refusal'] == 'original_authority'"),
+    ('SX06_recipe_known', '/dispatch_refusal', "the original's sealed recipe tuple has an installed frozen verifier "
+     '(RetainedDispatcher recipe_unknown; no other verifier is probed); entailed: the owner returns the tuple of the '
+     'same one receipt rd_recipe selected, and SX02 refuses first a receipt whose recipe has no installed verifier',
+     'original_refused', "value['dispatch_refusal'] == 'recipe_unknown'"),
     ('SX07_dispatch_other', '/dispatch_refusal', 'no other RetainedDispatcher refusal (original_binding, '
      'original_ambiguous, caller_recipe_override, recipe_selection, original_bytes_type, current_disclosure); '
      'entailed: the owner is the custody of the Storage instance read and the commitment covers every event field '
-     'of the binding, which the earlier rows join to the family and scope; the owner seals one original per ref '
-     'and commitment; no override is passed; disclosure is the separate DS rows', 'original_refused',
+     'of the binding, which the earlier rows join to the family and scope; SX09 refuses first more than one receipt '
+     'for one original; no override is passed; disclosure is the separate DS rows', 'original_refused',
      "value['dispatch_refusal'] is not None"),
 ])
 module('ev_original_copies', 'Original payload copies (typed).', [

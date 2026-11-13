@@ -15,11 +15,13 @@ positive must give exactly its expected result with no refusal recorded.
 
 The sealed write custody (Plans/ds15_original_custody.json) is the static stand-in for Storage's SP-1101
 custody. The builder records it once from the committed fixture world: every Storage instance the fixtures
-use is a ds15-v1 custody store for all 23 families; every original that reaches the retained resolution
-(rd_resolve) after passing every frozen-recipe check is sealed in the store that holds it; the part 2B
-positives marked 'seal' are sealed as written originals; and the wrong-tuple and older-recipe originals the
-SX05/SX06 witnesses need are sealed with exactly that recipe. The part 2B negatives are never sealed. At
-check time the case under check never adds to it.
+use is a custody store for all 23 families (a Store records families, never a recipe: batch 2 fix 1); every
+original a committed (non part 2B) witness call, or a deck-2 checker base or accepting case, presents to the
+retained recipe selection (rd_recipe) or to the retained resolution (rd_resolve) is sealed, with the ds15-v1 receipt its writer wrote, in the store that
+holds it; the part 2B positives marked 'seal' are sealed as written originals (so are the owner-invalid retained originals T13 and T14,
+which Storage sealed but whose frozen verifier refuses them); and the wrong-tuple,
+older-recipe and doubly sealed originals the SX05, SX02 and SX09 witnesses need are sealed with exactly those
+recipes. The other part 2B negatives are never sealed. At check time the case under check never adds to it.
 """
 import copy
 import json
@@ -31,8 +33,7 @@ FIXTURE = ROOT / 'Plans/ds15_p2b_cases.json'
 CUSTODY = ROOT / 'Plans/ds15_original_custody.json'
 FIXTURE_STORES = ('11111111-1111-4111-8111-111111111111', '22222222-2222-4222-8222-222222222222')
 STORE_NO_CUSTODY = '33333333-3333-4333-8333-333333333333'   # SX01: no sealed write custody at all
-STORE_V0 = '44444444-4444-4444-8444-444444444444'           # SX02: custody records the older ds15-v0 writer
-STORE_EMPTY = '66666666-6666-4666-8666-666666666666'        # SX03: a ds15-v1 custody store that holds no copy
+STORE_EMPTY = '66666666-6666-4666-8666-666666666666'        # SX08: a custody store that holds no receipt for the original
 BIG = 2 ** 53 + 1
 
 # (id, family, parent, op, changes, maintain, expect, extra)
@@ -42,7 +43,8 @@ BIG = 2 ** 53 + 1
 #             producer digest and both commitment copies), 'store' (move the custody Storage instance copy)
 #   expect: {'row': refusing row, 'result': result} for a negative; {'result': ...} for a positive
 #   extra: {'cause': [record, reason]} timestamp cause check; {'seal': true} sealed as a written original;
-#          {'seal_as': [event_type, write_recipe]} sealed with exactly that (wrong) family or recipe
+#          {'seal_as': [event_type, write_recipe]} sealed with exactly that (wrong) family or recipe;
+#          {'seal_also': [[event_type, write_recipe], ...]} additional receipts for the same original
 LIVE, CAPTURE, UPDATE = 'live.step.updated', 'browser.context_captured', 'catalog.update.started'
 DEV = 'Plans/ds15_dev_session_record_v2.schema.json'
 REFUSE = {'result': 'REFUSE', 'effects': 0}
@@ -91,10 +93,10 @@ CASES = [
     # S-FMT1: retained originals keep CV-253 on Storage fields; a skipped old check authorizes nothing
     ('T13-retained-original-observed-offset', LIVE, ('sem', 'read-current'), 'read',
      {'original/event/observed_at_utc': '2026-09-11T21:00:01+00:00'}, ['commitments'],
-     {'row': 'ORIGINAL_EVENT_schema', 'result': REFUSE}, {'cause': ['original_event', 'date_time_utc_z']}),
+     {'row': 'ORIGINAL_EVENT_schema', 'result': REFUSE}, {'cause': ['original_event', 'date_time_utc_z'], 'seal': True}),
     ('T14-retained-original-occurred-hour-24', LIVE, ('sem', 'read-current'), 'read',
      {'original/event/occurred_at_utc': '2026-09-11T24:00:00Z'}, ['cohere'],
-     {'row': 'ENVELOPE_V1_schema', 'result': REFUSE}, {'cause': ['envelope', 'date_time_hour']}),
+     {'row': 'ENVELOPE_V1_schema', 'result': REFUSE}, {'cause': ['envelope', 'date_time_hour'], 'seal': True}),
     ('T15-retained-envelope-persisted-lowercase-z', LIVE, ('sem', 'read-current'), 'read',
      {'envelope/persisted_at_utc': '2026-09-11T21:00:01z'}, [], {'row': 'ENVELOPE_V1_schema', 'result': REFUSE},
      {'cause': ['envelope', 'date_time_utc_z']}),
@@ -153,31 +155,40 @@ CASES = [
      {'storage_instance_id': STORE_NO_CUSTODY}, ['store'], {'row': 'SX01_custody_store', 'result': REFUSE}, {}),
     ('SX01-append-recovery-store-without-custody', LIVE, ('sem', 'append-recovery'), 'recover',
      {'storage_instance_id': STORE_NO_CUSTODY}, [], {'row': 'SX01_custody_store', 'result': REFUSE}, {}),
-    ('SX02-read-store-older-recipe', LIVE, ('sem', 'read-current'), 'read',
-     {'storage_instance_id': STORE_V0}, ['store'], {'row': 'SX02_recipe_installed', 'result': REFUSE}, {}),
-    ('SX02-deck2-receipt-store-older-recipe', UPDATE, ('deck2', 'project'), 'read',
-     {'storage_instance_id': STORE_V0}, ['store'], {'row': 'SX02_recipe_installed', 'result': REFUSE}, {}),
-    # S-N2: rd_resolve, the shared RetainedDispatcher through the sealed original owner
+    # Batch 2 fix 1 (SP-1101): the recipe comes from the one sealed receipt of the exact original (rd_recipe SX08,
+    # SX09, SX02); the Store records families, never a recipe. The two former SX02 Store-recipe witnesses (Store
+    # 4444, "custody records the older ds15-v0 writer") are gone with that Store default. An original with no receipt
+    # (SX03 store without it, SX04 coherent forgeries whose commitment Storage never sealed) now refuses at SX08 before
+    # any retained check, UNAVAILABLE for a read (the existing unavailable contract); the receipt naming ds15-v0
+    # refuses at SX02. rd_resolve SX03, SX04 and SX06 are now entailed by these rows. Ids are kept.
     ('SX03-original-not-held-by-store', LIVE, ('sem', 'read-current'), 'read',
-     {'storage_instance_id': STORE_EMPTY}, ['store'], {'row': 'SX03_original_sealed', 'result': REFUSE}, {}),
+     {'storage_instance_id': STORE_EMPTY}, ['store'], {'row': 'SX08_receipt_present', 'result': UNAVAILABLE}, {}),
     ('SX03-append-recovery-original-not-held', LIVE, ('sem', 'append-recovery'), 'recover',
-     {'storage_instance_id': STORE_EMPTY}, [], {'row': 'SX03_original_sealed', 'result': REFUSE}, {}),
+     {'storage_instance_id': STORE_EMPTY}, [], {'row': 'SX08_receipt_present', 'result': REFUSE}, {}),
+    ('SX08-deck2-store-without-receipt', UPDATE, ('deck2', 'project'), 'read',
+     {'storage_instance_id': STORE_EMPTY}, ['store'], {'row': 'SX08_receipt_present', 'result': UNAVAILABLE}, {}),
     ('SX04-coherent-forgery-actor', LIVE, ('sem', 'read-current'), 'read',
-     {'original/event/actor_ref': 'actor:forged'}, ['cohere'], {'row': 'SX04_original_authentic', 'result': REFUSE}, {}),
+     {'original/event/actor_ref': 'actor:forged'}, ['cohere'], {'row': 'SX08_receipt_present', 'result': UNAVAILABLE}, {}),
     ('SX04-coherent-forgery-occurred-at', LIVE, ('sem', 'original-retry'), 'recover',
      {'original/event/occurred_at_utc': '2026-09-11T20:59:59Z'}, ['cohere'],
-     {'row': 'SX04_original_authentic', 'result': REFUSE}, {}),
+     {'row': 'SX08_receipt_present', 'result': REFUSE}, {}),
     ('SX04-coherent-forgery-persisted-at', LIVE, ('sem', 'read-current'), 'read',
      {'original/event/persisted_at_utc': '2026-09-11T21:00:02Z'}, ['commitments'],
-     {'row': 'SX04_original_authentic', 'result': REFUSE}, {}),
+     {'row': 'SX08_receipt_present', 'result': UNAVAILABLE}, {}),
     ('SX04-deck2-coherent-forgery', UPDATE, ('deck2', 'project'), 'read',
-     {'original/event/actor_ref': 'actor:forged'}, ['cohere'], {'row': 'SX04_original_authentic', 'result': REFUSE}, {}),
+     {'original/event/actor_ref': 'actor:forged'}, ['cohere'], {'row': 'SX08_receipt_present', 'result': UNAVAILABLE}, {}),
     ('SX05-original-sealed-under-another-family', LIVE, ('sem', 'read-current'), 'read',
      {'original/event/actor_ref': 'actor:sealed-wrong-family'}, ['cohere'],
      {'row': 'SX05_original_verification', 'result': REFUSE}, {'seal_as': ['live.session.started', 'ds15-v1']}),
     ('SX06-original-sealed-under-older-recipe', LIVE, ('sem', 'read-current'), 'read',
      {'original/event/actor_ref': 'actor:sealed-v0'}, ['cohere'],
-     {'row': 'SX06_recipe_known', 'result': REFUSE}, {'seal_as': [LIVE, 'ds15-v0']}),
+     {'row': 'SX02_recipe_installed', 'result': REFUSE}, {'seal_as': [LIVE, 'ds15-v0']}),
+    ('SX09-original-sealed-twice', LIVE, ('sem', 'read-current'), 'read',
+     {'original/event/actor_ref': 'actor:sealed-twice'}, ['cohere'],
+     {'row': 'SX09_receipt_unique', 'result': REFUSE}, {'seal_as': [LIVE, 'ds15-v1'], 'seal_also': [[LIVE, 'ds15-v0']]}),
+    ('SX09-retry-original-sealed-twice', LIVE, ('sem', 'original-retry'), 'recover',
+     {'original/event/actor_ref': 'actor:sealed-twice-retry'}, ['cohere'],
+     {'row': 'SX09_receipt_unique', 'result': REFUSE}, {'seal_as': [LIVE, 'ds15-v1'], 'seal_also': [[LIVE, 'ds15-v0']]}),
     # Part 2A row EB05 keeps a single-row negative: its predicate witness (isolated-envelope_ok-153-19) moves the
     # operation's Storage instance outside the sealed custody, which SX01 now refuses first; this one moves it to the
     # other ds15-v1 custody store, so only the application source's Storage instance join refuses.
@@ -381,15 +392,15 @@ def build_custody():
     for name in families:
         c = m16.contract_of(name)
         manifests[name] = m16.recipe_resource_manifest(c['payload_schema_ref'], m16.context_schema_ref(c))
-    stores = {s: {'write_recipe': 'ds15-v1', 'families': families} for s in (*FIXTURE_STORES, STORE_EMPTY)}
-    stores[STORE_V0] = {'write_recipe': 'ds15-v0', 'families': families}
+    stores = {s: {'families': families} for s in (*FIXTURE_STORES, STORE_EMPTY)}
     custody = {'schema_id': 'pm.ds15.original_write_custody.fixture.v1',
                'description': ("Static stand-in for Storage's SP-1101 sealed write custody of DS15 originals (sweep part 2B, "
-                               "S-N2). stores: the write recipe each Storage instance's custody records per family; "
+                               "S-N2; batch 2 fix 1). stores: the families each Storage instance's custody holds (a Store never supplies a recipe); "
                                "resource_manifests: the SHA-256 manifest of the frozen resources each family's originals "
                                "were written against; sealed_originals: the binding (Storage instance, scope, Server, "
-                               "Project, event type, ids, owner operation, CV-339 commitment) and write recipe sealed at "
-                               "each original ref. Recorded once by scripts/pm_ds15_p2b_cases.py --write-custody; the case "
+                               "Project, event type, ids, owner operation, CV-339 commitment) and write recipe of the one "
+                               "receipt sealed with each original at its ref (more than one only for the deliberate SX09 "
+                               "negatives); a retained read selects only from that receipt. Recorded once by scripts/pm_ds15_p2b_cases.py --write-custody; the case "
                                "under check never adds to it. Native custody NOT_RUN."),
                'stores': stores, 'resource_manifests': manifests, 'sealed_originals': []}
     CUSTODY.write_text(json.dumps(custody, indent=1, sort_keys=True) + '\n')
@@ -402,9 +413,27 @@ def build_custody():
     def recording(d):
         reached.append(copy.deepcopy({'storage_instance_id': d['storage_instance_id'], 'original': d['original']}))
         return None
+
+    def selecting(model):
+        # The witness reaches the retained recipe selection: record the original it presents (as its writer
+        # sealed it) and let the call go on with the ds15-v1 receipt the writer wrote. Only an original of a
+        # custody Store, whose commitment can be computed, is a sealed original.
+        def select(c, d):
+            store = custody['stores'].get(d.get('storage_instance_id')) if isinstance(d, dict) else None
+            if not (isinstance(store, dict) and c['event_type'] in store['families']):
+                return None, 'SX01_custody_store'
+            try:
+                model.full_value_commitment(d['original']['event'])
+            except Exception:
+                return None, 'SX08_receipt_present'
+            recording(d)
+            return 'ds15-v1', None
+        return select
     saved = [model.resolve_refusal for model in models]
+    saved_select = [model.select_original_recipe for model in models]
     for model in models:
         model.resolve_refusal = recording
+        model.select_original_recipe = selecting(model)
     try:
         for wid, family, kind_name, pair, run_call in suites.witness_calls():
             if wid.startswith('p2b/'):
@@ -414,17 +443,31 @@ def build_custody():
             for d in reached:
                 row = binding_row(m16, d)
                 sealed[json.dumps(row, sort_keys=True)] = row
+        # The deck-2 checker also reads its own fixture cases through the same selection: each base (a valid
+        # parent) and each accepting case presents an original its writer sealed. A new append (NEW_WRITE_OPS)
+        # selects the writer's own recipe and never reaches this selection, so nothing is sealed for it.
+        for f in deck.read('Plans/ds15_deck2_fixtures.json'):
+            c = next(c for c in deck.read('Plans/ds15_deck2_contracts.json') if c['event_type'] == f['event_type'])
+            for case in f['cases']:
+                parent = copy.deepcopy(f['bases'][case['base']])
+                deck.evaluate(c, case['operation'], parent)
+                if case['expected'] not in ('REFUSE', 'UNAVAILABLE', 'PENDING'):
+                    data = copy.deepcopy(parent)
+                    deck.base.patch(data, case['changes'])
+                    deck.base.patch(data, case.get('derived_observations', {}))
+                    deck.evaluate(c, case['operation'], data)
         if FIXTURE.exists():
             for case in fixture_cases():
                 extra = case[7]
                 if extra.get('seal') or extra.get('seal_as'):
                     _, _, _, data = build(m16, deck, case)
-                    event_type, recipe = extra.get('seal_as') or (None, 'ds15-v1')
-                    row = binding_row(m16, data, event_type, recipe)
-                    sealed[json.dumps(row, sort_keys=True)] = row
+                    for event_type, recipe in [extra.get('seal_as') or (None, 'ds15-v1'), *extra.get('seal_also', [])]:
+                        row = binding_row(m16, data, event_type, recipe)
+                        sealed[json.dumps(row, sort_keys=True)] = row
     finally:
-        for model, original in zip(models, saved):
+        for model, original, select in zip(models, saved, saved_select):
             model.resolve_refusal = original
+            model.select_original_recipe = select
     custody['sealed_originals'] = sorted(sealed.values(), key=lambda r: json.dumps(r, sort_keys=True))
     CUSTODY.write_text(json.dumps(custody, indent=1, sort_keys=True) + '\n')
     return custody
