@@ -1,10 +1,10 @@
 {
-  "assessment": "phase_1_prepared_contract_only",
-  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "assessment": "phase_2_oracles_implemented_without_admission",
+  "base_sha": "0ef6e6842a52209b4eed4c0443d1ee6ed8648b1d",
   "assessed_source_sha256": {
     "Plans/orchestrator-subagent-integration.md": "167320640f25243ff4455ee1dc78947cc43665649f631ba254ae1e46da54ef20",
-    "Plans/Contracts_V0.md": "a68d9519a978a1d5ec016eb75bbc342cdab76ace654da5c93562e80732df06c8",
-    "Plans/storage-plan.md": "2fb28708857f38a7c7b4104cd89faecba36701dc1e41574139976e93f510ed5e",
+    "Plans/Contracts_V0.md": "a045b1f317050d984ebd5d82aefa736fa022381f47b8d47f2f1b441997675957",
+    "Plans/storage-plan.md": "e62bb6d6f007a856971acae58345fe8aa848d41ed48e4260ff4bb217e73c66ed",
     "Plans/Automated_Testing_System.md": "ccfb27fa3d6277eb9ac8f3ff6107474a33fc9843836f7df50f44a359dbeb425f",
     "Plans/continuity_event_contracts.schema.json": "89a618dcbc23731d072a1a21c329e0d91275158969a421452f49c6e74c1ba1c4",
     "Plans/storage_value_registry.json": "666b72e890d1293cda8fa294f5b27b574a1354c71f1441dca69a28513f30603f"
@@ -55,8 +55,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1600",
-              "line_start": 20553,
-              "line_end": 20553,
+              "line_start": 20675,
+              "line_end": 20675,
               "quote": "Exact payload schema:"
             }
           ],
@@ -79,8 +79,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29484,
-              "line_end": 29484,
+              "line_start": 29610,
+              "line_end": 29610,
               "quote": "SP-286/CV-339 full-value v2"
             }
           ],
@@ -96,8 +96,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1600",
-              "line_start": 20553,
-              "line_end": 20553,
+              "line_start": 20675,
+              "line_end": 20675,
               "quote": "The root is closed."
             }
           ],
@@ -113,15 +113,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1600",
-              "line_start": 20555,
-              "line_end": 20555,
+              "line_start": 20677,
+              "line_end": 20677,
               "quote": "scope_kind=project"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1600",
-              "line_start": 20557,
-              "line_end": 20557,
+              "line_start": 20679,
+              "line_end": 20679,
               "quote": "identity bytes are"
             }
           ],
@@ -137,15 +137,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1600",
-              "line_start": 20557,
-              "line_end": 20557,
+              "line_start": 20679,
+              "line_end": 20679,
               "quote": "Same tuple and body return the original full result"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29492,
-              "line_end": 29492,
+              "line_start": 29618,
+              "line_end": 29618,
               "quote": "Rebuild reads retained authentic originals"
             }
           ],
@@ -161,15 +161,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29494,
-              "line_end": 29494,
+              "line_start": 29620,
+              "line_end": 29620,
               "quote": "RP-AUTHORITY-INDEFINITE@1.0.0"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29494,
-              "line_end": 29494,
+              "line_start": 29620,
+              "line_end": 29620,
               "quote": "RP-PROJECTION-3GEN@1.0.0"
             }
           ],
@@ -185,15 +185,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29494,
-              "line_end": 29494,
+              "line_start": 29620,
+              "line_end": 29620,
               "quote": "mandatory coherent backup/restore"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29494,
-              "line_end": 29494,
+              "line_start": 29620,
+              "line_end": 29620,
               "quote": "Raw secrets, prompts, outputs"
             }
           ],
@@ -216,8 +216,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29488,
-              "line_end": 29488,
+              "line_start": 29614,
+              "line_end": 29614,
               "quote": "Replay of the same event is a no-op"
             }
           ],
@@ -233,22 +233,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29482,
-              "line_end": 29482,
+              "line_start": 29608,
+              "line_end": 29608,
               "quote": "operating audit-only reader"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29490,
-              "line_end": 29490,
+              "line_start": 29616,
+              "line_end": 29616,
               "quote": "explicitly adopt SP-278"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29490,
-              "line_end": 29490,
+              "line_start": 29616,
+              "line_end": 29616,
               "quote": "Persist only SP-278"
             }
           ],
@@ -264,15 +264,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29496,
-              "line_end": 29496,
+              "line_start": 29622,
+              "line_end": 29622,
               "quote": "Unknown versions are unavailable"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1600",
-              "line_start": 29496,
-              "line_end": 29496,
+              "line_start": 29622,
+              "line_end": 29622,
               "quote": "Withdrawal first cuts off"
             }
           ],
@@ -281,9 +281,9 @@
           "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-1280 and W3I-oracle-plan.json contain this family's positives and predicate-level single-defect negative plans. Oracle code, shared-helper adoption and guard isolation are phase 2, NOT_RUN.",
+          "finding": "Implemented criterion-12 oracles: five boundaries, 59 named guard rows, 260 single-defect negatives and 32 controls; gated guard tool 14/14 suites PASS, 59/59 rows proved, 0 masked. Shared CV-1100/SP-1100/SP-1101/CV-1101 helpers adopted. Native execution NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -291,11 +291,18 @@
               "line_start": 7242,
               "line_end": 7242,
               "quote": "Phase-1 grade is PARTIAL"
+            },
+            {
+              "path": "scripts/pm_w3i_continuity_oracles.py",
+              "unit": "W3I-oracles",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "W3I wave-3 phase 2: the complete continuity lane checker."
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+          "prior": "PARTIAL",
+          "change": "regraded",
+          "change_reason": "Wave-3 phase 2: oracle code written (scripts/pm_w3i_continuity_oracles.py), all 59 guard rows proved by the gated tool 004bdedd63 with single-defect witnesses, shared number corpus 0 disagreements, shared date_time at every timestamp field. Native execution remains NOT_RUN; whole-tree date-time gate is the T198 integration item."
         }
       },
       "remaining_gaps": [
@@ -363,8 +370,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1601",
-              "line_start": 20607,
-              "line_end": 20607,
+              "line_start": 20729,
+              "line_end": 20729,
               "quote": "Exact payload schema:"
             }
           ],
@@ -387,8 +394,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29552,
-              "line_end": 29552,
+              "line_start": 29678,
+              "line_end": 29678,
               "quote": "SP-286/CV-339 full-value v2"
             }
           ],
@@ -404,8 +411,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1601",
-              "line_start": 20607,
-              "line_end": 20607,
+              "line_start": 20729,
+              "line_end": 20729,
               "quote": "The root is closed."
             }
           ],
@@ -421,15 +428,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1601",
-              "line_start": 20609,
-              "line_end": 20609,
+              "line_start": 20731,
+              "line_end": 20731,
               "quote": "scope_kind=project"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1601",
-              "line_start": 20611,
-              "line_end": 20611,
+              "line_start": 20733,
+              "line_end": 20733,
               "quote": "identity bytes are"
             }
           ],
@@ -445,15 +452,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1601",
-              "line_start": 20611,
-              "line_end": 20611,
+              "line_start": 20733,
+              "line_end": 20733,
               "quote": "Same tuple and body return the original full result"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29560,
-              "line_end": 29560,
+              "line_start": 29686,
+              "line_end": 29686,
               "quote": "Rebuild reads retained authentic originals"
             }
           ],
@@ -469,15 +476,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29562,
-              "line_end": 29562,
+              "line_start": 29688,
+              "line_end": 29688,
               "quote": "RP-AUTHORITY-INDEFINITE@1.0.0"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29562,
-              "line_end": 29562,
+              "line_start": 29688,
+              "line_end": 29688,
               "quote": "RP-PROJECTION-3GEN@1.0.0"
             }
           ],
@@ -493,15 +500,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29562,
-              "line_end": 29562,
+              "line_start": 29688,
+              "line_end": 29688,
               "quote": "mandatory coherent backup/restore"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29562,
-              "line_end": 29562,
+              "line_start": 29688,
+              "line_end": 29688,
               "quote": "Raw secrets, prompts, outputs"
             }
           ],
@@ -524,8 +531,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29556,
-              "line_end": 29556,
+              "line_start": 29682,
+              "line_end": 29682,
               "quote": "Replay of the same event is a no-op"
             }
           ],
@@ -541,22 +548,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29550,
-              "line_end": 29550,
+              "line_start": 29676,
+              "line_end": 29676,
               "quote": "operating audit-only reader"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29558,
-              "line_end": 29558,
+              "line_start": 29684,
+              "line_end": 29684,
               "quote": "explicitly adopt SP-278"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29558,
-              "line_end": 29558,
+              "line_start": 29684,
+              "line_end": 29684,
               "quote": "Persist only SP-278"
             }
           ],
@@ -572,15 +579,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29564,
-              "line_end": 29564,
+              "line_start": 29690,
+              "line_end": 29690,
               "quote": "Unknown versions are unavailable"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1601",
-              "line_start": 29564,
-              "line_end": 29564,
+              "line_start": 29690,
+              "line_end": 29690,
               "quote": "Withdrawal first cuts off"
             }
           ],
@@ -589,9 +596,9 @@
           "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-1281 and W3I-oracle-plan.json contain this family's positives and predicate-level single-defect negative plans. Oracle code, shared-helper adoption and guard isolation are phase 2, NOT_RUN.",
+          "finding": "Implemented criterion-12 oracles: five boundaries, 59 named guard rows, 260 single-defect negatives and 32 controls; gated guard tool 14/14 suites PASS, 59/59 rows proved, 0 masked. Shared CV-1100/SP-1100/SP-1101/CV-1101 helpers adopted. Native execution NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -599,11 +606,18 @@
               "line_start": 7295,
               "line_end": 7295,
               "quote": "Phase-1 grade is PARTIAL"
+            },
+            {
+              "path": "scripts/pm_w3i_continuity_oracles.py",
+              "unit": "W3I-oracles",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "W3I wave-3 phase 2: the complete continuity lane checker."
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+          "prior": "PARTIAL",
+          "change": "regraded",
+          "change_reason": "Wave-3 phase 2: oracle code written (scripts/pm_w3i_continuity_oracles.py), all 59 guard rows proved by the gated tool 004bdedd63 with single-defect witnesses, shared number corpus 0 disagreements, shared date_time at every timestamp field. Native execution remains NOT_RUN; whole-tree date-time gate is the T198 integration item."
         }
       },
       "remaining_gaps": [
@@ -671,8 +685,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1602",
-              "line_start": 20661,
-              "line_end": 20661,
+              "line_start": 20783,
+              "line_end": 20783,
               "quote": "Exact payload schema:"
             }
           ],
@@ -695,8 +709,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29620,
-              "line_end": 29620,
+              "line_start": 29746,
+              "line_end": 29746,
               "quote": "SP-286/CV-339 full-value v2"
             }
           ],
@@ -712,8 +726,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1602",
-              "line_start": 20661,
-              "line_end": 20661,
+              "line_start": 20783,
+              "line_end": 20783,
               "quote": "The root is closed."
             }
           ],
@@ -729,15 +743,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1602",
-              "line_start": 20663,
-              "line_end": 20663,
+              "line_start": 20785,
+              "line_end": 20785,
               "quote": "scope_kind=project"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1602",
-              "line_start": 20665,
-              "line_end": 20665,
+              "line_start": 20787,
+              "line_end": 20787,
               "quote": "identity bytes are"
             }
           ],
@@ -753,15 +767,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1602",
-              "line_start": 20665,
-              "line_end": 20665,
+              "line_start": 20787,
+              "line_end": 20787,
               "quote": "Same tuple and body return the original full result"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29628,
-              "line_end": 29628,
+              "line_start": 29754,
+              "line_end": 29754,
               "quote": "Rebuild reads retained authentic originals"
             }
           ],
@@ -777,15 +791,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29630,
-              "line_end": 29630,
+              "line_start": 29756,
+              "line_end": 29756,
               "quote": "RP-AUTHORITY-INDEFINITE@1.0.0"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29630,
-              "line_end": 29630,
+              "line_start": 29756,
+              "line_end": 29756,
               "quote": "RP-PROJECTION-3GEN@1.0.0"
             }
           ],
@@ -801,15 +815,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29630,
-              "line_end": 29630,
+              "line_start": 29756,
+              "line_end": 29756,
               "quote": "mandatory coherent backup/restore"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29630,
-              "line_end": 29630,
+              "line_start": 29756,
+              "line_end": 29756,
               "quote": "Raw secrets, prompts, outputs"
             }
           ],
@@ -832,8 +846,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29624,
-              "line_end": 29624,
+              "line_start": 29750,
+              "line_end": 29750,
               "quote": "Replay of the same event is a no-op"
             }
           ],
@@ -849,22 +863,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29618,
-              "line_end": 29618,
+              "line_start": 29744,
+              "line_end": 29744,
               "quote": "operating audit-only reader"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29626,
-              "line_end": 29626,
+              "line_start": 29752,
+              "line_end": 29752,
               "quote": "explicitly adopt SP-278"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29626,
-              "line_end": 29626,
+              "line_start": 29752,
+              "line_end": 29752,
               "quote": "Persist only SP-278"
             }
           ],
@@ -880,15 +894,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29632,
-              "line_end": 29632,
+              "line_start": 29758,
+              "line_end": 29758,
               "quote": "Unknown versions are unavailable"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1602",
-              "line_start": 29632,
-              "line_end": 29632,
+              "line_start": 29758,
+              "line_end": 29758,
               "quote": "Withdrawal first cuts off"
             }
           ],
@@ -897,9 +911,9 @@
           "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-1282 and W3I-oracle-plan.json contain this family's positives and predicate-level single-defect negative plans. Oracle code, shared-helper adoption and guard isolation are phase 2, NOT_RUN.",
+          "finding": "Implemented criterion-12 oracles: five boundaries, 59 named guard rows, 260 single-defect negatives and 32 controls; gated guard tool 14/14 suites PASS, 59/59 rows proved, 0 masked. Shared CV-1100/SP-1100/SP-1101/CV-1101 helpers adopted. Native execution NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -907,11 +921,18 @@
               "line_start": 7348,
               "line_end": 7348,
               "quote": "Phase-1 grade is PARTIAL"
+            },
+            {
+              "path": "scripts/pm_w3i_continuity_oracles.py",
+              "unit": "W3I-oracles",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "W3I wave-3 phase 2: the complete continuity lane checker."
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+          "prior": "PARTIAL",
+          "change": "regraded",
+          "change_reason": "Wave-3 phase 2: oracle code written (scripts/pm_w3i_continuity_oracles.py), all 59 guard rows proved by the gated tool 004bdedd63 with single-defect witnesses, shared number corpus 0 disagreements, shared date_time at every timestamp field. Native execution remains NOT_RUN; whole-tree date-time gate is the T198 integration item."
         }
       },
       "remaining_gaps": [
@@ -979,8 +1000,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1603",
-              "line_start": 20715,
-              "line_end": 20715,
+              "line_start": 20837,
+              "line_end": 20837,
               "quote": "Exact payload schema:"
             }
           ],
@@ -1003,8 +1024,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29688,
-              "line_end": 29688,
+              "line_start": 29814,
+              "line_end": 29814,
               "quote": "SP-286/CV-339 full-value v2"
             }
           ],
@@ -1020,8 +1041,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1603",
-              "line_start": 20715,
-              "line_end": 20715,
+              "line_start": 20837,
+              "line_end": 20837,
               "quote": "The root is closed."
             }
           ],
@@ -1037,15 +1058,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1603",
-              "line_start": 20717,
-              "line_end": 20717,
+              "line_start": 20839,
+              "line_end": 20839,
               "quote": "scope_kind=project"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1603",
-              "line_start": 20719,
-              "line_end": 20719,
+              "line_start": 20841,
+              "line_end": 20841,
               "quote": "identity bytes are"
             }
           ],
@@ -1061,15 +1082,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-1603",
-              "line_start": 20719,
-              "line_end": 20719,
+              "line_start": 20841,
+              "line_end": 20841,
               "quote": "Same tuple and body return the original full result"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29696,
-              "line_end": 29696,
+              "line_start": 29822,
+              "line_end": 29822,
               "quote": "Rebuild reads retained authentic originals"
             }
           ],
@@ -1085,15 +1106,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29698,
-              "line_end": 29698,
+              "line_start": 29824,
+              "line_end": 29824,
               "quote": "RP-AUTHORITY-INDEFINITE@1.0.0"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29698,
-              "line_end": 29698,
+              "line_start": 29824,
+              "line_end": 29824,
               "quote": "RP-PROJECTION-3GEN@1.0.0"
             }
           ],
@@ -1109,15 +1130,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29698,
-              "line_end": 29698,
+              "line_start": 29824,
+              "line_end": 29824,
               "quote": "mandatory coherent backup/restore"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29698,
-              "line_end": 29698,
+              "line_start": 29824,
+              "line_end": 29824,
               "quote": "Raw secrets, prompts, outputs"
             }
           ],
@@ -1140,8 +1161,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29692,
-              "line_end": 29692,
+              "line_start": 29818,
+              "line_end": 29818,
               "quote": "Replay of the same event is a no-op"
             }
           ],
@@ -1157,22 +1178,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29686,
-              "line_end": 29686,
+              "line_start": 29812,
+              "line_end": 29812,
               "quote": "operating audit-only reader"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29694,
-              "line_end": 29694,
+              "line_start": 29820,
+              "line_end": 29820,
               "quote": "explicitly adopt SP-278"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29694,
-              "line_end": 29694,
+              "line_start": 29820,
+              "line_end": 29820,
               "quote": "Persist only SP-278"
             }
           ],
@@ -1188,15 +1209,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29700,
-              "line_end": 29700,
+              "line_start": 29826,
+              "line_end": 29826,
               "quote": "Unknown versions are unavailable"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-1603",
-              "line_start": 29700,
-              "line_end": 29700,
+              "line_start": 29826,
+              "line_end": 29826,
               "quote": "Withdrawal first cuts off"
             }
           ],
@@ -1205,9 +1226,9 @@
           "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-1283 and W3I-oracle-plan.json contain this family's positives and predicate-level single-defect negative plans. Oracle code, shared-helper adoption and guard isolation are phase 2, NOT_RUN.",
+          "finding": "Implemented criterion-12 oracles: five boundaries, 59 named guard rows, 260 single-defect negatives and 32 controls; gated guard tool 14/14 suites PASS, 59/59 rows proved, 0 masked. Shared CV-1100/SP-1100/SP-1101/CV-1101 helpers adopted. Native execution NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1215,11 +1236,18 @@
               "line_start": 7401,
               "line_end": 7401,
               "quote": "Phase-1 grade is PARTIAL"
+            },
+            {
+              "path": "scripts/pm_w3i_continuity_oracles.py",
+              "unit": "W3I-oracles",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "W3I wave-3 phase 2: the complete continuity lane checker."
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Phase-1 prepared contract, not admission; current owner text was inspected and structural schema/ref checks passed."
+          "prior": "PARTIAL",
+          "change": "regraded",
+          "change_reason": "Wave-3 phase 2: oracle code written (scripts/pm_w3i_continuity_oracles.py), all 59 guard rows proved by the gated tool 004bdedd63 with single-defect witnesses, shared number corpus 0 disagreements, shared date_time at every timestamp field. Native execution remains NOT_RUN; whole-tree date-time gate is the T198 integration item."
         }
       },
       "remaining_gaps": [
@@ -1395,5 +1423,20 @@
         ]
       }
     ]
+  },
+  "phase_2": {
+    "guard_tool": "004bdedd632d9463f3535190a6ed5772338cdce1",
+    "numrule_head": "58c2816ff33365384d4039553f5efdb5370930e6",
+    "rows": 59,
+    "rows_proved": 59,
+    "masked": 0,
+    "suites_pass": "14/14",
+    "controls": 32,
+    "negatives": 260,
+    "number_corpus_disagreements": 0,
+    "number_self_test": "pass",
+    "fixture_inventory_gate": "pass",
+    "criterion_12": "PASS",
+    "membership": "ABSENT"
   }
 }

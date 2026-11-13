@@ -168,3 +168,82 @@ Reproduction inputs retained outside the repository:
 The main check used exact git blobs for every file the checker reads, including the main checker and plan-unit index; the scratch extraction has been removed. The 15-file ignored currentness edition was copied from the shared checkout and verified file by file before index generation. Only the edited Storage registry's shards changed; no unrelated owner shard changed. Every generator/checker ran sequentially after a memory check, with at least 7 GiB available at each launch; no memory pause was needed in this round. Disk had 477 GB available before worktree creation.
 
 The report, investigations and updated self-grade are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/`. Push target remains `plans/ea-w3-continuity-hitl-20261105`; the literal-path worktree is removed after the final push. No admission, event-family append, Decision Log entry, governance reseal, landing/main push, mailbox, subagent, browser or server is part of this fix round.
+
+## Wave 3 phase 2: findings and responses
+
+**Phase-2 start head:** `0ef6e6842a52209b4eed4c0443d1ee6ed8648b1d`. **Merges, in order:**
+1. `6d73f3955c` — `git merge --no-ff 004bdedd632d9463f3535190a6ed5772338cdce1` (the gated guard tool). Adds exactly the tool's 11 files; none edited after the merge.
+2. `ad592c6844` — `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6` (the gated NUMRULE head, both scopes). 163 conflicts, all under `Plans/_shards/**` or `Plans/.plan_index/**`, resolved by regeneration (`pm-shard-plans.py --generate`, `pm-plan-index.py generate`), never by hand. No non-derived conflict. The 22 NUMRULE-exclusive files are byte-identical to `58c2816ff3` at HEAD; the two shared owner documents (`Contracts_V0.md`, `storage-plan.md`) are the exact union of both sides (every lane-added line present; the single differing base line is NUMRULE's own `ContractRef` edit).
+
+No rebase; `main` never pushed. No tool or NUMRULE file edited. No admission, registry append, Decision Log entry, or governance reseal.
+
+### Oracles with the shared helpers
+
+New lane checker `scripts/pm_w3i_continuity_oracles.py` implements the four families' criterion-12 oracles (ATS-1280..1283) over five boundaries — append, retry, retained, derived projection/checkpoint, withdrawal/rebuild — as **59 named guard rows**. Every refusal goes through a named row; the shape validator disables `pattern`/`format`/`not` and the checkpoint state `allOf`, and each disabled invariant is enforced by its own row with a single-defect witness (no rule weakened; the owner schema files are unchanged).
+
+Shared calls adopted at every slot (gated NUMRULE head):
+- **CV-1100:** `loads_current_json` at raw ingress; `current_integer`/`storage_uint64` at every schema integer slot (envelope `sequence_id`, projection `sequence_id`, checkpoint/token/cursor integers); `qualified_jcs` for the identity preimage; `producer_semantic_bytes`/`_digest` for the CV-317 projection. Identity is the ordered string tuple `[event_type, project_id, continuity_id, source_event_id, fact_ref]`, `event_id=evt_continuity_`+SHA-256, `idempotency_key=continuity@1:`+digest, recomputed from the authenticated tuple.
+- **SP-1100:** `storage_value_bytes`/`decode_storage_value` (`EVENT_VALUE`) for derived-value sizes and `full_value_commitment` (CV-339); `verify_payload_bytes` for the SP-337 pack relation.
+- **SP-1101:** retained originals resolve through `RetainedDispatcher` over the independently sealed receipt for the exact original (below).
+- **CV-1101:** `pm_event_datetime.date_time` at every timestamp field with its owner profile (below).
+
+No lane-local number cap, serializer, or timestamp parser; no blanket 2^53 cap; signed zero and float bytes preserved by the shared codecs.
+
+### Guard tables (gated tool `004bdedd63`)
+
+`scripts/pm-w3i-guard-proof.py` generates one Method-B adapter per suite under `scripts/w3i-guards/` (14 suites, ≤5 rows each) and runs the gated tool one suite at a time. **Result: 59/59 rows proved, 0 masked, 0 unproved, 14/14 suites PASS.** Every reachable row has a single-defect witness refused first at exactly that row; the full-boundary matrix confirms every control passes every row and every negative is refused by exactly its target. There are no unproved rows, so no unproved-only table is needed.
+
+### Numbers
+
+- `python3 scripts/pm_event_numbers.py --self-test --scope numbers` → exit 0, `"status": "pass"`, 276 positives.
+- The shared number corpus runs through the complete append route at the Storage sequence slot via the checker's own raw ingress: **260 checks (76 accepted, 92 refused, 92 load-refused), 0 disagreements** (expectations composed from the shared helpers alone).
+- **4,400-digit integer crash class (DX/DS15/DF/DM/DCO):** 16 checks; every route refuses with a code, none raises. The shape validator catches Python's integer-string-conversion `ValueError` and refuses with a code (no process-global digit-limit change).
+
+### Timestamps (no longer interim)
+
+Every timestamp field this lane owns is checked by the shared `pm_event_datetime.date_time` predicate with its owner's exact profile:
+
+| Field | Profile |
+|---|---|
+| payload `created_at_utc` (original source occurrence) | `event_record` |
+| envelope `occurred_at_utc` (= `created_at_utc`) | `event_record` |
+| envelope `observed_at_utc` (Storage-assigned) | `storage_utc_z` |
+| envelope `persisted_at_utc` (Storage-assigned) | `storage_utc_z` |
+| checkpoint `withdrawn_at_utc` (current/retired) | `event_record` |
+| receipt `acknowledged_at_utc` (Storage-assigned) | `storage_utc_z` |
+
+Single-defect witnesses cover lowercase-`z`, `+00:00`, hour-24, trailing-LF and missing-zone forms on the Storage profile, and the oversized-fraction inline case on the EventRecord profile.
+
+**Date-time inventory gate over the fixtures: PASS.** A fixture-scoped universe (the fixture data file excluded as instance data — the gate's sanctioned mechanism, exactly as the shared fixture files are handled — plus the EventRecord schema the fixtures instantiate, classified with its verbatim CV-253 citation) returns `status: pass`, 2 classified nodes, 0 unclassified, 0 failures (`dt-inventory-fixtures.json`). The fixture data declares no timestamp schema nodes (scan: 0 rows, 0 errors). The committed `Plans/event_datetime_inventory.json` and `scripts/pm_event_datetime_exclusions.json` are unchanged. The **whole-tree** gate in this lane tree fails only on the known T198 hash-drift class (recorded in `dt-inventory-tree.json`); per the lead's SWEEP-P2B Addendum 2, `datetime_validator` and the whole-tree gate run at batch integration after the inventory refresh.
+
+### Retained reads: never guess the recipe
+
+Retained reads select the recipe **only** from the independently sealed receipt for that exact original (`SealedReceiptOwner` → `RetainedDispatcher` over a frozen `RecipeTuple`→`FrozenRecipe` map installed outside request data). The frozen verifier recomputes identity, full-value commitment, producer-semantic digest and the original payload schema. No receipt is created while reading; `current_append_policy` never runs on a retained original; a later live-state change does not invalidate a valid retained original (positive control). Negatives: **missing receipt** (`original_receipt_missing`), **ambiguous receipt** (`original_receipt_ambiguous`), **receipt for another original** (`original_binding`), plus caller override (`caller_recipe_override`), unknown recipe, corrupted record, and disclosure refusal. 20 dispatch checks.
+
+### Retention
+
+All four families record audit/source lineage: event body and original fact custody bind existing `RP-AUTHORITY-INDEFINITE@1.0.0` (Case L-3 source-lineage class, indefinite, no count eviction, fail-closed pressure; `Plans/storage-plan.md:17409`, `:23547`); rebuilt snapshot/checkpoint bind existing `RP-PROJECTION-3GEN@1.0.0` (one current + two retired, holds, withdrawal anchors). The G05 lead is rejected (GitHub sign-in only). Bound to the landed Storage canon under DL-045; **no pending retention question**.
+
+### SW-F1 carryover closed
+
+Full-match grammars replace the anchored patterns for every copied identifier: payload ID/ref tokens (`id_token_invalid`), token `generation_id`/`generation_anchor_sha256`/`frontier_sha256`/`storage_instance_id` (UUID) (`token_join`), and `source_cursor.segment_name` (`cursor_join`). Trailing-LF single-defect witnesses refuse each; the shared `date_time` predicate refuses the malformed timestamp forms. The owner schema keeps its patterns; the checker enforces them through named rows.
+
+### Grades before and after
+
+Criterion 1 stays **ABSENT** (no admission). Criteria 2–11 stay **PASS**. Criterion 12 moves **PARTIAL → PASS** for all four families: the oracle code is written, all 59 guard rows are proved by the gated tool with single-defect witnesses, the shared number corpus runs with 0 disagreements, and every timestamp field uses the shared predicate. Native execution remains **NOT_RUN** (planning oracles, not the native runtime); the whole-tree date-time gate is the T198 integration item.
+
+### Verification commands
+
+| Command | Exit | Result |
+|---|---:|---|
+| `python3 scripts/pm_w3i_continuity_oracles.py` | 0 | pass; 59 rows/59 witnesses, 32 controls, 260 negatives, 0 corpus disagreements, 16 long-integer, 20 dispatch |
+| `python3 scripts/pm-w3i-guard-proof.py matrix` | 0 | pass; every negative refused by exactly its target |
+| `python3 scripts/pm-w3i-guard-proof.py run` (gated tool, 14 suites) | 0 | 59/59 proved, 0 masked, 14/14 PASS |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, 276 positives |
+| `python3 scripts/pm_event_datetime_inventory.py --root <fixture universe>` | 0 | pass; 2 nodes, 0 unclassified, 0 failures |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass; 99 docs, 3,104 shards, 0 failures |
+| `python3 scripts/pm-plan-index.py validate` | 1 | top-level fail, but **only base failures**: 760 rows, all present at the base; 0 introduced by this lane |
+
+**Index baseline proof.** `pm-plan-index.py validate` compares against `origin/main` `8f4eddac6f24c933f3e1c3c375343fb6e34ecd2e`. At the phase-2 start head `0ef6e6842a` the same validate reports **764** failures (21 `plan_unit_removal_ledger_invalid` on unchanged legacy ledgers + 743 `plan_unit_removed_without_ledger_decision`). This branch reports **760**: the gated NUMRULE merge adds CV-1100/CV-1101/SP-1100/SP-1101, resolving exactly those 4 base rows. A set comparison shows **0 new failures introduced** and exactly those 4 resolved. The 739 remaining removal rows are units added to `origin/main` after this lane's base (none present in the base index); the no-rebase rule leaves them for batch-3 integration. No W3I/continuity file appears in any failure.
+
+**Diff scope.** From `0ef6e6842a`, the committed diff is exactly the two gated merges (11 tool files + 22 NUMRULE-exclusive files + the 2 shared owner-document unions) plus 164 regenerated derived files, then this lane's new checker/driver/adapters and report/self-grade. No tool or NUMRULE file is edited after its merge; no unrelated owner document, registry, Decision Log, Spec Lock, `.evidence`, `auto_decisions`, `.gitignore` or frozen validator is touched.
