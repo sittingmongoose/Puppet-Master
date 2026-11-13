@@ -63,7 +63,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1250).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -226,7 +226,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1251).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -389,7 +389,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1252).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -552,7 +552,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1253).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -715,7 +715,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1254).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -878,7 +878,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1255).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -1041,7 +1041,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1256).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -1204,7 +1204,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1257).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -1367,7 +1367,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1258).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -1530,7 +1530,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1259).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -1693,7 +1693,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1260).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -1856,7 +1856,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1261).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -2019,7 +2019,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1262).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -2182,7 +2182,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1263).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -2345,7 +2345,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1264).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -2508,7 +2508,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1265).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -2671,7 +2671,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1266).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -2834,7 +2834,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1267).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
@@ -2997,7 +2997,7 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION; no default becomes an approved policy.",
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1268).",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",

@@ -39,6 +39,10 @@ def _gates(value):
     return sum(1 for k, v in value.items() if k.startswith('g_') and v is True)
 
 
+def _size(value):
+    return len(json.dumps(value, sort_keys=True, default=repr))
+
+
 def collect(progress=None):
     collected = {table: dict(controls={}, negatives={}) for table in w3b.TABLES}
     counts = dict(cases=0, accepted=0, refused=0, judged_errors=0)
@@ -65,11 +69,12 @@ def collect(progress=None):
             if not refused:
                 if key not in slot['controls']:
                     slot['controls'][key] = dict(id=f'control/{table}/{len(slot["controls"])}', value=value, boundary=boundary,
-                                                 source=cid, gates=_gates(value))
+                                                 source=cid, gates=_gates(value), size=_size(value))
             elif first is not None and first[0] == table:
                 row, code = refused[0]
                 slot['negatives'].setdefault(key, dict(id=f'negative/{table}/{len(slot["negatives"])}', value=value, target=row,
-                                                       code=code, rows=[n for n, _ in refused], source=cid, boundary=boundary))
+                                                       code=code, rows=[n for n, _ in refused], source=cid, boundary=boundary,
+                                                       size=_size(value)))
         counts['accepted' if first is None else 'refused'] += 1
         if progress and number % 2000 == 0:
             progress(number)
@@ -93,7 +98,7 @@ def lane_matrix(table, controls, negatives):
 
 def pick_controls(slot, limit):
     """Prefer controls under which the table's rows actually evaluate (most readiness gates open), one per path first."""
-    ranked = sorted(slot['controls'].values(), key=lambda c: (-c['gates'], c['id']))
+    ranked = sorted(slot['controls'].values(), key=lambda c: (-c['gates'], c['size'], c['id']))
     out, seen_boundaries = [], set()
     for c in ranked:
         if c['boundary'] not in seen_boundaries:
@@ -116,7 +121,7 @@ def suite_for(table, slot, negative_limit=2, control_limit=4):
     negatives = []
     for row in sorted({n['target'] for n in slot['negatives'].values()}):
         own = [n for n in slot['negatives'].values() if n['target'] == row and n['id'] not in masked]
-        negatives += own[:negative_limit]
+        negatives += sorted(own, key=lambda n: (n['size'], n['id']))[:negative_limit]
     if not negatives:
         return None
     first = controls[0]['id']

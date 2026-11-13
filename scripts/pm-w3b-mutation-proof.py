@@ -31,9 +31,9 @@ MUTATIONS = [
      'weaken the key recipe comparison to its first four characters'),
     ('M03', T + 'source_join_2.py', 'return "source_join" if (v[\'src\'].get(\'repo_id\') != v[\'native\'].get(\'repo_id\')) else None',
      'return None', 'source_join_repo_id', 'delete the repo_id source join'),
-    ('M04', T + 'copies_1.py', 'return "source_join" if (v[\'payload_hex\'] != v[\'src_payload_hex\']) else None',
-     'return "source_join" if (len(v[\'payload_hex\']) != len(v[\'src_payload_hex\'])) else None', 'payload_copy',
-     'weaken the event-payload / source-payload copy join to a length comparison'),
+    ('M04', T + 'copies_1.py', 'return "source_join" if (v[\'payload_sha\'] != v[\'src_payload_sha\']) else None',
+     'return "source_join" if (v[\'payload_sha\'][:2] != v[\'src_payload_sha\'][:2]) else None', 'payload_copy',
+     'weaken the event-payload / source-payload copy join to the first byte of the digests'),
     ('M05', T + 'acceptance_1.py', 'return "original_acceptance" if (v[\'op\'].get(\'source_commitment\') != v[\'src_commitment\']) else None',
      'return None', 'acceptance_commitment', 'delete the native acceptance commitment join'),
     ('M06', T + 'retry_1.py', 'return "idempotency_conflict" if (v[\'cand_producer_digest\'] != v[\'orig_held\'].get(\'producer_semantic_sha256\')) else None',
@@ -100,7 +100,7 @@ _NOPATTERN = validators.extend(Draft202012Validator, {'pattern': lambda *a: iter
     ('M26', C, """            f['g_body'] = f['inline_bytes'] is not None and f['inline_bytes'] <= INLINE_LIMIT""",
      """            f['g_body'] = f['inline_bytes'] is not None""", 'inline_size readiness', 'let an oversize inline body reach the joins'),
     ('M27', C, """    return Draft202012Validator(_ref_schema(uri), registry=REGISTRY, format_checker=DATETIME_FORMATS)""",
-     """    return validators.extend(Draft202012Validator, {'pattern': lambda v, p, i, s: iter(()) if p == '^[^\\r\\n]+$' else
+     """    return validators.extend(Draft202012Validator, {'pattern': lambda v, p, i, s: iter(()) if p == r'^[^\\r\\n]+$' else
                              Draft202012Validator.VALIDATORS['pattern'](v, p, i, s)})(_ref_schema(uri), registry=REGISTRY,
                                                                                      format_checker=DATETIME_FORMATS)""",
      'owner pattern of the W3B id/ref definitions', 'drop only the W3B id/ref CR/LF pattern from owner validation'),

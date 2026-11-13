@@ -437,6 +437,14 @@ def sha_or_none(value):
     return None if raw is None else hashlib.sha256(raw).hexdigest()
 
 
+def view(d, drop):
+    """A shallow view of a dict without bulky members (rows never read them); each dropped member that was present is
+    replaced by a marker so presence tests still hold."""
+    if type(d) is not dict:
+        return d
+    return {k: ('<present>' if v is not None else None) if k in drop else v for k, v in d.items()}
+
+
 # ---------------------------------------------------------------------------------------------
 # Owner recipes (SCS-1250..1268 C4/C5, SP-1250..1268 keys, Storage project~ partition)
 # ---------------------------------------------------------------------------------------------
@@ -780,7 +788,8 @@ def _derive(c):
     f['native'], f['world'], f['lineage'] = _d(owner.get('native')), _d(owner.get('world')), _d(owner.get('lineage'))
     f['authority'] = {k: _d(_d(owner.get('authority')).get(k)) for k in AUTHORITY_KINDS}
     f['current_generation'] = _d(owner.get('current_generation'))
-    f['op'] = _d(owner.get('operation'))
+    f['op_full'] = _d(owner.get('operation'))
+    f['op'] = view(f['op_full'], ('native_evidence_refs',))
     f['wf'], f['nf'] = flat(f['world']), flat(f['native'])
     f['fields'] = payload_fields(family) if known else ()
     f['x_authorities'] = spec(family)['authorities'] if known else ()
@@ -801,14 +810,22 @@ def _derive(c):
     _derive_backup(c, f)
     _derive_checkpoint(c, f)
     _derive_install(c, f)
+    # predicates read small views; bodies are compared through the digests above
+    f['ev'] = view(f['ev'], ('payload',))
+    for k in ('fact', 'orig_fact'):
+        f[k] = view(f[k], ('source_body',))
+    f['orig'] = view(f['orig'], ('payload',))
+    f['ck'] = view(f['ck'], ('stored', 'next', 'publication', 'scanned', 'cas', 'live_current', 'effects'))
+    f['ck_pub'] = view(f['ck_pub'], ('rows',))
+    f['pf'] = {k: v for k, v in f['pf'].items() if k != 'rows'}
     return f
 
 
 def _derive_candidate(c, f):
     e, fam, sid = f['ev'], f['family'], f['owner_sid']
     for k in ('env_errors', 'env_int_ok', 'seq_u64', 'observed_utc', 'persisted_utc', 'payload_errors', 'payload_full_errors',
-              'payload_int_ok', 'producer_reason', 'inline_bytes', 'payload_hex', 'pack', 'pack_len', 'pack_blake3',
-              'pack_decoded_hex', 'x_event_id', 'x_key', 'x_partition', 'x_fact_key', 'policy_reason', 'x_producer_digest',
+              'payload_int_ok', 'producer_reason', 'inline_bytes', 'payload_sha', 'pack', 'pack_len', 'pack_blake3',
+              'pack_decoded_sha', 'x_event_id', 'x_key', 'x_partition', 'x_fact_key', 'policy_reason', 'x_producer_digest',
               'x_full_value', 'durable_packs', 'target', 'admission', 'producer', 'ev_payload'):
         f[k] = None
     f['g_env'] = f['g_envnum'] = f['g_l1'] = f['g_payload'] = f['g_payload_full'] = f['g_l2'] = f['g_producer'] = False
@@ -845,21 +862,21 @@ def _derive_candidate(c, f):
         f['g_producer'] = f['producer_reason'] is None
     if f['g_producer']:
         raw = bytes_or_none(e['payload'])
-        f['payload_hex'] = None if raw is None else raw.hex()
+        f['payload_sha'] = None if raw is None else hashlib.sha256(raw).hexdigest()
         f['inline_bytes'] = None if raw is None else len(raw)
         pack = c.get('pack')
-        f['pack'] = pack if type(pack) is dict else None
+        f['pack'] = view(pack, ('bytes_hex',)) if type(pack) is dict else None
         f['durable_packs'] = _l(c.get('durable_packs'))
-        p = pack_facts(f['pack'], PACK_MEDIA)
+        p = pack_facts(pack if type(pack) is dict else None, PACK_MEDIA)
         f['pack_len'], f['pack_blake3'] = p['len'], p['blake3']
-        f['pack_decoded_hex'] = None if p['decoded'] is None else hex_or_none(p['decoded'])
+        f['pack_decoded_sha'] = None if p['decoded'] is None else sha_or_none(p['decoded'])
         if e['payload_ref'] is None:
             f['g_body'] = f['inline_bytes'] is not None and f['inline_bytes'] <= INLINE_LIMIT
         else:
-            pk = _d(f['pack'])
+            pk = _d(pack)
             f['g_pack_route'] = type(pk.get('payload_id')) is str and e['payload_ref'] == 'sp337:blake3:' + pk['payload_id']
             f['g_pack_bytes'] = f['g_pack_route'] and p['verify'] is None
-            f['g_body'] = (f['g_pack_bytes'] and f['pack_decoded_hex'] is not None and f['pack_decoded_hex'] == f['payload_hex'] and
+            f['g_body'] = (f['g_pack_bytes'] and f['pack_decoded_sha'] is not None and f['pack_decoded_sha'] == f['payload_sha'] and
                            pk.get('payload_id') in f['durable_packs'] and f['inline_bytes'] is not None and f['inline_bytes'] > INLINE_LIMIT)
         p0 = e['payload']
         if recipe_inputs_ok(f['owner_sid'], p0.get('project_id'), p0.get('owner_operation_id')):
@@ -882,20 +899,23 @@ def _derive_candidate(c, f):
 def _derive_fact(c, f):
     """The canonical source fact (append CAS predecessor, recovery input) and its resolved source body."""
     fam = f['family']
+    f['fact_full'] = None
     for k in ('fact', 'fact_key', 'fact_errors', 'fact_full_errors', 'fact_int_ok', 'fact_bytes', 'src_ref', 'src_pack',
               'src_pack_len', 'src_pack_blake3', 'src_body', 'src_body_errors', 'src_body_full_errors', 'src', 'req',
-              'src_commitment', 'src_strings', 'x_fact_key_of_fact', 'src_body_hex', 'src_body_int_ok', 'src_payload_hex',
-              'fact_rest_hex', 'fact_after_rest_hex', 'src_inline_fact_bytes', 'source_durable_packs'):
+              'src_commitment', 'src_strings', 'x_fact_key_of_fact', 'src_body_view', 'src_body_int_ok', 'src_payload_sha',
+              'fact_rest_sha', 'fact_after_rest_sha', 'src_inline_fact_bytes', 'source_durable_packs', 'src_native_refs_sha',
+              'op_native_refs_sha'):
         f[k] = None
     f['rf'] = {}
     for g in ('g_fact', 'g_fact_full', 'g_fact_num', 'g_fact_size', 'g_src_route', 'g_src_bytes', 'g_source'):
         f[g] = False
     applies = (f['path'] == 'append' and f['g_body']) or (f['path'] == 'recovery' and f['known_family'])
     f['g_fact_applies'] = applies
+    f['src_body_decoded'] = False
     fact = c.get('fact')
     if not applies or fact is None:
         return
-    f['fact'], f['fact_key'] = fact, c.get('fact_key')
+    f['fact'], f['fact_full'], f['fact_key'] = fact, fact, c.get('fact_key')
     uri = subject_uri(fam, 'fact')
     f['fact_errors'] = schema_errors(uri, fact)
     f['g_fact'] = f['fact_errors'] == 0
@@ -931,6 +951,7 @@ def _derive_fact(c, f):
     if body is not None:
         buri = subject_uri(fam, 'source_body')
         f['src_body'] = body
+        f['src_body_decoded'] = True
         f['src_body_errors'] = schema_errors(buri, body)
         f['src_body_full_errors'] = fullmatch_errors(buri, body) if f['src_body_errors'] == 0 else None
         f['src_body_int_ok'] = integer_slots_exact(buri, body) if f['src_body_full_errors'] == 0 else None
@@ -943,11 +964,13 @@ def _derive_fact(c, f):
                       f['src_ref'].get('blake3_id') in f['source_durable_packs'])
         if f['src_body_int_ok'] is True and routed:
             f['src'] = body['payload']
-            f['src_payload_hex'] = hex_or_none(body['payload'])
+            f['src_payload_sha'] = sha_or_none(body['payload'])
+            f['src_body_view'] = {'original_owner_result_ref': body['original_owner_result_ref']}
+            f['src_native_refs_sha'] = sha_or_none(body['native_evidence_refs'])
+            f['op_native_refs_sha'] = sha_or_none(f['op_full'].get('native_evidence_refs'))
             f['req'] = request_view(body['original_request'])
             f['rf'] = flat(f['req'])
             f['src_commitment'] = sha_or_none(body)
-            f['src_body_hex'] = hex_or_none(body)
             acc = []
             _collect_strings(body, acc)
             f['src_strings'] = [x.lower() for x in acc]
@@ -988,8 +1011,9 @@ def _derive_publication(c, f):
         (['native_outcome', 'terminal_publication'] if short in COMPLETED else [])
     f['order_ok'] = all([x in f['order'] for x in f['order_required']])
     rest = ('phase', 'first_append_receipt_ref')
-    f['fact_rest_hex'] = hex_or_none({k: x for k, x in f['fact'].items() if k not in rest})
-    f['fact_after_rest_hex'] = hex_or_none({k: x for k, x in f['fact_after'].items() if k not in rest})
+    f['fact_rest_sha'] = sha_or_none({k: x for k, x in f['fact_full'].items() if k not in rest})
+    f['fact_after_rest_sha'] = sha_or_none({k: x for k, x in f['fact_after'].items() if k not in rest})
+    f['fact_after'] = view(f['fact_after'], ('source_body',))
     receipt = f['custody'].get('receipt')
     f['receipt'] = _d(receipt)
     f['receipt_errors'] = schema_errors(RECEIPT_URI, receipt)
@@ -1006,8 +1030,8 @@ def _derive_original(c, f):
     """SP-1101: retry, history and recovery resolve the original through the shared dispatcher."""
     for k in ('dispatch', 'orig', 'orig_fact', 'orig_held', 'orig_env_errors', 'orig_env_int_ok', 'orig_payload_errors',
               'orig_payload_full_errors', 'orig_payload_int_ok', 'orig_observed_utc', 'orig_persisted_utc', 'orig_x_event_id',
-              'orig_x_key', 'orig_x_full_value', 'orig_x_producer', 'orig_x_receipt_ref', 'orig_fact_errors', 'orig_hex',
-              'retry', 'cand_producer_digest', 'request_hex', 'orig_receipt', 'orig_payload_hex', 'orig_fact_payload_hex',
+              'orig_x_key', 'orig_x_full_value', 'orig_x_producer', 'orig_x_receipt_ref', 'orig_fact_errors', 'orig_sha',
+              'retry', 'cand_producer_digest', 'request_hex', 'orig_receipt', 'orig_payload_sha', 'orig_fact_payload_sha',
               'orig_receipt_errors'):
         f[k] = None
     f['g_dispatch'] = f['g_orig'] = f['g_orig_env'] = f['g_orig_payload'] = f['g_resolved'] = False
@@ -1046,7 +1070,7 @@ def _derive_original(c, f):
         return
     f['orig'], f['orig_fact'], f['orig_held'] = record, fact, held_v
     f['orig_receipt'] = _d(held_v.get('receipt'))
-    f['orig_hex'] = original.record_bytes.hex()
+    f['orig_sha'] = hashlib.sha256(original.record_bytes).hexdigest()
     f['orig_env_errors'] = schema_errors(ENVELOPE_URI, record)
     if f['orig_env_errors'] == 0:
         f['orig_env_int_ok'] = integer_slots_exact(ENVELOPE_URI, record)
@@ -1073,15 +1097,20 @@ def _derive_original(c, f):
             f['orig_x_receipt_ref'] = first_receipt_ref(sidb, record['event_id'])
             f['orig_receipt_errors'] = schema_errors(RECEIPT_URI, held_v.get('receipt'))
             f['orig_fact_errors'] = schema_errors(subject_uri(f['family'], 'fact'), fact)
-            f['orig_payload_hex'] = hex_or_none(p)
+            f['orig_payload_sha'] = sha_or_none(p)
             if f['orig_fact_errors'] == 0 and type(fact.get('source_body')) is dict:
-                f['orig_fact_payload_hex'] = hex_or_none(fact['source_body'].get('payload'))
-    f['request_hex'] = hex_or_none(c['event'])
+                f['orig_fact_payload_sha'] = sha_or_none(fact['source_body'].get('payload'))
+    f['request_hex'] = None
 
 
 def _derive_reader(c, f):
     f['reader'] = _d(c.get('reader')) if f['path'] == 'history' else None
     f['reader_holds'] = _l(_d(c.get('reader')).get('holds'))
+    out = _d(c.get('reader')).get('output_hex')
+    try:
+        f['reader_output_sha'] = hashlib.sha256(bytes.fromhex(out)).hexdigest() if type(out) is str else None
+    except ValueError:
+        f['reader_output_sha'] = None
     f['effects'] = None
     if f['path'] == 'history':
         f['effects'] = _d(_d(c.get('reader')).get('effects'))
@@ -1272,7 +1301,7 @@ row('payload', 'pack_media', 'payload_pack', '/pack/media_type', 'the pack media
     "v['pack'].get('media_type') != 'application/vnd.puppetmaster.event-payload+msgpack'",
     when=("v['g_producer'] is True", "v['ev'].get('payload_ref') is not None", "v['g_pack_route'] is True"), paths=AR)
 row('payload', 'pack_body', 'payload_pack', '/pack/bytes_hex', 'the pack bytes are exactly the canonical SP-236 bytes of the payload',
-    "v['pack_decoded_hex'] != v['payload_hex']", when=("v['g_producer'] is True", "v['g_pack_bytes'] is True"), paths=AR)
+    "v['pack_decoded_sha'] != v['payload_sha']", when=("v['g_producer'] is True", "v['g_pack_bytes'] is True"), paths=AR)
 row('payload', 'pack_durable', 'payload_pack_durable', '/pack', 'the referenced pack is durable at the reference barrier (no dangling ref)',
     "v['pack'].get('payload_id') not in v['durable_packs']", when=("v['g_producer'] is True", "v['g_pack_bytes'] is True"), paths=AR)
 row('payload', 'pack_needed', 'inline_size', '/event/payload_ref',
@@ -1354,9 +1383,9 @@ row('fact', 'src_pack_media', 'source_body_pack', '/fact/source_body_ref/media_t
     "v['src_ref'].get('media_type') != 'application/vnd.puppetmaster.source-control-source-body+msgpack'",
     when="v['g_src_route'] is True and v['src_ref'] is not None", paths='append recovery')
 row('fact', 'src_pack_decodes', 'source_body_pack', '/source_pack/bytes_hex', 'the verified source pack decodes as canonical SP-236 bytes',
-    "v['src_body'] is None", when="v['g_src_bytes'] is True and v['src_ref'] is not None", paths='append recovery')
+    "v['src_body_decoded'] is not True", when="v['g_src_bytes'] is True and v['src_ref'] is not None", paths='append recovery')
 row('fact', 'src_body_schema', 'source_body_schema', '/source_pack', 'a decoded source body validates against the family source-body definition',
-    "v['src_body_errors'] != 0", when="v['src_body'] is not None and v['src_ref'] is not None", paths='append recovery')
+    "v['src_body_errors'] != 0", when="v['src_body_decoded'] is True and v['src_ref'] is not None", paths='append recovery')
 row('fact', 'src_body_fullmatch', 'source_body_schema', '/source_pack', 'every identifier in a decoded source body matches in full',
     "v['src_body_full_errors'] != 0", when="v['src_body_errors'] == 0 and v['src_ref'] is not None", paths='append recovery')
 row('fact', 'src_body_numbers', 'current_integer', '/source_pack', 'every integer slot of a decoded source body is an exact current integer',
@@ -1373,7 +1402,7 @@ row('fact', 'src_pack_durable', 'payload_pack_durable', '/fact/source_body_ref',
 # copies of the same value: one join row per copy (event <- source fact <- native owner) -------------------
 row('copies', 'payload_copy', 'source_join', '/event/payload',
     'the event payload is exactly the source body payload committed in the fact (canonical bytes)',
-    "v['payload_hex'] != v['src_payload_hex']", when=G_SRC, paths='append')
+    "v['payload_sha'] != v['src_payload_sha']", when=G_SRC, paths='append')
 row('copies', 'envelope_project_copy', 'scope_copy', '/event/project_id', 'the EventRecord project_id equals the source payload project_id',
     "v['ev'].get('project_id') != v['src'].get('project_id')", when=G_SRC, paths='append')
 row('copies', 'fact_storage', 'storage_identity', '/fact/storage_instance_id', 'the fact is in the owner\'s actual Storage instance',
@@ -1402,10 +1431,10 @@ row('acceptance', 'source_join_owner_operation_id', 'source_join', '/source_body
     "v['src'].get('owner_operation_id') != v['op'].get('owner_operation_id')", when=G_SRC, paths='append')
 row('acceptance', 'owner_result_ref', 'source_join', '/source_body/original_owner_result_ref',
     'the original owner result ref is the actual admitted start result or terminal receipt of the accepted operation',
-    "v['src_body'].get('original_owner_result_ref') != v['op'].get('result_ref')", when=G_SRC, paths='append')
+    "v['src_body_view'].get('original_owner_result_ref') != v['op'].get('result_ref')", when=G_SRC, paths='append')
 row('acceptance', 'native_evidence', 'source_join', '/source_body/native_evidence_refs',
     'the native evidence refs are exactly the native owner\'s evidence refs for the operation',
-    "v['src_body'].get('native_evidence_refs') != v['op'].get('native_evidence_refs')", when=G_SRC, paths='append')
+    "v['src_native_refs_sha'] != v['op_native_refs_sha']", when=G_SRC, paths='append')
 row('acceptance', 'no_secret', 'secret_material', '/source_body',
     'the source body holds IDs and authorized refs only: no credential, token, key, password or protected-auth material '
     '(every source string, lower-cased by derive, is scanned for the SCS non_secret_ref markers)',
@@ -1533,7 +1562,7 @@ row('cas', 'cas_after_receipt', 'source_phase_cas', '/publication/fact_after/fir
     when=G_SRC, paths='append')
 row('cas', 'cas_after_unchanged', 'source_phase_cas', '/publication/fact_after',
     'issuance never changes the semantic body or identity of the fact (only phase and receipt ref move)',
-    "v['fact_after_rest_hex'] != v['fact_rest_hex']", when=G_SRC, paths='append')
+    "v['fact_after_rest_sha'] != v['fact_rest_sha']", when=G_SRC, paths='append')
 G_ORD = (G_SRC, "v['order_ok'] is True")
 row('order', 'order_steps_present', 'publication_order', '/publication/order',
     'the publication records every step the family requires (source commit, append, receipt resolution, fact CAS, exposure, '
@@ -1643,7 +1672,7 @@ row('frozen', 'frozen_fact_receipt', 'original_verification', '/storage/fact/fir
     'an issued original fact records the original first receipt', "v['orig_fact'].get('first_append_receipt_ref') != v['orig_x_receipt_ref']",
     when=("v['g_orig_payload'] is True", "v['orig_fact_errors'] == 0", "v['orig_fact'].get('phase') == 'issued'"), paths=DISP_PATHS)
 row('frozen', 'frozen_fact_payload', 'original_verification', '/storage/fact/source_body/payload',
-    'the original event payload is exactly the original fact source payload', "v['orig_payload_hex'] != v['orig_fact_payload_hex']",
+    'the original event payload is exactly the original fact source payload', "v['orig_payload_sha'] != v['orig_fact_payload_sha']",
     when=("v['g_orig_payload'] is True", "v['orig_fact_errors'] == 0"), paths=DISP_PATHS)
 entailed('original_verified', 'original_verification', '/storage',
          'the shared dispatcher\'s frozen verifier accepts the authenticated original', "v['dispatch'] == 'original_verification'",
@@ -1688,7 +1717,7 @@ row('reader', 'reader_hold', 'hold_protected', '/reader/disposition', 'a purge n
     "v['reader'].get('disposition') == 'purge' and len(v['reader_holds']) != 0", when=G_RES, paths='history')
 row('reader', 'reader_output', 'reader_output', '/reader/output_hex',
     'the reader returns exactly the authenticated original bytes (no reinterpretation under current rules)',
-    "v['reader'].get('output_hex') != v['orig_hex']", when=G_RES, paths='history')
+    "v['reader_output_sha'] != v['orig_sha']", when=G_RES, paths='history')
 for _k in EFFECT_KINDS:
     row('effects', 'no_effect_' + _k, 'replay_effect', '/effects/' + _k,
         'a passive read, replay or rebuild performs no ' + _k + ' effect', "v['effects'].get('" + _k + "', 0) != 0",
