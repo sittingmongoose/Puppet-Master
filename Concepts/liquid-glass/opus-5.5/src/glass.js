@@ -315,7 +315,7 @@
        size under the lens at rest, magLift its size while the lens is lifted and moving */
     lens:    { bezel: 4,  thick: 10, sat: 1.1,  mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.04, magLift: 1.13 },
     lensRow: { bezel: 5,  thick: 11, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true, magRest: 1,    magLift: 1.03 },
-    lensIcon:{ bezel: 5,  thick: 12, sat: 1.12, mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.08, magLift: 1.2 },
+    lensIcon:{ bezel: 5,  thick: 12, sat: 1.12, mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.08, magLift: 1.2, restSat: true },
     bead:    { bezel: 5,  thick: 12, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true },
     menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95, css: true },
   };
@@ -1159,8 +1159,8 @@
     var bf = null;
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
     else if (gpu() && k.lens) { var f = lf.f; e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
-    /* a lens keeps its filter here and wears it only while it moves or is pressed (lensBend, PERF-4) */
-    if (k.lens) { e.__lgBf = bf; lensBend(e); return e.__lgF; }
+    /* a lens keeps its filter here and wears it only while it moves or is pressed (lensBend, PERF-4); restSat: its tint at rest */
+    if (k.lens) { e.__lgBf = bf; e.__lgRest = bf && k.restSat ? 'saturate(' + k.sat + ')' : null; lensBend(e); return e.__lgF; }
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
@@ -1804,10 +1804,15 @@
     L.lens.__lgLive = !!((L.anim && !L.reducedAnim) || L.dragging || (L.pending && !L.pending.up));
     lensBend(L.lens);
   }
+  /* The Activity bar's icon lens (KINDS.lensIcon.restSat) keeps its saturate() at rest, a plain CSS backdrop pass with no
+     SVG filter: over the bar's saturated blue its filter's saturate(1.12) is most of what the filter changes, and taking
+     it off when the lens came to rest stepped the whole lens's tint in one frame (Glass Dark median (29,48,115) to
+     (30,47,108), Glass Light red +3; lane G pixels, 2026-11-13; the lead's choice R2). At rest it then differs from the
+     moving lens only at its rim, by the bend. */
   function lensBend(e) {
-    /* the filter mount() keeps (__lgBf), worn while live in a mounted Glass lens; unmount and unmountAll take an inline
-       filter off by themselves, so one found gone is forgotten here */
-    var want = (e.__lgLive && e.__lgSig && isGlass() && e.__lgBf) || null;
+    /* the filter mount() keeps (__lgBf), worn while live in a mounted Glass lens, else its resting tint (__lgRest);
+       unmount and unmountAll take an inline filter off by themselves, so one found gone is forgotten here */
+    var want = (e.__lgSig && isGlass() && (e.__lgLive && e.__lgBf || e.__lgRest)) || null;
     if (e.__lgBfOn && !e.style.getPropertyValue('backdrop-filter')) e.__lgBfOn = null;
     if (want === (e.__lgBfOn || null)) return;
     e.__lgBfOn = want;
