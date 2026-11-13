@@ -32,7 +32,7 @@ def case(value):
     table = g.GuardTable([
         g.Guard('CP01_members_derived', g.Invariant('/members_derived', 'the cohort equals the facts derived from actual before/after'), 'compound_refused', CP01_members_derived),
         g.Guard('CP02_members_admitted', g.Invariant('/members_admitted', 'every required member family is admitted before the mutation'), 'compound_refused', CP02_members_admitted),
-        g.Guard('CP03_members_atomic', g.Invariant('/members_atomic', 'all member journals commit in the one body transaction'), 'compound_refused', CP03_members_atomic),
+        g.Guard('CP03_members_atomic', g.Invariant('/members_atomic', 'every member journal commits in the owner body transaction'), 'compound_refused', CP03_members_atomic),
         g.Guard('CP04_group_complete', g.Invariant('/group_complete', 'the durable group holds exactly every member'), 'compound_refused', CP04_group_complete),
         g.Guard('CP05_group_receipts', g.Invariant('/group_receipts', 'a complete-history acknowledgement has every member receipt'), 'compound_refused', CP05_group_receipts),
         g.Guard('CP06_members_verified', g.Invariant('/members_verified', 'every member journal verifies'), 'compound_refused', CP06_members_verified),

@@ -1305,7 +1305,7 @@ ROWS.update({
     'cp': ('compound_refused', 'Compound ToDo mutation: one atomic cohort and one complete SP-347 group', [
         ('CP01_members_derived', 'members_derived', 'the cohort equals the facts derived from actual before/after'),
         ('CP02_members_admitted', 'members_admitted', 'every required member family is admitted before the mutation'),
-        ('CP03_members_atomic', 'members_atomic', 'all member journals commit in the one body transaction'),
+        ('CP03_members_atomic', 'members_atomic', 'every member journal commits in the owner body transaction'),
         ('CP04_group_complete', 'group_complete', 'the durable group holds exactly every member'),
         ('CP05_group_receipts', 'group_receipts', 'a complete-history acknowledgement has every member receipt'),
         ('CP06_members_verified', 'members_verified', 'every member journal verifies'),
@@ -1524,7 +1524,7 @@ def compound(cw):
     derived = derive_todo_facts(cw['before'], cw['after'])
     facts = dict(members_derived=sorted((m['family'], m['source']['result']['todo_id']) for m in members) == derived,
                  members_admitted=all(cw['admitted'].get(f) is True for f, _ in derived),
-                 members_atomic=len({cw['txn'].get(i) for i in ids}) == 1 and None not in {cw['txn'].get(i) for i in ids},
+                 members_atomic=all(cw['txn'].get(i) == cw['body_txn'] for i in ids),
                  group_complete=sorted(cw['group']['members']) == sorted(ids),
                  group_receipts=not cw['ack_claims_complete'] or all(type(cw['group']['receipts'].get(i)) is dict for i in ids),
                  members_verified=all(verify_publication(m, 'current') is None for m in members))

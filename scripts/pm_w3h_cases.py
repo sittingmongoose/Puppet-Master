@@ -371,6 +371,7 @@ fx('TD05_plan_currentness', 'plan-version-moved', setf(('currentness', 'plan_ver
 fx('TD06_run_currentness', 'run-epoch-moved', setf(('currentness', 'run_epoch_actual'), 2))
 fx('TD07_list_revision', 'list-revision-skipped', setf(('list', 'revision_after'), 9))
 fx('TD08_item_expected', 'item-expected-stale', setf(('before', 'todo-3', 'revision'), 3), families=[f for f in TODO if f != 'todo.created'])
+fx('TD08_item_expected', 'created-over-existing-revision', lambda w: facts(w)['before'].__setitem__('todo-3', m._item('pending', [], 2, 3)), families=['todo.created'])
 fx('TD09_item_committed', 'item-revision-skipped', setf(('after', 'todo-3', 'revision'), 6))
 
 
@@ -652,37 +653,55 @@ def retained_cases():
     return out
 
 
-def compound_world():
-    a = m.build_world('todo.dependency_changed')
-    b = m.build_world('todo.reordered')
+COHORT_CHANGES = {'todo.dependency_changed': dict(depends_on=['todo-1', 'todo-2']), 'todo.reordered': dict(display_order=5),
+                  'todo.status_changed': dict(status='in_progress'), 'todo.work_bound': dict(binding='bind-1'),
+                  'todo.updated': dict(title_ref='t3b'), 'todo.removed_from_current_list': dict(member=False)}
+COHORTS = (('todo.dependency_changed', 'todo.reordered'), ('todo.work_bound', 'todo.status_changed'),
+           ('todo.updated', 'todo.reordered'), ('todo.created',), ('todo.removed_from_current_list',))
+
+
+def compound_world(families=COHORTS[0]):
+    """One owner mutation of todo-3 whose actual before/after graph yields exactly these member facts."""
+    members = [m.build_world(f) for f in families]
     before = copy.deepcopy(m.build_world('todo.updated')['source']['facts']['before'])
+    before['todo-3']['title_ref'] = 't3'
     after = copy.deepcopy(before)
-    after['todo-3'].update(depends_on=['todo-1', 'todo-2'], display_order=5)
-    ids = [m.logical_of(x)['event_id'] for x in (a, b)]
-    return dict(members=[a, b], before=before, after=after, admitted={'todo.dependency_changed': True, 'todo.reordered': True},
-                txn={i: 'txn-1' for i in ids}, group=dict(members=list(ids), receipts={i: copy.deepcopy(x['publication']['first_append_receipt']) for i, x in zip(ids, (a, b))}),
+    if families == ('todo.created',):
+        del before['todo-3']
+    for f in families:
+        after['todo-3'].update(COHORT_CHANGES.get(f, {}))
+    ids = [m.logical_of(x)['event_id'] for x in members]
+    admitted = {f: True for f in families}
+    return dict(members=members, before=before, after=after, admitted=admitted, txn={i: 'txn-1' for i in ids}, body_txn='txn-1',
+                group=dict(members=list(ids), receipts={i: copy.deepcopy(x['publication']['first_append_receipt']) for i, x in zip(ids, members)}),
                 ack_claims_complete=True)
 
 
 def compound_cases():
-    out = [('compound/dependency+reorder', 'todo.dependency_changed', compound_world(), ('accept',))]
+    out = []
+    for cohort in COHORTS:
+        name = '+'.join(f.split('.')[-1] for f in cohort)
+        out.append((f'compound/{name}/published', cohort[0], compound_world(cohort), ('accept',)))
 
-    def neg(label, row, mut):
-        cw = compound_world()
-        mut(cw)
-        out.append((f'compound/{label}', 'todo.dependency_changed', cw, ('refuse', 'cp', row)))
+        def neg(label, row, mut, cohort=cohort, name=name):
+            cw = compound_world(cohort)
+            mut(cw)
+            out.append((f'compound/{name}/{label}', cohort[-1], cw, ('refuse', 'cp', row)))
 
-    def drop_member(cw):
-        removed = cw['members'].pop()
-        rid = m.logical_of(removed)['event_id']
-        cw['group']['members'].remove(rid)
-        cw['group']['receipts'].pop(rid)
-    neg('cohort-missing-component', 'CP01_members_derived', drop_member)
-    neg('member-not-admitted', 'CP02_members_admitted', lambda cw: cw['admitted'].__setitem__('todo.reordered', False))
-    neg('member-other-transaction', 'CP03_members_atomic', lambda cw: cw['txn'].__setitem__(sorted(cw['txn'])[0], 'txn-2'))
-    neg('group-missing-member', 'CP04_group_complete', lambda cw: cw['group']['members'].pop())
-    neg('ack-without-member-receipt', 'CP05_group_receipts', lambda cw: cw['group']['receipts'].pop(sorted(cw['group']['receipts'])[0]))
-    neg('member-source-rejected', 'CP06_members_verified', lambda cw: cw['members'][0]['source'].__setitem__('result_status', 'rejected'))
+        def drop_member(cw):
+            removed = cw['members'].pop()
+            rid = m.logical_of(removed)['event_id']
+            cw['group']['members'].remove(rid)
+            cw['group']['receipts'].pop(rid)
+        if len(cohort) > 1:
+            neg('cohort-missing-component', 'CP01_members_derived', drop_member)
+        else:
+            neg('cohort-claims-extra-component', 'CP01_members_derived', lambda cw: cw['after']['todo-2'].update(display_order=7))
+        neg('member-not-admitted', 'CP02_members_admitted', lambda cw, f=cohort[-1]: cw['admitted'].__setitem__(f, False))
+        neg('member-other-transaction', 'CP03_members_atomic', lambda cw: cw['txn'].__setitem__(sorted(cw['txn'])[0], 'txn-2'))
+        neg('group-missing-member', 'CP04_group_complete', lambda cw: cw['group']['members'].pop())
+        neg('ack-without-member-receipt', 'CP05_group_receipts', lambda cw: cw['group']['receipts'].pop(sorted(cw['group']['receipts'])[0]))
+        neg('member-source-rejected', 'CP06_members_verified', lambda cw: cw['members'][0]['source'].__setitem__('result_status', 'rejected'))
     return out
 
 
