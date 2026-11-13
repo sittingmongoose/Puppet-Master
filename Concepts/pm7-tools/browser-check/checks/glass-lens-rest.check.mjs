@@ -361,8 +361,8 @@ async function onboardingPart(t, surface, W, H) {
 /* --set parts=pixels (lane G's pixel proof, normal surface): PNGs in the run folder, read by its report's script.
    Per look on Home and Usage: the resting frame with every animation frozen at 4 s (comparable across builds), the
    same load with each laid-out lens's own filter put back where the build keeps one (what main drew there), and
-   frames across one travel (Home's rail tabs, Usage's range): before the press, the travel's first and second frames,
-   its last frame, and the first frame after it ended, the rest of the page frozen throughout */
+   frames across one travel (Home's Activity bar, Usage's range): before the press, the travel's first and second
+   frames, its next-to-last and last, and the first frame after it ended, the rest of the page frozen throughout */
 async function pixelsPart(t, surface, W, H) {
 	const { writeFileSync } = await import('node:fs');
 	const pathm = await import('node:path');
@@ -391,7 +391,9 @@ async function pixelsPart(t, surface, W, H) {
 			if (rec.relive) { await t.page.waitForTimeout(300); await shot(`${tag}-relive`); await f.evaluate(() => window.__g.all().forEach((l) => { if (l.__pxPut) { l.style.removeProperty('backdrop-filter'); l.__pxPut = false; } })); }
 			await thaw();
 			/* frames across one travel */
-			const sel = view === 'home' ? '#sidePanelSlot .pm-segtab' : '#pmuRange';
+			/* Home's travel is the Activity bar's: the rail tabs' travel is cut short on both builds when the chosen tab grows
+			   (an existing re-sync snaps the lens to the grown tab), so it has no last frame to hand over from */
+			const sel = view === 'home' ? '#activityBar' : '#pmuRange';
 			const x = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === sel && z.other);
 			await t.check(`pixels: ${sel} has its lens and another item ${tag}`, !!x, '');
 			if (!x) continue;
@@ -401,11 +403,21 @@ async function pixelsPart(t, surface, W, H) {
 			await freeze(); await t.page.waitForTimeout(300);
 			const lensState = () => f.evaluate((i) => { const l = window.__g.all()[i], r = l.getBoundingClientRect(); return { filter: getComputedStyle(l).backdropFilter, box: { x: r.left, y: r.top, w: r.width, h: r.height } }; }, x.lens);
 			rec.travel = { strip: sel, from: x.box, to: x.other, frames: {} };
+			/* the same paused frame with the lens's inline filter taken off for one shot and put back: the filter's own
+			   part of a frame, apart from what the press and the choice change around it */
+			const flat = async (name) => {
+				const had = await f.evaluate((i) => { const l = window.__g.all()[i], v = l.style.getPropertyValue('backdrop-filter'); if (v) { l.__pxKeep = [v, l.style.getPropertyValue('-webkit-backdrop-filter')]; l.style.removeProperty('backdrop-filter'); l.style.removeProperty('-webkit-backdrop-filter'); } return !!v; }, x.lens);
+				if (!had) return;
+				await t.page.waitForTimeout(200); await shot(name);
+				await f.evaluate((i) => { const l = window.__g.all()[i], k = l.__pxKeep; l.__pxKeep = null; if (k) { l.style.setProperty('backdrop-filter', k[0], 'important'); l.style.setProperty('-webkit-backdrop-filter', k[1] || k[0], 'important'); } }, x.lens);
+				await t.page.waitForTimeout(150);
+			};
 			rec.travel.frames.before = await lensState(); await shot(`${tag}-t0-before`);
 			await t.page.mouse.down();
 			rec.travel.made = await f.evaluate(() => { const n = document.getAnimations().filter((a) => !window.__pre.has(a)); window.__new = n; n.forEach((a) => { try { a.pause(); a.currentTime = 0; } catch (e) { /* gone */ } }); return n.map((a) => { const fx = a.effect; return { el: fx && fx.target ? fx.target.tagName.toLowerCase() + '.' + String(fx.target.className && fx.target.className.baseVal !== undefined ? fx.target.className.baseVal : fx.target.className).split(' ')[0] + (fx.pseudoElement || '') : '?', end: fx ? Math.round(fx.getComputedTiming().endTime) : 0 }; }); });
 			await t.page.waitForTimeout(250);
 			rec.travel.frames.first = await lensState(); await shot(`${tag}-t1-first`);
+			await flat(`${tag}-t1-first-flat`);
 			await f.evaluate(() => window.__new.forEach((a) => { try { a.currentTime = 1000 / 120; } catch (e) { /* gone */ } }));
 			await t.page.waitForTimeout(250);
 			rec.travel.frames.second = await lensState(); await shot(`${tag}-t2-second`);
@@ -421,6 +433,7 @@ async function pixelsPart(t, surface, W, H) {
 			await f.evaluate(() => window.__new.forEach((a) => { try { a.currentTime = a.effect.getComputedTiming().endTime - 1000 / 120; } catch (e) { /* gone */ } }));
 			await t.page.waitForTimeout(250);
 			rec.travel.frames.last = await lensState(); await shot(`${tag}-t4-last`);
+			await flat(`${tag}-t4-last-flat`);
 			await f.evaluate(() => new Promise((r) => { window.__new.forEach((a) => { try { a.finish(); } catch (e) { /* gone */ } }); requestAnimationFrame(() => requestAnimationFrame(r)); }));
 			await t.page.waitForTimeout(250);
 			rec.travel.frames.after = await lensState(); await shot(`${tag}-t5-after`);
@@ -435,8 +448,8 @@ async function pixelsPart(t, surface, W, H) {
 	await t.check('pixels: frames written', Object.keys(out).length > 0, Object.keys(out).join(','));
 }
 
-/* --set parts=film with --record: one travel on Home (the rail tabs) and one on Usage (the range) per Glass look, each
-   chosen with a held click (down, 90 ms, up) and chosen back, marked on the film */
+/* --set parts=film with --record: travels on Home (the Activity bar, the rail tabs) and on Usage (the range) per Glass
+   look, each chosen with a held click (down, 90 ms, up) and chosen back, marked on the film */
 async function filmPart(t, surface, W, H) {
 	const f = await t.app.open({});
 	await f.evaluate(PROBE);
@@ -447,25 +460,27 @@ async function filmPart(t, surface, W, H) {
 			await f.evaluate((p) => PM_PAGES.go(p), VIEWS[view]);
 			await t.page.waitForTimeout(2500);
 			await f.evaluate(() => window.__g.settle());
-			const sel = view === 'home' ? '#sidePanelSlot .pm-segtab' : '#pmuRange';
-			const x = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === sel && z.other);
-			if (!x) { await t.check(`film: ${sel} has its lens ${look} ${view}`, false, ''); continue; }
-			const off = await offsetOf(t, f), at = (b) => ({ x: off.x + b.x + b.w / 2, y: off.y + b.y + b.h / 2 });
-			for (const [name, b] of [['to ' + (x.label || 'next'), x.other], ['back', x.cur]]) {
-				await t.page.mouse.move(at(b).x, at(b).y, { steps: 6 }); await t.page.waitForTimeout(700);
-				await f.evaluate((i) => window.__g.watch(i), x.lens);
-				await t.mark(`${look} ${view} ${sel} travel ${name}`);
-				await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
-				await t.page.waitForTimeout(1600);
-				/* the same click read per frame (a probe beside the film): where the lens is drawn, whether it moves and
-				   bends; a travel cut short shows as a jump of its centre between two frames */
-				const fr = await f.evaluate(() => window.__g.stop()), cx = (z) => z.b.x + z.b.w / 2, cy = (z) => z.b.y + z.b.h / 2;
-				let jump = 0, at2 = -1; for (let k = 1; k < fr.length; k++) { const d = Math.hypot(cx(fr[k]) - cx(fr[k - 1]), cy(fr[k]) - cy(fr[k - 1])); if (d > jump) { jump = d; at2 = k; } }
-				const lastMv = fr.reduce((k, z, n) => (z.mv ? n : k), -1), after = fr.slice(lastMv + 1), mv = fr.filter((z) => z.mv);
-				const row = { frames: fr.length, moving: mv.length, movingFlat: mv.filter((z) => !z.bend).length, after: after.length, afterBent: after.filter((z) => z.bend).length,
-					jump: Math.round(jump * 10) / 10, jumpAt: at2, jumpMoving: at2 > 0 ? [fr[at2 - 1].mv, fr[at2].mv] : null, path: fr.filter((z, k) => k % 6 === 0 || z.mv !== (fr[k - 1] || {}).mv).map((z) => [z.t, Math.round(cx(z)), z.mv ? 1 : 0, z.bend ? 1 : 0]).slice(0, 40) };
-				t.log(`film ${look} ${view} ${name}: ${JSON.stringify(row)}`);
-				await t.check(`film: the click's travel bends in every frame and rests unbent ${look} ${view} ${name}`, mv.length >= 3 && row.movingFlat === 0 && after.length >= 5 && row.afterBent === 0, JSON.stringify(row));
+			for (const sel of view === 'home' ? ['#activityBar', '#sidePanelSlot .pm-segtab'] : ['#pmuRange']) {
+				await f.evaluate(() => window.__g.settle());
+				const x = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === sel && z.other);
+				if (!x) { await t.check(`film: ${sel} has its lens ${look} ${view}`, false, ''); continue; }
+				const off = await offsetOf(t, f), at = (b) => ({ x: off.x + b.x + b.w / 2, y: off.y + b.y + b.h / 2 });
+				for (const [name, b] of [['to ' + (x.label || 'next'), x.other], ['back', x.cur]]) {
+					await t.page.mouse.move(at(b).x, at(b).y, { steps: 6 }); await t.page.waitForTimeout(700);
+					await f.evaluate((i) => window.__g.watch(i), x.lens);
+					await t.mark(`${look} ${view} ${sel} travel ${name}`);
+					await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+					await t.page.waitForTimeout(1600);
+					/* the same click read per frame (a probe beside the film): where the lens is drawn, whether it moves and
+					   bends; a travel cut short shows as a jump of its centre between two frames */
+					const fr = await f.evaluate(() => window.__g.stop()), cx = (z) => z.b.x + z.b.w / 2, cy = (z) => z.b.y + z.b.h / 2;
+					let jump = 0, at2 = -1; for (let k = 1; k < fr.length; k++) { const d = Math.hypot(cx(fr[k]) - cx(fr[k - 1]), cy(fr[k]) - cy(fr[k - 1])); if (d > jump) { jump = d; at2 = k; } }
+					const lastMv = fr.reduce((k, z, n) => (z.mv ? n : k), -1), after = fr.slice(lastMv + 1), mv = fr.filter((z) => z.mv);
+					const row = { frames: fr.length, moving: mv.length, movingFlat: mv.filter((z) => !z.bend).length, after: after.length, afterBent: after.filter((z) => z.bend).length,
+						jump: Math.round(jump * 10) / 10, jumpAt: at2, jumpMoving: at2 > 0 ? [fr[at2 - 1].mv, fr[at2].mv] : null, path: fr.filter((z, k) => k % 6 === 0 || z.mv !== (fr[k - 1] || {}).mv).map((z) => [z.t, Math.round(cx(z)), z.mv ? 1 : 0, z.bend ? 1 : 0]).slice(0, 40) };
+					t.log(`film ${look} ${view} ${sel} ${name}: ${JSON.stringify(row)}`);
+					await t.check(`film: the click's travel bends in every frame and rests unbent ${look} ${view} ${sel} ${name}`, mv.length >= 3 && row.movingFlat === 0 && after.length >= 5 && row.afterBent === 0, JSON.stringify(row));
+				}
 			}
 		}
 	}
