@@ -663,15 +663,22 @@ SEALED_KEYS = ('original_ref', 'binding', 'recipe', 'record_hex', 'result_hex', 
 
 
 def _custody_from_sealed(sealed):
-    """Build the authenticated original from one sealed store row; a malformed row refuses with a code."""
+    """Build the authenticated original from one sealed store row; a malformed row refuses with a code. A binding or
+    recipe member of the wrong type or value makes the shared constructors refuse (RecipeTuple: recipe_tuple,
+    recipe_resource_hash; OriginalBinding: original_binding, original_scope; scripts/pm_event_numbers.py:442-485).
+    Those are defects of the sealed row itself, so they refuse here as sealed_receipt_malformed."""
     if (type(sealed) is not dict or set(sealed) != set(SEALED_KEYS) or type(sealed['binding']) is not dict
             or set(sealed['binding']) != set(BINDING_FIELDS) or type(sealed['recipe']) is not dict
             or set(sealed['recipe']) != set(RECIPE_FIELDS)
             or any(type(sealed[k]) is not str or len(sealed[k]) % 2 or sealed[k].strip('0123456789abcdef')
                    for k in ('record_hex', 'result_hex', 'receipt_hex'))):
         raise Refusal('sealed_receipt_malformed')
+    try:
+        binding, recipe = OriginalBinding(**sealed['binding']), RecipeTuple(**sealed['recipe'])
+    except Refusal:
+        raise Refusal('sealed_receipt_malformed') from None
     return OriginalCustody(
-        binding=OriginalBinding(**sealed['binding']), recipe=RecipeTuple(**sealed['recipe']),
+        binding=binding, recipe=recipe,
         record_bytes=bytes.fromhex(sealed['record_hex']), result_bytes=bytes.fromhex(sealed['result_hex']),
         receipt_bytes=bytes.fromhex(sealed['receipt_hex']))
 
@@ -1779,17 +1786,37 @@ HANDLED_REASONS = sorted({r for _r, r, _f, _w in DISPATCH_ROWS} | {'original_ver
 row(T, 'entailed_retained_resolved', 'retained_resolved', 'original_unavailable', '/sealed_store',
     'the dispatcher returned the original or a refusal an earlier row owns', 'handled',
     lambda c, m: {'presented': RES(m), 'handled': HANDLED_REASONS})
-entailed('retained_resolved', [r for r, _x, _f, _w in DISPATCH_ROWS] + [r[0] for r in FROZEN_ROWS],
-         'RetainedDispatcher.resolve (scripts/pm_event_numbers.py:523-545) refuses with caller_recipe_override, '
-         'original_query, original_authority, original_binding, recipe_selection, recipe_unknown, original_bytes_type, '
-         'original_verification or current_disclosure, plus what the owner raises. A request with no computable '
-         'expected binding reaches it as None and is refused as original_query (retained_request). The owner here '
-         '(SealedReceiptOwner/_custody_from_sealed) raises only original_receipt_missing, original_receipt_ambiguous '
-         'and sealed_receipt_malformed, and always returns an OriginalCustody built from OriginalBinding(**), '
-         'RecipeTuple(**) and bytes.fromhex(...) values, so original_authority, recipe_selection and '
-         'original_bytes_type cannot occur. Every other reason has its own dispatch row (retained_dispatch), and '
-         'original_verification is returned exactly when a frozen_* row refuses (_frozen_verify is the conjunction '
-         'of frozen_components). So this catch-all never refuses first.')
+entailed('retained_resolved', [r for r, _x, _f, _w in DISPATCH_ROWS] + [r[0] for r in FROZEN_ROWS] +
+         ['retained_no_current_gate'],
+         'RetainedDispatcher.resolve (scripts/pm_event_numbers.py:523-545) refuses itself only with '
+         'caller_recipe_override, original_query, original_authority, original_binding, recipe_selection, '
+         'recipe_unknown, original_bytes_type, original_verification or current_disclosure; any other reason is '
+         'raised by the owner or by the frozen verifier. (1) Owner: SealedReceiptOwner.authenticated_original '
+         '(scripts/pm_w3i_continuity_oracles.py:693-699) raises only original_receipt_missing and '
+         'original_receipt_ambiguous, then _custody_from_sealed (:665-683). That function refuses '
+         'sealed_receipt_malformed at :675 unless the row has exactly SEALED_KEYS, a binding with exactly '
+         'BINDING_FIELDS, a recipe with exactly RECIPE_FIELDS and three even-length lowercase-hex strings (so '
+         'bytes.fromhex cannot raise). The shared constructors refuse a wrong-typed or wrong-valued member by '
+         'themselves (scripts/pm_event_numbers.py:442-485): RecipeTuple.__post_init__ with recipe_tuple (:460) or '
+         'recipe_resource_hash (:462), and OriginalBinding.__post_init__ with original_binding (:481) or '
+         'original_scope (:484). :676-679 catches every such Refusal and re-raises it as sealed_receipt_malformed. '
+         'So the owner raises only original_receipt_missing, original_receipt_ambiguous and sealed_receipt_malformed, '
+         'and otherwise returns an OriginalCustody of an OriginalBinding, a RecipeTuple and three bytes values, so '
+         'original_authority, recipe_selection and original_bytes_type cannot occur. AccessLoggingOwner (:706) '
+         'raises exactly what its parent raises. (2) Request: retained_request (:808-818) returns an OriginalBinding '
+         'or None, and None is refused by the dispatcher as original_query. (3) Frozen verifier: _frozen_verify '
+         '(:774) is the conjunction of frozen_components (:717-761), which raises no Refusal. Decoding refusals are '
+         'caught (:728); the date-time checks go through reason_of; producer_semantic_digest refusals are caught '
+         '(:758). full_value_commitment (scripts/pm_event_numbers.py:405-412) runs only on a record that decoded '
+         'canonically (so its re-encoding cannot refuse) and passed the frozen EventRecord schema (whose schema_id and '
+         'schema_version consts exclude full_value_edition). identity (:212) runs qualified_jcs on schema-valid '
+         'payload strings decoded from UTF-8. So the verifier returns True or False, and the dispatcher reports '
+         'False as original_verification. frozen_dispatch_failures (:2657), run on every retained control and '
+         'negative, requires that, once verify_original is reached, the dispatcher refuses original_verification '
+         'exactly when a frozen_* row refuses. The negative-only frozen map current_gated (_current_gated_verify) '
+         'may raise the current writer gate\'s own reason. It calls the instrumented gate whenever the verifier '
+         'runs, so retained_no_current_gate (table retained_effects, ahead of this table) refuses first. Every '
+         'reason that remains has its own dispatch row (retained_dispatch). So this catch-all never refuses first.')
 
 
 # ---- Tables, the checker's refusal path ----------------------------------------------------------------------------
@@ -2456,6 +2483,14 @@ def build_negatives(controls):
            'sealed row bytes not hex')
         T_('retained_receipt_wellformed', lambda c: c['sealed_store'][0].pop('result_hex'), 'none',
            'sealed row without its result')
+        # The shared constructors' own refusals (scripts/pm_event_numbers.py:442-485) are the sealed row's defects.
+        for part, key, value, reason in (('recipe', 'identity_recipe', 7, 'recipe_tuple'),
+                                         ('recipe', 'physical_profile', None, 'recipe_tuple'),
+                                         ('recipe', 'resource_manifest_sha256', 'zz', 'recipe_resource_hash'),
+                                         ('binding', 'project_id', 7, 'original_scope'),
+                                         ('binding', 'server_id', 7, 'original_binding')):
+            T_('retained_receipt_wellformed', _value(('sealed_store', 0, part, key), value), 'none',
+               'sealed %s.%s = %r (the shared constructor refuses %s)' % (part, key, value, reason))
 
         def _wrong_original(c, fam=other):
             wrong = copy.deepcopy(build_case(fam, 'other-original')['sealed_store'][0])
