@@ -12,6 +12,9 @@
 //   dialog — Settings › General › page options › "Show all explanations": in each section card, every row keeps
 //            main's relationship to the section title: its label starts 14 px right of the title and its chevron ends
 //            14 px in from the card's content edge, within 1 px (main 48dd033447: the row's own 14 px inline padding).
+//            Lines: the drawer's rows draw main's label-and-meta line total in every look. FO-174 changed those rows' own
+//            padding, and settings-min-text never opens this drawer, so this is where FO-159's line rule is kept for
+//            them (pm-fo-lead, 2026-11-13). Main's totals are pinned below; they hold at every size and in both modes.
 //
 // Cells: all ten looks, each chosen through Settings' own Theme and Light-or-dark rows and guarded as painted
 // (helpers/settings-look.mjs), at 1920x1080 with Files docked (the app's default there), at 1280x500 with Files kept
@@ -19,10 +22,12 @@
 // leaves Settings 1235 px wide), and at 860x900 and 740x900, which settings-min-text's line cells reach by resizing the
 // same 1920 page. Both surfaces (`--set sandbox=0` and `--set sandbox=1`).
 // Bites: fails 076e30eda7 (rows 8 px under a 14 px header: icon -6 px, chevron +6 px; drawer label +8 px) on both
-// surfaces; passes main 48dd033447 and FO-174.
+// surfaces; the line total fails d2acaabee8 (drawer rows at 14 px in a 14 px card: +2 to +4 lines a look); passes
+// main 48dd033447 and FO-174.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-home-row-inset.check.mjs --set page=<build> --set sandbox=0
 //   --set looks=a,b   --set sizes=1280x500,740x900   --set dialog=0 (home cards only)   --set probe=1 (log every row)
-//   --set shots=friendly-dark,retro-light (normal surface, 1920: a LOOK crop of the home page per look; --set build=<name>)
+//   --set shots=friendly-dark,retro-light (normal surface, 1920: LOOK crops of the home page and the drawer per look;
+//   --set build=<name> names them)
 import { LOOKS } from '../browser-check.config.mjs';
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 
@@ -36,6 +41,11 @@ const TOL = 1;
 /* main 48dd033447's drawer rows: `#panel-settings .setup-row { padding: 12px 14px }` inside a `.panel-card` whose
    title sits at the card's own padding, so the label is one 14 px row inset right of the title in every look. */
 const MAIN_DIALOG_INSET = 14;
+/* main 48dd033447's drawer, recorded with this check (`dialog:` log lines, bite-main runs of 2026-11-13, Windows,
+   browser-check 2.0.55): its 72 rows draw this many label and meta lines in each look family, the same at 1920, 1280,
+   860 and 740 and in light and dark. A drawer with another row count is a new inventory: record it again. */
+const MAIN_DRAWER_ROWS = 72;
+const MAIN_DRAWER_LINES = { basic: 194, friendly: 198, glass: 194, nier: 196, retro: 215 };
 
 const r1 = (n) => Math.round(n * 10) / 10;
 
@@ -226,8 +236,14 @@ for (const surface of ['normal', 'sandbox']) {
 					await f.waitForFunction(STILL, '#panel-settings .panel-card > .setup-row', { polling: 'raf', timeout: 4000 }).catch(() => {});
 					await t.page.waitForTimeout(250);
 					const rows = await f.evaluate(DIALOG);
-					/* not asserted: the drawer's drawn lines, so a build pair can be compared from the log */
-					t.log(`${cell} dialog: ${rows.length} rows draw ${rows.reduce((n, r) => n + r.lines, 0)} label and meta lines`);
+					const drawn = rows.reduce((n, r) => n + r.lines, 0), want = MAIN_DRAWER_LINES[look.split('-')[0]];
+					t.log(`${cell} dialog: ${rows.length} rows draw ${drawn} label and meta lines`);
+					await t.check(`${cell} "Show all explanations": its rows draw main's ${want} label and meta lines`,
+						rows.length === MAIN_DRAWER_ROWS && drawn === want,
+						rows.length !== MAIN_DRAWER_ROWS ? `the drawer has ${rows.length} rows; main's totals are pinned for ${MAIN_DRAWER_ROWS}: record them again` : `${drawn} drawn, ${drawn - want > 0 ? '+' : ''}${drawn - want} against main`);
+					if (shots.includes(look) && surface === 'normal' && size.id === '1920x1080') {
+						await t.crop(`${t.args.build || 'page'}-${look}-${size.id}-drawer`, f.locator('#panel-settings .drawer').first(), 'each section title against its card edge and its rows\' labels (14 px in), next to the home crop\'s card headers');
+					}
 					if (probe) for (const r of rows.slice(0, 6)) t.log(`${cell} dialog | ${r.label} | label ${r1(r.labelDx ?? NaN)} chevron in ${r1(r.chevIn ?? NaN)}`);
 					const badL = rows.filter((r) => r.labelDx === null || Math.abs(r.labelDx - MAIN_DIALOG_INSET) > TOL);
 					const badC = rows.filter((r) => r.chevIn === null || Math.abs(r.chevIn - MAIN_DIALOG_INSET) > TOL);
