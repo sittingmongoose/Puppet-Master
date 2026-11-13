@@ -29124,8 +29124,14 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: 
    has data-pm56="on"; the tour takes it off). Hidden, it was still styled and laid out: about 600 elements of every
    whole-page restyle (a look change, a page switch; 20 % of a theme change on the P1000) and two resize observers that
    measured it. Its contents are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16).
-   The rule keyed on the stand-in chat's data-pmw-sc until that chat was removed (2026-10-23, DL-233). */
-html:not([data-o55-tour]) #chatPanel[data-pm56="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }
+   The rule keyed on the stand-in chat's data-pmw-sc until that chat was removed (2026-10-23, DL-233).
+   2026-11-10 (performance): it is taken out of the layout instead of skipped. Skipped (content-visibility: hidden), the
+   CSS animations its rows had already started kept running, on the main thread because nothing of them is painted (14
+   of them: the thread list's pulse, wtDirtyPulse and pm6-chat-pulse), so the page rendered a main-thread frame on every
+   refresh at rest in every look; and no rule can stop them from outside, because styles inside a skipped subtree are
+   not updated. Without a box an element runs no animation. The 5.6 Pro chat's frame fills the column by itself
+   (position: absolute; inset: 0), so nothing else moves. */
+html:not([data-o55-tour]) #chatPanel[data-pm56="on"] > .float-content.pm6-chat-root { display: none !important; }
 
 /* A page change stamps its direction (--pm-dir) on both pages and the answered fade's start (--pm8-out-from) on the
    leaving one, read only by those pages' own pm8 keyframes. Unregistered, a custom property is inherited, so each
@@ -33386,8 +33392,11 @@ html[data-motion="reduced"] #pm-o55-onboarding[data-family="glass"] .o55-btn { t
 .wk-list :is([data-tone="paused"]) { --wk-t: var(--wk-idle); }
 
 /* ---- the category marks (X1): lit by status like the Activity bar's, the backlight a soft tail on the host ---- */
-.wk-g { position: relative; display: inline-grid; place-items: center; flex: none; isolation: isolate; }
-.wk-g > svg { width: 13px; height: 13px; color: var(--wk-idle); --nx-stroke-base: 2.2; --nx-tone-k: 1; --nx-hiv: visible; --nx-hi-a: var(--nx-h-quiet-i, .1); }
+/* an inline-block round one block svg: the box the inline-grid gave (shrink-wrapped to the svg, so the centring had
+   nothing to do; baseline the svg's bottom), but the svg is no longer a grid item, so the live mark's moving parts lay
+   out only the svg instead of the whole document from the top on every frame (lane A, 2026-11-10) */
+.wk-g { position: relative; display: inline-block; flex: none; isolation: isolate; }
+.wk-g > svg { display: block; width: 13px; height: 13px; color: var(--wk-idle); --nx-stroke-base: 2.2; --nx-tone-k: 1; --nx-hiv: visible; --nx-hi-a: var(--nx-h-quiet-i, .1); }
 .wk-g::before { content: ""; position: absolute; left: 50%; top: 50%; width: 220%; height: 220%; translate: -50% -50%; border-radius: 50%; z-index: -1;
   pointer-events: none; background: radial-gradient(closest-side, var(--wk-work), transparent); opacity: 0; }
 .wk-g[data-tone="working"] > svg { color: var(--wk-work); --nx-hi-a: var(--nx-h-working-i, .2); }
@@ -38660,10 +38669,17 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 /* Rounds 9-11: the ring lies in a frame laid on the bar's scroll box, which clips it there (clip-path: inset(0)) as the
    bar clips the tiles, on the compositor while the bar scrolls (opus-recheck-f96i F3: round 9's script clip trailed a fast
    wheel by 1 to 19 frames). The frame is the bar's border box less the bar's top and bottom borders: none, but Liquid
-   Glass's 1 px sheet border (glass.css). The ring never reaches the bar's sides. */
+   Glass's 1 px sheet border (glass.css). The ring never reaches the bar's sides.
+   The bar names the frame's anchor only while the focus is inside it (2026-11-10, performance): a frame anchored at
+   all times was laid out again after every whole-document layout and asked for one more frame each time, and a glyph
+   ticking anywhere on the page causes a whole-document layout, so at rest the two kept the main thread rendering a
+   frame on every refresh in every look (Chrome names it: layout invalidation of #d-abclip, 'Anchor positioning', once
+   a frame). Without its anchor the frame falls back to an empty box off the page, as the ring does without a
+   key-focused tile; :focus-within turns true in the style pass that gives the tile its own anchor name, so the frame
+   and the ring are placed in the same layout. */
 .d-abring, .d-abclip { display: none; }
 @supports (anchor-name: --d-abfocus) {
-  [data-rail-skin="d"] #activityBar { anchor-name: --d-abbar; }
+  [data-rail-skin="d"] #activityBar:focus-within { anchor-name: --d-abbar; }
   [data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]) .d-abclip {
     display: block; position: fixed; z-index: 2147483100; pointer-events: none; margin: 0; padding: 0; border: 0;
     position-anchor: --d-abbar; left: anchor(left, -99px); right: anchor(right, 100vw);
@@ -39389,8 +39405,11 @@ svg:where(.nx-z0) .nx-p { animation: none; }
    halo / .08 backlight; light themes a lower backlight curve, rest .07). Reduced motion: lit and static, the
    overlays hidden. NieR: the ink fill steps down band by band and the bolt flashes solid ink in held frames; no
    halo, no backlight. */
+/* inline-block, not inline-flex (as .nx-st below): the same box, but the svg is no longer a flex item, so Chrome lays
+   it out on its own when a part inside it moves instead of laying out the whole document from the top (lane A,
+   2026-11-10) */
 .nx-bolt {
-  position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle;
+  position: relative; isolation: isolate; display: inline-block; flex: none; line-height: 0; vertical-align: middle;
   --nxb-bl: nx-bolt-bl; --nxb-blh: nx-bolt-bl-h; --nxb-rest: var(--nx-bl-attention);
 }
 html[data-theme$="-light"] body .nx-bolt { --nxb-bl: nx-bolt-bl-l; --nxb-blh: nx-bolt-bl-lh; --nxb-rest: .07; }
@@ -39574,8 +39593,12 @@ svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired
    into the surfaces by step 3B; here so the gallery and every later surface share one definition. */
-/* The wrapper is a small stacking context, so its backlight paints behind the glyph and above the row. */
-.nx-st { position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle; }
+/* The wrapper is a small stacking context, so its backlight paints behind the glyph and above the row. It is an
+   inline-block round its one block svg, the same box as the inline-flex it was (shrink-wrapped, its baseline the svg's
+   bottom), but the svg is no longer a flex item: a moving part inside it then lays out only the svg (Chrome's layout
+   stops at an svg of fixed size that is not a flex or grid item) instead of the whole document from the top, on every
+   frame the page draws (measured in PMConcept7, lane A 2026-11-10: dirty 5 of 7000 objects, whole document -> 2 of 7). */
+.nx-st { position: relative; isolation: isolate; display: inline-block; flex: none; line-height: 0; vertical-align: middle; }
 .nx-st > svg.nx { display: block; }
 /* The backlight: the glow's soft tail, a radial gradient of the plain tone token, about 2.2x the mark, faded by
    element opacity (no color-mix, no filter). It has no edge, unlike stepped stroke bands. */
@@ -39598,6 +39621,14 @@ svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 
    9 s list bead is both livelier and quieter, and needs-you's lead (neon-verify 13) is wider. */
 .nx-st-working::before { display: none; }
 .nx-st-working .nx-p { animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
+/* The bead is drawn in a second svg laid exactly over the first (neon-icons.js render: a status part that turns about
+   the centre), and that svg turns: it carries .nx-p and the part's --kl, so the rule above gives it the bead's own turn
+   (keyframes, 9 s, the spin voice's --nx-le, the delay), and every context that stops or holds a status mark's parts
+   (.nx-st .nx-p, .nx-st-move, .nx-st *) reaches it the same way. The bead inside it does not turn a second time. An svg
+   element turning is a compositor transform; the bead turning inside the svg laid the svg out and re-ran the hover hit
+   test on every frame (pm7-perf lane F2: 119 partial layouts and 120 hit tests a second, Basic Dark Settings). */
+.nx-st > svg.nx-st-spin { position: absolute; left: 0; top: 0; transform-box: border-box; transform-origin: 50% 50%; pointer-events: none; }
+.nx-st-working > svg.nx-st-spin .nx-p { animation: none; }
 /* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
 .nx-st-reviewing::before { display: none; }
 .nx-st-reviewing .nx-p { animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }
@@ -39743,6 +39774,9 @@ html[data-o55-nier="on"] .nx-st-failed { animation: o55n-nx-glitch 320ms steps(4
    at 2.8 s it out-moved needs-you 3-4x in a list; fix cycle 1 keeps the slow turn to the list);
    otherwise it is the ink bead on the ring, going round in steps (--nx-le above). */
 html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx { visibility: hidden; }
+/* the hidden ring's bead does not go round: Chrome ticks every running animation, seen or not, and restyles it in
+   every frame the page draws (pm7-perf lane F2: the Files footer's working mark on every NieR page) */
+html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx .nx-p, html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx-st-spin { animation: none; }
 html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
   content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;
   border: 1.5px solid var(--nx-ink, var(--o55-nier-ink)); outline: 1px solid var(--nx-ink, var(--o55-nier-ink)); outline-offset: -4.5px;
@@ -40230,6 +40264,36 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
  * pm-loader.js finds it, and stays unseen until it is armed; armed, it fades in already in the shared clock's phase. */
 .pml-ld { display: inline-block; flex: none; width: var(--pml-size, 1em); height: var(--pml-size, 1em); vertical-align: -.18em; line-height: 0; color: inherit; contain: layout style; }
 .pml-ld > .pml { display: block; width: 100%; height: 100%; }
+/* The phase pm-loader.js writes on the loader (the periods and delays of Pip's parts) reaches only the svg and the parts
+   that read it, and the groups between them: registered as not inherited, and taken by those elements alone. Inherited,
+   a start (every time a loader comes back on screen, a tab is shown or a busy spell ends) restyled every element of the
+   drawing: a pixel loader is 118 to 240 elements, a dozen of which move (pm7-perf lane I: 17 loaders, 2,132 elements in
+   one frame of a Home tab switch). The values each part reads are the same, so the motion is the same. NieR's own
+   properties (--pml-k, --pml-ndelay, --pml-sdelay, --pml-nbdelay) stay inherited: their part is one span and its
+   pseudo-elements, which inherit from it. */
+@property --pml-dur { syntax: '*'; inherits: false; }
+@property --pml-delay { syntax: '*'; inherits: false; }
+@property --pml-rdur { syntax: '*'; inherits: false; }
+@property --pml-rdelay { syntax: '*'; inherits: false; }
+@property --pml-bdur { syntax: '*'; inherits: false; }
+@property --pml-bdelay { syntax: '*'; inherits: false; }
+@property --pml-kdelay { syntax: '*'; inherits: false; }
+.pml-ld > .pml,
+.pml-ld > .pml :is(.pml-fr),
+.pml-ld > .pml :is(.pml-fr-rest),
+.pml-ld > .pml :is(.pml-fr-rctl),
+.pml-ld > .pml :is(.pml-fr-rlid),
+.pml-ld > .pml :is(.pml-str),
+.pml-ld > .pml :is(.pml-pup),
+.pml-ld > .pml :is(.pml-face),
+.pml-ld > .pml :is(.pml-eyes),
+.pml-ld > .pml :is(.pml-blink),
+.pml-ld > .pml :is(.pml-dot2),
+.pml-ld > .pml :is(.pml-dot3),
+.pml-ld > .pml :is(.pml-dot4),
+.pml-ld > .pml :is(.pml-ctl) {
+  --pml-dur: inherit; --pml-delay: inherit; --pml-rdur: inherit; --pml-rdelay: inherit; --pml-bdur: inherit; --pml-bdelay: inherit; --pml-kdelay: inherit;
+}
 .pml-ld:not([data-pml-run]) { animation: pml-arm 1ms; }
 .pml-ld:not([data-pml-run]) > .pml { opacity: 0; }
 .pml-ld[data-pml-run="on"]:not([data-pml-in]) > .pml { animation: pml-ld-in 160ms ease-out; }
@@ -40928,7 +40992,23 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
          non-scaling-stroke: Chromium will not composite a transform over non-scaling strokes. A context that renders
          the icon at another size sets --nx-u in its CSS, which wins over this default (the bar: 24/14). */
       var u = live.length ? ' style="--nx-u0:' + fmt(24 / size) + '"' : '';
-      var out = '<svg class="' + esc(c) + '" data-nx="' + esc(n) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + u + '>' + base + moving + '</svg>';
+      var open = '<svg class="' + esc(c) + '" data-nx="' + esc(n) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+      var out = open + u + '>' + base + moving + '</svg>';
+      /* A status mark whose one moving part turns about the centre (working's bead on its still ring) draws that part in a
+         second svg of the same size laid over the first, and the svg itself turns: the same keyframes, period, easing and
+         delay (the wrapper's rule for .nx-p reaches it through its classes and partStyle), so the same pose at every moment.
+         The same partStyle keeps --k1 on the svg too: nx-still plays that entrance once before holding at rest.
+         A part turning inside an svg lays that svg out on every frame it moves and each layout re-runs the hover hit test;
+         an svg element turning is a compositor transform with neither (pm7-perf lane F2: the Files footer's working mark,
+         the one glyph still laid out in every frame in Basic and Glass, 119 partial layouts and 120 hit tests a second).
+         The part inside keeps its classes and its own animation is off (neon-icons.css section 9). */
+      if (statusWrap && d.act === 'spin' && live.length === 1 && stat.length) {
+        var lm = live[0].p.m, lo = Array.isArray(lm.o) ? lm.o : (lm.o === 'c' ? null : d.origin);
+        if (lm.ar && !lm.ax && !lm.ay && !lm.cr && !lm.n && lo && +lo[0] === 12 && +lo[1] === 12) {
+          out = open + u + '>' + base + '</svg>' + open.replace('class="' + esc(c) + '"', 'class="' + esc(c + ' nx-p nx-st-move nx-st-spin') + '"') +
+            ' style="--nx-u0:' + fmt(24 / size) + ';' + partStyle(n, live[0].j, lm, d.origin) + '">' + moving + '</svg>';
+        }
+      }
       if (cacheN > 4000) { cache = Object.create(null); cacheN = 0; }
       cache[key] = out; cacheN++;
       return out;
@@ -43385,25 +43465,31 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
   }
   const drawn = (el) => el.getAttribute('data-pml-look') === L.look() && el.firstElementChild && el.firstElementChild.classList.contains(isNier(L.look()) ? 'pml-nier' : 'pml');
 
-  /* the periods and phases one loader needs, from the shared clock and Animation speed */
+  /* the periods and phases one loader needs, from the shared clock and Animation speed.
+     Each value is written only when it differs from the one the loader holds: --pml-k and the periods change with
+     Animation speed, the look or the size, the phases (the delays) at every start. The Pip phase properties are
+     registered as not inherited (pm-loader.css): only the svg and the parts that move take them, so a start restyles
+     about a dozen elements of a loader instead of all of them (a pixel loader is 118 to 240 elements; the Agents list's
+     17 loaders were 2,132 elements in one frame of a Home tab switch, 18.5 to 21 ms, pm7-perf lane I). */
+  const put = (el, name, value) => { if (el.style.getPropertyValue(name) !== value) el.style.setProperty(name, value); };
   function phase(el) {
     const look = L.look(), family = L.family(look), motion = motionOf(el), px = pxOf(el), k = L.clock.speed();
-    el.style.setProperty('--pml-k', String(k));
+    put(el, '--pml-k', String(k));
     const ms = (v) => Math.round(v) + 'ms', c = L.clock;
     if (family === 'nier') {
       // NieR's part keeps its own periods (the diamond's 2.8 s turn, the ring's 0.8 s, the 2.4 s breath), scaled by
       // --pml-k. Diamonds add a stable host offset; the ring and Reduced Motion breath keep their shared phase.
-      el.style.setProperty('--pml-ndelay', ms(c.delay(NIER_MS.diamond * k) - nierOffset(el) * NIER_MS.diamond * k));
-      el.style.setProperty('--pml-sdelay', ms(c.delay(NIER_MS.ring * k)));
-      el.style.setProperty('--pml-nbdelay', ms(c.delay(NIER_MS.breath * k)));
+      put(el, '--pml-ndelay', ms(c.delay(NIER_MS.diamond * k) - nierOffset(el) * NIER_MS.diamond * k));
+      put(el, '--pml-sdelay', ms(c.delay(NIER_MS.ring * k)));
+      put(el, '--pml-nbdelay', ms(c.delay(NIER_MS.breath * k)));
       return;
     }
     const P = L.period({ family, motion, px }) * k, base = (L.MOTION[family] || L.MOTION.basic).dur * 1000 * k;
     const rP = base * 1.3, bP = base * 2.6, kP = P * 2;
-    el.style.setProperty('--pml-dur', ms(P)); el.style.setProperty('--pml-delay', ms(c.delay(P)));
-    el.style.setProperty('--pml-rdur', ms(rP)); el.style.setProperty('--pml-rdelay', ms(c.delay(rP)));
-    el.style.setProperty('--pml-bdur', ms(bP)); el.style.setProperty('--pml-bdelay', ms(c.delay(bP)));
-    el.style.setProperty('--pml-kdelay', ms(c.delay(kP)));
+    put(el, '--pml-dur', ms(P)); put(el, '--pml-delay', ms(c.delay(P)));
+    put(el, '--pml-rdur', ms(rP)); put(el, '--pml-rdelay', ms(c.delay(rP)));
+    put(el, '--pml-bdur', ms(bP)); put(el, '--pml-bdelay', ms(c.delay(bP)));
+    put(el, '--pml-kdelay', ms(c.delay(kP)));
   }
   function busyNow(el) {
     let why = '';
@@ -43553,7 +43639,7 @@ body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-poi
       host.__pmlBusy = null;
       return true;
     }
-    host.setAttribute('aria-busy', 'true');
+    if (host.getAttribute('aria-busy') !== 'true') host.setAttribute('aria-busy', 'true');
     if (o.status && !host.hasAttribute('role')) { host.setAttribute('role', 'status'); host.setAttribute('data-pml-status', 'on'); }
     if (mine) return true;
     const t = D.createElement('template');
@@ -46544,6 +46630,12 @@ html[data-pmw-home="on"] .pmw-gl-hint {
 html[data-pmw-home="on"] .pmw-gl-hint::before { inset: 25% 0; background: radial-gradient(closest-side, var(--gl-s-glow)); opacity: .2; }
 html[data-pmw-home="on"] .pmw-gl-hint::after { left: 50%; top: 0; bottom: 0; width: var(--gl-beam-w); translate: -50% 0; background: linear-gradient(to bottom, var(--gl-s-beam)); opacity: .95; }
 html[data-pmw-home="on"] .pmw-gl:is(.pmw-gl-hover, .pmw-gl-held, :focus-visible) .pmw-gl-hint { opacity: 0; transition: opacity 140ms linear; }
+/* While a bar is lit the script rewrites --gl-near and --gl-at on every pointer move near it, which moves and fades the
+   hint. Drawn in the page's own layer, each new opacity or position made Chrome re-layerize the whole page (one full
+   PaintArtifactCompositor update a frame, 2.5-4 ms on the RTX 3090); on a layer of its own while the bar is lit, the
+   compositor takes the new values directly. Home, Basic Dark, a pointer sweep: re-layerizes 41-51 -> 25-26 a second,
+   their time 170-178 -> 100-114 ms/s (lane H, 2026-11-11). */
+html[data-pmw-home="on"] .pmw-gl.pmw-gl-on .pmw-gl-hint { will-change: transform, opacity; }
 
 /* the pool: a soft bloom (::before) and the line of light along the bar (::after); heat widens it */
 html[data-pmw-home="on"] .pmw-gl-pool {
@@ -50313,6 +50405,18 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
 .pmed-cz.pmed-prepared :is(.pmt-cz-scrim > i),
 .pmed-cz.pmed-prepared :where(.pmt-cz-frame):not(.t7:not(*)):not(t7:not(*)),
 .pmed-cz.pmed-prepared :where(.pmt-cz-dialog):not(.t7:not(*)):not(t7:not(*)) { pointer-events: none; }
+/* and its parts draw nothing, as the terminal's parked screen does (26-customize.css): at opacity 0 under the clip the
+   sheet was still painted, about 370 display items (a sixth of the page's) that every re-layerize of the page walked
+   (one each time a composited hover transition starts or ends, 20-28 a second while Usage scrolls), with 3-16 layers
+   of its preview (the head's backdrop blur, the canvas, the thumbs). A forced re-layerize, RTX 3090, Basic Dark: Usage
+   2.7-3.05 -> 2.4 ms, Home 2.55 -> 2.27 ms. The dialog's own box stays visible for Liquid Glass, as on the terminal's
+   screen; the class's removal shows the parts in the click's frame, painted there (lane H, 2026-11-11).
+   Not in Glass: there the hidden body (the preview and its tiles) made the page re-layerize on most frames of a pointer
+   sweep (Usage, Glass Dark: 14-19 -> 67-74 a second, Liquid Glass's doing, cause not found), and a forced re-layerize
+   got no cheaper (3.0 ms either way), so Glass keeps the sheet drawn as before. */
+:root:not([data-theme^="glass"]) .pmed-cz.pmed-prepared > :is(.pmt-cz-scrim),
+:root:not([data-theme^="glass"]) .pmed-cz.pmed-prepared > :is(.pmt-cz-frame),
+:root:not([data-theme^="glass"]) .pmed-cz.pmed-prepared .pmt-cz-dialog > * { visibility: hidden; }
 /* Static scheme pictures keep their measured size while the browser skips
    drawing them below the scrollport. Their original contents appear before
    they enter view; no tile or effect is replaced by a placeholder. */
@@ -56338,7 +56442,7 @@ html[data-ab-ready] .pm56-host .activity-item[data-hover-domain="review"]{ --ab-
 html[data-ab-ready] .pm56-host .activity-item[data-hover-domain="chat_room"]{ --ab-ink: var(--ab-ink-chat_room);  --ab-anim: var(--ab-anim-chat_room);  --ab-hi: var(--ab-hi-chat_room);  --ab-bl: var(--ab-bl-chat_room);  --ab-stroke: var(--ab-stroke-chat_room); }
 html[data-ab-ready] .pm56-host .activity-item[data-hover-domain="changes"]{ --ab-ink: var(--ab-ink-changes);    --ab-anim: var(--ab-anim-changes);    --ab-hi: var(--ab-hi-changes);    --ab-bl: var(--ab-bl-changes);    --ab-stroke: var(--ab-stroke-changes); }
 html[data-ab-ready] .pm56-host .activity-item[data-hover-domain="artifacts"]{ --ab-ink: var(--ab-ink-artifacts);  --ab-anim: var(--ab-anim-artifacts);  --ab-hi: var(--ab-hi-artifacts);  --ab-bl: var(--ab-bl-artifacts);  --ab-stroke: var(--ab-stroke-artifacts); }
-html[data-ab-ready] .pm56-host .activity-item > svg{
+html[data-ab-ready] .pm56-host .activity-item svg{
   
   width: 14px; height: 14px;
   
@@ -56357,11 +56461,13 @@ html[data-ab-ready] .pm56-host .activity-item > svg{
   animation: var(--ab-anim, none);
   transition: color 200ms var(--ease);
 }
-html[data-ab-goal="working"] .pm56-host .activity-item[data-hover-domain="goal"] > svg .nx-p, html[data-ab-todo="working"] .pm56-host .activity-item[data-hover-domain="todo"] > svg .nx-p, html[data-ab-subagents="working"] .pm56-host .activity-item[data-hover-domain="subagents"] > svg .nx-p, html[data-ab-processes="working"] .pm56-host .activity-item[data-hover-domain="processes"] > svg .nx-p, html[data-ab-crew="working"] .pm56-host .activity-item[data-hover-domain="crew"] > svg .nx-p, html[data-ab-brainstorm="working"] .pm56-host .activity-item[data-hover-domain="brainstorm"] > svg .nx-p, html[data-ab-review="working"] .pm56-host .activity-item[data-hover-domain="review"] > svg .nx-p, html[data-ab-chat_room="working"] .pm56-host .activity-item[data-hover-domain="chat_room"] > svg .nx-p, html[data-ab-changes="working"] .pm56-host .activity-item[data-hover-domain="changes"] > svg .nx-p, html[data-ab-artifacts="working"] .pm56-host .activity-item[data-hover-domain="artifacts"] > svg .nx-p{
+.pm56-host .activity-item > .ab-glyph{ display: block; flex: 0 0 auto; }
+.pm56-host .activity-item > .ab-glyph > svg{ display: block; }
+html[data-ab-goal="working"] .pm56-host .activity-item[data-hover-domain="goal"] svg .nx-p, html[data-ab-todo="working"] .pm56-host .activity-item[data-hover-domain="todo"] svg .nx-p, html[data-ab-subagents="working"] .pm56-host .activity-item[data-hover-domain="subagents"] svg .nx-p, html[data-ab-processes="working"] .pm56-host .activity-item[data-hover-domain="processes"] svg .nx-p, html[data-ab-crew="working"] .pm56-host .activity-item[data-hover-domain="crew"] svg .nx-p, html[data-ab-brainstorm="working"] .pm56-host .activity-item[data-hover-domain="brainstorm"] svg .nx-p, html[data-ab-review="working"] .pm56-host .activity-item[data-hover-domain="review"] svg .nx-p, html[data-ab-chat_room="working"] .pm56-host .activity-item[data-hover-domain="chat_room"] svg .nx-p, html[data-ab-changes="working"] .pm56-host .activity-item[data-hover-domain="changes"] svg .nx-p, html[data-ab-artifacts="working"] .pm56-host .activity-item[data-hover-domain="artifacts"] svg .nx-p{
   animation: var(--kl) 2200ms var(--nx-le) infinite;
   animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms);
 }
-html[data-ab-goal="attention"] .pm56-host .activity-item[data-hover-domain="goal"] > svg .nx-p, html[data-ab-todo="attention"] .pm56-host .activity-item[data-hover-domain="todo"] > svg .nx-p, html[data-ab-subagents="attention"] .pm56-host .activity-item[data-hover-domain="subagents"] > svg .nx-p, html[data-ab-processes="attention"] .pm56-host .activity-item[data-hover-domain="processes"] > svg .nx-p, html[data-ab-crew="attention"] .pm56-host .activity-item[data-hover-domain="crew"] > svg .nx-p, html[data-ab-brainstorm="attention"] .pm56-host .activity-item[data-hover-domain="brainstorm"] > svg .nx-p, html[data-ab-review="attention"] .pm56-host .activity-item[data-hover-domain="review"] > svg .nx-p, html[data-ab-chat_room="attention"] .pm56-host .activity-item[data-hover-domain="chat_room"] > svg .nx-p, html[data-ab-changes="attention"] .pm56-host .activity-item[data-hover-domain="changes"] > svg .nx-p, html[data-ab-artifacts="attention"] .pm56-host .activity-item[data-hover-domain="artifacts"] > svg .nx-p{
+html[data-ab-goal="attention"] .pm56-host .activity-item[data-hover-domain="goal"] svg .nx-p, html[data-ab-todo="attention"] .pm56-host .activity-item[data-hover-domain="todo"] svg .nx-p, html[data-ab-subagents="attention"] .pm56-host .activity-item[data-hover-domain="subagents"] svg .nx-p, html[data-ab-processes="attention"] .pm56-host .activity-item[data-hover-domain="processes"] svg .nx-p, html[data-ab-crew="attention"] .pm56-host .activity-item[data-hover-domain="crew"] svg .nx-p, html[data-ab-brainstorm="attention"] .pm56-host .activity-item[data-hover-domain="brainstorm"] svg .nx-p, html[data-ab-review="attention"] .pm56-host .activity-item[data-hover-domain="review"] svg .nx-p, html[data-ab-chat_room="attention"] .pm56-host .activity-item[data-hover-domain="chat_room"] svg .nx-p, html[data-ab-changes="attention"] .pm56-host .activity-item[data-hover-domain="changes"] svg .nx-p, html[data-ab-artifacts="attention"] .pm56-host .activity-item[data-hover-domain="artifacts"] svg .nx-p{
   animation: var(--kl) 3200ms var(--nx-le) infinite;
   animation-delay: calc(var(--ad, 0) * 3.2ms - 3200ms);
 }
@@ -56373,7 +56479,7 @@ html[data-ab-ready] .pm56-host .activity-item[data-hover-domain]::after{
   background: radial-gradient(closest-side, var(--ab-ink, var(--subtle)), transparent);
   opacity: var(--ab-bl, 0);
 }
-html[data-ab-ready] .pm56-host .activity-item:hover > svg, html[data-ab-ready] .pm56-host .activity-item.active > svg{ --nx-hi-a: calc(var(--ab-hi, var(--nx-h-quiet-i)) + .06); }
+html[data-ab-ready] .pm56-host .activity-item:hover svg, html[data-ab-ready] .pm56-host .activity-item.active svg{ --nx-hi-a: calc(var(--ab-hi, var(--nx-h-quiet-i)) + .06); }
 @keyframes ab-breathe{ 0%, 100% { opacity: 1; } 50% { opacity: .48; } }
 @keyframes ab-alert{
   0%, 43% { opacity: 1; }
@@ -56618,8 +56724,9 @@ html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only > .pm56-activity-b
   width: 30px;
   height: 30px;
   padding: 0;
-  display: grid;
-  place-items: center;
+  
+  display: block;
+  align-content: center;
   border: 1px solid var(--border);
   border-radius: 9px;
   background: var(--surface-2);
@@ -56638,6 +56745,8 @@ html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only > .pm56-activity-b
   transition: opacity 160ms var(--ease, ease), visibility 0s, color 200ms var(--ease, ease);
 }
 .pm56-host .jump-bottom > svg{
+  display: block;
+  margin-inline: auto;
   width: 14px;
   height: 14px;
   flex: 0 0 auto;
@@ -56766,7 +56875,7 @@ html[data-ab-ready] .pm56-host .pm56-activity-bar::-webkit-scrollbar{ display: n
 html[data-ab-ready] .pm56-host .activity-item{ flex: 0 0 auto; }}
 @container pmActivityBar (max-width: 330px){html[data-ab-ready] .pm56-host .activity-item[data-hover-domain="changes"] .count::before, html[data-ab-ready] .pm56-host .activity-item[data-hover-domain="changes"] .count::after{ content: ""; }}
 @container pmActivityBar (max-width: 220px){html[data-ab-ready] .pm56-host .pm56-activity-bar{ justify-content: flex-start; }}
-@media (prefers-reduced-motion: reduce){html[data-ab-ready] .pm56-host .activity-item > svg{ animation: none !important; }
+@media (prefers-reduced-motion: reduce){html[data-ab-ready] .pm56-host .activity-item svg{ animation: none !important; }
 .pm56-host .hover-card.ab-card{ animation: none !important; }
 .pm56-host .jump-bottom.is-working > svg{ animation: none !important; }}
 div.pm56-host.pm56-reduced .hover-card.ab-card, html[data-motion="reduced"] .pm56-host .hover-card.ab-card{ animation: none !important; }
@@ -58141,10 +58250,12 @@ body[data-ph-drawer][data-ph-resizing] div.pm56-host .history-flyout, body[data-
   white-space: normal; overflow-wrap: anywhere;
 }
 .pm56-host .orbit-node-symbol{
-  display: grid; place-items: center; width: 14px; height: 14px;
+  
+  display: block; width: 14px; height: 14px;
   animation: orbit-symbol-in var(--pm-t-icon) var(--pm-ease-pop) backwards;
 }
-.pm56-host .orbit-node-symbol > .nx-st{ width: 100%; height: 100%; display: grid; place-items: center; }
+.pm56-host .orbit-node-symbol > .nx-st{ width: 100%; height: 100%; display: block; }
+.pm56-host .orbit-node-symbol > svg, .pm56-host .orbit-node-symbol > .nx-st > svg{ display: block; }
 .pm56-host .orbit-node-symbol svg{ width: 100%; height: 100%; --nx-u: 1.7143; --nx-stroke-base: 2.3; }
 @keyframes orbit-symbol-in{
   from { opacity: .35; transform: scale(.78); }
@@ -58475,6 +58586,8 @@ html:not([data-o55-nier="on"]) div.pm56-host[data-theme="retro-light"] .orbit-co
 .pm56-host .wa-chrome .wa-disc.done{ color: var(--positive); }
 .pm56-host .wa-chrome .wa-disc.current > svg, .pm56-host .pm-rail-item.orbit-strip-item.current > svg{ --nx-hi-a: var(--nx-h-working-i); }
 .pm56-host .wa-chrome .wa-disc.done > svg, .pm56-host .wa-disc.orbit-strip-item.done > svg{ --nx-hi-a: var(--nx-h-quiet-i); }
+.pm56-host .work-phase-icon{ display: block; align-content: center; }
+.pm56-host .work-phase-icon > svg{ display: block; margin-inline: auto; }
 .pm56-host .working-card .work-phase-icon{ background: var(--surface-3); color: var(--muted); box-shadow: none; }
 .pm56-host .working-variant-0 .reference-stage .work-phase-icon, .pm56-host .receipt-building .work-phase-icon, .pm56-host .stack-card.current .work-phase-icon{
   background: var(--nx-disc); color: var(--pm-step, var(--accent));
@@ -67277,7 +67390,7 @@ div.pm56-host[data-theme^="retro"] svg:where(.nx-a-spin){ --nx-le: steps(16, end
   --nx-ink: var(--text);
 }
 .pm56-host .nx-bolt{
-  position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle;
+  position: relative; isolation: isolate; display: inline-block; flex: none; line-height: 0; vertical-align: middle;
   --nxb-bl: nx-bolt-bl; --nxb-blh: nx-bolt-bl-h; --nxb-rest: var(--nx-bl-attention);
 }
 div.pm56-host[data-theme$="-light"] .nx-bolt{ --nxb-bl: nx-bolt-bl-l; --nxb-blh: nx-bolt-bl-lh; --nxb-rest: .07; }
@@ -67352,7 +67465,7 @@ html[data-o55-nier="on"] .pm56-host [data-menu-anchor="wand"] > svg[data-nx="wan
 .pm56-host svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gsm1{ animation: nx-grill-smoke1 var(--nx-1); }
 .pm56-host svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gsm2{ animation: nx-grill-smoke2 var(--nx-1); }
 .pm56-host svg:where([data-nx="grill"]) .nx-gsm{ stroke-width: calc(var(--nx-stroke-base, 1.8) * var(--nx-tone-k, 1) * .75); }
-.pm56-host .nx-st{ position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle; }
+.pm56-host .nx-st{ position: relative; isolation: isolate; display: inline-block; flex: none; line-height: 0; vertical-align: middle; }
 .pm56-host .nx-st > svg.nx{ display: block; }
 .pm56-host .nx-st::before{
   content: ""; position: absolute; left: 50%; top: 50%; width: 220%; height: 220%; translate: -50% -50%;
@@ -67367,6 +67480,8 @@ html[data-o55-nier="on"] .pm56-host [data-menu-anchor="wand"] > svg[data-nx="wan
 .pm56-host .nx-tn-done::before, .pm56-host .nx-tn-idle::before, .pm56-host .nx-tn-paused::before{ display: none; }
 .pm56-host .nx-st-working::before{ display: none; }
 .pm56-host .nx-st-working .nx-p{ animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
+.pm56-host .nx-st > svg.nx-st-spin{ position: absolute; left: 0; top: 0; transform-box: border-box; transform-origin: 50% 50%; pointer-events: none; }
+.pm56-host .nx-st-working > svg.nx-st-spin .nx-p{ animation: none; }
 .pm56-host .nx-st-reviewing::before{ display: none; }
 .pm56-host .nx-st-reviewing .nx-p{ animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }
 .pm56-host .nx-st-waiting .nx-p{ animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
@@ -67422,6 +67537,7 @@ html[data-o55-nier-parts~="brackets"] .pm56-host .ph-status .nx-st-waiting::afte
 }
 html[data-o55-nier="on"] .pm56-host .nx-st-failed{ animation: o55n-nx-glitch 320ms steps(4, end) 1; }
 html[data-o55-nier-parts~="diamonds"] .pm56-host .nx-st-working > svg.nx{ visibility: hidden; }
+html[data-o55-nier-parts~="diamonds"] .pm56-host .nx-st-working > svg.nx .nx-p, html[data-o55-nier-parts~="diamonds"] .pm56-host .nx-st-working > svg.nx-st-spin{ animation: none; }
 html[data-o55-nier-parts~="diamonds"] .pm56-host .nx-st-working::after{
   content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;
   border: 1.5px solid var(--nx-ink, var(--o55-nier-ink)); outline: 1px solid var(--nx-ink, var(--o55-nier-ink)); outline-offset: -4.5px;
@@ -81363,6 +81479,9 @@ var PMU_SERIES = {
   /* count-up: since the WOW round every count is an odometer roll (PMU.film.odometer, WOW-SPEC 3.1 and 3.6): first render
      spins the digit columns up from zero (rightmost first), a change rolls only the changed digits; compositor-only.
      opts.plain keeps the old text tween (first render 1000 ms from 0 with an ease-out cubic; a change 520 ms). */
+  /* a text written only when it differs (a count that lands on the value it shows, a decode's settled frames): a write of
+     the same text still replaces the node, restyles and wakes every DOM watcher of the page (pm7-perf lane K) */
+  function setText(el, s) { if (el.firstElementChild || el.textContent !== s) el.textContent = s; }
   function countUp(el, from, to, format, opts) {
     opts = opts || {};
     if (!el) return { cancel: function () {} };
@@ -81375,7 +81494,7 @@ var PMU_SERIES = {
     var fam = family(), stepped = fam === 'retro' || fam === 'nier';
     var handle = tween({ from: from == null ? 0 : from, to: to, dur: opts.dur || (from == null ? 'count' : 'value'), delay: opts.delay,
       ease: stepped ? undefined : function (t) { return 1 - Math.pow(1 - t, 3); },
-      step: function (v) { el.textContent = format(v); }, done: function () { el.textContent = format(to); el._pmuCount = null; } });
+      step: function (v) { setText(el, format(v)); }, done: function () { setText(el, format(to)); el._pmuCount = null; } });
     el._pmuCount = handle.cancelled === false && !reduced() ? handle : null;
     return handle;
   }
@@ -81714,10 +81833,13 @@ var PMU_SERIES = {
      is written back as plain text when the roll ends, so the page text after a moment equals an instant render ---- */
   var DIG = /[0-9]/;
   function strip(seq) { return seq.join('\n'); }
+  /* a text written only when it differs (a count that lands on the value it shows, a decode's settled frames): a write of
+     the same text still replaces the node, restyles and wakes every DOM watcher of the page (pm7-perf lane K) */
+  function setText(el, s) { if (el.firstElementChild || el.textContent !== s) el.textContent = s; }
   function odometer(el, to, format, o) {
     o = o || {};
     if (!el) return { cancel: function () {} };
-    if (off.odo) { el.textContent = format(to); return { cancel: function () {} }; }
+    if (off.odo) { setText(el, format(to)); return { cancel: function () {} }; }
     var fin = format(to);
     /* WOW-SPEC-3 9.1 / E3-10: a roll already running to this text keeps running; a reading whose shown text is already
        the target never rolls (no re-roll of an unchanged value by a patch) */
@@ -81728,7 +81850,7 @@ var PMU_SERIES = {
     /* quiet (WOW-SPEC-3 3.3, Q3 heroRoll): during an entrance only the hero's numbers roll; a supporting value is written
        final (one text write, no columns), as is any roll asked for with {quiet: true} */
     var quietNow = o.quiet || first && quietEl(el);
-    if (reduced() || quietNow || !DIG.test(fin) || (!first && (prev === fin || el.textContent === fin))) { el.textContent = fin; return { cancel: function () {} }; }
+    if (reduced() || quietNow || !DIG.test(fin) || (!first && (prev === fin || el.textContent === fin))) { setText(el, fin); return { cancel: function () {} }; }
     var f = fam();
     /* NieR decodes; without a GPU the hero's decode is one text swap at its time (PERF-3 open item: the decode is a JS
        tween on every frame of the moment) */
@@ -81817,10 +81939,10 @@ var PMU_SERIES = {
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function swapText(el, text, delay) {
-    if (!delay || reduced()) { el.textContent = text; return { cancel: function () {} }; }
+    if (!delay || reduced()) { setText(el, text); return { cancel: function () {} }; }
     el.classList.add('pmu-dec-wait');
-    var id = setTimeout(function () { el.classList.remove('pmu-dec-wait'); el.textContent = text; }, delay * M.speed());
-    return { cancel: function () { clearTimeout(id); el.classList.remove('pmu-dec-wait'); el.textContent = text; } };
+    var id = setTimeout(function () { el.classList.remove('pmu-dec-wait'); setText(el, text); }, delay * M.speed());
+    return { cancel: function () { clearTimeout(id); el.classList.remove('pmu-dec-wait'); setText(el, text); } };
   }
   /* ---- NieR decode (5): glyphs cycle every 30 ms and lock left to right, 35 ms per character, at most 420 ms; the final
      characters are exact (never zero-first) ---- */
@@ -81832,7 +81954,7 @@ var PMU_SERIES = {
     if (!el) return { cancel: function () {} };
     if (el._pmuDecode) el._pmuDecode.cancel();
     /* a card title's nowrap spans (42-cards.js nbHyphen, item 9) come back when the decode lands */
-    var html0 = el.firstElementChild && el.textContent === text ? el.innerHTML : null, land = function () { if (html0 != null) el.innerHTML = html0; else el.textContent = text; };
+    var html0 = el.firstElementChild && el.textContent === text ? el.innerHTML : null, land = function () { if (html0 != null) el.innerHTML = html0; else setText(el, text); };
     if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); land(); return { cancel: function () {} }; }
     var n = text.length, per = Math.min(35, 420 / Math.max(1, n)), total = per * n + 60, lastBucket = -1;
     var same = o.from != null && String(o.from).length === n ? String(o.from) : null;
@@ -81856,7 +81978,7 @@ var PMU_SERIES = {
       step: function (ms) {
         show();
         var bucket = Math.floor(ms / 30); if (bucket === lastBucket) return; lastBucket = bucket;
-        el.textContent = glyphs(ms, bucket);
+        setText(el, glyphs(ms, bucket));
       },
       done: function () { show(); land(); if (el._pmuDecode === handle) el._pmuDecode = null; } });
     var handle = { cancel: function () { tw.cancel(); show(); if (el._pmuDecode === handle) el._pmuDecode = null; } };
@@ -86613,6 +86735,9 @@ var PMU_SERIES = {
 
   /* number roll: from the value on screen to the new one (first time from 0), tabular, no overshoot. The element keeps
      the shown value in data-shown so a later change counts from it (DESIGN-SPEC 8.5, A1 8.1). */
+  /* a text written only when it differs (a count that lands on the value it shows, a decode's settled frames): a write of
+     the same text still replaces the node, restyles and wakes every DOM watcher of the page (pm7-perf lane K) */
+  function setText(el, s) { if (el.firstElementChild || el.textContent !== s) el.textContent = s; }
   charts.roll = function (el, to, format, opts) {
     if (!el) return null;
     opts = opts || {};
@@ -86624,15 +86749,15 @@ var PMU_SERIES = {
     if (!finite(to)) { el.textContent = opts.missing || '-'; el.removeAttribute('data-shown'); return null; }
     el.setAttribute('data-shown', String(to));
     /* a quiet entrance writes its numbers final (WOW-SPEC-3 3.3: supporting values never roll on an entrance) */
-    if (reduced() || from === to || opts.instant || opts.quiet || (first && quietNow())) { el.textContent = opts.finalText != null ? opts.finalText : format(to); return null; }
+    if (reduced() || from === to || opts.instant || opts.quiet || (first && quietNow())) { setText(el, opts.finalText != null ? opts.finalText : format(to)); return null; }
     /* every roll is an odometer since the WOW round (WOW-SPEC 3.1, 3.6; PMU.film.odometer): digit columns on the compositor */
     if (opts.finalText == null && PMU.film && PMU.film.odometer) {
       el._pmuRoll = PMU.film.odometer(el, to, format, { from: first ? null : from, change: !first, delay: opts.delay || 0, dur: opts.dur, spins: opts.spins });
       return el._pmuRoll;
     }
-    el.textContent = format(from);
-    el._pmuRoll = tw(opts.dur || (first ? 1000 : 520), 'count', function (k) { el.textContent = format(k >= 1 ? to : from + (to - from) * k); },
-      function () { el._pmuRoll = null; el.textContent = opts.finalText != null ? opts.finalText : format(to); }, opts.delay || 0);
+    setText(el, format(from));
+    el._pmuRoll = tw(opts.dur || (first ? 1000 : 520), 'count', function (k) { setText(el, format(k >= 1 ? to : from + (to - from) * k)); },
+      function () { el._pmuRoll = null; setText(el, opts.finalText != null ? opts.finalText : format(to)); }, opts.delay || 0);
     return el._pmuRoll;
   };
   /* value-change pulse (WOW-SPEC 3.6): the reading flashes once (a pre-painted glow layer, opacity only) and a light
@@ -87278,9 +87403,11 @@ var PMU_SERIES = {
     return PMU.motion.tween({ from: 0, to: 1, dur: dur || 420, delay: delay || 0, ease: 'linear',
       step: function (v, t) {
         var x = t == null ? v : t, k = 1 - Math.pow(1 - x, 3);
-        jobs.forEach(function (j) { j.el.setAttribute('d', pathFrom(j.sk, j.a.map(function (a0, i) { return a0 + (j.b[i] - a0) * k; }))); });
+        /* a stepped voice (NieR) holds k between steps: the same d is not written again (208 same-value writes in two
+           beats on NieR Dark Home, pm7-perf lane K) */
+        jobs.forEach(function (j) { var d = pathFrom(j.sk, j.a.map(function (a0, i) { return a0 + (j.b[i] - a0) * k; })); if (j.el.getAttribute('d') !== d) j.el.setAttribute('d', d); });
       },
-      done: function () { jobs.forEach(function (j) { j.el.setAttribute('d', j.d1); }); } });
+      done: function () { jobs.forEach(function (j) { if (j.el.getAttribute('d') !== j.d1) j.el.setAttribute('d', j.d1); }); } });
   };
   /* marks that ride a morphing path (Jared 2026-10-09, item 3: a dot "doesn't follow its line"). A path morphs by a JS
      tween (the area and line morphs, livePatchSvg, the spark), stepping k = ease-out cubic of its linear t on the rAF
@@ -87734,7 +87861,7 @@ var PMU_SERIES = {
   function axisW(labels) { var m = 0; labels.forEach(function (s) { m = Math.max(m, charts.textW(s, 11, true)); }); return m; }
   /* axes: horizontal gridlines with left (and right) ticks sharing k divisions, unit titles, x ticks and grid */
   function drawAxes(svg, g, patch) {
-    svg.setAttribute('width', g.W); svg.setAttribute('height', g.H);
+    setWH(svg, g.W, g.H);
     var s = '', i, y;
     for (i = 0; i <= g.ya.k; i++) {
       y = r1(g.pad.t + g.ph - g.ph * i / g.ya.k) + 0.5;
@@ -88186,8 +88313,8 @@ var PMU_SERIES = {
         P.cost = charts.key(S('path', { class: 'pmu-mark', 'data-mark': 'line', 'data-key': 'cost', 'data-role': 'cost' }, f.plot), ov.key);
       }
     }
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
+    setWH(f.over, W, Hh);
     f.plot.classList.toggle('is-split', split);
     /* split token bands hide the total line: the comet then rides the top band's edge (the stack's top is the last series) */
     P.edges.forEach(function (e, i) { if (split && m.token && i === P.edges.length - 1) e.setAttribute('data-comet', '1'); else e.removeAttribute('data-comet'); });
@@ -88241,20 +88368,25 @@ var PMU_SERIES = {
     else if (c._hover) { c._hover.destroy(); c._hover = null; }
     paintIso(c);
   }
+  /* a path's d and an svg's size are written only when they differ: a Live beat that leaves the plot where it was tweened
+     every frame from the shape to the same shape, and rewrote the d of each band, edge and line with the value it held
+     (208 writes in one beat, NieR Dark Home), and every re-render rewrote the plot's width and height (pm7-perf lane K) */
+  function setD(el, d) { if (el.getAttribute('d') !== d) el.setAttribute('d', d); }
+  function setWH(svg, w, h) { if (svg.getAttribute('width') !== String(w)) svg.setAttribute('width', w); if (svg.getAttribute('height') !== String(h)) svg.setAttribute('height', h); }
   function paintArea(c, cur, geo) {
     var P = c.P;
     if (geo.token) {
-      P.total.setAttribute('d', gapBand(cur.x0, cur.x1, cur.tot, cur.base));
+      setD(P.total, gapBand(cur.x0, cur.x1, cur.tot, cur.base));
       var tl = gapLine(cur.x0, cur.x1, cur.tot);
-      P.totalLine.setAttribute('d', tl); P.glow.setAttribute('d', tl); if (P.core) P.core.setAttribute('d', tl);
+      setD(P.totalLine, tl); setD(P.glow, tl); if (P.core) setD(P.core, tl);
     }
     cur.lv.forEach(function (row, j) {
       var bot = geo.stacked ? (j ? cur.lv[j - 1] : cur.base) : cur.base;
-      P.bands[j].setAttribute('d', gapBand(cur.x0, cur.x1, row, bot.map(function (v, i) { return finite(v) ? v : cur.base[i]; })));
-      P.edges[j].setAttribute('d', gapLine(cur.x0, cur.x1, row));
+      setD(P.bands[j], gapBand(cur.x0, cur.x1, row, bot.map(function (v, i) { return finite(v) ? v : cur.base[i]; })));
+      setD(P.edges[j], gapLine(cur.x0, cur.x1, row));
     });
-    if (P.cost && cur.cd != null) P.cost.setAttribute('d', cur.cd);
-    else if (P.cost && cur.cs) P.cost.setAttribute('d', gapLine(cur.x0, cur.x1, cur.cs));
+    if (P.cost && cur.cd != null) setD(P.cost, cur.cd);
+    else if (P.cost && cur.cs) setD(P.cost, gapLine(cur.x0, cur.x1, cur.cs));
   }
   /* the NOW / last point of each line: a 3.5 px dot with a static 10 px halo (WOW-SPEC 2.4), HTML over the plot */
   function endDots(c, geo, m, totals, cost, Y, YB, mids, slide, morphing) {
@@ -88642,8 +88774,8 @@ var PMU_SERIES = {
       swapAxes(f, { W: W, H: Hh, pad: pad, pw: pw, ph: ph, ya: ya, yMin0: lo === 0, unitA: spec.unitTitle || charts.unitTitle(unit),
         ylab: function (i) { return charts.fmtAxis(lo + ya.step * i, unit, ya.step); }, xt: xt, extra: extra }, live ? 'live' : mode === 'morph');
     } else f.axes.innerHTML = '';
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
+    setWH(f.over, W, Hh);
     var pts = series.map(function (s) { return (s.values || []).map(function (v) { return finite(v) ? Y(v) : null; }); });
     var bandPts = null, fcPts = null;
     if (fc && finite(fc.from)) {
@@ -88851,7 +88983,7 @@ var PMU_SERIES = {
       ylab: function (i) { return charts.fmtAxis(ya.step * i, unit, ya.step); }, xt: xt };
     swapAxes(f, g, live ? 'live' : mode === 'morph');
     /* the overlay svg keeps the plot's size (an unsized svg is 300 x 150 and pushed short cards into overflow) */
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.over, W, Hh);
     /* bars (DOM) */
     if (!f.bars) { f.bars = H('div', 'pmu-cols', f.box); }
     var bars = f.bars;
@@ -89032,7 +89164,7 @@ var PMU_SERIES = {
     var W = Math.max(24, c._w || 0), Hh = c._h >= 12 ? c._h : (spec.height || c.opts.height || 28);
     c.el.style.height = Hh + 'px';
     var vals = (spec.values || []), n = vals.length;
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
     if (!n) { f.plot.innerHTML = ''; return; }
     var lo = Infinity, hi = -Infinity;
     vals.forEach(function (v) { if (finite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } });
@@ -89197,8 +89329,8 @@ var PMU_SERIES = {
       ylab: function (i) { return charts.fmtAxis(ya.step * i, 'usd', ya.step); }, xt: xt, extra: extra }, live ? 'live' : morph);
     c._bgeo = { W: W, ph: ph, xNow: xtd, pad: pad, pw: pw, days: days, top: ya.top, ya: ya, xLast: null };
     if (compact) f.axes.innerHTML = '';
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
+    setWH(f.over, W, Hh);
     var pts = []; cum.forEach(function (v, i) { if (finite(v)) pts.push([X(i + 1), Y(v)]); });
     if (pts.length) c._bgeo.xLast = pts[pts.length - 1][0];
     /* the flyer map (C3-5): the budget repeats on Overview and Costs (chart:budget); its domain is the month x [0, top] */
@@ -89530,8 +89662,8 @@ var PMU_SERIES = {
     swapAxes(f, { W: W, H: Hh, pad: pad, pw: pw, ph: ph, ya: ya, yMin0: true, unitA: '',
       ylab: function (i) { return (25 * i) + '%'; }, xt: xt, extra: extra }, morph);
     $$('.pmu-grid', f.axes).forEach(function (g, i) { if (i === 4) g.classList.add('is-100'); });
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
+    setWH(f.over, W, Hh);
     var s = '', hl = '';
     wins.forEach(function (w, i) {
       var pts = (w.points || []).filter(function (p) { return finite(p.v); });
@@ -91586,7 +91718,8 @@ var PMU_SERIES = {
     function place(card, r) {
       card._pmuBoard = api;
       gridPlace(card, r);
-      card.dataset.x = r.x; card.dataset.y = r.y; card.dataset.w = r.w; card.dataset.h = r.h;
+      // only what differs: a relayout after a look change put every card back where it was and rewrote its four numbers
+      ['x', 'y', 'w', 'h'].forEach(function (k) { if (card.dataset[k] !== String(r[k])) card.dataset[k] = r[k]; });
       var def = PMU.widgets.get(card.getAttribute('data-widget')) || {};
       var form = PMU.cards.headForm(def, r.w, r.h, current.cls ? current.cls.pitchX : 48);
       if (card.getAttribute('data-head') !== form) card.setAttribute('data-head', form);
@@ -92262,9 +92395,9 @@ var PMU_SERIES = {
       flushLeaving(true);
       dropOld();
       cardsNow().forEach(destroyCard);
-      boardEl.setAttribute('data-held', '');
+      if (boardEl.getAttribute('data-held') !== '') boardEl.setAttribute('data-held', '');
       boardEl.removeAttribute('data-hold-bodies');
-      boardEl.setAttribute('data-room', room);
+      if (boardEl.getAttribute('data-room') !== room) boardEl.setAttribute('data-room', room);
       setBoardClass();
       boardEl.removeAttribute('data-op');
       boardEl.textContent = '';
@@ -94313,7 +94446,7 @@ var PMU_SERIES = {
     /* the key (mark or swatch) first: titleFits and fitSub measure the room beside it, and a hidden key read on the first
        sync made the subtitle 34 px too generous (FINAL-REVIEW-3 must-fix 8: Muse Code "Standby · alex@orbit.example" cut
        at 140 / 185 px in Glass Dark 1440) */
-    if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; keyEl.hidden = !k; } }
+    if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; if (keyEl.hidden !== !k) keyEl.hidden = !k; } }
     var full = text(def.title, ctx), sub = text(def.meta, ctx);
     /* the short title only where the whole title does not fit its line (final fix M8: provider tiles keep their Settings
        names wherever they fit) */
@@ -97099,7 +97232,8 @@ var PMU_SERIES = {
     if (line) {
       if (!line.hasAttribute('data-pm-hover-foldbase')) line.setAttribute('data-pm-hover-foldbase', line.getAttribute('data-pm-hover-detail') || '');
       var base = line.getAttribute('data-pm-hover-foldbase');
-      line.setAttribute('data-pm-hover-label', line.getAttribute('data-pm-hover-label') && base ? line.getAttribute('data-pm-hover-label') : C.FOLD_LABEL);
+      var label = line.getAttribute('data-pm-hover-label') && base ? line.getAttribute('data-pm-hover-label') : C.FOLD_LABEL;
+      if (line.getAttribute('data-pm-hover-label') !== label) line.setAttribute('data-pm-hover-label', label);
       line.setAttribute('data-pm-hover-detail', rows.concat(base ? [base] : [], notes).join('; '));
       return;
     }
@@ -97638,7 +97772,8 @@ var PMU_SERIES = {
         body.innerHTML = '<div class="pmu-kpi is-wide"' + tileHover + '><div class="pmu-kpimain">' + head + subEl + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>' +
           '<div class="pmu-kpiside">' + factsHtml + moreHtml + '</div></div>';
       } else {
-        body.innerHTML = '<div class="pmu-kpi"' + tileHover + '>' + head + subEl + factsHtml + moreHtml + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>';
+        var html = '<div class="pmu-kpi"' + tileHover + '>' + head + subEl + factsHtml + moreHtml + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>';
+        if (body.innerHTML !== html) body.innerHTML = html;
       }
       var sp = body.querySelector('.pmu-kpispark, .pmu-kpitrend');
       if (sp) C.chart(body, 'spark', sp, { values: m.spark.values, idx: m.spark.idx || 0, tk: m.spark.tk }, { label: ctx.def.title + ' trend' });
@@ -97838,7 +97973,7 @@ var PMU_SERIES = {
       rows0.slice(0, k1.length - 1).forEach(function (r, j) {
         var d = drows[j + 1]; if (!d || r.innerHTML === d.innerHTML) return;
         r.innerHTML = d.innerHTML;
-        ['data-pm-hover-label', 'data-pm-hover-detail', 'data-tone'].forEach(function (a) { if (d.hasAttribute(a)) r.setAttribute(a, d.getAttribute(a)); else r.removeAttribute(a); });
+        ['data-pm-hover-label', 'data-pm-hover-detail', 'data-tone'].forEach(function (a) { var value = d.getAttribute(a); if (r.getAttribute(a) !== value) { if (value === null) r.removeAttribute(a); else r.setAttribute(a, value); } });
       });
       var m0 = list.querySelector(':scope > .pmu-more'), m1 = dl.querySelector(':scope > .pmu-more');
       if (m0 && m1) { m0.textContent = m1.textContent; ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { if (m1.hasAttribute(a)) m0.setAttribute(a, m1.getAttribute(a)); }); }
@@ -98445,9 +98580,10 @@ var PMU_SERIES = {
       var reserve = (compact ? 56 : 40) + (factsOk ? 30 : 0) + (mixOk ? 40 : 0);
       /* the plot takes whatever the hero leaves (the hero wraps to a second line at some widths), so no band stays empty */
       void reserve;
-      body.innerHTML = '<div class="pmu-budget' + (compact ? ' is-compact' : '') + '">' + hero + '<div class="pmu-budgetplot pmu-fillplot"></div>' +
+      var html = '<div class="pmu-budget' + (compact ? ' is-compact' : '') + '">' + hero + '<div class="pmu-budgetplot pmu-fillplot"></div>' +
         (factsOk ? '<div class="pmu-factrow">' + m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('') + '</div>' : '') +
         (mixOk ? '<div class="pmu-budgetmix"></div>' : '') + '</div>';
+      if (body.innerHTML !== html) body.innerHTML = html;
       C.chart(body, 'budget', body.querySelector('.pmu-budgetplot'), budgetSpec(m, compact),
         { label: 'Budget projection: ' + C.money(m.spent) + ' of ' + C.money(m.budget), tier: ctx.tier, readout: true });
       if (mixOk) C.chart(body, 'mix', body.querySelector('.pmu-budgetmix'), { segments: m.mix, legend: true }, { label: 'Plan allocation versus metered' });
@@ -149874,7 +150010,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     if (typeof p.cooldownSec === 'number') {
       D.cooldown = p.cooldownSec;
       var cd = document.getElementById('pm6DashCooldown');
-      if (cd) cd.textContent = fmtCooldown(D.cooldown);
+      if (cd) { var text = fmtCooldown(D.cooldown); if (cd.textContent !== text) cd.textContent = text; }
     }
     var qs = p.quotas;
     if (qs && qs.length) {
@@ -149884,7 +150020,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       if (q && typeof q.pct === 'number' && Math.round(q.pct) !== D.usagePct) {
         D.usagePct = Math.round(q.pct);
         var pctEl = document.getElementById('pm6DashUsagePct');
-        if (pctEl) pctEl.textContent = D.usagePct + '%';
+        if (pctEl && pctEl.textContent !== D.usagePct + '%') pctEl.textContent = D.usagePct + '%';
         refreshKind('quota_summary');
       }
     }
@@ -149900,7 +150036,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       if (p && typeof p.pct === 'number') {
         D.usagePct = Math.round(p.pct);
         var pctEl = document.getElementById('pm6DashUsagePct');
-        if (pctEl) pctEl.textContent = D.usagePct + '%';
+        if (pctEl && pctEl.textContent !== D.usagePct + '%') pctEl.textContent = D.usagePct + '%';
       }
       if (sub && p && p.suggestion) sub.textContent = String(p.suggestion);
     }
@@ -149944,21 +150080,32 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     // cooldown countdown on the ambient usage warning card
     // PM7 T08: the decrement keeps its exact schedule; only the DOM write is
     // gated to the active dashboard page and flushed on page.changed.
+    // pm7-perf lane I: nor while the onboarding window is open (html[data-o55-open]): the app under it is inert and
+    // its loops rest (onboarding README, Performance rules, 6). Each write there woke six document-wide
+    // MutationObservers and restyled #dashboardView and main.primary-content through their :has() rules, 0.1-0.4 ms a
+    // second for a clock nobody can see (Windows, Basic and Glass Dark). The window's close writes the current value.
     var pm7DashCdDirty = false;
+    var pm7Html = document.documentElement;
+    function pm7DashCdFlush(shown) {
+      if (!pm7DashCdDirty || pm7Html.hasAttribute('data-o55-open') || !(shown || root().classList.contains('active'))) return;
+      pm7DashCdDirty = false;
+      var el = document.getElementById('pm6DashCooldown');
+      if (el) { var text = fmtCooldown(D.cooldown); if (el.textContent !== text) el.textContent = text; }
+    }
     setInterval(function () {
       if (document.hidden) return;
       var el = document.getElementById('pm6DashCooldown');
       if (!el) return;
       D.cooldown = Math.max(0, D.cooldown - 1);
-      if (root().classList.contains('active')) { el.textContent = fmtCooldown(D.cooldown); pm7DashCdDirty = false; }
+      if (root().classList.contains('active') && !pm7Html.hasAttribute('data-o55-open')) { var text = fmtCooldown(D.cooldown); if (el.textContent !== text) el.textContent = text; pm7DashCdDirty = false; }
       else { pm7DashCdDirty = true; }
     }, 1000);
     on('page.changed', function (p) {
-      if (!p || p.page !== 'dashboard' || !pm7DashCdDirty) return;
-      pm7DashCdDirty = false;
-      var el = document.getElementById('pm6DashCooldown');
-      if (el) el.textContent = fmtCooldown(D.cooldown);
+      if (p && p.page === 'dashboard') pm7DashCdFlush(true);
     });
+    if (typeof MutationObserver === 'function') {
+      new MutationObserver(function () { pm7DashCdFlush(false); }).observe(pm7Html, { attributes: true, attributeFilter: ['data-o55-open'] });
+    }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
@@ -152142,16 +152289,35 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   }
 
   /* ---------- header + banners + tab badges ---------- */
+  /* The header is marked on every demo event (one every few seconds) whatever page is shown, and it wrote its fifteen
+     elements each time with the values they already held: a same-value text, attribute, hidden or title still restyles
+     and wakes the page's DOM watchers, whose frames followed (pm7-perf lane A census, 2026-11-10: about 15 such writes
+     every 5 s on Settings and Home). Now it writes a value only when it differs, and nothing while the page is not
+     shown: PM_PAGES.go marks every widget when it shows the page (page.changed, subscribe below), so the header is
+     written in the frame the page first appears. The elapsed clock's start and end are still noted on every event. A
+     title is compared with the one this wrote last: PMConcept7's hover tags move it to their own attribute. */
+  function putText(el, v) { if (el && el.textContent !== v) el.textContent = v; }
+  function putAttr(el, k, v) { if (el && el.getAttribute(k) !== v) el.setAttribute(k, v); }
+  function putProp(el, k, v) { if (el && el[k] !== v) el[k] = v; }
+  function putTitle(el, v) { if (el && el.__orchTitle !== v) { el.__orchTitle = v; el.title = v; } }
   var elapsedStart = null, elapsedEnd = null;
   RENDERERS.header = safe(function () {
     var st = ST();
     if (!st) return;
     var run = st.run;
+    /* elapsed: where the run's clock started and ended, noted whether or not the page is shown */
+    var stage2 = run.stage;
+    if (stage2 && stage2 !== 'idle' && stage2 !== 'pending-launch' && elapsedStart === null) {
+      var guess = stage2 === 'complete' ? 110000 : (stage2 === 'compiling' ? 2000 : 45000);
+      elapsedStart = st.clock.t - guess;
+    }
+    if (stage2 === 'complete' && elapsedEnd === null && elapsedStart !== null) elapsedEnd = st.clock.t;
+    if (!pageIsActive()) return;
     var chipId = $('pm6OrchRunChipId'), modeEl = $('pm6OrchRunMode');
-    if (chipId) chipId.textContent = focusedId();
+    putText(chipId, focusedId());
     if (modeEl) {
-      modeEl.textContent = run.focusMode === 'historical' ? 'historical' : 'live';
-      modeEl.setAttribute('data-mode', run.focusMode === 'historical' ? 'historical' : 'live');
+      putText(modeEl, run.focusMode === 'historical' ? 'historical' : 'live');
+      putAttr(modeEl, 'data-mode', run.focusMode === 'historical' ? 'historical' : 'live');
     }
     var badge = $('pm6OrchStatusBadge');
     if (badge) {
@@ -152163,67 +152329,55 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         : stage === 'executing' ? 'Running'
         : stage === 'blocked' ? 'Blocked'
         : stage === 'complete' ? 'Complete' : stage;
-      badge.textContent = label;
-      badge.setAttribute('data-state',
+      putText(badge, label);
+      putAttr(badge, 'data-state',
         !st.clock.playing && stage !== 'complete' ? 'paused'
         : stage === 'executing' ? 'running' : stage);
     }
     /* freshness */
     var fr = run.freshness || 'current';
     var fchip = $('pm6OrchFreshChip'), flabel = $('pm6OrchFreshLabel'), fban = $('pm6OrchFreshBanner');
-    if (fchip) fchip.setAttribute('data-fresh', fr);
-    if (flabel) flabel.textContent = 'Projection: ' + fr;
-    if (fban) fban.hidden = fr === 'current';
+    putAttr(fchip, 'data-fresh', fr);
+    putText(flabel, 'Projection: ' + fr);
+    putProp(fban, 'hidden', fr === 'current');
     /* historical banner */
     var hban = $('pm6OrchHistBanner'), htext = $('pm6OrchHistBannerText');
-    if (hban) hban.hidden = !hist();
+    putProp(hban, 'hidden', !hist());
     if (htext && hist()) {
-      htext.textContent = 'Viewing ' + focusedId() + ' — read-only historical snapshot. Controls that mutate the run are parked.';
+      putText(htext, 'Viewing ' + focusedId() + ' — read-only historical snapshot. Controls that mutate the run are parked.');
     }
     /* pause / resume */
     var pb = $('pm6OrchPauseBtn'), rb = $('pm6OrchResumeBtn');
     if (pb && rb) {
       var playing = !!st.clock.playing;
       if (hist()) {
-        pb.disabled = true; rb.disabled = true;
-        pb.setAttribute('data-reason', 'stale'); rb.setAttribute('data-reason', 'stale');
-        pb.title = 'stale — historical snapshot; focus the live run to control it';
-        rb.title = pb.title;
+        putProp(pb, 'disabled', true); putProp(rb, 'disabled', true);
+        putAttr(pb, 'data-reason', 'stale'); putAttr(rb, 'data-reason', 'stale');
+        putTitle(pb, 'stale — historical snapshot; focus the live run to control it');
+        putTitle(rb, 'stale — historical snapshot; focus the live run to control it');
       } else {
-        pb.disabled = !playing;
-        rb.disabled = playing;
-        pb.setAttribute('data-reason', playing ? '' : 'already_done');
-        rb.setAttribute('data-reason', playing ? 'already_done' : '');
-        pb.title = playing ? 'Pause the focused run at the next safe point' : 'already_done — ' + REASON_HINT.already_done;
-        rb.title = playing ? 'already_done — run is already live' : 'Resume the paused run';
+        putProp(pb, 'disabled', !playing);
+        putProp(rb, 'disabled', playing);
+        putAttr(pb, 'data-reason', playing ? '' : 'already_done');
+        putAttr(rb, 'data-reason', playing ? 'already_done' : '');
+        putTitle(pb, playing ? 'Pause the focused run at the next safe point' : 'already_done — ' + REASON_HINT.already_done);
+        putTitle(rb, playing ? 'already_done — run is already live' : 'Resume the paused run');
       }
     }
     /* elapsed */
-    var stage2 = run.stage;
-    if (stage2 && stage2 !== 'idle' && stage2 !== 'pending-launch' && elapsedStart === null) {
-      var guess = stage2 === 'complete' ? 110000 : (stage2 === 'compiling' ? 2000 : 45000);
-      elapsedStart = st.clock.t - guess;
-    }
-    if (stage2 === 'complete' && elapsedEnd === null && elapsedStart !== null) elapsedEnd = st.clock.t;
-    var eEl = $('pm6OrchElapsed');
-    if (eEl) {
-      eEl.textContent = elapsedStart === null ? '--:--'
-        : fmtClock(((elapsedEnd === null ? st.clock.t : elapsedEnd) - elapsedStart) / 1000);
-    }
+    putText($('pm6OrchElapsed'), elapsedStart === null ? '--:--'
+      : fmtClock(((elapsedEnd === null ? st.clock.t : elapsedEnd) - elapsedStart) / 1000));
     /* tab badges */
     var gates = run.gates || {};
     var pending = Object.keys(gates).filter(function (k) { return gates[k].state === 'attention_required'; }).length;
-    var bp = $('orchTabBadgeProgress');
-    if (bp) bp.textContent = pending ? String(pending) : '';
+    putText($('orchTabBadgeProgress'), pending ? String(pending) : '');
     var attn = false;
     Object.keys(run.nodes || {}).forEach(function (k) { if (isProblem(run.nodes[k].state)) attn = true; });
     var bg = $('orchTabBadgeNodeGraph');
-    if (bg) bg.style.display = attn ? 'inline-block' : 'none';
-    var be = $('orchTabBadgeEvidence');
-    if (be) be.textContent = String(evidenceRows().length);
-    var bl = $('orchTabBadgeLedger');
+    if (bg && bg.style.display !== (attn ? 'inline-block' : 'none')) bg.style.display = attn ? 'inline-block' : 'none';
+    putText($('orchTabBadgeEvidence'), String(evidenceRows().length));
     var d = D();
-    if (bl) bl.textContent = d && d.log ? String(d.log.length) : '';
+    putText($('orchTabBadgeLedger'), d && d.log ? String(d.log.length) : '');
   }, 'header');
 
   /* ---------- Progress widgets ---------- */
@@ -161072,11 +161226,29 @@ policies for tenant isolation, and add migration script.</textarea>
       requestAnimationFrame(function () { moveInk(false); });
     });
   }
+  /* The live counters on the Artifacts and Tests shelves keep counting, but write only while their row is drawn. A
+     shelf that is not open has no box, and the write into it still restyled the page once a second each, woke the
+     page's DOM watchers and drew a frame at rest (lane A, 2026-11-10: 2 of the 35-55 main frames a second at rest on
+     Home and Settings). The row's ResizeObserver hears it get a box again and writes the count before that frame is
+     painted, so a counter never shows a stale value. It starts unshown: the observer reports a row that is drawn at
+     once and stays silent for one that is not. */
+  function liveCounter(el, n) {
+    var row = el.closest('div') || el.parentElement, shown = false, stale = true;
+    function put() { stale = false; var v = n.toFixed(1) + 's'; if (el.textContent !== v) el.textContent = v; }
+    if (window.ResizeObserver && row) {
+      new ResizeObserver(function (en) {
+        var r = en[en.length - 1].contentRect;
+        shown = r.width > 0 || r.height > 0;
+        if (shown && stale) put();
+      }).observe(row);
+    } else shown = true;
+    setInterval(function () { if (document.hidden) return; n += 1; if (shown) put(); else stale = true; }, 1000);
+  }
   function wireTickers() {
     var art = byId('artLiveElapsed');
-    if (art) { var s1 = 18; setInterval(function () { if (document.hidden) return; s1 += 1; art.textContent = s1.toFixed(1) + 's'; }, 1000); }
+    if (art) liveCounter(art, 18);
     var tst = byId('tstLiveElapsed');
-    if (tst) { var s2 = 41; setInterval(function () { if (document.hidden) return; s2 += 1; tst.textContent = s2.toFixed(1) + 's'; }, 1000); }
+    if (tst) liveCounter(tst, 41);
   }
 
   /* ================= 6. File Manager machinery ================= */
@@ -163754,7 +163926,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        judged: by the two rAF intervals after the step's frame (the first is where a GPU compile holds the next frame)
          and, for a GPU step, every interval of its watch, until 300 ms after its frame, since on the P1000 its programs
          link 100-350 ms after its frame, when the tiles raster (frameMs [d1, d2, worst later]); the next admission waits
-         for the watch, so links never stack across steps. Late (v3.9) is any of them over 100 ms, the acceptance bar;
+         for the watch, so links never stack across steps. The watch runs while a computer shows it is needed (pm7-perf
+         lane B): from the start and after any interval over the slow bar; after 16 watched steps in a row with every
+         interval on time (25 ms) a GPU step is judged by its two intervals, logged watched: false, until a slow
+         interval comes again. Late (v3.9) is any of them over 100 ms, the acceptance bar;
          slow is one over max(40 ms, 3x the median refresh) but not over 100 ms, logged 'slow': one program linked (45-84
          ms on the P1000) is warm then, so a slow step takes the clean path, and only ends a light chain and holds light
          steps to one a frame pair for 2 s. A cpu step (it makes no GPU work) keeps two intervals: in a long slot the two
@@ -163764,7 +163939,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        light (one kind, <= 2 ms of JS): judged by the one interval after it; the owner's next step, if light, may go in
          the next frame (one per frame) while that interval is under the slow bar, every gate holds, no frame was slow or
          late in the last 2 s and the chain is under
-         100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch.
+         100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch (while it is needed; else
+         the interval after its own).
        late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
          goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
          after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
@@ -163778,9 +163954,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      add({ owner, name, run, near, later, light, cpu, until, onLate }) -> id; cancel(id), cancelOwner(owner), state(owner?)
      { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
      last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also PM_WARM.log): the last 200
-     { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome }. 'pm-warm-done' on window when the queue
-     empties, at the session stop, and after an add skipped with nothing queued (warming off), so an owner that waits
-     for it never waits on a software-rendered computer */
+     { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome, watched: false on a GPU step judged without
+     its watch, watchReset: true on the first row after an interval that no row shows set the count of steady watches
+     back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
+     nothing queued (warming off), so an owner that waits for it never waits on a software-rendered computer */
   const warmFlag = (v) => { try { return new RegExp('(?:^|[?&])pm-warm=' + v + '(?:&|$)').test(location.search); } catch (_) { return false; } };
   const warmOff = warmFlag('0'), warmForce = warmFlag('force');
   /* softwareRendered() says false until its worker has answered, so only a known answer is kept (landing review IW-1) */
@@ -163799,7 +163976,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   let warmSeq = 0, warmLastOwner = '', warmTimer = 0, warmIdle = 0, warmBusy = false, warmRunning = null,
     warmBackoff = 0, warmUntil = 0, warmClean = 0, warmLateRun = 0, warmLateCount = 0, warmLateAt = -1e9,
     warmStops = 0, warmStopped = false, warmSession = false, warmStopTimer = 0, warmDoneTimer = 0,
-    warmInput = -1e9, warmWaitMs = 0, warmQuietSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '';
+    warmInput = -1e9, warmWaitMs = 0, warmQuietSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '',
+    watchClean = 0, watchResets = 0, watchUnseen = false;
   const listen = (t, fn) => window.addEventListener(t, fn, { capture: true, passive: true });
   ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => listen(t, () => { warmInput = performance.now(); }));
   /* shown again: the quiet clock starts again (review WQ5-3) */
@@ -163879,7 +164057,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const lateMs = () => Math.max(40, 3 * median());
   const onTime = (d) => d <= 1.5 * median();
   const note = (d) => {
-    if (d > lateMs()) warmLateAt = performance.now();
+    /* over the slow bar: the watch is needed again (watchClean, below) */
+    if (d > lateMs()) { warmLateAt = performance.now(); watchClean = 0; watchResets++; }
     warmD1 = warmD2; warmD2 = d;
     warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
   };
@@ -163901,7 +164080,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const LASTING = { hidden: 1, busy: 1, input: 1, pending: 1 };
   const quiet = () => { warmWhy = blocked(); if (LASTING[warmWhy]) warmQuietSince = performance.now(); return !warmWhy; };
   const logStep = (st, cpuMs, frameMs, late, outcome) => {
-    warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
+    const row = { owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome };
+    /* a GPU step judged without its watch (watching(), below) */
+    if (st.unwatched) row.watched = false;
+    /* the count of steady watches set back to zero by an interval no row shows (watchUnseen, at WATCH_KEEP below) */
+    if (watchUnseen) { row.watchReset = true; watchUnseen = false; }
+    warmLog.push(row);
     if (warmLog.length > 200) warmLog.shift();
   };
   const tell = (st, late, dropped) => {
@@ -163985,7 +164169,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const vis = warmVis;
     requestAnimationFrame((tA) => requestAnimationFrame((tB) => requestAnimationFrame((tC) => {
       if (vis !== warmVis) { warmBusy = false; retry(); return; }
+      const r0 = watchResets;
       note(tB - tA); note(tC - tB);
+      if (watchResets !== r0) watchUnseen = true;   /* (no row shows these two: watchUnseen, at WATCH_KEEP below) */
       /* a frame off time is momentary: tried again in 250 ms, the wait not grown (v3.5 item 3) */
       if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; warmWake(250); return; }
       if (!quiet()) { warmBusy = false; if (!lookUp()) retry(); return; }
@@ -164003,9 +164189,32 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return { cpu: performance.now() - c0, cleanup: typeof cleanup === 'function' ? cleanup : null };
   };
   const clean = (r) => { if (r.cleanup) { try { r.cleanup(); } catch (_) { /* none */ } } };
+  const WATCH_MS = 300, LATE_MS = 100;
+  /* the watch while a computer shows it is needed (pm7-perf lane B, 2026-11-11). Its frame loop makes the page draw a
+     main frame on every refresh for as long as GPU steps are queued, and they are queued for minutes after a load
+     (Usage's pass, then Glass's catalog: on the 3090 1,124 steps from +6 s to +317 s, 38 frames a step, 33 of them the
+     watch's; on the P1000 1,141 steps to +370 s). Where links land late (the P1000: 104 of 856 watched steps had a
+     40-100 ms interval only the watch saw) it spaces the steps, so their links never stack; where they do not, it only
+     costs frames. So it runs from the start, and again whenever the queue notes an interval over the slow bar (a step's
+     two, its watch's, the two admission frames'); once WATCH_KEEP watched GPU steps in a row came back with every
+     interval on time (STEADY_MS, or 1.5x the refresh on a slower display), a GPU step is judged by its two intervals
+     (a light chain's last by the two after it) and logged watched: false, until such a slow interval comes again. On
+     the P1000 the longest run of steady watches was 11 steps (three idle runs, 1,855 watched steps), so its watch stays;
+     on the 3090 812 of 838 watches were steady (runs up to 181), on the M3 all 772.
+     What the log says of it (for perf-warm-watch's replay; lane C3, the R1 review): a GPU step's row shows its own
+     intervals (frameMs; a watch by its worst), and two kinds of interval that also set watchClean back to zero show in
+     no row: the two frames looked at before a step is admitted (an admission attempt, admitted or not, writes no row),
+     and those of a step whose judging the page's hiding cut short (its row has frameMs null). When one of them was over
+     the slow bar, the next row logged, whatever it is (a step, or one 'skipped' or 'dropped' without frameMs), carries
+     watchReset: true: since the row before it, an interval over the slow bar that no row's frameMs shows set the count
+     of steady watches back to zero. Without it a replay of the log believed 16 steady watches still stood and called
+     the next, rightly watched, step needless. Only the log changes: watchResets counts every such reset, watchUnseen
+     holds the word until the next row */
+  const WATCH_KEEP = 16, STEADY_MS = 25;
+  const watching = () => watchClean < WATCH_KEEP;
+  const watched = (frameMs) => { watchClean = Math.max.apply(null, frameMs) <= Math.max(STEADY_MS, 1.5 * median()) ? watchClean + 1 : 0; };
   /* the watch after a GPU step (v3.5 item 1): the frames from the one at 'from' until 300 ms after the step's frame t;
      done(the worst of those intervals), or done(-1) when the page was hidden meanwhile */
-  const WATCH_MS = 300, LATE_MS = 100;
   const warmWatch = (t, from, vis, done) => {
     let prev = from, worst = 0;
     const tick = (x) => {
@@ -164035,7 +164244,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* a GPU step, in the frame at t */
   const runStep = (st, t) => {
     const vis = warmVis, limit = lateMs(), r = run(st);
-    st.at = t;
+    st.at = t; st.unwatched = false; st.resets0 = watchResets;
     requestAnimationFrame((a) => {
       clean(r);
       const d1 = a - t;
@@ -164050,10 +164259,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           if (judge(st, r.cpu, [Math.round(d1)], limit)) return;
           nx.chain0 = c0; runStep(nx, a); return;
         }
-        /* the chain's last step: the watch */
+        /* the chain's last step: the watch, or while it is not needed the interval after this one */
+        if (!watching()) { unwatched(st, r.cpu, a, d1, vis, limit); return; }
         warmWatch(t, a, vis, (w) => {
           if (w < 0) { judge(st, r.cpu, null, limit); after(); return; }
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(w)], limit)) after();
+          const fm = [Math.round(d1), Math.round(w)];
+          watched(fm);
+          if (!judge(st, r.cpu, fm, limit)) after();
         });
         return;
       }
@@ -164061,11 +164273,27 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const d2 = b - a;
         if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
         note(d2);
+        /* the watch not needed: judged by the two (a d1 or d2 over the slow bar has just made it needed, so this step
+           keeps it) */
+        if (!watching()) { st.unwatched = true; if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after(); return; }
         warmWatch(t, b, vis, (w) => {
           if (w < 0) { judge(st, r.cpu, null, limit); after(); return; }
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2), Math.round(w)], limit)) after();
+          const fm = [Math.round(d1), Math.round(d2), Math.round(w)];
+          watched(fm);
+          if (!judge(st, r.cpu, fm, limit)) after();
         });
       });
+    });
+  };
+  /* a light chain's last step while the watch is not needed: judged by d1 and the interval after it (d2); one of them
+     over the slow bar makes it needed again (note) for the next steps */
+  const unwatched = (st, cpuMs, a, d1, vis, limit) => {
+    requestAnimationFrame((b) => {
+      const d2 = b - a;
+      if (vis !== warmVis) { judge(st, cpuMs, null, limit); after(); return; }
+      note(d2);
+      st.unwatched = true;
+      if (!judge(st, cpuMs, [Math.round(d1), Math.round(d2)], limit)) after();
     });
   };
   /* a cpu step, inside an idle callback, given its deadline. In a long slot it is judged by the two intervals after the
@@ -164073,7 +164301,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      pending a frame loop (1 s at most) keeps tLast, and it is judged by tLast -> a and a -> b, so its overrun of the
      ambient loop's frame counts; it goes back to the head of the line only when no idle callback comes within 1 s */
   const cpuStep = (st, tC) => {
-    warmRunning = st; st.at = tC;
+    warmRunning = st; st.at = tC; st.resets0 = watchResets;
     const vis = warmVis, limit = lateMs();
     let tLast = tC, waiting = true;
     const loop = (t) => { if (!waiting) return; tLast = t; if (t - tC < 1000) requestAnimationFrame(loop); };
@@ -164116,6 +164344,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      takes the clean path, logged 'slow'; it ends a light chain and holds light steps to one a frame pair for 2 s */
   const judge = (st, cpuMs, frameMs, limit) => {
     warmRunning = null;
+    /* left unjudged by the page's hiding: its intervals show in no row (watchUnseen, at WATCH_KEEP above) */
+    if (!frameMs && st.resets0 != null && watchResets !== st.resets0) watchUnseen = true;
     const worst = frameMs ? Math.max.apply(null, frameMs) : 0, late = worst > LATE_MS;
     if (!late) {
       const slow = worst > limit;
@@ -164265,7 +164495,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;overflow:hidden;visibility:hidden;contain:strict;pointer-events:none';
         document.body.appendChild(probe);
       }
-      probe.setAttribute('data-theme', to.theme);
+      if (probe.getAttribute('data-theme') !== to.theme) probe.setAttribute('data-theme', to.theme);
       probe.toggleAttribute('data-o55-nier', to.nier);
       if (to.nier) probe.setAttribute('data-o55-nier-preview', to.mode); else probe.removeAttribute('data-o55-nier-preview');
       const cs = getComputedStyle(probe);
@@ -164305,7 +164535,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         v.setAttribute('data-fx', FX[fx] ? fx : 'basic');
       }
     } catch (_) { /* the fallbacks */ }
-    v.setAttribute('data-ready', '');
+    if (v.getAttribute('data-ready') !== '') v.setAttribute('data-ready', '');
     return v;
   }
   /* Painted ahead is not rastered ahead: a cover at opacity 0 is never drawn, so its motion parts were rastered on
@@ -172136,7 +172366,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        2026-10-29: a click landed on a card at opacity 0). Once shown it takes clicks, and covers what is under it (Jared,
        2026-10-30). A class, not an inline style: Usage's stage rule gives its cards pointer events with !important, which
        beat the inline none there (final check F3-5); 26-notify-00-core.css answers it for entering and leaving cards */
-    c.classList.add('pmn-entering');
+    if (!c.classList.contains('pmn-entering')) c.classList.add('pmn-entering');
     const shown = () => { if (c.isConnected && !c.classList.contains('pmn-leaving')) c.classList.remove('pmn-entering'); };
     const play = (e, f, o) => {
       const a = e && typeof e.animate === 'function' ? e.animate(f, Object.assign({ fill: 'backwards', delay: delay || 0 }, o)) : null;
@@ -172773,13 +173003,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     doc.addEventListener('visibilitychange', () => { staged.forEach((rec) => { if (rec.bar && !rec.leaving) { if (doc.hidden) rec.bar.pause(); else if (!held) rec.bar.play(); } }); });
     window.addEventListener('resize', () => { if (open) { placePanel(); pushStage(); } if (staged.size) clampStage(); });
 
-    /* times and lifetimes */
+    /* times and lifetimes. A time that reads the same ("2m ago" for a minute) is not written again: the same text written
+       every second replaced the text node, re-laid out the title bar and drew a frame at rest (lane A, 2026-11-10) */
+    const text = (el, v) => { if (el && el.textContent !== v) el.textContent = v; };
     setInterval(() => {
       if (!items.length) return;
       const now = Date.now();
       items.filter((it) => it.expires && it.expires <= now).forEach((it) => dismiss(it.id));
-      if (frontEl && items.length) { const t = ordered()[0]; if (t) frontEl.querySelector('.pmn-front-when').textContent = ago(t.createdAt); }
-      if (open) rowEls.forEach((r, id) => { const it = items.find((x) => x.id === id); if (!it) return; r.querySelector('.pmn-item-when').textContent = ago(it.createdAt); if (it.expires) r.querySelector('.pmn-item-life').textContent = T('expires', { n: Math.max(0, Math.ceil((it.expires - now) / 1000)) }); });
+      if (frontEl && items.length) { const t = ordered()[0]; if (t) text(frontEl.querySelector('.pmn-front-when'), ago(t.createdAt)); }
+      if (open) rowEls.forEach((r, id) => { const it = items.find((x) => x.id === id); if (!it) return; text(r.querySelector('.pmn-item-when'), ago(it.createdAt)); if (it.expires) text(r.querySelector('.pmn-item-life'), T('expires', { n: Math.max(0, Math.ceil((it.expires - now) / 1000)) })); });
     }, 1000);
     /* a look change: the empty art and the stack's glyphs follow it */
     new MutationObserver(() => { if (open && !items.length) fillEmpty(); }).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
@@ -175003,6 +175235,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     list.forEach((x) => { const n = surfaceName(x.surface); by[n] = (by[n] || 0) + 1; });
     return Object.keys(by).map((k) => k + ' ' + by[k]).join(', ');
   }
+  /* the bar is painted on every 1 s tick: a value it already shows is not written again, since the same attribute or
+     hidden written again still restyles the page and wakes its DOM watchers (lane A, 2026-11-10: about 16 such writes a
+     second at rest, a main frame each tick) */
+  const put = (el, k, v) => { if (el.getAttribute(k) !== v) el.setAttribute(k, v); };
   function paintItem(b, kind, n, ask, c) {
     if (!b) return;
     const A = kind === 'agents', live = n > 0;
@@ -175013,29 +175249,29 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     else h += '<span><strong>' + n + '</strong> ' + T(A ? (n === 1 ? 'bar.agent' : 'bar.agents') : (n === 1 ? 'bar.process' : 'bar.processes')) + '</span>' +
       (ask ? askMark + '<span><strong>' + ask + '</strong> ' + T(A ? (ask === 1 ? 'bar.question' : 'bar.questions') : (ask === 1 ? 'bar.needsInputOne' : 'bar.needsInputMany')) + '</span></span>' : '');
     if (b.__wkHtml !== h) { b.innerHTML = h; b.__wkHtml = h; }
-    b.setAttribute('data-tone', live ? 'working' : 'idle');
-    b.setAttribute('data-ask', ask ? 'true' : 'false');
+    put(b, 'data-tone', live ? 'working' : 'idle');
+    put(b, 'data-ask', ask ? 'true' : 'false');
     const on = ui.open && ui.tab === kind;
-    b.setAttribute('aria-expanded', on ? 'true' : 'false');
+    put(b, 'aria-expanded', on ? 'true' : 'false');
     b.classList.toggle('is-open', on);
     const list = A ? items({ kind: 'agent' }).filter(isLive) : liveProcs();
     const askWords = A ? plural(ask, T('bar.question'), T('bar.questions')) : ask + ' ' + T(ask === 1 ? 'bar.needsInputOne' : 'bar.needsInputMany');
-    b.setAttribute('data-pm-hover-label', T(A ? 'bar.agentsLabel' : 'bar.processesLabel'));
-    b.setAttribute('data-pm-hover-detail', (n ? T(A ? 'bar.agentsRunning' : 'bar.processesRunning', { n: plural(n, T(A ? 'bar.agent' : 'bar.process'), T(A ? 'bar.agents' : 'bar.processes')), where: bySurface(list) })
+    put(b, 'data-pm-hover-label', T(A ? 'bar.agentsLabel' : 'bar.processesLabel'));
+    put(b, 'data-pm-hover-detail', (n ? T(A ? 'bar.agentsRunning' : 'bar.processesRunning', { n: plural(n, T(A ? 'bar.agent' : 'bar.process'), T(A ? 'bar.agents' : 'bar.processes')), where: bySurface(list) })
       : T(A ? 'bar.noneAgents' : 'bar.noneProcesses')) + (ask ? ' ' + T(A ? 'bar.asksAgents' : 'bar.asksProcesses', { n: askWords }) : '') +
       (!A && c.scheduled ? ' ' + T('bar.scheduled', { n: c.scheduled }) : '') + ' ' + T('bar.click'));
-    b.setAttribute('aria-label', T(A ? 'bar.ariaAgents' : 'bar.ariaProcesses', { n: n, ask: ask ? ', ' + askWords : '' }));
+    put(b, 'aria-label', T(A ? 'bar.ariaAgents' : 'bar.ariaProcesses', { n: n, ask: ask ? ', ' + askWords : '' }));
   }
   function paintBar(why) {
     const g = group(), w = W();
     if (!g) return;
     if (!w) { g.hidden = true; return; }
-    g.hidden = false;
+    if (g.hidden) g.hidden = false;
     const c = counts(), feed = w.feed ? w.feed() : { state: 'current' };
     const paint = () => {
       paintItem(g.querySelector('[data-status-action="agents"]'), 'agents', c.agents, c.questions, c);
       paintItem(g.querySelector('[data-status-action="processes"]'), 'processes', c.processes, c.needsInput, c);
-      g.setAttribute('data-work-words', words() ? 'on' : 'off');
+      put(g, 'data-work-words', words() ? 'on' : 'off');
     };
     if (why !== 'tick') wordsDontFit = false;
     paint();
@@ -175043,12 +175279,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const stale = g.querySelector('[data-work-stale]');
     if (stale) {
       const on = feed.state === 'stale';
-      stale.hidden = !on;
+      if (stale.hidden !== !on) stale.hidden = !on;
       if (on) {
         const h = st('offline', 10) + '<span class="wk-dim">' + T('bar.stale') + '</span>';
         if (stale.__wkHtml !== h) { stale.innerHTML = h; stale.__wkHtml = h; }
-        stale.setAttribute('data-pm-hover-label', T('bar.staleLabel'));
-        stale.setAttribute('data-pm-hover-detail', T('bar.staleDetail', { ago: short(Date.now() - (feed.at || Date.now())) }));
+        put(stale, 'data-pm-hover-label', T('bar.staleLabel'));
+        put(stale, 'data-pm-hover-detail', T('bar.staleDetail', { ago: short(Date.now() - (feed.at || Date.now())) }));
       }
     }
   }
@@ -175705,8 +175941,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const all = items().filter(o.filter || (() => true));
       const groups = (o.groups ? o.groups(all) : [{ key: 'all', items: sort(all) }]).filter((g) => g.items.length);
       const focused = doc.activeElement && host.contains(doc.activeElement) ? focusKey(doc.activeElement) : null;
-      const html = groups.map((g) => (o.section ? o.section(g, rowsOf(g)) : rowsOf(g))).join('');
-      host.innerHTML = html || '<p class="wk-empty">' + esc(o.empty || '') + '</p>';
+      const html = groups.map((g) => (o.section ? o.section(g, rowsOf(g)) : rowsOf(g))).join('') || '<p class="wk-empty">' + esc(o.empty || '') + '</p>';
+      /* the same rows as the ones drawn, apart from their times, progress and output: patch those in place, as a tick
+         does, instead of drawing the list again. Home's Agents board repaints on every show of its tab (it missed the
+         changes while hidden), and a fresh list is new rows and new loaders to style, lay out and arm: 4 to 8 ms of
+         the 240 to 270 ms a Home tab switch cost, and the 17 Pip loaders' restart (pm7-perf lane I) */
+      const bare = untick(html);
+      if (host.__wkBare === bare && host.firstChild) { patchTicks(host, fmt); if (o.onPaint) o.onPaint(all); return; }
+      host.innerHTML = html; host.__wkBare = bare;
       watchMoving(host);
       if (focused) { const f = host.querySelector(focused); if (f) f.focus({ preventScroll: true }); }
       if (o.onPaint) o.onPaint(all);
@@ -175776,13 +176018,29 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   /* --------------------------------------------------------------------------------------- staying current */
   const progText = (it) => T('detail.progressOf', { done: it.progress.done, total: it.progress.total, unit: esc(it.progress.unit) });
+  /* a list's markup without what a tick patches (times, progress, output tails): two lists with the same untick()
+     hold the same rows, and patchTicks brings the one drawn up to date. The patched values are escaped text, so they
+     hold no "<"; a tail ends with its pre. */
+  function untick(h) { return h.replace(/(data-work-(?:time|prog)="[^"]*">)[^<]*/g, '$1').replace(/(data-work-tail="[^"]*">)[\s\S]*?<\/pre><\/div>/g, '$1</div>'); }
   /* what a row is: a tick that changes any of it (work ends, fails, starts waiting, stops) repaints the panel; a tick
      that only moves time, output or progress patches those in place (A6) */
   const shape = () => items().map((x) => x.id + ':' + x.state + ':' + (x.stopping ? 1 : 0) + ':' + (needsYou(x) ? 1 : 0) + ':' + (x.lost ? 1 : 0) + ':' + (x.progress && isLive(x) ? 1 : 0)).join('|');
   let lastShape = '';
-  /* time, output tail and progress in place, for the panel and for the chat's Processes view */
+  /* time, output tail and progress in place, for the panel and for the chat's Processes view.
+     While the onboarding window is open over the app (html[data-o55-open]) the app beneath holds still (onboarding
+     README, Performance rules, 6): a root outside the window is not written, only remembered, and is patched the moment
+     the window goes, so its clocks are current in the first frame it shows again. Under the window these writes (the
+     chat composer's work clocks, every second) woke five of the chat's DOM watchers, a frame each (pm7-perf lane C2). */
+  const heldTicks = new Map();
+  const underWindow = (root) => doc.documentElement.hasAttribute('data-o55-open') && !(root.closest && root.closest('#pm-o55-onboarding'));
+  if (typeof MutationObserver === 'function') new MutationObserver(() => {
+    if (doc.documentElement.hasAttribute('data-o55-open') || !heldTicks.size) return;
+    const held = [...heldTicks]; heldTicks.clear();
+    held.forEach(([root, fmt]) => { if (root.isConnected) patchTicks(root, fmt); });
+  }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-o55-open'] });
   function patchTicks(root, fmt) {
     if (!root) return;
+    if (underWindow(root)) { heldTicks.set(root, fmt); return; }
     root.querySelectorAll('[data-work-time]').forEach((el) => { const it = byId(el.getAttribute('data-work-time')); if (it) { const v = (fmt || time)(it); if (el.textContent !== v) el.textContent = v; } });
     root.querySelectorAll('[data-work-prog]').forEach((el) => { const it = byId(el.getAttribute('data-work-prog')); if (it && it.progress) { const v = progText(it); if (el.innerHTML !== v) el.innerHTML = v; } });
     root.querySelectorAll('[data-work-tail]').forEach((el) => {
@@ -195535,9 +195793,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     this.overlayScanTimer=setTimeout(function(){self.overlayScanTimer=0;self.overlaySettling=false;var overlay=activeOverlay();self.scheduleScan(overlay||activeSurface());},reduced?0:OVERLAY_SETTLE_MS);
     return changedRoot||activeOverlay();
   };
+  /* A record from the decoration on Pip's onboarding stage (aria-hidden: its drawing, bubble and readouts) can change
+     no tag, and the stage rewrites that decoration on every frame it draws: about 3,400 records a second with the
+     window open and nothing touched, 10 to 16 ms of this observer a second (2026-11-11, performance). The tip box
+     and its close button are not aria-hidden and are still heard. */
+  function stageDecoration(record){var n=record.target;n=n&&n.nodeType===1?n:n&&n.parentElement;return !!(n&&n.closest&&n.closest('#pm-o55-onboarding .pst [aria-hidden="true"]'));}
   HoverTagController.prototype.observe=function(){
     var self=this;if(this.observer)this.observer.disconnect();
     this.observer=new MutationObserver(function(records){
+      for(var di=0;di<records.length&&stageDecoration(records[di]);di++);if(di===records.length)return;
       /* Opening either product-owned modal can construct and animate hundreds
          of descendants in one turn. Recognize that boundary before consuming
          any child-list record, cancel stale page/live work, update modal
@@ -218589,6 +218853,9 @@ function* construct(opts) {
   var setA = function (e, n, x) { if (e && e.getAttribute(n) !== x) e.setAttribute(n, x); };
   // text written only when it differs: a rewrite of the same words still lays the page out again, once per slider step
   var setT = function (e, x) { if (e && e.textContent !== x) e.textContent = x; };
+  // hidden written only when it differs, like setA and setT: the sheet's unseen redraw after a look change rewrote the hidden
+  // it held on every chip, weight and group control (pm7-perf lane K)
+  var setH = function (e, h) { h = !!h; if (e && e.hidden !== h) e.hidden = h; };
   function fmt(key, x) {
     if (x === null || x === undefined || x === '' || isNaN(x)) return '';
     if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
@@ -218616,7 +218883,7 @@ function* construct(opts) {
     if (I.own) return name + ' is indented with ' + I.own + ' spaces, so Tab puts in ' + I.own + '.';
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
-  function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
+  function note(sel, text) { var e = root.querySelector(sel); if (!e) return; setH(e, !text); if (e.textContent !== text) e.textContent = text; }
   /* the look's own code colours (Follow look), read off the editor once per look, colour mode and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
   var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
@@ -218731,7 +218998,7 @@ function* construct(opts) {
     append(function () {
       tiles.forEach(function (tile, i) {
         if (heights[i] === null) { tile.removeAttribute('data-pmed-sized'); return; }
-        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; tile.setAttribute('data-pmed-sized', '');
+        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; if (!tile.hasAttribute('data-pmed-sized')) tile.setAttribute('data-pmed-sized', '');
       });
       root.classList.add('pmed-contained'); contained = true;
     });
@@ -218797,7 +219064,7 @@ function* construct(opts) {
       if (key === 'ligatures' && o && !R.font.ligatures) word = 'On · this face has none';
       if (st.textContent !== word) st.textContent = word;
       c.classList.toggle('pmt-cz-is-mine', mine(key));
-      var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
+      var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) setH(more, !o);
       box.classList.toggle('pmt-cz-lit', o);
     });
     [].forEach.call(root.querySelectorAll('input[type="range"][data-key]'), function (r) {
@@ -218808,18 +219075,20 @@ function* construct(opts) {
     });
     setT(root.querySelector('[data-out="fontSize"]'), fmt('fontSize', R.font.size));
     setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
-    root.querySelector('[data-when-line]').hidden = R.caret.shape !== 'line';
-    root.querySelector('[data-chip="activeIndent"]').hidden = R.lines.guides === 'off';
+    setH(root.querySelector('[data-when-line]'), R.caret.shape !== 'line');
+    setH(root.querySelector('[data-chip="activeIndent"]'), R.lines.guides === 'off');
     /* weights the face has */
     var wr = R.font.weights;
-    [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1]; });
+    [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); setH(b, !wr || n < wr[0] || n > wr[1]); });
     var why = root.querySelector('[data-weight-why]'), wtxt = R.font.id === 'jetbrains-mono' ? 'JetBrains Mono comes from Regular to Heavy here.' : '';
     if (why.textContent !== wtxt) why.textContent = wtxt;
     /* the Follow look tile: the look's own colours, read from the editor's own tokens */
     var fa = root.querySelector('[data-follow-art]');
     if (fa && lt && fa.getAttribute('data-for') !== lkKey) {
       var g = function (n) { return lt[n] || ''; };
-      fa.innerHTML = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      var art = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      var parsed = document.createElement('template'); parsed.innerHTML = art;
+      if (fa.innerHTML !== parsed.innerHTML) fa.innerHTML = art;
       fa.setAttribute('data-for', lkKey);
     }
     var fm = root.querySelector('[data-follow-meta]'), fs2 = EL().followScheme(), ftxt = fs2 ? 'Like ' + fs2.name : 'The look’s own';
@@ -218851,7 +219120,7 @@ function* construct(opts) {
       var k = GROUP_KEYS[gp[0]].filter(mine).length, t = k ? k + ' changed' : '';
       var c = root.querySelector('[data-count="' + gp[0] + '"]'); if (c.textContent !== t) c.textContent = t;
       var nv = root.querySelector('[data-navn="' + gp[0] + '"]'); if (nv.textContent !== (k ? String(k) : '')) nv.textContent = k ? String(k) : '';
-      root.querySelector('[data-act="group-reset"][data-group="' + gp[0] + '"]').hidden = !k;
+      setH(root.querySelector('[data-act="group-reset"][data-group="' + gp[0] + '"]'), !k);
     });
     var ft = root.querySelector('[data-foot-n]'), ftt = n ? n + (n === 1 ? ' change from the look in ' : ' changes from the look in ') + (scope === 'tab' ? 'this editor' : 'all editors') : 'Following the look';
     if (ft.textContent !== ftt) ft.textContent = ftt;
@@ -218932,7 +219201,7 @@ function* construct(opts) {
     var s = root.querySelectorAll('.pmt-cz-scrim > i'), x0 = hole ? Math.max(0, r.left) : 0, y0 = hole ? Math.max(0, r.top) : 0, x1 = hole ? Math.min(W, r.right) : 0, y1 = hole ? Math.min(H, r.bottom) : 0;
     var rects = hole ? [[0, 0, W, y0], [0, y1, W, H - y1], [0, y0, x0, y1 - y0], [x1, y0, W - x1, y1 - y0]] : [[0, 0, W, H], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
     rects.forEach(function (q, i) { s[i].style.cssText = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; });
-    var fr = root.querySelector('.pmt-cz-frame'); fr.hidden = !hole;
+    var fr = root.querySelector('.pmt-cz-frame'); setH(fr, !hole);
     if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
     root.classList.toggle('pmt-cz-narrow', narrow);
     syncDock();
@@ -219428,7 +219697,7 @@ function* construct(opts) {
   function dockTo(on) {
     if (!preview || !!on === !dock.hidden) return;
     (on ? dockBox : homeBox).appendChild(pvHost);
-    dock.hidden = !on; root.classList.toggle('pmt-cz-docked', !!on);
+    setH(dock, !on); root.classList.toggle('pmt-cz-docked', !!on);
     if (on) Motion.play(dock);
     preview.demo.relayout();
   }
@@ -238398,7 +238667,7 @@ var T = {};
     var wasActive = this.active;
     this.active = !!(wantGL && this.gl && this.gl.ok && !this.gl.lost && !this.failedAt);
     if (wasActive !== this.active) v.renderer.invalidate();
-    v.fxCanvas.hidden = !this.active;
+    if (v.fxCanvas.hidden !== !this.active) v.fxCanvas.hidden = !this.active;
     v.canvas.style.opacity = this.active ? '0' : '';
     /* CPU path (or no GL wanted): static fallbacks only */
     var cpuScan = wantGL && !this.active && e.scanlines && e.scanlines.on;
@@ -238462,7 +238731,7 @@ var T = {};
      as every effect), outside a full-screen program, and never under Reduced Motion or a battery saver (round 2) */
   Policy.prototype.groundLive = function (now) {
     var v = this.view, self = this;
-    if (!v.root.classList.contains('pmt-bg-moves')) { v.root.classList.remove('pmt-bg-live'); return; }
+    if (!v.root.classList.contains('pmt-bg-moves')) { if (v.root.classList.contains('pmt-bg-live')) v.root.classList.remove('pmt-bg-live'); return; }
     now = now || T.util.now();
     var left = IDLE_MS - (now - this.lastActivity);
     /* where no GPU draws the terminal nothing moves (F3-643): the ground shows its still frame */
@@ -243925,8 +244194,8 @@ var T = {};
     this._bindScrollbar();
     this.sticky.addEventListener('click', function () { if (self.stickyCmd) self.revealCommand(self.stickyCmd); });
 
-    this.blinkTimer = setInterval(function () { self._blinkTick(); }, 530);
-    this.clockTimer = setInterval(function () { self._updateHeader(); }, 1000);
+    this.blinkTimer = 0; this.clockTimer = 0;
+    this._timers();
     /* browser zoom and a move to another monitor change the device pixel ratio, often with no resize from the host:
        lay out again (layout() measures the cells anew) and re-arm the query for the new ratio */
     (function watchDpr() {
@@ -243992,7 +244261,8 @@ var T = {};
     this.root.style.setProperty('--pmt-glow-color', roles.glow || C.toHex(ap.theme.fg));
     this.root.style.setProperty('--pmt-pad-x', (ap.padding ? ap.padding.x : 8) + 'px');
     this.root.style.setProperty('--pmt-pad-y', (ap.padding ? ap.padding.y : 6) + 'px');
-    this.root.setAttribute('data-pmt-scheme', ap.theme.appearance || '');
+    var scheme = ap.theme.appearance || '';
+    if (this.root.getAttribute('data-pmt-scheme') !== scheme) this.root.setAttribute('data-pmt-scheme', scheme);
     /* the background, and its worst pixel for the text's contrast floor (24-renderer.js; none over the scheme's own
        surface) */
     this.contrastGround = this._applyBackground(ap.background || { kind: 'theme' });
@@ -244127,10 +244397,11 @@ var T = {};
   View.prototype._applyBackground = function (bg) {
     var L = this.bgLayer, th = this.theme, G = T.Grounds, ground = typeof bg.ground === 'number' ? bg.ground : null, dim = 0;
     this._bgSpec = bg; this._bgKey = '';
-    L.style.cssText = '';
-    L.className = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
+    if (L.getAttribute('style') !== '') L.style.cssText = '';
+    var classes = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
+    if (L.className !== classes) L.className = classes;
     var mv = this.bgMove, moving = !!(bg.motion && G);
-    if (!moving) { mv.hidden = true; mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
+    if (!moving) { if (mv.hidden !== true) mv.hidden = true; if (mv.getAttribute('style') !== '') mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
     if ((bg.paint || moving) && G && th) {
       var r = this.bodyEl.getBoundingClientRect(), w = r.width || 960, h = r.height || 600;
       this._bgKey = sizeStep(w) + 'x' + sizeStep(h);
@@ -244479,6 +244750,7 @@ var T = {};
     if (e.type === 'exec') { this.lastExit = null; this._updateLabel(); }
     this.marksDirty = true;
     this._updateHeader();
+    this._timers();
     this.schedule();
   };
 
@@ -244489,7 +244761,7 @@ var T = {};
     var g = this.gutter, m = this.metrics, buf = this.term.buf, self = this;
     var marks = this._marks || (this._marks = new Map());
     if (buf.isAlt) { marks.clear(); g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
-    g.classList.remove('pmt-gutter-alt');
+    if (g.classList.contains('pmt-gutter-alt')) g.classList.remove('pmt-gutter-alt');
     var top = this.viewTop(), rows = buf.rows, cmds = this.term.commands, seen = new Set();
     this._gutterCmds = [];
     for (var i = cmds.length - 1; i >= 0; i--) {
@@ -244598,7 +244870,7 @@ var T = {};
         break;
       }
     }
-    if (!cmd) { s.hidden = true; this.stickyCmd = null; return; }
+    if (!cmd) { if (s.hidden !== true) s.hidden = true; this.stickyCmd = null; return; }
     this.stickyCmd = cmd;
     var promptText = cmd.promptLine.text();
     s.hidden = false;
@@ -245017,8 +245289,20 @@ var T = {};
   View.prototype._visibility = function (show) {
     var on = !!(this.hostVisible && this.onScreen), was = this.visible;
     this.visible = on;
+    this._timers();
     if (on !== was) { if (this.term.images) this.term.images.pause(!on); if (this.fx) this.fx.visible(on); }
     if (on && (on !== was || show)) { if (this._lookStale) this._applyLook(); this.layout(); this._groundSoon(); this.schedule(true); }
+  };
+  /* the cursor's blink and the header's 1 s clock run only while they have something to do: the blink while the
+     terminal is visible (it did nothing otherwise), the clock while it is visible or a command runs, so a command's
+     elapsed time is still current when a hidden terminal comes back. Every terminal kept both going behind other tabs
+     and pages: about 5.5 blink and 3 clock callbacks a second at rest on Home and Settings (lane A, 2026-11-10) */
+  View.prototype._timers = function () {
+    var self = this, blink = this.visible && !this._gone, clock = !this._gone && (this.visible || !!this._running());
+    if (blink && !this.blinkTimer) this.blinkTimer = setInterval(function () { self._blinkTick(); }, 530);
+    else if (!blink && this.blinkTimer) { clearInterval(this.blinkTimer); this.blinkTimer = 0; }
+    if (clock && !this.clockTimer) this.clockTimer = setInterval(function () { self._updateHeader(); }, 1000);
+    else if (!clock && this.clockTimer) { clearInterval(this.clockTimer); this.clockTimer = 0; }
   };
   View.prototype.onShow = function () { this.hostVisible = true; this._visibility(true); };
   View.prototype.onHide = function () { this.hostVisible = false; this._visibility(); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
@@ -245056,7 +245340,7 @@ var T = {};
   View.prototype.dispose = function () {
     /* out of the appearance registry, so a closed or restarted terminal is neither kept alive nor configured again;
        an open popover goes with its document listener, without taking the focus */
-    this.hostVisible = false; this.visible = false;
+    this.hostVisible = false; this.visible = false; this._gone = true;
     if (this.closeAppearance) this.closeAppearance(true);
     if (T.Appearance && T.Appearance.forget) T.Appearance.forget(this);
     this.disposers.forEach(function (d) { try { d(); } catch (e) {} });
@@ -245235,8 +245519,9 @@ var T = {};
     this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level, gloss: gloss,
       strength: STRENGTH[side][li] * (mat === 'glass' ? GLASS[side][li] : 1) * (light || gloss ? 1 : dimScreen(th.bg)),
       light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
-    this.el.hidden = !this.on();
-    this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
+    var hidden = !this.on();
+    if (this.el.hidden !== hidden) this.el.hidden = hidden;
+    if (this.view.root.getAttribute('data-pmt-bezel') !== this.spec.style) this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
     this.geoKey = '';
     if (!this.on()) this._release();
   };
@@ -247267,7 +247552,7 @@ var T = {};
         gSig = sig;
         var fl = ['follow'].concat(G.forLook(R.lookKey).map(function (id) { return (G.isGradient(id) ? 'g:' : 'i:') + id; })).slice(0, 6);
         root.querySelector('[data-forlook]').innerHTML = fl.map(function (gv) { return groundTile(gv, gv === 'follow' ? 'Look’s own' : G.name(gv.slice(2)), th); }).join('');
-        root.querySelector('[data-forlook-label]').textContent = 'Suggested for ' + (LOOK_NAMES[R.lookKey] || 'this look');
+        setText(root.querySelector('[data-forlook-label]'), 'Suggested for ' + (LOOK_NAMES[R.lookKey] || 'this look'));
         var same = ownIsTheme();
         var tiles = gcat === 'plain' ? PLAIN.filter(function (p) { return !(same && p[0] === 'theme'); }).map(function (p) { return groundTile(p[0], p[1], th); }) :
           gcat === 'yours' ? [groundTile('custom', 'Your picture', th, A().pictureName(val('bgImageData') || '') || 'Choose one…')] :
@@ -247292,17 +247577,17 @@ var T = {};
       [].forEach.call(root.querySelectorAll('[data-key="ground"]'), function (b) { setA(b, 'aria-checked', String(b.getAttribute('data-value') === now)); });
       [].forEach.call(root.querySelectorAll('[data-gcat]'), function (b) { setA(b, 'aria-selected', String(b.getAttribute('data-gcat') === gcat)); });
       var custom = now === 'custom', design = now.indexOf(':') === 1;
-      root.querySelector('[data-gctl="solid"]').hidden = now !== 'solid';
-      root.querySelector('[data-gctl="yours"]').hidden = !custom;
-      root.querySelector('[data-gctl="design"]').hidden = !design;
+      setHidden(root.querySelector('[data-gctl="solid"]'), now !== 'solid');
+      setHidden(root.querySelector('[data-gctl="yours"]'), !custom);
+      setHidden(root.querySelector('[data-gctl="design"]'), !design);
       /* a design's own controls: Size for patterns, Motion for any that moves, whatever its kind */
       var did = design ? now.slice(2) : '', moves = !!did && !!G.motion(did);
       [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { var sub = s.getAttribute('data-gctl-sub');
-        s.hidden = !(sub === 'moving' ? moves : sub === 'pattern' ? !!did && G.sized(did) : sub === cat0); });
-      root.querySelector('[data-bezel-more]').hidden = val('bezel') === 'off';
+        setHidden(s, !(sub === 'moving' ? moves : sub === 'pattern' ? !!did && G.sized(did) : sub === cat0)); });
+      setHidden(root.querySelector('[data-bezel-more]'), val('bezel') === 'off');
       /* Reflection: the material's own level named; none for NieR's ink frame, which reflects nothing */
       var rf = reflect(R), rtxt = rf.own ? rf.name + '’s own is ' + rf.own.charAt(0).toUpperCase() + rf.own.slice(1) + '.' : '';
-      root.querySelector('[data-reflect-field]').hidden = !rf.own;
+      setHidden(root.querySelector('[data-reflect-field]'), !rf.own);
       var rw = root.querySelector('[data-reflect-why]'); if (rw.textContent !== rtxt) rw.textContent = rtxt;
     }
     /* the pictures paintGround puts in its tiles (the look's suggestions, then the category shown), painted ahead of
@@ -247354,7 +247639,7 @@ var T = {};
       var sig = JSON.stringify(list) + '|' + renaming + '|' + JSON.stringify(mineNow) + '|' + eff().look.mode + '|' + eff().lookKey;
       if (sig === presetSig) return;
       presetSig = sig;
-      box.hidden = !list.length;
+      setHidden(box, !list.length);
       box.innerHTML = list.map(function (p) {
         var on = sameFields(mineNow, p.fields), n = Object.keys(p.fields).length;
         var label = renaming === p.id ? '<input type="text" class="pmt-cz-pname-in" data-rename="' + esc(p.id) + '" value="' + esc(p.name) + '" maxlength="40" autocomplete="off" spellcheck="false" aria-label="New name for ' + esc(p.name) + '"' + NOTAG + '>' :
@@ -247370,7 +247655,7 @@ var T = {};
     }
     function presetNote(text, undo) {
       var n = root.querySelector('[data-pnote]');
-      n.hidden = !text;
+      setHidden(n, !text);
       n.innerHTML = text ? esc(text) + (undo ? ' <button type="button" class="pmt-textbtn" data-act="preset-undo"' + NOTAG + '>Undo</button>' : '') : '';
     }
     function presetSaveOpen() {
@@ -247399,6 +247684,11 @@ var T = {};
 
     /* ---- painting: every control shows this scope's value ---- */
     var setA = function (e, n, x) { if (e.getAttribute(n) !== x) e.setAttribute(n, x); };
+    /* hidden and texts written only when they differ, like setA: the screen redraws itself unseen after a look change (its
+       first frame must already be right), and that redraw rewrote about 170 values it already held (tabindex, hidden,
+       the sliders' outputs), each a restyle and a wake for every DOM watcher of the page (pm7-perf lane K) */
+    function setHidden(e, h) { h = !!h; if (e.hidden !== h) e.hidden = h; }
+    function setText(e, s) { if (e.textContent !== s) e.textContent = s; }
     function fmt(key, x) {
       if (x === null || x === undefined || x === '') return '';
       if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
@@ -247411,9 +247701,9 @@ var T = {};
     }
     function paint() {
       var R = eff(), fx = R.effects, look = R.lookKey, isNier = !!R.look.nier;
-      root.setAttribute('data-pmt-look', isNier ? 'nier' : look);
-      root.setAttribute('data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
-      root.setAttribute('data-scope', scope);
+      setA(root, 'data-pmt-look', isNier ? 'nier' : look);
+      setA(root, 'data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
+      setA(root, 'data-scope', scope);
       /* the effect pictures are drawn in this scope's own scheme */
       if (R.theme) {
         root.style.setProperty('--pmt-cz-sfg', T.color.toHex(R.theme.fg));
@@ -247465,7 +247755,7 @@ var T = {};
         /* and while they are spaced the switch is not offered: either position would draw the same (Q15 #6) */
         if (key === 'ligatures') setA(c, 'aria-disabled', String(ligBlocked));
         c.classList.toggle('pmt-cz-is-mine', mine(key));
-        var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
+        var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) setHidden(more, !o);
         box.classList.toggle('pmt-cz-lit', o);
       });
       var bi = root.querySelector('input[data-key="burnIn"]'); if (bi) bi.checked = !!val('burnIn');
@@ -247484,13 +247774,13 @@ var T = {};
       sl = []; for (k = floor; k <= 0.9 + 1e-6; k += 0.05) sl.push(Math.round(k * 100) / 100);
       if (!sl.length) sl = [Math.min(1, Math.round((bgR.floor || 0.9) * 100) / 100)];
       setStops(root.querySelector('input[data-key="bgDim"]'), sl);
-      root.querySelector('[data-slider="bgDim"]').hidden = sl.length < 2;
+      setHidden(root.querySelector('[data-slider="bgDim"]'), sl.length < 2);
       /* under a heavy dim a picture keeps less of itself, so fewer of its steps can be told apart: from 85 % only full
          colour or grey, and from 90 % (a scheme with no contrast to spare) colour hardly shows and blur has two steps */
       var pdim = bgR.custom ? bgR.dim || 0 : 0;
       setStops(root.querySelector('input[data-key="bgDesat"]'), pdim >= 0.85 ? [0, 1] : [0, 0.5, 1]);
       setStops(root.querySelector('input[data-key="bgBlur"]'), pdim >= 0.9 ? [0, 12] : [0, 3, 6, 12, 24]);
-      root.querySelector('[data-slider="bgDesat"]').hidden = pdim >= 0.9;
+      setHidden(root.querySelector('[data-slider="bgDesat"]'), pdim >= 0.9);
       note('[data-dim-why]', bgR.custom && sl.length < 2 ? 'Dim stays at ' + Math.round(sl[0] * 100) + ' %: any less and this picture would hide the text.' +
         (pdim >= 0.9 ? ' So little of it shows that its colour hardly changes, so Less colour is not offered.' : '') : '');
       /* Glass's opacity: the least, its own (0.74 dark, 0.7 light) and solid. Glass light's terminal lies on glass of its
@@ -247509,28 +247799,28 @@ var T = {};
         var autoDim = key === 'bgDim' && (x === null || x === undefined);
         if (autoDim) x = R.background && typeof R.background.dim === 'number' ? R.background.dim : 0.45;
         if (document.activeElement !== r) rangeShow(r, x);
-        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim ? 'Auto · ' : '') + fmt(key, document.activeElement === r ? rangeValue(r) : x);
+        var out = r.parentNode.querySelector('output'); if (out) setText(out, (autoDim ? 'Auto · ' : '') + fmt(key, document.activeElement === r ? rangeValue(r) : x));
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
-      var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
+      var fs = root.querySelector('[data-out="fontSize"]'); if (fs) setText(fs, fmt('fontSize', R.font.size));
       [].forEach.call(root.querySelectorAll('[data-step]'), function (b) { setA(b, 'aria-disabled', String(nextSize(R, parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1) === null)); });
       setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
       var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? A().solidDefault(R.theme) : '#000000');
       if (col && document.activeElement !== col) col.value = bgc;
-      var bo = root.querySelector('[data-out="bgColor"]'); if (bo) bo.textContent = bgc;
+      var bo = root.querySelector('[data-out="bgColor"]'); if (bo) setText(bo, bgc);
       /* what shows when (SSYS-051's visibility rule, kept for the person's sake: a hidden part keeps its value) */
       var ground = val('background');
       /* the background group's tiles wait for its own build step while it is out of the layout (buildSlices) */
       if (!groundLater) paintGround(R);
-      root.querySelector('[data-slider="opacity"]').hidden = look !== 'glass' || opacityOff;
-      root.querySelector('[data-axes]').hidden = R.font.id !== 'sixtyfour';
+      setHidden(root.querySelector('[data-slider="opacity"]'), look !== 'glass' || opacityOff);
+      setHidden(root.querySelector('[data-axes]'), R.font.id !== 'sixtyfour');
       /* weights the face has */
       var FD = A().fontDef(R.font.id), wr = FD && FD.weights;
-      [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1] || !!wrep[n]; });
+      [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); setHidden(b, !wr || n < wr[0] || n > wr[1] || !!wrep[n]); });
       var nw = wr ? Object.keys(wrep).length : 0;
       var why = root.querySelector('[data-weight-why]'), wtxt = wr ? (nw ? 'Only the weights ' + R.font.label + ' has on this computer.' : '') : R.font.label + ' comes in one weight.';
       if (why.textContent !== wtxt) why.textContent = wtxt;
-      root.querySelector('[data-seg="fontWeight"]').hidden = !wr;
+      setHidden(root.querySelector('[data-seg="fontWeight"]'), !wr);
       /* thumbnails that follow the look and the scheme */
       var follow = A().scheme(A().LOOKS[look][R.look.mode === 'light' ? 'light' : 'dark']);
       var fa = root.querySelector('[data-follow-art]'); if (follow && fa.getAttribute('data-for') !== follow.id) { fa.innerHTML = schemeArt(follow); fa.setAttribute('data-for', follow.id); }
@@ -247543,8 +247833,8 @@ var T = {};
       if (pn.textContent !== pname) pn.textContent = pname;
       /* a face from this computer, named by Settings */
       var lfBox = root.querySelector('[data-local-face]');
-      lfBox.hidden = !R.font.local;
-      if (R.font.local) lfBox.textContent = R.font.label + (R.font.local.installed ? ' (from Settings, on this computer)' : ' (from Settings)');
+      setHidden(lfBox, !R.font.local);
+      if (R.font.local) setText(lfBox, R.font.label + (R.font.local.installed ? ' (from Settings, on this computer)' : ' (from Settings)'));
       /* notes */
       note('[data-note-face]', R.font.local && !R.font.local.installed ? R.font.label + ' is not on this computer, so JetBrains Mono shows in its place.' :
         R.font.axes && R.font.axes.unavailable ? 'This browser cannot set Sixtyfour’s axes, so its default draws.' : '');
@@ -247566,31 +247856,31 @@ var T = {};
       note('[data-note-side]', tabN ? 'This terminal keeps ' + (tabN === 1 ? 'one choice of its own, which stays' : tabN + ' choices of its own, which stay') + ' on top of All terminals on it. The preview shows All terminals.' : '');
       var ew = root.querySelector('[data-effects-why]'), etext = val('effects') === 'follow' ? 'The look’s own: ' + lookEffects(R) + '. Turning one on or off switches to Custom.' : val('effects') === 'off' ? 'No effects in this scope.' : '';
       if (ew.textContent !== etext) ew.textContent = etext;
-      root.querySelector('[data-act="degauss"]').hidden = look !== 'retro' || isNier;
+      setHidden(root.querySelector('[data-act="degauss"]'), look !== 'retro' || isNier);
       /* the preview's caption, also its text alternative */
       var desc = (R.scheme ? R.scheme.name : '') + ', ' + R.font.label + ' ' + (Math.round(R.font.size * 100) / 100) + ' px, ' + (R.opts.cursor.shape) + ' cursor' + (fx.off || !(fx.scanlines.on || fx.glow.on || fx.crt) ? '' : ', ' + lookEffects(R));
       var pd = root.querySelector('[data-pv-desc]'); if (pd.textContent !== desc) pd.textContent = desc;
-      root.querySelector('[data-pv-box]').setAttribute('aria-label', 'Preview: ' + desc);
+      setA(root.querySelector('[data-pv-box]'), 'aria-label', 'Preview: ' + desc);
       /* counts: the meter, each group, the footer, the quick sets */
       var mineKeys = COUNTED.filter(mine), n = mineKeys.length;
       [].forEach.call(root.querySelectorAll('.pmt-cz-cells > i'), function (c, i) { c.classList.toggle('pmt-cz-on', mine(COUNTED[i])); });
       var mn = root.querySelector('[data-meter-n]'), mt = n ? n + (n === 1 ? ' change' : ' changes') : 'The look’s own';
       if (mn.textContent !== mt) mn.textContent = mt;
-      root.querySelector('[data-meter-scope]').textContent = scope === 'tab' ? 'This terminal' : 'All terminals';
+      setText(root.querySelector('[data-meter-scope]'), scope === 'tab' ? 'This terminal' : 'All terminals');
       GROUPS.forEach(function (g) {
         var k = GROUP_KEYS[g[0]].filter(mine).length, t = k ? k + ' changed' : '';
         var c = root.querySelector('[data-count="' + g[0] + '"]'); if (c.textContent !== t) c.textContent = t;
         var nv = root.querySelector('[data-navn="' + g[0] + '"]'); if (nv.textContent !== (k ? String(k) : '')) nv.textContent = k ? String(k) : '';
-        root.querySelector('[data-act="group-reset"][data-group="' + g[0] + '"]').hidden = !k;
+        setHidden(root.querySelector('[data-act="group-reset"][data-group="' + g[0] + '"]'), !k);
       });
       var ft = root.querySelector('[data-foot-n]'), ftt = n ? n + (n === 1 ? ' change from the look in ' : ' changes from the look in ') + (scope === 'tab' ? 'this terminal' : 'all terminals') : 'Following the look';
       if (ft.textContent !== ftt) ft.textContent = ftt;
-      var rb = root.querySelector('[data-act="reset"]'); rb.textContent = scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals'; setA(rb, 'aria-disabled', String(!n));
+      var rb = root.querySelector('[data-act="reset"]'); setText(rb, scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals'); setA(rb, 'aria-disabled', String(!n));
       [].forEach.call(root.querySelectorAll('[data-set]'), function (b) { setA(b, 'aria-pressed', String(setPressed(b.getAttribute('data-set'), mineKeys))); });
       /* the scope's reason */
       var sw = root.querySelector('[data-scope-why]'), swt = scope === 'app' ? (A().settingsReady() ? 'Saved in this project’s Settings' : 'Saved on this computer') : 'Saved with this tab';
       if (sw.textContent !== swt) sw.textContent = swt;
-      root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals';
+      setText(root.querySelector('.pmt-cz-framelabel'), scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals');
       paintPresets();
       roving();
       fitNow();
@@ -247600,7 +247890,7 @@ var T = {};
       if (fx.scanlines.on) l.push('scanlines'); if (fx.glow.on) l.push('glow'); if (fx.crt) l.push('full CRT'); if (fx.dim > 0) l.push('dimming');
       return l.length ? l.join(', ') : 'none';
     }
-    function note(sel, text) { var e = root.querySelector(sel); e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
+    function note(sel, text) { var e = root.querySelector(sel); setHidden(e, !text); if (e.textContent !== text) e.textContent = text; }
     function setPressed(id, mineKeys) {
       var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return false;
       if (!s.patch) return mineKeys.length === 0;
@@ -247626,9 +247916,10 @@ var T = {};
       /* the scrim around the terminal's rectangle (none when it is not on screen) */
       var s = root.querySelectorAll('.pmt-cz-scrim > i'), x0 = hole ? Math.max(0, r.left) : 0, y0 = hole ? Math.max(0, r.top) : 0, x1 = hole ? Math.min(W, r.right) : 0, y1 = hole ? Math.min(H, r.bottom) : 0;
       var rects = hole ? [[0, 0, W, y0], [0, y1, W, H - y1], [0, y0, x0, y1 - y0], [x1, y0, W - x1, y1 - y0]] : [[0, 0, W, H], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-      rects.forEach(function (q, i) { s[i].style.cssText = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; });
-      var fr = root.querySelector('.pmt-cz-frame'); fr.hidden = !hole;
-      if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
+      // only what differs (the unseen redraw after a look change put the four shades where they were)
+      rects.forEach(function (q, i) { var css = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; if (s[i].__czCss !== css) { s[i].style.cssText = css; s[i].__czCss = css; } });
+      var fr = root.querySelector('.pmt-cz-frame'); setHidden(fr, !hole);
+      if (hole) { var fcss = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px'; if (fr.__czCss !== fcss) { fr.style.cssText = fcss; fr.__czCss = fcss; } }
       root.classList.toggle('pmt-cz-narrow', narrow);
       syncDock();
       fitNow();
@@ -247770,11 +248061,11 @@ var T = {};
       var ql = String(q || '').trim().toLowerCase(), n = 0, fam = null, famHas = false;
       var items = root.querySelectorAll('.pmt-cz-schemes > *');
       [].forEach.call(items, function (x) {
-        if (x.classList.contains('pmt-cz-fam')) { if (fam) fam.hidden = !famHas; fam = x; famHas = false; return; }
+        if (x.classList.contains('pmt-cz-fam')) { if (fam) setHidden(fam, !famHas); fam = x; famHas = false; return; }
         var hit = !ql || (x.getAttribute('data-name') || '').indexOf(ql) >= 0;
-        x.hidden = !hit; if (hit) { n++; famHas = true; }
+        setHidden(x, !hit); if (hit) { n++; famHas = true; }
       });
-      if (fam) fam.hidden = !famHas;
+      if (fam) setHidden(fam, !famHas);
       var fn = root.querySelector('[data-find-n]'); fn.textContent = ql ? (n ? n + (n === 1 ? ' scheme' : ' schemes') : 'No scheme matches') : '';
     }
     /* a scheme previews when the pointer rests on it (hover intent, 110 ms) or the arrow keys reach it; leaving the
@@ -247853,7 +248144,7 @@ var T = {};
     function roving() {
       [].forEach.call(root.querySelectorAll('[role="radiogroup"]'), function (g) {
         var opts = g.querySelectorAll('[role="radio"]'), chosen = g.querySelector('[role="radio"][aria-checked="true"]:not([hidden])') || [].filter.call(opts, function (o) { return !o.hidden; })[0];
-        [].forEach.call(opts, function (o) { o.tabIndex = o === chosen ? 0 : -1; });
+        [].forEach.call(opts, function (o) { var ti = o === chosen ? '0' : '-1'; if (o.getAttribute('tabindex') !== ti) o.setAttribute('tabindex', ti); });
       });
     }
 
@@ -247950,6 +248241,12 @@ var T = {};
        its idle-warm queue (PM_WARM, 11-motion-start.js) the drawing is a step on it after the quiet time, admitted and
        judged as every warm step is, instead of this screen's own idle wait */
     var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmStep = 0, warmWait = 0, warmSince = 0, offWarm = null;
+    /* between a short idle slot and the next try it waits on a timer, 400 ms doubling to 2 s as PM_WARM's own retry
+       does (11-motion-start.js): asking for the next idle callback from inside a short one ran it about 110 times a
+       second at 0.85 ms each, for up to 10 s after every look or size change, on a page drawing frames (lane A,
+       2026-11-10). warmPause is that timer, kept apart from warmJob so a cancel never hands a timer id to
+       cancelIdleCallback */
+    var warmPause = 0, warmBack = 0;
     /* changed: something it shows may have changed while nothing watched it (kept from a terminal that went), so it
        draws again before it shows */
     var changed = false;
@@ -247960,7 +248257,16 @@ var T = {};
       if (settling()) { warmSoon(); return; }
       if (deadline === 'queue') { warmDraw(); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS && T.util.now() - warmSince < WARM_LATEST_MS) {
-        warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
+        warmBack = warmBack ? Math.min(2000, warmBack * 2) : 400;
+        /* the last wait ends at the backstop, and the callback after it draws whatever slot it gets. Never a zero wait: an
+           idle callback asked for from a timer can run again in the same short idle period, back to back (tried: 480 a
+           second in the last second before the backstop) */
+        var wait = Math.max(16, Math.min(warmBack, WARM_LATEST_MS - (T.util.now() - warmSince)));
+        warmPause = setTimeout(function () {
+          warmPause = 0;
+          if (!closed || disposed) return;
+          warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
+        }, wait);
         return;
       }
       warmDraw();
@@ -248051,6 +248357,7 @@ var T = {};
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
+      clearTimeout(warmPause); warmPause = 0;
       if (warmStep && window.PM_WARM) window.PM_WARM.cancel(warmStep);
       if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); }
       warmJob = warmStep = 0;
@@ -248060,7 +248367,7 @@ var T = {};
        profile, the queue's session stop): the screen still has to be up to date when it shows */
     function warmIdle() { warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300); }
     function warmQueue() {
-      warmSince = T.util.now();
+      warmSince = T.util.now(); warmBack = 0;
       if (window.PM_WARM && !window.PM_WARM.state().off) {
         var id = warmStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:catch-up', run: function () { warm('queue'); return null; },
           until: function () { return closed && !disposed; },
@@ -248138,7 +248445,7 @@ var T = {};
     function dockTo(on) {
       if (!pv || !!on === !dock.hidden) return;
       (on ? dockBox : homeBox).appendChild(pv.root);
-      dock.hidden = !on; root.classList.toggle('pmt-cz-docked', !!on);
+      setHidden(dock, !on); root.classList.toggle('pmt-cz-docked', !!on);
       if (on) T.Motion.play(dock);
       pv.layout(true); preview.select();
     }
@@ -248204,7 +248511,7 @@ var T = {};
       /* something changed while it was parked and its catch-up has not run yet (a look just switched, a screen kept from a
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
-      var owed = changed || !!(warmWait || warmJob || warmStep) || building || fitIds.length > 0;
+      var owed = changed || !!(warmWait || warmJob || warmStep || warmPause) || building || fitIds.length > 0;
       rasterCancel(); fitCancel();
       parkedWatch(false);
       var showing = ++visit;
@@ -248376,13 +248683,18 @@ var T = {};
     /* built in a really idle moment where it can (an idle period of 45 ms or more: nothing is drawing frames), never under
        a cover or a switch; after 4 s it takes the next idle moment, since a page with motion of its own never fully rests
        and a screen built late only makes the first click pay for it */
-    var since = T.util.now();
+    var since = T.util.now(), back = 0;
     var build = function (deadline, staged) {
       prepStep = 0;
       if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) prepareLater(1500); return; }
       if (pageSettling()) { prepareLater(1500); return; }
+      /* a short slot waits on a timer before it asks again (400 ms doubling, never past the 4 s backstop), as the parked
+         catch-up's warm() does, rather than asking for the next idle callback from inside this one (lane A, 2026-11-10) */
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
-        requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); return;
+        back = back ? Math.min(2000, back * 2) : 400;
+        setTimeout(function () { requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); },
+          Math.max(16, Math.min(back, 4000 - (T.util.now() - since))));
+        return;
       }
       try { open(v, { prepare: true, staged: !!staged }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
     };
@@ -250106,12 +250418,26 @@ window.PM56_CLASS_MAP={"activity-bar": "pm56-activity-bar"};
     if (layers) layers.hidden = tour;
   }
   syncTour();
+  /* pm7-perf lane C2: the onboarding window (html[data-o55-open], 60-ui-core.js open/close) lays its scrim over the
+     app and makes it inert, and the app's own loops rest while it is open (onboarding README, Performance rules, 6).
+     The chat rests with them: its work clock, its follow glide and its room and stream loops stop where they are and
+     carry on from there when the window has gone (app.js and turn-stream.js listen through onRest). Under the window
+     a demo run went on: on main 70-113 room and follow frames a second and 150-180 ms of script; after pm7-perf lane C
+     still 96-145 chat frames a second and its card patched twice a second (Windows, RTX 3090, 120 Hz). */
+  var resting = doc.documentElement.hasAttribute('data-o55-open'), restFns = [];
+  function syncRest() {
+    var on = doc.documentElement.hasAttribute('data-o55-open');
+    if (on === resting) return;
+    resting = on;
+    restFns.forEach(function (fn) { try { fn(on); } catch (err) { try { console.error('[pm56] rest hook failed', err); } catch (_) {} } });
+  }
   if (typeof MutationObserver === 'function') new MutationObserver(function (recs) {
-    var tour = false, motion = false;
-    recs.forEach(function (r) { if (r.attributeName === 'data-o55-tour') tour = true; else motion = true; });
+    var tour = false, motion = false, rest = false;
+    recs.forEach(function (r) { if (r.attributeName === 'data-o55-tour') tour = true; else if (r.attributeName === 'data-o55-open') rest = true; else motion = true; });
     if (tour) syncTour();
     if (motion) syncState();
-  }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-o55-tour', 'data-motion'] });
+    if (rest) syncRest();
+  }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-o55-tour', 'data-motion', 'data-o55-open'] });
   /* what the chat appends to <body> goes to the effects layer (class prefixes only the chat uses) */
   var FX_CLASS = /(?:^|\s)(?:pm56-|pmx-|tx-fly|rec-tap)/;
   function isChatFx(n) { return !!(n && n.nodeType === 1 && fx && FX_CLASS.test(n.className && n.className.baseVal != null ? n.className.baseVal : (n.className || ''))); }
@@ -250386,6 +250712,10 @@ window.PM56_CLASS_MAP={"activity-bar": "pm56-activity-bar"};
       if (doc.documentElement.hasAttribute('data-o55-tour')) return false;
       return true;
     },
+    /* the onboarding window is open over the app (above): the chat's clocks and loops stand still. onRest(fn) hears
+       fn(true) as it opens and fn(false) once it has gone */
+    resting: function () { return resting; },
+    onRest: function (fn) { if (typeof fn === 'function') restFns.push(fn); },
     kindFor: kindFor,
     mountChatBody: mountChatBody,
     wrapKinds: wrapKinds,
@@ -256225,7 +256555,23 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
          non-scaling-stroke: Chromium will not composite a transform over non-scaling strokes. A context that renders
          the icon at another size sets --nx-u in its CSS, which wins over this default (the bar: 24/14). */
       var u = live.length ? ' style="--nx-u0:' + fmt(24 / size) + '"' : '';
-      var out = '<svg class="' + esc(c) + '" data-nx="' + esc(n) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + u + '>' + base + moving + '</svg>';
+      var open = '<svg class="' + esc(c) + '" data-nx="' + esc(n) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+      var out = open + u + '>' + base + moving + '</svg>';
+      /* A status mark whose one moving part turns about the centre (working's bead on its still ring) draws that part in a
+         second svg of the same size laid over the first, and the svg itself turns: the same keyframes, period, easing and
+         delay (the wrapper's rule for .nx-p reaches it through its classes and partStyle), so the same pose at every moment.
+         The same partStyle keeps --k1 on the svg too: nx-still plays that entrance once before holding at rest.
+         A part turning inside an svg lays that svg out on every frame it moves and each layout re-runs the hover hit test;
+         an svg element turning is a compositor transform with neither (pm7-perf lane F2: the Files footer's working mark,
+         the one glyph still laid out in every frame in Basic and Glass, 119 partial layouts and 120 hit tests a second).
+         The part inside keeps its classes and its own animation is off (neon-icons.css section 9). */
+      if (statusWrap && d.act === 'spin' && live.length === 1 && stat.length) {
+        var lm = live[0].p.m, lo = Array.isArray(lm.o) ? lm.o : (lm.o === 'c' ? null : d.origin);
+        if (lm.ar && !lm.ax && !lm.ay && !lm.cr && !lm.n && lo && +lo[0] === 12 && +lo[1] === 12) {
+          out = open + u + '>' + base + '</svg>' + open.replace('class="' + esc(c) + '"', 'class="' + esc(c + ' nx-p nx-st-move nx-st-spin') + '"') +
+            ' style="--nx-u0:' + fmt(24 / size) + ';' + partStyle(n, live[0].j, lm, d.origin) + '">' + moving + '</svg>';
+        }
+      }
       if (cacheN > 4000) { cache = Object.create(null); cacheN = 0; }
       cache[key] = out; cacheN++;
       return out;
@@ -305272,7 +305618,15 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
 
   function C() { return EXT.ctx(); }
   function reduced() { var M = window.PM56_MOTION; return !!(M && M.reduced && M.reduced()); }
-  function now() { return window.PM56_CLOCK ? window.PM56_CLOCK.now() : performance.now(); }
+  /* pm7-perf lane C2: while PMConcept7's onboarding window is open over the app (PM56_HOST.onRest, 00-host.js) this
+     module's clock stands still and its loops (streams, directors, the held room) ask for no frames; when the window
+     has gone each carries on from where it stopped: a reply's words, a spring, a hold's timing. rest.ms is the time
+     the window has taken so far, in motion time. */
+  var rest = { on: false, at: 0, ms: 0 };
+  /* a send flight's next frame, put aside while the window is open (fly; lane C3) */
+  var restingFlights = [];
+  function clockNow() { return window.PM56_CLOCK ? window.PM56_CLOCK.now() : performance.now(); }
+  function now() { return (rest.on ? rest.at : clockNow()) - rest.ms; }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function sound(ev) { try { if (window.PM56_SOUND) window.PM56_SOUND.play(ev); } catch (e) { } }
   function voice() { var tr = document.querySelector('.transcript'); return (tr && tr.getAttribute('data-voice')) || 'basic'; }
@@ -305432,7 +305786,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     return st;
   }
 
-  function kick() { if (!loop) loop = requestAnimationFrame(frame); }
+  function kick() { if (!loop && !rest.on) loop = requestAnimationFrame(frame); }
 
   function arrivedChars(st, t) {
     var n = 0;
@@ -305750,14 +306104,20 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var t = now();
     return t < room.quietUntil || (t < room.quietUntil + FOLD_QUIET_MAX && stillFolding());
   }
-  function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
+  /* pm7-perf lane C: the transcript is kept while it stays in the page; a whole-document query on each call cost 5 ms a
+     second of a Working run on Home (CPU profile, Windows) */
+  var roomTr = null;
+  function roomInner() { var tr = roomTr && roomTr.isConnected ? roomTr : (roomTr = document.querySelector('.chat-stage .transcript')); return tr && tr.querySelector('.transcript-inner'); }
   function roomFloor(px) {
     room.floorW = px == null ? null : px;   /* P5: the floor as written */
     if (px == null) window.PM56_ROOT_STYLE.removeProperty('--tx-hold-min');
     else window.PM56_ROOT_STYLE.setProperty('--tx-hold-min', px.toFixed(1) + 'px');
   }
   function naturalH(inner) { var l = inner.lastElementChild; return l ? l.getBoundingClientRect().bottom - inner.getBoundingClientRect().top : 0; }
-  function dropRoom() { room.tier = false; room.lg = false; room.own = 0; room.keepWas = 0; room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); }
+  /* (a dropped room needs no frame: one still asked for is given back. A hold that expires in the frame in which the
+     content already reaches the floor wakes the loop in releaseRoom and is dropped a few lines later, and that wake
+     then ran one frame for nothing) */
+  function dropRoom() { room.tier = false; room.lg = false; room.own = 0; room.keepWas = 0; room.on = false; room.rel = false; room.x = null; room.quietUntil = 0; room.foldIds = null; room.transient = false; roomFloor(null); if (room.raf) { cancelAnimationFrame(room.raf); room.raf = 0; } }
   /* the list's height as last laid out: the completion render (which drops
      the card's narration line and mounts the answer's placeholder) runs before
      the hold starts, so the hold takes the height from before that render */
@@ -305775,6 +306135,37 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     /* while held this is the floored height, which is what the reader sees */
     roomRO = new ResizeObserver(function () { if (roomSeen && roomSeen.isConnected) room.lastH = roomSeen.offsetHeight; });
     roomRO.observe(inner);
+    /* pm7-perf lane C: the held room's loop sleeps while nothing in the list moves (roomFrame). A size change of any of
+       the list's items, or any change to the list, wakes it. */
+    if (kidRO) kidRO.disconnect();
+    if (kidMO) kidMO.disconnect();
+    kidRO = new ResizeObserver(roomResized);
+    for (var k = inner.firstElementChild; k; k = k.nextElementSibling) kidRO.observe(k);
+    kidMO = new MutationObserver(roomChanged);
+    kidMO.observe(inner, { childList: true, subtree: true, attributes: true, characterData: true });
+  }
+  var kidRO = null, kidMO = null;
+  function wakeRoom() { if (room.on && !room.raf && !rest.on) room.raf = requestAnimationFrame(roomTick); }
+  /* An item changed size while the loop slept. This runs after layout, so it reads the list now and raises the held
+     height as the loop would have this frame; the loop, woken, writes it in the next frame's layout. Written here, a
+     whole-pixel floor a fraction over the content would resize the list inside this delivery, which the browser
+     reports as a ResizeObserver loop. */
+  function roomResized() {
+    if (!room.on || room.raf) return;
+    if (!room.rel && !room.tier && !roomQuiet() && room.inner === roomSeen && roomSeen && roomSeen.isConnected) {
+      var g = naturalH(roomSeen);
+      if (g > room.h0 + 0.001) room.h0 = Math.ceil(g - 0.001);
+    }
+    wakeRoom();
+  }
+  function roomChanged(list) {
+    for (var i = 0; i < list.length; i++) {
+      var r = list[i], j;
+      if (r.type !== 'childList' || r.target !== roomSeen || !kidRO) continue;
+      for (j = 0; j < r.addedNodes.length; j++) if (r.addedNodes[j].nodeType === 1) kidRO.observe(r.addedNodes[j]);
+      for (j = 0; j < r.removedNodes.length; j++) if (r.removedNodes[j].nodeType === 1) kidRO.unobserve(r.removedNodes[j]);
+    }
+    wakeRoom();
   }
   function holdRoom() {
     if (reduced()) return;
@@ -305791,7 +306182,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomTick);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.pdt = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.pdt = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; wakeRoom(); } }
   /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
      and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
      re-observes the list) */
@@ -305869,6 +306260,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     room.viewTs = ts; room.viewDt = dt; room.viewNat = nat;
     return Math.max(wanted, tr.scrollTop - Math.max(0, CLOSE_STEP * Math.min(1, sdt * 60) - growth));
   }
+  /* app.js asks this before a follow kick that has nothing else to wake it (kickFollowIfMoved): while a close's view
+     cut holds, the target moves every frame by itself */
+  closeFollowTarget.active = function () { return room.on && room.rel && room.lg && room.viewCut; };
   function closeViewStart() {
     var inner = roomInner(), tr = inner && inner.closest('.transcript'), c = C();
     room.viewTs = null; room.viewDt = null; room.viewNat = null; room.viewCut = false; room.viewCompleteTop = null; room.viewBody = null;
@@ -305985,7 +306379,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
   function holdShrink(fresh, finite, atLeast) {
     if (reduced() && !runHoldsRoom()) return;
-    if (room.on) { if (room.lg) { room.keepWas = room.keep; keepRoom(); } if (room.tier) { room.tier = false; if (!room.rel && room.floorW !== room.h0) roomFloor(room.h0); } if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
+    if (room.on) { if (room.lg) { room.keepWas = room.keep; keepRoom(); } if (room.tier) { room.tier = false; if (!room.rel && room.floorW !== room.h0) roomFloor(room.h0); } if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); wakeRoom(); return; }
     var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
     var inner = roomInner(); if (!inner) return;
     /* fresh: a hold that follows no shrink (watchRoom) takes the list as it is now */
@@ -306007,7 +306401,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      shrink a FLIP or a fold announces makes it an ordinary hold (holdShrink). */
   function holdTier(down) {
     if (reduced()) return;   /* there the dial changes at once and watchRoom holds the run's room from its start */
-    if (room.on) { if (down && room.lg) keepRoom(); if (down && room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
+    if (room.on) { if (down && room.lg) keepRoom(); if (down && room.transient && !room.rel) room.relAt = shrinkRelAt(); wakeRoom(); return; }
     if (!down && !runHoldsRoom()) return;
     /* the list's laid-out height is whole pixels; the floor starts at or above the content it holds. The content is read
        before the hold writes the floor, which it then writes once: read after that write, it restyled the whole page in
@@ -306020,6 +306414,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   // Room measurements follow this frame's natural layout. Reading the last card in rAF forced a
   // second page layout during a width drag; the room's writes still land before the same frame paints.
   function roomTick(ts) {
+    if (rest.on) { room.raf = 0; return; }   /* (lane C2: a frame asked for as the window opened; wire() wakes it) */
     var pending = room.raf;
     if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(function () { if (room.raf === pending) roomFrame(ts); });
     else roomFrame(ts);
@@ -306030,6 +306425,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
     if (room.transient && !room.rel && room.relAt === Infinity && (!runHoldsRoom() || room.h0 - naturalH(inner) > RUN_ROOM_MAX)) room.relAt = now() + SHRINK_HOLD;
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
+    var still = false;
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
          it can then never be clamped back when something above shrinks */
@@ -306038,12 +306434,20 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
          pixel when a subject's rows folded, 26.4 s), at most one write per pixel of growth. A tier hold writes only
          once the growth stops (each write restyles the page; written mid-growth it cost a 69 ms frame and a 30 px step). */
       if (grown > room.h0 + 0.001) { room.h0 = Math.ceil(grown - 0.001); if (!room.tier) roomFloor(room.h0); }
+      /* a growth roomResized took while this loop slept: written now, in the layout of the frame after it */
+      else if (!room.tier && room.floorW !== room.h0) roomFloor(room.h0);
       /* round 3 (hist): a growth still adding under half a pixel a frame (a spring's settle) has stopped: deferred
          past it, the floor stayed at the pre-growth height for a frame too many, and a fold nothing announced then
          clamped a following reader 67 px down (hosted Long agent turn, 14.4 s, 1 run in 9) */
       if (room.tier) { if (room.floorW !== room.h0 && !(grown > room.grownAt + 0.5)) roomFloor(room.h0); room.grownAt = grown; }
       /* round 3 (hist): the run's own height, the most the list held without what the reader opened */
       var ownH = grown - openedH(inner); if (ownH > room.own) room.own = ownH;
+      /* pm7-perf lane C: a run's room held with nothing moving (no release due, no tier write waiting, the list the
+         height it was last frame) has nothing to do each frame. Every frame of it read the list and kicked the
+         follow, and asked for the next frame: 64 main frames a second for a whole Working run on Home (Windows,
+         RTX 3090, 120 Hz). It sleeps until roomResized, roomChanged, a hold call or watchRoom's interval wakes it. */
+      still = room.transient && room.relAt === Infinity && !(room.tier && room.floorW !== room.h0) && Math.abs(grown - room.lastNat) < 0.01 && inner === roomSeen && !!kidRO;
+      room.lastNat = grown;
     }
     if (room.rel) {
       if (room.lg && room.viewCut && !runHoldsRoom()) {
@@ -306128,7 +306532,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     }
     try { C().followIfSticky(); } catch (e) { }
     if (room.rel && room.lg) lgMark(inner);
-    room.raf = requestAnimationFrame(roomTick);
+    if (still) return;
+    /* An expiring hold calls releaseRoom above, whose wake already queued the next frame. Keep that one chain;
+       releaseRoom must still wake a sleeping room when called outside roomFrame. */
+    if (!room.raf) room.raf = requestAnimationFrame(roomTick);
   }
 
   /* ================================================================ 6 directors
@@ -306493,7 +306900,11 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
         S.style.transform = 'translate(' + bx.toFixed(2) + 'px,' + by.toFixed(2) + 'px) scale(' + ss.toFixed(4) + ')';
         S.style.opacity = String(op); S.style.filter = blur ? 'blur(' + blur.toFixed(2) + 'px)' : 'none'; S.style.clipPath = clip;
       }
-      if (t < 1) requestAnimationFrame(frame);
+      /* (under the onboarding window the flight stands where it is, under the window's scrim, and carries on at the
+         close from there, on this module's clock, which skipped the window: rest, wire. Lane C3, R1 review of lane C2:
+         that clock stands still meanwhile, so t stayed under 1 and this frame asked for the next on every refresh for
+         as long as the window was open) */
+      if (t < 1) { if (rest.on) restingFlights.push(frame); else requestAnimationFrame(frame); }
       else {
         document.body.classList.remove('tx-flying');
         land(id);
@@ -306528,7 +306939,28 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var c; try { c = C(); } catch (e) { return; }
     if (!c || !c.registerTurnOwner) return;
     wired = true;
-    setInterval(watchRoom, 700);
+    /* ...and once a 700 ms tick: a run that stops running with nothing in the list changing still lets its room go */
+    setInterval(function () { if (rest.on) return; watchRoom(); wakeRoom(); }, 700);
+    /* lane C2 (rest, top): the onboarding window opens: the loops stop where they are; it has gone: they carry on, a
+       release's next step timed from the clock (which skipped the window) rather than from the last frame's stamp */
+    var H = window.PM56_HOST;
+    if (H && H.onRest) {
+      if (H.resting && H.resting()) { rest.on = true; rest.at = clockNow(); }
+      H.onRest(function (on) {
+        if (on === rest.on) return;
+        if (on) {
+          rest.at = clockNow(); rest.on = true;
+          if (loop) { cancelAnimationFrame(loop); loop = 0; }
+          if (room.raf) { cancelAnimationFrame(room.raf); room.raf = 0; }
+          return;
+        }
+        rest.ms += clockNow() - rest.at; rest.on = false;
+        room.lastTs = null;
+        wakeRoom();
+        if (streams.size || directors.size) kick();
+        restingFlights.splice(0).forEach(function (f) { requestAnimationFrame(f); });
+      });
+    }
     c.registerTurnOwner(owner);
     c.onWorkComplete(onComplete);
     if (c.onWorkShrink) c.onWorkShrink(holdShrink);
@@ -310196,7 +310628,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     // same cascade, container and media regime and inherited host variables, so syncActivityCompact's observer reads
     // every tier width from layout. The copies carry no action, domain id or accessible name (aria-hidden, inert);
     // data-hover-domain and .active stay, because the bar's rules size items by them.
-    const inner=(id,d)=>`<i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span>`;
+    const inner=(id,d)=>`<i class="state-mark ${d.state}"></i><span class="ab-glyph">${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}</span><span class="label">${d.label}</span><span class="count">${d.count}</span>`;
     const isActive=id=>state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;
     const fitRow=tier=>`<div class="activity-fit${tier?' is-ab-compact':''}"><div class="pm56-activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}">${items.map(([id,d])=>`<button class="activity-item ${isActive(id)?'active':''}" data-hover-domain="${id}" tabindex="-1">${inner(id,d)}</button>`).join('')}</div></div>`;
     return `<div class="activity-wrap${abCompactTier>=1?' is-ab-compact':''}${abCompactTier>=2?' is-ab-icon-only':''}" data-k="activity-wrap"><div class="pm56-activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=isActive(id);return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}">${inner(id,d)}</button>`;}).join('')}</div><div class="activity-sizer" data-k="activity-sizer" aria-hidden="true" inert>${fitRow(0)}${fitRow(1)}</div></div>`;
@@ -310780,6 +311212,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     renderApp();
   }
   function renderApp(preserve=true){
+    renderGen++; appRenderGen++;
     syncActivityDomain();
     const wasFollowing=tStick, revealing=settleWorkGate();
     /* Round 3 (A): the render that hides a tail already on screen (armWorkGate g.cut) is a cut: no scroll capture,
@@ -310819,7 +311252,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const preTop=keepTopBefore();
     if(HOSTED) pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell" data-pm56-hosted><div class="workspace"><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel('dock'):''}${renderChat()}</div></section></div></main>`);
     else pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel('dock'):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
-    document.getElementById('pmRoot').setAttribute('aria-busy','false');
+    { const r=document.getElementById('pmRoot'); if(r.getAttribute('aria-busy')!=='false') r.setAttribute('aria-busy','false'); } // only when it differs: each full render rewrote it, a write every DOM watcher of the page heard (pm7-perf lane K)
     const post=snapScroll();
     const flips=cut?[]:flipHeights(flipTargets, flipBefore);
     if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
@@ -310899,6 +311332,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      nothing to patch, so callers can fall back to renderApp(). */
   function patchScope(live, html){
     if(!live||!live.isConnected||!html) return false;
+    renderGen++;
     const tpl=document.createElement('template'); tpl.innerHTML=String(html).trim();
     const src=tpl.content.firstElementChild; if(!src) return false;
     if(src.getAttribute('data-k')!==live.getAttribute('data-k')) return false;
@@ -311301,7 +311735,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function followTarget(fn){ followTargetFn=typeof fn==='function'?fn:null; }
   const GLIDE_TAU=70;
   const GLIDE_DT_MAX=120;   /* a late frame still advances the glide by the time it took (to 120 ms); at 60 fps nothing changes */
-  function tEl(){ return scrollKeyEl('transcript'); }
+  /* pm7-perf lane C: the transcript, looked up once while it stays in the page. An attribute query walks the whole
+     document, and PMConcept7's is tens of thousands of nodes: tEl() alone was 25 ms a second of a Working run on Home
+     (CPU profile, Windows), from the glide, the jump pill and the room's checks. Only renderChat makes this element. */
+  var tElNode=null;   /* var, as the other state below: no read before its line runs can throw */
+  function tEl(){ if(tElNode&&tElNode.isConnected) return tElNode; tElNode=scrollKeyEl('transcript'); return tElNode; }
   function tAtBottom(el){
     el=el||tEl(); if(!el) return true;
     const limit=el.scrollHeight-el.clientHeight;
@@ -311310,7 +311748,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const target=tStick&&followTargetFn?followTargetFn(el,limit,true):null;
     return (target==null?limit:Math.min(limit,target))-el.scrollTop<=24;
   }
-  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
+  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; followMoved=true; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
   /* The glide's time constant is real time; a late frame catches up the time it lost instead of falling further behind (P1, 2026-10-23: 302-367 ms on a loaded standalone). */
   function glideStep(ts){
@@ -311336,7 +311774,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
     const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
     if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
-    if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
+    if(d<=0.5){ glideTs=0; followMoved=false; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
     let next;
     if(window.PM56_MOTION&&window.PM56_MOTION.reduced()) next=max;
@@ -311346,11 +311784,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     writeScrollInstant(el,next);
     /* Integer scroll offsets can round the final subpixel step back to cur forever (2px short at 120Hz). Finish
        that near-bottom settle so the next card starts a fresh glide instead of inheriting this idle one's clock. */
-    if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; syncJumpBottom(); return; }
+    if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; followMoved=false; syncJumpBottom(); return; }
     glideRAF=requestAnimationFrame(glideStep);
   }
-  function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
+  function kickFollow(){ if(tStick&&!glideRAF&&!workResting()){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }   /* (not under PMConcept7's onboarding window: lane C2, armWorkTimer) */
   function followIfSticky(){ kickFollow(); }
+  /* pm7-perf lane C: whether the transcript's size, its list's size or its scroll position may have changed since the
+     glide last came to rest at the bottom (its observer, a scroll event, a write of ours). A patch's follow (restoreScroll)
+     kicks the glide only then: with nothing moved, each kick cost a frame and a forced layout to find it was there. */
+  var followMoved=true;
+  function kickFollowIfMoved(){
+    if(followMoved||(followTargetFn&&(!followTargetFn.active||followTargetFn.active()))) kickFollow();
+  }
   /* A turn module may hold the follow for a moment: a card about to fold frees
      far more room than the answer mounting under it needs, so chasing that
      answer first would scroll down only to be clamped back up by the fold. */
@@ -311379,7 +311824,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return g;
   }
   function stickToBottom(instant){
-    tStick=true;
+    tStick=true; followMoved=true;
     const el=tEl();
     if(instant&&el){ cancelGlide(); writeScrollInstant(el,el.scrollHeight); requestAnimationFrame(()=>{ const e2=tEl(); if(e2&&tStick) writeScrollInstant(e2,e2.scrollHeight); syncJumpBottom(); }); return; }
     kickFollow();
@@ -311389,7 +311834,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(inner===tROTarget) return;
     if(tRO){ tRO.disconnect(); tRO=null; }
     tROTarget=inner;
-    if(inner){ tRO=new ResizeObserver(()=>kickFollow()); tRO.observe(inner); tRO.observe(el); }
+    if(inner){ tRO=new ResizeObserver(()=>{ followMoved=true; kickFollow(); }); tRO.observe(inner); tRO.observe(el); }
   }
   function inTranscript(t){ return !!(t&&t.closest&&t.closest('[data-scroll-key="transcript"]')); }
   const T_SCROLL_KEYS=new Set(['PageUp','PageDown','ArrowUp','ArrowDown','Home','End',' ']);
@@ -311409,7 +311854,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const r=el.getBoundingClientRect();
     if(e.clientX>r.left+el.clientWidth){ tDragging=true; tUserInputAt=performance.now(); tStick=false; cancelGlide(); }
   },{capture:true});
-  document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
+  document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); followMoved=true; const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
   function scrollTargets(scope=document){
     const out=[...scope.querySelectorAll('[data-scroll-key]')];
     for(let el=scope.nodeType===1?scope:null;el;el=el.parentElement) if(el.hasAttribute('data-scroll-key')) out.push(el);
@@ -311466,16 +311911,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return {total:g, el:big?big.el:null, h0:big?big.h0:0, h1:big?big.h1:0, instant};
   }
   function transcriptAwayFromBottom(){
-    const el=scrollKeyEl('transcript');
+    const el=tEl();
     if(!el) return false;
     const max=el.scrollHeight-el.clientHeight;
     if(max<=4) return false;
     return !tAtBottom(el);
   }
+  var jumpBtnNode=null;
   function syncJumpBottom(){
     const on=transcriptAwayFromBottom();
     jumpBottomVisible=on;
-    const btn=document.querySelector('.jump-bottom');
+    /* pm7-perf lane C: kept while it stays in the page (a whole-document query each call; see tEl) */
+    const btn=jumpBtnNode&&jumpBtnNode.isConnected?jumpBtnNode:(jumpBtnNode=document.querySelector('.jump-bottom'));
     if(btn) btn.classList.toggle('is-visible', on);
   }
   function onTranscriptScroll(){
@@ -311486,6 +311933,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        anchoring is switched off for the transcript (turn-stage.css): it moved the
        view up when a card above shrank, which this rule would misread. */
     const el=tEl();
+    followMoved=true;
     if(el){
       const top=el.scrollTop, prev=tLastTop, ch=el.clientHeight, lastCh=tLastCh; tLastTop=top; tLastCh=ch;
       const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
@@ -311619,7 +312067,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         const v=pos?pos[el.dataset.scrollKey]:null;
         if(v==null) return;
         if(el.dataset.scrollKey==='transcript'&&historyAnchored&&workHistoryAnchor) return;
-        if(v==='follow'){ kickFollow(); return; }
+        if(v==='follow'){ kickFollowIfMoved(); return; }
         /* The reader moved between the patch and this frame: their position
            wins over the one captured before the patch. */
         const post=opts&&opts.post;
@@ -311751,7 +312199,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return content ? `<div class="lens-inline" data-k="lens-inline">${content}</div>` : '';
   }
   function syncInlineLens(){
-    const dock=document.querySelector('.lens-dock');
+    /* pm7-perf lane C: kept while it stays in the page (a whole-document query on every overlay render; see tEl) */
+    const dock=lensDockNode&&lensDockNode.isConnected?lensDockNode:(lensDockNode=document.querySelector('.lens-dock'));
     if(!dock)return;
     const html=renderInlineLens();
     /* Mounting the in-flow controls moves the transcript's viewport before
@@ -311767,7 +312216,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
   }
   let lastOverlayPayload='';
-  function renderOverlays(){
+  var lensDockNode=null;
+  function renderOverlays(opts){
     const root=document.getElementById('pmOverlayRoot');
     /* F0b (IMPACT A1-36): a scoped picker opened from a sheet goes with that sheet. Closing the
        sheet (x, Cancel, Save, Start) while its picker was open left the 560 px menu hanging at
@@ -311796,7 +312246,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     lastMenuSig=menuSig;
     syncHoverCard();
     runAfterRender('overlay',{patched});
-    requestAnimationFrame(positionOverlays);
+    /* pm7-perf lane C: a work tick that changed nothing drawn, with no menu or hover card to place, takes no frame:
+       what is left (the sprouts, syncChatDock) reads only what that tick did not touch. With a menu or a card open the
+       tick still re-places it, as every tick did. */
+    if(patched||!(opts&&opts.still)||state.menu||state.hover) requestAnimationFrame(positionOverlays);
   }
   /* F0b (e), the model-menu fold fix (DESIGN-SPEC 10.1 e; brief C.5, D-16). The 13th model
      was never below reach: scrollIntoView brings kimi-k3-turbo into the list. What missed was
@@ -312576,10 +313029,36 @@ suggested path                    migration 0043, reversible</div></div></sectio
      time because renderers gate them on the half-second clock. */
   function armWorkTimer(){
     clearInterval(workTimer);
+    if(workResting()){ workTimer=null; return; }   /* (pm7-perf lane C2, below: armed when the window has gone) */
     /* 500ms of MOTION time: a film tool that slows the clock slows the tick too. */
     workTimer=setInterval(workTick,window.PM56_CLOCK?window.PM56_CLOCK.ms(500):500);
   }
   window.addEventListener('pm56-clock-scale',()=>{ if(workTimer) armWorkTimer(); });
+  /* pm7-perf lane C2: while PMConcept7's onboarding window is open over the app (PM56_HOST.onRest, 00-host.js) the
+     work clock stands still: no tick, so no card or status-bar patch, and no follow glide (kickFollow). The clock
+     advances by ticks, so when the window has gone it carries on from where it stopped, and a run that would have
+     ended meanwhile ends then. A chain's next run waits too: its delay counts only the time the window is not open
+     (seqArm). Under the window the run went on: its tick twice a second, glide and room frames 96-145 a second. */
+  function workResting(){ return !!(HOSTED&&HOST.resting&&HOST.resting()); }
+  /* A chain's next run (onRecComplete) is armed here. seqDue is when it falls due; at the opening it is put aside in
+     seqPark with what is left of its delay, and armed again with that at the close; armed while the window is open, it
+     is put aside whole. seqTimer keeps its id meanwhile, so the chain still counts as pending (maybeFlushQueue) and a
+     reset or a thread switch (seqTimer=null) still ends it. Lane C3 (R1 review of lane C2): the delay used to be put
+     aside only when it fell due under the window, so a visit that ended before then was not counted at all (1200 ms
+     armed, the window open from +200 to +800 ms: the next run started at +1200 instead of +1800). */
+  var seqDue=null, seqPark=null;
+  function seqArm(fn,ms){ seqTimer=setTimeout(fn,ms); seqDue={fn,id:seqTimer,at:performance.now()+ms}; if(workResting()) seqRest(); }
+  function seqRest(){
+    const d=seqDue; seqDue=null;
+    if(d&&seqTimer===d.id){ clearTimeout(seqTimer); seqPark={fn:d.fn,id:seqTimer,left:Math.max(0,d.at-performance.now())}; }
+  }
+  if(HOSTED&&HOST.onRest) HOST.onRest(on=>{
+    if(on){ clearInterval(workTimer); workTimer=null; cancelGlide(); seqRest(); return; }
+    if(runningRecs().length) armWorkTimer();
+    const p=seqPark; seqPark=null;
+    if(p&&seqTimer===p.id) seqArm(p.fn,p.left);
+    followMoved=true; kickFollow();
+  });
   function workTick(){
     // Hosted: a shell/Home resize drag owns the frame budget. The demo clock advances a fixed step
     // per tick, so skipping ticks while body.pm-resizing simply pauses the timeline mid-drag; the
@@ -312607,10 +313086,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(!runningRecs().length){ stopWorkTimer(); maybeFlushQueue(); }
   }
   const STAMP_KEEP=['data-role','data-msg-type','data-family','data-turn','data-turn-pos'];
+  /* pm7-perf lane C: a tick whose card would come out exactly as it is patches nothing. renderGen counts every render
+     of the app and every scoped patch; when nothing rendered since the last light tick, a card whose markup is the
+     string that tick patched it with is already that markup, and patchScope's measuring, scroll custody, hooks and
+     frames would only find so (about one tick in four of the classic run changes nothing drawn; each such patch also
+     stripped and re-set Pip's data-pip-run). The status bar likewise. lightTickGen is renderGen as the last light tick
+     left it, or -1 when something else rendered during that tick (a hook): what that render drew is not known here. */
+  var renderGen=0, appRenderGen=0, lightTickGen=-1, statusBarHtml=null, statusBarNode=null, statusBarGen=-1;
+  const lightTickHtml=new WeakMap();
   function lightTick(live){
-    const t=activeThread(), inner=document.querySelector('.transcript-inner');
+    const tr=tEl(), t=activeThread(), inner=tr&&tr.querySelector('.transcript-inner');
     if(!t||!inner) return false;
-    const recs=new Set(live), covered=new Set();
+    const recs=new Set(live), covered=new Set(), clean=renderGen===lightTickGen, gen0=renderGen;
+    let changed=false, own=0;
     for(const m of t.messages){
       if(m.type!=='working'||!messageVisible(m)) continue;
       const rec=workRecFor(m); if(!rec||!recs.has(rec)) continue;
@@ -312621,14 +313109,24 @@ suggested path                    migration 0043, reversible</div></div></sectio
       const node=inner.querySelector(`:scope > [data-k="${CSS.escape(km[1])}"]`);
       if(!node) return false;
       html=stampItem(html,STAMP_KEEP.map(a=>[a,node.getAttribute(a)]));
+      if(clean&&lightTickHtml.get(node)===html){ covered.add(rec); continue; }
       if(!patchScope(node,html)) return false;
+      lightTickHtml.set(node,html); changed=true; own++;
       covered.add(rec);
     }
     for(const r of live) if(!covered.has(r)) return false;
-    const sb=document.querySelector('.status-bar');
-    if(sb){ const tpl=document.createElement('template'); tpl.innerHTML=renderStatusBar(); if(tpl.content.firstElementChild) pmPatchNode(sb,tpl.content.firstElementChild); }
-    renderOverlays();
+    /* only renderApp makes the status bar (never hosted): looked up once per app render */
+    if(statusBarGen!==appRenderGen){ statusBarGen=appRenderGen; statusBarNode=document.querySelector('.status-bar'); statusBarHtml=null; }
+    const sb=statusBarNode&&statusBarNode.isConnected?statusBarNode:null;
+    if(sb){
+      const sbHtml=renderStatusBar();
+      if(sbHtml!==statusBarHtml){ statusBarHtml=sbHtml; const tpl=document.createElement('template'); tpl.innerHTML=sbHtml; if(tpl.content.firstElementChild) pmPatchNode(sb,tpl.content.firstElementChild); changed=true; }
+    }
+    /* nothing drawn changed: the overlays are re-patched only if their own markup changed, and keep their places */
+    renderOverlays(changed?null:{still:true});
+    /* every tick, changed or not: for a reader who is not following it is also what shows the pill as a card's FLIP grows */
     syncJumpBottom();
+    lightTickGen=renderGen===gen0+own?renderGen:-1;
     return true;
   }
   function stopWorkTimer(killSequence){ clearInterval(workTimer); workTimer=null; if(killSequence){ clearTimeout(seqTimer); seqTimer=null; for(const k in heldNextRuns) delete heldNextRuns[k]; } }
@@ -312644,13 +313142,17 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const def=rec.runId&&D.workRuns&&D.workRuns[rec.runId];
     if(!def) return;                 // a PRIMARY record completing must not scroll the reader
     followIfSticky();
-    clearTimeout(seqTimer);
+    /* (the pending successor delay is cleared here, as ever; what the rest hook holds of it goes too, or a visit to the
+       onboarding window would arm the cleared delay again: seqRest and the close know it only by seqTimer's id, which
+       stays) */
+    clearTimeout(seqTimer); seqDue=null; seqPark=null;
     /* A finished card compacts when its successor enters the thread (startWorkingRec
        sets supersededBy at spawn time) or when the turn's answer starts streaming
        (turn-stream.js). */
     if(def.next&&D.workRuns[def.next.run]){
       const nid=def.next.run, pid=rec.id||rec.runId, delay=def.next.delayMs||1200;
-      const go=()=>{ clearTimeout(seqTimer); seqTimer=setTimeout(()=>{ seqTimer=null; startWorkingRec(nid,pid); },delay); };
+      /* (its delay counts only the time PMConcept7's onboarding window is not open: seqArm, by armWorkTimer's rest hook) */
+      const go=()=>{ clearTimeout(seqTimer); seqArm(()=>{ seqTimer=null; startWorkingRec(nid,pid); },delay); };
       if(hold) heldNextRuns[pid]=go; else go();
     }
   }
@@ -315717,7 +316219,16 @@ function watchSeat() {
   seat = f;
   if (seat) ro.observe(seat);
 }
-window.addEventListener('scroll', soon, { capture: true, passive: true });
+/* only a scroll that can carry the chat's controls under the Pod: one inside the chat, or of a box that holds it (the
+   document among them). The other pages' own scrollers (Usage's board, Settings) never move the chat, and every check is
+   25 hit tests: 4.8 ms a run on an M3, several runs a second while Usage's board scrolled (2026-11-11, lane D). */
+let chatHost = null;
+window.addEventListener('scroll', function (e) {
+  const t = e.target;
+  if (!chatHost || !chatHost.isConnected) chatHost = document.querySelector('.pm56-host');
+  if (chatHost && t && t.nodeType === 1 && !t.closest('.pm56-host') && !t.contains(chatHost)) return;
+  soon();
+}, { capture: true, passive: true });
 window.addEventListener('resize', soon, { passive: true });
 new MutationObserver(soon).observe(html, { attributes: true, attributeFilter: ['data-o55-nier', 'data-o55-nier-parts'] });
 const E = window.PM56_EXT;
@@ -318970,9 +319481,16 @@ try {
       if (sizeWatch) { sizeWatch.unobserve(n); sizeWatch.observe(n); }
     }
   }
+  /* A record from the decoration on Pip's onboarding stage (aria-hidden: its drawing, its bubble, its HUD), which the
+     stage rewrites on every frame it draws. That decoration holds no glass and its redraws remove none, so such a record
+     is not looked at: before, each one ran the strip scans below and asked for a lazy sync, on every frame the window was
+     open, in every look (pm7-perf, 2026-11-11; lane G: 9.5-15 ms of script a second). A record from anything else in the
+     window (a screen replaced, a card, a button) is handled as before. */
+  function pipDecoration(r) { var n = r.target; n = n && n.nodeType === 1 ? n : n && n.parentElement; return !!(n && n.closest && n.closest('#pm-o55-onboarding .pst [aria-hidden="true"]')); }
   var mo = new MutationObserver(function (recs) {
     var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
     for (var i = 0; i < recs.length; i++) {
+      if (pipDecoration(recs[i])) continue;
       /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
          the lazy sync (an opaque chip gone for 140 ms left its inverted label on bare ground) */
       if (recs[i].type === 'childList' && recs[i].removedNodes.length) for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
