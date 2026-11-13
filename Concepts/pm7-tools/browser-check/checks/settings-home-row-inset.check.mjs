@@ -120,6 +120,27 @@ async function sized(t, f, w, h) {
 	return Math.abs(vp.iw - w) <= 2 && Math.abs(vp.ih - h) <= 2 ? null : `inner ${vp.iw}x${vp.ih}`;
 }
 
+/* General › page options › "Show all explanations". Up to three tries, each logged: in one of about 80 drawer steps
+   on 076e30eda7 (sandbox, Basic Light, after the 1280 -> 1920 resize) General's page options never showed within 18 s
+   and the step threw before measuring. Returns the try that opened the drawer, or 0. */
+async function openExplanations(t, f, cell) {
+	const rowsShown = () => f.waitForFunction(() => [...document.querySelectorAll('#panel-settings .panel-card > .setup-row')].some((r) => r.checkVisibility()), null, { timeout: 8000 }).then(() => true).catch(() => false);
+	for (let n = 1; n <= 3; n++) {
+		await f.evaluate(() => window.PM51.go('general', 'app-input'));
+		const opt = f.locator('#pm-settings-root [data-action="page-options"]').first();
+		const item = f.getByText('Show all explanations', { exact: true }).first();
+		const ok = await opt.waitFor({ state: 'visible', timeout: 6000 }).then(() => opt.click({ timeout: 5000 }))
+			.then(() => item.waitFor({ state: 'visible', timeout: 5000 })).then(() => item.click({ timeout: 5000 }))
+			.then(rowsShown).catch(() => false);
+		if (ok) { if (n > 1) t.log(`${cell}: the drawer opened on try ${n}`); return n; }
+		t.log(`${cell}: try ${n} did not open "Show all explanations"; closing any menu and opening General again`);
+		await t.page.keyboard.press('Escape').catch(() => {});
+		await f.evaluate(() => window.PM51.go('general', '__domain__')).catch(() => {});
+		await t.page.waitForTimeout(800);
+	}
+	return 0;
+}
+
 const worst = (rows, key) => rows.filter((r) => typeof r[key] === 'number').reduce((m, r) => Math.max(m, Math.abs(r[key])), 0);
 
 export const tests = {};
@@ -196,14 +217,12 @@ for (const surface of ['normal', 'sandbox']) {
 				const cell = `${look} ${size.id}`;
 				await t.step(`dialog ${cell}`, async () => {
 					await sized(t, f, size.w, size.h);
-					await f.evaluate(() => window.PM51.go('general', 'app-input'));
-					const opt = f.locator('#pm-settings-root [data-action="page-options"]').first();
-					await opt.waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
-					await opt.click();
-					const item = f.getByText('Show all explanations', { exact: true }).first();
-					await item.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
-					await item.click();
-					await f.waitForFunction(() => document.querySelectorAll('#panel-settings .panel-card > .setup-row').length > 0, null, { timeout: 8000 }).catch(() => {});
+					const attempt = await openExplanations(t, f, cell);
+					if (!attempt) {
+						await t.shot(`dialog-not-opened-${look}-${size.id}`, 'Settings › General after three tries to open "Show all explanations"');
+						await t.check(`${cell} "Show all explanations" opens`, false, 'General\'s page options or the drawer never showed in three tries');
+						return;
+					}
 					await f.waitForFunction(STILL, '#panel-settings .panel-card > .setup-row', { polling: 'raf', timeout: 4000 }).catch(() => {});
 					await t.page.waitForTimeout(250);
 					const rows = await f.evaluate(DIALOG);
