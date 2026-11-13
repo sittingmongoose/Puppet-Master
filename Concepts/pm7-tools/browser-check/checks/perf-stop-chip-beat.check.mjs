@@ -24,6 +24,12 @@
 //     time) moves forward by no more than one frame's step at the faster pace (dt / the shorter length, 10% and 0.002
 //     slack), and the glyph's scale and the backlight's opacity move by no more than the fastest ordinary frame of the
 //     same look at the flowing pace (per ms, 15% and 0.002 slack). A new loop (a restart) at a change fails.
+// Every frame from the first change on is judged the same way (no new loop, no place step over one frame), not only
+// the frames that hold a change.
+// What this cannot see: the compositor. A retimed loop reaches it only with the next frame and it keeps the old timing
+// until then, also through a long task; the page's samples show the main thread's view. The hand-over is judged in
+// tests/stop-chip-beat-verify.mjs (a model of the frame clock and the compositor) and on pixels in lane S's films
+// (share 2026-11-13-pm7-stop-chip-pace: a Settings save, a 261 ms task, made both main and the first build jump).
 // After the run ends nothing of the chip's is armed (PM56_SENDSTOP.debug(): no quiet timer, no observer).
 // Each look is SAVED through Settings before its run: a Settings save (the speed change) repaints the saved look, and
 // with the kit's unsaved look() the page went back to Basic Dark mid-run (first runs: a look change, read as a jump).
@@ -55,7 +61,7 @@ const PACE = async ({ speed, windowPart }) => {
 		if (!b) return r;
 		const all = b.getAnimations({ subtree: true });
 		const g = all.find((a) => /^ss-breathe/.test(a.animationName)), l = all.find((a) => /^ss-glow/.test(a.animationName));
-		if (g) { const cs = getComputedStyle(b.querySelector('.ss-g')), m = cs.transform; r.ease = cs.animationTimingFunction; r.g = { id: idOf(g), name: g.animationName, dur: +g.effect.getTiming().duration, place: placeOf(g), state: g.playState, v: m && m.startsWith('matrix(') ? parseFloat(m.slice(7)) : 1 }; }
+		if (g) { const cs = getComputedStyle(b.querySelector('.ss-g')), m = cs.transform; r.ease = cs.animationTimingFunction; r.g = { id: idOf(g), name: g.animationName, dur: +g.effect.getTiming().duration, delay: +g.effect.getTiming().delay, place: placeOf(g), state: g.playState, v: m && m.startsWith('matrix(') ? parseFloat(m.slice(7)) : 1 }; }
 		if (l) r.b = { id: idOf(l), name: l.animationName, dur: +l.effect.getTiming().duration, place: placeOf(l), state: l.playState, v: parseFloat(getComputedStyle(b.querySelector('.ss-bl'), '::before').opacity) };
 		return r;
 	};
@@ -141,6 +147,27 @@ const PACE = async ({ speed, windowPart }) => {
 	for (const m of marks) if (m.kind === 'quiet') { const fl = flips.find((x) => x.to === 'waiting' && x.now >= m.wordAt); if (fl) { m.i = fl.i; m.flipMs = Math.round(fl.now - m.wordAt); } }
 	return { rows, marks, flips, errors, after };
 };
+
+// Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew
+// (a restart) and its place never moves more than one frame at the faster pace (a retime that something else did, at a
+// moment no mark names, would show here; the first speed films found one 0.8 s after a Settings save).
+function everyFrame(R) {
+	const out = { worst: 0, where: null, restarts: [] };
+	const first = Math.max(1, Math.min(...R.marks.map((m) => m.i).filter((i) => i > 0)));
+	for (const layer of ['g', 'b']) {
+		for (let i = first; i < R.rows.length; i++) {
+			const a = R.rows[i - 1][layer], b = R.rows[i][layer];
+			if (!a || !b) continue;
+			const t = Math.round(R.rows[i].t - R.rows[first].t);
+			if (a.id !== b.id) { out.restarts.push(`${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms`); continue; }
+			if (a.place == null || b.place == null) continue;
+			const dt = R.rows[i].t - R.rows[i - 1].t, bound = dt / Math.min(a.dur, b.dur) * 1.1 + 0.002, step = b.place - a.place;
+			const over = step < -1e-6 ? 99 : step / bound;
+			if (over > out.worst) { out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: place ${a.place.toFixed(4)} -> ${b.place.toFixed(4)} (bound ${bound.toFixed(4)}), length ${a.dur} -> ${b.dur}, delay ${a.delay ?? '-'} -> ${b.delay ?? '-'}, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
+		}
+	}
+	return out;
+}
 
 // Judge one look's samples.
 function judge(R, look) {
@@ -242,6 +269,10 @@ export default async function (t) {
 			const bad = rows.filter((r) => r.restart || (r.ok === false));
 			await t.check(`${look}: no change makes the loop jump (place within a frame at the faster pace, scale and opacity within the fastest ordinary frame)`, rows.length > 0 && bad.length === 0,
 				bad.length ? bad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `place ${r.place}/${r.placeBound}, value ${r.value}/${r.valueBound}`}`).join('; ') : `${rows.length} changes judged`);
+			const ev = everyFrame(R);
+			t.log(`${look}: every frame from the first change on: worst place step ${(ev.worst * 100).toFixed(0)}% of its bound${ev.where ? ` (${ev.where})` : ''}; new loops: ${ev.restarts.join(', ') || 'none'}`);
+			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never moves more than one frame at the faster pace`, ev.restarts.length === 0 && ev.worst <= 1,
+				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
 			// at once: a word -> flowing with the flowing length in the next frame; the quiet change on time
 			const words = R.marks.filter((m) => m.kind === 'word' && m.i > 0 && m.i < R.rows.length);
 			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = R.rows[m.i]; if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
