@@ -12,6 +12,7 @@
 #panel-settings .pm51-doctor-wait > .pml-ld { --pml-size: 14px; }
 #panel-settings .pm51-doctor-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 #panel-settings .pm51-doctor-evidence { margin-top: 10px; }
+.pm51-doctor-copybox { display: block; width: 100%; box-sizing: border-box; min-height: 9.5em; resize: vertical; font-family: var(--font-mono, ui-monospace, monospace); font-size: 12px; line-height: 1.5; white-space: pre; }
 `);
 
   /* S6/R12: a finding about something another page owns reads that page's state each time, so Doctor and the page
@@ -199,10 +200,31 @@
     const holder = wrap.querySelector('[data-doctor-evidence]'); if (holder) holder.innerHTML = ev.evidence(ds(el, 'kind'));
   });
   PM51.on('doctor-export', () => PM51.toast('Report prepared', 'Example data only. A redacted readiness report would be saved as a file.', 'info'));
+  /* FO-172: Copy says "copied" only once the clipboard has taken the text. A page that may not write the clipboard (T3's
+     sandboxed preview: no clipboard-write permission, so writeText rejects) used to toast success anyway. There the text
+     opens selected in a box of its own, to copy by hand, and nothing claims it was copied. */
+  const clipboardBlocked = () => { try { const p = document.permissionsPolicy || document.featurePolicy; return !!p && typeof p.allowsFeature === 'function' && !p.allowsFeature('clipboard-write'); } catch (_e) { return false; } };
+  const clipboardWrite = text => {
+    if (clipboardBlocked() || !navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') return Promise.resolve(false);
+    try { return Promise.resolve(navigator.clipboard.writeText(text)).then(() => true, () => false); } catch (_e) { return Promise.resolve(false); }
+  };
+  const copyByHand = (text, what) => {
+    const wrap = PM51.panel({ title: `Copy the ${what.toLowerCase()} yourself`, subtitle: 'Nothing was copied: this window may not use your clipboard.',
+      body: PM51.note('Your clipboard is blocked here, as it is in a preview. The text below is selected: press Ctrl+C, or ⌘C on a Mac, then paste it where you need it.', 'attention')
+        + PM51.panelSection(what, `<textarea class="form-textarea pm51-doctor-copybox" data-doctor-copybox readonly rows="8" spellcheck="false" aria-label="${a(what)}, to copy by hand">${h(text)}</textarea>`),
+      closeLabel: 'Done' });
+    const box = wrap && wrap.querySelector('[data-doctor-copybox]');
+    if (box) {
+      const pick = () => { try { box.focus({ preventScroll: true }); box.select(); } catch (_e) { /* the panel closed meanwhile */ } };
+      box.addEventListener('focus', () => box.select());
+      requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(pick)));
+    }
+    return wrap;
+  };
+  const copyOut = (text, what, said) => clipboardWrite(text).then(ok => { if (ok) PM51.toast(`${what} copied`, said, 'info'); else copyByHand(text, what); return ok; });
   PM51.on('doctor-copy', () => {
     const text = groups().map(g => `${g.title}\n` + g.findings.map(f => `  - ${f.title}: ${f.state} (checked ${f.checked})`).join('\n')).join('\n');
-    try { const p = navigator.clipboard && navigator.clipboard.writeText(text); if (p && p.catch) p.catch(() => {}); } catch (_e) {}
-    PM51.toast('Checkup summary copied', 'Every finding and its state, with nothing secret in it.', 'info');
+    copyOut(text, 'Checkup summary', 'Every finding and its state, with nothing secret in it.');
   });
   /* S5: "Collect support details" (system.health.platform-diagnostics, canon "Collects detailed info about your computer
      and app install") is its own thing, not a second Copy of the checkup summary: it lists what it gathers, then copies it. */
@@ -223,8 +245,7 @@
     PM51.panel({ title: 'Support details', subtitle: 'Computer and app install details, with secrets removed. Copy them when support asks.', body: PM51.panelSection('What is collected', PM51.kv(rows)) + PM51.note('Nothing is sent anywhere. Copy puts this list on your clipboard for you to paste.', 'info'),
       primaryLabel: 'Copy support details', onPrimary: () => {
         const text = rows.map(r => `${r[0]}: ${r[1]}`).join('\n');
-        try { const p = navigator.clipboard && navigator.clipboard.writeText(text); if (p && p.catch) p.catch(() => {}); } catch (_e) {}
-        PM51.toast('Support details copied', 'Computer and app install details, with secrets removed.', 'info');
+        copyOut(text, 'Support details', 'Computer and app install details, with secrets removed.');
       } });
   });
 })();
