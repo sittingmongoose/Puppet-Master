@@ -571,8 +571,9 @@ and Jared's YOLO rulings. The full table of findings and outcomes is in `pass2/B
   not to a side panel. OpenRouter has no account entry in PMConcept7's providers data, so it shows only in the copy sheet.
 - **PMConcept7's Servers page** draws its own example servers; the layer renames them to the demo world's (Home NAS,
   MacBook Pro) and adds Studio Mac through the manager's own state. Its Devices tab still lists PMConcept7's devices.
-- **Counts:** tastebook has 11 settings of its own here, not Split v2's 13: its Theme, Everyday model and Profile in use
-  would contradict BUILD-SPEC 4.4's world. harbor has 2, not 6.
+- **Counts:** tastebook has 8 settings of its own here (and 3 about its own files), not Split v2's 13: its Theme,
+  Everyday model and Profile in use would contradict BUILD-SPEC 4.4's world, and main's one-model and Memory rulings
+  retired Thinking depth and one memory row it set. harbor has 1, not 6.
 - **The plain specimen row on the board is Speed or power**, not Text size: Text size varies by device in this world.
 - **Reduce motion's operating-system part** is the strip's checkbox; a device's or project's own value is fed to the engine,
   which paints it.
