@@ -1168,14 +1168,27 @@
     return sayTiming(op.kit ? kitOf(op.kit) : P.kit, text, op);
   }
   function hush() { const pip = API(); if (pip) pip.hush(); }
+  /* Keep the stage's request while a switch temporarily silences it. The player still owns the first-gesture and
+     hold gates; enabling a part or unmuting reconciles the request on that same press, without a rescue click. */
+  function syncBed() {
+    const S = SND(), enabled = P.want.bed > 0.001 && part('setup-music') && S && !S.muted;
+    const pip = API();
+    if (pip && register()) {
+      if (!enabled) { pip.stopMusic(0.6); return; }
+      const playing = pip.playing();
+      if (!playing || playing.music !== 'pip-' + P.kit) pip.music('pip-' + P.kit);
+      return;
+    }
+    applyLoop('bed', enabled ? P.want.bed : 0);
+    pumpOn();
+  }
   function loop(name, level) {
     if (LOOPS.indexOf(name) < 0) return;
     level = clamp(+level || 0, 0, 1);
-    if (name === 'bed' && !part('setup-music')) level = 0;
     P.want[name] = level;
+    if (name === 'bed') { syncBed(); return; }
     const pip = API();
     if (pip && register()) {
-      if (name === 'bed') { if (level > 0.001) pip.music('pip-' + P.kit); else pip.stopMusic(0.6); return; }
       if (P.tune) P.tune.level(name, level);
       return;
     }
@@ -1183,6 +1196,7 @@
     pumpOn();
   }
   function applyLoop(name, level) {
+    if (name === 'bed' && !part('setup-music')) level = 0;
     if (!attach()) return;
     let inst = P.loops[name];
     if (!inst && level > 0.001) { inst = P.loops[name] = loopInst(P.ctx, P.g, P.kit, name, P.ctx.currentTime, P.st); inst.next = P.ctx.currentTime + 0.05; }
@@ -1212,7 +1226,7 @@
     const kn = kitOf(t); if (kn === P.kit) return;
     P.kit = kn;
     const pip = API();
-    if (pip && register()) { if (P.want.bed > 0.001) pip.music('pip-' + kn); return; }
+    if (pip && register()) { if (P.want.bed > 0.001) syncBed(); return; }
     if (P.ctx) { const t0 = tnow(); Object.keys(P.loops).forEach((n) => { P.loops[n].stop(t0); delete P.loops[n]; }); }
     Object.keys(P.want).forEach((n) => applyLoop(n, P.want[n]));
   }
@@ -1221,8 +1235,9 @@
      (which Pip's voice uses everywhere it speaks, the chat included) are there before the first sound */
   if (!registered && document.readyState === 'loading') document.addEventListener('DOMContentLoaded', register, { once: true });
   /* the music asked for before the first click or key (the window opens on its own) starts with that gesture */
-  const wake = () => { const pip = API(); if (!pip || !(P.want.bed > 0.001) || !part('setup-music')) return; const pl = pip.playing(); if (!pl || pl.music !== 'pip-' + P.kit) pip.music('pip-' + P.kit); };
-  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, () => setTimeout(wake, 0), { capture: true, passive: true }));
+  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, () => setTimeout(syncBed, 0), { capture: true, passive: true }));
+  window.addEventListener('pm7.pip-parts.changed', syncBed);
+  window.addEventListener('o55:sound', syncBed);
   O55.pipVoice = {
     EVENTS, KITS, LOOPS, TARGET, SUBTLE, OFFSET, TRIM, kitOf,
     play, say, hush, loop, setTheme,
