@@ -795,6 +795,18 @@ class _RecordingOwner:
         return original
 
 
+REQUEST_STRINGS = ('event_type', 'event_id', 'idempotency_key')
+
+
+def retained_request(event):
+    """The expected binding of the original the read asks for. A request that cannot name one original refuses as
+    original_query (the shared dispatcher's own reason); a shared-helper refusal keeps its own reason."""
+    if (type(event) is not dict or any(type(event.get(k)) is not str for k in REQUEST_STRINGS)
+            or type(event.get('payload')) is not dict or type(event['payload'].get('fact_ref')) is not str):
+        raise Refusal('original_query')
+    return original_binding(event)
+
+
 def resolve_retained(case):
     """One SP-1101 resolution through the shared RetainedDispatcher, instrumented: the sealed store is snapshotted
     before and after, and every call of the shared current writer gate during the read is counted."""
@@ -812,8 +824,9 @@ def resolve_retained(case):
     pm_event_numbers.current_append_policy = counting
     module.current_append_policy = counting
     try:
+        expected = retained_request(case['event'])
         RetainedDispatcher(owner, recipes).resolve(
-            case['original_ref'], original_binding(case['event']),
+            case['original_ref'], expected,
             disclose=lambda binding: case['disclosure_allowed'] is True,
             recipe_override=case['retained_recipe_override'])
         reason = None
@@ -1001,6 +1014,11 @@ def pack_reason(c, m):
 @derived
 def retry_phys_ok(c, m):
     return type(c['retry_event']) is dict and physical_reason(c['retry_event']) is None
+
+
+@derived
+def retry_ok(c, m):
+    return m.get('retry_phys_ok') and schema_errors(EVENT_RECORD_ID, '', c['retry_event']) == []
 
 
 @derived
@@ -1203,6 +1221,8 @@ A = 'append'
 FAM_ACTOR, FAM_PROV, FAM_RED, FAM_REPLAY = FAMILIES
 
 # append: scenario and admission ---------------------------------------------------------------------------------
+row(A, 'append_admission', 'append_event_object', 'event_schema', '/event',
+    'the presented EventRecord is a JSON object', 'true', lambda c, m: V(type(E(c)) is dict))
 row(A, 'append_admission', 'append_admitted', 'missing_event_registration', '/live/admitted',
     'the live registry admits this exact family/version before any effect', 'true',
     lambda c, m: V(c['live']['admitted']))
@@ -1439,25 +1459,30 @@ row(A, 'append_body_2', 'append_inline_limit', 'payload_inline_limit', '/event/p
 # retry --------------------------------------------------------------------------------------------------------------
 R = 'retry'
 RE_ = lambda c: c['retry_event']  # noqa: E731
+row(R, 'retry', 'retry_event_object', 'retry_event_schema', '/retry_event',
+    'the retry candidate is a JSON object', 'true', lambda c, m: V(type(RE_(c)) is dict))
 row(R, 'retry', 'retry_event_physical', 'number_domain', '/retry_event',
     'the retry candidate encodes under SP-1100 EVENT_VALUE', 'none',
     lambda c, m: V(physical_reason(RE_(c))), when=lambda c, m: type(RE_(c)) is dict)
+row(R, 'retry', 'retry_envelope_schema', 'retry_event_schema', '/retry_event',
+    'the full EventRecord owner schema accepts the retry candidate (shared CV-1101 date-time checker)', 'empty',
+    lambda c, m: V(schema_errors(EVENT_RECORD_ID, '', RE_(c))), gates=('retry_phys_ok',))
 row(R, 'retry', 'retry_event_id', 'retry_identity_join', '/retry_event/event_id',
     'the retry preserves the original event_id', 'eq', lambda c, m: EQ(RE_(c).get('event_id'), E(c)['event_id']),
-    gates=('retry_phys_ok',))
+    gates=('retry_ok',))
 row(R, 'retry', 'retry_idempotency_key', 'retry_identity_join', '/retry_event/idempotency_key',
     'the retry preserves the original idempotency_key', 'eq',
-    lambda c, m: EQ(RE_(c).get('idempotency_key'), E(c)['idempotency_key']), gates=('retry_phys_ok',))
+    lambda c, m: EQ(RE_(c).get('idempotency_key'), E(c)['idempotency_key']), gates=('retry_ok',))
 row(R, 'retry', 'retry_replay_only', 'replay_only_not_appendable', '/retry_event/replay_policy',
     'a retry never selects projector_replay_only (shared current_append_policy)', 'ne',
-    lambda c, m: NE(m.get('retry_policy_reason'), 'replay_only_not_appendable'), gates=('retry_phys_ok',))
+    lambda c, m: NE(m.get('retry_policy_reason'), 'replay_only_not_appendable'), gates=('retry_ok',))
 row(R, 'retry', 'retry_replay_policy', 'family_current_replay_policy', '/retry_event/replay_policy',
     'a retry selects dedupe_by_idempotency_key, like every current write', 'eq',
-    lambda c, m: EQ(RE_(c).get('replay_policy'), 'dedupe_by_idempotency_key'), gates=('retry_phys_ok',),
+    lambda c, m: EQ(RE_(c).get('replay_policy'), 'dedupe_by_idempotency_key'), gates=('retry_ok',),
     when=lambda c, m: m.get('retry_policy_reason') != 'replay_only_not_appendable')
 row(R, 'retry', 'retry_semantic', 'idempotency_conflict', '/retry_event',
     'the retry\'s complete CV-317 producer-semantic digest equals the original\'s (no conflict)', 'eq',
-    lambda c, m: EQ(m.get('retry_digest'), m.get('digest')), gates=('retry_phys_ok',),
+    lambda c, m: EQ(m.get('retry_digest'), m.get('digest')), gates=('retry_ok',),
     when=lambda c, m: (RE_(c).get('event_id') == E(c)['event_id'] and
                        RE_(c).get('idempotency_key') == E(c)['idempotency_key'] and
                        m.get('retry_policy_reason') != 'replay_only_not_appendable'))
@@ -1940,6 +1965,8 @@ def build_negatives(controls):
             add(rid, family, control, mutate, mode, defect)
 
         # append: admission and scenario
+        A_('append_event_object', _value(('event',), 'not-an-event'), 'none', 'EventRecord is a string')
+        A_('append_event_object', _value(('event',), []), 'none', 'EventRecord is an array')
         A_('append_admitted', lambda c: c['live'].update(admitted=False), 'none', 'live registry withholds admission')
         A_('append_family_known', lambda c: c.update(family='continuity.unknown_family'), 'none', 'unknown family')
         A_('append_dedupe', lambda c: c.update(dedupe_caught_up=False), 'none', 'lifetime dedupe not caught up')
@@ -2123,6 +2150,10 @@ def build_negatives(controls):
            control=pc)
         A_('append_pack_shape', _value(('payload_pack',), None), 'none', 'no descriptor for a referenced body',
            control=pc)
+        A_('append_pack_shape', _value(('payload_pack', 'raw_hex'), 5), 'none', 'pack bytes as an integer',
+           control=pc)
+        A_('append_pack_shape', _value(('payload_pack', 'payload_id'), 7), 'none', 'payload_id as an integer',
+           control=pc)
         A_('append_pack_ref', _value(('event', 'payload_ref'), 'blake3:' + '1' * 64), 'full',
            'payload_ref names another pack', control=pc)
         A_('append_pack_ref', lambda c: c['event'].update(payload_ref=c['payload_pack']['payload_id']), 'full',
@@ -2163,6 +2194,14 @@ def build_negatives(controls):
                 'retry payload ' + free + ' integer ' + label)
         add('retry_event_physical', family, rc, _value(RT + ('sequence_id',), LONG_INT), 'none',
             'retry sequence_id 10**4399')
+        add('retry_event_object', family, rc, _value(RT, 'not-an-event'), 'none', 'retry candidate is a string')
+        add('retry_event_object', family, rc, _value(RT, None), 'none', 'retry candidate is null')
+        add('retry_envelope_schema', family, rc, _value(RT + ('extra_member',), 'x'), 'none',
+            'retry candidate unknown member')
+        add('retry_envelope_schema', family, rc, _value(RT + ('observed_at_utc',), 'garbage'), 'none',
+            'retry candidate Storage time malformed (outside the semantic comparison, still an EventRecord field)')
+        add('retry_envelope_schema', family, rc, _value(RT + ('schema_version',), '1.0.0'), 'none',
+            'retry candidate envelope version')
         add('retry_event_id', family, rc, _value(RT + ('event_id',), 'evt_continuity_' + '1' * 64), 'none',
             'retry event_id')
         add('retry_idempotency_key', family, rc, _value(RT + ('idempotency_key',), 'continuity@1:' + '1' * 64), 'none',
@@ -2191,6 +2230,10 @@ def build_negatives(controls):
             elif field == 'migration':
                 add('retry_semantic', family, rc, _value(RT + ('migration', 'migration_id'), 'migration-x'), 'none',
                     'same key, changed migration')
+            elif field == 'scope_kind':
+                add('retry_semantic', family, rc, lambda c: c['retry_event'].update(scope_kind='application',
+                                                                                  project_id=None), 'none',
+                    'same key, changed scope_kind (an owner-valid application envelope, project_id null)')
             else:
                 add('retry_semantic', family, rc, _value(RT + (field,), SEMANTIC_DEFECTS[field]), 'none',
                     'same key, changed ' + field)
@@ -2376,6 +2419,7 @@ def build_negatives(controls):
         T_('retained_recipe_override', _value(('retained_recipe_override',), 'caller-selected-recipe'), 'none',
            'caller recipe override (through resolve(recipe_override=...))')
         T_('retained_query', _value(('original_ref',), ''), 'none', 'empty original reference')
+        T_('retained_query', _value(('event',), 'not-an-event'), 'none', 'the request names no original')
         T_('retained_receipt_present', _value(('sealed_store',), []), 'none', 'missing receipt')
         T_('retained_receipt_unique', lambda c: c['sealed_store'].append(copy.deepcopy(c['sealed_store'][0])), 'none',
            'ambiguous receipt')
