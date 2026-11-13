@@ -1,8 +1,13 @@
 // Real input; visible text only. No live DNS or proxy deployment is claimed.
 import {paintedText} from '../helpers/painted-text.mjs';
+import {ink} from '../helpers/text-ink.mjs';
 // FO-169 round 2: the no-match line's painted contrast in every look (--set look= picks some; the recheck's R1 was
-// Basic Dark at 2.76-2.85:1 on afa5e7582b). Read the way failed-status-contrast reads its stems: four real paints, fully
-// covered stems only, each against its own ground.
+// Basic Dark at 2.76-2.85:1 peak ink on afa5e7582b). 11.5 px text paints no fully covered pixel in most looks, so the
+// four-paint reader (painted-text.mjs) finds 0 stems there. The gate is text-ink.mjs's peak: the line photographed with
+// and without its text, the strongest changed pixel against the same pixel without the text, at the 4.5:1 normal-text
+// bar. Antialiasing only blends ink toward its ground, so the peak is a lower bound on the ink colour's contrast. Where
+// the four-paint reader does find stems (Retro's face), they must reach 4.5 too. The p90 reading is logged, not gated:
+// the roster's own help text, whose colour this line now takes, reads 3.9-4.1 by it in Friendly and NieR Light.
 const LOOKS=['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark']);
 const list=(v,all)=>v?String(v).split(','):all;
 const W = '.o55g-win .o55g-layer:not(.o55g-out)';
@@ -22,10 +27,11 @@ export const tests = {
   const line=roster.locator('.pm51-filter-empty:visible');
   for (const look of list(t.args.look,LOOKS)) {
    await t.app.look(look);
-   const p=await paintedText(line.first());
-   t.log(JSON.stringify({look,count:p.count,minimum:p.minimum,lowest:p.lowest}));
-   if (['basic-dark','basic-light','glass-dark','nier-dark'].includes(look)) await t.crop(`fo169-line-${look}`,line.first(),`No-match line ink in ${look}: ${p.minimum.toFixed(2)}:1 measured`);
-   await t.check(`${look} no-match line painted ink >=4.5`,p.count>=3&&p.minimum>=4.5,`${p.minimum.toFixed(3)}:1 (${p.count} stems; ink ${p.lowest[0]?.ink} on ${p.lowest[0]?.ground})`);
+   const k=await ink(line.first()), p=await paintedText(line.first());
+   t.log('FO169-INK '+JSON.stringify({look,ink:k,stems:p.count,stemMin:p.count?p.minimum:null,lowest:p.lowest[0]||null}));
+   if (['basic-dark','basic-light','glass-dark','nier-dark'].includes(look)) await t.crop(`fo169-line-${look}`,line.first(),`No-match line ink in ${look}: peak ${k.peak.contrast}:1 measured`);
+   await t.check(`${look} no-match line painted ink >=4.5`,k.n>=30&&k.peak.contrast>=4.5,JSON.stringify(k));
+   if (p.count>=3) await t.check(`${look} no-match line fully covered stems >=4.5`,p.minimum>=4.5,`${p.minimum.toFixed(3)}:1 (${p.count} stems; ink ${p.lowest[0].ink} on ${p.lowest[0].ground})`);
   }
   await input.fill(''); await t.equal('clearing restores every row',await roster.locator('.resource-row:visible').count(),before);
   await t.equal('empty line removed',await roster.locator('.pm51-filter-empty:visible').count(),0);
