@@ -148,7 +148,19 @@ const PROBE = () => {
 			return !!l;
 		},
 		stop() { this.on = false; return this.frames; },
-		times() { return { tDown: this.tDown, tUp: this.tUp }; }
+		times() { return { tDown: this.tDown, tUp: this.tUp, tAbandon: this.tAbandon || null }; },
+		/* a hold abandoned with no pointerup reaching the page (R31 F2, R30 Finding 3): the window's blur, or the document
+		   turning hidden, dispatched in the page as the browser would send them; the button stays down */
+		abandon(how) {
+			this.phase = 'abandoned'; this.tAbandon = Math.round(performance.now());
+			if (how === 'blur') { window.dispatchEvent(new Event('blur')); return how; }
+			const d = document;
+			Object.defineProperty(d, 'hidden', { configurable: true, get: () => true });
+			Object.defineProperty(d, 'visibilityState', { configurable: true, get: () => 'hidden' });
+			d.dispatchEvent(new Event('visibilitychange'));
+			delete d.hidden; delete d.visibilityState;
+			return how;
+		}
 	};
 };
 
@@ -244,7 +256,8 @@ async function heldCheck(t, f, x, tag, chosen) {
 	const ch0 = fr.length ? fr[0].ch : '', k = fr.findIndex((z) => z.ch !== ch0);
 	const choseAt = k < 0 ? null : { phase: fr[k].ph, msAfterDown: tm.tDown != null ? fr[k].t - tm.tDown : null, from: ch0, to: fr[k].ch };
 	const relLast = rel.reduce((kk, z, n) => (z.mv ? n : kk), -1), after = rel.slice(relLast + 1);
-	const row = { frames: fr.length, heldMoving: held.filter((z) => z.mv).length, stillHeld: still.length, stillHeldFlat: still.filter((z) => !z.bend).length,
+	const row = { frames: fr.length, heldMoving: held.filter((z) => z.mv).length, heldMovingFlat: held.filter((z) => z.mv && !z.bend).length, stillHeld: still.length, stillHeldFlat: still.filter((z) => !z.bend).length,
+		stillHeldMs: still.length > 1 ? still[still.length - 1].t - still[0].t : 0,
 		firstFlatMsAfterDown: (() => { const z = still.find((q) => !q.bend); return z && tm.tDown != null ? z.t - tm.tDown : null; })(),
 		holdMs: tm.tDown != null && tm.tUp != null ? tm.tUp - tm.tDown : null, choseAt, after: after.length, afterBent: after.filter((z) => z.bend).length };
 	row.sidePanel = await f.evaluate(() => { const v = document.querySelector('#sidePanelSlot > .side-panel-view.active'), sp = document.getElementById('sidePanelSlot'); return { open: !!(sp && sp.getBoundingClientRect().width > 4), view: v ? v.id : null }; });
@@ -255,12 +268,59 @@ async function heldCheck(t, f, x, tag, chosen) {
 		const { appendFileSync } = await import('node:fs'); const pathm = await import('node:path');
 		appendFileSync(pathm.join(t.run.dir, 'held-frames.jsonl'), JSON.stringify({ what, row, tDown: tm.tDown, tUp: tm.tUp, frames: fr.map((z) => [tm.tDown != null ? z.t - tm.tDown : z.t, z.ph, z.mv ? 1 : 0, z.bend ? 1 : 0, z.ch]) }) + '\n');
 	} catch (e) { t.log('held frames not written: ' + e); }
-	await t.check(`held: a press held past its travel bends in every frame until the release ${what}`, row.heldMoving >= 3 && row.stillHeld >= 30 && row.stillHeldFlat === 0, JSON.stringify(row));
+	/* every held frame, moving or still (R31 F6); the still part judged by its duration, not by a frame count a slow
+	   machine could starve (R31 F7, R30 Finding 7): at least 600 ms of a 1.6 s hold after a 600 ms travel */
+	await t.check(`held: a press held past its travel bends in every frame until the release ${what}`, row.heldMoving >= 3 && row.heldMovingFlat === 0 && row.stillHeldMs >= 600 && row.stillHeldFlat === 0, JSON.stringify(row));
 	await t.check(`held: after the release it rests unbent ${what}`, row.after >= 5 && row.afterBent === 0, JSON.stringify({ after: row.after, afterBent: row.afterBent }));
 	/* the original item chosen back (a held click), and the page left to settle */
 	await t.page.mouse.move(at(c).x, at(c).y); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
 	await t.page.waitForTimeout(2500);
 	await f.evaluate(() => window.__g.settle(4000));
+}
+
+/* R31 F1 (2026-11-13): a press held on the item already chosen, without moving: the lens does not travel, and must bend
+   in every frame of the hold (it is pressed), then rest unbent after the release (no choice changes) */
+async function heldSelectedCheck(t, f, x, tag) {
+	const off = await offsetOf(t, f), c = x.cur, at = { x: off.x + c.x + c.w / 2, y: off.y + c.y + c.h / 2 };
+	await t.page.mouse.move(at.x, at.y); await t.page.waitForTimeout(450);
+	await f.evaluate((i) => window.__g.watch(i), x.lens);
+	await t.page.waitForTimeout(120);
+	await t.page.mouse.down(); await t.page.waitForTimeout(1200); await t.page.mouse.up();
+	await t.page.waitForTimeout(800);
+	const fr = await f.evaluate(() => window.__g.stop());
+	const held = fr.filter((z) => z.ph === 'held'), rel = fr.filter((z) => z.ph === 'released');
+	const row = { held: held.length, heldMs: held.length > 1 ? held[held.length - 1].t - held[0].t : 0, heldFlat: held.filter((z) => !z.bend).length, moved: fr.filter((z) => z.mv).length,
+		released: rel.length, releasedMs: rel.length > 1 ? rel[rel.length - 1].t - rel[0].t : 0, releasedBent: rel.filter((z) => z.bend).length };
+	const what = `${tag} ${x.strip} (the chosen item)`;
+	t.log(`held-selected ${what}: ${JSON.stringify(row)}`);
+	await t.check(`held: a press held on the chosen item bends in every frame of the hold ${what}`, row.heldMs >= 900 && row.heldFlat === 0, JSON.stringify(row));
+	await t.check(`held: after the release on the chosen item it rests unbent ${what}`, row.releasedMs >= 400 && row.releasedBent === 0, JSON.stringify(row));
+}
+
+/* R31 F2, R30 Finding 3 (2026-11-13): a press on another item, held past its travel, then abandoned with no pointerup
+   reaching the page (the window's blur, the document turning hidden), the button still down: from the abandonment the
+   lens comes back to the item the app has chosen (it never chose the pressed one) and rests unbent; the button is then
+   released off the item, so nothing is chosen */
+async function abandonCheck(t, f, x, tag, how) {
+	const off = await offsetOf(t, f), o = x.other, at = (b) => ({ x: off.x + b.x + b.w / 2, y: off.y + b.y + b.h / 2 });
+	const away = x.vertical ? { x: off.x + o.x + o.w + 48, y: at(o).y } : { x: at(o).x, y: off.y + o.y + o.h + 36 };
+	await t.page.mouse.move(at(o).x, at(o).y); await t.page.waitForTimeout(450);
+	await f.evaluate((i) => window.__g.watch(i), x.lens);
+	await t.page.waitForTimeout(120);
+	await t.page.mouse.down(); await t.page.waitForTimeout(900);
+	await f.evaluate((h) => window.__g.abandon(h), how);
+	await t.page.waitForTimeout(1600);
+	const fr = await f.evaluate(() => window.__g.stop());
+	await t.page.mouse.move(away.x, away.y, { steps: 3 }); await t.page.mouse.up();
+	await t.page.waitForTimeout(1200); await f.evaluate(() => window.__g.settle(4000));
+	const ab = fr.filter((z) => z.ph === 'abandoned');
+	const lastMv = ab.reduce((k, z, n) => (z.mv ? n : k), -1), rest = ab.slice(lastMv + 1);
+	const end = ab.length ? ab[ab.length - 1].b : null, near = (a, b) => a && b && Math.abs(a.x - b.x) <= 1.5 && Math.abs(a.y - b.y) <= 1.5;
+	const row = { abandoned: ab.length, movedAfter: ab.filter((z) => z.mv).length, movingFlat: ab.filter((z) => z.mv && !z.bend).length, restMs: rest.length > 1 ? rest[rest.length - 1].t - rest[0].t : 0,
+		restBent: rest.filter((z) => z.bend).length, backOnChosen: near(end, x.box), end, start: x.box };
+	const what = `${tag} ${x.strip} -> ${x.label || 'item'} (${how})`;
+	t.log(`abandon ${what}: ${JSON.stringify(row)}`);
+	await t.check(`held: a hold abandoned by ${how} with no pointerup comes back to the chosen item and rests unbent ${what}`, row.restMs >= 400 && row.restBent === 0 && row.movingFlat === 0 && row.backOnChosen, JSON.stringify(row));
 }
 
 /* Usage's range: pressed on its chosen button, slid 40 px and back, released there */
@@ -346,6 +406,16 @@ async function appPart(t, surface, W, H) {
 					const xs = await f.evaluate(() => window.__g.targets()), x = xs.find((z) => z.strip === sel && z.other);
 					if (!x) { await t.check(`held: ${sel} has its lens and another item ${tag}`, false, JSON.stringify(xs.map((z) => ({ strip: z.strip, kind: z.kind, other: !!z.other, box: z.box })))); continue; }
 					await heldCheck(t, f, x, tag, chosen);
+				}
+				/* the page tabs: a press held on the chosen tab, and holds abandoned without a pointerup */
+				await parkPointer(t.page, W, H); await f.evaluate(() => window.__g.settle(4000));
+				const xp = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === 'nav.page-tabs' && z.other);
+				if (!xp) await t.check(`held: the page tabs have their lens ${tag}`, false, '');
+				else await heldSelectedCheck(t, f, xp, tag);
+				for (const how of ['blur', 'hidden']) {
+					await parkPointer(t.page, W, H); await f.evaluate(() => window.__g.settle(4000));
+					const y = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === 'nav.page-tabs' && z.other);
+					if (y) await abandonCheck(t, f, y, tag, how); else await t.check(`held: the page tabs have their lens for ${how} ${tag}`, false, '');
 				}
 			}
 			const xs = await presses(t, f, tag, { hold: Number(t.args.hold || 1100) });
