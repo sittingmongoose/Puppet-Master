@@ -155,7 +155,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -572,7 +572,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -1003,7 +1003,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -1428,7 +1428,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -1847,7 +1847,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -2268,7 +2268,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -2686,7 +2686,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -3105,7 +3105,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -3524,7 +3524,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -3941,7 +3941,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -4360,7 +4360,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -4777,7 +4777,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -5199,7 +5199,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -5625,7 +5625,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -6044,7 +6044,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -6463,7 +6463,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -6887,7 +6887,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -7306,7 +7306,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -7733,7 +7733,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -8160,7 +8160,7 @@
     "order_flush_receipt": 2,
     "order_receipt_event_committed": 2,
     "receipt_barrier": 2,
-    "receipt_commitment": 2,
+    "receipt_commitment": 4,
     "receipt_event_join": 2,
     "receipt_schema": 16
    },
@@ -8590,7 +8590,7 @@
     "order_flush_receipt": 1,
     "order_receipt_event_committed": 1,
     "receipt_barrier": 1,
-    "receipt_commitment": 1,
+    "receipt_commitment": 2,
     "receipt_event_join": 1,
     "receipt_schema": 8
    },

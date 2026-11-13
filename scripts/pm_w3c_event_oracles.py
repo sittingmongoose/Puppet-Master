@@ -413,13 +413,24 @@ def frozen_components(original, family, scope):
     out['payload'] = out['envelope'] and valid(uri(edition(family, scope)), record['payload'])
     out['storage_times'] = out['envelope'] and all([date_time_ok(record[k], STORAGE_UTC_Z) for k in ('observed_at_utc', 'persisted_at_utc')])
     if out['payload']:
-        p = record['payload']
-        out['event_identity'] = record['event_id'] == event_id_recipe(original.binding.storage_instance_id, p['owner_operation_id'], family)
-        out['key'] = record['idempotency_key'] == key_recipe(scope, family, p['scope']['server_id'], p['owner_operation_id'])
-        out['full_value'] = held.get('full_value_sha256') == full_value_commitment(record)
-        out['producer'] = held.get('producer_semantic_sha256') == producer_semantic_digest(record)
-        out['custody_event'] = held.get('event_id') == record['event_id']
+        for k, pair in frozen_pairs(original, family, scope).items():   # one computation for the verifier and the rows
+            out[k] = pair[0] == pair[1]
     return out
+
+
+FROZEN_EQ = ('event_identity', 'key', 'full_value', 'producer', 'custody_event')
+
+
+def frozen_pairs(original, family, scope):
+    """The raw [held or supplied, recomputed] pair each comparison component of the frozen verifier compares."""
+    record = decode_storage_value(original.record_bytes, profile=EVENT_VALUE)
+    held = decode_storage_value(original.receipt_bytes, profile=EVENT_VALUE)
+    p = record['payload']
+    return {'event_identity': [record['event_id'], event_id_recipe(original.binding.storage_instance_id, p['owner_operation_id'], family)],
+            'key': [record['idempotency_key'], key_recipe(scope, family, p['scope']['server_id'], p['owner_operation_id'])],
+            'full_value': [canon(held.get('full_value_sha256')), canon(full_value_commitment(record))],
+            'producer': [canon(held.get('producer_semantic_sha256')), canon(producer_semantic_digest(record))],
+            'custody_event': [canon(held.get('event_id')), canon(record['event_id'])]}
 
 
 def frozen_verifier(expected_tuple, family, scope):
@@ -719,6 +730,11 @@ def frozen(c, m):
     return frozen_components(resolved_original(c), c['family'], c['scope'])
 
 
+@derived
+def frozen_pair(c, m):
+    return frozen_pairs(resolved_original(c), c['family'], c['scope'])
+
+
 # ---------------------------------------------------------------------------------------------
 # Row specification. Each row: one predicate with one refusal code. ``fn(c, m)`` returns NA (True) when the row
 # does not apply or an earlier row owns its precondition, else the template's observation.
@@ -808,7 +824,9 @@ row('scenario', 'scenario_scope', 'scope_unsupported', '/scope',
     'member', lambda c, m: NA if c.get('family') not in FAMILIES else [c.get('scope'), list(FAMILIES[c['family']][5])], '*')
 row('scenario', 'event_family', 'event_family', '/event/event_type',
     'the event (candidate, formed input or presented retained record) is an object of the scenario family',
-    'ok', lambda c, m: NA if c.get('family') not in FAMILIES or c.get('scope') not in FAMILIES[c['family']][5] or c.get('path') not in PATHS else ok(m.get('r0')), 'append retry history')
+    'eq', lambda c, m: NA if c.get('family') not in FAMILIES or c.get('scope') not in FAMILIES[c['family']][5] or c.get('path') not in PATHS
+    or (c['path'] == 'retry' and c.get('event') is None)
+    else [canon(c['event'].get('event_type') if type(c.get('event')) is dict else '<not an EventRecord object>'), canon(c['family'])], 'append retry history')
 
 # install (eager resource admission, CV-13xx "every referenced schema, even unvisited branches") -------------------
 row('install', 'install_metaschema', 'schema_install', '/resources', 'every installed W3C resource is a valid 2020-12 schema',
@@ -1259,8 +1277,10 @@ row('recipe', 'read_no_receipt_created', 'receipt_created_on_read', '/storage/cu
 for _k in FROZEN[1:]:   # 'decodes' cannot fail: Storage hands out bytes of its own SP-236 encoding
     row('frozen', 'frozen_' + _k, 'original_verification', '/storage/custody/original',
         'the w3c@1 frozen verifier\'s ' + _k + ' component holds for Storage\'s original (no current writer or live-state gate)',
-        'ok', DQ(lambda c, m, k=_k: NA if m.get('disp')[0] not in ('ok', 'original_verification') or
-                 any([m.get('frozen').get(j) is not True for j in FROZEN[:FROZEN.index(k)]]) else m.get('frozen').get(k) is True), 'retry history')
+        'eq' if _k in FROZEN_EQ else 'ok',
+        DQ(lambda c, m, k=_k: NA if m.get('disp')[0] not in ('ok', 'original_verification') or
+           any([m.get('frozen').get(j) is not True for j in FROZEN[:FROZEN.index(k)]])
+           else (m.get('frozen_pair')[k] if k in FROZEN_EQ else m.get('frozen').get(k) is True)), 'retry history')
 HX = lambda fn: gate('r0')(lambda c, m: fn(c, m) if c['path'] == 'history' and m.get('disp')[0] == 'ok' else NA)  # noqa: E731
 row('disclosure', 'disclosure_access', 'current_disclosure', '/reader/access/allowed', 'present access is allowed for this disclosure',
     'true', HX(lambda c, m: [c['reader']['access']['allowed']]), 'history')

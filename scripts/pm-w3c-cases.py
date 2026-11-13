@@ -141,7 +141,8 @@ def append_witnesses():
     W += [('scenario_path', 'append', [('final', '/path', 'publish')], {}),
           ('scenario_family', 'append', [('final', '/family', 'testing.capture.zz_unknown')], {}),
           ('scenario_scope', 'append', [('final', '/scope', 'application')], {'abbr': ['rdy']}),
-          ('event_family', 'append', [('event', '/event/event_type', 'testing.capture.zz_other')], {})]
+          ('event_family', 'append', [('event', '/event/event_type', 'testing.capture.zz_other')], {}),
+          ('event_family', 'append', [('event', '/event/event_type', lambda sc, st: sc['family'] + '\n')], {'tag': 'trailing_lf_implied'})]
     W += [('admission_family', 'append', [('owner', '/owner/admission/family', 'testing.capture.zz_other')], {}),
           ('admission_version', 'append', [('owner', '/owner/admission/version', '2.0.0')], {}),
           ('admission_installed', 'append', [('owner', '/owner/admission/schema_installed', False)], {}),
@@ -217,7 +218,10 @@ def append_witnesses():
           ('receipt_ack_issued', 'append', [('storage', R + 'acknowledged_at_utc', '2026-11-05T10:00:03Z')], {}),
           ('receipt_barrier', 'append', [('storage', R + 'durability_class', 'ordinary')], {}),
           ('receipt_commitment', 'append', [('storage', '/storage/issued/result/original_event_value_commitment/sha256', 'a' * 64)], {}),
-          ('receipt_segment', 'append', [('storage', '/storage/issued/result/original_segment_ref', 'seglog/other')], {})]
+          ('receipt_segment', 'append', [('storage', '/storage/issued/result/original_segment_ref', 'seglog/other')], {}),
+          ('receipt_commitment', 'append', [('storage', '/storage/issued/result/original_event_value_commitment/sha256',
+                                             lambda sc, st: sc['storage']['issued']['result']['original_event_value_commitment']['sha256'] + '\n')],
+           {'tag': 'trailing_lf_implied'})]
     for a, b in (('flush', 'receipt'), ('receipt', 'event_committed'), ('event_committed', 'terminal'), ('terminal', 'publish')):
         order = ['flush', 'receipt', 'event_committed', 'terminal', 'publish']
         i, j = order.index(a), order.index(b)

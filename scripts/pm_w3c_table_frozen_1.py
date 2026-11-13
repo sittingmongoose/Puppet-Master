@@ -26,27 +26,37 @@ def frozen_storage_times(value, context):
 
 def frozen_event_identity(value, context):
     v = value["frozen_event_identity"]
-    return "original_verification" if v is not True else None
+    if v is True:
+        return None
+    return "original_verification" if v[0] != v[1] else None
 
 
 def frozen_key(value, context):
     v = value["frozen_key"]
-    return "original_verification" if v is not True else None
+    if v is True:
+        return None
+    return "original_verification" if v[0] != v[1] else None
 
 
 def frozen_full_value(value, context):
     v = value["frozen_full_value"]
-    return "original_verification" if v is not True else None
+    if v is True:
+        return None
+    return "original_verification" if v[0] != v[1] else None
 
 
 def frozen_producer(value, context):
     v = value["frozen_producer"]
-    return "original_verification" if v is not True else None
+    if v is True:
+        return None
+    return "original_verification" if v[0] != v[1] else None
 
 
 def frozen_custody_event(value, context):
     v = value["frozen_custody_event"]
-    return "original_verification" if v is not True else None
+    if v is True:
+        return None
+    return "original_verification" if v[0] != v[1] else None
 
 
 def case(value):

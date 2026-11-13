@@ -32,7 +32,9 @@ def scenario_scope(value, context):
 
 def event_family(value, context):
     v = value["event_family"]
-    return "event_family" if v is not True else None
+    if v is True:
+        return None
+    return "event_family" if v[0] != v[1] else None
 
 
 def case(value):
