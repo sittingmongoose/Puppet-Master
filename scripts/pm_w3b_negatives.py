@@ -340,6 +340,16 @@ def utc_variant(t, zone):
     return t[:-1] + zone
 
 
+def same_len(text):
+    """A different string of the same length (last character changed within [A-Za-z0-9]); a length-only weakening of a
+    join still sees the defect."""
+    last = text[-1]
+    repl = '1' if last == '0' else '0' if last.isdigit() else ('b' if last.lower() == 'a' else 'a') if last.isalpha() else 'x'
+    if last.isupper():
+        repl = repl.upper()
+    return text[:-1] + repl
+
+
 def alt_value(fam, field, value):
     """A schema-valid different value for a payload field (the native owner keeps the original)."""
     enums = {'observation_state': {'backend.detected': ['complete', 'partial', 'unavailable'],
@@ -361,7 +371,7 @@ def alt_value(fam, field, value):
     if type(value) is int:
         return value + 1
     if type(value) is str:
-        return value + '.alt'
+        return same_len(value)
     raise ValueError((fam, field, value))
 
 
@@ -424,6 +434,13 @@ def family(C, fam):
         C.pos(kid + '/append/occurred-' + label, nb(event_over={'occurred_at_utc': t}, op_over={'occurred_at_utc': t}),
               plan=[pg(fam, 'timestamp_owner_profile')])
 
+    # CV-339 AppendReceipt acknowledged_at_utc is a plain format date-time field: the EventRecord (CV-1101) profile, not
+    # CV-253 storage_utc_z, so an offset or a lowercase z is owner-valid there (append receipt and retained held receipt).
+    for label, t in (('offset', '2026-11-05T12:15:30.790+02:00'), ('lowercase-z', '2026-11-05t10:15:30.790z')):
+        BK = L.build(fam, ack_over=t)
+        C.pos(kid + '/append/receipt-ack-' + label, L.append_case(BK), plan=[pg(fam, 'timestamp_owner_profile')])
+        C.pos(kid + '/history/receipt-ack-' + label, L.history_case(BK), plan=[pg(fam, 'timestamp_owner_profile')])
+
     # scenario and install ---------------------------------------------------------------------------------
     N('scenario-path', post(A, '/path', 'replay'), 'scenario_path')
     N('scenario-family', post(A, '/family', 'source_control.unknown_family'), 'scenario_family')
@@ -474,6 +491,7 @@ def family(C, fam):
         pk = J['pack']
         N('inline-oversize', edit(J, lambda x: x.update({'pack': None, 'durable_packs': x['durable_packs'][1:]}) or
                                   x['event'].update({'payload_ref': None})), 'inline_size', plan=[pg(fam, 'event_body_size')], base_id=bid)
+        N('pack-missing', edit(J, lambda x: x.update({'pack': None})), 'pack_route', plan=[pg(fam, 'payload_pack_durable')], base_id=bid)
         N('pack-route', post(J, '/event/payload_ref', 'sp337:blake3:' + H('other-pack')), 'pack_route',
           plan=[pg(fam, 'payload_pack_identity')], base_id=bid)
         N('pack-size', post(J, '/pack/byte_size', pk['byte_size'] + 1), 'pack_size', plan=[pg(fam, 'payload_pack_identity')], base_id=bid)
@@ -525,7 +543,8 @@ def family(C, fam):
              'requested_account_ref': 'acct:req:u2', 'effective_account_ref': 'acct:eff:u2', 'correlation_id': 'corr.other',
              'causation_event_id': 'evt.cause.other', 'parent_event_id': 'evt.parent.other'}
     for fld in W.LINEAGE_FIELDS:
-        N('lineage-' + fld, resync(post(A, '/event/' + fld, other[fld])), 'lineage_' + fld)
+        val = same_len(A['event'][fld]) if type(A['event'][fld]) is str else other[fld]
+        N('lineage-' + fld, resync(post(A, '/event/' + fld, val)), 'lineage_' + fld)
     N('occurred-not-source-time', resync(post(A, '/event/occurred_at_utc', '2026-11-05T10:15:31.000Z')), 'occurred_source')
     N('redaction-profile', resync(post(A, '/event/redaction_profile', 'redacted')), 'envelope_redaction', plan=[pg(fam, 'no_secret')])
     N('migration-lineage', resync(post(A, '/event/migration/migration_id', 'mig.1')), 'envelope_migration')
@@ -556,6 +575,7 @@ def family(C, fam):
     N('source-inline-oversize', edit(LE, lambda x: x['fact'].update({'source_body': copy.deepcopy(body), 'source_body_ref': None})),
       'fact_wrapper_size', plan=[pg(fam, 'stored_wrapper_size')], base_id=lid)
     N('source-pack-missing', post(LE, '/source_pack', None), 'src_pack_present', plan=[pg(fam, 'source_body_route')], base_id=lid)
+    N('source-pack-bad-hex', post(LE, '/source_pack/bytes_hex', 'zz'), 'src_pack_present', plan=[pg(fam, 'payload_pack_identity')], base_id=lid)
     N('source-pack-size', post(LE, '/fact/source_body_ref/byte_size', sref['byte_size'] + 1), 'src_pack_size',
       plan=[pg(fam, 'payload_pack_identity')], base_id=lid)
     N('source-pack-blake3', post(LE, '/fact/source_body_ref/blake3_id', H('forged-source-pack')), 'src_pack_blake3',
@@ -603,7 +623,8 @@ def family(C, fam):
     N('source-small-body-referenced', edit(A, small_source_ref), 'src_pack_needed', plan=[pg(fam, 'stored_wrapper_size')])
 
     # copies --------------------------------------------------------------------------------------------------
-    N('event-payload-copy', resync(post(A, '/event/payload/execution_environment_id', 'env.other')), 'payload_copy')
+    N('event-payload-copy', resync(post(A, '/event/payload/execution_environment_id', same_len(L.ENV))), 'payload_copy')
+    N('event-payload-copy-longer', resync(post(A, '/event/payload/execution_environment_id', 'env.other.longer')), 'payload_copy')
 
     def env_project(x):
         x['event']['project_id'] = 'proj.other'
@@ -619,8 +640,8 @@ def family(C, fam):
             L.resync_fact_after(_with_orig(x, B))
             x.pop('_original', None)
         return fn
-    N('fact-event-copy', edit(A, fact_change('event_id', 'evt_scs_other')), 'fact_event_copy')
-    N('fact-key-copy', edit(A, fact_change('idempotency_key', 'scs:other')), 'fact_key_copy')
+    N('fact-event-copy', edit(A, fact_change('event_id', same_len(A['event']['event_id']))), 'fact_event_copy')
+    N('fact-key-copy', edit(A, fact_change('idempotency_key', same_len(A['event']['idempotency_key']))), 'fact_key_copy')
     N('source-fact-ref', nb(payload_over={'source_fact_ref': 'source_control_event.' + kid + '.fact.v1:other'}), 'source_fact_ref',
       plan=[pg(fam, 'source_join/source_fact_ref')])
 
@@ -635,6 +656,12 @@ def family(C, fam):
     secret_refs = list(B['owner']['operation']['native_evidence_refs']) + ['native:evidence:access_token=abc123']
     N('secret-material', nb(body_over={'native_evidence_refs': secret_refs}, op_over={'native_evidence_refs': secret_refs}), 'no_secret',
       plan=[pg(fam, 'no_secret')])
+    if fam == W.FAMILIES[0]:
+        for marker in ('password', 'passwd', 'secret', 'apikey', 'api_key', 'api-key', 'access-token', 'refresh_token', 'refresh-token',
+                       'bearer', 'private_key', '-----begin'):
+            refs = list(B['owner']['operation']['native_evidence_refs']) + ['native:evidence:' + marker.upper() + '=x']
+            N('secret-material-' + marker.strip('-'), nb(body_over={'native_evidence_refs': refs}, op_over={'native_evidence_refs': refs}),
+              'no_secret', plan=[pg(fam, 'no_secret')])
 
     # original request ------------------------------------------------------------------------------------------
     if sp['command_id']:
@@ -679,7 +706,7 @@ def family(C, fam):
     N('storage-persisted', resync(post(A, '/event/persisted_at_utc', '2026-11-05T10:15:30.800Z')), 'storage_persisted_at_utc',
       plan=[pg(fam, 'storage_metadata_custody')])
     N('custody-other-storage', post(A, '/publication/custody/storage_instance_id', L.OTHER_SID), 'custody_storage')
-    N('custody-other-event', post(A, '/publication/custody/event_id', 'evt_scs_other'), 'custody_event')
+    N('custody-other-event', post(A, '/publication/custody/event_id', same_len(A['event']['event_id'])), 'custody_event')
     N('receipt-durability', post(A, '/publication/custody/receipt/durability_state', 'pending'), 'receipt_schema')
     for label, t in TIME_BREAKS:
         N('receipt-ack-' + label, post(A, '/publication/custody/receipt/acknowledged_at_utc', t), 'receipt_schema',
@@ -693,9 +720,11 @@ def family(C, fam):
         x['publication']['custody']['receipt']['event_id'] = 'evt_scs_other'
         x['storage_issued']['receipt']['event_id'] = 'evt_scs_other'
     N('receipt-other-event', edit(A, other_receipt_event), 'receipt_event')
-    N('custody-full-value', post(A, '/publication/custody/full_value_sha256', H('supplied')), 'custody_full_value',
+    N('custody-full-value', post(A, '/publication/custody/full_value_sha256', same_len(A['publication']['custody']['full_value_sha256'])),
+      'custody_full_value',
       plan=[pg(fam, 'first_receipt_full_value')])
-    N('custody-producer', post(A, '/publication/custody/producer_semantic_sha256', H('supplied')), 'custody_producer',
+    N('custody-producer', post(A, '/publication/custody/producer_semantic_sha256',
+                               same_len(A['publication']['custody']['producer_semantic_sha256'])), 'custody_producer',
       plan=[pg(fam, 'first_receipt_full_value')])
 
     def issued_fact(x):
@@ -718,6 +747,8 @@ def family(C, fam):
         i, j = o.index(a), o.index(b)
         o[i], o[j] = o[j], o[i]
         return o
+    for step in order:
+        N('order-missing-' + step, post(A, '/publication/order', [x for x in order if x != step]), 'order_steps_present')
     N('order-append-before-source', post(A, '/publication/order', swapped('source_commit', 'append')), 'order_source_before_append')
     early = [x for x in order if x != 'expose']
     early.insert(early.index('receipt_resolved'), 'expose')
@@ -950,6 +981,8 @@ def transition_negatives(C, fam, B, A, base, nb, N):
         return L.append_case(sc)
     if s == 'backend.detected':
         add('t_detect_set', wpost(A, '/setup_state/observed_backends', ['git']))
+        T['t_detect_set_same_size'] = (wpost(C.base[kid + '/append/partial'], '/setup_state/observed_backends', ['jujutsu']),
+                                       kid + '/append/partial')
         add('t_detect_complete', coherent({'observation_state': 'partial'}))
         add('t_detect_partial', coherent({'observation_state': 'complete'}, variant='partial'), kid + '/append/partial')
         add('t_detect_unavailable', coherent({'observation_state': 'complete'}, variant='unavailable'), kid + '/append/unavailable')
@@ -1108,8 +1141,9 @@ def transition_negatives(C, fam, B, A, base, nb, N):
         add('t_ll_no_clean_on_expiry', coherent({'reconciliation_state': 'clean'}, variant='expired'), eb)
         add('t_ll_no_removal_proof', wpost(A, '/removal_proven_by_expiry', True))
     for rid, (scenario, bid) in T.items():
-        fams, idx = W.TRANSITION_PLAN[rid]
-        N('transition-' + rid, scenario, rid, plan=[pg(fam, 'transition/' + str(idx))], base_id=bid)
+        row_id = rid[:-len('_same_size')] if rid.endswith('_same_size') else rid
+        fams, idx = W.TRANSITION_PLAN[row_id]
+        N('transition-' + rid, scenario, row_id, plan=[pg(fam, 'transition/' + str(idx))], base_id=bid)
     missing = [rid for rid, (fams, _) in W.TRANSITION_PLAN.items() if fam in fams and rid not in T]
     if missing:
         raise ValueError('transition rows without a witness for ' + fam + ': ' + ', '.join(missing))
@@ -1226,6 +1260,9 @@ def retained(C, fam, B, A):
     frozen('producer', corrupt(orig, held_fn=lambda h: h.update({'producer_semantic_sha256': H('x')})), 'frozen_producer', seal=False)
     frozen('custody-event', corrupt(orig, held_fn=lambda h: h.update({'event_id': 'evt.other'})), 'frozen_custody_event', seal=False)
     frozen('receipt-event', corrupt(orig, held_fn=lambda h: h['receipt'].update({'event_id': 'evt.other'})), 'frozen_receipt_event', seal=False)
+    for label, t in TIME_BREAKS[:4]:
+        frozen('receipt-ack-' + label, corrupt(orig, held_fn=lambda h, t=t: h['receipt'].update({'acknowledged_at_utc': t})),
+               'frozen_receipt_schema', plan=[pg(fam, 'timestamp_owner_profile')], seal=False)
     frozen('fact-phase', corrupt(orig, fact_fn=lambda f: f.update({'phase': 'sometimes'})), 'frozen_fact_schema', seal=False)
     frozen('fact-not-issued', corrupt(orig, fact_fn=lambda f: f.update({'phase': 'source_committed', 'first_append_receipt_ref': None})),
            'frozen_fact_issued', seal=False)

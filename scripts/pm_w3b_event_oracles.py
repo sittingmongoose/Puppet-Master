@@ -482,7 +482,7 @@ def recipe_inputs_ok(sid, project_id, operation):
 # ---------------------------------------------------------------------------------------------
 RECIPE_ID = 'w3b@1'
 FROZEN_ORDER = ('decodes', 'envelope', 'payload', 'storage_times', 'event_identity', 'key', 'full_value', 'producer',
-                'custody_event', 'fact_event', 'fact_payload')
+                'custody_event', 'receipt', 'fact_event', 'fact_payload')
 
 
 def custody():
@@ -548,6 +548,7 @@ def frozen_components(original, family):
                 out['producer'] = False
             out['custody_event'] = (held.get('event_id') == record['event_id'] and type(held.get('receipt')) is dict and
                                     held['receipt'].get('event_id') == record['event_id'])
+            out['receipt'] = schema_errors(RECEIPT_URI, held.get('receipt')) == 0
             fact_ok = schema_errors(subject_uri(family, 'fact'), fact) == 0
             out['fact_event'] = (fact_ok and fact.get('event_id') == record['event_id'] and
                                  (fact.get('phase') != 'issued' or
@@ -698,6 +699,18 @@ def _d(x):
     return x if type(x) is dict else {}
 
 
+def flat(d, prefix='', out=None):
+    """Every node of a nested dict under its dotted path (dicts included as values), so a predicate reads any depth
+    with one dict lookup (the gated tool certifies a single .get on a data value, never a chained call)."""
+    out = {} if out is None else out
+    for k, v in _d(d).items():
+        path = prefix + str(k)
+        out[path] = v
+        if type(v) is dict:
+            flat(v, path + '.', out)
+    return out
+
+
 def _l(x):
     return x if type(x) is list else []
 
@@ -768,6 +781,7 @@ def _derive(c):
     f['authority'] = {k: _d(_d(owner.get('authority')).get(k)) for k in AUTHORITY_KINDS}
     f['current_generation'] = _d(owner.get('current_generation'))
     f['op'] = _d(owner.get('operation'))
+    f['wf'], f['nf'] = flat(f['world']), flat(f['native'])
     f['fields'] = payload_fields(family) if known else ()
     f['x_authorities'] = spec(family)['authorities'] if known else ()
     f['x_command'] = spec(family)['command_id'] if known else None
@@ -873,6 +887,7 @@ def _derive_fact(c, f):
               'src_commitment', 'src_strings', 'x_fact_key_of_fact', 'src_body_hex', 'src_body_int_ok', 'src_payload_hex',
               'fact_rest_hex', 'fact_after_rest_hex', 'src_inline_fact_bytes', 'source_durable_packs'):
         f[k] = None
+    f['rf'] = {}
     for g in ('g_fact', 'g_fact_full', 'g_fact_num', 'g_fact_size', 'g_src_route', 'g_src_bytes', 'g_source'):
         f[g] = False
     applies = (f['path'] == 'append' and f['g_body']) or (f['path'] == 'recovery' and f['known_family'])
@@ -930,11 +945,12 @@ def _derive_fact(c, f):
             f['src'] = body['payload']
             f['src_payload_hex'] = hex_or_none(body['payload'])
             f['req'] = request_view(body['original_request'])
+            f['rf'] = flat(f['req'])
             f['src_commitment'] = sha_or_none(body)
             f['src_body_hex'] = hex_or_none(body)
             acc = []
             _collect_strings(body, acc)
-            f['src_strings'] = acc
+            f['src_strings'] = [x.lower() for x in acc]
             f['g_source'] = True
 
 
@@ -949,10 +965,14 @@ def _collect_strings(node, acc):
             _collect_strings(v, acc)
 
 
+ORDER_BASE = ('source_commit', 'append', 'receipt_resolved', 'fact_cas', 'expose')
+
+
 def _derive_publication(c, f):
     for k in ('issued', 'custody', 'fact_after', 'cas_expected', 'order', 'receipt_errors', 'receipt_int_ok', 'receipt_u64',
-              'x_receipt_ref', 'receipt'):
+              'x_receipt_ref', 'receipt', 'order_required'):
         f[k] = None
+    f['order_ok'] = False
     f['g_receipt'] = False
     if f['path'] != 'append' or not f['g_source']:
         return
@@ -963,6 +983,10 @@ def _derive_publication(c, f):
     f['cas_expected'] = _d(pub.get('cas_expected'))
     steps = _l(pub.get('order'))
     f['order'] = {s: steps.index(s) for s in steps if type(s) is str}
+    short = f['family'].split('.', 1)[1]
+    f['order_required'] = list(ORDER_BASE) + (['native_dispatch'] if short in STARTED else []) + \
+        (['native_outcome', 'terminal_publication'] if short in COMPLETED else [])
+    f['order_ok'] = all([x in f['order'] for x in f['order_required']])
     rest = ('phase', 'first_append_receipt_ref')
     f['fact_rest_hex'] = hex_or_none({k: x for k, x in f['fact'].items() if k not in rest})
     f['fact_after_rest_hex'] = hex_or_none({k: x for k, x in f['fact_after'].items() if k not in rest})
@@ -983,7 +1007,8 @@ def _derive_original(c, f):
     for k in ('dispatch', 'orig', 'orig_fact', 'orig_held', 'orig_env_errors', 'orig_env_int_ok', 'orig_payload_errors',
               'orig_payload_full_errors', 'orig_payload_int_ok', 'orig_observed_utc', 'orig_persisted_utc', 'orig_x_event_id',
               'orig_x_key', 'orig_x_full_value', 'orig_x_producer', 'orig_x_receipt_ref', 'orig_fact_errors', 'orig_hex',
-              'retry', 'cand_producer_digest', 'request_hex', 'orig_receipt', 'orig_payload_hex', 'orig_fact_payload_hex'):
+              'retry', 'cand_producer_digest', 'request_hex', 'orig_receipt', 'orig_payload_hex', 'orig_fact_payload_hex',
+              'orig_receipt_errors'):
         f[k] = None
     f['g_dispatch'] = f['g_orig'] = f['g_orig_env'] = f['g_orig_payload'] = f['g_resolved'] = False
     f['dispatch_verifiable'] = False
@@ -1046,6 +1071,7 @@ def _derive_original(c, f):
             except Refusal:
                 f['orig_x_producer'] = None
             f['orig_x_receipt_ref'] = first_receipt_ref(sidb, record['event_id'])
+            f['orig_receipt_errors'] = schema_errors(RECEIPT_URI, held_v.get('receipt'))
             f['orig_fact_errors'] = schema_errors(subject_uri(f['family'], 'fact'), fact)
             f['orig_payload_hex'] = hex_or_none(p)
             if f['orig_fact_errors'] == 0 and type(fact.get('source_body')) is dict:
@@ -1086,6 +1112,7 @@ def _derive_checkpoint(c, f):
               'ck_index_seqs', 'ck_scanned', 'x_last_event_id', 'x_last_fact_ref', 'ck_token', 'ck_live', 'ck_cas',
               'ck_stored_errors', 'ck_successor'):
         f[k] = None
+    f['tf'], f['pf'] = {}, {}
     f['g_ck'] = f['g_ck_schema'] = f['g_ck_full'] = f['g_ckr'] = False
     if f['path'] != 'checkpoint' or not f['known_family']:
         return
@@ -1116,6 +1143,8 @@ def _derive_checkpoint(c, f):
                        if uint64_refusal(v) is not None]
         f['g_ckr'] = f['ck_int_ok'] is True
         f['ck_token'] = tok
+        f['tf'] = flat(tok)
+    f['pf'] = flat(f['ck_pub'])
     if type(f['owner_sid']) is str and type(f['owner_project']) is str:
         f['x_ck_key'] = checkpoint_key_recipe(f['family'], f['owner_sid'], f['owner_project'])
     rows = [r for r in _l(f['ck_pub'].get('rows')) if type(r) is dict]
@@ -1378,8 +1407,9 @@ row('acceptance', 'native_evidence', 'source_join', '/source_body/native_evidenc
     'the native evidence refs are exactly the native owner\'s evidence refs for the operation',
     "v['src_body'].get('native_evidence_refs') != v['op'].get('native_evidence_refs')", when=G_SRC, paths='append')
 row('acceptance', 'no_secret', 'secret_material', '/source_body',
-    'the source body holds IDs and authorized refs only: no credential, token, key, password or protected-auth material',
-    "any([m in s.lower() for s in v['src_strings'] for m in ('password', 'passwd', 'secret', 'apikey', 'api_key', 'api-key', "
+    'the source body holds IDs and authorized refs only: no credential, token, key, password or protected-auth material '
+    '(every source string, lower-cased by derive, is scanned for the SCS non_secret_ref markers)',
+    "any([m in s for s in v['src_strings'] for m in ('password', 'passwd', 'secret', 'apikey', 'api_key', 'api-key', "
     "'access_token', 'access-token', 'refresh_token', 'refresh-token', 'bearer', 'private_key', '-----begin')])",
     when=G_SRC, paths='append')
 REQUEST_FAMILIES = tuple([s for s in COMMANDS if COMMANDS[s]])
@@ -1397,11 +1427,11 @@ for _f, _w in (('project_id', 'project_id'), ('execution_host_id', 'execution_ho
                ('execution_environment_id', 'execution_environment_id'), ('source_location_id', 'source_location_id')):
     row('request', 'request_lineage_' + _f, 'request_join', '/source_body/original_request/scope/lineage/' + _f,
         'the request scope lineage ' + _f + ' equals the source payload ' + _w,
-        "v['req'].get('lineage').get('" + _f + "') != v['src'].get('" + _w + "')", when=G_SRC, paths='append', families=REQUEST_FAMILIES)
+        "v['rf'].get('lineage." + _f + "') != v['src'].get('" + _w + "')", when=G_SRC, paths='append', families=REQUEST_FAMILIES)
 for _f in ('repo_id', 'scm_backend', 'workspace_id', 'repository_context_ref'):
     row('request', 'request_scope_' + _f, 'request_join', '/source_body/original_request/scope/' + _f,
         'the request scope ' + _f + ' equals the source payload ' + _f,
-        "v['req'].get('scope').get('" + _f + "') != v['src'].get('" + _f + "')",
+        "v['rf'].get('scope." + _f + "') != v['src'].get('" + _f + "')",
         when=(G_SRC, "'" + _f + "' in v['fields']"), paths='append', families=REPO_REQUEST)
 row('request', 'request_permission_ref', 'request_join', '/source_body/original_request/permission_snapshot_ref',
     'the request permission snapshot ref is the frozen permission evidence ref',
@@ -1413,25 +1443,25 @@ row('request', 'request_filesafe_ref', 'request_join', '/source_body/original_re
     families=REQUEST_FAMILIES)
 row('request', 'request_writer_lease_ref', 'request_join', '/source_body/original_request/scope/writer_lease_ref',
     'the request writer lease ref is the frozen writer-lease evidence ref',
-    "v['req'].get('scope').get('writer_lease_ref') != v['authority']['writer_lease'].get('evidence_ref')",
+    "v['rf'].get('scope.writer_lease_ref') != v['authority']['writer_lease'].get('evidence_ref')",
     when=(G_SRC, "v['req'].get('variant') == 'legacy_exact'", "'writer_lease' in v['x_authorities']"), paths='append',
     families=REQUEST_FAMILIES)
 row('request', 'request_credential_ref', 'request_join', '/source_body/original_request/scope/credential_lease_ref',
     'the request credential lease ref is the frozen credential evidence ref',
-    "v['req'].get('scope').get('credential_lease_ref') != v['authority']['credential'].get('evidence_ref')",
+    "v['rf'].get('scope.credential_lease_ref') != v['authority']['credential'].get('evidence_ref')",
     when=(G_SRC, "v['req'].get('variant') == 'legacy_exact'", "'credential' in v['x_authorities']"), paths='append',
     families=REQUEST_FAMILIES)
 row('request', 'request_target_project', 'request_join', '/source_body/original_request/target/project_id',
     'the v2 local_reconcile_only target project_id equals the source payload project_id',
-    "v['req'].get('target').get('project_id') != v['src'].get('project_id')",
+    "v['rf'].get('target.project_id') != v['src'].get('project_id')",
     when=(G_SRC, "v['req'].get('variant') == 'local_reconcile_only'"), paths='append', families=('remote.sync_started', 'remote.sync_completed'))
 row('request', 'request_target_backend', 'request_join', '/source_body/original_request/target/backend',
     'the v2 local_reconcile_only target backend equals the source payload scm_backend',
-    "v['req'].get('target').get('backend') != v['src'].get('scm_backend')",
+    "v['rf'].get('target.backend') != v['src'].get('scm_backend')",
     when=(G_SRC, "v['req'].get('variant') == 'local_reconcile_only'"), paths='append', families=('remote.sync_started', 'remote.sync_completed'))
 row('request', 'request_target_operation', 'request_join', '/source_body/original_request/target/operation_id',
     'the v2 local_reconcile_only target operation_id is the accepted operation',
-    "v['req'].get('target').get('operation_id') != v['op'].get('owner_operation_id')",
+    "v['rf'].get('target.operation_id') != v['op'].get('owner_operation_id')",
     when=(G_SRC, "v['req'].get('variant') == 'local_reconcile_only'"), paths='append', families=('remote.sync_started', 'remote.sync_completed'))
 row('request', 'request_variant', 'request_join', '/source_body/payload/sync_variant',
     'the payload sync_variant names the accepted request variant (legacy_exact remote_effect, v2 local_reconcile_only)',
@@ -1504,34 +1534,32 @@ row('cas', 'cas_after_receipt', 'source_phase_cas', '/publication/fact_after/fir
 row('cas', 'cas_after_unchanged', 'source_phase_cas', '/publication/fact_after',
     'issuance never changes the semantic body or identity of the fact (only phase and receipt ref move)',
     "v['fact_after_rest_hex'] != v['fact_rest_hex']", when=G_SRC, paths='append')
+G_ORD = (G_SRC, "v['order_ok'] is True")
+row('order', 'order_steps_present', 'publication_order', '/publication/order',
+    'the publication records every step the family requires (source commit, append, receipt resolution, fact CAS, exposure, '
+    'and native dispatch for a started fact, native outcome and terminal publication for a completion fact)',
+    "any([x not in v['order'] for x in v['order_required']])", when=G_SRC, paths='append')
 row('order', 'order_source_before_append', 'publication_order', '/publication/order',
     'the original source fact is committed before this family\'s append is attempted',
-    "v['order'].get('source_commit') is None or v['order'].get('append') is None or v['order'].get('source_commit') > v['order'].get('append')",
-    when=G_SRC, paths='append')
+    "v['order'].get('source_commit') > v['order'].get('append')", when=G_ORD, paths='append')
 row('order', 'order_receipt_before_expose', 'publication_order', '/publication/order',
     'the event is not exposed before its first issued receipt is resolved and joined',
-    "v['order'].get('receipt_resolved') is None or v['order'].get('expose') is None or "
-    "v['order'].get('receipt_resolved') > v['order'].get('expose')", when=G_SRC, paths='append')
+    "v['order'].get('receipt_resolved') > v['order'].get('expose')", when=G_ORD, paths='append')
 row('order', 'order_receipt_before_cas', 'publication_order', '/publication/order',
     'the fact moves to issued only after the first receipt is resolved',
-    "v['order'].get('receipt_resolved') is None or v['order'].get('fact_cas') is None or "
-    "v['order'].get('receipt_resolved') > v['order'].get('fact_cas')", when=G_SRC, paths='append')
+    "v['order'].get('receipt_resolved') > v['order'].get('fact_cas')", when=G_ORD, paths='append')
 row('order', 'order_append_before_dispatch', 'publication_order', '/publication/order',
     'for a started fact, append and receipt resolution precede native dispatch',
-    "v['order'].get('receipt_resolved') is None or v['order'].get('native_dispatch') is None or "
-    "v['order'].get('receipt_resolved') > v['order'].get('native_dispatch')", when=G_SRC, paths='append', families=STARTED)
+    "v['order'].get('receipt_resolved') > v['order'].get('native_dispatch')", when=G_ORD, paths='append', families=STARTED)
 row('order', 'order_source_before_dispatch', 'publication_order', '/publication/order',
     'the start source is durable before the first native effect',
-    "v['order'].get('source_commit') is None or v['order'].get('native_dispatch') is None or "
-    "v['order'].get('source_commit') > v['order'].get('native_dispatch')", when=G_SRC, paths='append', families=STARTED)
+    "v['order'].get('source_commit') > v['order'].get('native_dispatch')", when=G_ORD, paths='append', families=STARTED)
 row('order', 'order_outcome_before_append', 'publication_order', '/publication/order',
     'for a completion fact, the native outcome source precedes append',
-    "v['order'].get('native_outcome') is None or v['order'].get('append') is None or "
-    "v['order'].get('native_outcome') > v['order'].get('append')", when=G_SRC, paths='append', families=COMPLETED)
+    "v['order'].get('native_outcome') > v['order'].get('append')", when=G_ORD, paths='append', families=COMPLETED)
 row('order', 'order_terminal_after_receipt', 'publication_order', '/publication/order',
     'dependent terminal publication follows the resolved first receipt',
-    "v['order'].get('receipt_resolved') is None or v['order'].get('terminal_publication') is None or "
-    "v['order'].get('receipt_resolved') > v['order'].get('terminal_publication')", when=G_SRC, paths='append', families=COMPLETED)
+    "v['order'].get('receipt_resolved') > v['order'].get('terminal_publication')", when=G_ORD, paths='append', families=COMPLETED)
 
 # SP-1101 retained originals (retry, history, recovery): the shared dispatcher's refusals -----------------------
 G_DISP = "v['g_dispatch'] is True"
@@ -1601,6 +1629,9 @@ row('frozen', 'frozen_custody_event', 'original_verification', '/storage/custody
     "v['orig_held'].get('event_id') != v['orig'].get('event_id')", when="v['g_orig_payload'] is True", paths=DISP_PATHS)
 row('frozen', 'frozen_receipt_event', 'original_verification', '/storage/custody/receipt/event_id', 'the held first receipt names the original event',
     "v['orig_receipt'].get('event_id') != v['orig'].get('event_id')", when="v['g_orig_payload'] is True", paths=DISP_PATHS)
+row('frozen', 'frozen_receipt_schema', 'original_verification', '/storage/custody/receipt',
+    'the held first receipt is the closed CV-339 AppendReceipt (shared event_record date-time checker for acknowledged_at_utc)',
+    "v['orig_receipt_errors'] != 0", when="v['g_orig_payload'] is True", paths=DISP_PATHS)
 row('frozen', 'frozen_fact_schema', 'original_verification', '/storage/fact', 'the original issued fact passes its frozen verdict',
     "v['orig_fact_errors'] != 0", when="v['g_orig_payload'] is True", paths=DISP_PATHS)
 row('frozen', 'frozen_fact_issued', 'original_verification', '/storage/fact/phase', 'a retried or retained original fact is issued',
@@ -1619,7 +1650,7 @@ entailed('original_verified', 'original_verification', '/storage',
          G_DISP, DISP_PATHS,
          ['frozen_decodes', 'frozen_envelope_schema', 'frozen_envelope_numbers', 'frozen_observed_utc', 'frozen_persisted_utc',
           'frozen_payload_schema', 'frozen_payload_fullmatch', 'frozen_payload_numbers', 'frozen_event_identity', 'frozen_key',
-          'frozen_full_value', 'frozen_producer', 'frozen_custody_event', 'frozen_receipt_event', 'frozen_fact_schema',
+          'frozen_full_value', 'frozen_producer', 'frozen_custody_event', 'frozen_receipt_event', 'frozen_receipt_schema', 'frozen_fact_schema',
           'frozen_fact_issued', 'frozen_fact_event', 'frozen_fact_receipt', 'frozen_fact_payload'],
          'The dispatcher reaches original_verification only through FrozenRecipe.verify_original (frozen_verifier). Its recipe '
          'key is the exact RecipeTuple the owner built from the sealed receipt and the installed map is keyed by that tuple, so '
@@ -1627,7 +1658,8 @@ entailed('original_verified', 'original_verification', '/storage',
          'frozen_components is not True. Each component is one or more frozen_* rows computed from the same authenticated bytes '
          '(decodes: frozen_decodes; envelope: frozen_envelope_schema/numbers; payload: frozen_payload_schema/fullmatch/numbers; '
          'storage_times: frozen_observed_utc/persisted_utc; event_identity; key; full_value; producer; custody_event: '
-         'frozen_custody_event/receipt_event; fact_event: frozen_fact_schema/event and, for an issued fact, frozen_fact_receipt; '
+         'frozen_custody_event/receipt_event; receipt: frozen_receipt_schema; fact_event: frozen_fact_schema/event and, for an '
+         'issued fact, frozen_fact_receipt; '
          'fact_payload: frozen_fact_payload), and those rows '
          'sit in earlier tables, so one of them always refuses first.')
 
@@ -1736,7 +1768,7 @@ for _f in TOKEN_FIELDS[2:]:
         'the durable token ' + _f + ' is the actual current SP-278 publication value pinned at capture',
         "v['ck_token'].get('" + _f + "') != v['ck_pub'].get('" + _f + "')", when=G_CK, paths=CK)
 row('ck_token', 'ck_selection_storage', 'checkpoint_token', '/checkpoint/next/generic_token/source_selection/storage_instance_id',
-    'the token source selection names the actual Storage instance', "v['ck_token'].get('source_selection').get('storage_instance_id') != v['owner_sid']",
+    'the token source selection names the actual Storage instance', "v['tf'].get('source_selection.storage_instance_id') != v['owner_sid']",
     when=G_CK, paths=CK)
 entailed('ck_uint64', 'storage_uint64', '/checkpoint/next',
          'every Storage uint64 checkpoint slot (through_sequence_id, frontier_revision, segment/manifest generations, recovery_epoch) '
@@ -1767,7 +1799,7 @@ row('ck_cas', 'ck_monotonic', 'checkpoint_cas', '/checkpoint/next/through_sequen
     "v['ck_next'].get('through_sequence_id') < v['ck_stored'].get('through_sequence_id')", when=G_PRED, paths=CK)
 row('ck_commit', 'ck_current_bytes', 'checkpoint_current', '/checkpoint/live_current/current_bytes_sha256',
     'CURRENT is unchanged at commit (stale capture refuses)', "v['ck_live'].get('current_bytes_sha256') != "
-    "v['ck_pub'].get('source_selection', {}).get('current_bytes_sha256')", when=G_CK, paths=CK)
+    "v['pf'].get('source_selection.current_bytes_sha256')", when=G_CK, paths=CK)
 row('ck_commit', 'ck_current_frontier', 'checkpoint_current', '/checkpoint/live_current/frontier_revision',
     'the live frontier is the captured frontier at commit', "v['ck_live'].get('frontier_revision') != v['ck_pub'].get('frontier_revision')",
     when=G_CK, paths=CK)
@@ -1789,11 +1821,8 @@ W_ = "v['world']"
 
 
 def w(*keys):
-    """Expression reading a nested world value with dict defaults (owner data shape)."""
-    expr = W_
-    for k in keys[:-1]:
-        expr += ".get('" + k + "', {})"
-    return expr + ".get('" + keys[-1] + "')"
+    """Expression reading a world value at any depth through the flattened view (one lookup)."""
+    return "v['wf'].get('" + '.'.join(keys) + "')"
 
 
 def nat(k):
@@ -1801,10 +1830,7 @@ def nat(k):
 
 
 def req(*keys):
-    expr = "v['req'].get('" + keys[0] + "')"
-    for k in keys[1:]:
-        expr += ".get('" + k + "')"
-    return expr
+    return "v['rf'].get('" + '.'.join(keys) + "')"
 
 
 def T(families, rid, idx, words, bad, when=()):
@@ -1817,7 +1843,7 @@ def T(families, rid, idx, words, bad, when=()):
 F = 'backend.detected'
 _avail = w('setup_state', 'available')
 T(F, 't_detect_set', 0, 'detected_backends is exactly the Git/Jujutsu set observed in the actual setup-state source',
-  "set(v['native'].get('detected_backends', [])) != set(v['world'].get('setup_state', {}).get('observed_backends', []))",
+  "set(v['native'].get('detected_backends', [])) != set(v['wf'].get('setup_state.observed_backends', []))",
   _avail + ' is True')
 T(F, 't_detect_complete', 1, 'a complete setup-state observation is recorded as complete', nat('observation_state') + " != 'complete'",
   (_avail + ' is True', w('setup_state', 'complete') + ' is True'))
@@ -1849,7 +1875,7 @@ T(F, 't_ckc_generation_saved', 0, 'checkpoint_generation is the saved checkpoint
   nat('checkpoint_generation') + ' != ' + w('checkpoint', 'generation'))
 T(F, 't_ckc_revision', 1, 'checkpoint_revision is the actual native saved revision', nat('checkpoint_revision') + ' != ' + w('checkpoint', 'native_revision'))
 T(F, 't_ckc_backend_tag', 1, 'the saved revision carries the exact backend tag of scm_backend',
-  "v['native'].get('checkpoint_revision', {}).get('kind') != " + nat('scm_backend'))
+  "v['nf'].get('checkpoint_revision.kind') != " + nat('scm_backend'))
 T(F, 't_ckc_durable', 2, 'the checkpoint exists durably before the created fact is published', w('checkpoint', 'durable') + ' is not True')
 
 F = 'checkpoint.restored'
@@ -1890,7 +1916,7 @@ for _fam in ('remote.fetch_completed', 'remote.publish_completed', 'remote.sync_
       w('observed_after_revision') + ' != ' + nat('after_revision'))
     T(_fam, 't_done_no_unresolved_' + _n, 2, 'no effect remains unresolved', "len(v['world'].get('unresolved_effects', [])) != 0")
 T('remote.publish_completed', 't_fanout_all', 3, 'completion is all-target success; partial fan-out is never presented as success',
-  "set(v['world'].get('fanout', {}).get('succeeded', [])) != set(v['world'].get('fanout', {}).get('targets', []))")
+  "set(v['wf'].get('fanout.succeeded', [])) != set(v['wf'].get('fanout.targets', []))")
 for _fam in ('remote.publish_started', 'remote.publish_completed'):
     T(_fam, 't_fanout_no_retry_' + _fam.replace('.', '_'), 3, 'partial fan-out is never automatically retried',
       w('fanout', 'auto_retry') + ' is not False')
@@ -2140,7 +2166,7 @@ def cases():
         yield n['id'], mutate(bases[n['base']]['scenario'], n['changes']), n
 
 
-def run_all(progress=None, extra=()):
+def run_all(progress=None, extra=(), fail_fast=False):
     counts = dict(cases=0, positives=0, negatives=0, errors=0)
     findings, firsts = [], {}
     STORE_CHECKS['reads'] = STORE_CHECKS['changed'] = 0
@@ -2153,6 +2179,8 @@ def run_all(progress=None, extra=()):
         if verdict:
             counts['errors'] += 1
             findings.append({'case': cid, 'verdict': verdict})
+            if fail_fast:
+                break
         if first:
             firsts[first[0]] = firsts.get(first[0], 0) + 1
         if progress and number % 1000 == 0:
@@ -2198,9 +2226,12 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--json', type=Path)
     parser.add_argument('--limit-findings', type=int, default=40)
+    parser.add_argument('--fail-fast', action='store_true', help='stop at the first judged error (mutation proof)')
     args = parser.parse_args(argv)
     extra = long_integer_cases()
-    counts, findings, firsts = run_all(extra=extra)
+    counts, findings, firsts = run_all(extra=extra, fail_fast=args.fail_fast)
+    if STORE_CHECKS['changed']:
+        findings.append({'case': '*', 'verdict': 'sealed store changed while reading: ' + str(STORE_CHECKS['changed'])})
     unwitnessed = sorted([r['id'] for r in ROWS if r['id'] not in firsts and r['id'] not in ENTAILED])
     store_ok = STORE_CHECKS['changed'] == 0 and STORE_CHECKS['reads'] > 0
     status = 'pass' if not findings and not unwitnessed and store_ok else 'fail'

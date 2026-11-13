@@ -378,7 +378,7 @@ def make_pack(value, media):
 
 def build(fam, path='append', variant='base', payload_over=None, body_over=None, native_over=None, world_over=None, op_over=None,
           request_fn=None, event_over=None, sid=SID, long_evidence=False, eid_over=None, ikey_over=None, fact_sid=None,
-          fact_project=None, fact_op=None):
+          fact_project=None, fact_op=None, ack_over=None):
     """One coherent scenario. payload_over changes the committed source payload (every copy follows; owner authority
     does not); native_over/world_over/op_over change owner authority only; request_fn edits the original request
     before commitment; event_over sets envelope fields the event carries on its own (lineage, times, policy)."""
@@ -420,7 +420,7 @@ def build(fam, path='append', variant='base', payload_over=None, body_over=None,
     eid, ikey = eid_over or event_id(fam, sid, proj, opid), ikey_over or idem_key(fam, sid, proj, opid)
     native = {k: copy.deepcopy(v) for k, v in n.items()}
     native.update(native_over or {})
-    op['source_commitment'] = sha(body)
+    op['source_commitment'] = _safe(sha, body)
     lin = lineage(fam)
     event = {'schema_id': 'pm.event.v0', 'schema_version': '2.0.0', 'scope_kind': 'project', 'event_id': eid, 'event_type': fam,
              'project_id': proj, 'occurred_at_utc': OCCURRED, 'observed_at_utc': OBSERVED, 'persisted_at_utc': PERSISTED,
@@ -433,7 +433,7 @@ def build(fam, path='append', variant='base', payload_over=None, body_over=None,
     for f, v in (event_over or {}).items():
         event[f] = v
     pack = None
-    if len(vbytes(event['payload'])) > 16384:
+    if (_safe(lambda x: len(vbytes(x)), event['payload']) or 0) > 16384:
         pack = make_pack(event['payload'], PACK_MEDIA)
         event['payload_ref'] = 'sp337:blake3:' + pack['payload_id']
     fact = {'schema_id': 'pm.storage_value.source_control_event.' + key(fam) + '.fact.v1', 'schema_version': '1.0.0',
@@ -441,14 +441,14 @@ def build(fam, path='append', variant='base', payload_over=None, body_over=None,
             'idempotency_key': ikey, 'phase': 'source_committed', 'source_body': body, 'source_body_ref': None,
             'first_append_receipt_ref': None}
     source_pack = None
-    if len(vbytes(fact)) > 16384:
+    if (_safe(lambda x: len(vbytes(x)), fact) or 0) > 16384:
         sp = make_pack(body, SOURCE_MEDIA)
         source_pack = {'bytes_hex': sp['bytes_hex']}
         fact['source_body'] = None
         fact['source_body_ref'] = {'blake3_id': sp['payload_id'], 'byte_size': sp['byte_size'], 'media_type': SOURCE_MEDIA}
     receipt = {'event_id': eid, 'sequence_id': event['sequence_id'] if type(event['sequence_id']) is int else SEQ, 'segment_generation': 3,
                'segment_name': 'seg-000003', 'byte_offset': 1024, 'commit_group_id': 'cg.' + key(fam) + '.1', 'durability_class': 'ordinary',
-               'durable_end_offset': 4096, 'durability_state': 'synced', 'manifest_generation': 3, 'acknowledged_at_utc': ACK}
+               'durable_end_offset': 4096, 'durability_state': 'synced', 'manifest_generation': 3, 'acknowledged_at_utc': ack_over or ACK}
     issued_fact = dict(copy.deepcopy(fact), phase='issued', first_append_receipt_ref=receipt_ref(sid, eid))
     owner = {'storage_instance_id': SID, 'server_id': SERVER, 'project_id': PROJECT, 'operation': op, 'native': native, 'world': world,
              'lineage': lin, 'authority': auth, 'current_generation': gens}

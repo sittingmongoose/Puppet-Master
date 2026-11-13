@@ -63,7 +63,7 @@ def no_secret(value, context):
         return None
     if not (v['g_source'] is True):
         return None
-    return "secret_material" if (any([m in s.lower() for s in v['src_strings'] for m in ('password', 'passwd', 'secret', 'apikey', 'api_key', 'api-key', 'access_token', 'access-token', 'refresh_token', 'refresh-token', 'bearer', 'private_key', '-----begin')])) else None
+    return "secret_material" if (any([m in s for s in v['src_strings'] for m in ('password', 'passwd', 'secret', 'apikey', 'api_key', 'api-key', 'access_token', 'access-token', 'refresh_token', 'refresh-token', 'bearer', 'private_key', '-----begin')])) else None
 
 
 def case(value):
@@ -74,7 +74,7 @@ def case(value):
         g.Guard("source_join_owner_operation_id", g.Invariant("/source_body/payload/owner_operation_id", "the source payload operation is the operation the native owner accepted"), "source_join", source_join_owner_operation_id),
         g.Guard("owner_result_ref", g.Invariant("/source_body/original_owner_result_ref", "the original owner result ref is the actual admitted start result or terminal receipt of the accepted operation"), "source_join", owner_result_ref),
         g.Guard("native_evidence", g.Invariant("/source_body/native_evidence_refs", "the native evidence refs are exactly the native owner's evidence refs for the operation"), "source_join", native_evidence),
-        g.Guard("no_secret", g.Invariant("/source_body", "the source body holds IDs and authorized refs only: no credential, token, key, password or protected-auth material"), "secret_material", no_secret),
+        g.Guard("no_secret", g.Invariant("/source_body", "the source body holds IDs and authorized refs only: no credential, token, key, password or protected-auth material (every source string, lower-cased by derive, is scanned for the SCS non_secret_ref markers)"), "secret_material", no_secret),
     ])
 
     def check(value):

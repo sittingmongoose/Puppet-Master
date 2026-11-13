@@ -424,8 +424,12 @@
   },
   {
    "guard": "backend_detected/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "backend_detected/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "backend_detected/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -456,7 +460,7 @@
   },
   {
    "guard": "backend_detected/no_secret",
-   "witness_count": 2,
+   "witness_count": 14,
    "witnesses": [
     {
      "case": "backend_detected/append/base/neg/redaction-profile",
@@ -464,6 +468,46 @@
     },
     {
      "case": "backend_detected/append/base/neg/secret-material",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-password",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-passwd",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-secret",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-apikey",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-api_key",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-api-key",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-access-token",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-refresh_token",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-refresh-token",
+     "row": "no_secret"
+    },
+    {
+     "case": "backend_detected/append/base/neg/secret-material-bearer",
      "row": "no_secret"
     }
    ]
@@ -654,7 +698,7 @@
   },
   {
    "guard": "backend_detected/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "backend_detected/append/occurred-lowercase-t-z",
@@ -673,6 +717,22 @@
      "row": null
     },
     {
+     "case": "backend_detected/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "backend_detected/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "backend_detected/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "backend_detected/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "backend_detected/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -687,22 +747,6 @@
     {
      "case": "backend_detected/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "backend_detected/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "backend_detected/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "backend_detected/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "backend_detected/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -1998,10 +2042,14 @@
   },
   {
    "guard": "backend_detected/transition/0",
-   "witness_count": 1,
+   "witness_count": 2,
    "witnesses": [
     {
      "case": "backend_detected/append/base/neg/transition-t_detect_set",
+     "row": "t_detect_set"
+    },
+    {
+     "case": "backend_detected/append/partial/neg/transition-t_detect_set_same_size",
      "row": "t_detect_set"
     }
    ]
@@ -2472,8 +2520,12 @@
   },
   {
    "guard": "backend_selected/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "backend_selected/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "backend_selected/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -2702,7 +2754,7 @@
   },
   {
    "guard": "backend_selected/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "backend_selected/append/occurred-lowercase-t-z",
@@ -2721,6 +2773,22 @@
      "row": null
     },
     {
+     "case": "backend_selected/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "backend_selected/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "backend_selected/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "backend_selected/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "backend_selected/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -2735,22 +2803,6 @@
     {
      "case": "backend_selected/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "backend_selected/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "backend_selected/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "backend_selected/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "backend_selected/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -4466,7 +4518,7 @@
   },
   {
    "guard": "checkpoint_created/payload_pack_identity",
-   "witness_count": 9,
+   "witness_count": 10,
    "witnesses": [
     {
      "case": "checkpoint_created/append/jj_big/neg/pack-route",
@@ -4489,6 +4541,10 @@
      "row": "pack_body"
     },
     {
+     "case": "checkpoint_created/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
+    {
      "case": "checkpoint_created/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
     },
@@ -4508,8 +4564,12 @@
   },
   {
    "guard": "checkpoint_created/payload_pack_durable",
-   "witness_count": 2,
+   "witness_count": 3,
    "witnesses": [
+    {
+     "case": "checkpoint_created/append/jj_big/neg/pack-missing",
+     "row": "pack_route"
+    },
     {
      "case": "checkpoint_created/append/jj_big/neg/pack-not-durable",
      "row": "pack_durable"
@@ -4720,7 +4780,7 @@
   },
   {
    "guard": "checkpoint_created/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "checkpoint_created/append/occurred-lowercase-t-z",
@@ -4739,6 +4799,22 @@
      "row": null
     },
     {
+     "case": "checkpoint_created/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "checkpoint_created/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "checkpoint_created/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "checkpoint_created/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "checkpoint_created/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -4753,22 +4829,6 @@
     {
      "case": "checkpoint_created/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "checkpoint_created/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "checkpoint_created/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "checkpoint_created/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "checkpoint_created/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -6582,7 +6642,7 @@
   },
   {
    "guard": "checkpoint_restored/payload_pack_identity",
-   "witness_count": 9,
+   "witness_count": 10,
    "witnesses": [
     {
      "case": "checkpoint_restored/append/jj_big/neg/pack-route",
@@ -6605,6 +6665,10 @@
      "row": "pack_body"
     },
     {
+     "case": "checkpoint_restored/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
+    {
      "case": "checkpoint_restored/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
     },
@@ -6624,8 +6688,12 @@
   },
   {
    "guard": "checkpoint_restored/payload_pack_durable",
-   "witness_count": 2,
+   "witness_count": 3,
    "witnesses": [
+    {
+     "case": "checkpoint_restored/append/jj_big/neg/pack-missing",
+     "row": "pack_route"
+    },
     {
      "case": "checkpoint_restored/append/jj_big/neg/pack-not-durable",
      "row": "pack_durable"
@@ -6836,7 +6904,7 @@
   },
   {
    "guard": "checkpoint_restored/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "checkpoint_restored/append/occurred-lowercase-t-z",
@@ -6855,6 +6923,22 @@
      "row": null
     },
     {
+     "case": "checkpoint_restored/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "checkpoint_restored/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "checkpoint_restored/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "checkpoint_restored/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "checkpoint_restored/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -6869,22 +6953,6 @@
     {
      "case": "checkpoint_restored/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "checkpoint_restored/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "checkpoint_restored/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "checkpoint_restored/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "checkpoint_restored/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -8758,7 +8826,7 @@
   },
   {
    "guard": "remote_fetch_completed/payload_pack_identity",
-   "witness_count": 9,
+   "witness_count": 10,
    "witnesses": [
     {
      "case": "remote_fetch_completed/append/jj_big/neg/pack-route",
@@ -8781,6 +8849,10 @@
      "row": "pack_body"
     },
     {
+     "case": "remote_fetch_completed/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
+    {
      "case": "remote_fetch_completed/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
     },
@@ -8800,8 +8872,12 @@
   },
   {
    "guard": "remote_fetch_completed/payload_pack_durable",
-   "witness_count": 2,
+   "witness_count": 3,
    "witnesses": [
+    {
+     "case": "remote_fetch_completed/append/jj_big/neg/pack-missing",
+     "row": "pack_route"
+    },
     {
      "case": "remote_fetch_completed/append/jj_big/neg/pack-not-durable",
      "row": "pack_durable"
@@ -9012,7 +9088,7 @@
   },
   {
    "guard": "remote_fetch_completed/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "remote_fetch_completed/append/occurred-lowercase-t-z",
@@ -9031,6 +9107,22 @@
      "row": null
     },
     {
+     "case": "remote_fetch_completed/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_fetch_completed/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_fetch_completed/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "remote_fetch_completed/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "remote_fetch_completed/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -9045,22 +9137,6 @@
     {
      "case": "remote_fetch_completed/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "remote_fetch_completed/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_fetch_completed/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_fetch_completed/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_fetch_completed/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -10934,8 +11010,12 @@
   },
   {
    "guard": "remote_fetch_started/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "remote_fetch_started/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "remote_fetch_started/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -11164,7 +11244,7 @@
   },
   {
    "guard": "remote_fetch_started/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "remote_fetch_started/append/occurred-lowercase-t-z",
@@ -11183,6 +11263,22 @@
      "row": null
     },
     {
+     "case": "remote_fetch_started/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_fetch_started/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_fetch_started/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "remote_fetch_started/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "remote_fetch_started/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -11197,22 +11293,6 @@
     {
      "case": "remote_fetch_started/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "remote_fetch_started/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_fetch_started/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_fetch_started/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_fetch_started/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -13022,8 +13102,12 @@
   },
   {
    "guard": "remote_publish_completed/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "remote_publish_completed/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "remote_publish_completed/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -13252,7 +13336,7 @@
   },
   {
    "guard": "remote_publish_completed/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "remote_publish_completed/append/occurred-lowercase-t-z",
@@ -13271,6 +13355,22 @@
      "row": null
     },
     {
+     "case": "remote_publish_completed/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_publish_completed/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_publish_completed/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "remote_publish_completed/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "remote_publish_completed/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -13285,22 +13385,6 @@
     {
      "case": "remote_publish_completed/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "remote_publish_completed/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_publish_completed/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_publish_completed/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_publish_completed/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -15188,8 +15272,12 @@
   },
   {
    "guard": "remote_publish_started/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "remote_publish_started/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "remote_publish_started/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -15418,7 +15506,7 @@
   },
   {
    "guard": "remote_publish_started/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "remote_publish_started/append/occurred-lowercase-t-z",
@@ -15437,6 +15525,22 @@
      "row": null
     },
     {
+     "case": "remote_publish_started/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_publish_started/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_publish_started/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "remote_publish_started/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "remote_publish_started/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -15451,22 +15555,6 @@
     {
      "case": "remote_publish_started/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "remote_publish_started/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_publish_started/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_publish_started/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_publish_started/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -17286,8 +17374,12 @@
   },
   {
    "guard": "remote_sync_completed/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "remote_sync_completed/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "remote_sync_completed/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -17516,7 +17608,7 @@
   },
   {
    "guard": "remote_sync_completed/timestamp_owner_profile",
-   "witness_count": 78,
+   "witness_count": 86,
    "witnesses": [
     {
      "case": "remote_sync_completed/append/occurred-lowercase-t-z",
@@ -17535,6 +17627,22 @@
      "row": null
     },
     {
+     "case": "remote_sync_completed/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_sync_completed/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_sync_completed/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "remote_sync_completed/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "remote_sync_completed/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -17549,22 +17657,6 @@
     {
      "case": "remote_sync_completed/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "remote_sync_completed/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_sync_completed/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_sync_completed/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_sync_completed/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -19516,8 +19608,12 @@
   },
   {
    "guard": "remote_sync_started/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "remote_sync_started/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "remote_sync_started/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -19746,7 +19842,7 @@
   },
   {
    "guard": "remote_sync_started/timestamp_owner_profile",
-   "witness_count": 78,
+   "witness_count": 86,
    "witnesses": [
     {
      "case": "remote_sync_started/append/occurred-lowercase-t-z",
@@ -19765,6 +19861,22 @@
      "row": null
     },
     {
+     "case": "remote_sync_started/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_sync_started/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "remote_sync_started/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "remote_sync_started/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "remote_sync_started/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -19779,22 +19891,6 @@
     {
      "case": "remote_sync_started/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "remote_sync_started/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_sync_started/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_sync_started/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "remote_sync_started/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -21682,8 +21778,12 @@
   },
   {
    "guard": "repository_bound/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "repository_bound/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "repository_bound/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -21912,7 +22012,7 @@
   },
   {
    "guard": "repository_bound/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "repository_bound/append/occurred-lowercase-t-z",
@@ -21931,6 +22031,22 @@
      "row": null
     },
     {
+     "case": "repository_bound/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "repository_bound/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "repository_bound/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "repository_bound/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "repository_bound/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -21945,22 +22061,6 @@
     {
      "case": "repository_bound/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "repository_bound/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "repository_bound/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "repository_bound/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "repository_bound/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -23774,8 +23874,12 @@
   },
   {
    "guard": "repository_unbound/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "repository_unbound/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "repository_unbound/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -24004,7 +24108,7 @@
   },
   {
    "guard": "repository_unbound/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "repository_unbound/append/occurred-lowercase-t-z",
@@ -24023,6 +24127,22 @@
      "row": null
     },
     {
+     "case": "repository_unbound/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "repository_unbound/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "repository_unbound/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "repository_unbound/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "repository_unbound/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -24037,22 +24157,6 @@
     {
      "case": "repository_unbound/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "repository_unbound/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "repository_unbound/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "repository_unbound/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "repository_unbound/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -25866,8 +25970,12 @@
   },
   {
    "guard": "status_refreshed/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "status_refreshed/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "status_refreshed/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -26096,7 +26204,7 @@
   },
   {
    "guard": "status_refreshed/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "status_refreshed/append/occurred-lowercase-t-z",
@@ -26115,6 +26223,22 @@
      "row": null
     },
     {
+     "case": "status_refreshed/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "status_refreshed/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "status_refreshed/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "status_refreshed/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "status_refreshed/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -26129,22 +26253,6 @@
     {
      "case": "status_refreshed/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "status_refreshed/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "status_refreshed/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "status_refreshed/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "status_refreshed/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -27968,8 +28076,12 @@
   },
   {
    "guard": "workspace_created/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "workspace_created/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "workspace_created/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -28198,7 +28310,7 @@
   },
   {
    "guard": "workspace_created/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "workspace_created/append/occurred-lowercase-t-z",
@@ -28217,6 +28329,22 @@
      "row": null
     },
     {
+     "case": "workspace_created/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "workspace_created/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "workspace_created/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "workspace_created/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "workspace_created/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -28231,22 +28359,6 @@
     {
      "case": "workspace_created/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_created/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_created/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_created/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_created/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -30048,8 +30160,12 @@
   },
   {
    "guard": "workspace_opened/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "workspace_opened/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "workspace_opened/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -30278,7 +30394,7 @@
   },
   {
    "guard": "workspace_opened/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "workspace_opened/append/occurred-lowercase-t-z",
@@ -30297,6 +30413,22 @@
      "row": null
     },
     {
+     "case": "workspace_opened/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "workspace_opened/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "workspace_opened/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "workspace_opened/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "workspace_opened/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -30311,22 +30443,6 @@
     {
      "case": "workspace_opened/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_opened/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_opened/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_opened/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_opened/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -32132,8 +32248,12 @@
   },
   {
    "guard": "workspace_removed/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "workspace_removed/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "workspace_removed/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -32362,7 +32482,7 @@
   },
   {
    "guard": "workspace_removed/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "workspace_removed/append/occurred-lowercase-t-z",
@@ -32381,6 +32501,22 @@
      "row": null
     },
     {
+     "case": "workspace_removed/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "workspace_removed/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "workspace_removed/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "workspace_removed/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "workspace_removed/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -32395,22 +32531,6 @@
     {
      "case": "workspace_removed/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_removed/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_removed/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_removed/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_removed/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -34256,7 +34376,7 @@
   },
   {
    "guard": "workspace_switched/payload_pack_identity",
-   "witness_count": 9,
+   "witness_count": 10,
    "witnesses": [
     {
      "case": "workspace_switched/append/jj_big/neg/pack-route",
@@ -34279,6 +34399,10 @@
      "row": "pack_body"
     },
     {
+     "case": "workspace_switched/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
+    {
      "case": "workspace_switched/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
     },
@@ -34298,8 +34422,12 @@
   },
   {
    "guard": "workspace_switched/payload_pack_durable",
-   "witness_count": 2,
+   "witness_count": 3,
    "witnesses": [
+    {
+     "case": "workspace_switched/append/jj_big/neg/pack-missing",
+     "row": "pack_route"
+    },
     {
      "case": "workspace_switched/append/jj_big/neg/pack-not-durable",
      "row": "pack_durable"
@@ -34510,7 +34638,7 @@
   },
   {
    "guard": "workspace_switched/timestamp_owner_profile",
-   "witness_count": 71,
+   "witness_count": 79,
    "witnesses": [
     {
      "case": "workspace_switched/append/occurred-lowercase-t-z",
@@ -34529,6 +34657,22 @@
      "row": null
     },
     {
+     "case": "workspace_switched/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "workspace_switched/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "workspace_switched/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "workspace_switched/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "workspace_switched/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -34543,22 +34687,6 @@
     {
      "case": "workspace_switched/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_switched/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_switched/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_switched/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "workspace_switched/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -36384,8 +36512,12 @@
   },
   {
    "guard": "writer_lease_granted/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "writer_lease_granted/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "writer_lease_granted/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -36614,7 +36746,7 @@
   },
   {
    "guard": "writer_lease_granted/timestamp_owner_profile",
-   "witness_count": 57,
+   "witness_count": 65,
    "witnesses": [
     {
      "case": "writer_lease_granted/append/occurred-lowercase-t-z",
@@ -36633,6 +36765,22 @@
      "row": null
     },
     {
+     "case": "writer_lease_granted/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "writer_lease_granted/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "writer_lease_granted/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "writer_lease_granted/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "writer_lease_granted/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -36647,22 +36795,6 @@
     {
      "case": "writer_lease_granted/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "writer_lease_granted/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "writer_lease_granted/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "writer_lease_granted/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "writer_lease_granted/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
@@ -38574,8 +38706,12 @@
   },
   {
    "guard": "writer_lease_lost/payload_pack_identity",
-   "witness_count": 4,
+   "witness_count": 5,
    "witnesses": [
+    {
+     "case": "writer_lease_lost/append/source-pack/neg/source-pack-bad-hex",
+     "row": "src_pack_present"
+    },
     {
      "case": "writer_lease_lost/append/source-pack/neg/source-pack-size",
      "row": "src_pack_size"
@@ -38804,7 +38940,7 @@
   },
   {
    "guard": "writer_lease_lost/timestamp_owner_profile",
-   "witness_count": 57,
+   "witness_count": 65,
    "witnesses": [
     {
      "case": "writer_lease_lost/append/occurred-lowercase-t-z",
@@ -38823,6 +38959,22 @@
      "row": null
     },
     {
+     "case": "writer_lease_lost/append/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "writer_lease_lost/history/receipt-ack-offset",
+     "row": null
+    },
+    {
+     "case": "writer_lease_lost/append/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
+     "case": "writer_lease_lost/history/receipt-ack-lowercase-z",
+     "row": null
+    },
+    {
      "case": "writer_lease_lost/append/base/neg/occurred-missing-zone",
      "row": "envelope_schema"
     },
@@ -38837,22 +38989,6 @@
     {
      "case": "writer_lease_lost/append/base/neg/occurred-hour-24",
      "row": "envelope_schema"
-    },
-    {
-     "case": "writer_lease_lost/append/base/neg/occurred-trailing-lf",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "writer_lease_lost/append/base/neg/occurred-false-leap",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "writer_lease_lost/append/base/neg/occurred-empty-fraction",
-     "row": "envelope_schema"
-    },
-    {
-     "case": "writer_lease_lost/append/base/neg/observed_at_utc-offset-plus-zero",
-     "row": "storage_utc_z_observed_at_utc"
     }
    ]
   },
