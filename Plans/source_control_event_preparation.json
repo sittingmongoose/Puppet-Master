@@ -4,7 +4,7 @@
   "lane": "W3B",
   "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
   "authority": "deck 2 item 9.a A (DL-450 pending answer application)",
-  "phase": 1,
+  "phase": 2,
   "event_registry_modified": false,
   "families": [
     {
@@ -30,8 +30,8 @@
       "fact_key": "source_control_event.backend_detected.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_backend_detected_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:backend_detected:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.backend.detected` in its existing Project scope, does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.backend.detect and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -42,7 +42,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a, option A), applied in SCS-1250 C7 and SP-1250",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.backend.detected`, DL-454 (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_backend_detected_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.backend.selected",
@@ -67,8 +70,8 @@
       "fact_key": "source_control_event.backend_selected.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_backend_selected_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:backend_selected:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.backend.selected` in its existing Project scope, does its saved history use configuration/source-lineage audit versus ordinary telemetry? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.backend.select and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -79,7 +82,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1251 C7 and SP-1251",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.backend.selected`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_backend_selected_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.checkpoint.created",
@@ -104,8 +110,8 @@
       "fact_key": "source_control_event.checkpoint_created.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_checkpoint_created_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:checkpoint_created:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.checkpoint.created` in its existing Project scope, does its saved history use source-lineage audit versus migration/recovery operational history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.checkpoint.create and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -116,7 +122,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1252 C7 and SP-1252",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.checkpoint.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_created_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.checkpoint.restored",
@@ -141,8 +150,8 @@
       "fact_key": "source_control_event.checkpoint_restored.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_checkpoint_restored_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:checkpoint_restored:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.checkpoint.restored` in its existing Project scope, does its saved history use source-lineage audit versus migration/recovery operational history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.checkpoint.restore and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -153,7 +162,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1253 C7 and SP-1253",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.checkpoint.restored`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_restored_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.remote.fetch_completed",
@@ -178,8 +190,8 @@
       "fact_key": "source_control_event.remote_fetch_completed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_remote_fetch_completed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:remote_fetch_completed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.remote.fetch_completed` in its existing Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.fetch and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -190,7 +202,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a, option A), applied in SCS-1254 C7 and SP-1254",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.remote.fetch_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_fetch_completed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.remote.fetch_started",
@@ -215,8 +230,8 @@
       "fact_key": "source_control_event.remote_fetch_started.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_remote_fetch_started_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:remote_fetch_started:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.remote.fetch_started` in its existing Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.fetch and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -227,7 +242,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a, option A), applied in SCS-1255 C7 and SP-1255",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.remote.fetch_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_fetch_started_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.remote.publish_completed",
@@ -252,8 +270,8 @@
       "fact_key": "source_control_event.remote_publish_completed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_remote_publish_completed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:remote_publish_completed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.remote.publish_completed` in its existing Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.publish and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -264,7 +282,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a, option A), applied in SCS-1256 C7 and SP-1256",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.remote.publish_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_publish_completed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.remote.publish_started",
@@ -289,8 +310,8 @@
       "fact_key": "source_control_event.remote_publish_started.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_remote_publish_started_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:remote_publish_started:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.remote.publish_started` in its existing Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.publish and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -301,7 +322,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a, option A), applied in SCS-1257 C7 and SP-1257",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.remote.publish_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_publish_started_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.remote.sync_completed",
@@ -326,8 +350,8 @@
       "fact_key": "source_control_event.remote_sync_completed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_remote_sync_completed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:remote_sync_completed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.remote.sync_completed` in its existing Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.sync and its command_instance_id/idempotency/scope must join the actual source. The separately owned v2 local_reconcile_only request is also accepted exactly as SCS-025 defines; it never inherits transport-only v1 fields or invents a command-instance field absent from that selected schema. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -338,7 +362,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a, option A), applied in SCS-1258 C7 and SP-1258",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.remote.sync_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_sync_completed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.remote.sync_started",
@@ -363,8 +390,8 @@
       "fact_key": "source_control_event.remote_sync_started.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_remote_sync_started_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:remote_sync_started:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.remote.sync_started` in its existing Project scope, does its saved history use source-lineage/receipt audit versus operational remote history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.sync and its command_instance_id/idempotency/scope must join the actual source. The separately owned v2 local_reconcile_only request is also accepted exactly as SCS-025 defines; it never inherits transport-only v1 fields or invents a command-instance field absent from that selected schema. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -375,7 +402,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a, option A), applied in SCS-1259 C7 and SP-1259",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.remote.sync_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_sync_started_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.repository.bound",
@@ -400,8 +430,8 @@
       "fact_key": "source_control_event.repository_bound.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_repository_bound_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:repository_bound:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.repository.bound` in its existing Project scope, does its saved history use source-lineage audit versus operational binding history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.repository.bind and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -412,7 +442,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1260 C7 and SP-1260",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.repository.bound`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_repository_bound_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.repository.unbound",
@@ -437,8 +470,8 @@
       "fact_key": "source_control_event.repository_unbound.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_repository_unbound_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:repository_unbound:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.repository.unbound` in its existing Project scope, does its saved history use source-lineage audit versus operational binding history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.repository.unbind and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -449,7 +482,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1261 C7 and SP-1261",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.repository.unbound`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_repository_unbound_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.status.refreshed",
@@ -474,8 +510,8 @@
       "fact_key": "source_control_event.status_refreshed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_status_refreshed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:status_refreshed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.status.refreshed` in its existing Project scope, does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.status.refresh and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -486,7 +522,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a, option A), applied in SCS-1262 C7 and SP-1262",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.status.refreshed`, DL-454 (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_status_refreshed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.workspace.created",
@@ -511,8 +550,8 @@
       "fact_key": "source_control_event.workspace_created.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_workspace_created_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:workspace_created:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.workspace.created` in its existing Project scope, does its saved history use source-lineage audit versus the separately approved Git-worktree release-anchored class? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.workspace.create and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -523,7 +562,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1263 C7 and SP-1263",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.workspace.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_workspace_created_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.workspace.opened",
@@ -548,8 +590,8 @@
       "fact_key": "source_control_event.workspace_opened.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_workspace_opened_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:workspace_opened:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.workspace.opened` in its existing Project scope, does its saved history use ordinary telemetry versus source-lineage audit? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.workspace.open and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -560,7 +602,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a, option A), applied in SCS-1264 C7 and SP-1264",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.workspace.opened`, DL-454 (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_workspace_opened_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.workspace.removed",
@@ -585,8 +630,8 @@
       "fact_key": "source_control_event.workspace_removed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_workspace_removed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:workspace_removed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.workspace.removed` in its existing Project scope, does its saved history use source-lineage audit versus the separately approved Git-worktree release-anchored class? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.workspace.remove and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -597,7 +642,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1265 C7 and SP-1265",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.workspace.removed`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_workspace_removed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.workspace.switched",
@@ -622,8 +670,8 @@
       "fact_key": "source_control_event.workspace_switched.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_workspace_switched_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:workspace_switched:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.workspace.switched` in its existing Project scope, does its saved history use source-lineage audit versus ordinary selection telemetry? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "source_body_join": "The original request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.workspace.switch and its command_instance_id/idempotency/scope must join the actual source. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -634,7 +682,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a, option A), applied in SCS-1266 C7 and SP-1266",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.workspace.switched`, DL-454 (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_workspace_switched_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.writer_lease.granted",
@@ -659,8 +710,8 @@
       "fact_key": "source_control_event.writer_lease_granted.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_writer_lease_granted_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:writer_lease_granted:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.writer_lease.granted` in its existing Project scope, does its saved history use write-authorization audit versus operational lease history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "original_request is null; the actual authenticated WriterLeaseCoordinator acceptance and original lease transition are the source, never a caller-created request. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -671,7 +722,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1267 C7 and SP-1267",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.writer_lease.granted`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_granted_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     },
     {
       "event_type": "source_control.writer_lease.lost",
@@ -696,8 +750,8 @@
       "fact_key": "source_control_event.writer_lease_lost.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
       "event_id_recipe": "evt_scs_writer_lease_lost_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)}",
       "idempotency_key_recipe": "scs:writer_lease_lost:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For `source_control.writer_lease.lost` in its existing Project scope, does its saved history use write-authorization audit versus operational lease history? Please choose its exact retention class and anchor, count limit/scope and overflow/deletion rule, and whether the original source-fact custody shares that rule. G01/G26 are analogies only and do not assign this name.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "source_body_join": "original_request is null; the actual authenticated WriterLeaseCoordinator acceptance and original lease transition are the source, never a caller-created request. ",
       "newly_authored_bindings": [
         "closed event payload",
@@ -708,7 +762,10 @@
         "withdrawal protocol"
       ],
       "native_execution": "NOT_RUN",
-      "criterion_12": "PARTIAL"
+      "criterion_12": "executable synthetic oracles (wave 3 phase 2); graded in reports/event-authority-20261105/W3B-self-grade.json",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a, option A), applied in SCS-1268 C7 and SP-1268",
+      "source_fact_retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_fact_retention_question": "For `source_control.writer_lease.lost`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_lost_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?"
     }
   ]
 }
