@@ -1,4 +1,10 @@
 // Real input; visible text only. No live DNS or proxy deployment is claimed.
+import {paintedText} from '../helpers/painted-text.mjs';
+// FO-169 round 2: the no-match line's painted contrast in every look (--set look= picks some; the recheck's R1 was
+// Basic Dark at 2.76-2.85:1 on afa5e7582b). Read the way failed-status-contrast reads its stems: four real paints, fully
+// covered stems only, each against its own ground.
+const LOOKS=['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark']);
+const list=(v,all)=>v?String(v).split(','):all;
 const W = '.o55g-win .o55g-layer:not(.o55g-out)';
 const pause = f => f.waitForTimeout(450);
 async function settings(t) { await t.viewport(1440,900); const f=await t.app.open({settleMs:1500}); await f.locator('#tab-settings').click(); await f.waitForTimeout(1500); return f; }
@@ -13,6 +19,14 @@ export const tests = {
   await t.equal('exactly one visible empty line',await roster.getByText('No services match. Clear the filter to see everything.',{exact:true}).locator('visible=true').count(),1);
   await t.equal('no heading claims hidden rows',await roster.locator('.roster-title:visible,.o55-roster-group:visible').count(),0);
   for (const look of ['basic-dark','glass-light','nier-dark']) { await t.app.look(look); await t.shot(`fo169-${look}`,'Filter no-match line: spacing, contrast and placement under filter'); }
+  const line=roster.locator('.pm51-filter-empty:visible');
+  for (const look of list(t.args.look,LOOKS)) {
+   await t.app.look(look);
+   const p=await paintedText(line.first());
+   t.log(JSON.stringify({look,count:p.count,minimum:p.minimum,lowest:p.lowest}));
+   if (['basic-dark','basic-light','glass-dark','nier-dark'].includes(look)) await t.crop(`fo169-line-${look}`,line.first(),`No-match line ink in ${look}: ${p.minimum.toFixed(2)}:1 measured`);
+   await t.check(`${look} no-match line painted ink >=4.5`,p.count>=3&&p.minimum>=4.5,`${p.minimum.toFixed(3)}:1 (${p.count} stems; ink ${p.lowest[0]?.ink} on ${p.lowest[0]?.ground})`);
+  }
   await input.fill(''); await t.equal('clearing restores every row',await roster.locator('.resource-row:visible').count(),before);
   await t.equal('empty line removed',await roster.locator('.pm51-filter-empty:visible').count(),0);
   await t.equal('heading restored',await roster.locator('.roster-title:visible').count(),1);
