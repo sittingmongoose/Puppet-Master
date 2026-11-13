@@ -1797,13 +1797,14 @@
      or is pressed. Its live SVG backdrop filter was kept while it rested, and Chrome runs that filter again for every
      frame anything under the lens draws: the largest single cost of the Glass look (lane E, 2026-11-11). At rest a lens
      draws the rim and tint it bakes (--lg-spec) with no backdrop filter; its bend there is at most 1.4 px
-     (buildLensMaps). Live while its travel runs (not the Reduce Motion fade), while it is scrubbed, and while a press
-     that sent it is held; each moment that changes one of those asks here, so nothing runs at rest. Measured (lane G,
+     (buildLensMaps). Live while it moves or is pressed (Jared's words, held literally since round 2): while its travel
+     runs (not the Reduce Motion fade), while it is scrubbed, and while a pointer is down on its strip; each moment that
+     changes one of those asks here, so nothing runs at rest. Measured (lane G,
      A-B-B-A against main, Windows RTX 3090, 2026-11-13): the GPU thread 64 to 77 ms a second less at rest in Glass Dark
      and Light (Home 85 / 81, Usage 124 / 73, Settings 84 / 72), 99 to 115 less under a pointer sweep, 95 to 108 less
      scrolling; Basic Dark unchanged. */
   function lensLive(L) {
-    L.lens.__lgLive = !!((L.anim && !L.reducedAnim) || L.dragging || (L.pending && !L.pending.up));
+    L.lens.__lgLive = !!((L.anim && !L.reducedAnim) || L.dragging || L.held);
     lensBend(L.lens);
   }
   /* The Activity bar's icon lens (KINDS.lensIcon.restSat) keeps its saturate() at rest, a plain CSS backdrop pass with no
@@ -2486,14 +2487,17 @@
   }
   document.addEventListener('pointerdown', function (e) {
     if (!switchOn() || e.button !== 0 || reduced()) return;
-    var hit = stripAt(e.target); if (!hit || !choosable(hit.item, hit.cfg)) return;
-    var L = lenses.get(hit.strip); if (!L || !L.rect || L.dragging) return;
+    var hit = stripAt(e.target); if (!hit) return;
+    var L = lenses.get(hit.strip); if (!L || !L.rect) return;
+    /* PERF-4 round 2 (R31 F1): PRESSED is a pointer down on any item of the strip, the chosen one included: the lens
+       bends from here until the press ends (pressOver) or is abandoned (pressAbandon), whatever the app chooses, and when */
+    L.held = true; lensLive(L);
+    if (!choosable(hit.item, hit.cfg) || L.dragging) return;
     var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
     if (hit.item === cur) return;
     if (L.pending) pressMark(L.pending, false);
     L.pending = { el: hit.item, from: cur, up: 0, away: false }; pressMark(L.pending, true);
     syncStrip(hit.cfg, hit.strip);
-    lensLive(L);   /* held: live until the release (below), whether or not the press sent it anywhere */
   }, true);
   document.addEventListener('pointerup', function (e) {
     lenses.forEach(function (L) {
@@ -2503,12 +2507,29 @@
     });
   }, true);
   document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { pressMark(L.pending, false); L.pending = null; queueSync(L.strip); } }); }, true);
-  /* PERF-4: a held press is over (after the two listeners above): a lens resting where it was sent stops bending. One
-     released off its item (away) stays live into the sync queued above, which sends it back (dropping the bend here
-     would leave it unbent for the frame or two between the two moves); that sync re-reads it (syncStrip) */
-  function pressOver() { lenses.forEach(function (L) { if (L.lens.__lgLive && !(L.pending && L.pending.away)) lensLive(L); }); }
+  /* PERF-4: the press is over (after the two listeners above), or the pointer's capture went with it: no lens is held. A
+     lens resting where it was sent stops bending. One released off its item (away) stays live into the sync queued
+     above, which sends it back (dropping the bend here would leave it unbent for the frame or two between the two
+     moves); that sync re-reads it (syncStrip) */
+  function pressOver() { lenses.forEach(function (L) { L.held = false; if (L.lens.__lgLive && !(L.pending && L.pending.away)) lensLive(L); }); }
   document.addEventListener('pointerup', pressOver, true);
   document.addEventListener('pointercancel', pressOver, true);
+  document.addEventListener('lostpointercapture', pressOver, true);
+  /* PERF-4 round 2 (R31 F2, R30 Finding 3): a press whose release never reaches the page (the window loses focus, the page
+     is hidden or left with the button down) ends here: every held press and scrub is abandoned, the app's own choice
+     stands, and a sync brings each lens back to it, where it rests. No lens stays bent after a release the page missed */
+  function pressAbandon() {
+    lenses.forEach(function (L) {
+      var P = L.pending, was = L.held || L.dragging || (P && !P.up);
+      L.held = false;
+      if (L.scrubCleanup) L.scrubCleanup();
+      if (P && !P.up) { pressMark(P, false); L.pending = null; }
+      if (was) { queueSync(L.strip); lensLive(L); }
+    });
+  }
+  window.addEventListener('blur', pressAbandon);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) pressAbandon(); });
+  window.addEventListener('pagehide', pressAbandon);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
