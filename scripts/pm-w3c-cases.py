@@ -508,14 +508,21 @@ def checkpoint_witnesses():
     return W
 
 
-def install_witnesses():
-    probe = '/$defs/w3c_unvisited_probe'
-    return [('install_metaschema', 'install', [('final', '/resources', {'$overlay': [[CONTRACTS, '/$defs/id/type', 'strng']]})], {}),
-            ('install_refs', 'install', [('final', '/resources', {'$overlay': [[CONTRACTS, probe, {'$ref': 'https://puppetmaster.local/Plans/w3c_missing.schema.json#/$defs/x'}]]})],
-             {'tag': 'missing_resource'}),
-            ('install_refs', 'install', [('final', '/resources', {'$overlay': [[CONTRACTS, probe, {'$ref': '#/$defs/w3c_missing_definition'}]]})], {'tag': 'missing_fragment'}),
-            ('install_refs', 'install', [('final', '/resources', {'$overlay': [[RECORDS, probe, {'$ref': 'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/missing'}]]})],
-             {'tag': 'records_missing_external_fragment'})]
+def install_witnesses(fam):
+    """Per family: a dangling reference in an unvisited branch inside that family's own payload definition (missing
+    resource and missing fragment), plus, for the first family, an invalid metaschema keyword and a dangling reference in
+    the application-records resource."""
+    d = '/$defs/' + FAMILIES[fam][1] + '/$defs'
+    out = [('install_refs', 'install', [('final', '/resources', {'$overlay': [[CONTRACTS, d, {'w3c_unvisited_probe': {
+               '$ref': 'https://puppetmaster.local/Plans/w3c_missing.schema.json#/$defs/x'}}]]})], {'tag': 'missing_resource'}),
+           ('install_refs', 'install', [('final', '/resources', {'$overlay': [[CONTRACTS, d, {'w3c_unvisited_probe': {
+               '$ref': '#/$defs/w3c_missing_definition'}}]]})], {'tag': 'missing_fragment'})]
+    if fam == 'artifacts.capture_provenance.inspected':
+        out += [('install_metaschema', 'install', [('final', '/resources', {'$overlay': [[CONTRACTS, '/$defs/id/type', 'strng']]})], {}),
+                ('install_refs', 'install', [('final', '/resources', {'$overlay': [[RECORDS, '/$defs/w3c_unvisited_probe',
+                  {'$ref': 'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/missing'}]]})],
+                 {'tag': 'records_missing_external_fragment'})]
+    return out
 
 
 POSITIVE_EDITS = (
@@ -551,11 +558,11 @@ def build_cases(families=None):
             positive(fam, scope, 'append-sp337')
         for name, v, edits in POSITIVE_EDITS:
             positive(fam, scope, v, name, edits)
-    if families is None or abbr('artifacts.capture_provenance.inspected') in families:
-        fam = 'artifacts.capture_provenance.inspected'
-        sc = L.build(fam, 'project', 'install', 'append', (), man)
-        positives.append({'id': 'w3c/install/repository', 'expect': 'accept', 'scenario': sc})
-        cache[('install',)] = sc
+    for fam, scope in sel:
+        if scope == FAMILIES[fam][5][0]:
+            sc = L.build(fam, scope, 'install', 'append', (), man)
+            positives.append({'id': pid(fam, scope, 'install'), 'expect': 'accept', 'scenario': sc})
+            cache[(fam, scope, 'install')] = sc
     witnesses = (append_witnesses() + join_witnesses() + clause_witnesses() + schema_leaf_witnesses() + retry_history_witnesses() +
                  operation_witnesses() + checkpoint_witnesses())
     counter = {}
@@ -583,13 +590,15 @@ def build_cases(families=None):
                 nid += '/' + str(counter[nid])
             negatives.append({'id': nid, 'base': pid(fam, scope, base_variant), 'expect': {'row': expect_row, 'code': ROW_BY_ID[expect_row]['code']},
                               'witness_of': rid, 'family': fam, 'scope': scope, 'path': path_of(variant), 'changes': changes})
-    if families is None or abbr('artifacts.capture_provenance.inspected') in families:
-        for rid, variant, edits, filt in install_witnesses():
-            neg = L.build('artifacts.capture_provenance.inspected', 'project', 'install', 'append', edits, man)
-            negatives.append({'id': 'w3c/install/repository/neg/' + rid + ('/' + filt['tag'] if filt.get('tag') else ''),
-                              'base': 'w3c/install/repository', 'expect': {'row': rid, 'code': ROW_BY_ID[rid]['code']},
-                              'witness_of': rid, 'family': 'artifacts.capture_provenance.inspected', 'scope': 'project', 'path': 'install',
-                              'changes': L.diff(cache[('install',)], neg)})
+    for fam, scope in sel:
+        if scope != FAMILIES[fam][5][0]:
+            continue
+        for rid, variant, edits, filt in install_witnesses(fam):
+            neg = L.build(fam, scope, 'install', 'append', edits, man)
+            negatives.append({'id': pid(fam, scope, 'install') + '/neg/' + rid + ('/' + filt['tag'] if filt.get('tag') else ''),
+                              'base': pid(fam, scope, 'install'), 'expect': {'row': rid, 'code': ROW_BY_ID[rid]['code']},
+                              'witness_of': rid, 'family': fam, 'scope': scope, 'path': 'install',
+                              'changes': L.diff(cache[(fam, scope, 'install')], neg)})
     return positives, negatives
 
 
@@ -614,6 +623,7 @@ def main(argv=None):
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--families', help='comma-separated abbreviations (development only; never written)')
     parser.add_argument('--out', type=Path)
+    parser.add_argument('--coverage', action='store_true', help='also write (or --check) the oracle-plan coverage report')
     args = parser.parse_args(argv)
     sys.set_int_max_str_digits(0)
     custody = custody_text()
@@ -624,16 +634,112 @@ def main(argv=None):
     text = fixtures_text(positives, negatives)
     summary = {'positives': len(positives), 'negatives': len(negatives), 'rows_witnessed': len({n['expect']['row'] for n in negatives}),
                'rows': len(ROWS), 'bytes': len(text)}
+    cov_text = None
+    if args.coverage and fams is None:
+        cov = coverage(negatives)
+        summary['plan_entries'], summary['plan_unwitnessed'] = cov['plan_entries'], cov['unwitnessed']
+        cov_text = json.dumps(cov, indent=1, sort_keys=True) + '\n'
     if args.check:
-        stale = [p.name for p, t in ((FIXTURES, text), (CUSTODY, custody)) if not p.exists() or p.read_text() != t]
+        targets = [(FIXTURES, text), (CUSTODY, custody)] + ([(COVERAGE, cov_text)] if cov_text else [])
+        stale = [p.name for p, t in targets if not p.exists() or p.read_text() != t]
         print(json.dumps(dict(summary, stale=stale)))
         return 1 if stale else 0
     target = args.out or (FIXTURES if fams is None else None)
     if target is None:
         raise SystemExit('--families needs --out')
     target.write_text(text)
+    if cov_text:
+        COVERAGE.write_text(cov_text)
     print(json.dumps(summary))
     return 0
+
+
+
+# ---------------------------------------------------------------------------------------------
+# Oracle-plan coverage (--coverage): every plan entry with the rows that implement it and their witnesses
+# ---------------------------------------------------------------------------------------------
+CATEGORY_ROWS = {
+    'admission': ['admission_family', 'admission_version', 'admission_installed'],
+    'closed_shape': ['payload_schema', 'retry_request_schema', 'op_schema', 'ck_schema', 'rdy_source_schema'],
+    'full_match': ['op_uuid', 'ck_uuid_storage_instance', 'ck_uuid_token_storage', 'ck_uuid_selection_storage', 'ck_full_generation_id',
+                   'ck_full_generation_anchor', 'ck_full_frontier', 'ck_full_current_bytes_sha256', 'payload_schema'],
+    'scope': ['scenario_scope', 'scope_kind_copy', 'scope_partition_recipe', 'scope_project_join', 'scope_home_server_join', 'scope_server_join',
+              'scope_named_plan_join', 'event_project_join', 'op_scope_join', 'request_scope_join', 'ck_scope_join', 'cov_scope'],
+    'source_identity': ['source_record_owner', 'source_record_hash', 'before_record_hash', 'request_record_hash', 'op_outcome_hash'],
+    'source_joins': ['before_record_join', 'permission_snapshot_join', 'owner_operation_join', 'request_before_join', 'request_permission_join',
+                     'request_operation_join', 'JOINS'],
+    'target': ['target_class', 'target_generation', 'target_host', 'target_environment'],
+    'permission': ['permission_granted', 'permission_generation', 'writer_generation', 'stop_generation'],
+    'identity_recipe': ['event_id_recipe', 'idempotency_key_recipe', 'op_key_recipe', 'ck_key_recipe', 'op_preimage_owner', 'op_preimage_frozen'],
+    'storage_metadata': ['sequence_id_issued', 'observed_at_utc_issued', 'persisted_at_utc_issued', 'occurred_from_owner', 'producer_sequence_from_owner',
+                         'receipt_sequence_join', 'receipt_ack_issued', 'receipt_segment'],
+    'current_replay_policy': ['replay_policy_current'],
+    'retry': ['retry_dedupe', 'retry_request_schema', 'retry_request_same', 'retry_preimage_same', 'retry_pending_result', 'retry_bound_result',
+              'retry_original_result', 'retry_no_effects'],
+    'first_receipt': ['receipt_schema', 'receipt_commitment', 'receipt_event_join', 'receipt_barrier', 'op_first_append', 'op_first_append_issued',
+                      'op_commitment', 'order_flush_receipt', 'order_receipt_event_committed'],
+    'body_size': ['inline_size', 'op_inline_size', 'ck_inline_size', 'event_pack_present', 'event_pack_id', 'event_pack_bytes', 'event_pack_body',
+                  'intent_pack_present', 'intent_pack_body', 'original_event_pack_present', 'original_event_pack_body', 'projection_pack_present',
+                  'projection_pack_body'],
+    'numbers': ['envelope_numbers', 'sequence_u64', 'producer_route', 'receipt_numbers', 'receipt_u64_byte_offset', 'op_numbers',
+                'op_receipt_u64_byte_offset', 'ck_numbers', 'ck_last_sequence_u64'],
+    'formats': ['envelope_schema', 'storage_utc_observed_at_utc', 'storage_utc_persisted_at_utc', 'receipt_schema', 'ck_schema'],
+    'read_identity': ['recipe_override', 'original_query', 'original_custody', 'original_other_receipt', 'recipe_unique', 'recipe_installed',
+                      'original_admission', 'original_binding', 'original_resolution', 'read_no_receipt_created', 'frozen_envelope', 'frozen_payload',
+                      'frozen_storage_times', 'frozen_event_identity', 'frozen_key', 'frozen_full_value', 'frozen_producer', 'frozen_custody_event'],
+    'disclosure': ['disclosure_access', 'disclosure_not_deleted', 'disclosure_not_restricted', 'reader_not_withdrawn', 'history_no_effects'],
+    'checkpoint': ['ck_storage_join', 'ck_token_storage_join', 'ck_selection_storage_join', 'ck_subject_query', 'ck_token_authentic',
+                   'ck_cursor_empty_last_event_id', 'ck_cursor_body_last_event_id'],
+    'advance': ['ck_predecessor_cas', 'ck_publish_atomic', 'ck_coverage_before_publish', 'cov_complete'],
+    'rebuild': ['ck_rebuild_no_effects', 'cov_nonmatching_counted'],
+    'generations': ['ck_slots', 'ck_single_current', 'ck_retired_anchor', 'ck_live_anchor_null', 'ck_anchor_fixed'],
+    'restore': ['restore_instance', 'restore_packs', 'restore_receipt'],
+    'withdrawal': ['writer_live', 'reader_not_withdrawn', 'ck_reader_live', 'op_withdrawn_outcome_pair', 'op_withdrawn_event_pair',
+                   'op_withdrawn_event_after_outcome', 'op_transition'],
+    'schema_reference_closure': ['install_metaschema', 'install_refs'],
+    'pending_request': ['op_pending_outcome_record_null', 'op_pending_producer_semantics_null', 'op_pending_first_append_null',
+                        'op_pending_original_event_null', 'op_intent_request', 'op_intent_external_schema'],
+    'outcome_binding': ['op_bound_outcome_record', 'op_bound_producer_semantics', 'op_outcome_owner', 'op_outcome_hash', 'op_formed_event_outcome',
+                        'op_outcome_no_first_append', 'op_outcome_no_original_event', 'op_outcome_record_immutable', 'op_producer_semantics_immutable'],
+    'uncertain_action_fence': ['fence_action_identity', 'fence_single_execution', 'fence_evidence', 'retry_pending_result'],
+    'phase_cas_publication': ['op_cas', 'op_transition', 'op_committed_first_append', 'op_committed_original_event', 'op_event_frozen', 'op_event_issued',
+                              'op_custody_before_terminal', 'order_event_committed_terminal', 'order_terminal_publish'],
+    'empty_cursor_shape': ['ck_cursor_empty_last_event_id', 'ck_cursor_empty_last_sequence_id', 'ck_cursor_body_last_event_id',
+                           'ck_cursor_body_last_sequence_id'],
+    'empty_coverage': ['cov_complete', 'cov_token', 'cov_family', 'cov_version', 'cov_scope', 'cov_subject', 'cov_no_gaps', 'cov_nonmatching_counted',
+                       'ck_empty_no_match'],
+    'nonempty_last_event': ['ck_body_has_match', 'ck_last_event_join', 'ck_last_sequence_join', 'ck_last_sequence_u64', 'ck_projection_body',
+                            'ck_projection_schema'],
+}
+
+
+def coverage(negatives):
+    import re
+    plan = json.loads((ROOT / 'Plans/w3c_test_capture_event_oracle_plan.json').read_text())
+    witnesses = {}
+    for n in negatives:
+        witnesses.setdefault((n['family'], n['expect']['row']), []).append(n['id'])
+    out, missing = [], []
+    for fam in plan['families']:
+        et = fam['event_type']
+        a = abbr(et)
+        clause_rows = {}
+        for suffix, code, words, *_ in CLAUSES[et]:
+            m = re.search(r'\((?:TCME|ATS)-1\d\d\d \(([\d, ]+)\)', words)
+            for k in (m.group(1).split(', ') if m else []):
+                clause_rows.setdefault('transition_' + k, []).append(a + '_' + suffix)
+        for g in fam['guards']:
+            cat = g['guard_id'].split('.', 1)[1]
+            rows = clause_rows.get(cat) if cat.startswith('transition_') else CATEGORY_ROWS[cat]
+            rows = [x for r in rows for x in (['join_' + f for f, _ in FAMILIES[et][7]] + (['rdy_enabled_at_owner'] if a == 'rdy' else [])
+                                              if r == 'JOINS' else [r])]
+            rows = [r for r in rows if r in ROW_BY_ID]
+            entry = {'plan_entry': g['guard_id'], 'rows': {r: len(witnesses.get((et, r), [])) for r in rows}}
+            entry['witnessed'] = any(entry['rows'].values())
+            if not entry['witnessed']:
+                missing.append(g['guard_id'])
+            out.append(entry)
+    return {'plan_entries': len(out), 'witnessed': len(out) - len(missing), 'unwitnessed': missing, 'entries': out}
 
 
 if __name__ == '__main__':

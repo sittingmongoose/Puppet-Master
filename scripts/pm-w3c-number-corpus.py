@@ -9,7 +9,8 @@ scripts/pm_w3c_cases_lib.py, except raw ingress, which is the checker's own fixt
   copies it): an EventRecord integer slot inside the CV-317 producer projection.
 - sequence_id (append, same base; Storage issued the same value to the event and the receipt): the Storage uint64 slot.
 - receipt byte_offset (append, same base; Storage's issued receipt): a CV-339 uint64 slot.
-- token frontier_revision (checkpoint, same family): a DurableGenericToken integer slot with an owner schema maximum.
+- token frontier_revision (checkpoint, same family; Storage's authenticated token carries the same value): a
+  DurableGenericToken integer slot with an owner schema maximum.
 Expected first row, composed from jsonschema's stock Draft 2020-12 type/minimum/maximum semantics and the shared helpers
 alone (current_integer, storage_uint64, producer_semantic_bytes). Acceptance, refusal at a row and an untracked exception
 are three separate outcomes. A 4,400-digit integer and 2**64 also run every payload route of every edition: as an
@@ -99,7 +100,8 @@ def scenario(route, value, family=FAMILY, scope=SCOPE):
     if route == 'receipt':
         return L.build(family, scope, 'append', 'append', [('storage', '/storage/issued/result/first_append_receipt/byte_offset', value)], MANIFEST)
     if route == 'token':
-        return L.build(family, scope, 'checkpoint', 'ck-inline', [('ckrow', '/checkpoint/row/index_read_token/frontier_revision', value)], MANIFEST)
+        return L.build(family, scope, 'checkpoint', 'ck-inline', [('ckrow', '/checkpoint/row/index_read_token/frontier_revision', value),
+                                                                 ('final', '/checkpoint/storage_token/frontier_revision', value)], MANIFEST)
     raise ValueError(route)
 
 

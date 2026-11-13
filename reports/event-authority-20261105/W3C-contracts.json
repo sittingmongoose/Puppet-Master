@@ -14,11 +14,11 @@
       "producer": "handlers::test_capture::artifacts_inspect_capture_provenance",
       "source_record_definition": "capture_provenance_selection",
       "semantic_result": "The exact requested subject and candidate identities were inspected and a provenance selection result was committed; inspection does not assert that provenance was accepted.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For artifacts.capture_provenance.inspected, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G21 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.artifacts.capture_provenance.inspected.v1",
@@ -46,7 +46,9 @@
           "schema_id": "pm.operation_request.artifacts.capture_provenance.inspected.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspected_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
     },
     {
       "event_type": "artifacts.demonstration_video.created",
@@ -65,7 +67,7 @@
       "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.artifacts.demonstration_video.created.v1",
@@ -108,11 +110,11 @@
       "producer": "handlers::test_capture::artifacts_create_demonstration_video",
       "source_record_definition": "capture_command_error",
       "semantic_result": "The original demonstration operation ended in a typed failure; no successful demonstration output is claimed.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For artifacts.demonstration_video.failed, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G21 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.artifacts.demonstration_video.failed.v1",
@@ -140,7 +142,9 @@
           "schema_id": "pm.operation_request.artifacts.demonstration_video.failed.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_decision": "DL-455"
     },
     {
       "event_type": "testing.capture.bookmarked",
@@ -155,11 +159,11 @@
       "producer": "handlers::test_capture::testing_capture_bookmark",
       "source_record_definition": "capture_command_request",
       "semantic_result": "The exact session received a durable bookmark at the requested service clock position, with its safe label reference.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.bookmarked, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.bookmarked.v1",
@@ -187,7 +191,9 @@
           "schema_id": "pm.operation_request.testing.capture.bookmarked.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarked_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_decision": "DL-453"
     },
     {
       "event_type": "testing.capture.clip_saved",
@@ -206,7 +212,7 @@
       "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.clip_saved.v1",
@@ -249,11 +255,11 @@
       "producer": "TestCaptureService.commit_effective_quality",
       "source_record_definition": "capture_health_receipt",
       "semantic_result": "The service committed a real requested/effective capture-quality change under the RuntimeResourceGovernor permit without degrading already retained evidence.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.effective_quality_changed, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.effective_quality_changed.v1",
@@ -281,7 +287,9 @@
           "schema_id": "pm.operation_request.testing.capture.effective_quality_changed.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changed_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
     },
     {
       "event_type": "testing.capture.health_degraded",
@@ -296,11 +304,11 @@
       "producer": "TestCaptureService.commit_health_observation",
       "source_record_definition": "capture_health_receipt",
       "semantic_result": "A detector observation committed a worsening health interval and preserved its thresholds and evidence, without claiming a root cause.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.health_degraded, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.health_degraded.v1",
@@ -328,7 +336,9 @@
           "schema_id": "pm.operation_request.testing.capture.health_degraded.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degraded_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
     },
     {
       "event_type": "testing.capture.health_recovered",
@@ -343,11 +353,11 @@
       "producer": "TestCaptureService.commit_health_observation",
       "source_record_definition": "capture_health_receipt",
       "semantic_result": "The service committed recovery of a previously degraded health interval, preserving the earlier interval and any gaps.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.health_recovered, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.health_recovered.v1",
@@ -375,7 +385,9 @@
           "schema_id": "pm.operation_request.testing.capture.health_recovered.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recovered_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
     },
     {
       "event_type": "testing.capture.interrupted",
@@ -390,11 +402,11 @@
       "producer": "TestCaptureService.commit_interruption",
       "source_record_definition": "test_capture_session",
       "semantic_result": "Capture continuity was interrupted by crash, disconnection or producer loss, with the original gap and recoverable/partial outcome retained.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.interrupted, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.interrupted.v1",
@@ -422,7 +434,9 @@
           "schema_id": "pm.operation_request.testing.capture.interrupted.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interrupted_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_decision": "DL-455"
     },
     {
       "event_type": "testing.capture.paused",
@@ -437,11 +451,11 @@
       "producer": "handlers::test_capture::testing_capture_pause",
       "source_record_definition": "test_capture_session",
       "semantic_result": "An authorized pause committed the exact existing capture session into paused state.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.paused, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.paused.v1",
@@ -469,7 +483,9 @@
           "schema_id": "pm.operation_request.testing.capture.paused.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_paused_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
     },
     {
       "event_type": "testing.capture.provenance_rejected",
@@ -488,7 +504,7 @@
       "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.provenance_rejected.v1",
@@ -535,7 +551,7 @@
       "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.provenance_verified.v1",
@@ -582,7 +598,7 @@
       "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.redaction_applied.v1",
@@ -625,11 +641,11 @@
       "producer": "handlers::test_capture::testing_capture_resume",
       "source_record_definition": "test_capture_session",
       "semantic_result": "An authorized resume committed the same paused capture session back to recording with truthful continuity.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.resumed, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.resumed.v1",
@@ -657,7 +673,9 @@
           "schema_id": "pm.operation_request.testing.capture.resumed.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumed_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
     },
     {
       "event_type": "testing.capture.segment_corrupt",
@@ -672,11 +690,11 @@
       "producer": "TestCaptureService.commit_segment_recovery",
       "source_record_definition": "capture_segment_manifest",
       "semantic_result": "The service detected a corrupt/incomplete segment and committed quarantine/discard/gap truth without presenting playable finalized evidence.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.segment_corrupt, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.segment_corrupt.v1",
@@ -704,7 +722,9 @@
           "schema_id": "pm.operation_request.testing.capture.segment_corrupt.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corrupt_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_decision": "DL-455"
     },
     {
       "event_type": "testing.capture.segment_finalized",
@@ -723,7 +743,7 @@
       "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.segment_finalized.v1",
@@ -770,7 +790,7 @@
       "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.segment_recovered.v1",
@@ -813,11 +833,11 @@
       "producer": "handlers::test_capture::testing_capture_start",
       "source_record_definition": "test_capture_session",
       "semantic_result": "The shared TestCaptureService began recording the exact permitted target with a governor permit and one declared encoder stream per admitted target stream.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.started, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.started.v1",
@@ -845,7 +865,9 @@
           "schema_id": "pm.operation_request.testing.capture.started.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_started_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
     },
     {
       "event_type": "testing.capture.stopped",
@@ -860,11 +882,11 @@
       "producer": "handlers::test_capture::testing_capture_stop",
       "source_record_definition": "test_capture_session",
       "semantic_result": "The explicit stop operation finalized its capture session with the exact complete, partial_with_gaps, failed_no_media, cancelled_with_evidence or interrupted_recoverable result.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.stopped, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.stopped.v1",
@@ -892,7 +914,9 @@
           "schema_id": "pm.operation_request.testing.capture.stopped.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stopped_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
     },
     {
       "event_type": "testing.capture.target_changed",
@@ -907,11 +931,11 @@
       "producer": "handlers::test_capture::testing_capture_target_update",
       "source_record_definition": "capture_target_switch_receipt",
       "semantic_result": "An explicit generation-aware target switch was committed with old/new target, exact clock anchors and continuity disposition.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
-      "retention_question": "For testing.capture.target_changed, what lifetime, expiry anchor and counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.capture.target_changed.v1",
@@ -939,7 +963,9 @@
           "schema_id": "pm.operation_request.testing.capture.target_changed.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changed_requestApplicationV1"
         }
-      }
+      },
+      "application_retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_decision": "DL-453"
     },
     {
       "event_type": "testing.runtime_enabled_for_adapter",
@@ -958,7 +984,7 @@
       "retention_question": null,
       "membership": "ABSENT",
       "newly_authored": true,
-      "oracle_execution": "PHASE_2_NOT_RUN",
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
       "payload_variants": {
         "project": {
           "schema_id": "pm.event_payload.testing.runtime_enabled_for_adapter.v1",
