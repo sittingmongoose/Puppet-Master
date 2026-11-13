@@ -555,6 +555,27 @@ KNOWN: dict[str, str] = {
     'html[data-o55-nier-parts~="cursor"] .pm56-host .thread-row.active :where(*)': _CHAT,
 }
 
+# PERF-R5, Jared 2026-11-13: restore main's tag arms for generic cursor carriers (rules 0/1/2/6).
+# These carriers include future options/menus, so a finite class census cannot preserve their contract.
+# Same guard, main6 / 385f155c8c / restore: 326 / 0 / 145 reported rows. The restore accounts for all145.
+# Permit only the approved main tags, in these exact carriers, after css_bucket_split emits singleton arms.
+# A new tag, a changed carrier, or an unrelated selector still fails. Class additions need no exception.
+_RESTORED_CURSOR_TAGS = {
+    0: 'b br circle div ellipse g i line path polygon polyline rect small span strong svg',
+    1: 'b circle g line mask path polygon polyline rect span svg',
+    2: 'circle defs desc ellipse feComposite feDisplacementMap feGaussianBlur feImage filter g line '
+       'linearGradient mask path polygon polyline rect stop svg text title use',
+    6: 'b br circle div g i line path polygon polyline rect small span strong svg',
+}
+for _cursor_rule in json.loads(Path(__file__).with_name('active_descendant_rules.json').read_text())['rules']:
+    if _cursor_rule['rule'] in _RESTORED_CURSOR_TAGS:
+        _cursor_prefix, _cursor_arms = _cursor_rule['replacement'].rsplit(':where(', 1)
+        for _cursor_tag in _RESTORED_CURSOR_TAGS[_cursor_rule['rule']].split():
+            if _cursor_tag in _cursor_arms[:-1].split(','):
+                KNOWN[_cursor_prefix + ':where(' + _cursor_tag + ')'] = (
+                    'PERF-R5: main cursor tag restored for generic carriers; guard rows main326/before0/after145; '
+                    'see reviews/M-REPORT.md Seventh task and active_descendant_restore.test.mjs')
+
 CONCEPTS = Path(__file__).resolve().parents[3]
 SOURCE_ROOTS = ['onboarding/opus-5.5/src', 'onboarding/opus-5.5/base/style', 'leftrail-redesign/src',
                 'glyph-system/opus-5.5/src', 'chat-assistant-concepts/5.6 Pro', 'home-redesign/src', 'usage-redesign/src']
