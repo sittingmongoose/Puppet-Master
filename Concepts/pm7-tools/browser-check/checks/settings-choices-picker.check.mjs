@@ -21,6 +21,9 @@
 // and closing it with Escape or a press outside move nothing in the panel (its body's scroll and every block stay put),
 // and it stays above the panel and a toast, with and without `isolation: isolate` on #panel-settings (FO-177's rule).
 // The listbox is found through the picker's aria-controls wherever it is drawn. Fails `f8b2098608` (the inline list).
+// FO-182 (Jared, 2026-11-13; Models_System 7.1): a model with depths is saved together with a depth chosen in the same
+// open picker, so the keys and held-press picks of a model go on through its depths (Enter, or a press on its first
+// depth, the model's own default) before the pick is judged.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-choices-picker.check.mjs --set page=<build>
 // --set looks=a,b narrows the looks; --set sizes=1390x900,740x900 the sizes; --set setting=<id> another model setting;
 // --set lists=<id,id> narrows the long lists; --set popSizes=1280x500,740x900 narrows FO-178's size sweep.
@@ -402,7 +405,12 @@ export const tests = {
 		const shown = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'); const l = c && document.getElementById(c.getAttribute('aria-controls')); return l ? [...l.querySelectorAll('[role="option"]')].filter((n) => !n.hidden).map((n) => n.textContent.trim()) : []; });
 		await t.check(`keys: typing "${word}" narrows the list to it`, shown.length >= 1 && shown.every((s) => s.toLowerCase().includes(word.toLowerCase())), JSON.stringify(shown));
 		await t.page.keyboard.press('Enter');
-		await t.page.waitForTimeout(600);
+		await t.page.waitForTimeout(400);
+		/* FO-182 (Models_System 7.1): Enter on a model with depths moves into its depths, in the same open picker; Enter
+		   there saves the model with the first, its own default depth */
+		const inDepth = await f.evaluate(() => /^Thinking depth/.test((document.activeElement && document.activeElement.getAttribute('aria-label')) || ''));
+		if (inDepth) { await t.page.keyboard.press('Enter'); await t.page.waitForTimeout(400); }
+		await t.page.waitForTimeout(200);
 		const after = await f.evaluate(([id]) => {
 			const sel = document.querySelector(`#pm-settings-root select[data-setting="${CSS.escape(id)}"]`);
 			const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]');
@@ -842,7 +850,12 @@ export const tests = {
 				if (!row) await t.check(`${where}: a row to press`, false, id ? 'no other row in view' : 'no open list');
 				else {
 					await f.locator(`${listSel(id)} [role="option"][data-index="${row.index}"]`).click({ delay: 200 });
-					await t.page.waitForTimeout(600);
+					await t.page.waitForTimeout(400);
+					/* FO-182 (Models_System 7.1): a model with depths is saved with its depth, chosen in the same open picker;
+					   a held press on its first depth (the model's own default) saves the pair */
+					const depth = f.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"]').first();
+					if (await depth.count()) { await depth.click({ delay: 200 }); await t.page.waitForTimeout(400); }
+					await t.page.waitForTimeout(200);
 					const after = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]'); return { expanded: c && c.getAttribute('aria-expanded'), focus: !!(c && document.activeElement === c), face: c ? (((c.querySelector('strong') || c).firstChild || {}).textContent || '').trim() : '', popped: !!document.querySelector('.o55-pick-pop.is-open') }; });
 					await t.check(`${where}: FO-178 a press on "${row.name}" held 200 ms picks it: the popup closes and focus is back on the picker, which names it`, after.expanded === 'false' && !after.popped && after.focus && after.face === row.name, JSON.stringify(after));
 					const reset = f.locator('#panel-settings .detail-inspector [data-action="reset-setting"]').first();
