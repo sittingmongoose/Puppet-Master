@@ -1166,11 +1166,21 @@ def run_path(path, W):
     W['_path'] = path
     fam = W['fam']
     for phase in rows_spec.PATHS[path]:
-        name = rows_spec.phase_name(phase, fam)
-        first, observed = refusal(name, observe(phase, W))
-        if first is not None:
-            failing = [k for k, v in observed.items() if v is not True]
-            return (name, first[0], first[1], failing)
+        names = rows_spec.phase_names(phase, fam)
+        facts = observe(phase, W)
+        known = set()
+        for name in names:
+            known.update(table(name)[0])
+        extra = sorted(k for k in facts if k not in known)
+        if extra:
+            raise UnattributedObservation(f'{phase}: {extra}')
+        for name in names:
+            fields = table(name)[0]
+            first, observed = refusal(name, {k: facts[k] for k in fields if k in facts})
+            if first is not None:
+                # Single-defect judgement spans the whole phase observation, not only the refusing table.
+                failing = [k for k in sorted(known) if facts.get(k) is not True]
+                return (name, first[0], first[1], failing)
     return None
 
 
@@ -1589,9 +1599,12 @@ def all_cases(fam, kind):
         out.append(dict(p, kind='positive'))
     for n in shared_negatives(fam, kind):
         out.append(dict(n, kind='negative', phase=_phase_of(n['row']), id=f"{n['row']}/{n['label'] or 'single defect'}"))
+    row_table = {}
+    for name in rows_spec.family_table_names(fam):
+        for r in rows_spec.all_phases()[name][1]:
+            row_table[r[0]] = name
     for n in family_negatives(fam, kind):
-        name = rows_spec.phase_name(n['phase'], fam)
-        out.append(dict(n, kind='negative', phase=name, id=f"{n['row']}/{n['label'] or 'single defect'}"))
+        out.append(dict(n, kind='negative', phase=row_table[n['row']], id=f"{n['row']}/{n['label'] or 'single defect'}"))
     return out
 
 
@@ -1600,14 +1613,18 @@ _ROW_PHASE = {}
 
 def _phase_of(row):
     if not _ROW_PHASE:
-        for phase, (_t, rows) in rows_spec.SHARED.items():
-            for r in rows:
-                _ROW_PHASE[r[0]] = phase
+        for phase in rows_spec.SHARED:
+            for name, (_t, rows) in rows_spec.shared_tables(phase).items():
+                for r in rows:
+                    _ROW_PHASE[r[0]] = name
     return _ROW_PHASE[row]
 
 
+_ALL = {}
+
+
 def code_of(phase_name, row):
-    phases = rows_spec.all_phases()
+    phases = _ALL.setdefault('p', rows_spec.all_phases())
     for r in phases[phase_name][1]:
         if r[0] == row:
             return r[3]
@@ -1669,8 +1686,9 @@ def main(argv=None):
                     if single:
                         witnessed.setdefault(f"{case['phase']}/{case['row']}", []).append(kind)
             # every reachable row of every table on this family's paths needs a single-row witness
+            mine = set(rows_spec.family_table_names(fam))
             for phase_name, (_t, rows) in rows_spec.all_phases().items():
-                if phase_name.startswith(('payload_', 'source_')) and not phase_name.endswith(fam['slug']):
+                if phase_name.startswith(('payload_', 'source_')) and phase_name not in mine:
                     continue
                 if phase_name.endswith('_entailed'):
                     continue

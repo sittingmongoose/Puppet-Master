@@ -288,19 +288,69 @@ def source_rows(fam):
     return rows
 
 
-def family_phases():
+_GROUPS = {}
+CHUNK = 4  # rows per table: the gated tool's cost grows with rows x cases per table
+
+
+def payload_tables(fam):
+    """The family's payload rows grouped per field (one table per payload member, plus the closed rule)."""
+    if fam['slug'] in _GROUPS:
+        return _GROUPS[fam['slug']]
+    groups = _GROUPS[fam['slug']] = {}
+    for row in payload_rows(fam):
+        field = row[1]
+        member = 'closed' if field == 'closed' else field.split('.', 1)[1]
+        groups.setdefault(f'payload_{fam["slug"]}__{member}', []).append(row)
+    return groups
+
+
+def _chunks(prefix, title, rows):
+    if len(rows) <= CHUNK:
+        return {prefix: (title, rows)}
     out = {}
-    for fam in spec.FAMILIES:
-        out[f'payload_{fam["slug"]}'] = (f'{fam["event_type"]} closed payload ({fam["owner_unit"]})', payload_rows(fam))
-        out[f'source_{fam["slug"]}'] = (f'{fam["event_type"]} native source and FGI conjuncts ({fam["owner_unit"]})', source_rows(fam))
+    for i in range(0, len(rows), CHUNK):
+        out[f'{prefix}__{i // CHUNK + 1:02d}'] = (f'{title} (rows {i + 1}-{min(i + CHUNK, len(rows))})', rows[i:i + CHUNK])
     return out
 
 
+def source_tables(fam):
+    return _chunks(f'source_{fam["slug"]}', f'{fam["event_type"]} native source and FGI conjuncts ({fam["owner_unit"]})',
+                   source_rows(fam))
+
+
+def shared_tables(phase):
+    title, rows = SHARED[phase]
+    return _chunks(phase, title, rows)
+
+
+def family_phases():
+    out = {}
+    for fam in spec.FAMILIES:
+        for name, rows in payload_tables(fam).items():
+            member = name.split('__', 1)[1]
+            out[name] = (f'{fam["event_type"]} closed payload member {member} ({fam["owner_unit"]})', rows)
+        out.update(source_tables(fam))
+    return out
+
+
+def family_table_names(fam):
+    return list(payload_tables(fam)) + list(source_tables(fam))
+
+
+_PHASES = {}
+
+
 def all_phases():
-    phases = dict(SHARED)
-    phases.update(family_phases())
-    return phases
+    if not _PHASES:
+        for phase in SHARED:
+            _PHASES.update(shared_tables(phase))
+        _PHASES.update(family_phases())
+    return _PHASES
 
 
-def phase_name(phase, fam):
-    return f'{phase}_{fam["slug"]}' if phase in ('payload', 'source') else phase
+def phase_names(phase, fam):
+    if phase == 'payload':
+        return list(payload_tables(fam))
+    if phase == 'source':
+        return list(source_tables(fam))
+    return list(shared_tables(phase))
