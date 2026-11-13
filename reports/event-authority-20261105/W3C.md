@@ -278,3 +278,262 @@ IDs reused: TCME-1300..1319, CV-1300..1320, SP-1300..1320, ATS-1220..1222; zero 
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/p1fix1/schema-shapes.py` — SHA-256 `09a8607d06124caf5cb5c265e29aee48bf4bc50130d5d1e11405b925e640741d`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/p1fix1/validate-phase1.py` — SHA-256 `93af6e12378fa62f4dffff4d6b2f3d1e7ddec86b2c6e0341f350d8daae4415e6`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/p1fix1/write-report.py` — SHA-256 `8d38db13f71429b40af34ab849d49d7708b662e3467a26eea80b51ce37da04e2`.
+
+## Wave 3 phase 2: findings and responses
+
+Task: `lanes/W3-P2.md` (stream E, 2026-11-13), worker for lane W3C, with the lead's quality bar (guard rows are the checker's real predicates; mutation proof; owner schema keywords kept or restored at named rows; every timestamp through `pm_event_datetime`; integer slots through `storage_uint64`/`current_integer`; retained reads proved by sealed-store snapshots through the shared `RetainedDispatcher`; join rows for copies of one value) and the lead's ruling that AppendReceipt `acknowledged_at_utc` takes the EventRecord date-time profile. Start: `origin/plans/ea-w3-test-capture-20261105` at `666be09039` (fetched first in `/home/sittingmongoose/src/PuppetMaster`), sparse local worktree `/home/sittingmongoose/pm-worktrees/w3c-p2` (`Plans scripts reports tests`). No rebase. Heavy commands ran one at a time under `systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0`, each started at 12 GiB or more available; long runs under `long-job`. No pm-mail, subagents or browsers; `main` was not pushed. Membership stays ABSENT and native execution NOT_RUN: everything below is synthetic oracle evidence.
+
+### Gated foundations
+
+| Merge | Commit | Result |
+|---|---|---|
+| Guard tool `004bdedd632d9463f3535190a6ed5772338cdce1` (`--no-ff`) | `0acfca3fac` | 11 files, no conflict, none edited. |
+| NUMRULE head `58c2816ff33365384d4039553f5efdb5370930e6` (`--no-ff`) | `70e5d0c0c1` | 163 conflicts, all in `Plans/_shards/**` and `Plans/.plan_index/**`; resolved by `pm-shard-plans --generate` and `pm-plan-index generate` (the 15-file currentness edition copied in first, identical to the shared checkout's) and `pm-shard-plans --check` (pass). No other path conflicted; no NUMRULE file edited. |
+
+Verify: `git diff --stat 0acfca3fac^1 0acfca3fac` (11 files); `git diff 004bdedd63 HEAD -- scripts/pm_guard_isolation.py scripts/pm_guard_isolation_traps.py Plans/guard_isolation_traps.json scripts/guard-isolation/README.md` and `git diff 58c2816ff3 HEAD -- scripts/pm_event_numbers.py scripts/pm_event_numbers_corpus.py scripts/pm_event_datetime*.py Plans/event_number_recipe_corpus.json Plans/event_datetime_inventory.json` are empty.
+
+### What phase 2 built
+
+| Part | Path | What it is |
+|---|---|---|
+| Complete checker | `scripts/pm_w3c_event_oracles.py` | One scenario model for the 21 families (41 scope editions) over seven paths: `install` (eager reference closure through the unchanged Corpus registry), `append` (current writer, admission and live generations, EventRecord, payload, scope, identity, source and family joins, Storage metadata, CV-339/SP-286 first-receipt custody, publication order, family clauses), `retry` (phase-aware request and frozen-preimage comparison, original result), `history` (SP-1101 retained read, frozen verifier, present disclosure), `operation` (each canonical operation CAS step: first write, outcome binding with the uncertain-action fence, commit custody, terminal, withdrawal, restore), `checkpoint` (SP-278 token, empty and nonempty coverage, cursors, last-event joins, predecessor CAS, RP-PROJECTION-3GEN generations) and `records` (the lane's application capture record schema). `observe` (`:1725`) collects each row's raw facts; `evaluate` (`:1760`) reaches a refusal only through the table predicates, in table order; `judge` (`:1774`) requires a positive to refuse nowhere and a negative to refuse first, and only, at exactly its row. A checker exception is a finding, never a refusal. The checker refuses to run unless every table module is byte-identical to its generated source (`stale_tables`, `:1716`). |
+| Guard tables | `scripts/pm_w3c_table_*.py` (70 modules), generator `scripts/pm-w3c-table-generate.py` | 390 rows, at most eight per table. Each row's predicate is a comparison emitted from a template (`TEMPLATES`, `:745`): 333 rows compare raw facts inside the predicate (supplied copy against its independently recomputed authority, a raw owner fact against an owner literal, an order index, a list membership); 57 rows read the verdict of a shared helper (schema validators with the shared date-time checker, `current_integer`, `storage_uint64`, `date_time`, `current_append_policy`, `producer_semantic_bytes`, `verify_payload_bytes`, the frozen verifier's validator components, a full-match grammar). |
+| Family data | `scripts/pm_w3c_families.py` | Literal data only: owner units, payload-to-source joins and the per-clause witness edit for each TCME/ATS numbered predicate. The clause predicates are in the checker (`CLAUSE_FACTS`, `:1076`). |
+| Fixtures | `Plans/w3c_event_fixtures.json`, builder `scripts/pm-w3c-cases.py` (`--check --coverage`), library `scripts/pm_w3c_cases_lib.py` | Complete positives per family, scope edition and path variant, and one-defect negatives stored as their base plus the exact JSON changes. Each negative injects one change at the stage that owns the value (owner, request record, source record, request instance, payload, formed event, appended event, Storage issuance, operation, checkpoint row, path), and every later copy, hash, key and commitment is derived from it. Identity recipes in the builder are written independently of the checker's; expected rows are written by hand per witness. |
+| Sealed custody | `Plans/w3c_original_custody.json` | The `w3c@1` recipe (resource manifest over the two W3C schema documents, EventRecord, the CV-339 receipt contracts and WorkflowScopeV2) and the sealed Stores. Each retained scenario carries Storage's own sealed receipts. |
+| Plan coverage | `reports/event-authority-20261105/W3C-phase2-plan-coverage.json` | Every oracle-plan entry with the rows that implement it for that family and their witness counts. |
+| Tool runner | `scripts/pm-w3c-guard-tables.py`, adapter `scripts/pm_w3c_guard_suites.py` | One gated-tool run per table. |
+| Number corpus | `scripts/pm-w3c-number-corpus.py` | The shared NUMRULE corpus, the 4,400-digit routes and payload long-integer routes through the complete checker. |
+| Mutation proof | `scripts/pm-w3c-mutations.py` | Twenty one-at-a-time guard deletions or weakenings; each must fail the suite. |
+
+### Item responses
+
+| Item | Disposition and change | Commit, path:line | Verify |
+|---|---|---|---|
+| **Phase-1 obligations carried by both reviews** (`reviews/W3C-sol/REVIEW-phase1.md` "Oracle plan and standing/recurring checks"; the recheck: "Unchanged phase-2 NUMRULE, format and shared isolation obligations remain") | **Closed.** Executable one-defect negatives for source identity and joins, Storage metadata, historical readers in both directions, exact types, unvisited references, every stored part's size with an owner-valid SP-337 positive, custody on every path, both scope editions of every checkpoint shape, nonzero encoder exit and no success upgrade (`dvf_exit_nonzero`, `dvf_failure_outcome`), CV-366 application key and `project~` partition (`idempotency_key_recipe`, `scope_partition_recipe`), passive replay (`history_no_effects`, `retry_no_effects`, `ck_rebuild_no_effects`). | `df66eb257b`..`8c96afd8b9`; `scripts/pm_w3c_event_oracles.py` | `python3 scripts/pm_w3c_event_oracles.py`; plan coverage 723/723 |
+| **Sweep: format enforcement and inherited LF** (DurableGenericToken format-only UUIDs, pattern-only hashes and generation id accept a trailing LF) | **Closed** at full-match rows (`ck_uuid_*`, `ck_full_*`, `op_uuid`), each with its LF or uppercase witness; the implied sites are listed above. | `:1529` onward | checker pass; tool proof |
+| **Sweep: numbers and retained recipe selection** | **Closed:** shared NUMRULE calls at every integer slot, the shared corpus through the complete checker, SP-1101 dispatch from the sealed receipt only. | see Numbers, Retained reads | `python3 scripts/pm-w3c-number-corpus.py` |
+| **Masked negatives / shared isolation proof** | **Closed:** the gated tool proves every row (below); the judge refuses any negative with a second refusing row. | `scripts/pm-w3c-guard-tables.py` | tool summary |
+| **13 `PENDING_RETENTION_DECISION` cells** | **Bound** to DL-453/454/455 (Retention cells below); the owner sentences in TCME and SP units now state the binding. | `ecdb497768`; TCME-1300/1302/1303/1305..1309/1313/1314/1317..1319, the same SP units | `grep -c PENDING_RETENTION_DECISION Plans/*.md` finds none in W3C units |
+| **Stale owner claims** ("Criterion 12 ... PARTIAL until phase 2", "Phase-2 shared NUMRULE/format adoption ... remain required", ATS-1221 "not executable oracle code") | Replaced in the 41 owner/payload/Storage units and ATS-1220/1221; ATS-1221 gains a phase-2 paragraph naming the checker, tables, fixtures, custody and shared calls. Canonical text changed in exactly 56 lane units; no other unit changed. | `ecdb497768` | `git diff 8e8772439d..HEAD -- Plans/*.md` |
+| **`testing.receipt.recorded` (outside the 21)** | Unchanged: still an OPEN owner evidence question (phase-1 report and both reviews); no contract, alias or exclusion authored. | — | — |
+
+**Disputed:** none. **IDs:** no new PlanUnit, Decision Log, registry or admission ID; fixture case IDs only.
+
+### Guard-table result (gated tool `004bdedd63`, credited exactly as reported)
+
+Run at the implementation head `8c96afd8b9` (tool SHA-256 `e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8`, byte-identical to `004bdedd63`; fixtures `e735face34fe...`, checker `f689f722fbfe...`, both recorded in the tool's `summary.json`). Collection replays every W3C case once through the complete checker: **18,893 cases** (1,450 positives accepted, 17,443 negatives refused), **0 judged errors, 0 collection findings**. The tool then ran once per table: **70 runs, all `PASS`; 390 of 390 rows proved**; each cut swapped one row to always-pass, ran every control and negative, compared the guard-call trace with the uncut baseline and ran a fresh restoration. **0 unrelated changes, 0 masked negatives, 0 lane-matrix problems, 0 rows without a negative.** No row is entailed, so there is no unproved-row table. Collection 776 s, total 1,861 s, serial, MemoryGate 1,800 MiB RSS, inside a 2 GiB no-swap scope. Command: `python3 scripts/pm-w3c-guard-tables.py --out <dir>`; the per-table reports and `summary.json` are in the evidence folder.
+
+The tool analyses the predicate code each row's table carries: a comparison over the raw facts the checker observed (333 rows) or over a shared helper's verdict (57 rows: schema validators, `current_integer`, `storage_uint64`, `date_time`, `current_append_policy`, `producer_semantic_bytes`, `verify_payload_bytes`, three frozen-verifier validator components and the full-match grammars). The checker's own refusal path is those predicates in that order, and it refuses to run if a table module differs from its generated source, so a deleted or reordered `require` fails the suite (M09 below).
+
+| Checker part | Tables (run / PASS) | Rows | Proved | Tool negatives / controls | Evaluations | Cut: own flips | Cut: stays | Unrelated | Masked | Lane matrix |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Scenario path, family, scope, event family | 1 (1 / 1) | 4 | 4 | 6 / 4 | 130 | 6 | 18 | 0 | 0 | 0 |
+| Schema installation (eager references) | 1 (1 / 1) | 2 | 2 | 2 / 1 | 21 | 2 | 2 | 0 | 0 | 0 |
+| Application capture records | 1 (1 / 1) | 1 | 1 | 1 / 1 | 8 | 1 | 0 | 0 | 0 | 0 |
+| Admission, writer, permission, target generations | 2 (2 / 2) | 12 | 12 | 20 / 6 | 578 | 20 | 124 | 0 | 0 | 0 |
+| EventRecord verdict, CV-1100 slots, uint64, CV-253 times, replay policy | 1 (1 / 1) | 7 | 7 | 13 / 4 | 374 | 13 | 78 | 0 | 0 | 0 |
+| Payload verdict, producer route, SP-337 size and pack | 1 (1 / 1) | 7 | 7 | 12 / 4 | 352 | 12 | 72 | 0 | 0 | 0 |
+| Scope copies and partition | 1 (1 / 1) | 7 | 7 | 10 / 3 | 286 | 10 | 60 | 0 | 0 | 0 |
+| Event id, key, operation | 1 (1 / 1) | 3 | 3 | 6 / 4 | 100 | 6 | 12 | 0 | 0 | 0 |
+| Source and predecessor identity | 1 (1 / 1) | 5 | 5 | 10 / 4 | 224 | 10 | 40 | 0 | 0 | 0 |
+| Payload-to-source joins (field by field) | 5 (5 / 5) | 33 | 33 | 39 / 20 | 1370 | 39 | 266 | 0 | 0 | 0 |
+| Storage metadata and owner-input copies | 1 (1 / 1) | 5 | 5 | 5 / 4 | 144 | 5 | 20 | 0 | 0 | 0 |
+| Frozen outcome and preimage, first append | 1 (1 / 1) | 4 | 4 | 8 / 4 | 156 | 8 | 24 | 0 | 0 | 0 |
+| CV-339 receipt verdict, uint64, joins, barrier, commitment | 2 (2 / 2) | 13 | 13 | 19 / 8 | 549 | 19 | 103 | 0 | 0 | 0 |
+| Publication order | 1 (1 / 1) | 4 | 4 | 4 / 2 | 78 | 4 | 12 | 0 | 0 | 0 |
+| Family clauses (TCME-1300..1319, ATS-1220) | 23 (23 / 23) | 132 | 132 | 132 / 48 | 3525 | 132 | 708 | 0 | 0 | 0 |
+| Retry (phase-aware) | 1 (1 / 1) | 8 | 8 | 15 / 4 | 475 | 15 | 105 | 0 | 0 | 0 |
+| SP-1101 receipt selection and no receipt on read | 2 (2 / 2) | 10 | 10 | 12 / 8 | 356 | 12 | 60 | 0 | 0 | 0 |
+| SP-1101 frozen verifier | 1 (1 / 1) | 8 | 8 | 13 / 4 | 425 | 13 | 91 | 0 | 0 | 0 |
+| Present disclosure and passive read | 1 (1 / 1) | 5 | 5 | 5 / 2 | 112 | 5 | 20 | 0 | 0 | 0 |
+| Operation verdict, uuid, packs, joins, key, CAS | 4 (4 / 4) | 25 | 25 | 40 / 16 | 1274 | 40 | 266 | 0 | 0 | 0 |
+| Restored phase custody | 2 (2 / 2) | 13 | 13 | 20 / 8 | 610 | 20 | 122 | 0 | 0 | 0 |
+| Bound values never change | 1 (1 / 1) | 5 | 5 | 10 / 4 | 224 | 10 | 40 | 0 | 0 | 0 |
+| Original request custody | 1 (1 / 1) | 6 | 6 | 12 / 4 | 304 | 12 | 60 | 0 | 0 | 0 |
+| Outcome binding | 1 (1 / 1) | 4 | 4 | 8 / 4 | 156 | 8 | 24 | 0 | 0 | 0 |
+| Uncertain-action fence | 1 (1 / 1) | 3 | 3 | 6 / 4 | 100 | 6 | 12 | 0 | 0 | 0 |
+| Commit custody and terminal order | 1 (1 / 1) | 5 | 5 | 9 / 4 | 208 | 9 | 36 | 0 | 0 | 0 |
+| Restore | 1 (1 / 1) | 3 | 3 | 6 / 4 | 100 | 6 | 12 | 0 | 0 | 0 |
+| Checkpoint verdict, numbers, packs, size | 1 (1 / 1) | 8 | 8 | 13 / 4 | 425 | 13 | 91 | 0 | 0 | 0 |
+| Token full-match rows | 2 (2 / 2) | 13 | 13 | 13 / 2 | 321 | 13 | 76 | 0 | 0 | 0 |
+| Restored cursor pairs | 1 (1 / 1) | 4 | 4 | 5 / 4 | 117 | 5 | 15 | 0 | 0 | 0 |
+| Checkpoint joins, key, authentic token | 1 (1 / 1) | 7 | 7 | 14 / 4 | 396 | 14 | 84 | 0 | 0 | 0 |
+| Coverage (empty and nonempty) | 2 (2 / 2) | 10 | 10 | 18 / 8 | 542 | 18 | 114 | 0 | 0 | 0 |
+| Last-event joins | 1 (1 / 1) | 4 | 4 | 7 / 4 | 143 | 7 | 21 | 0 | 0 | 0 |
+| Predecessor CAS and atomic publication | 1 (1 / 1) | 3 | 3 | 4 / 4 | 80 | 4 | 8 | 0 | 0 | 0 |
+| RP-PROJECTION-3GEN, rebuild, withdrawal | 1 (1 / 1) | 7 | 7 | 7 / 4 | 242 | 7 | 42 | 0 | 0 | 0 |
+| **Total** | 70 (70 / 70) | 390 | 390 | 524 / 217 | 14505 | 524 | 2838 | 0 | 0 | 0 |
+
+### Mutation proof
+
+`python3 scripts/pm-w3c-mutations.py --scratch <dir>` applies each mutation alone to a scratch copy of `scripts/` (with a copy of `Plans`), runs the complete checker over the fixture subset that holds the guard's witnesses, and requires a nonzero exit; the same subset passes unmutated first, and the scratch copy is restored byte for byte after each. Predicate mutations inside generated tables run with `--skip-table-check` so their kill is behavioural; M09 keeps the table-source check. **20 of 20 killed**, on the final fixtures (`mutations.json`).
+
+| # | Guard | File | Mutation | Subset (family / path) | Unmutated | Mutated | Result |
+|---|---|---|---|---|---|---|---|
+| M01 | `scope_partition_recipe` | `pm_w3c_event_oracles.py` | delete the observation | testing.capture.bookmarked / append | exit 0, pass | exit 1 | KILLED (2 judged errors of 374 cases) |
+| M02 | `receipt_barrier` | `pm_w3c_table_receipt_2.py` | weaken the table predicate | testing.capture.bookmarked / append | exit 0, pass | exit 1 | KILLED (2 judged errors of 374 cases) |
+| M03 | `ck_token_authentic` | `pm_w3c_event_oracles.py` | compare one token field only | testing.capture.bookmarked / checkpoint | exit 0, pass | exit 1 | KILLED (4 judged errors of 223 cases) |
+| M04 | `retry_request_same` | `pm_w3c_event_oracles.py` | delete the observation | testing.capture.bookmarked / retry | exit 0, pass | exit 1 | KILLED (2 judged errors of 132 cases) |
+| M05 | `fence_single_execution` | `pm_w3c_event_oracles.py` | weaken the bound | testing.capture.bookmarked / operation | exit 0, pass | exit 1 | KILLED (2 judged errors of 213 cases) |
+| M06 | `recipe_unique` | `pm_w3c_event_oracles.py` | weaken the sealed-receipt uniqueness | testing.capture.bookmarked / history | exit 0, pass | exit 1 | KILLED (2 judged errors of 54 cases) |
+| M07 | `read_no_receipt_created` | `pm_w3c_event_oracles.py` | snapshot the store before only | testing.capture.bookmarked / history | exit 0, pass | exit 1 | KILLED (2 judged errors of 54 cases) |
+| M08 | `op_cas` | `pm_w3c_event_oracles.py` | delete the observation | testing.capture.bookmarked / operation | exit 0, pass | exit 1 | KILLED (2 judged errors of 213 cases) |
+| M09 | `dvc_manifest_immutable` | `pm_w3c_table_clause_dvc_1.py` | delete the table row's require | artifacts.demonstration_video.created / append | exit 0, pass | exit 1 | KILLED (table-source check) |
+| M10 | `storage_utc_observed_at_utc` | `pm_w3c_event_oracles.py` | weaken the date-time profile | testing.capture.bookmarked / append | exit 0, pass | exit 1 | KILLED (8 judged errors of 374 cases) |
+| M11 | `frozen_full_value` | `pm_w3c_event_oracles.py` | replace the recomputed commitment by the held one | testing.capture.bookmarked / history | exit 0, pass | exit 1 | KILLED (2 judged errors of 54 cases) |
+| M12 | `cov_nonmatching_counted` | `pm_w3c_table_coverage_1.py` | delete the table predicate | testing.capture.bookmarked / checkpoint | exit 0, pass | exit 1 | KILLED (2 judged errors of 223 cases) |
+| M13 | `envelope_numbers` | `pm_w3c_event_oracles.py` | drop current_integer at integer slots | testing.capture.bookmarked / append | exit 0, pass | exit 1 | KILLED (6 judged errors of 374 cases) |
+| M14 | `sequence_u64` | `pm_w3c_event_oracles.py` | replace storage_uint64 by a looser lane bound | testing.capture.bookmarked / append | exit 0, pass | exit 1 | KILLED (12 judged errors of 374 cases) |
+| M15 | `install_refs` | `pm_w3c_event_oracles.py` | ignore unresolved references | artifacts.capture_provenance.inspected / install | exit 0, pass | exit 1 | KILLED (3 judged errors of 5 cases) |
+| M16 | `request_before_join` | `pm_w3c_event_oracles.py` | delete the observation | testing.capture.paused / operation | exit 0, pass | exit 1 | KILLED (2 judged errors of 164 cases) |
+| M17 | `op_uuid` | `pm_w3c_event_oracles.py` | weaken the full-match grammar | testing.capture.bookmarked / operation | exit 0, pass | exit 1 | KILLED (2 judged errors of 213 cases) |
+| M18 | `payload_schema (format)` | `pm_w3c_event_oracles.py` | drop the shared date-time format checker | testing.runtime_enabled_for_adapter / append | exit 0, pass | exit 1 | KILLED (35 judged errors of 240 cases) |
+| M19 | `tgc_monotonic` | `pm_w3c_table_clause_tgc_1.py` | weaken the comparison | testing.capture.target_changed / append | exit 0, pass | exit 1 | KILLED (2 judged errors of 384 cases) |
+| M20 | `op_event_frozen` | `pm_w3c_event_oracles.py` | compare the appended event with itself | testing.capture.bookmarked / operation | exit 0, pass | exit 1 | KILLED (4 judged errors of 213 cases) |
+
+### Owner schema keywords: kept, restored at named rows, implied
+
+Validation uses the full owner schemas through the unchanged Corpus registry with the shared `format_checker(profile=EVENT_RECORD)` (`:215`), so `pattern`, `format` (date-time through the shared predicate; `uuid` through jsonschema's registered checker, which the shared checker keeps), `not` (the protected-auth exclusion on every `safe_ref`) and the scope `allOf` stay in every verdict. Exactly two compound keywords are removed from the validated copy (`stripped_doc`, `:188`, which refuses to load if either changes shape) and restored predicate by predicate:
+
+| Removed keyword | Restored at |
+|---|---|
+| Operation `allOf[1]` phase `oneOf` (null/nonnull custody by phase) | `op_pending_{outcome_record,producer_semantics,first_append,original_event}_null`, `op_bound_{outcome_record,producer_semantics}`, `op_outcome_no_{first_append,original_event}`, `op_committed_{first_append,original_event}`, `op_withdrawn_outcome_pair`, `op_withdrawn_event_pair`, `op_withdrawn_event_after_outcome` (`:1380` onward), one witness each |
+| Checkpoint `allOf[1..2]` cursor `if/then/else` pairs | `ck_cursor_empty_last_event_id`, `ck_cursor_empty_last_sequence_id`, `ck_cursor_body_last_event_id`, `ck_cursor_body_last_sequence_id` (`:1554`), one witness each |
+
+Fields the stock validator admits but the owner restricts further get their own rows: `format: uuid` with uppercase hex (`op_uuid`, `ck_uuid_storage_instance`, `ck_uuid_token_storage`, `ck_uuid_selection_storage`) and the pattern-only DurableGenericToken fields whose Python `$` admits a trailing LF (`ck_full_generation_id`, `ck_full_generation_anchor`, `ck_full_frontier`, `ck_full_<7 source_selection hashes>`), each with its LF or uppercase witness. Identifier negatives for every payload and request field (missing, wrong type number/boolean/null/array/object, trailing LF, empty, bad character, over-length; for `safe_ref` also protected-auth token and leading digit; for `source_ref` also uppercase hash, 63-hex-plus-LF hash, LF ref and extra member) run for every scope edition at `payload_schema` and `retry_request_schema`, and for the embedded copies (operation intent, checkpoint inline projection) on two editions (`testing.capture.bookmarked`/Project, `artifacts.demonstration_video.created`/application) at `op_schema` and `ck_schema`; the retained original's payload is validated by `frozen_payload` (an LF identifier witness included).
+
+**Implied sites** (left out of a full-match row because another row always refuses first; not counted as proved by their own row):
+
+| Site | Row that always refuses first | Proof | Witness |
+|---|---|---|---|
+| `storage_instance_id` (operation, checkpoint, token, source selection) with a trailing LF | `op_schema` / `ck_schema` | The shared `format_checker` is a `FormatChecker()` with every registered format (`scripts/pm_event_datetime.py:103`); jsonschema's `uuid` checker parses with `uuid.UUID`, which refuses the LF. | `w3c/*/op-first/neg/op_uuid/trailing_lf_implied`, `w3c/*/ck-inline/neg/ck_uuid_*/trailing_lf_implied` |
+| EventRecord `event_type` pattern (no LF guard) | `event_family` | `event_family` (`:828`) requires the event type to equal the scenario family exactly; a trailing LF differs. | `w3c/*/append/neg/event_family/trailing_lf_implied` |
+| EventRecord `event_id` (non-empty string) | `event_id_recipe` | Exact equality with the recomputed `w3c@1:` id (`:964`). | `.../append/neg/event_id_recipe/trailing_lf_implied` |
+| WorkflowScopeV2 `scope_partition` pattern `^project~[A-Za-z0-9_-]+$` (LF admitted) and `server_id` (no pattern) | `scope_partition_recipe`, `scope_server_join` | Exact equality with the recomputed partition and the owner Server (`:947`, `:954`); the application edition fixes `scope_partition` const `app`, so its LF witness refuses at `payload_schema`. | `.../append/neg/scope_partition_recipe/trailing_lf_implied`, `.../scope_server_join/trailing_lf_implied` |
+| CV-339 `original_event_value_commitment.sha256` pattern-only | `receipt_commitment` | Exact equality with the shared `full_value_commitment` (`:1043`). | `.../append/neg/receipt_commitment/trailing_lf_implied` |
+| Operation `original_event.value.payload` (EventRecord `payload` is an open object, so the operation edition does not validate the family payload inside it) | `op_event_frozen` (commit), `op_original_event_immutable` (later steps) | Any change to the embedded payload changes the CV-317 digest the commit compares with the frozen preimage (`:1466`), and later steps compare the whole embedded event with the predecessor (`:1412`). | `.../op-commit/neg/op_event_frozen/embedded_payload_lf_implied`, `.../op-terminal/neg/op_original_event_immutable/embedded_payload_lf_implied` |
+| Persisted `redb_snapshot_id` in a checkpoint token | `ck_schema` | DurableGenericToken is closed (`additionalProperties: false`). | `.../ck-inline/neg/ck_schema/persisted_redb_snapshot_id` |
+| Token integer fields above uint64 | `ck_schema` | The owner schema fixes `maximum: 18446744073709551615` on every token integer; `ck_numbers` (`current_integer`) covers integral floats. | `.../ck-inline/neg/ck_schema/uint64_range` |
+| The readiness source `enabled_at_utc` with a malformed time | `payload_schema` | The payload copies it (`join_enabled_at_utc`), and the payload edition checks the same profile first; the source's own check (`rdy_source_schema`) is witnessed by its `prior_state` const. | covered by the payload `enabled_at_utc` time witnesses |
+
+### Numbers
+
+Shared calls (CV-1100/SP-1100):
+
+| Slot or route | Shared call | Row |
+|---|---|---|
+| Fixture text, every integer token | `loads_exact` + `current_integer` (`materialize`) | ingress (`-0`, `01` never parse) |
+| EventRecord integer slots; receipt, operation and checkpoint integer slots | stock verdict, then `current_integer` at every admitted slot (`slots_exact`, `:274`; recording validator over a `$schema`-free copy of the registry, `slot_registry`, `:254`, so slots inside an embedded EventRecord are recorded too) | `envelope_numbers`, `receipt_numbers`, `op_numbers`, `ck_numbers` |
+| EventRecord `sequence_id`; receipt `sequence_id`, `segment_generation`, `byte_offset`, `durable_end_offset`, `manifest_generation` (append and operation); checkpoint `last_sequence_id` | `storage_uint64` (`u64_ok`, `:288`) | `sequence_u64`, `receipt_u64_*`, `op_receipt_u64_*`, `ck_last_sequence_u64` |
+| CV-317 producer projection | `producer_semantic_bytes` / `producer_semantic_digest` | `producer_route`, `op_preimage_frozen`, `op_preimage_owner`, `op_event_frozen`, `retry_preimage_same`, `frozen_producer` |
+| CV-339 commitment | `full_value_commitment` | `receipt_commitment`, `op_commitment`, `frozen_full_value` |
+| Sizes, packs, record hashes | `storage_value_bytes`, `decode_storage_value`, `verify_payload_bytes` | `inline_size`, `op_inline_size`, `ck_inline_size`, `*_pack_*`, every `*_hash` row |
+| Retained originals | `RetainedDispatcher`, `RecipeTuple`, `OriginalBinding`, `OriginalCustody`, `FrozenRecipe` | `recipe` and `frozen` rows |
+
+The W3C payload editions declare no integer slot (closed objects of strings, arrays and source refs), so no lane payload integer row exists; an integer anywhere in a payload is refused by `payload_schema`. No lane-local bound or serializer remains (the phase-1 surrogates were never executable).
+
+Results:
+- **Shared self-test:** `python3 scripts/pm_event_numbers.py --self-test --scope numbers` exit 0, `"status": "pass"` (276 positives, 304 negatives).
+- **Shared corpus through the complete checker:** `python3 scripts/pm-w3c-number-corpus.py` exit 0, `"status": "pass"`: 163 corpus cases, 587 route runs (raw ingress, `producer_sequence_id`, `sequence_id`, receipt `byte_offset`, token `frontier_revision`), 348 accepted, 239 refused, 0 disagreements with the expected row composed from stock JSON Schema semantics and the shared helpers alone, 0 untracked exceptions.
+- **The 4,400-digit integer** (the crash DX, DS15, DF, DM and DCO each found): checked; nothing crashes. Observations run under a scoped `exact_digits()` and nothing re-encodes a value through JSON text. In memory, `10**4399` refuses at `producer_route` (producer slot), `sequence_u64` (Storage slot), `receipt_u64_byte_offset` (receipt) and `ck_schema` (token, owner maximum); raw ingress of a 4,400-digit token is accepted, as the shared parser accepts it. **Payload long integers:** `2**64` and `10**4399` as an extra payload member and at a wrongly typed (string) payload field, for all 41 editions (164 routes), each refuse at `payload_schema` with a code; none raises. Integers above uint64 in a retained Storage original refuse at `original_resolution` (fixture witnesses on the history and committed-retry paths); integers above uint64 in a stored operation receipt or checkpoint cursor refuse at `op_receipt_u64_*` and `ck_last_sequence_u64` before any size computation.
+
+**Fixture expectations the shared rule decides** (W3C had no earlier executable fixtures, so these are the cases a stock-schema reading alone would accept):
+
+| Input | Stock JSON Schema | Shared rule | Refusing row |
+|---|---|---|---|
+| Integral float (`41.0`, `7.0`, `4096.0`, `12.0`) at an integer slot | accepted as integer | `current_integer` refuses (`integer_type`) | `envelope_numbers`, `receipt_numbers`, `op_numbers`, `ck_numbers` |
+| `-0`, `01` tokens | not reached | `loads_exact` refuses | ingress (corpus raw route) |
+| `2^53 + 1` at `producer_sequence_id` (owner input) | accepted | the producer route refuses before effects | `producer_route` |
+| `2^64` at `sequence_id`, a receipt integer, a stored first receipt, `last_sequence_id` | accepted (no maximum) | `storage_uint64` refuses (`integer_range`) | `sequence_u64`, `receipt_u64_*`, `op_receipt_u64_*`, `ck_last_sequence_u64` |
+| `2^64 - 1` at `sequence_id`; `2^53` at `producer_sequence_id` | accepted | accepted | positives `.../append-sequence-u64-max`, `.../append-producer-2p53` |
+| A retained original holding an integer above uint64 | — | not canonical SP-236 bytes | `original_resolution` (unavailable, never accepted) |
+
+### Timestamps
+
+Every timestamp field, derived from the lane's two schema documents and the owner schemas they reference, and the shared check that covers it (`TIMESTAMP_FIELDS`, `:85`). The timestamp review is no longer interim.
+
+| Field | Owner profile | Shared check | Witnesses |
+|---|---|---|---|
+| EventRecord `occurred_at_utc` (candidate, formed input, retained original) | EventRecord, `event_record` | `format_checker(EVENT_RECORD)` in `envelope_schema`, `op_schema` (embedded), `frozen_envelope` | positives: lowercase `t`/`z`, an offset, the legitimate leap second `2016-12-31T23:59:60Z`, a 12-digit fraction (owner input copied into the event); negatives: missing zone, space separator, Feb 30, `24:00:00`, trailing LF, false leap second, empty fraction |
+| EventRecord `observed_at_utc`, `persisted_at_utc` | CV-253 Storage-assigned, `storage_utc_z` | `date_time(STORAGE_UTC_Z)` rows `storage_utc_observed_at_utc`, `storage_utc_persisted_at_utc`; `frozen_storage_times` for retained originals | `+00:00`, `-00:00`, lowercase `z` (each valid under `event_record`, refused under `storage_utc_z`); the seven malformed forms at `envelope_schema` |
+| AppendReceipt `acknowledged_at_utc` (Storage issuance and every stored `first_append`) | CV-339 schema `format: date-time`, `event_record` (lead ruling 2026-11-13) | `format_checker(EVENT_RECORD)` in `receipt_schema` and `op_schema` | positives `append-ack-offset` (`+02:00`) and `append-ack-lowerz` per edition; the seven malformed forms at `receipt_schema`; a space separator inside the stored operation row at `op_schema` |
+| CV-1320 payload `enabled_at_utc` (and every inline projection copy) | EventRecord `occurred_at_utc` reference, `event_record` | `format_checker(EVENT_RECORD)` in `payload_schema`, `ck_schema` | the seven malformed forms at `payload_schema`; join rows `join_enabled_at_utc` (payload against source) and `rdy_enabled_at_owner` (source against the owner instant the event's `occurred_at_utc` copies) |
+| `adapter_readiness_source.enabled_at_utc` | same reference, `event_record` | `format_checker(EVENT_RECORD)` in `rdy_source_schema` | implied at `payload_schema` (table above) |
+| Checkpoint `first_retired_at_utc` (retired generations) | EventRecord `occurred_at_utc` reference, `event_record` | `format_checker(EVENT_RECORD)` in `ck_schema` | positive with an offset anchor (row and predecessor); the seven malformed forms; `ck_retired_anchor`, `ck_live_anchor_null`, `ck_anchor_fixed` |
+| `test_capture_application_records` `$defs/timestamp` (14 sites in 11 definitions: `created_at_utc`, `updated_at_utc`, `wall_start_utc`, `wall_end_utc`) | `format: date-time`, `event_record` | `format_checker(EVENT_RECORD)` in `records_schema` | a valid instance per definition with every optional timestamp filled, offset and lowercase positives, the seven malformed forms at every site |
+
+**Date-time inventory gate:** `python3 scripts/pm_event_datetime_inventory.py` (the shared gate over the whole `Plans/` tree): exit 1, `"status": "fail"`, 233 nodes, 0 unclassified nodes, 40 failure rows. 39 are the class W3F recorded for the same base: the ignored currentness edition (4 `unclassified_mentioning_container`), `.plan_index` (14 `unclassified_mentioning_container`, 2 `stale_scan_exclusion`) from the regenerated index after the NUMRULE merge, and `.plan_migration` (19). The lane adds exactly one: `Plans/w3c_event_fixtures.json` (`unclassified_mentioning_container`: it holds EventRecord instances). Under SWEEP-P2B addendum 2 the inventory and exclusions are NUMRULE files and are not edited in a lane tree; the row is recorded for the batch-3 integration refresh. The lane uses the shared predicate `date_time` and `format_checker` with the explicit profile per field and does not call `datetime_validator` in the lane tree.
+
+### Retained reads (batch 2 fix 1, built in from the start)
+
+- **Selection only from the sealed receipt for that exact original** (`W3COriginalOwner`, `:475`, through the shared `RetainedDispatcher` in `dispatch`, `:522`): receipts are looked up by Store, scope, event type and event id in the scenario's sealed store, and must bind the bytes Storage holds. No Store default, fallback or probing; new-write selection stays separate (a fresh append reads no receipt).
+- **Missing, ambiguous and other-original receipts:** `original_custody` (none → `original_unavailable`), `recipe_unique` (two → `recipe_ambiguous`), `original_other_receipt` (a receipt for the same id that binds other bytes), plus `recipe_installed`, `original_admission`, `original_binding`, `original_query` and `original_resolution` (any other refusal, such as an original above uint64 that Storage cannot hand out as canonical bytes, is unavailable, never accepted). Witnesses on both the committed-retry and the history path.
+- **Caller override:** a supplied `recipe_selector` goes through `resolve(recipe_override=...)`, so the shared dispatcher's own gate refuses it (`recipe_override`).
+- **No receipt created while reading:** `dispatch` resolves against a working copy of the sealed store and returns its canonical text before and after the read; row `read_no_receipt_created` compares the two. Witness: a Storage backend whose service is `write_through` (it mints a read receipt on every lookup) is refused at that row on the history and the committed-retry path. No fixture flag decides it; mutation M07 (compare the store with itself) fails the suite.
+- **Frozen verifier:** the `w3c@1` recipe verifies Storage's original with its own resources and no current gate; its comparison components are rows over the raw held and recomputed pairs (`frozen_pairs`, `:427`): `frozen_event_identity`, `frozen_key`, `frozen_full_value`, `frozen_producer`, `frozen_custody_event`, plus validator rows `frozen_envelope`, `frozen_payload`, `frozen_storage_times`.
+- **History in both directions:** `history-live-change` reads after the writer is withdrawn, the permission revoked, the schema uninstalled and the writer generation moved; `history-compat` reads a retained `projector_replay_only` original (valid for compatibility reads); both accept. Forged identity/key originals, withdrawn readers and present access/deletion/restriction refuse.
+
+### Retention cells
+
+All 21 cells are bound (`reports/event-authority-20261105/W3C-phase2-retention.json`, read against `main` `564ed6a467`). Decisions checked: Card 1 (DL-401), deck 2 (DL-415..DL-452), deck 3 (DL-453..DL-464) and deck 4 (DL-500..DL-509). The 13 cells phase 1 left pending are each named in E-CARDS-3 Appendix A, and main's Storage Case L-3 lists them under the decision:
+
+| Families | Was | Now | Decision |
+|---|---|---|---|
+| `testing.capture.bookmarked`, `testing.capture.target_changed` | `PENDING_RETENTION_DECISION` | `RP-AUTHORITY-INDEFINITE@1.0.0`, Project and application, no new count allowance | DL-453 (E-CARDS-3 item 1.a, option A); main `Plans/storage-plan.md:17638` |
+| `artifacts.capture_provenance.inspected`, `testing.capture.effective_quality_changed`, `.health_degraded`, `.health_recovered`, `.paused`, `.resumed`, `.started`, `.stopped` | `PENDING_RETENTION_DECISION` | 90 days from the first successful save that survives a restart: Project `RP-TELEMETRY-90D@1.0.0`, application `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` | DL-454 (item 2.a, option A); main `:17651` |
+| `artifacts.demonstration_video.failed`, `testing.capture.interrupted`, `testing.capture.segment_corrupt` | `PENDING_RETENTION_DECISION` | seven years from the original saved change: Project `RP-OPERATIONAL-2555D@1.0.0` with Storage's Project first-save anchor adapter, application `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` | DL-455 (item 3.a, option A); main `:17659` |
+| The 8 phase-1 bound families | `RP-AUTHORITY-INDEFINITE` | unchanged (E-CARDS-3 Appendix B lists them as W3C's 8 settled rows) | phase-1 binding, reviewed PASS |
+
+No cell stays pending; no retention question goes to Jared. Integration note: `RP-TELEMETRY-90D`, `RP-ROUTINE-OBSERVATION-APPLICATION-90D`, `RP-OPERATIONAL-SECURITY-APPLICATION-2555D` and the Project first-save anchor adapter are on main but not on this unrebased branch; they arrive with the batch-3 rebase.
+
+### What Astra keeps finding: how each was ruled out
+
+1. **Forged or contradictory inputs:** every identity, key, partition, hash and commitment is recomputed from owner authority and compared at its own row; copies join their authority one by one (scope fields, source and request records, permission, owner input times and sequence, receipts, coverage).
+2. **Storage-assigned metadata:** `sequence_id_issued`, `observed_at_utc_issued`, `persisted_at_utc_issued`, the receipt joins and `op_first_append_issued`/`op_event_issued` compare with Storage's issuance; retries compare only the CV-317 preimage (`retry-storage-differs` accepts different Storage values).
+3. **Historical readers:** valid history reads after live changes and for compatibility originals; forged, foreign-receipt, withdrawn and unencodable originals refuse; no current-writer row runs on the history path.
+4. **One field read two ways:** typed canonical text (`canon`, `:147`) for every structured join, so `true`/`1`/`1.0` and object order cannot slip; uppercase uuid and trailing LF refuse.
+5. **Unresolved references:** `install_refs` resolves every `$ref` eagerly through the Corpus registry, with a dangling reference in an unvisited branch of each family's definition (missing resource and missing fragment) and one in the records resource.
+6. **Size limits:** the event body, the complete operation row and the complete checkpoint row each against 16,384 bytes; the owner-valid oversize demonstration body (`append-sp337`) externalized with its SP-337 pack; pack present/id/bytes/body rows for every externalized part.
+7. **Custody on every path:** first-receipt custody on append and commit, the original receipt on committed retries, the sealed original on every retained read, restore of packs and receipt custody.
+8. **Masked negatives:** the judge refuses any negative that refuses at any row but its own; every negative is built at its owning stage; the tool's matrix and cut/restore runs re-check every table.
+9. **Grades:** below; criterion 12 claims only what the checker, the tool and the mutation proof show.
+10. **Numbers written two ways:** one recipe per identity and digest; integral floats refuse at every integer slot; `-0`/`01` refuse at ingress.
+11. **Types confused:** wrong-type number, boolean, null, array and object at every payload and request field; string numbers at EventRecord integer slots.
+12. **Formats the validator skips:** date-time through the shared checker everywhere; `uuid` and pattern-only fields through full-match rows.
+10a. **Tightened rules and history:** retained originals verify under their sealed `w3c@1` recipe; a caller cannot select another. W3C has a single edition, so there is no older-recipe positive.
+
+### Grades before and after
+
+Per family: PASS / PARTIAL / ABSENT (criterion 1, membership, stays ABSENT by design). Re-graded at the phase-2 owner text; every evidence quote in `reports/event-authority-20261105/W3C-self-grade.json` was re-found at its line with the current file hash (268 quotes moved with the inserted text, 13 on the same line; the 34 cells whose evidence is new cite the new text).
+
+| Families | Before (phase-1 round 1, reviewed) | After (phase 2) | Cells that changed |
+|---|---|---|---|
+| 8 bound families (`artifacts.demonstration_video.created`, `testing.capture.clip_saved`, `.provenance_rejected`, `.provenance_verified`, `.redaction_applied`, `.segment_finalized`, `.segment_recovered`, `testing.runtime_enabled_for_adapter`) | 10 / 1 / 1 | 11 / 0 / 1 | 12 oracles: PARTIAL → PASS |
+| 13 newly bound families | 9 / 2 / 1 | 11 / 0 / 1 | 7 retention and 12 oracles: PARTIAL → PASS |
+
+Why: **7 (retention)** was pending; DL-453/454/455 on main decide it. **12 (oracles)** was PARTIAL because only a plan existed; every family now has executable positives and one-defect negatives on every applicable path, every row is proved by the gated tool, twenty mutations fail the suite, and the shared number and date-time checks run through the complete checker. These remain synthetic grades: native execution NOT_RUN, membership ABSENT, and Sol and Astra have not reviewed phase 2.
+
+### Checks at the phase-2 head
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3C/phase2/` with `SHA256SUMS`. Each heavy command ran under `systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0`, started at 12 GiB or more available.
+
+| Command | Exit | Result |
+|---|---:|---|
+| `python3 scripts/pm_w3c_event_oracles.py --json <file>` | 0 | `pass`: 18,893 cases (1,450 positives, 17,443 negatives), 0 errors, 0 unwitnessed rows, 390 rows in 70 tables |
+| `python3 scripts/pm-w3c-cases.py --check --coverage` | 0 | nothing stale (fixtures, custody, plan coverage); 723/723 plan entries witnessed |
+| `python3 scripts/pm-w3c-table-generate.py --check` | 0 | 70 tables, 390 rows, 0 entailed; nothing stale or extra |
+| `python3 scripts/pm-w3c-guard-tables.py --out <dir>` | 0 | 70/70 runs PASS, 390/390 rows proved |
+| `python3 scripts/pm-w3c-mutations.py --scratch <dir>` | 0 | 20/20 killed; scratch restored identical |
+| `python3 scripts/pm-w3c-number-corpus.py` | 0 | `pass`: 163 cases, 587 route runs, 0 disagreements, 0 untracked; 4,400-digit and payload long-integer routes at their rows |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`: 276 positives, 304 negatives |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | `fail`: 40 rows, 1 from this lane's fixture file, 39 of the pre-existing class (Timestamps) |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | `pass`; only Automated_Testing_System, Contracts_V0 and storage-plan shards changed |
+| `python3 scripts/pm-plan-index.py generate` (15-file currentness edition copied in, identical) | 0 | `pass`: 7,491 units; canonical text changed in exactly 56 lane units (TCME-1300..1319, ATS-1220, ATS-1221, CV-1300..1320, SP-1300, -1302, -1303, -1305..-1309, -1313, -1314, -1317..-1319) |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass` |
+| `python3 scripts/pm-plan-index.py validate`, scratch shared clone at `8c96afd8b9` with `origin/main` pinned to `58c2816ff3` | 0 | `pass`, 0 failures |
+| same, `origin/main` live `564ed6a467` | 1 | 760 rows, all from main moving past this unrebased branch: 739 `plan_unit_removed_without_ledger_decision` for units none of which exists at the branch base `70e5d0c0c1`, and the 21 older-ledger rows that come with them |
+
+### Stopped for Jared
+
+Nothing new. `testing.receipt.recorded` (outside the 21) stays the open owner evidence question recorded in phase 1: "Does `testing.receipt.recorded` designate only the existing saved `TestRunReceipt` result/notification, an alias of an already admitted family (which exact family and mapping), or an additional durable EventRecord? Cite the current Testing/Storage authority that selects it."
