@@ -1452,6 +1452,10 @@ def shared_negatives(fam, kind):
     add('CP13_retired_clock', 'publish', {'cand': setp('generations', 1, 'retired_at_utc', '2026-10-20T00:00:00z')})
     add('CP14_root_size', 'publish', {'cand': setp('generations', 0, 'core', 'generic_token', 'checkpoint_key', 'k' * 17000)})
     add('CP15_no_fourth_key', 'publish', {'storage_keys': lambda k, W: k + [W['root_key'] + '.history']})
+    lf = _token_both('generation_anchor_sha256', sha(b'anchor') + '\n')
+    add('CP01_root_schema', 'publish', lf, 'trailing LF on a durable token hash (standing check 5; TK05 also fails later)')
+    lf = _token_both('generation_id', 'eig_' + sha(b'index-gen') + '\n')
+    add('CP01_root_schema', 'publish', lf, 'trailing LF on the durable token generation id (standing check 5; TK04 also fails later)')
     # generation (R1 constructions)
     add('GN01_current_cardinality', 'publish', {'cand': lambda c, W: c['generations'][1].update(lifecycle='current', retired_at_utc=None)})
     add('GN02_node_membership', 'publish', {'cand': lambda c, W: c.__setitem__('generations', [c['generations'][0], c['generations'][1], copy.deepcopy(c['generations'][1])])}, 'A,B,B')
@@ -1662,6 +1666,11 @@ def main(argv=None):
         only = args[args.index('--family') + 1]
     out_path = Path(args[args.index('--json') + 1]) if '--json' in args else None
     summary = dict(families=0, positives=0, negatives=0, single_row=0, multi_row=0, mismatches=[], unresolved_refs=[])
+    # Standing check 8: an inverted expectation must be flagged, never pass as success.
+    probe = dict(kind='negative', phase='admission__01', row='AD02_membership')
+    summary['oracle_self_check'] = (judge(dict(kind='positive'), ('admission__01', 'AD02_membership', 'missing_event_registration', ['membership'])) is not None
+                                    and judge(probe, None) is not None
+                                    and judge(dict(probe, row='AD01_cutoff_open'), ('admission__01', 'AD02_membership', 'missing_event_registration', ['membership'])) is not None)
     coverage = {}
     with exact_integer_digits():
         summary['unresolved_refs'] = resolve_every_ref()
@@ -1696,7 +1705,7 @@ def main(argv=None):
                     if f'{phase_name}/{r[0]}' not in witnessed:
                         summary['mismatches'].append(dict(family=fam['event_type'], case=f'{phase_name}/{r[0]}', why='row without a single-row witness'))
     summary['rows_witnessed'] = {k: len(v) for k, v in coverage.items()}
-    summary['status'] = 'pass' if not summary['mismatches'] and not summary['unresolved_refs'] else 'fail'
+    summary['status'] = 'pass' if not summary['mismatches'] and not summary['unresolved_refs'] and summary['oracle_self_check'] else 'fail'
     text = json.dumps(summary, indent=1, sort_keys=True, default=str)
     if out_path:
         out_path.write_text(text + '\n')
