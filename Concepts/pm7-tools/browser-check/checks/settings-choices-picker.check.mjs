@@ -812,6 +812,51 @@ export const tests = {
 		await t.viewport(1390, 900);
 	},
 
+	/* FO-178: a press on a row held for a moment, as a person presses (200 ms between press and release), picks it: the
+	   popup closes, the row's own control follows, and focus is back on the picker, which names it (a press on a row must
+	   not count as focus leaving the popup). Go back to the default restores it. The model setting at 1390x900 (the
+	   popup under its trigger) and 1280x500 (over it), either surface. */
+	'FO-178 a held press on a row picks it': async (t) => {
+		const f = await t.app.open();
+		await t.emulate({ reducedMotion: 'no-preference' });
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		for (const [w, h] of [[1390, 900], [1280, 500]]) {
+			await t.viewport(1390, 900);
+			if (!(await openDetails(t, f, SETTING))) continue;
+			if (w !== 1390 || h !== 900) { await t.viewport(w, h); await t.page.waitForTimeout(500); }
+			const where = `held press ${w}x${h}`;
+			const b = await judgeClosed(t, f, where, SETTING);
+			if (b.combos) {
+				await beforeOpen(t, f);
+				await f.locator(PICKER).first().click();
+				await t.page.waitForTimeout(450);
+				const id = await openListId(f);
+				/* a row that is not the current one, can be picked, and stands wholly in the list's view */
+				const row = id && await f.evaluate((id) => {
+					const l = document.getElementById(id), lr = l.getBoundingClientRect();
+					const r = [...l.querySelectorAll('[role="option"]')].find((n) => { const x = n.getBoundingClientRect(); return !n.hidden && n.getAttribute('aria-selected') !== 'true' && n.getAttribute('aria-disabled') !== 'true' && x.top >= lr.top && x.bottom <= lr.bottom; });
+					return r ? { index: r.dataset.index, name: (((r.querySelector('strong') || r).firstChild || {}).textContent || '').trim() } : null;
+				}, id);
+				if (!row) await t.check(`${where}: a row to press`, false, id ? 'no other row in view' : 'no open list');
+				else {
+					await f.locator(`${listSel(id)} [role="option"][data-index="${row.index}"]`).click({ delay: 200 });
+					await t.page.waitForTimeout(600);
+					const after = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]'); return { expanded: c && c.getAttribute('aria-expanded'), focus: !!(c && document.activeElement === c), face: c ? (((c.querySelector('strong') || c).firstChild || {}).textContent || '').trim() : '', popped: !!document.querySelector('.o55-pick-pop.is-open') }; });
+					await t.check(`${where}: FO-178 a press on "${row.name}" held 200 ms picks it: the popup closes and focus is back on the picker, which names it`, after.expanded === 'false' && !after.popped && after.focus && after.face === row.name, JSON.stringify(after));
+					const reset = f.locator('#panel-settings .detail-inspector [data-action="reset-setting"]').first();
+					if (await reset.count()) { await reset.click(); await t.page.waitForTimeout(500); }
+					const back = await f.evaluate((id) => { const s = document.querySelector(`#pm-settings-root select[data-setting="${CSS.escape(id)}"]`); return s && s.value; }, SETTING);
+					await t.check(`${where}: Go back to the default restores it`, back === b.value, `${back} vs ${b.value}`);
+				}
+				if (await f.evaluate(POPPED)) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); }
+			}
+			await closeDetails(t, f);
+		}
+		await t.viewport(1390, 900);
+	},
+
 	/* FO-178: the popup sits above the panel and above a toast (Settings' toasts appear near the top of the window, where
 	   the popup reaches when it opens over its trigger), with and without FO-177's `isolation: isolate` on
 	   #panel-settings: its corners, its middle and every point it shares with the toast reach the popup. The model

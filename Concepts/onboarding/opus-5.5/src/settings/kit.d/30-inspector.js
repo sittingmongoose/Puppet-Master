@@ -192,17 +192,18 @@ const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip
    picker and every Settings popout are built from, nothing of its own:
      where it lives   document.body, position: fixed (a .pm51-popout, kit.js's popout layer at z-index 1300), so it sits
                       above the panel and the panel's toasts whatever stacking context the panel makes (isolation or not)
-     where it stands  kit.js's positionPopout: from the trigger's left edge at the trigger's width, so it fits the narrow
-                      panel; under the trigger when the list fits there, over it when it does not (it keeps that bottom
-                      edge while a search shortens it, as the chat's picker does), never past the window's edges or under
-                      the status bar
+     where it stands  the chat picker's placement (o55PopPlace below): from the trigger's left edge at the trigger's
+                      width, so it fits the narrow panel; under the trigger when the list fits there, over it when it
+                      does not (it keeps that bottom edge while a search shortens it, as the chat's picker does), never
+                      past the window's edges or under the status bar (Settings' popout frame)
      how it moves     the menu sprout, PM6_SPROUT, from the trigger's centre (origin 'trigger', the chat's menus' own);
                       its size bounce when a search or a maker changes its height; nothing under Reduced Motion
      its surface      a menu sheet in Glass (data-lg-surface="menu") and a popout in every other look
    Inside it, the maker strip (the chat's rail, laid flat for the narrow panel) and the search stay at the top and the
    list is the popup's own scroll box. It keeps its own keys (arrows, Page Up/Down, Home/End, Enter, Escape, Tab out to
-   the trigger); a press outside it, focus leaving it, a window resize or its trigger leaving the page close it, and a
-   scroll that moves its trigger takes it along. */
+   the trigger) and keeps focus in its search while a row is pressed (a press on a row is not focus leaving it); a press
+   outside it, focus leaving it, a window resize or its trigger leaving the page close it, and a scroll that moves its
+   trigger takes it along. */
 let o55Pop = null;
 function o55PopClose(focusTrigger) {
   const e = o55Pop; if (!e) return; o55Pop = null;
@@ -253,7 +254,7 @@ function o55PopOpen(trigger, setting, pm, src) {
   document.body.appendChild(box);
   const list = box.querySelector('.o55-pick-list');
   const entry = { el: list, pop: box, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
-  const p = o55Pop = { box, trigger, entry, setting: setting.id, at: null, watch: null };
+  const p = o55Pop = { box, trigger, entry, at: null, watch: null };
   trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', id + '-list');
   const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55PopClose(true); if (src && src.commit) o55PickOwnerCommit(setting.id, src, o.value); else o55PickCommit(setting.id, o.value); };
   o55PopPlace(p);
@@ -264,6 +265,9 @@ function o55PopOpen(trigger, setting, pm, src) {
   if (node) list.scrollTop = Math.max(0, node.offsetTop - (list.clientHeight - node.offsetHeight) / 2);
   if (window.PM6_SPROUT) PM6_SPROUT.open(box, null, trigger, { origin: 'trigger' }); else box.classList.add('is-open');
   box.addEventListener('pointermove', e => { const it = e.target.closest('[role="option"]'); if (it && Number(it.dataset.index) !== entry.active) setActiveOption(entry, Number(it.dataset.index), false); });
+  /* a press on a row, a heading or the popup's edge leaves focus where it is (the search), as a listbox's rows do: the
+     rows take no focus, and a blur there would close the popup before a press held for a moment ends in its click */
+  box.addEventListener('mousedown', e => { if (!e.target.closest('input, button')) e.preventDefault(); });
   box.addEventListener('click', e => {
     const chip = e.target.closest('.o55-pick-chip');
     if (chip) { e.preventDefault(); e.stopPropagation(); entry.brand = chip.dataset.brand || ''; box.querySelectorAll('.o55-pick-chip').forEach(b => { const on = b === chip; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); }); o55PickFilter(entry, list); return; }
