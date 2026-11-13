@@ -12,9 +12,9 @@
     "unblocks_edge_count": 3214,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-13T00:35:24Z",
+  "generated_at_utc": "2026-11-13T07:25:00Z",
   "gui_related_units": {
-    "count": 3890,
+    "count": 3885,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -5407,17 +5407,6 @@
         }
       },
       {
-        "owner_doc": "Plans/Automated_Testing_System.md",
-        "plan_unit_id": "ATS-316",
-        "source_location": {
-          "heading": "ATS-316 - Card 1b maintenance oracles",
-          "heading_level": 3,
-          "heading_line": 10090,
-          "line": 10092,
-          "path": "Plans/Automated_Testing_System.md"
-        }
-      },
-      {
         "owner_doc": "Plans/Bitbucket_Integration.md",
         "plan_unit_id": "BBI-001",
         "source_location": {
@@ -9154,28 +9143,6 @@
           "heading_level": 3,
           "heading_line": 25253,
           "line": 25255,
-          "path": "Plans/Contracts_V0.md"
-        }
-      },
-      {
-        "owner_doc": "Plans/Contracts_V0.md",
-        "plan_unit_id": "CV-658",
-        "source_location": {
-          "heading": "CV-658 - memory.prune_archive.completed Card 1b contract",
-          "heading_level": 3,
-          "heading_line": 31957,
-          "line": 31959,
-          "path": "Plans/Contracts_V0.md"
-        }
-      },
-      {
-        "owner_doc": "Plans/Contracts_V0.md",
-        "plan_unit_id": "CV-659",
-        "source_location": {
-          "heading": "CV-659 - memory.prune_archive.started Card 1b contract",
-          "heading_level": 3,
-          "heading_line": 32100,
-          "line": 32102,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -36120,28 +36087,6 @@
       },
       {
         "owner_doc": "Plans/storage-plan.md",
-        "plan_unit_id": "SP-638",
-        "source_location": {
-          "heading": "SP-638 - memory.monthly_summary.completed Card 1b contract",
-          "heading_level": 3,
-          "heading_line": 38947,
-          "line": 38949,
-          "path": "Plans/storage-plan.md"
-        }
-      },
-      {
-        "owner_doc": "Plans/storage-plan.md",
-        "plan_unit_id": "SP-639",
-        "source_location": {
-          "heading": "SP-639 - memory.monthly_summary.started Card 1b contract",
-          "heading_level": 3,
-          "heading_line": 39093,
-          "line": 39095,
-          "path": "Plans/storage-plan.md"
-        }
-      },
-      {
-        "owner_doc": "Plans/storage-plan.md",
         "plan_unit_id": "SP-656",
         "source_location": {
           "heading": "SP-656 — Preview subject UI and runtime identity mapping",
@@ -47202,7 +47147,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "4d3f1cace81584bea41a93d031d1ae9ed60ab2c5690290127b100ef0631ef9f5",
+        "expected": "4787625103f0742db48e5e1df0b815768830e76ff8d6391196a237197cf8c511",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

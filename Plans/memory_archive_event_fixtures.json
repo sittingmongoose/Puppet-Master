@@ -41014,45 +41014,11 @@
       "refusal": "cutoffs_unavailable"
     },
     {
-      "name": "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
-      "event_type": "memory.monthly_summary.completed",
-      "guard": "cutoffs_unavailable",
-      "kind": "writer",
-      "initial": "before",
-      "edits": [
-        {
-          "path": [
-            "state",
-            "cutoff_authorities"
-          ],
-          "value": {}
-        }
-      ],
-      "refusal": "cutoffs_unavailable"
-    },
-    {
       "name": "memory.monthly_summary.completed:direct-cutoffs-absent",
       "event_type": "memory.monthly_summary.completed",
       "guard": "cutoffs_unavailable",
       "kind": "writer",
       "initial": "before",
-      "edits": [
-        {
-          "path": [
-            "state",
-            "cutoff_authorities"
-          ],
-          "value": {}
-        }
-      ],
-      "refusal": "cutoffs_unavailable"
-    },
-    {
-      "name": "memory.monthly_summary.completed:button-disabled-with-reason",
-      "event_type": "memory.monthly_summary.completed",
-      "guard": "cutoffs_unavailable",
-      "kind": "panel",
-      "initial": "started",
       "edits": [
         {
           "path": [
@@ -46549,45 +46515,11 @@
       "refusal": "cutoffs_unavailable"
     },
     {
-      "name": "memory.monthly_summary.started:memory-panel-cutoffs-absent",
-      "event_type": "memory.monthly_summary.started",
-      "guard": "cutoffs_unavailable",
-      "kind": "writer",
-      "initial": "before",
-      "edits": [
-        {
-          "path": [
-            "state",
-            "cutoff_authorities"
-          ],
-          "value": {}
-        }
-      ],
-      "refusal": "cutoffs_unavailable"
-    },
-    {
       "name": "memory.monthly_summary.started:direct-cutoffs-absent",
       "event_type": "memory.monthly_summary.started",
       "guard": "cutoffs_unavailable",
       "kind": "writer",
       "initial": "before",
-      "edits": [
-        {
-          "path": [
-            "state",
-            "cutoff_authorities"
-          ],
-          "value": {}
-        }
-      ],
-      "refusal": "cutoffs_unavailable"
-    },
-    {
-      "name": "memory.monthly_summary.started:button-disabled-with-reason",
-      "event_type": "memory.monthly_summary.started",
-      "guard": "cutoffs_unavailable",
-      "kind": "panel",
-      "initial": "started",
       "edits": [
         {
           "path": [
@@ -51532,45 +51464,11 @@
       "refusal": "cutoffs_unavailable"
     },
     {
-      "name": "memory.prune_archive.completed:memory-panel-cutoffs-absent",
-      "event_type": "memory.prune_archive.completed",
-      "guard": "cutoffs_unavailable",
-      "kind": "writer",
-      "initial": "before",
-      "edits": [
-        {
-          "path": [
-            "state",
-            "cutoff_authorities"
-          ],
-          "value": {}
-        }
-      ],
-      "refusal": "cutoffs_unavailable"
-    },
-    {
       "name": "memory.prune_archive.completed:direct-cutoffs-absent",
       "event_type": "memory.prune_archive.completed",
       "guard": "cutoffs_unavailable",
       "kind": "writer",
       "initial": "before",
-      "edits": [
-        {
-          "path": [
-            "state",
-            "cutoff_authorities"
-          ],
-          "value": {}
-        }
-      ],
-      "refusal": "cutoffs_unavailable"
-    },
-    {
-      "name": "memory.prune_archive.completed:button-disabled-with-reason",
-      "event_type": "memory.prune_archive.completed",
-      "guard": "cutoffs_unavailable",
-      "kind": "panel",
-      "initial": "started",
       "edits": [
         {
           "path": [
@@ -56777,45 +56675,11 @@
       "refusal": "cutoffs_unavailable"
     },
     {
-      "name": "memory.prune_archive.started:memory-panel-cutoffs-absent",
-      "event_type": "memory.prune_archive.started",
-      "guard": "cutoffs_unavailable",
-      "kind": "writer",
-      "initial": "before",
-      "edits": [
-        {
-          "path": [
-            "state",
-            "cutoff_authorities"
-          ],
-          "value": {}
-        }
-      ],
-      "refusal": "cutoffs_unavailable"
-    },
-    {
       "name": "memory.prune_archive.started:direct-cutoffs-absent",
       "event_type": "memory.prune_archive.started",
       "guard": "cutoffs_unavailable",
       "kind": "writer",
       "initial": "before",
-      "edits": [
-        {
-          "path": [
-            "state",
-            "cutoff_authorities"
-          ],
-          "value": {}
-        }
-      ],
-      "refusal": "cutoffs_unavailable"
-    },
-    {
-      "name": "memory.prune_archive.started:button-disabled-with-reason",
-      "event_type": "memory.prune_archive.started",
-      "guard": "cutoffs_unavailable",
-      "kind": "panel",
-      "initial": "started",
       "edits": [
         {
           "path": [
