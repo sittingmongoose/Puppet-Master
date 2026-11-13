@@ -46,6 +46,13 @@ const READ = (sel) => {
 	});
 	const d = shown[shown.length - 1];
 	if (!d) return null;
+	/* the entrance is finished first: NieR's slice opens the dialog from a 0.2 px-tall sliver (every line box shares
+	   one top, read as no line at all) and the others scale it from 98.2%; a measurement belongs to the laid-out dialog */
+	for (const a of document.getAnimations()) {
+		const el = a.effect && a.effect.target;
+		if (!el || !(el === d || d.contains(el) || el.contains(d))) continue;
+		try { if (Number.isFinite(a.effect.getComputedTiming().endTime)) a.finish(); } catch (e) { /* an endless one stays */ }
+	}
 	const tx = (n) => (n ? n.textContent : '').replace(/\s+/g, ' ').trim();
 	const part = (el) => {
 		if (!el || !tx(el)) return null;
@@ -393,6 +400,9 @@ for (const surface of ['normal', 'sandbox']) {
 						out.cells[id][key] = { dialogW: info.dialogW, sub: info.sub, alert: info.alert };
 					}
 					await t.check(`${id}: every listed dialog opened through PM51.confirm`, broken === 0, `${broken} of ${got.length} drew no dialog`);
+					/* words that are there draw at least one line: a 0 is a reading of a dialog not laid out yet, never a pass */
+					const blank = Object.entries(rows).filter(([, n]) => !(n >= 1));
+					await t.check(`${id}: every copy row was read on at least one line (${Object.keys(rows).length} rows)`, blank.length === 0 && Object.keys(rows).length > 0, blank.slice(0, 3).map(([k, n]) => `${k.slice(0, 50)} ${n}`).join(' | '));
 					/* the replay is the clicked dialog: at the walk's own cell, same words on the same lines */
 					if (walked && look === 'basic-dark' && size[0] === WALK_SIZE[0] && size[1] === WALK_SIZE[1]) {
 						const miss = [];
