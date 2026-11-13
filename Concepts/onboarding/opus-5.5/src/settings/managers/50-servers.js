@@ -119,6 +119,7 @@
      new one arrives. Example Servers and devices the person never set up are not listed beside it, and a value the
      result does not carry is shown as not checked rather than invented. */
   const ROUTE_OF = { local_or_vpn: r => (r.via === 'vpn' ? 'vpn' : 'lan'), tailscale: () => 'tailscale', reverse_proxy: () => 'domain', remote_link: () => 'remote-link' };
+  const PROXY_FAMILY = { caddy: 'Caddy', nginx: 'NGINX', traefik: 'Traefik' };
   const ROUTE_STATE = { in_use: 'active', ready: 'ready', waiting: 'testing', needs_attention: 'needs-attention', set_up_later: 'not-set-up', not_set_up: 'not-set-up' };
   function adoptOnboarding(SP) {
     const r = window.PM_ONBOARDING_RESULT;
@@ -138,7 +139,15 @@
         else if (x.id === 'lan' && R.actual !== 'lan') { x.status = 'not-set-up'; x.lastCheck = 'Never'; }
       });
       if (pick === 'tailscale' && route.control === 'headscale') R.headscale = { address: route.endpoint_label || '' };
-      if (pick === 'domain') R.domain = { name: String(route.endpoint_label || '').replace(/^https:\/\//, ''), proxy: 'Proxy' };
+      /* FO-175: the proxy the person chose comes over with the route (proxy_family caddy, nginx or traefik for a file
+         Puppet Master makes; proxy_hosting existing_proxy for one they already run), as Settings' own Away guide saves
+         it; it was written as 'Proxy', which the sheet's picker read as Caddy whatever was picked. A result that names
+         no proxy (one kept from before) still says only Proxy: no family is put in its place. */
+      if (pick === 'domain') {
+        const own = route.proxy_hosting === 'existing_proxy', fam = PROXY_FAMILY[route.proxy_family], done = route.state === 'ready' || route.state === 'in_use';
+        R.domain = { name: String(route.endpoint_label || '').replace(/^https:\/\//, ''), proxy: own ? 'Your proxy' : fam || 'Proxy' };
+        if (own || fam) Object.assign(R.domain, { hosting: own ? 'existing' : 'file', forwarded: done, generated: !own && done });
+      }
       if (pick === 'remote-link') R.remoteLink = { link: route.endpoint_label || '', created: 'During setup' };
       if (pick === 'vpn') R.vpn = { kind: 'Other', address: srv ? srv.address_label || '' : '' };
     }
@@ -1213,7 +1222,7 @@
         summary: 'Your own address through your own reverse proxy. Puppet Master makes its settings file; your proxy runs it. It is a public address, so sign-in is still required.',
         body: PM51.panelSection('Steps', railSteps(steps, settled ? 3 : configured ? (own || dom.generated ? 2 : 1) : 0, false), '', { icon: 'route' })
           + PM51.panelSection('Your domain', PM51.field('Domain', PM51.input(dom.name || '', { action: 'pm51-servers-domain-name', placeholder: 'pm.example.com', label: 'Domain' }), 'Point this name at your home IP address.') + (own ? PM51.field('Proxy', `<span class="pm51-row-value">Your own proxy · nothing is made for it</span>`) : PM51.field('Proxy', PM51.dropdown(kind, GENERATES, { action: 'pm51-servers-domain-proxy', label: 'Proxy' }))), '', { icon: 'browser' })
-          + (own ? '' : PM51.panelSection('Settings file', `<div class="pm51-servers-actions">${PM51.btn({ label: 'Make the settings file', small: true, icon: 'file', action: 'pm51-servers-domain-generate' })}</div><div data-domain-config style="margin-top:10px">${dom.generated && dom.name ? `<div class="pm51-servers-conf">${h(proxyConfig(dom.name, kind))}</div>` : ''}</div>`, `Add it to your proxy and reload it. ${CERT_NOTE}`, { icon: 'file' }))
+          + (own ? '' : PM51.panelSection('Settings file', `<div class="pm51-servers-actions">${PM51.btn({ label: 'Make the settings file', small: true, icon: 'file', action: 'pm51-servers-domain-generate' })}</div><div data-domain-config style="margin-top:10px">${dom.generated && dom.name ? `<div class="pm51-servers-conf">${h(awayConfig({ domain: dom.name, proxy: kind }))}</div>` : ''}</div>`, `Add it to your proxy and reload it. ${CERT_NOTE}`, { icon: 'file' }))
           + (configured ? useRouteCard(r) : '')
           + PM51.note('A domain is a public address. Prefer Tailscale, your VPN, or Remote Link when you can.', 'info'),
         primary: !configured ? { label: 'Save', run: wrap => {
@@ -1481,11 +1490,13 @@
   PM51.onChange('servers-domain-proxy', () => {});
   PM51.onInput('servers-vpn-address', () => {});
   PM51.onChange('servers-vpn-kind', () => {});
+  /* FO-175: the file is made by awayConfig, the one builder onboarding uses too: proxyConfig has no Caddy branch, and a
+     Caddy pick here used to make an NGINX server block */
   PM51.on('servers-domain-generate', el => {
     const R = ra(), wrap = el.closest('.pm51-panel') || portalRoot();
     const name = fieldValue(wrap, 'input[data-action="pm51-servers-domain-name"]') || 'pm.example.com', picked = fieldValue(wrap, 'select[data-action="pm51-servers-domain-proxy"]'), proxy = GENERATES.includes(picked) ? picked : 'Caddy';
     R.domain = Object.assign({}, R.domain || {}, { name, proxy, hosting: 'file', generated: true }); saveState();
-    const holder = wrap.querySelector('[data-domain-config]'); if (holder) holder.innerHTML = `<div class="pm51-servers-conf">${h(proxyConfig(name, proxy))}</div>`;
+    const holder = wrap.querySelector('[data-domain-config]'); if (holder) holder.innerHTML = `<div class="pm51-servers-conf">${h(awayConfig({ domain: name, proxy }))}</div>`;
     const step = wrap.querySelectorAll('.pm51-steps.pm51-rail .pm51-step')[1]; if (step && !step.classList.contains('is-done')) { step.classList.add('is-done'); const n = step.querySelector('.pm51-step-n'); if (n) n.innerHTML = icon('check'); const end = step.querySelector('.pm51-step-end'); if (end) end.innerHTML = ''; }
   });
 

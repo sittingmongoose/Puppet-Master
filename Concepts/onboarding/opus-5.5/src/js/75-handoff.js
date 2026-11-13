@@ -47,11 +47,15 @@
   /* How this device reaches the Server. mode follows the draft's remote_mode; state is what actually happened. */
   function route(S) {
     const d = serverDraft(S), mode = d.remote_mode || 'none';
-    const base = { mode, control: mode === 'tailscale' ? d.tailscale_control || 'hosted' : null, via: null, endpoint_label: '', state: 'not_set_up' };
+    const base = { mode, control: mode === 'tailscale' ? d.tailscale_control || 'hosted' : null, via: null, endpoint_label: '', state: 'not_set_up', proxy_family: null, proxy_hosting: null };
     if (mode === 'tailscale') base.endpoint_label = d.tailscale_control === 'headscale' ? d.headscale_url : 'Tailscale';
-    if (mode === 'reverse_proxy') base.endpoint_label = d.proxy_hostname;
+    /* FO-175: a web address keeps the proxy the person chose, so the app shows and makes the file for that one: proxy_family
+       is exactly caddy, nginx or traefik for a file Puppet Master makes (generate_only), and null for a proxy they
+       already run (existing_proxy). Settings read the route without it and showed Caddy whatever was picked. */
+    if (mode === 'reverse_proxy') Object.assign(base, { endpoint_label: d.proxy_hostname, proxy_hosting: d.proxy_hosting === 'existing_proxy' ? 'existing_proxy' : d.proxy_hosting === 'generate_only' ? 'generate_only' : null,
+      proxy_family: d.proxy_hosting === 'existing_proxy' ? null : ['caddy', 'nginx', 'traefik'].includes(d.proxy_kind) ? d.proxy_kind : null });
     if (mode === 'remote_link') base.endpoint_label = d.remote_endpoint;
-    if (d.server_mode === 'this_device' || mode === 'none') return Object.assign(base, { mode: 'none', control: null, endpoint_label: '' });
+    if (d.server_mode === 'this_device' || mode === 'none') return Object.assign(base, { mode: 'none', control: null, endpoint_label: '', proxy_family: null, proxy_hosting: null });
     if (d.server_mode === 'existing_server') {
       const s = known(S, d.server_ref) || {};
       base.via = mode === 'local_or_vpn' ? (s.via === 'vpn' ? 'vpn' : 'lan') : null;
