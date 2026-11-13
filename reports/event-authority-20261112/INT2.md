@@ -1,5 +1,159 @@
 # INT2 — batch-2 Event Authority integration
 
+## Rebase onto main 9b212f7aa9 (2026-11-12)
+
+**The branch now sits on `origin/main` `9b212f7aa943508e76e7c8f27cc0d5104a5dec83`.** Content head `539cc75c96fd2972fbb7e1f82c4a25c02d1e427a`; this report is the one commit on top of it; the old head `659e53a306` is preserved by tag `ea-batch2-int-pre-rebase-20261112` (tag object `99a34854a1`) on both push URLs. Lane merge structure is unchanged: every lane, tool and deck merge keeps its approved head as second parent. No landing lock, `main` push, reseal, Spec Lock or `.evidence` edit. Native execution stays NOT_RUN; no family is admitted.
+
+- **Conflicts:** 4 owner files, 7 replay steps. Two are E-text decisions that follow main's newer Memory rulings. One is a recomputed graph hash. The rest are main-against-main or append order. Details below.
+- **Regeneration:** 30 shard namespaces plus the index. All are documents the branch changes; none of main's other documents moved.
+- **Repairs main's moves required:** a T198 date-time inventory refresh and a DG6A grade citation re-point. Both use INT2's own sanctioned tools; no meaning changed.
+- **Registry:** 0 diagnostics. It and the five protected shared files are byte-identical to the pre-rebase head, and to main where main owns them.
+- **Consumers:** 119 checks, the full set INT2 ran. 118 exit 0; the DT guard replay exits 1 with verdicts identical to INT2's.
+- **Dry landing:** exit 1 with 0 blocking items and 0 infrastructure timeouts. All 33,082 on-branch rows are governance staleness.
+- **AMS-141:** the `2787` citation no longer exists on current main, so there is nothing to re-point.
+
+**Stopped for Jared (not answered, not edited):** main's DL-475 says Memory has no maintenance buttons "now or after those holds close", while DMEM's prepared CV-658, CV-659, SP-638, SP-639, ATS-316 and the §7.2 usefulness rule still bind unavailable Memory-panel buttons that wait for approvals (DL-403 option A). See "Open question" below.
+
+### Base and method
+
+- **Base.** The work rebased onto `origin/main` `b4e7a1c639`, 15 commits past INT2's last integrated main `002800123f` (quiet Memory and helper reads, retired memory/context inspection, one model defaults list, Settings batches 2 and 3, snapshot and baseline refresh; 90 non-derived paths). Main then moved twice, each time only under `Concepts/`: to `b69d410c45` (79 PM7 and chat performance commits) and to `9b212f7aa9` (34 Projects Split v3 commits). No chain commit touches `Concepts/`. Under the stream's rule for Concepts-only moves, each was a mechanical rebase: every commit was rebuilt with the new base's `Concepts` tree, keeping its message, author, author date and second parents. The branch's diff against `9b212f7aa9` is byte-identical to its diff against `b4e7a1c639`. The dry landing ran at the `b69d410c45` edition (`2db51d2a34`), which differs from the pushed content head only in `Concepts/`, so it was not rerun for the second Concepts-only move.
+- **Method (batch-1 replay, merge parents kept).** The 51 first-parent commits of `659e53a306` (from `c5eb892ebb`) were replayed in order as three-way tree merges: base = the commit's first parent, ours = the new chain, theirs = the commit. `Plans/_shards/**` and `Plans/.plan_index/**` were never merged: they stayed at main's bytes until one fresh regeneration commit. For INT2's six merges of older main commits, every path whose change was purely main's (merge result = that main commit's bytes, and the branch side unchanged since their merge base) was reset, because the new base already holds that or newer main; a naive replay would have re-added snapshot files main has since removed. Each commit keeps its message, author and author date; parents are the new chain plus the original second parents (lane heads, tool and deck heads, and the old main commits INT2 merged). Lane heads carry no main newer than their merge point, so no lane content was dropped.
+- **Result.** 49 commits replayed, 2 dropped: `c82121276f` (regeneration only) and `bf2a7b291a` (its line re-points became empty: main removed UCC-230's evidence `line:` fields and rewrote AMS-141, so the conflict resolves to main's bytes). Three commits added: `0170bbd1bd` (shards and index), `5e9d40ffad` (T198 date-time inventory refresh) and `539cc75c96` (DG6A grade citation re-point). The full old→new map is `INT2-rebase-replay.json`.
+- **Cross-check.** The replayed tree's non-derived content equals a direct `git merge-tree origin/main 659e53a306` (base `002800123f`) on every path except its four conflicted files, and each of those equals the adjudicated resolution below. Against main, the branch still changes the same 2,833 non-derived paths as before the rebase.
+
+### Conflicts and resolutions
+
+| Replay step | Path | Resolution |
+|---|---|---|
+| DMEM `3b75e50eb8` → `e0271799c7` | `Plans/assistant-memory-subsystem.md` (4 hunks: §7.2 item 6; AMS-022 canonical text, acceptance, negative constraints) | Main's DL-475 text kept. It already says archive-only, deletion is the user's action, pins protected, DL-402/403/444–447 holds remain. DMEM's other edits in the file (item 4 dedup, DL-446/447 rules, AMS-100 and later units) merge unchanged. |
+| DCN `f5c0c40d98` → `6d6c298ad7` | `Plans/UI_Command_Catalog.md` §2.8 table, UCC-084 canonical text | Main's §2.8 table (no events column; "Typed owner payloads and results are defined in AMS-141"). UCC-084 = main's text plus DCN's one appended sentence: "DL-407 and AMS-130/CV-785/SP-765 replace the seven command history spellings with memory.gist_state_changed once per successful real mutation; requested or failed verification and no-ops retain only their command results." DCN's token change (seven retired `memory.gist.*` names out, `memory.gist_state_changed` in) merged cleanly and needs that sentence to stay inside its unit. |
+| DM `ac8fea2b5c` → `1648ceb661` | same two hunks | Main's table; UCC-084 also gets DM's appended sentence: "Under DL-408, the auto-save-unverified switch records only settings.layer.changed; settings.updated is retired as superseded." DM's token and `stale_retired_dispositions` edits merged cleanly. |
+| DS `a1da3279da` → `f0d0737f31`; CV-366 pin `1ad380249e` → `d82c15da7e` | `Plans/application_workflow_source_graph.json` `graph_sha256` | Recomputed with `pm_projects_refresh_contracts.semantic_hash('source_graph', …)` over the merged graph: main's new `assistant_memory_contracts.schema.json` pin plus DS's content (`1fae8b3f…`), then plus INT2's workflow-contracts pin (final `fd892f205eadd0ab4d3da1df061fdfa9038bc848927b2b7bc30303317fd9aa2e`). Every resource pin equals the tree bytes; `graph_failures` and the DO V2 successor check return `[]`. |
+| Q5 citations `bf2a7b291a` (dropped) | `UI_Command_Catalog.md` UCC-230 evidence (7 hunks), `assistant-memory-subsystem.md` AMS-141 (2 hunks) | Main's bytes: main no longer carries the `line:` fields INT2 re-pointed, and C's AMS-141 was rewritten by `7f6c2b00ed`. |
+| Main merge `5fba5ed7e1` → `129f5ae72b` | `Decision_Log.md`, `FinalGUISpec.md`, `Personas.md`, `Settings_System.md` (6 hunks) | Every hunk is older main text against newer main text (checked block by block); newer main kept. |
+| Main merge `dce01cb874` → `1f36935683` | `Plans/Decision_Log.md` end of file | Append/append: main's DL-475 and DL-476 first, then the branch's DL-500..DL-509 block byte for byte. |
+
+Derived conflicts: none were merged; all derived paths were regenerated.
+
+### Re-adjudicated passages (main changed what the branch cites or edits)
+
+- **Memory maintenance (§7.2 item 6, AMS-022).** DMEM's DL-402 wording is superseded by main's DL-475 wording, which keeps the same meaning (archive-only, user-only delete, pinned notes protected). Decision: follow main.
+- **§2.8 memory commands, UCC-084.** Main retired the Gist Review panel and made Verify/Pin/Discard/toggle/preview support- or compatibility-only. DCN's DL-407 event mapping and DM's DL-408 sentence still hold for any real mutation through those IDs. Decision: main's text plus the two event sentences.
+- **§9.1 helper access** (`assistant-memory-subsystem.md`, cited by DMEM's deck-2 6.c/6.d sources): "Subagent access: disabled" became read-only helper access under DL-475, with personal notes at an Every project level. DL-446/447's cutoffs apply only inside each Project, and a non-Project caller needs its own approved saved record before any test runs. So Every-project notes are not selected until separately approved. Decision: the branch text follows unchanged; reviewers should confirm.
+- **Memory-panel buttons (DL-475 vs DMEM).** Not resolvable by following main; see "Open question".
+- **Persona models (DL-476).** DG6B's `persona.selected` already takes model resolution from Models, not Persona. No change.
+- **Citations into main-changed files.** 1,212 line citations in branch-added text point into files main changed. Each cited range was mapped exactly from the pre-rebase head to the rebased head through `git diff` hunks: 651 unchanged, 524 shifted, 37 landing on lines main edited. The 37 come from five passages, all cited only by frozen records: DCN/August disposition rows and ledgers, DMEM/DX/DCN lane reports and INT2.md. Their locators were already lane-relative and none of their claims depends on main's edit. No live canon citation lands on an edited passage. Live citations that only shifted are left alone, because they are commit-pinned (Decision Log sources), lineage (F3-527 `source_lineage`), tied to a search commit (DS15 `e237aebb94`), or sit in hash-pinned fixtures, contracts and oracle comments. `INT2-rebase-citation-locators.json` gives every shifted and edited mapping, as batch 1's locator map did.
+
+### AMS-141 (for the lead to relay to pm-closure-lead)
+
+- **`assistant-memory-subsystem.md:2787`: no new value.** Current main no longer has this citation: C's quiet-Memory rewrite of AMS-141 (`7f6c2b00ed`) removed the AMS-048 line reference. Nothing to re-point. AMS-141 is unchanged by this rebase.
+- **Two other AMS-141 citations are already stale on main itself** (not caused by the branch; not edited):
+  - `assistant-memory-subsystem.md:412` (the gap note for maintenance success/failure status): on main it lands on a blank line. Main's §7.2 rewrite removed the cited rule ("Maintenance operations MUST be user-invokable in GUI … explicit success/failure status"). The nearest current text is AMS-022's "Internal operations retain truthful success/failure …" (main line 1712; rebased head 1721).
+  - `UI_Command_Catalog.md:8857` (the `UCC-084..UCC-088` overlay identity `memory_item_id?`): the overlay row is at main line 8872 and at rebased-head line 8875 (DM's DL-408 paragraph adds 3 lines above it).
+- **389 and 392 are unchanged.** The 13 `UI_Command_Catalog.md:1133–1144` citations are unchanged.
+
+### Touches of other streams' text
+
+- `Plans/UI_Command_Catalog.md` UCC-084 `canonical_text` (main's quiet-Memory text): two E sentences appended, as the conflict required. No main word changed.
+- `Plans/application_workflow_source_graph.json` `graph_sha256`: recomputed, mechanical.
+- `Plans/Decision_Log.md`: append order only.
+- No other stream's file was edited. AMS-141 is untouched.
+
+### Regenerated documents
+
+`pm-shard-plans --generate` then `pm-plan-index generate` (ignored currentness edition present) then `--check`: pass. 3,704 shards, 99 sources; 8,162 PlanUnits, 31,493 acceptance units, 96 documents; no blockers. Only the 30 shard namespaces of documents the branch changes were rewritten: assistant-chat-design, assistant-memory-subsystem, automated_testing_system, contracts_v0, decision_log, executor_protocol, filemanager, filesafe, finalguispec, formatters_system, github_api_auth_and_flows, lspsupport, miscplan, models_system, newtools, orchestrator_page, orchestrator-subagent-integration, personas, planning_wizard, plugins_system, prompt_pipeline, runtime_artifacts_panel, section15_mvp_promoted_features_spec, storage-plan, storage_value_registry, storage_value_registry.schema, tools, ui_command_catalog, ui_wiring_rules and wiring_matrix, plus the six index files. For the 17 of those whose source main did not change, shard content equals the pre-rebase head except generation timestamps.
+
+### T198 refresh (commit `5e9d40ffad`)
+
+Main's Settings batches changed `Plans/settings_system_contracts.schema.json` and rotated the migration snapshot (004 → 005). That made the branch's date-time inventory stale, and every lane checker that calls `datetime_validator` refused with `inventory_node_changed`. The sequence was INT2's own sanctioned helpers, run on a tree holding only tracked files, because the scan walks every file under `Plans/`:
+
+- prune: 19 exclusions for the removed snapshot;
+- relocate: 0 registry relocations, since the registry bytes are unchanged;
+- projection: 3 hash-only rows (`settings_system_contracts.schema.json` `/$defs/setting_value/oneOf/5`, `/$defs/values_by_setting_id`, `/$defs/source_by_setting_id`; node bytes and classifications unchanged);
+- classify: 0 new nodes, 278 content-pinned container exclusions renewed on the same paths, 19 added for snapshot 005 (640 → 659).
+
+Inventory gate: pass, 254 nodes, 0 unclassified, scan errors 0. Inventory `81435cb7854df067ee6134ce8c26e900e1b6f250c990f537cf470c99c76583d3`, exclusions `59e46399d726def22871b9a78e0fee999589b5ff4769e75d9663a9d2f4a2d01d`. NUMRULE tool code, mutation fixtures and nested-resource declarations are unchanged.
+
+### Re-verification on the rebased head
+
+Every command ran serially under `MemoryMax=2G`, `MemorySwapMax=0`, each started with at least 12 GiB available. Commands, exits, seconds, peak RSS and log SHA-256 are in `INT2-rebase-verification.json`. The four scan and number suites ran at `2db51d2a34` on a tracked-files-only tree. The other 115 ran at `fc4a5b9728`, the `b4e7a1c639` edition, with the ignored inputs INT2 used, hash-verified. Both are identical to the pushed content head outside `Concepts/`, and no consumer reads `Concepts/`. The only Concepts-reading code is in the landing-check gates.
+
+| Consumer group | Exits | Result |
+|---|---|---|
+| Registry: rebase proof, working-tree diagnostics, readiness self-test | 3/3 | 0 diagnostics; 496 families, 41 policies. `storage_value_registry.json` (`69ac880a…`), Spec Lock, event family registry and the EventRecord, append-receipt and index-checkpoint schemas are byte-identical to the pre-rebase head; all but the registry also equal main. |
+| Shared-runtime materializer; shared-runtime and index-binding tests; registry byte render; onboarding tests; browser admission tests | 6/6 | `check` passes; 36 tests OK; render test OK; 50 onboarding tests OK |
+| DFM: 12 complete family CLIs, P2A, tables, B4 registry regression | 15/15 | B4 passes |
+| DG6A: 16 family CLIs, 7 domain, 7 full regressions, grade audit, tables, guard check | 33/33 | After the citation re-point below. Before it, the 5 regressions that had run failed only their A5 citation audit. |
+| DG6B checker, tables, preparation_b retention guards | 3/3 | |
+| DT checker, tables; DT guard replay | 2/2; replay exit 1 | The replay is INT2's declared failing one: 70 phases, 244/247 proved, FAIL `src_stage` and `src_project_only`. Every verdict line is identical to INT2's. |
+| DS15 (checker, 7 deck-2 families, P2A, P2B, tables) | 11/11 | |
+| DMEM maintenance, archive, tables | 3/3 | |
+| DCW six families | 6/6 | |
+| DR checker | 1/1 | |
+| DX tables, P2A, semantics, contracts | 4/4 | |
+| DCN checker, tables, P2A | 3/3 | |
+| DS P2B, P2A, tables, terminal self-test, layout slot and self-test | 6/6 | |
+| DM checker | 1/1 | 55,535 assertions |
+| DCH checker, Stop, tables | 3/3 | |
+| DDBG checker, views | 2/2 | |
+| DC checker, tables, self-test | 3/3 | |
+| DO guard proof check-all and check, coordination events and tests, orchestrator checker | 6/6 | Orchestrator checker: 222,702 checks, 25 families |
+| Shared: numbers scope and scope-all, date-time inventory, runtime probe, command-payload definitions (Q5) | 6/6 | 13,626/13,626 cases; 254 nodes, 0 unclassified; Q5 exit 0 |
+| Graphs, custody, unit preservation, shard check | 4/4 | CV-366 and DO V2 graph failures `[]`. Custody pins unchanged (DFM 12, DCN 2, DS 6, DS15 23). CV-1100/1101 and SP-1100/1101 byte-identical to the gated head. 8,162 unique PlanUnits; 3,704 shards pass. |
+
+**Total: 119 commands, 118 exit 0; the DT replay is the one nonzero, as in INT2.** No check's exit differs from INT2's.
+
+**Superseded pass:** my first full pass exported `PYTHONINTMAXSTRDIGITS=0` to every consumer. INT2 set that only for its dry landing. Under it the DO checker's long-integer oracle failed (`long_identity`, `ea-do-json-v1`), because the setting removes the integer-size refusal that oracle expects. The whole set was rerun without it. The superseded results stay local (`runs/results.env0.tsv`) and receive no credit.
+
+### DG6A grade citations (commit `539cc75c96`)
+
+Main's edits moved lines that `reports/event-authority-20261104/DG6A.self-grade.json` quotes, so the regressions' A5 citation audit refused (`SP-660` at `storage-plan.md:40029`). I used INT2's own quote-preserving relocation tool, run from the grade's recorded source head `e638a6e347` to the rebased head. It checked all 475 quoted references (each valid at the source head, each found exactly once at the new head) and relocated 273 line spans. A structural comparison with the spans removed is equal: every quote, grade, disposition, outcome and gap is unchanged, and no file pin changed. The record is `INT2-rebase-DG6A-citation-refresh.json`.
+
+### Dry landing check
+
+Ran in a clean full local worktree at `2db51d2a347f943b3d6fc557603ecc1a57766574`, the content head on `b69d410c45`; it is identical to the pushed content head outside `Concepts/`. It used the branch's own `scripts/pm-landing-check.py`, which already contains the landing-check change T32 (merged at `c3527f03d0` in the rebased chain), so the result predicts the real landing as INT2's dry did. Command: `python3 scripts/pm-landing-check.py --base b69d410c458d6e4e323655bfb025ba181566829a --json --keep-check-reports … --readiness-audit-root …/event-authority-2026-08-13-currentness`, with INT2's inputs (currentness edition, audit reports, evidence link) hash-verified and `PYTHONINTMAXSTRDIGITS=0` as INT2's dry used. Hard cap 2 GiB, no swap; started at 13.73 GiB available; 2,419 s; peak child RSS 966 MB.
+
+| Aggregate | Status | Failure rows | Recorded baseline rows |
+|---|---|---|---|
+| audit-governance | fail | 6,279 | 5,386 |
+| plan-migration-validate | fail | 32,482 | 0 |
+| run-gates | fail | 6,279 | 5,386 |
+
+- **Checker exit 1. Blocking: 0. Infrastructure timeouts: none. Pre-existing rows: 0.**
+- **Baseline current:** `48dd033447` is an ancestor of the base, 0.25 days older.
+- **On-branch rows: 33,082, all governance staleness.** By kind:
+  - `current_snapshot_live_span_metadata_mismatch` 27,085;
+  - `current_snapshot_coverage_not_exact_same_document_planunit_set` 2,839;
+  - `current_snapshot_span_sha256_mismatch` 2,302;
+  - `stale_batch_report_sha256_after` 290;
+  - `artifact_hash_stale` 120;
+  - `audit_closure_validator_error` 94;
+  - `event_authority_currentness_source_drift` 78;
+  - `current_snapshot_live_sha256_mismatch` 64 and `current_snapshot_live_bytes_mismatch` 64;
+  - `current_snapshot_live_line_count_mismatch` 56;
+  - `stale_hash` 34;
+  - `current_snapshot_batch_doc_invalid` 24;
+  - the remaining Spec Lock hash kinds.
+- **New rows: 32,924.** 32,922 are staleness. The 2 non-stale rows are `historical_successor_terminal_current_snapshot_invalid` (run-gates/`validate_plan_migration` and audit-governance/`plan_migration`) on `Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json`, `terminal_failure_count` 32,482. They name no branch path; they are run 002's roll-up of the current-snapshot staleness. INT2's dry printed the same two rows. Per the landing rule they do not stop the landing; they are reported to Jared with the reseal request.
+- **Grown buckets: 12, all staleness.** Grown subchecks: evidence, plan_graph, plan_migration, spec_lock, implementation_readiness (both copies) and plan-migration-validate.
+- **Resolved buckets: 4** (the audit status index and two `00-plans-index.md` missing refs).
+- **Compared by total only:** audit_closure in both aggregates.
+- **Report:** `report.json` SHA-256 `625f4061fb570ca56f8bf7a0b3d43e5219dd8d42b9fbda82bf90374829c03a34`. The compact summary is `INT2-rebase-landing-summary.json`.
+
+**Reseal request for Jared after landing:** the governance staleness above stays for the separately assigned seal and snapshot workflow. This round did not take the landing lock, push `main`, reseal, or refresh the baseline or migration snapshot.
+
+### Open question for Jared
+
+DL-475 (main, Jared 2026-11-11) says Memory has no maintenance buttons or unavailable placeholders, "now or after those holds close" (storage-plan, rebased head line 17628; AMS-022 "there is no user cleanup workbench"). DMEM's prepared memory-maintenance contracts still bind "unavailable Memory-panel buttons" that remain unavailable "until all remaining definition, review and recording approvals pass" (DL-403 option A, 2026-11-04): CV-658, CV-659, SP-638, SP-639, ATS-316 and the §7.2 usefulness rule (rebased head line 400). Should the batch drop those Memory-panel button clauses so memory maintenance stays internal/support-only as DL-475 says, or keep them as written?
+
+### Evidence
+
+`reports/event-authority-20261112/INT2-rebase-replay.json` (old → `b4e7a1c639` edition → final SHAs, both Concepts-only moves), `INT2-rebase-citation-locators.json`, `INT2-rebase-verification.json`, `INT2-rebase-landing-summary.json`, `INT2-rebase-DG6A-citation-refresh.json`. Raw logs: `/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/` (runs/logs, t198, out). Copied with SHA256SUMS to `drafts/INT2/rebase/`. Worktree `/home/sittingmongoose/pm-worktrees/int2-rebase` (at the content head, with the ignored inputs) retained for the reviewers. The interim branch `wip/ea-int2-rebase-20261113` (`fc4a5b9728`, the `b4e7a1c639` edition) is not an ancestor of the pushed head, because both Concepts-only moves rebuilt the chain.
+
+## INT2 retention checkpoint before the rebase (`659e53a306`, historical)
+
+Everything below describes the pre-rebase head. The rebase section above supersedes its base, SHAs and dry result.
+
 **Retention deck 4 is applied: 86 exact value bindings, DL-500..DL-509, registry 0 diagnostics.** The full actual-worktree dry exits 1 with **0 blocking items and 0 infrastructure timeouts**. All twelve complete DFM family CLIs, B4 and the actual shared-runtime materializer pass. No family is admitted; native execution remains NOT_RUN.
 
 Checked source: `a76b7e43a301317422dc3b60f00998a09d8381e1` on `plans/ea-batch2-int-20261112`, retained at `/home/sittingmongoose/pm-worktrees/int2`. Main at retention start, `002800123fcf2464ac3d8005538527d283c27b70`, was integrated before retention; the dry used base `48dd033447c5feb95866d6978d2cfd70961c5cbb`. Source checkpoints are `dce01cb874` (main merge plus bindings and companions) and `a76b7e43a3` (final indexes, T198 pins and checkpoint report). Both configured push URLs were confirmed at the checked source; the final report-only push is confirmed separately.
