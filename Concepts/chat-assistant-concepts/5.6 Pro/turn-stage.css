@@ -292,7 +292,22 @@ body[data-theme] { --tx-gutter: 24px; }
 @keyframes wd-in { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
 .work-demo-btn { opacity: .55; }
 .work-demo-btn:hover, .work-demo-btn.active { opacity: 1; }
-.working-head:has(.work-demo-drawer) .orbit-caption { opacity: .25; }
+/* Expanded lab controls have their own row; the collapsed head keeps its
+   original geometry. Reserve the status and timer before eliding the caption. */
+.working-head:has(.work-demo-drawer) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+.working-head:has(.work-demo-drawer) > div:not(.working-controls) { overflow: visible; }
+.working-head:has(.work-demo-drawer) strong { flex: 0 0 auto; min-width: min-content; }
+.working-head:has(.work-demo-drawer) .sub { min-width: min-content; }
+.working-head:has(.work-demo-drawer) .orbit-caption { flex: 1 1 0; }
+.working-head:has(.work-demo-drawer) > .spacer { display: none; }
+.working-head:has(.work-demo-drawer) > .working-controls {
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  overflow: visible;
+}
 
 /* the item being pointed at or typed in sits above its neighbours, so hover
    chrome that reaches into the gap (attachment actions, the hover row) is never
