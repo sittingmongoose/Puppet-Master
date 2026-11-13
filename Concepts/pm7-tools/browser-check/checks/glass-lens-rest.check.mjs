@@ -104,13 +104,18 @@ const PROBE = () => {
 							laid++;
 							const f = getComputedStyle(l).backdropFilter, icon = l.getAttribute('data-lg-lens') === 'lensIcon';
 							const want = restWant(l), seen = !mv && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden';
-							if (!mv && (f || 'none') !== want) bad.set(l, { ...desc(l, i), filter: f, want, strip: stripOf(l), opacity: getComputedStyle(l).opacity });
+							/* a shown lens (opaque, visible, on screen) has exactly its tint; a hidden one (glass.js puts a lens out at opacity
+							   0, parks it, or it lies in a parked screen off the window) is never drawn: it may keep its tint or have none, but
+							   never a url() */
+							const r0 = l.getBoundingClientRect(), onScreen = r0.right > 0 && r0.bottom > 0 && r0.left < innerWidth && r0.top < innerHeight;
+							const ok = seen && onScreen ? (f || 'none') === want : !/url\(/.test(f || '') && ((f || 'none') === 'none' || f === want);
+							if (!mv && !ok) bad.set(l, { ...desc(l, i), filter: f, want, strip: stripOf(l), opacity: getComputedStyle(l).opacity, shown: seen && onScreen });
 							if (icon && seen) icons.set(l, { ...desc(l, i), filter: f });
 							if (seen && want === STRIP_REST) tints.set(l, { ...desc(l, i), strip: stripOf(l), filter: f });
 						}
 						const s = l.style.getPropertyValue('backdrop-filter'), sv = s.replace(/\s/g, '');
 						/* inline: never a url() at rest; a plain saturate only where the rest wants one (the bead's comes from CSS) */
-						if (s && !mv && (/url\(/.test(s) || l.classList.contains('lg-bead') || sv !== restWant(l))) inl.set(l, { ...desc(l, i), inline: s });
+						if (s && !mv && (/url\(/.test(s) || l.classList.contains('lg-bead') || sv !== restWant(l).replace(/\s/g, ''))) inl.set(l, { ...desc(l, i), inline: s });
 					});
 					if (++n < frames) requestAnimationFrame(tick);
 					else resolve({ lenses: all.length, laid, movers, bent: [...bad.values()], inline: [...inl.values()], icons: [...icons.values()], tints: [...tints.values()] });
@@ -243,7 +248,7 @@ async function restCheck(t, f, tag, { W, H }) {
 	const s = await f.evaluate(() => window.__g.settle());
 	const r = await f.evaluate(() => window.__g.rest());
 	await t.check(`rest: the page has settled and shows a lens ${tag}`, s.settled && r.laid >= 1, JSON.stringify({ ...s, lenses: r.lenses, laid: r.laid, movers: r.movers }));
-	await t.check(`rest: every laid-out resting lens has exactly its plain saturate and no url() (1.1, the icon lens 1.12, the bead only while it shows) ${tag}`, r.bent.length === 0, JSON.stringify({ laid: r.laid, wrong: r.bent.length, eg: r.bent.slice(0, 4) }));
+	await t.check(`rest: every shown resting lens has exactly its plain saturate and no url() (1.1, the icon lens 1.12, the bead only while it shows); a hidden one no url() ${tag}`, r.bent.length === 0, JSON.stringify({ laid: r.laid, wrong: r.bent.length, eg: r.bent.slice(0, 4) }));
 	await t.check(`rest: no lens in the page keeps a url() filter inline, nor a tint other than its own, while still ${tag}`, r.inline.length === 0, JSON.stringify({ lenses: r.lenses, inline: r.inline.length, eg: r.inline.slice(0, 3) }));
 	if (r.icons.length) await t.check(`rest: the Activity icon lens rests with its saturate(1.12) and no url() filter ${tag}`, r.icons.every((x) => x.filter === 'saturate(1.12)'), JSON.stringify(r.icons));
 	/* C: a shown lens rests with its plain saturate(1.1), today's tint without the bend, on any host and any wallpaper */
