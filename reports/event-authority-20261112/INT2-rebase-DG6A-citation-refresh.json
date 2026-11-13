@@ -1,0 +1,4923 @@
+{
+  "source_tree_head": "160367cc186fdca6317bcf289f4417e58be55d0d",
+  "prior_source_head": "e638a6e347985893339d2377e2822da2e832f5ca",
+  "source_grade_sha256": "8a7867466c25db4e46d3d490f252f36300fb5eea7fe894cdee9549a1dc0a2675",
+  "proposed_grade_sha256": "8d22c4da70eb76fc9e875218850fd2e5a273b70a8dc5adcc1b61dbc2055fb2e2",
+  "quotes_checked": 475,
+  "changes": [
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40029,
+            40029
+          ],
+          "after": [
+            40030,
+            40030
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "currently absent means\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40047,
+            40047
+          ],
+          "after": [
+            40048,
+            40048
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40029,
+            40029
+          ],
+          "after": [
+            40030,
+            40030
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-680",
+      "quote": "alert.acknowledged exact payload and storage route",
+      "changes": {
+        "lines": {
+          "before": [
+            32990,
+            32990
+          ],
+          "after": [
+            33007,
+            33007
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "handlers::alert::acknowledge, produces this exact family. Existing closed\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40030,
+            40030
+          ],
+          "after": [
+            40031,
+            40031
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40054,
+            40054
+          ],
+          "after": [
+            40055,
+            40055
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-680",
+      "quote": "alert.acknowledged exact payload and storage route",
+      "changes": {
+        "lines": {
+          "before": [
+            32990,
+            32990
+          ],
+          "after": [
+            33007,
+            33007
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Identity is Project-scoped EventRecord\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40036,
+            40036
+          ],
+          "after": [
+            40037,
+            40037
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "project~base64url_no_pad(UTF8(project_id)); envelope project_id equals payload project_id,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40037,
+            40037
+          ],
+          "after": [
+            40038,
+            40038
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Request digest covers\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40042,
+            40042
+          ],
+          "after": [
+            40043,
+            40043
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "retries\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40059,
+            40059
+          ],
+          "after": [
+            40060,
+            40060
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40137,
+            40137
+          ],
+          "after": [
+            40138,
+            40138
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40091,
+            40091
+          ],
+          "after": [
+            40092,
+            40092
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_acknowledged_operation.schema.json.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40061,
+            40061
+          ],
+          "after": [
+            40062,
+            40062
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40063,
+            40063
+          ],
+          "after": [
+            40064,
+            40064
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Transition: unacknowledged\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40032,
+            40032
+          ],
+          "after": [
+            40033,
+            40033
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "projector.alert_acknowledged.history@1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40068,
+            40068
+          ],
+          "after": [
+            40069,
+            40069
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "SP-278 and DL-076:\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40071,
+            40071
+          ],
+          "after": [
+            40072,
+            40072
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "CAS the exact subject revision\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40049,
+            40049
+          ],
+          "after": [
+            40050,
+            40050
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "Compatibility/withdrawal: only payload\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40084,
+            40084
+          ],
+          "after": [
+            40085,
+            40085
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "withdrawn under whole-value CAS.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40088,
+            40088
+          ],
+          "after": [
+            40089,
+            40089
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-330",
+      "quote": "alert.acknowledged contract oracles",
+      "changes": {
+        "lines": {
+          "before": [
+            10565,
+            10565
+          ],
+          "after": [
+            10599,
+            10599
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.acknowledged",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-660",
+      "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40096,
+            40096
+          ],
+          "after": [
+            40097,
+            40097
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40176,
+            40176
+          ],
+          "after": [
+            40177,
+            40177
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40195,
+            40195
+          ],
+          "after": [
+            40196,
+            40196
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40176,
+            40176
+          ],
+          "after": [
+            40177,
+            40177
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-681",
+      "quote": "alert.dismissed exact payload and storage route",
+      "changes": {
+        "lines": {
+          "before": [
+            33047,
+            33047
+          ],
+          "after": [
+            33064,
+            33064
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "handlers::alert::dismiss, produces this exact family. Existing closed payload\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40177,
+            40177
+          ],
+          "after": [
+            40178,
+            40178
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40202,
+            40202
+          ],
+          "after": [
+            40203,
+            40203
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-681",
+      "quote": "alert.dismissed exact payload and storage route",
+      "changes": {
+        "lines": {
+          "before": [
+            33047,
+            33047
+          ],
+          "after": [
+            33064,
+            33064
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40184,
+            40184
+          ],
+          "after": [
+            40185,
+            40185
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40184,
+            40184
+          ],
+          "after": [
+            40185,
+            40185
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40190,
+            40190
+          ],
+          "after": [
+            40191,
+            40191
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "retries\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40207,
+            40207
+          ],
+          "after": [
+            40208,
+            40208
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40285,
+            40285
+          ],
+          "after": [
+            40286,
+            40286
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40239,
+            40239
+          ],
+          "after": [
+            40240,
+            40240
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_dismissed_operation.schema.json.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40209,
+            40209
+          ],
+          "after": [
+            40210,
+            40210
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40211,
+            40211
+          ],
+          "after": [
+            40212,
+            40212
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Transition: unacknowledged,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40179,
+            40179
+          ],
+          "after": [
+            40180,
+            40180
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "projector.alert_dismissed.history@1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40216,
+            40216
+          ],
+          "after": [
+            40217,
+            40217
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "SP-278 and DL-076:\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40219,
+            40219
+          ],
+          "after": [
+            40220,
+            40220
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "CAS the exact subject revision\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40197,
+            40197
+          ],
+          "after": [
+            40198,
+            40198
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "Compatibility/withdrawal: only payload 1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40232,
+            40232
+          ],
+          "after": [
+            40233,
+            40233
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "withdrawn under whole-value CAS.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40236,
+            40236
+          ],
+          "after": [
+            40237,
+            40237
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-331",
+      "quote": "alert.dismissed contract oracles",
+      "changes": {
+        "lines": {
+          "before": [
+            10615,
+            10615
+          ],
+          "after": [
+            10649,
+            10649
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.dismissed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-661",
+      "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40244,
+            40244
+          ],
+          "after": [
+            40245,
+            40245
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40323,
+            40323
+          ],
+          "after": [
+            40324,
+            40324
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40342,
+            40342
+          ],
+          "after": [
+            40343,
+            40343
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40323,
+            40323
+          ],
+          "after": [
+            40324,
+            40324
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-682",
+      "quote": "alert.rule_muted exact payload and storage route",
+      "changes": {
+        "lines": {
+          "before": [
+            33103,
+            33103
+          ],
+          "after": [
+            33120,
+            33120
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "handlers::alert::mute_rule, produces this exact family. Existing closed\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40324,
+            40324
+          ],
+          "after": [
+            40325,
+            40325
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40349,
+            40349
+          ],
+          "after": [
+            40350,
+            40350
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-682",
+      "quote": "alert.rule_muted exact payload and storage route",
+      "changes": {
+        "lines": {
+          "before": [
+            33103,
+            33103
+          ],
+          "after": [
+            33120,
+            33120
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40331,
+            40331
+          ],
+          "after": [
+            40332,
+            40332
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40331,
+            40331
+          ],
+          "after": [
+            40332,
+            40332
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Request digest covers the full admitted command, subject alert_rule_id,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40337,
+            40337
+          ],
+          "after": [
+            40338,
+            40338
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "retries\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40354,
+            40354
+          ],
+          "after": [
+            40355,
+            40355
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40432,
+            40432
+          ],
+          "after": [
+            40433,
+            40433
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40386,
+            40386
+          ],
+          "after": [
+            40387,
+            40387
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_rule_muted_operation.schema.json.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40356,
+            40356
+          ],
+          "after": [
+            40357,
+            40357
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40358,
+            40358
+          ],
+          "after": [
+            40359,
+            40359
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Transition: unmuted\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40326,
+            40326
+          ],
+          "after": [
+            40327,
+            40327
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "projector.alert_rule_muted.history@1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40363,
+            40363
+          ],
+          "after": [
+            40364,
+            40364
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "SP-278 and DL-076:\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40366,
+            40366
+          ],
+          "after": [
+            40367,
+            40367
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "CAS the exact subject revision\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40344,
+            40344
+          ],
+          "after": [
+            40345,
+            40345
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "Compatibility/withdrawal: only payload 1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40379,
+            40379
+          ],
+          "after": [
+            40380,
+            40380
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "withdrawn under whole-value CAS.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40383,
+            40383
+          ],
+          "after": [
+            40384,
+            40384
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-332",
+      "quote": "alert.rule_muted contract oracles",
+      "changes": {
+        "lines": {
+          "before": [
+            10664,
+            10664
+          ],
+          "after": [
+            10698,
+            10698
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.rule_muted",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-662",
+      "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40391,
+            40391
+          ],
+          "after": [
+            40392,
+            40392
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40470,
+            40470
+          ],
+          "after": [
+            40471,
+            40471
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40489,
+            40489
+          ],
+          "after": [
+            40490,
+            40490
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40470,
+            40470
+          ],
+          "after": [
+            40471,
+            40471
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-683",
+      "quote": "alert.snoozed exact payload and storage route",
+      "changes": {
+        "lines": {
+          "before": [
+            33159,
+            33159
+          ],
+          "after": [
+            33176,
+            33176
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "handlers::alert::snooze, produces this exact family. Existing closed payload\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40471,
+            40471
+          ],
+          "after": [
+            40472,
+            40472
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40496,
+            40496
+          ],
+          "after": [
+            40497,
+            40497
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-683",
+      "quote": "alert.snoozed exact payload and storage route",
+      "changes": {
+        "lines": {
+          "before": [
+            33159,
+            33159
+          ],
+          "after": [
+            33176,
+            33176
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40478,
+            40478
+          ],
+          "after": [
+            40479,
+            40479
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "project~base64url_no_pad(UTF8(project_id));\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40478,
+            40478
+          ],
+          "after": [
+            40479,
+            40479
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40484,
+            40484
+          ],
+          "after": [
+            40485,
+            40485
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "retries\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40501,
+            40501
+          ],
+          "after": [
+            40502,
+            40502
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40579,
+            40579
+          ],
+          "after": [
+            40580,
+            40580
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40533,
+            40533
+          ],
+          "after": [
+            40534,
+            40534
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_snoozed_operation.schema.json.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40503,
+            40503
+          ],
+          "after": [
+            40504,
+            40504
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40505,
+            40505
+          ],
+          "after": [
+            40506,
+            40506
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Transition: unacknowledged\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40473,
+            40473
+          ],
+          "after": [
+            40474,
+            40474
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "projector.alert_snoozed.history@1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40510,
+            40510
+          ],
+          "after": [
+            40511,
+            40511
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "SP-278 and DL-076:\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40513,
+            40513
+          ],
+          "after": [
+            40514,
+            40514
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "CAS the exact subject revision\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40491,
+            40491
+          ],
+          "after": [
+            40492,
+            40492
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "Compatibility/withdrawal: only payload 1.0.0\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40526,
+            40526
+          ],
+          "after": [
+            40527,
+            40527
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "withdrawn under whole-value CAS.\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40530,
+            40530
+          ],
+          "after": [
+            40531,
+            40531
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-333",
+      "quote": "alert.snoozed contract oracles",
+      "changes": {
+        "lines": {
+          "before": [
+            10713,
+            10713
+          ],
+          "after": [
+            10747,
+            10747
+          ]
+        }
+      }
+    },
+    {
+      "family": "alert.snoozed",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-663",
+      "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\",
+      "changes": {
+        "lines": {
+          "before": [
+            40538,
+            40538
+          ],
+          "after": [
+            40539,
+            40539
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52721,
+            52721
+          ],
+          "after": [
+            52820,
+            52820
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52747,
+            52747
+          ],
+          "after": [
+            52846,
+            52846
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52721,
+            52721
+          ],
+          "after": [
+            52820,
+            52820
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Producer and transitions: there is no current producer",
+      "changes": {
+        "lines": {
+          "before": [
+            52531,
+            52531
+          ],
+          "after": [
+            52630,
+            52630
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52727,
+            52727
+          ],
+          "after": [
+            52826,
+            52826
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52727,
+            52727
+          ],
+          "after": [
+            52826,
+            52826
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "No timestamp guess, identifier similarity, replay of note commands",
+      "changes": {
+        "lines": {
+          "before": [
+            52531,
+            52531
+          ],
+          "after": [
+            52630,
+            52630
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52743,
+            52743
+          ],
+          "after": [
+            52842,
+            52842
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52741,
+            52741
+          ],
+          "after": [
+            52840,
+            52840
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Producer and transitions:",
+      "changes": {
+        "lines": {
+          "before": [
+            52531,
+            52531
+          ],
+          "after": [
+            52630,
+            52630
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52737,
+            52737
+          ],
+          "after": [
+            52836,
+            52836
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52745,
+            52745
+          ],
+          "after": [
+            52844,
+            52844
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.annotation_state_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-708",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52747,
+            52747
+          ],
+          "after": [
+            52846,
+            52846
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52585,
+            52585
+          ],
+          "after": [
+            52684,
+            52684
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52611,
+            52611
+          ],
+          "after": [
+            52710,
+            52710
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52585,
+            52585
+          ],
+          "after": [
+            52684,
+            52684
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Explicitly adopt SP-286/CV-339",
+      "changes": {
+        "lines": {
+          "before": [
+            52597,
+            52597
+          ],
+          "after": [
+            52696,
+            52696
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52591,
+            52591
+          ],
+          "after": [
+            52690,
+            52690
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52591,
+            52591
+          ],
+          "after": [
+            52690,
+            52690
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+      "changes": {
+        "lines": {
+          "before": [
+            52597,
+            52597
+          ],
+          "after": [
+            52696,
+            52696
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52607,
+            52607
+          ],
+          "after": [
+            52706,
+            52706
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52605,
+            52605
+          ],
+          "after": [
+            52704,
+            52704
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Exact transition:",
+      "changes": {
+        "lines": {
+          "before": [
+            52469,
+            52469
+          ],
+          "after": [
+            52568,
+            52568
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52601,
+            52601
+          ],
+          "after": [
+            52700,
+            52700
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52609,
+            52609
+          ],
+          "after": [
+            52708,
+            52708
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_created",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-706",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52611,
+            52611
+          ],
+          "after": [
+            52710,
+            52710
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52653,
+            52653
+          ],
+          "after": [
+            52752,
+            52752
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52679,
+            52679
+          ],
+          "after": [
+            52778,
+            52778
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52653,
+            52653
+          ],
+          "after": [
+            52752,
+            52752
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Explicitly adopt SP-286/CV-339",
+      "changes": {
+        "lines": {
+          "before": [
+            52665,
+            52665
+          ],
+          "after": [
+            52764,
+            52764
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52659,
+            52659
+          ],
+          "after": [
+            52758,
+            52758
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52659,
+            52659
+          ],
+          "after": [
+            52758,
+            52758
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+      "changes": {
+        "lines": {
+          "before": [
+            52665,
+            52665
+          ],
+          "after": [
+            52764,
+            52764
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52675,
+            52675
+          ],
+          "after": [
+            52774,
+            52774
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52673,
+            52673
+          ],
+          "after": [
+            52772,
+            52772
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Exact transition:",
+      "changes": {
+        "lines": {
+          "before": [
+            52803,
+            52803
+          ],
+          "after": [
+            52902,
+            52902
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52669,
+            52669
+          ],
+          "after": [
+            52768,
+            52768
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52677,
+            52677
+          ],
+          "after": [
+            52776,
+            52776
+          ]
+        }
+      }
+    },
+    {
+      "family": "bundle.note_status_changed",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-707",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52679,
+            52679
+          ],
+          "after": [
+            52778,
+            52778
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52789,
+            52789
+          ],
+          "after": [
+            52888,
+            52888
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52815,
+            52815
+          ],
+          "after": [
+            52914,
+            52914
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52789,
+            52789
+          ],
+          "after": [
+            52888,
+            52888
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Explicitly adopt SP-286/CV-339",
+      "changes": {
+        "lines": {
+          "before": [
+            52801,
+            52801
+          ],
+          "after": [
+            52900,
+            52900
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52795,
+            52795
+          ],
+          "after": [
+            52894,
+            52894
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52795,
+            52795
+          ],
+          "after": [
+            52894,
+            52894
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+      "changes": {
+        "lines": {
+          "before": [
+            52801,
+            52801
+          ],
+          "after": [
+            52900,
+            52900
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52811,
+            52811
+          ],
+          "after": [
+            52910,
+            52910
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52809,
+            52809
+          ],
+          "after": [
+            52908,
+            52908
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Exact effect:",
+      "changes": {
+        "lines": {
+          "before": [
+            52735,
+            52735
+          ],
+          "after": [
+            52834,
+            52834
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52805,
+            52805
+          ],
+          "after": [
+            52904,
+            52904
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52813,
+            52813
+          ],
+          "after": [
+            52912,
+            52912
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.assigned",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-709",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52815,
+            52815
+          ],
+          "after": [
+            52914,
+            52914
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40941,
+            40941
+          ],
+          "after": [
+            40942,
+            40942
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "currently absent: deny before journal, record/body write, append",
+      "changes": {
+        "lines": {
+          "before": [
+            40991,
+            40991
+          ],
+          "after": [
+            40992,
+            40992
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40941,
+            40941
+          ],
+          "after": [
+            40942,
+            40942
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-686",
+      "quote": "concern.created closed current payload and authority route",
+      "changes": {
+        "lines": {
+          "before": [
+            33339,
+            33339
+          ],
+          "after": [
+            33356,
+            33356
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "handlers::concern::create commits this family, after independently authenticating one of those five creator",
+      "changes": {
+        "lines": {
+          "before": [
+            40946,
+            40946
+          ],
+          "after": [
+            40947,
+            40947
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
+      "changes": {
+        "lines": {
+          "before": [
+            41003,
+            41003
+          ],
+          "after": [
+            41004,
+            41004
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-686",
+      "quote": "concern.created closed current payload and authority route",
+      "changes": {
+        "lines": {
+          "before": [
+            33339,
+            33339
+          ],
+          "after": [
+            33356,
+            33356
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Identity: Project-only EventRecord 2.0.0, scope_kind=project, envelope project_id equals payload and original",
+      "changes": {
+        "lines": {
+          "before": [
+            40962,
+            40962
+          ],
+          "after": [
+            40963,
+            40963
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "project~base64url_no_pad(UTF8(project_id)). No application/default/focus",
+      "changes": {
+        "lines": {
+          "before": [
+            40963,
+            40963
+          ],
+          "after": [
+            40964,
+            40964
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Request digest",
+      "changes": {
+        "lines": {
+          "before": [
+            40982,
+            40982
+          ],
+          "after": [
+            40983,
+            40983
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "retries recover append; settled retries",
+      "changes": {
+        "lines": {
+          "before": [
+            41010,
+            41010
+          ],
+          "after": [
+            41011,
+            41011
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "PENDING_RETENTION_DECISION, with Case L-3 audit-authority/ordinary telemetry and RP-PROJECTION-3GEN",
+      "changes": {
+        "lines": {
+          "before": [
+            41087,
+            41087
+          ],
+          "after": [
+            41088,
+            41088
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Custody: canonical record and original operation are non-rebuildable original authority. Preserve immutable original",
+      "changes": {
+        "lines": {
+          "before": [
+            41029,
+            41029
+          ],
+          "after": [
+            41030,
+            41030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "backup/restore includes all of them with the original Storage source under one verified recovery boundary.",
+      "changes": {
+        "lines": {
+          "before": [
+            41031,
+            41031
+          ],
+          "after": [
+            41032,
+            41032
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Birth is absent -> active at concern_revision=1, never acknowledged/resolved/dismissed, never a",
+      "changes": {
+        "lines": {
+          "before": [
+            40953,
+            40953
+          ],
+          "after": [
+            40954,
+            40954
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "projector.concern_created.history@1.0.0 and reader.concern_created.history@1.0.0 expose passive",
+      "changes": {
+        "lines": {
+          "before": [
+            41039,
+            41039
+          ],
+          "after": [
+            41040,
+            41040
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            41041,
+            41041
+          ],
+          "after": [
+            41042,
+            41042
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "CAS creates concern_record.v1:{project_id}:{concern_id}",
+      "changes": {
+        "lines": {
+          "before": [
+            40994,
+            40994
+          ],
+          "after": [
+            40995,
+            40995
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "Compatibility: only the exact current payload 1.0.0 and declared value schemas are selected;",
+      "changes": {
+        "lines": {
+          "before": [
+            41068,
+            41068
+          ],
+          "after": [
+            41069,
+            41069
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "withdrawn publication or missing coverage is unavailable. Source-generation change requires",
+      "changes": {
+        "lines": {
+          "before": [
+            41058,
+            41058
+          ],
+          "after": [
+            41059,
+            41059
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-334",
+      "quote": "concern.created has its own independent python3 scripts/pm-concern-created-contracts-check.py and",
+      "changes": {
+        "lines": {
+          "before": [
+            10789,
+            10789
+          ],
+          "after": [
+            10823,
+            10823
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.created",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-666",
+      "quote": "NOT_RUN. Nothing here admits an event or makes a native writer available.'",
+      "changes": {
+        "lines": {
+          "before": [
+            41092,
+            41092
+          ],
+          "after": [
+            41093,
+            41093
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52857,
+            52857
+          ],
+          "after": [
+            52956,
+            52956
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52883,
+            52883
+          ],
+          "after": [
+            52982,
+            52982
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52857,
+            52857
+          ],
+          "after": [
+            52956,
+            52956
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Explicitly adopt SP-286/CV-339",
+      "changes": {
+        "lines": {
+          "before": [
+            52869,
+            52869
+          ],
+          "after": [
+            52968,
+            52968
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52863,
+            52863
+          ],
+          "after": [
+            52962,
+            52962
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52863,
+            52863
+          ],
+          "after": [
+            52962,
+            52962
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+      "changes": {
+        "lines": {
+          "before": [
+            52869,
+            52869
+          ],
+          "after": [
+            52968,
+            52968
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52879,
+            52879
+          ],
+          "after": [
+            52978,
+            52978
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52877,
+            52877
+          ],
+          "after": [
+            52976,
+            52976
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Exact effect:",
+      "changes": {
+        "lines": {
+          "before": [
+            52939,
+            52939
+          ],
+          "after": [
+            53038,
+            53038
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52873,
+            52873
+          ],
+          "after": [
+            52972,
+            52972
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52881,
+            52881
+          ],
+          "after": [
+            52980,
+            52980
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.evidence_linked",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-710",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52883,
+            52883
+          ],
+          "after": [
+            52982,
+            52982
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52925,
+            52925
+          ],
+          "after": [
+            53024,
+            53024
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52951,
+            52951
+          ],
+          "after": [
+            53050,
+            53050
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52925,
+            52925
+          ],
+          "after": [
+            53024,
+            53024
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Explicitly adopt SP-286/CV-339",
+      "changes": {
+        "lines": {
+          "before": [
+            52937,
+            52937
+          ],
+          "after": [
+            53036,
+            53036
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52931,
+            52931
+          ],
+          "after": [
+            53030,
+            53030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52931,
+            52931
+          ],
+          "after": [
+            53030,
+            53030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+      "changes": {
+        "lines": {
+          "before": [
+            52937,
+            52937
+          ],
+          "after": [
+            53036,
+            53036
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52947,
+            52947
+          ],
+          "after": [
+            53046,
+            53046
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52945,
+            52945
+          ],
+          "after": [
+            53044,
+            53044
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Exact effect:",
+      "changes": {
+        "lines": {
+          "before": [
+            52939,
+            52939
+          ],
+          "after": [
+            53038,
+            53038
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52941,
+            52941
+          ],
+          "after": [
+            53040,
+            53040
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52949,
+            52949
+          ],
+          "after": [
+            53048,
+            53048
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.promoted",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-711",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52951,
+            52951
+          ],
+          "after": [
+            53050,
+            53050
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52925,
+            52925
+          ],
+          "after": [
+            53024,
+            53024
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52951,
+            52951
+          ],
+          "after": [
+            53050,
+            53050
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52925,
+            52925
+          ],
+          "after": [
+            53024,
+            53024
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Explicitly adopt SP-286/CV-339",
+      "changes": {
+        "lines": {
+          "before": [
+            52937,
+            52937
+          ],
+          "after": [
+            53036,
+            53036
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52931,
+            52931
+          ],
+          "after": [
+            53030,
+            53030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52931,
+            52931
+          ],
+          "after": [
+            53030,
+            53030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+      "changes": {
+        "lines": {
+          "before": [
+            52937,
+            52937
+          ],
+          "after": [
+            53036,
+            53036
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52947,
+            52947
+          ],
+          "after": [
+            53046,
+            53046
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52945,
+            52945
+          ],
+          "after": [
+            53044,
+            53044
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Exact transition:",
+      "changes": {
+        "lines": {
+          "before": [
+            52871,
+            52871
+          ],
+          "after": [
+            52970,
+            52970
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52941,
+            52941
+          ],
+          "after": [
+            53040,
+            53040
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52949,
+            52949
+          ],
+          "after": [
+            53048,
+            53048
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.reopened",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-712",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52951,
+            52951
+          ],
+          "after": [
+            53050,
+            53050
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52925,
+            52925
+          ],
+          "after": [
+            53024,
+            53024
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52951,
+            52951
+          ],
+          "after": [
+            53050,
+            53050
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52925,
+            52925
+          ],
+          "after": [
+            53024,
+            53024
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Explicitly adopt SP-286/CV-339",
+      "changes": {
+        "lines": {
+          "before": [
+            52937,
+            52937
+          ],
+          "after": [
+            53036,
+            53036
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52931,
+            52931
+          ],
+          "after": [
+            53030,
+            53030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52931,
+            52931
+          ],
+          "after": [
+            53030,
+            53030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+      "changes": {
+        "lines": {
+          "before": [
+            52937,
+            52937
+          ],
+          "after": [
+            53036,
+            53036
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52947,
+            52947
+          ],
+          "after": [
+            53046,
+            53046
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52945,
+            52945
+          ],
+          "after": [
+            53044,
+            53044
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Exact transition:",
+      "changes": {
+        "lines": {
+          "before": [
+            52871,
+            52871
+          ],
+          "after": [
+            52970,
+            52970
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52941,
+            52941
+          ],
+          "after": [
+            53040,
+            53040
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52949,
+            52949
+          ],
+          "after": [
+            53048,
+            53048
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.resolved",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-713",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52951,
+            52951
+          ],
+          "after": [
+            53050,
+            53050
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52925,
+            52925
+          ],
+          "after": [
+            53024,
+            53024
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Membership ABSENT.",
+      "changes": {
+        "lines": {
+          "before": [
+            52951,
+            52951
+          ],
+          "after": [
+            53050,
+            53050
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Newly authored owner contract for ",
+      "changes": {
+        "lines": {
+          "before": [
+            52925,
+            52925
+          ],
+          "after": [
+            53024,
+            53024
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Explicitly adopt SP-286/CV-339",
+      "changes": {
+        "lines": {
+          "before": [
+            52937,
+            52937
+          ],
+          "after": [
+            53036,
+            53036
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Payload and scope: the exact closed schema is ",
+      "changes": {
+        "lines": {
+          "before": [
+            52931,
+            52931
+          ],
+          "after": [
+            53030,
+            53030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+      "changes": {
+        "lines": {
+          "before": [
+            52931,
+            52931
+          ],
+          "after": [
+            53030,
+            53030
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+      "changes": {
+        "lines": {
+          "before": [
+            52937,
+            52937
+          ],
+          "after": [
+            53036,
+            53036
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "retention_policy_ref=PENDING_RETENTION_DECISION",
+      "changes": {
+        "lines": {
+          "before": [
+            52947,
+            52947
+          ],
+          "after": [
+            53046,
+            53046
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Mandatory coherent backup/restore preserves them together",
+      "changes": {
+        "lines": {
+          "before": [
+            52945,
+            52945
+          ],
+          "after": [
+            53044,
+            53044
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Exact effect:",
+      "changes": {
+        "lines": {
+          "before": [
+            52939,
+            52939
+          ],
+          "after": [
+            53038,
+            53038
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Explicitly adopt SP-278/DL-076:",
+      "changes": {
+        "lines": {
+          "before": [
+            52941,
+            52941
+          ],
+          "after": [
+            53040,
+            53040
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "Close exact-family writer admission first",
+      "changes": {
+        "lines": {
+          "before": [
+            52949,
+            52949
+          ],
+          "after": [
+            53048,
+            53048
+          ]
+        }
+      }
+    },
+    {
+      "family": "concern.updated",
+      "path": "Plans/FinalGUISpec.md",
+      "unit": "F3-714",
+      "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+      "changes": {
+        "lines": {
+          "before": [
+            52951,
+            52951
+          ],
+          "after": [
+            53050,
+            53050
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "canonical_text: 'Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40617,
+            40617
+          ],
+          "after": [
+            40618,
+            40618
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host",
+      "changes": {
+        "lines": {
+          "before": [
+            40645,
+            40645
+          ],
+          "after": [
+            40646,
+            40646
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40617,
+            40617
+          ],
+          "after": [
+            40618,
+            40618
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-684",
+      "quote": "panel.redocked current payload and historical reader",
+      "changes": {
+        "lines": {
+          "before": [
+            33215,
+            33215
+          ],
+          "after": [
+            33232,
+            33232
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "handlers::panel::redock in the shared panel shell, is this family''s sole producer. Successful transition is",
+      "changes": {
+        "lines": {
+          "before": [
+            40620,
+            40620
+          ],
+          "after": [
+            40621,
+            40621
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
+      "changes": {
+        "lines": {
+          "before": [
+            40658,
+            40658
+          ],
+          "after": [
+            40659,
+            40659
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-684",
+      "quote": "panel.redocked current payload and historical reader",
+      "changes": {
+        "lines": {
+          "before": [
+            33215,
+            33215
+          ],
+          "after": [
+            33232,
+            33232
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;",
+      "changes": {
+        "lines": {
+          "before": [
+            40631,
+            40631
+          ],
+          "after": [
+            40632,
+            40632
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;",
+      "changes": {
+        "lines": {
+          "before": [
+            40631,
+            40631
+          ],
+          "after": [
+            40632,
+            40632
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar",
+      "changes": {
+        "lines": {
+          "before": [
+            40640,
+            40640
+          ],
+          "after": [
+            40641,
+            40641
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40731,
+            40731
+          ],
+          "after": [
+            40732,
+            40732
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt",
+      "changes": {
+        "lines": {
+          "before": [
+            40724,
+            40724
+          ],
+          "after": [
+            40725,
+            40725
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate",
+      "changes": {
+        "lines": {
+          "before": [
+            40672,
+            40672
+          ],
+          "after": [
+            40673,
+            40673
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Successful transition is",
+      "changes": {
+        "lines": {
+          "before": [
+            40620,
+            40620
+          ],
+          "after": [
+            40621,
+            40621
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "projector.panel_redocked.history@1.0.0 and reader.panel_redocked.history@1.0.0 expose passive record-backed",
+      "changes": {
+        "lines": {
+          "before": [
+            40682,
+            40682
+          ],
+          "after": [
+            40683,
+            40683
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "SP-278/DL-076: complete",
+      "changes": {
+        "lines": {
+          "before": [
+            40684,
+            40684
+          ],
+          "after": [
+            40685,
+            40685
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "CAS committed -> settled with original_append_result_ref",
+      "changes": {
+        "lines": {
+          "before": [
+            40661,
+            40661
+          ],
+          "after": [
+            40662,
+            40662
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_redocked.schema.json is the original 1.0.0",
+      "changes": {
+        "lines": {
+          "before": [
+            40707,
+            40707
+          ],
+          "after": [
+            40708,
+            40708
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "withdrawn token, cursor beyond frontier or missing",
+      "changes": {
+        "lines": {
+          "before": [
+            40699,
+            40699
+          ],
+          "after": [
+            40700,
+            40700
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-334",
+      "quote": "panel.redocked is checked independently by python3 scripts/pm-panel-event-contracts-check.py with",
+      "changes": {
+        "lines": {
+          "before": [
+            10769,
+            10769
+          ],
+          "after": [
+            10803,
+            10803
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.redocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-664",
+      "quote": "NOT_RUN.",
+      "changes": {
+        "lines": {
+          "before": [
+            40729,
+            40729
+          ],
+          "after": [
+            40730,
+            40730
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "canonical_text: 'Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40779,
+            40779
+          ],
+          "after": [
+            40780,
+            40780
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host",
+      "changes": {
+        "lines": {
+          "before": [
+            40807,
+            40807
+          ],
+          "after": [
+            40808,
+            40808
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission.",
+      "changes": {
+        "lines": {
+          "before": [
+            40779,
+            40779
+          ],
+          "after": [
+            40780,
+            40780
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-685",
+      "quote": "panel.undocked current payload and historical reader",
+      "changes": {
+        "lines": {
+          "before": [
+            33277,
+            33277
+          ],
+          "after": [
+            33294,
+            33294
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "handlers::panel::undock in the shared panel shell, is this family''s sole producer. Successful transition is",
+      "changes": {
+        "lines": {
+          "before": [
+            40782,
+            40782
+          ],
+          "after": [
+            40783,
+            40783
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
+      "changes": {
+        "lines": {
+          "before": [
+            40820,
+            40820
+          ],
+          "after": [
+            40821,
+            40821
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-685",
+      "quote": "panel.undocked current payload and historical reader",
+      "changes": {
+        "lines": {
+          "before": [
+            33277,
+            33277
+          ],
+          "after": [
+            33294,
+            33294
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;",
+      "changes": {
+        "lines": {
+          "before": [
+            40793,
+            40793
+          ],
+          "after": [
+            40794,
+            40794
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;",
+      "changes": {
+        "lines": {
+          "before": [
+            40793,
+            40793
+          ],
+          "after": [
+            40794,
+            40794
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar",
+      "changes": {
+        "lines": {
+          "before": [
+            40802,
+            40802
+          ],
+          "after": [
+            40803,
+            40803
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+      "changes": {
+        "lines": {
+          "before": [
+            40893,
+            40893
+          ],
+          "after": [
+            40894,
+            40894
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt",
+      "changes": {
+        "lines": {
+          "before": [
+            40886,
+            40886
+          ],
+          "after": [
+            40887,
+            40887
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate",
+      "changes": {
+        "lines": {
+          "before": [
+            40834,
+            40834
+          ],
+          "after": [
+            40835,
+            40835
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Successful transition is",
+      "changes": {
+        "lines": {
+          "before": [
+            40782,
+            40782
+          ],
+          "after": [
+            40783,
+            40783
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "projector.panel_undocked.history@1.0.0 and reader.panel_undocked.history@1.0.0 expose passive record-backed",
+      "changes": {
+        "lines": {
+          "before": [
+            40844,
+            40844
+          ],
+          "after": [
+            40845,
+            40845
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "SP-278/DL-076: complete",
+      "changes": {
+        "lines": {
+          "before": [
+            40846,
+            40846
+          ],
+          "after": [
+            40847,
+            40847
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "CAS committed -> settled with original_append_result_ref",
+      "changes": {
+        "lines": {
+          "before": [
+            40823,
+            40823
+          ],
+          "after": [
+            40824,
+            40824
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_undocked.schema.json is the original 1.0.0",
+      "changes": {
+        "lines": {
+          "before": [
+            40869,
+            40869
+          ],
+          "after": [
+            40870,
+            40870
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "withdrawn token, cursor beyond frontier or missing",
+      "changes": {
+        "lines": {
+          "before": [
+            40861,
+            40861
+          ],
+          "after": [
+            40862,
+            40862
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-334",
+      "quote": "panel.undocked is checked independently by the same checker with Plans/panel_event_contracts/panel_undocked.fixtures.json:",
+      "changes": {
+        "lines": {
+          "before": [
+            10776,
+            10776
+          ],
+          "after": [
+            10810,
+            10810
+          ]
+        }
+      }
+    },
+    {
+      "family": "panel.undocked",
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-665",
+      "quote": "NOT_RUN.",
+      "changes": {
+        "lines": {
+          "before": [
+            40891,
+            40891
+          ],
+          "after": [
+            40892,
+            40892
+          ]
+        }
+      }
+    }
+  ]
+}
