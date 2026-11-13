@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36327-L37563
+Source lines: L36327-L37581
 
-Source SHA256: `faba71dc4ce3fe68b94ea0639e20e448c3f9f3c74a8343e647aa275704933a7a`
+Source SHA256: `ba630d2b72c90b75de4bb712459b497deeba44040730302e1e590e8b279a96ad`
 
 ---
 
@@ -1193,55 +1193,73 @@ plan_unit_id: F3-527
 unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  panel.undocked and panel.redocked are independent persisted semantic transitions owned by the shared panel shell,
-  not aliases of workspace.layout_changed. panel.undocked occurs only after cmd.panel.undock has successfully moved
-  one identified panel from its settled workspace host into one identified detached window and the owner state is
-  durably committed. panel.redocked occurs only after cmd.panel.redock has successfully moved one identified
-  detached panel window into its settled target workspace host and the owner state is durably committed. The same
-  accepted command may also emit workspace.layout_changed only when it independently changes the settled workspace
-  layout; a shared correlation and an explicit nullable event reference relate the two records without collapsing
-  their identities. Preview movement, pickup, window creation/close attempts, dispatch acceptance, rejected or stale
-  owner results, persistence failure, cancellation, no-change settlement, and rollback emit neither panel event.
+canonical_text: 'Current precedence reconciliation: CV-361, SP-330, UCC-203 and F3-637 already restrict panel.undocked/panel.redocked
+  to desktop chat pop-out/return, never saved across restart and never co-emitting workspace.layout_changed or advancing
+  Home revision. The original generic-panel/monotonic-layout payloads remain immutable historical 1.0.0 reader inputs
+  only; their fields do not authorize current writes or host restoration. Newly authored independent current 2.0.0
+  technical contracts are F3-704/SP-664/CV-684 for panel.redocked and F3-705/SP-665/CV-685 for panel.undocked. Durable
+  operation/event/receipt custody audits the settled transient move without saving a layout. Preview, acceptance,
+  stale/refused/no-change, cancellation, failed persistence and rollback still emit neither event. Exact future
+  admission, retention and native verification remain required.'
 gui_related: true
-gui_classification_reason: This unit defines the durable semantics behind visible panel pop-out and redock actions while keeping all preview animation view-local.
+gui_classification_reason: This unit defines the durable semantics behind visible panel pop-out and redock actions
+  while keeping all preview animation view-local.
 split_recommended: false
-depends_on: [F3-515, UCC-147, CV-215, SP-001]
+depends_on:
+- F3-515
+- UCC-147
+- CV-215
+- SP-001
 unblocks: []
 acceptance_criteria:
-  - "panel.undocked validates only against pm.event.panel_undocked.v1 and requires cmd.panel.undock, panel/window/host identity, exact result and receipt references, monotonic layout revisions, settled-only truth, persistence truth, and the workspace-layout co-emission relationship."
-  - "panel.redocked validates only against pm.event.panel_redocked.v1 and requires cmd.panel.redock, panel/window/target-host identity, exact result and receipt references, monotonic layout revisions, settled-only truth, persistence truth, and the workspace-layout co-emission relationship."
-  - "workspace.layout_changed remains separately owned; it is co-emitted only where the same accepted transition also changes the settled workspace layout, and its event reference is required exactly when co-emission is true."
-  - "Cancellation, no-op, stale/rejected result, failed persistence, rollback, preview, and command acceptance produce no panel EventRecord and do not advance a projector checkpoint."
-  - "Static owner text and payload schemas do not authorize event append or dispatch; admission still requires the exact registry rows, storage binding, compatibility/retention/redaction rules, and executable positive/negative/replay/recovery fixtures."
+- Current chat-only transitions follow their own 2.0.0 contract and never the historical generic-panel writer requirements.
+- Both immutable 1.0.0 schemas remain stored-schema-dispatched historical readers; unknown versions fail closed.
+- No saved pop-out host, Home revision advance, workspace.layout_changed co-emission or startup redock is introduced.
+- No append or checkpoint advance before exact event-family admission; native tests NOT_RUN.
 validation_surfaces:
-  - Plans/event_payloads/panel_undocked.schema.json
-  - Plans/event_payloads/panel_redocked.schema.json
-  - Plans/event_family_registry.json
-  - Plans/storage-plan.md
-  - future panel transition producer, append/dedupe/replay/recovery, and projector fixtures
+- python3 scripts/pm-panel-event-contracts-check.py
+- Plans/event_payloads/panel_redocked.schema.json
+- Plans/event_payloads/panel_undocked.schema.json
 risk_class: panel_transition_alias_or_duplicate_event_drift
 reasoning_tier: high
 context_scope: settled_panel_host_transition_event_identity
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - Plans/event_payloads/panel_undocked.schema.json
-  - Plans/event_payloads/panel_redocked.schema.json
-  - Plans/event_family_registry.json
-  - Plans/storage-plan.md
-node_compile_hint: {mode: panel_transition_event_contract_only, create_worknodes: false, create_nodeseeds: false}
+- Plans/FinalGUISpec.md
+- Plans/event_payloads/panel_undocked.schema.json
+- Plans/event_payloads/panel_redocked.schema.json
+- Plans/event_family_registry.json
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: panel_transition_event_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - Plans/UI_Command_Catalog.md:8087
-  - Plans/UI_Command_Catalog.md:8088
-  - Plans/Contracts_V0.md:3414
-  - scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/PRIMARY_OWNER_DECISIONS.json
-preserved_exact_tokens: [panel.undocked, panel.redocked, workspace.layout_changed, cmd.panel.undock, cmd.panel.redock, settled_only, preview_state_included]
+- Plans/UI_Command_Catalog.md:8087
+- Plans/UI_Command_Catalog.md:8088
+- Plans/Contracts_V0.md:3414
+- scratchpad/pm-integration-20260831/event-authority-successor-20260901/aggregate-adjudication/owner-adjudication/PRIMARY_OWNER_DECISIONS.json
+preserved_exact_tokens:
+- panel.undocked
+- panel.redocked
+- workspace.layout_changed
+- cmd.panel.undock
+- cmd.panel.redock
+- settled_only
+- preview_state_included
 negative_constraints:
-  - "Do not alias either panel event to workspace.layout_changed or infer either transition from layout persistence alone."
-  - "Do not emit a panel event for preview motion, window attempts, command acceptance, failure, rejection, cancellation, rollback, or no-change settlement."
-  - "Do not register a generic panel transition event with a subtype field."
-  - "Do not claim native producer, persistence, replay, runtime, buildability, or PNC-019 proof from this static owner/schema materialization."
+- Do not alias either panel event to workspace.layout_changed or infer either transition from layout persistence
+  alone.
+- Do not emit a panel event for preview motion, window attempts, command acceptance, failure, rejection, cancellation,
+  rollback, or no-change settlement.
+- Do not register a generic panel transition event with a subtype field.
+- Do not claim native producer, persistence, replay, runtime, buildability, or PNC-019 proof from this static owner/schema
+  materialization.
 owner_boundary_notes:
-  - "Final GUI owns panel-host transition semantics and presentation; Contracts owns EventRecord; storage owns admission, append, retention, dedupe, replay, and checkpoint rules."
-owner_hints: [Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/UI_Command_Catalog.md]
+- Final GUI owns panel-host transition semantics and presentation; Contracts owns EventRecord; storage owns admission,
+  append, retention, dedupe, replay, and checkpoint rules.
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/UI_Command_Catalog.md
 ```
