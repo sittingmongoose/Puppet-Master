@@ -803,7 +803,7 @@ def cite(path, needle, start_after=None):
     if start_after is not None:
         first = next(n for n, line in enumerate(lines) if start_after in line)
     hits = [n + 1 for n, line in enumerate(lines) if n >= first and needle in line]
-    assert hits, (path, needle)
+    assert hits and 'cite(' not in lines[hits[0] - 1], ('missing, or a citation matched its own proof text', path, needle)
     return f'{path}:{hits[0]}'
 
 
@@ -827,7 +827,7 @@ ENTAILED = {
         f'the predicate of ST05 ({cite(EV, "obs[" + chr(39) + "receipt_event" + chr(39) + "] = ")}); (4) for the current edition '
         f'producer_semantic_bytes ({cite(EV, "            producer_semantic_bytes(ev)")}), the predicate of NM04 '
         f'({cite(EV, "obs[" + chr(39) + "producer_route" + chr(39) + "] = ")}), which runs on history exactly when the sealed recipe is '
-        f'the current edition ({cite(EV, "current_recipe = b not in (HI, RS)")}); (5) the installed tuple of that family/scope/edition '
+        f'the current edition ({cite(EV, "current_recipe = b not in " + "(HI, RS) or (len(sealed)")}); (5) the installed tuple of that family/scope/edition '
         f'({cite(EV, "return custody.recipe == RECIPES[(f, scope, edition)]")}), the predicate of RR05 '
         f'({cite(EV, "obs[" + chr(39) + "recipe_edition" + chr(39) + "] = ")}). Every predicate RR07 evaluates is an earlier row, so '
         'RR07 is never the first refusal.'),
