@@ -2755,7 +2755,8 @@ def boundary_errors(case, boundary):
 CONTROL_BOUNDARY = {'append': 'append', 'append-before': 'append', 'append-project': 'append',
                     'append-project-before': 'append', 'append-public': 'append', 'pack': 'append',
                     'retry': 'retry', 'retry-storage-meta': 'retry', 'derived': 'derived', 'derived-ref': 'derived',
-                    'derived-large': 'derived', 'withdrawal': 'withdrawal', 'retained': 'retained',
+                    'derived-large': 'derived', 'append-longref': 'append', 'derived-longref': 'derived',
+                    'withdrawal': 'withdrawal', 'retained': 'retained',
                     'retained-live': 'retained', 'compatibility': 'retained', 'retained-offset': 'retained',
                     'retained-project': 'retained'}
 
@@ -2814,6 +2815,15 @@ def build_controls():
         set_index_dataset(large, LONG_DATASET)
         large['checkpoint_route'] = 'ref'
         controls.append(('derived-large:' + family, resync(large)))
+        # The longest owner-valid custody reference (payload source_custody_ref maxLength 2048) is copied unchanged into
+        # the history row (its schema domain now matches the payload's).
+        longref = copy.deepcopy(before)
+        long_ref = 'custody:' + 'r' * 2040
+        longref['owner']['custody_refs']['custody_ref'] = long_ref
+        longref['event']['payload']['source_custody_ref'] = long_ref
+        resync(longref)
+        controls.append(('append-longref:' + family, longref))
+        controls.append(('derived-longref:' + family, copy.deepcopy(longref)))
         controls.append(('withdrawal:' + family, copy.deepcopy(base)))
         controls.append(('retained:' + family, copy.deepcopy(before)))
         # A later live-state change: the live writer admission, the writer lease and permission, the owner's current

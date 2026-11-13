@@ -475,7 +475,7 @@
         "source_custody_ref": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256,
+          "maxLength": 2048,
           "not": {
             "pattern": "[\\u0000-\\u0020\\u007f]"
           }
