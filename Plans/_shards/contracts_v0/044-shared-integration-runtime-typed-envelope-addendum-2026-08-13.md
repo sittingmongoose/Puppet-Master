@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L21327-L21458
+Source lines: L21450-L21581
 
-Source SHA256: `a68d9519a978a1d5ec016eb75bbc342cdab76ace654da5c93562e80732df06c8`
+Source SHA256: `a045b1f317050d984ebd5d82aefa736fa022381f47b8d47f2f1b441997675957`
 
 ---
 
