@@ -13,9 +13,17 @@
 // data-nx, a glyph PMG.has) in a quiet tile with no outer glow (every box-shadow layer inset). Semantics and geometry
 // only (roles, names, states, hit-tests, boxes, computed styles); no eye. Tile geometry and tick centring stay
 // settings-inspector-fit's.
+// FO-178 (Jared's card Q6, answer A, 2026-11-13: "Pop up over the panel, like the chat picker"): the list no longer
+// unfolds inside the Details panel, pushing what follows down; it pops up over the panel in a layer of its own
+// (position: fixed, outside the panel), within the panel's sides, wholly on screen and on top (its corners, its middle
+// and every row in view hit-test to it), right under its trigger or, without room there, right over it, at every size
+// the kit uses (1920x1080, 1390x900, 1280x500, 1024x768, 860x900, 740x900). Opening it, walking it with the arrow keys
+// and closing it with Escape or a press outside move nothing in the panel (its body's scroll and every block stay put),
+// and it stays above the panel and a toast, with and without `isolation: isolate` on #panel-settings (FO-177's rule).
+// The listbox is found through the picker's aria-controls wherever it is drawn. Fails `f8b2098608` (the inline list).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-choices-picker.check.mjs --set page=<build>
 // --set looks=a,b narrows the looks; --set sizes=1390x900,740x900 the sizes; --set setting=<id> another model setting;
-// --set lists=<id,id> narrows the long lists.
+// --set lists=<id,id> narrows the long lists; --set popSizes=1280x500,740x900 narrows FO-178's size sweep.
 import { LOOKS } from '../browser-check.config.mjs';
 
 const SETTING = 'ai.models.default-model';
@@ -137,8 +145,16 @@ const OPEN = () => {
 	const act = document.activeElement;
 	const insp = document.querySelector('#panel-settings .detail-inspector');
 	const ib = insp ? insp.getBoundingClientRect() : null;
+	/* FO-178: a popup is a layer of its own (fixed, not inside the panel); what a press at each of its corners (6 px
+	   in, inside any rounded corner up to 20 px) and at its middle reaches; and where it stands by its trigger */
+	const layer = !(insp && insp.contains(host)) && getComputedStyle(host).position === 'fixed';
+	const pts = [[hb.left + 6, hb.top + 6], [hb.right - 6, hb.top + 6], [hb.left + 6, hb.bottom - 6], [hb.right - 6, hb.bottom - 6], [(hb.left + hb.right) / 2, (hb.top + hb.bottom) / 2]];
+	const corners = pts.map(([x, y]) => { const e = document.elementFromPoint(x, y); return e && host.contains(e) ? 'popup' : e ? String(e.className || e.tagName).slice(0, 40) : 'nothing'; });
+	const tb = c.getBoundingClientRect();
+	const side = hb.top >= tb.bottom - 0.5 && hb.top - tb.bottom <= 10 ? 'under its trigger' : hb.bottom <= tb.top + 0.5 && tb.top - hb.bottom <= 10 ? 'over its trigger' : hb.top < tb.bottom && hb.bottom > tb.top ? 'covering its trigger' : `${Math.round(hb.top >= tb.bottom ? hb.top - tb.bottom : tb.top - hb.bottom)} px away from its trigger`;
 	return {
-		inPanel: !!(insp && insp.contains(host)), panel: ib ? { left: ib.left, right: ib.right } : null,
+		layer, corners, side, trig: { top: tb.top, bottom: tb.bottom }, room: { below: sbTop - 8 - tb.bottom, above: tb.top - 8 },
+		inPanel: !!(insp && insp.contains(host)), panel: ib ? { left: ib.left, right: ib.right, top: ib.top, bottom: ib.bottom } : null,
 		open: true, role: list.getAttribute('role'), label: list.getAttribute('aria-label') || '',
 		total: opts.length, labels: opts.map((o) => o.textContent.trim()), selected: opts.filter((o) => o.getAttribute('aria-selected') === 'true').map((o) => o.textContent.trim()),
 		names: opts.map((o) => (((o.querySelector('strong') || o).firstChild || {}).textContent || '').trim()),
@@ -147,6 +163,100 @@ const OPEN = () => {
 		activeExists: !!(search && search.getAttribute('aria-activedescendant') && document.getElementById(search.getAttribute('aria-activedescendant'))),
 		running: host.getAnimations ? host.getAnimations({ subtree: true }).filter((a) => a.playState === 'running').length : 0
 	};
+};
+
+/* FO-178: what the Details panel shows and where: its body's scroll and the top and bottom of each of its blocks (the
+   picker's own block included), so a picker that pushes the panel's content, or scrolls the panel, is seen. */
+const PANEL = () => {
+	const body = document.querySelector('#panel-settings .detail-inspector .o55-insp-body');
+	if (!body) return null;
+	return { scroll: Math.round(body.scrollTop * 10) / 10, blocks: [...body.children].map((n) => { const r = n.getBoundingClientRect(); return [Math.round(r.top * 10) / 10, Math.round(r.bottom * 10) / 10]; }) };
+};
+const moved = (a, b) => {
+	if (!a || !b) return 'no Details panel to compare';
+	const out = [];
+	if (Math.abs(a.scroll - b.scroll) > 0.5) out.push(`its body scrolled ${a.scroll} → ${b.scroll}`);
+	if (a.blocks.length !== b.blocks.length) out.push(`${a.blocks.length} → ${b.blocks.length} blocks`);
+	a.blocks.forEach((x, i) => { const y = b.blocks[i]; if (y && (Math.abs(x[0] - y[0]) > 0.5 || Math.abs(x[1] - y[1]) > 0.5)) out.push(`block ${i + 1} ${x.join('–')} → ${y.join('–')}`); });
+	return out.join('; ');
+};
+const PICKER = '#panel-settings .detail-inspector .o55-insp-block [role="combobox"]';
+/* The picker brought into the panel's view first (a click would scroll it there anyway), then the panel as it stands:
+   what opening, walking and closing the picker are compared against. */
+async function beforeOpen(t, f) {
+	await f.locator(PICKER).first().evaluate((el) => el.scrollIntoView({ block: 'nearest' }));
+	await t.page.waitForTimeout(150);
+	return f.evaluate(PANEL);
+}
+/* the open listbox's id (the picker's aria-controls), so its rows, search and maker strip are found wherever it is
+   drawn: in the panel (FO-127) or in its popup (FO-178) */
+const openListId = (f) => f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'); return c ? c.getAttribute('aria-controls') || '' : ''; });
+const listSel = (id) => `[id="${id}"]`;
+const searchSel = (id) => `input[type="search"][aria-controls="${id}"]`;
+const POPPED = () => !!document.querySelector('.o55-pick-pop.is-open');
+/* FO-178 judged on an open picker (OPEN's reading): a popup over the panel, within its sides, whole on screen and on
+   top, by its trigger, and the panel unmoved since `before` */
+async function judgePopup(t, where, o, before, now) {
+	const over = !!o.panel && o.host.left >= o.panel.left - 0.5 && o.host.right <= o.panel.right + 0.5 && o.host.top < o.panel.bottom && o.host.bottom > o.panel.top;
+	await t.check(`${where}: FO-178 the list pops up over the Details panel (a layer of its own, not inside the panel) within the panel's sides`, o.layer && over, o.layer ? JSON.stringify({ host: o.host, panel: o.panel }) : `not a popup: the list is drawn inside the panel (${JSON.stringify({ host: o.host, panel: o.panel })})`);
+	await t.check(`${where}: FO-178 the whole popup is on screen and on top (its corners and middle hit-test to it)`, o.layer && o.corners.every((x) => x === 'popup'), o.layer ? JSON.stringify(o.corners) : `not a popup; corners reach ${JSON.stringify(o.corners)}`);
+	const cramped = Math.max(o.room.below, o.room.above) < 200;
+	await t.check(`${where}: FO-178 the popup stands right by its trigger (${o.side}), covering it only when neither side has room`, o.layer && (o.side === 'under its trigger' || o.side === 'over its trigger' || (o.side === 'covering its trigger' && cramped)), o.layer ? `${o.side}; room under ${Math.round(o.room.below)} px, over ${Math.round(o.room.above)} px` : 'not a popup');
+	const m = moved(before, now);
+	await t.check(`${where}: FO-178 opening the picker moves nothing in the Details panel`, !m, m);
+}
+
+/* every size the kit uses (WIDTHS 860 to 1920, the short 1280x500 and the narrow 740) */
+const POP_SIZES = '1920x1080,1390x900,1280x500,1024x768,860x900,740x900';
+/* A spot to press that is no control, outside the open list: on the Details panel ('panel': its title first) or on
+   the Settings page beside it ('page'), in frame coordinates */
+const SPOT = (place) => {
+	const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]');
+	const list = c && document.getElementById(c.getAttribute('aria-controls') || '');
+	const host = list && (list.closest('.pm51-popout') || list.closest('.o55-pick-inline') || list);
+	const insp = document.querySelector('#panel-settings .detail-inspector');
+	const root = document.querySelector('#pm-settings-root');
+	if (!insp || !root) return null;
+	const ib = insp.getBoundingClientRect(), hb = host ? host.getBoundingClientRect() : null;
+	const CONTROL = 'button, a, input, select, textarea, summary, label, details, [role="button"], [role="tab"], [role="link"], [role="combobox"], [role="option"], [role="switch"], [data-action], [tabindex], [contenteditable]';
+	const ok = (x, y) => {
+		if (hb && x >= hb.left - 4 && x <= hb.right + 4 && y >= hb.top - 4 && y <= hb.bottom + 4) return null;
+		const e = document.elementFromPoint(x, y);
+		if (!e || (host && host.contains(e)) || e.closest(CONTROL)) return null;
+		if (place === 'panel' ? !insp.contains(e) : (insp.contains(e) || !root.contains(e) || x >= ib.left - 4)) return null;
+		return { x: Math.round(x), y: Math.round(y), what: String(e.className || e.tagName).split(' ')[0] || e.tagName };
+	};
+	if (place === 'panel') {
+		const title = insp.querySelector('.o55-insp-title');
+		if (title) { const r = title.getBoundingClientRect(); const got = ok(r.left + Math.min(40, r.width / 2), r.top + r.height / 2); if (got) return Object.assign(got, { what: 'its title' }); }
+	}
+	const [x0, x1] = place === 'panel' ? [ib.left + 8, ib.right - 8] : [8, ib.left - 12];
+	for (let y = 60; y < innerHeight - 40; y += 23) for (let x = x0; x < x1; x += 31) { const got = ok(x, y); if (got) return got; }
+	return null;
+};
+/* FO-178's stacking reading: the open list's host, whether it is a layer of its own, what its corners and middle reach,
+   and what each point it shares with the toast titled `title` reaches (the toast: the smallest card on screen, 40 to 200
+   px tall and 200 px wide or more, that holds the title; it may start a few px above the window, where the title bar
+   is hidden, and the notification centre keeps an empty slot above the window) */
+const STACK = (title) => {
+	const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]');
+	const list = c && document.getElementById(c.getAttribute('aria-controls') || '');
+	if (!list) return { open: false, corners: [], points: [] };
+	const host = list.closest('.pm51-popout') || list.closest('.o55-pick-inline') || list;
+	const insp = document.querySelector('#panel-settings .detail-inspector');
+	const layer = !(insp && insp.contains(host)) && getComputedStyle(host).position === 'fixed';
+	const hb = host.getBoundingClientRect();
+	const reach = (x, y) => { const e = document.elementFromPoint(x, y); return e && host.contains(e) ? 'popup' : e ? String(e.className || e.tagName).slice(0, 40) : 'nothing'; };
+	const corners = [[hb.left + 6, hb.top + 6], [hb.right - 6, hb.top + 6], [hb.left + 6, hb.bottom - 6], [hb.right - 6, hb.bottom - 6], [(hb.left + hb.right) / 2, (hb.top + hb.bottom) / 2]].map(([x, y]) => reach(x, y));
+	const cards = [...document.querySelectorAll('body *')].filter((e) => !host.contains(e) && e.getClientRects().length && (e.textContent || '').includes(title))
+		.map((e) => ({ e, r: e.getBoundingClientRect() })).filter(({ r }) => r.top > -24 && r.bottom > 20 && r.left >= -1 && r.right <= innerWidth + 1 && r.bottom <= innerHeight && r.height >= 40 && r.height <= 200 && r.width >= 200)
+		.sort((a, b) => a.r.width * a.r.height - b.r.width * b.r.height);
+	const card = cards[0];
+	const box = { left: Math.round(hb.left), top: Math.round(hb.top), right: Math.round(hb.right), bottom: Math.round(hb.bottom) };
+	if (!card) return { open: true, layer, corners, points: [], toast: null, box, cards: cards.length };
+	const r = card.r, ix = { left: Math.max(r.left, hb.left) + 4, right: Math.min(r.right, hb.right) - 4, top: Math.max(r.top, hb.top) + 4, bottom: Math.min(r.bottom, hb.bottom) - 4 };
+	const points = ix.left < ix.right && ix.top < ix.bottom ? [[ix.left, ix.top], [ix.right, ix.top], [ix.left, ix.bottom], [ix.right, ix.bottom], [(ix.left + ix.right) / 2, (ix.top + ix.bottom) / 2]].map(([x, y]) => reach(x, y)) : [];
+	return { open: true, layer, corners, points, box, toast: { left: Math.round(r.left), top: Math.round(r.top), right: Math.round(r.right), bottom: Math.round(r.bottom), cls: String(card.e.className || card.e.tagName).slice(0, 40) } };
 };
 
 /* A head tile: the glyph it draws (a PMG glyph carries data-nx, the registry name) and its shadow layers (an outer
@@ -177,8 +287,9 @@ async function judgeClosed(t, f, where, id) {
 	await t.check(`${where}: the picker sits inside the panel`, !!b.box && !!b.panel && b.box.left >= b.panel.left - 0.5 && b.box.right <= b.panel.right + 0.5 && b.box.h >= 32, JSON.stringify({ box: b.box, panel: b.panel }));
 	return b;
 }
-async function judgeOpen(t, f, where, b, { still = false } = {}) {
+async function judgeOpen(t, f, where, b, { still = false, before = null } = {}) {
 	const o = await f.evaluate(OPEN);
+	const now = await f.evaluate(PANEL);
 	await t.check(`${where}: the picker opened a listbox it controls`, o.open && o.role === 'listbox', JSON.stringify(o).slice(0, 200));
 	if (!o.open) return o;
 	/* every choice: the row's own select when it offers the same long list, else the inventory's choices */
@@ -193,7 +304,8 @@ async function judgeOpen(t, f, where, b, { still = false } = {}) {
 	const listed = o.names.some((n) => n === cur);
 	await t.check(`${where}: ${listed ? `exactly the current choice ("${cur}") is selected` : `nothing is selected while the value ("${cur}") is not one of the choices`}`, listed ? o.selected.length === 1 && o.selected[0].startsWith(cur) : o.selected.length === 0, JSON.stringify(o.selected));
 	await t.check(`${where}: focus is in its search, with an active option named`, o.searchFocused && o.activeExists, `search focused ${o.searchFocused}, active ${o.activeDesc}`);
-	await t.check(`${where}: the list unfolds inside the Details panel`, o.inPanel && !!o.panel && o.host.left >= o.panel.left - 0.5 && o.host.right <= o.panel.right + 0.5, JSON.stringify({ host: o.host, panel: o.panel }));
+	/* FO-178 replaces FO-127's "the list unfolds inside the Details panel" (Jared's Q6 answer A): it pops up over it */
+	await judgePopup(t, where, o, before, now);
 	await t.check(`${where}: the open list is inside the window and above the status bar`, o.host.left >= 0 && o.host.right <= o.vw && o.host.top >= 0 && o.host.bottom <= o.sbTop + 0.5, JSON.stringify({ host: o.host, vw: o.vw, sbTop: o.sbTop }));
 	const covered = o.hits.filter((h) => !h.on);
 	await t.check(`${where}: every option in view is on top (${o.hits.length} hit-tested, 3 or more)`, o.hits.length >= 3 && covered.length === 0, covered.slice(0, 3).map((h) => 'under ' + h.under).join(' | '));
@@ -226,13 +338,17 @@ export const tests = {
 				const b = await judgeClosed(t, f, where, sid);
 				if (sid === id) await judgeTile(t, f, `${where} Details`, '#panel-settings .detail-inspector .o55-insp-icon');
 				if (b.combos) {
-					await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().click();
+					const before = await beforeOpen(t, f);
+					await f.locator(PICKER).first().click();
 					await t.page.waitForTimeout(450);
-					await judgeOpen(t, f, where, b);
+					const o = await judgeOpen(t, f, where, b, { before });
 					await t.page.keyboard.press('Escape');
 					await t.page.waitForTimeout(300);
 					const after = await f.evaluate(() => ({ open: !!document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'), panel: !!document.querySelector('#panel-settings .detail-inspector .o55-insp-head'), focus: !!(document.activeElement && document.activeElement.matches('#panel-settings .detail-inspector [role="combobox"]')) }));
 					await t.check(`${where}: Escape closes the picker, keeps the panel, and returns focus to the picker`, !after.open && after.panel && after.focus, JSON.stringify(after));
+					/* FO-178: Escape folds the popup away (none is left open over the panel) and the panel stands as it did */
+					const gone = await f.evaluate(POPPED), m = moved(before, await f.evaluate(PANEL));
+					await t.check(`${where}: FO-178 Escape closes the popup over the panel, focus on the picker, the panel where it stood before it opened`, !!(o && o.layer) && !gone && !after.open && after.focus && !m, !(o && o.layer) ? 'it never popped up over the panel (the list was inside it)' : gone ? 'a popup is still open' : m || JSON.stringify(after));
 				}
 				await closeDetails(t, f);
 			}
@@ -270,7 +386,8 @@ export const tests = {
 		const makers = s0.groups;
 		await t.check(`keys: the maker strip has All and one mark per maker (${makers.length} makers)`, s0.chips.length === makers.length + 1 && s0.chips[0].pressed === 'true' && makers.every((m) => s0.chips.some((c) => c.label === m)), JSON.stringify(s0.chips));
 		const maker = makers[makers.length - 1];
-		const host = '#panel-settings .detail-inspector [role="group"]';
+		/* the strip sits beside the list, in the panel (FO-127) or in its popup (FO-178) */
+		const host = `:is(#panel-settings .detail-inspector, .o55-pick-pop.is-open) [role="group"][aria-label="Show models from"]`;
 		await f.locator(`${host} button[aria-label="${maker}"]`).first().click();
 		await t.page.waitForTimeout(200);
 		const s1 = await f.evaluate(STRIP);
@@ -279,7 +396,7 @@ export const tests = {
 		await t.page.waitForTimeout(200);
 		const s2 = await f.evaluate(STRIP);
 		await t.check('keys: All brings every row back', s2.shown === s0.shown && s2.groups.length === makers.length, JSON.stringify({ shown: s2.shown, before: s0.shown }));
-		await f.locator('#panel-settings .detail-inspector input[type="search"][role="combobox"]').first().focus();
+		await f.locator(searchSel(await openListId(f))).first().focus();
 		await t.page.keyboard.type(word);
 		await t.page.waitForTimeout(250);
 		const shown = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'); const l = c && document.getElementById(c.getAttribute('aria-controls')); return l ? [...l.querySelectorAll('[role="option"]')].filter((n) => !n.hidden).map((n) => n.textContent.trim()) : []; });
@@ -310,9 +427,10 @@ export const tests = {
 		if (!(await openDetails(t, f, id))) return;
 		const b = await judgeClosed(t, f, 'reduced motion', id);
 		if (b.combos) {
-			await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().click();
+			const before = await beforeOpen(t, f);
+			await f.locator(PICKER).first().click();
 			await t.page.waitForTimeout(60);
-			await judgeOpen(t, f, 'reduced motion', b, { still: true });
+			await judgeOpen(t, f, 'reduced motion', b, { still: true, before });
 			await t.page.keyboard.press('Escape');
 		}
 		await closeDetails(t, f);
@@ -339,10 +457,11 @@ export const tests = {
 			const b = await judgeClosed(t, f, where, id);
 			if (b.combos) {
 				await t.check(`${where}: its picker has no maker mark`, !b.mark);
-				await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().focus();
+				const before = await beforeOpen(t, f);
+				await f.locator(PICKER).first().focus();
 				await t.page.keyboard.press('ArrowDown');
 				await t.page.waitForTimeout(400);
-				const o = await judgeOpen(t, f, where, b);
+				const o = await judgeOpen(t, f, where, b, { before });
 				const rows = await f.evaluate(() => {
 					const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]');
 					const list = c && document.getElementById(c.getAttribute('aria-controls'));
@@ -469,7 +588,7 @@ export const tests = {
 				await trig.click(); await t.page.waitForTimeout(400);
 				const opts = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'); const l = c && document.getElementById(c.getAttribute('aria-controls')); const o = l ? [...l.querySelectorAll('[role="option"]')] : []; return { n: o.length, off: o.filter((x) => x.getAttribute('aria-disabled') === 'true').length, sel: o.filter((x) => x.getAttribute('aria-selected') === 'true').length }; });
 				await t.check(`${thing}: read only, every one of its ${opts.n} choices is unavailable and none is selected`, opts.n > 1 && opts.off === opts.n && opts.sel === 0, JSON.stringify(opts));
-				const first = f.locator('#panel-settings .detail-inspector .o55-pick-list [role="option"]').first();
+				const first = f.locator(`${listSel(await openListId(f))} [role="option"]`).first();
 				/* a click on an unavailable choice (Playwright will not press a disabled one, so the event is sent) */
 				if (await first.count()) await first.dispatchEvent('click');
 				await t.page.waitForTimeout(400);
@@ -485,7 +604,9 @@ export const tests = {
 	   and Arrow Down keeps the active row (the search box's aria-activedescendant) wholly visible after every key (inside
 	   the list, the Details panel's scrolled view, the window and above the status bar), in a model setting and two long
 	   lists, at 1390x900, 1280x500 and 740x900 (--set arrowSizes=), with motion and under Reduced Motion. The old scroll used offsetTop against
-	   another box: Arrow Up hid the row, and under Reduced Motion every step did. */
+	   another box: Arrow Up hid the row, and under Reduced Motion every step did. FO-178: the walk happens in the popup
+	   over the panel (its list is its own scroll box), and nothing in the Details panel moves from before the picker
+	   opened to the last key (FO-127's inline list scrolled the panel to show the row at 1280x500). */
 	'FO-127 arrow keys keep the active row in view': async (t) => {
 		const f = await t.app.open();
 		await t.viewport(1390, 900);
@@ -522,19 +643,23 @@ export const tests = {
 				await t.viewport(1390, 900);
 				if (!(await openDetails(t, f, id))) continue;
 				if (w !== 1390 || h !== 900) { await t.viewport(w, h); await t.page.waitForTimeout(500); }
-				await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().focus();
+				const before = await beforeOpen(t, f);
+				await f.locator(PICKER).first().focus();
 				await t.page.keyboard.press('ArrowDown');
 				await t.page.waitForTimeout(350);
-				const misses = [];
+				const o = await f.evaluate(OPEN);
+				const misses = [], shifts = [];
 				let lostFocus = 0;
 				for (const k of KEYS) {
 					await t.page.keyboard.press(k);
 					const v = await f.evaluate(VIS);
 					if (!v.ok) misses.push(`${k}: ${v.why || `top ${v.top}, bottom ${v.bottom}, cut by ${v.by} (${v.name})`}`);
 					if (!v.focus) lostFocus++;
+					const m = moved(before, await f.evaluate(PANEL)); if (m) shifts.push(`${k}: ${m}`);
 				}
 				await t.check(`arrows ${w}x${h} ${motion} ${id}: the active row stays wholly in view (list, Details panel, window, above the status bar) over ${KEYS.length} keys`, misses.length === 0, `${misses.length} out of view: ${misses.slice(0, 4).join(' | ')}`);
 				await t.check(`arrows ${w}x${h} ${motion} ${id}: focus stays in the search box while walking`, lostFocus === 0, `${lostFocus} keys left focus elsewhere`);
+				await t.check(`arrows ${w}x${h} ${motion} ${id}: FO-178 the walk stays in the popup over the panel (its own list scrolls) and the Details panel never moves`, !!o.layer && shifts.length === 0, !o.layer ? 'not a popup: the list is inside the panel' : `${shifts.length} of ${KEYS.length} keys moved the panel: ${shifts.slice(0, 3).join(' | ')}`);
 				await t.page.keyboard.press('Escape');
 				await closeDetails(t, f);
 			}
@@ -553,14 +678,15 @@ export const tests = {
 		if (!(await openDetails(t, f, 'code.terminal.background-image'))) return;
 		await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().click();
 		await t.page.waitForTimeout(400);
-		const search = f.locator('#panel-settings .detail-inspector .o55-pick-inline input[type="search"]').first();
+		const search = f.locator(searchSel(await openListId(f))).first();
 		await search.hover();
 		await t.page.waitForTimeout(1200);
 		/* what a person sees (the visible tag) and what a screen reader hears (the box's own description) */
 		const tag = await f.evaluate(() => {
 			const v = document.getElementById('pm-hover-tag-visual');
 			const shown = v && v.getClientRects().length && getComputedStyle(v).visibility !== 'hidden' && getComputedStyle(v).opacity !== '0' ? v.textContent.replace(/\s+/g, ' ').trim() : '';
-			const s = document.querySelector('#panel-settings .detail-inspector .o55-pick-inline input[type="search"]');
+			const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]');
+			const s = c && document.querySelector(`input[type="search"][aria-controls="${c.getAttribute('aria-controls')}"]`);
 			const desc = s ? (s.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean).map((id) => (document.getElementById(id) || {}).textContent || '').join(' ') : '';
 			return { shown, desc };
 		});
@@ -618,5 +744,113 @@ export const tests = {
 		const mp = await f.evaluate(() => { const i = document.querySelector('#panel-settings .detail-inspector'); return { checks: i.querySelectorAll('.o55-insp-block [role="checkbox"]').length, combos: i.querySelectorAll('.o55-insp-block [role="combobox"]').length }; });
 		await t.check(`Ways to fix (several choices): stays a tick list (${mp.checks} checkboxes)`, mp.checks > 6 && mp.combos === 0, `checkboxes ${mp.checks}, combobox ${mp.combos}`);
 		await closeDetails(t, f);
+	},
+
+	/* FO-178 (Jared's Q6, answer A): at every size the kit uses, the list pops up over the Details panel, inside the
+	   panel's sides, whole on screen and on top, right by its trigger (under it, or over it when there is no room under
+	   it), and opening it moves nothing in the panel. A model setting, Theme (a short list) and Editor colors (the
+	   longest), Basic Dark, either surface. --set popSizes= narrows the sizes. */
+	'FO-178 the picker pops up over the panel at every size': async (t) => {
+		const sizes = (t.args.popSizes ? String(t.args.popSizes) : POP_SIZES).split(',').map((x) => x.split('x').map(Number));
+		const f = await t.app.open();
+		await t.emulate({ reducedMotion: 'no-preference' });
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		for (const [w, h] of sizes) for (const id of [SETTING, 'general.visual.theme', 'code.editing.color-scheme']) {
+			await t.viewport(1390, 900);
+			if (!(await openDetails(t, f, id))) continue;
+			if (w !== 1390 || h !== 900) { await t.viewport(w, h); await t.page.waitForTimeout(500); }
+			const where = `popup ${w}x${h} ${id}`;
+			const b = await judgeClosed(t, f, where, id);
+			if (b.combos) {
+				const before = await beforeOpen(t, f);
+				await f.locator(PICKER).first().click();
+				await t.page.waitForTimeout(450);
+				await judgeOpen(t, f, where, b, { before });
+				await t.page.keyboard.press('Escape');
+				await t.page.waitForTimeout(300);
+			}
+			await closeDetails(t, f);
+		}
+		await t.viewport(1390, 900);
+	},
+
+	/* FO-178: a press outside the popup closes it. On the Details panel's own title (or, where the popup covers it,
+	   another spot of the panel with no control): the popup closes, the panel stays open, focus is not left in the closed
+	   popup, and nothing in the panel moved. On the Settings page beside the panel (a spot with no control): the popup
+	   closes. The model setting at 1390x900 (the popup under its trigger) and 1280x500 (over it), either surface. */
+	'FO-178 a press outside closes the popup': async (t) => {
+		const f = await t.app.open();
+		await t.emulate({ reducedMotion: 'no-preference' });
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		const STATE = () => ({ open: !!document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'), popped: !!document.querySelector('.o55-pick-pop.is-open'), panel: !!document.querySelector('#panel-settings .detail-inspector .o55-insp-head'), inPop: !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('.o55-pick-pop, .o55-pick-inline')) });
+		for (const [w, h] of [[1390, 900], [1280, 500]]) {
+			await t.viewport(1390, 900);
+			if (!(await openDetails(t, f, SETTING))) continue;
+			if (w !== 1390 || h !== 900) { await t.viewport(w, h); await t.page.waitForTimeout(500); }
+			const where = `outside ${w}x${h}`;
+			for (const place of ['panel', 'page']) {
+				const before = await beforeOpen(t, f);
+				await f.locator(PICKER).first().click();
+				await t.page.waitForTimeout(450);
+				const o = await f.evaluate(OPEN);
+				const spot = await f.evaluate(SPOT, place);
+				if (!spot) { await t.check(`${where}: a spot of the ${place} with no control, outside the open list`, false, 'none found'); await t.page.keyboard.press('Escape'); continue; }
+				await f.locator('html').click({ position: { x: spot.x, y: spot.y }, force: true });
+				await t.page.waitForTimeout(350);
+				const after = await f.evaluate(STATE), m = moved(before, await f.evaluate(PANEL));
+				if (place === 'panel') await t.check(`${where}: FO-178 a press on the Details panel outside the popup (${spot.what}) closes the popup and keeps the panel, unmoved`, !!o.layer && !after.open && !after.popped && after.panel && !after.inPop && !m, !o.layer ? 'it never popped up over the panel (the list was inside it)' : m || JSON.stringify(after));
+				else await t.check(`${where}: FO-178 a press on the Settings page beside the panel (${spot.what}) closes the popup`, !!o.layer && !after.open && !after.popped && !after.inPop, !o.layer ? 'it never popped up over the panel (the list was inside it)' : JSON.stringify(after));
+				if (after.open) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); }
+				if (!after.panel) break;
+			}
+			await closeDetails(t, f);
+		}
+		await t.viewport(1390, 900);
+	},
+
+	/* FO-178: the popup sits above the panel and above a toast (Settings' toasts appear near the top of the window, where
+	   the popup reaches when it opens over its trigger), with and without FO-177's `isolation: isolate` on
+	   #panel-settings: its corners, its middle and every point it shares with the toast reach the popup. The model
+	   setting at 1280x500 and 1920x1080, the toast raised just before the picker opens; at least one cell must have the
+	   toast and the popup overlap. */
+	'FO-178 the popup sits above the panel and a toast': async (t) => {
+		const f = await t.app.open();
+		await t.emulate({ reducedMotion: 'no-preference' });
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		let overlapped = 0;
+		for (const iso of [false, true]) for (const [w, h] of [[1280, 500], [1920, 1080]]) {
+			await f.evaluate((iso) => { let st = document.getElementById('fo178-isolation'); if (iso && !st) { st = document.createElement('style'); st.id = 'fo178-isolation'; st.textContent = '#panel-settings { isolation: isolate; }'; document.head.appendChild(st); } if (!iso && st) st.remove(); }, iso);
+			await t.viewport(1390, 900);
+			if (!(await openDetails(t, f, SETTING))) continue;
+			if (w !== 1390 || h !== 900) { await t.viewport(w, h); await t.page.waitForTimeout(500); }
+			const where = `stacking ${w}x${h}${iso ? ', #panel-settings isolated' : ''}`;
+			const isolated = await f.evaluate(() => getComputedStyle(document.getElementById('panel-settings')).isolation);
+			await t.check(`${where}: the panel's isolation is ${iso ? 'isolate' : 'as the page has it'}`, iso ? isolated === 'isolate' : true, isolated);
+			/* a toast on screen first (the notification centre holds a new one back while focus is in a search box, so
+			   it is raised before the picker opens), then the popup opens over it */
+			const title = `FO-178 toast ${w}x${h}${iso ? ' isolated' : ''}`;
+			await f.evaluate((title) => PM51.toast(title, 'A toast under the picker', 'info'), title);
+			const shown = await f.waitForFunction((title) => [...document.querySelectorAll('body *')].some((e) => { if (!(e.textContent || '').includes(title) || !e.getClientRects().length) return false; const r = e.getBoundingClientRect(); return r.top > -24 && r.bottom > 20 && r.left >= -1 && r.right <= innerWidth + 1 && r.bottom <= innerHeight && r.height >= 40 && r.height <= 200 && r.width >= 200; }), title, { timeout: 6000, polling: 100 }).then(() => true, () => false);
+			await t.check(`${where}: the toast is on screen`, shown, 'no toast card on screen within 6 s');
+			await f.locator(PICKER).first().click();
+			await t.page.waitForTimeout(450);
+			const r = await f.evaluate(STACK, title);
+			t.log(`${where}: popup ${JSON.stringify(r.box)}, toast ${JSON.stringify(r.toast)}, ${r.points.length} shared points`);
+			if (r.points.length) overlapped++;
+			const off = r.corners.concat(r.points).filter((x) => x !== 'popup');
+			await t.check(`${where}: FO-178 the popup is on top of the panel and the toast (its corners, its middle and ${r.points.length} points it shares with the toast reach it)`, r.open && r.layer && off.length === 0, !r.open ? 'no open list' : !r.layer ? 'not a popup: the list is inside the panel' : `reached instead: ${off.slice(0, 4).join(' | ')}; toast ${JSON.stringify(r.toast)}`);
+			await t.page.keyboard.press('Escape');
+			await t.page.waitForTimeout(300);
+			await closeDetails(t, f);
+		}
+		await f.evaluate(() => { const st = document.getElementById('fo178-isolation'); if (st) st.remove(); });
+		await t.check(`FO-178 a toast overlapped the popup in at least one cell (${overlapped} of 4)`, overlapped >= 1, 'the toast never met the popup, so its stacking was not tested');
+		await t.viewport(1390, 900);
 	}
 };

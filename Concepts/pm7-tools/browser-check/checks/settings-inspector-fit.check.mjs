@@ -11,7 +11,8 @@
 // --set looks=a,b,c narrows the looks; --set widths=1280,740 narrows the width pass; --set move=0 skips FO-125.
 // FO-127 (Jared, 2026-11-11, all 11 long lists): Theme's choices are a picker now (settings-choices-picker); its panel
 // opens the picker and the chosen row's tick is measured in its tick cell, by the same rule. --set nudge=1 shifts every
-// tick and the head glyph 1 px, to show the check fails an off-centre tick or glyph.
+// tick and the head glyph 1 px, to show the check fails an off-centre tick or glyph. FO-178: the picker's list pops up
+// over the panel, outside it, so its ticked row is found through the picker's aria-controls (the same rule measures it).
 import { LOOKS } from '../browser-check.config.mjs';
 import { setLookBySetting as setLookShared } from '../helpers/settings-look.mjs';
 
@@ -51,7 +52,11 @@ const MEASURE = () => {
   };
   const insp = document.querySelector('#panel-settings .detail-inspector');
   if (!insp || insp.getAttribute('aria-hidden') === 'true' || !insp.getClientRects().length) return { error: 'no inspector is open' };
-  const ticks = [...insp.querySelectorAll('.o55-insp-choice.is-on .o55-insp-mark, .o55-pick-item[aria-selected="true"] .o55-pick-tick')].map(tick);
+  /* FO-178: an open picker's list pops up over the panel, outside it; it is found through the picker's aria-controls */
+  const pick = insp.querySelector('.o55-pick-trigger[aria-expanded="true"]');
+  const pop = pick && document.getElementById(pick.getAttribute('aria-controls') || '');
+  const scopes = pop && !insp.contains(pop) ? [insp, pop] : [insp];
+  const ticks = scopes.flatMap((sc) => [...sc.querySelectorAll('.o55-insp-choice.is-on .o55-insp-mark, .o55-pick-item[aria-selected="true"] .o55-pick-tick')]).map(tick);
   const tileEl = insp.querySelector('.o55-insp-icon');
   let tile = null;
   if (tileEl) {
@@ -66,7 +71,7 @@ const MEASURE = () => {
       };
     } else tile = { error: 'the icon tile draws no svg' };
   }
-  const roles = [...insp.querySelectorAll('.o55-insp-choice, .o55-pick-item[role="option"]')].map((c) => c.getAttribute('role'));
+  const roles = scopes.flatMap((sc) => [...sc.querySelectorAll('.o55-insp-choice, .o55-pick-item[role="option"]')]).map((c) => c.getAttribute('role'));
   return { ticks, tile, roles: [...new Set(roles)] };
 };
 const centre = (b) => [(b.left + b.right) / 2, (b.top + b.bottom) / 2];
@@ -146,13 +151,14 @@ async function openInspector(t, f, setting) {
   const picker = f.locator('#panel-settings .detail-inspector .o55-pick-trigger').first();
   if (await picker.count()) {
     await picker.click();
-    await f.waitForSelector('#panel-settings .detail-inspector .o55-pick-item[aria-selected="true"] .o55-pick-tick svg', { timeout: 8000 });
+    /* in the panel (FO-127) or in its popup over the panel (FO-178) */
+    await f.waitForSelector(':is(#panel-settings .detail-inspector, .o55-pick-pop.is-open) .o55-pick-item[aria-selected="true"] .o55-pick-tick svg', { timeout: 8000 });
     await t.settle();
   }
   if (t.args.nudge) await f.evaluate(() => {
     if (document.getElementById('fit-nudge')) return;
     const st = document.createElement('style'); st.id = 'fit-nudge';
-    st.textContent = '#panel-settings :is(.o55-insp-mark, .o55-pick-tick) svg { transform: translate(1px, 1px) } #panel-settings .o55-insp-icon svg { transform: translate(1px, 0) }';
+    st.textContent = ':is(#panel-settings, .o55-pick-pop) :is(.o55-insp-mark, .o55-pick-tick) svg { transform: translate(1px, 1px) } #panel-settings .o55-insp-icon svg { transform: translate(1px, 0) }';
     document.head.appendChild(st);
   });
   return true;
