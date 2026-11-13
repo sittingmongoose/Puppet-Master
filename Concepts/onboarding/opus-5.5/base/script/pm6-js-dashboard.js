@@ -3097,7 +3097,7 @@
     if (typeof p.cooldownSec === 'number') {
       D.cooldown = p.cooldownSec;
       var cd = document.getElementById('pm6DashCooldown');
-      if (cd) cd.textContent = fmtCooldown(D.cooldown);
+      if (cd) { var text = fmtCooldown(D.cooldown); if (cd.textContent !== text) cd.textContent = text; }
     }
     var qs = p.quotas;
     if (qs && qs.length) {
@@ -3107,7 +3107,7 @@
       if (q && typeof q.pct === 'number' && Math.round(q.pct) !== D.usagePct) {
         D.usagePct = Math.round(q.pct);
         var pctEl = document.getElementById('pm6DashUsagePct');
-        if (pctEl) pctEl.textContent = D.usagePct + '%';
+        if (pctEl && pctEl.textContent !== D.usagePct + '%') pctEl.textContent = D.usagePct + '%';
         refreshKind('quota_summary');
       }
     }
@@ -3123,7 +3123,7 @@
       if (p && typeof p.pct === 'number') {
         D.usagePct = Math.round(p.pct);
         var pctEl = document.getElementById('pm6DashUsagePct');
-        if (pctEl) pctEl.textContent = D.usagePct + '%';
+        if (pctEl && pctEl.textContent !== D.usagePct + '%') pctEl.textContent = D.usagePct + '%';
       }
       if (sub && p && p.suggestion) sub.textContent = String(p.suggestion);
     }
@@ -3167,21 +3167,32 @@
     // cooldown countdown on the ambient usage warning card
     // PM7 T08: the decrement keeps its exact schedule; only the DOM write is
     // gated to the active dashboard page and flushed on page.changed.
+    // pm7-perf lane I: nor while the onboarding window is open (html[data-o55-open]): the app under it is inert and
+    // its loops rest (onboarding README, Performance rules, 6). Each write there woke six document-wide
+    // MutationObservers and restyled #dashboardView and main.primary-content through their :has() rules, 0.1-0.4 ms a
+    // second for a clock nobody can see (Windows, Basic and Glass Dark). The window's close writes the current value.
     var pm7DashCdDirty = false;
+    var pm7Html = document.documentElement;
+    function pm7DashCdFlush(shown) {
+      if (!pm7DashCdDirty || pm7Html.hasAttribute('data-o55-open') || !(shown || root().classList.contains('active'))) return;
+      pm7DashCdDirty = false;
+      var el = document.getElementById('pm6DashCooldown');
+      if (el) { var text = fmtCooldown(D.cooldown); if (el.textContent !== text) el.textContent = text; }
+    }
     setInterval(function () {
       if (document.hidden) return;
       var el = document.getElementById('pm6DashCooldown');
       if (!el) return;
       D.cooldown = Math.max(0, D.cooldown - 1);
-      if (root().classList.contains('active')) { el.textContent = fmtCooldown(D.cooldown); pm7DashCdDirty = false; }
+      if (root().classList.contains('active') && !pm7Html.hasAttribute('data-o55-open')) { var text = fmtCooldown(D.cooldown); if (el.textContent !== text) el.textContent = text; pm7DashCdDirty = false; }
       else { pm7DashCdDirty = true; }
     }, 1000);
     on('page.changed', function (p) {
-      if (!p || p.page !== 'dashboard' || !pm7DashCdDirty) return;
-      pm7DashCdDirty = false;
-      var el = document.getElementById('pm6DashCooldown');
-      if (el) el.textContent = fmtCooldown(D.cooldown);
+      if (p && p.page === 'dashboard') pm7DashCdFlush(true);
     });
+    if (typeof MutationObserver === 'function') {
+      new MutationObserver(function () { pm7DashCdFlush(false); }).observe(pm7Html, { attributes: true, attributeFilter: ['data-o55-open'] });
+    }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

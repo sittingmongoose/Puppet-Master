@@ -66,7 +66,7 @@
   function axisW(labels) { var m = 0; labels.forEach(function (s) { m = Math.max(m, charts.textW(s, 11, true)); }); return m; }
   /* axes: horizontal gridlines with left (and right) ticks sharing k divisions, unit titles, x ticks and grid */
   function drawAxes(svg, g, patch) {
-    svg.setAttribute('width', g.W); svg.setAttribute('height', g.H);
+    setWH(svg, g.W, g.H);
     var s = '', i, y;
     for (i = 0; i <= g.ya.k; i++) {
       y = r1(g.pad.t + g.ph - g.ph * i / g.ya.k) + 0.5;
@@ -518,8 +518,8 @@
         P.cost = charts.key(S('path', { class: 'pmu-mark', 'data-mark': 'line', 'data-key': 'cost', 'data-role': 'cost' }, f.plot), ov.key);
       }
     }
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
+    setWH(f.over, W, Hh);
     f.plot.classList.toggle('is-split', split);
     /* split token bands hide the total line: the comet then rides the top band's edge (the stack's top is the last series) */
     P.edges.forEach(function (e, i) { if (split && m.token && i === P.edges.length - 1) e.setAttribute('data-comet', '1'); else e.removeAttribute('data-comet'); });
@@ -573,20 +573,25 @@
     else if (c._hover) { c._hover.destroy(); c._hover = null; }
     paintIso(c);
   }
+  /* a path's d and an svg's size are written only when they differ: a Live beat that leaves the plot where it was tweened
+     every frame from the shape to the same shape, and rewrote the d of each band, edge and line with the value it held
+     (208 writes in one beat, NieR Dark Home), and every re-render rewrote the plot's width and height (pm7-perf lane K) */
+  function setD(el, d) { if (el.getAttribute('d') !== d) el.setAttribute('d', d); }
+  function setWH(svg, w, h) { if (svg.getAttribute('width') !== String(w)) svg.setAttribute('width', w); if (svg.getAttribute('height') !== String(h)) svg.setAttribute('height', h); }
   function paintArea(c, cur, geo) {
     var P = c.P;
     if (geo.token) {
-      P.total.setAttribute('d', gapBand(cur.x0, cur.x1, cur.tot, cur.base));
+      setD(P.total, gapBand(cur.x0, cur.x1, cur.tot, cur.base));
       var tl = gapLine(cur.x0, cur.x1, cur.tot);
-      P.totalLine.setAttribute('d', tl); P.glow.setAttribute('d', tl); if (P.core) P.core.setAttribute('d', tl);
+      setD(P.totalLine, tl); setD(P.glow, tl); if (P.core) setD(P.core, tl);
     }
     cur.lv.forEach(function (row, j) {
       var bot = geo.stacked ? (j ? cur.lv[j - 1] : cur.base) : cur.base;
-      P.bands[j].setAttribute('d', gapBand(cur.x0, cur.x1, row, bot.map(function (v, i) { return finite(v) ? v : cur.base[i]; })));
-      P.edges[j].setAttribute('d', gapLine(cur.x0, cur.x1, row));
+      setD(P.bands[j], gapBand(cur.x0, cur.x1, row, bot.map(function (v, i) { return finite(v) ? v : cur.base[i]; })));
+      setD(P.edges[j], gapLine(cur.x0, cur.x1, row));
     });
-    if (P.cost && cur.cd != null) P.cost.setAttribute('d', cur.cd);
-    else if (P.cost && cur.cs) P.cost.setAttribute('d', gapLine(cur.x0, cur.x1, cur.cs));
+    if (P.cost && cur.cd != null) setD(P.cost, cur.cd);
+    else if (P.cost && cur.cs) setD(P.cost, gapLine(cur.x0, cur.x1, cur.cs));
   }
   /* the NOW / last point of each line: a 3.5 px dot with a static 10 px halo (WOW-SPEC 2.4), HTML over the plot */
   function endDots(c, geo, m, totals, cost, Y, YB, mids, slide, morphing) {
@@ -974,8 +979,8 @@
       swapAxes(f, { W: W, H: Hh, pad: pad, pw: pw, ph: ph, ya: ya, yMin0: lo === 0, unitA: spec.unitTitle || charts.unitTitle(unit),
         ylab: function (i) { return charts.fmtAxis(lo + ya.step * i, unit, ya.step); }, xt: xt, extra: extra }, live ? 'live' : mode === 'morph');
     } else f.axes.innerHTML = '';
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
+    setWH(f.over, W, Hh);
     var pts = series.map(function (s) { return (s.values || []).map(function (v) { return finite(v) ? Y(v) : null; }); });
     var bandPts = null, fcPts = null;
     if (fc && finite(fc.from)) {
@@ -1183,7 +1188,7 @@
       ylab: function (i) { return charts.fmtAxis(ya.step * i, unit, ya.step); }, xt: xt };
     swapAxes(f, g, live ? 'live' : mode === 'morph');
     /* the overlay svg keeps the plot's size (an unsized svg is 300 x 150 and pushed short cards into overflow) */
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.over, W, Hh);
     /* bars (DOM) */
     if (!f.bars) { f.bars = H('div', 'pmu-cols', f.box); }
     var bars = f.bars;
@@ -1364,7 +1369,7 @@
     var W = Math.max(24, c._w || 0), Hh = c._h >= 12 ? c._h : (spec.height || c.opts.height || 28);
     c.el.style.height = Hh + 'px';
     var vals = (spec.values || []), n = vals.length;
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
     if (!n) { f.plot.innerHTML = ''; return; }
     var lo = Infinity, hi = -Infinity;
     vals.forEach(function (v) { if (finite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } });
@@ -1529,8 +1534,8 @@
       ylab: function (i) { return charts.fmtAxis(ya.step * i, 'usd', ya.step); }, xt: xt, extra: extra }, live ? 'live' : morph);
     c._bgeo = { W: W, ph: ph, xNow: xtd, pad: pad, pw: pw, days: days, top: ya.top, ya: ya, xLast: null };
     if (compact) f.axes.innerHTML = '';
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
+    setWH(f.over, W, Hh);
     var pts = []; cum.forEach(function (v, i) { if (finite(v)) pts.push([X(i + 1), Y(v)]); });
     if (pts.length) c._bgeo.xLast = pts[pts.length - 1][0];
     /* the flyer map (C3-5): the budget repeats on Overview and Costs (chart:budget); its domain is the month x [0, top] */
@@ -1862,8 +1867,8 @@
     swapAxes(f, { W: W, H: Hh, pad: pad, pw: pw, ph: ph, ya: ya, yMin0: true, unitA: '',
       ylab: function (i) { return (25 * i) + '%'; }, xt: xt, extra: extra }, morph);
     $$('.pmu-grid', f.axes).forEach(function (g, i) { if (i === 4) g.classList.add('is-100'); });
-    f.plot.setAttribute('width', W); f.plot.setAttribute('height', Hh);
-    f.over.setAttribute('width', W); f.over.setAttribute('height', Hh);
+    setWH(f.plot, W, Hh);
+    setWH(f.over, W, Hh);
     var s = '', hl = '';
     wins.forEach(function (w, i) {
       var pts = (w.points || []).filter(function (p) { return finite(p.v); });

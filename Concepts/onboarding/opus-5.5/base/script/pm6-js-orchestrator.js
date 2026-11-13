@@ -156,16 +156,35 @@
   }
 
   /* ---------- header + banners + tab badges ---------- */
+  /* The header is marked on every demo event (one every few seconds) whatever page is shown, and it wrote its fifteen
+     elements each time with the values they already held: a same-value text, attribute, hidden or title still restyles
+     and wakes the page's DOM watchers, whose frames followed (pm7-perf lane A census, 2026-11-10: about 15 such writes
+     every 5 s on Settings and Home). Now it writes a value only when it differs, and nothing while the page is not
+     shown: PM_PAGES.go marks every widget when it shows the page (page.changed, subscribe below), so the header is
+     written in the frame the page first appears. The elapsed clock's start and end are still noted on every event. A
+     title is compared with the one this wrote last: PMConcept7's hover tags move it to their own attribute. */
+  function putText(el, v) { if (el && el.textContent !== v) el.textContent = v; }
+  function putAttr(el, k, v) { if (el && el.getAttribute(k) !== v) el.setAttribute(k, v); }
+  function putProp(el, k, v) { if (el && el[k] !== v) el[k] = v; }
+  function putTitle(el, v) { if (el && el.__orchTitle !== v) { el.__orchTitle = v; el.title = v; } }
   var elapsedStart = null, elapsedEnd = null;
   RENDERERS.header = safe(function () {
     var st = ST();
     if (!st) return;
     var run = st.run;
+    /* elapsed: where the run's clock started and ended, noted whether or not the page is shown */
+    var stage2 = run.stage;
+    if (stage2 && stage2 !== 'idle' && stage2 !== 'pending-launch' && elapsedStart === null) {
+      var guess = stage2 === 'complete' ? 110000 : (stage2 === 'compiling' ? 2000 : 45000);
+      elapsedStart = st.clock.t - guess;
+    }
+    if (stage2 === 'complete' && elapsedEnd === null && elapsedStart !== null) elapsedEnd = st.clock.t;
+    if (!pageIsActive()) return;
     var chipId = $('pm6OrchRunChipId'), modeEl = $('pm6OrchRunMode');
-    if (chipId) chipId.textContent = focusedId();
+    putText(chipId, focusedId());
     if (modeEl) {
-      modeEl.textContent = run.focusMode === 'historical' ? 'historical' : 'live';
-      modeEl.setAttribute('data-mode', run.focusMode === 'historical' ? 'historical' : 'live');
+      putText(modeEl, run.focusMode === 'historical' ? 'historical' : 'live');
+      putAttr(modeEl, 'data-mode', run.focusMode === 'historical' ? 'historical' : 'live');
     }
     var badge = $('pm6OrchStatusBadge');
     if (badge) {
@@ -177,67 +196,55 @@
         : stage === 'executing' ? 'Running'
         : stage === 'blocked' ? 'Blocked'
         : stage === 'complete' ? 'Complete' : stage;
-      badge.textContent = label;
-      badge.setAttribute('data-state',
+      putText(badge, label);
+      putAttr(badge, 'data-state',
         !st.clock.playing && stage !== 'complete' ? 'paused'
         : stage === 'executing' ? 'running' : stage);
     }
     /* freshness */
     var fr = run.freshness || 'current';
     var fchip = $('pm6OrchFreshChip'), flabel = $('pm6OrchFreshLabel'), fban = $('pm6OrchFreshBanner');
-    if (fchip) fchip.setAttribute('data-fresh', fr);
-    if (flabel) flabel.textContent = 'Projection: ' + fr;
-    if (fban) fban.hidden = fr === 'current';
+    putAttr(fchip, 'data-fresh', fr);
+    putText(flabel, 'Projection: ' + fr);
+    putProp(fban, 'hidden', fr === 'current');
     /* historical banner */
     var hban = $('pm6OrchHistBanner'), htext = $('pm6OrchHistBannerText');
-    if (hban) hban.hidden = !hist();
+    putProp(hban, 'hidden', !hist());
     if (htext && hist()) {
-      htext.textContent = 'Viewing ' + focusedId() + ' — read-only historical snapshot. Controls that mutate the run are parked.';
+      putText(htext, 'Viewing ' + focusedId() + ' — read-only historical snapshot. Controls that mutate the run are parked.');
     }
     /* pause / resume */
     var pb = $('pm6OrchPauseBtn'), rb = $('pm6OrchResumeBtn');
     if (pb && rb) {
       var playing = !!st.clock.playing;
       if (hist()) {
-        pb.disabled = true; rb.disabled = true;
-        pb.setAttribute('data-reason', 'stale'); rb.setAttribute('data-reason', 'stale');
-        pb.title = 'stale — historical snapshot; focus the live run to control it';
-        rb.title = pb.title;
+        putProp(pb, 'disabled', true); putProp(rb, 'disabled', true);
+        putAttr(pb, 'data-reason', 'stale'); putAttr(rb, 'data-reason', 'stale');
+        putTitle(pb, 'stale — historical snapshot; focus the live run to control it');
+        putTitle(rb, 'stale — historical snapshot; focus the live run to control it');
       } else {
-        pb.disabled = !playing;
-        rb.disabled = playing;
-        pb.setAttribute('data-reason', playing ? '' : 'already_done');
-        rb.setAttribute('data-reason', playing ? 'already_done' : '');
-        pb.title = playing ? 'Pause the focused run at the next safe point' : 'already_done — ' + REASON_HINT.already_done;
-        rb.title = playing ? 'already_done — run is already live' : 'Resume the paused run';
+        putProp(pb, 'disabled', !playing);
+        putProp(rb, 'disabled', playing);
+        putAttr(pb, 'data-reason', playing ? '' : 'already_done');
+        putAttr(rb, 'data-reason', playing ? 'already_done' : '');
+        putTitle(pb, playing ? 'Pause the focused run at the next safe point' : 'already_done — ' + REASON_HINT.already_done);
+        putTitle(rb, playing ? 'already_done — run is already live' : 'Resume the paused run');
       }
     }
     /* elapsed */
-    var stage2 = run.stage;
-    if (stage2 && stage2 !== 'idle' && stage2 !== 'pending-launch' && elapsedStart === null) {
-      var guess = stage2 === 'complete' ? 110000 : (stage2 === 'compiling' ? 2000 : 45000);
-      elapsedStart = st.clock.t - guess;
-    }
-    if (stage2 === 'complete' && elapsedEnd === null && elapsedStart !== null) elapsedEnd = st.clock.t;
-    var eEl = $('pm6OrchElapsed');
-    if (eEl) {
-      eEl.textContent = elapsedStart === null ? '--:--'
-        : fmtClock(((elapsedEnd === null ? st.clock.t : elapsedEnd) - elapsedStart) / 1000);
-    }
+    putText($('pm6OrchElapsed'), elapsedStart === null ? '--:--'
+      : fmtClock(((elapsedEnd === null ? st.clock.t : elapsedEnd) - elapsedStart) / 1000));
     /* tab badges */
     var gates = run.gates || {};
     var pending = Object.keys(gates).filter(function (k) { return gates[k].state === 'attention_required'; }).length;
-    var bp = $('orchTabBadgeProgress');
-    if (bp) bp.textContent = pending ? String(pending) : '';
+    putText($('orchTabBadgeProgress'), pending ? String(pending) : '');
     var attn = false;
     Object.keys(run.nodes || {}).forEach(function (k) { if (isProblem(run.nodes[k].state)) attn = true; });
     var bg = $('orchTabBadgeNodeGraph');
-    if (bg) bg.style.display = attn ? 'inline-block' : 'none';
-    var be = $('orchTabBadgeEvidence');
-    if (be) be.textContent = String(evidenceRows().length);
-    var bl = $('orchTabBadgeLedger');
+    if (bg && bg.style.display !== (attn ? 'inline-block' : 'none')) bg.style.display = attn ? 'inline-block' : 'none';
+    putText($('orchTabBadgeEvidence'), String(evidenceRows().length));
     var d = D();
-    if (bl) bl.textContent = d && d.log ? String(d.log.length) : '';
+    putText($('orchTabBadgeLedger'), d && d.log ? String(d.log.length) : '');
   }, 'header');
 
   /* ---------- Progress widgets ---------- */

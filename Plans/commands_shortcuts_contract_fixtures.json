@@ -32,7 +32,6 @@
           "overrides": {
             "persona": "rust-engineer",
             "mode": "regular",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -70,7 +69,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -207,7 +205,6 @@
         "value": {
           "persona": "rust-engineer",
           "mode": "plan",
-          "model": null,
           "permissionsProfile": "strict-review"
         },
         "expected_list_generation": 11,
@@ -287,7 +284,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -329,7 +325,7 @@
         "manager_route": "route:settings/commands-shortcuts",
         "control_label": "Import",
         "plan_id": "plan-import-001",
-        "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+        "plan_hash": "38163ce04f7282acde93f237af363042772b6ece08f247a5788a190cd9b617f3",
         "entries": [
           {
             "target": {
@@ -346,7 +342,6 @@
               "overrides": {
                 "persona": null,
                 "mode": "inherit",
-                "model": null,
                 "permissionsProfile": null
               },
               "enabled": true,
@@ -369,7 +364,6 @@
               "overrides": {
                 "persona": "rust-engineer",
                 "mode": "regular",
-                "model": null,
                 "permissionsProfile": null
               },
               "enabled": true,
@@ -381,7 +375,7 @@
         "expected_list_generation": 12,
         "confirmation": {
           "modal_accepted": true,
-          "confirmed_plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829"
+          "confirmed_plan_hash": "38163ce04f7282acde93f237af363042772b6ece08f247a5788a190cd9b617f3"
         }
       }
     },
@@ -523,7 +517,7 @@
         "action_id": "commands.preview",
         "request_id": "req-preview-001",
         "outcome": "preview_only",
-        "rendered_markdown": "Review the changes in src/main.rs and list anything risky.\n[contents of CHANGELOG.md \u2014 not read in preview]\n[output of git status --short \u2014 not run in preview]",
+        "rendered_markdown": "Review the changes in src/main.rs and list anything risky.\n[contents of CHANGELOG.md — not read in preview]\n[output of git status --short — not run in preview]",
         "persisted": false,
         "submitted": false,
         "executed": false,
@@ -537,13 +531,13 @@
         "inert_includes": [
           {
             "ref": "@CHANGELOG.md",
-            "placeholder": "[contents of CHANGELOG.md \u2014 not read in preview]"
+            "placeholder": "[contents of CHANGELOG.md — not read in preview]"
           }
         ],
         "inert_injections": [
           {
             "command": "git status --short",
-            "placeholder": "[output of git status --short \u2014 not run in preview]"
+            "placeholder": "[output of git status --short — not run in preview]"
           }
         ]
       }
@@ -556,7 +550,7 @@
         "action_id": "commands.preview",
         "request_id": "req-preview-002",
         "outcome": "preview_only",
-        "rendered_markdown": "Review the changes in src/main.rs and list anything risky.\n[contents of CHANGELOG.md \u2014 not read in preview]\n[output of git status --short \u2014 not run in preview]",
+        "rendered_markdown": "Review the changes in src/main.rs and list anything risky.\n[contents of CHANGELOG.md — not read in preview]\n[output of git status --short — not run in preview]",
         "persisted": false,
         "submitted": false,
         "executed": false,
@@ -570,13 +564,13 @@
         "inert_includes": [
           {
             "ref": "@CHANGELOG.md",
-            "placeholder": "[contents of CHANGELOG.md \u2014 not read in preview]"
+            "placeholder": "[contents of CHANGELOG.md — not read in preview]"
           }
         ],
         "inert_injections": [
           {
             "command": "git status --short",
-            "placeholder": "[output of git status --short \u2014 not run in preview]"
+            "placeholder": "[output of git status --short — not run in preview]"
           }
         ]
       }
@@ -590,7 +584,7 @@
         "request_id": "req-import-001",
         "outcome": "plan_bound",
         "plan_id": "plan-import-001",
-        "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+        "plan_hash": "38163ce04f7282acde93f237af363042772b6ece08f247a5788a190cd9b617f3",
         "list_generation": 12,
         "entries": [
           {
@@ -631,7 +625,6 @@
                 "overrides": {
                   "persona": null,
                   "mode": "inherit",
-                  "model": null,
                   "permissionsProfile": null
                 },
                 "enabled": true,
@@ -654,7 +647,6 @@
                 "overrides": {
                   "persona": "rust-engineer",
                   "mode": "regular",
-                  "model": null,
                   "permissionsProfile": null
                 },
                 "enabled": true,
@@ -1486,7 +1478,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1523,7 +1514,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1560,7 +1550,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1597,7 +1586,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1651,7 +1639,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1688,7 +1675,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1727,7 +1713,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1764,7 +1749,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1801,7 +1785,6 @@
           "overrides": {
             "persona": null,
             "mode": "turbo",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1940,7 +1923,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -1971,7 +1953,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -2261,7 +2242,7 @@
         "manager_route": "route:settings/commands-shortcuts",
         "control_label": "Import",
         "plan_id": "plan-import-001",
-        "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+        "plan_hash": "38163ce04f7282acde93f237af363042772b6ece08f247a5788a190cd9b617f3",
         "entries": [
           {
             "target": {
@@ -2277,7 +2258,6 @@
               "overrides": {
                 "persona": null,
                 "mode": "inherit",
-                "model": null,
                 "permissionsProfile": null
               },
               "enabled": true,
@@ -2289,7 +2269,7 @@
         "expected_list_generation": 12,
         "confirmation": {
           "modal_accepted": true,
-          "confirmed_plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829"
+          "confirmed_plan_hash": "38163ce04f7282acde93f237af363042772b6ece08f247a5788a190cd9b617f3"
         }
       }
     },
@@ -2379,7 +2359,6 @@
           "overrides": {
             "persona": null,
             "mode": "inherit",
-            "model": null,
             "permissionsProfile": null
           },
           "enabled": true,
@@ -2525,7 +2504,7 @@
         "request_id": "req-import-001",
         "outcome": "plan_bound",
         "plan_id": "plan-import-001",
-        "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+        "plan_hash": "38163ce04f7282acde93f237af363042772b6ece08f247a5788a190cd9b617f3",
         "list_generation": 12,
         "entries": [
           {
@@ -2665,7 +2644,7 @@
           "manager_route": "route:settings/commands-shortcuts",
           "control_label": "Import",
           "plan_id": "plan-import-001",
-          "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+          "plan_hash": "38163ce04f7282acde93f237af363042772b6ece08f247a5788a190cd9b617f3",
           "entries": [
             {
               "target": {
@@ -2682,7 +2661,6 @@
                 "overrides": {
                   "persona": null,
                   "mode": "inherit",
-                  "model": null,
                   "permissionsProfile": null
                 },
                 "enabled": true,
@@ -2868,7 +2846,6 @@
             "overrides": {
               "persona": null,
               "mode": "inherit",
-              "model": null,
               "permissionsProfile": null
             },
             "enabled": true,

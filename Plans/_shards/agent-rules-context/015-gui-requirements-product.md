@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L247-L258
+Source lines: L247-L259
 
-Source SHA256: `239ee9829dfe15dd51e8664b8363b46c63f10b843f88fe43aeedc72ad954280d`
+Source SHA256: `abc7dcb9b880d42034005d801131e1eb874cebd74eed7af23de2a74cb86375e6`
 
 ---
 
@@ -13,10 +13,11 @@ Context Injection behavior defaults use the one Settings resolver at admitted Ev
 1) Parent Summary — default ON
 2) Scoped AGENTS.md (beyond top-level) — default ON
 3) Attempt Journal — default ON
-GUI must show an “Injected Context” breakdown per run:
-- which AGENTS.md were included (paths + byte counts)
-- whether parent summary and attempt journal were included (byte counts)
-- whether truncation occurred (and why)
+Keep the “Injected Context” record internally for enforcement and debugging:
+- AGENTS.md identity, paths and byte counts
+- parent summary and attempt journal inclusion and byte counts
+- truncation occurrence, reason and order
+The GUI keeps basic capacity/cost/model facts and useful compaction/truncation status, with no source-composition view, prompt preview or per-run inclusion receipt (DL-475). Existing admitted Settings controls remain owner-governed; retired presentation controls are not restored.
 
 Each instruction/rules target has exactly one control mode: `PM Controlled` or `Manual Override`. A `PM Controlled` target is regenerated only from the saved canonical instruction source. A target can switch from `Manual Override` back to `PM Controlled` only after the canonical instruction source is saved and the target is refreshed from that source.
 ---

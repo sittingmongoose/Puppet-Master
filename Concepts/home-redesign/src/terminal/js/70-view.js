@@ -162,8 +162,8 @@
     this._bindScrollbar();
     this.sticky.addEventListener('click', function () { if (self.stickyCmd) self.revealCommand(self.stickyCmd); });
 
-    this.blinkTimer = setInterval(function () { self._blinkTick(); }, 530);
-    this.clockTimer = setInterval(function () { self._updateHeader(); }, 1000);
+    this.blinkTimer = 0; this.clockTimer = 0;
+    this._timers();
     /* browser zoom and a move to another monitor change the device pixel ratio, often with no resize from the host:
        lay out again (layout() measures the cells anew) and re-arm the query for the new ratio */
     (function watchDpr() {
@@ -229,7 +229,8 @@
     this.root.style.setProperty('--pmt-glow-color', roles.glow || C.toHex(ap.theme.fg));
     this.root.style.setProperty('--pmt-pad-x', (ap.padding ? ap.padding.x : 8) + 'px');
     this.root.style.setProperty('--pmt-pad-y', (ap.padding ? ap.padding.y : 6) + 'px');
-    this.root.setAttribute('data-pmt-scheme', ap.theme.appearance || '');
+    var scheme = ap.theme.appearance || '';
+    if (this.root.getAttribute('data-pmt-scheme') !== scheme) this.root.setAttribute('data-pmt-scheme', scheme);
     /* the background, and its worst pixel for the text's contrast floor (24-renderer.js; none over the scheme's own
        surface) */
     this.contrastGround = this._applyBackground(ap.background || { kind: 'theme' });
@@ -364,10 +365,11 @@
   View.prototype._applyBackground = function (bg) {
     var L = this.bgLayer, th = this.theme, G = T.Grounds, ground = typeof bg.ground === 'number' ? bg.ground : null, dim = 0;
     this._bgSpec = bg; this._bgKey = '';
-    L.style.cssText = '';
-    L.className = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
+    if (L.getAttribute('style') !== '') L.style.cssText = '';
+    var classes = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
+    if (L.className !== classes) L.className = classes;
     var mv = this.bgMove, moving = !!(bg.motion && G);
-    if (!moving) { mv.hidden = true; mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
+    if (!moving) { if (mv.hidden !== true) mv.hidden = true; if (mv.getAttribute('style') !== '') mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
     if ((bg.paint || moving) && G && th) {
       var r = this.bodyEl.getBoundingClientRect(), w = r.width || 960, h = r.height || 600;
       this._bgKey = sizeStep(w) + 'x' + sizeStep(h);
@@ -716,6 +718,7 @@
     if (e.type === 'exec') { this.lastExit = null; this._updateLabel(); }
     this.marksDirty = true;
     this._updateHeader();
+    this._timers();
     this.schedule();
   };
 
@@ -726,7 +729,7 @@
     var g = this.gutter, m = this.metrics, buf = this.term.buf, self = this;
     var marks = this._marks || (this._marks = new Map());
     if (buf.isAlt) { marks.clear(); g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
-    g.classList.remove('pmt-gutter-alt');
+    if (g.classList.contains('pmt-gutter-alt')) g.classList.remove('pmt-gutter-alt');
     var top = this.viewTop(), rows = buf.rows, cmds = this.term.commands, seen = new Set();
     this._gutterCmds = [];
     for (var i = cmds.length - 1; i >= 0; i--) {
@@ -835,7 +838,7 @@
         break;
       }
     }
-    if (!cmd) { s.hidden = true; this.stickyCmd = null; return; }
+    if (!cmd) { if (s.hidden !== true) s.hidden = true; this.stickyCmd = null; return; }
     this.stickyCmd = cmd;
     var promptText = cmd.promptLine.text();
     s.hidden = false;
@@ -1254,8 +1257,20 @@
   View.prototype._visibility = function (show) {
     var on = !!(this.hostVisible && this.onScreen), was = this.visible;
     this.visible = on;
+    this._timers();
     if (on !== was) { if (this.term.images) this.term.images.pause(!on); if (this.fx) this.fx.visible(on); }
     if (on && (on !== was || show)) { if (this._lookStale) this._applyLook(); this.layout(); this._groundSoon(); this.schedule(true); }
+  };
+  /* the cursor's blink and the header's 1 s clock run only while they have something to do: the blink while the
+     terminal is visible (it did nothing otherwise), the clock while it is visible or a command runs, so a command's
+     elapsed time is still current when a hidden terminal comes back. Every terminal kept both going behind other tabs
+     and pages: about 5.5 blink and 3 clock callbacks a second at rest on Home and Settings (lane A, 2026-11-10) */
+  View.prototype._timers = function () {
+    var self = this, blink = this.visible && !this._gone, clock = !this._gone && (this.visible || !!this._running());
+    if (blink && !this.blinkTimer) this.blinkTimer = setInterval(function () { self._blinkTick(); }, 530);
+    else if (!blink && this.blinkTimer) { clearInterval(this.blinkTimer); this.blinkTimer = 0; }
+    if (clock && !this.clockTimer) this.clockTimer = setInterval(function () { self._updateHeader(); }, 1000);
+    else if (!clock && this.clockTimer) { clearInterval(this.clockTimer); this.clockTimer = 0; }
   };
   View.prototype.onShow = function () { this.hostVisible = true; this._visibility(true); };
   View.prototype.onHide = function () { this.hostVisible = false; this._visibility(); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
@@ -1293,7 +1308,7 @@
   View.prototype.dispose = function () {
     /* out of the appearance registry, so a closed or restarted terminal is neither kept alive nor configured again;
        an open popover goes with its document listener, without taking the focus */
-    this.hostVisible = false; this.visible = false;
+    this.hostVisible = false; this.visible = false; this._gone = true;
     if (this.closeAppearance) this.closeAppearance(true);
     if (T.Appearance && T.Appearance.forget) T.Appearance.forget(this);
     this.disposers.forEach(function (d) { try { d(); } catch (e) {} });

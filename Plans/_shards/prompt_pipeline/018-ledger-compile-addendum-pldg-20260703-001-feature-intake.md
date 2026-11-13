@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L4059-L4142
+Source lines: L4100-L4192
 
-Source SHA256: `86f90ffb90e7a36627ac597c83f64e1fbb1e31f0064d56eed4f7e4e54c16783d`
+Source SHA256: `98b14aa766512aa10031600a7555f0164bf580f4a0c038a0aeb10d9b666e7a48`
 
 ---
 
@@ -20,22 +20,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  P1-CONTEXT-SKILL-BUDGETS (P1) is compiled as canonical Puppet Master intent for Skill/context catalog progressive disclosure: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries. The preserved PM gap/delta is: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI. The observed external-repo signal remains source-lineage evidence: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
+  P1-CONTEXT-SKILL-BUDGETS retains internal ContextCatalogBudget enforcement for skills, MCP tools,
+  provider models, memories and terminal transcript summaries. Catalog listings cannot crowd out run
+  context, selected skills load full instructions only when chosen, and omission/defer reasons
+  remain internal for enforcement/debugging. Chat retains basic capacity/cost/model and useful
+  compaction status without a context source inspector or per-run inclusion/omission receipt.
 gui_related: true
-gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+gui_classification_reason: >-
+  Defines retained context-budget enforcement and removal of ordinary source/omission inspection.
 depends_on:
 - PDS-003
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.
-- Selected skill loads full instructions only when chosen.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+  - "Skill/tool/catalog budgets prevent crowding out run context; omission/defer reasons remain internally attributable, with no user-facing context inspector or inclusion receipt."
+  - "Selected skill loads full instructions only when chosen."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created."
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.
-- Selected skill loads full instructions only when chosen.
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake"
+  - "Internal catalog-budget/omission records and selected-skill progressive loading."
 risk_class: p1_context_cache_hardening
 reasoning_tier: standard
 context_scope: context_cache
@@ -57,6 +61,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:14
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 source_atom_ids:
 - atom-0018
 external_atom_id: extrepo-20260703-0014
@@ -85,10 +90,14 @@ preserved_exact_tokens:
 - openai/codex
 - cline/cline
 - earendil-works/pi
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 observed_signal: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
 pm_current_coverage: PM Prompt Pipeline owns skill bundling and compaction algorithms.
-pm_gap_or_delta: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI.
+pm_gap_or_delta: >-
+  Historical imported GUI-omission-warning delta; DL-475 retains skill/tool/catalog listing budgets
+  and omission reasons internally, with ordinary chat showing basic capacity/cost/model and useful
+  compaction status only.
 proposal_or_recommendation: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries.
 compile_disposition: create_new_planunit
 ```

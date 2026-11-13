@@ -1,5 +1,5 @@
 {
- "_about": "Context & Memory: memory on/off and the list first; the working space of a chat on its own tab, as defaults for every chat (Settings has no open chat, so no live gauge and no Squeeze now); standing instructions apart from memories; one answer each for how long memories last and who may read them. Per-run and per-Goal token caps move to Permissions Run limits.",
+ "_about": "DL-475 quiet Memory inventory retirement. Retired tuning keys have no live row, search, All Settings or transfer entry; owner UI redesign is specified in Plans.",
  "sections": {
   "memory-home": {
    "to": "context-memory",
@@ -135,8 +135,7 @@
   {
    "section": "memory-home",
    "ids": [
-    "memory.retention.enabled",
-    "memory.retention.gist-review-filter"
+    "memory.retention.enabled"
    ]
   },
   {
@@ -154,111 +153,14 @@
   {
    "section": "memory-limits",
    "ids": [
-    "memory.limits.auto-compress",
-    "memory.limits.compaction-mode",
-    "memory.limits.pressure-start-threshold",
-    "memory.limits.pressure-aggressive-threshold",
-    "memory.limits.low-context-warning",
     "memory.limits.max-context-ktokens"
-   ]
-  },
-  {
-   "section": "memory-notebook",
-   "ids": [
-    "memory.notebook.auto-capture",
-    "memory.notebook.resume-capsule",
-    "memory.notebook.capsule-budget-tokens",
-    "memory.notebook.injection-budget-tokens"
-   ]
-  },
-  {
-   "section": "memory-limits-more",
-   "ids": [
-    "memory.limits.tool-result-policy",
-    "memory.limits.budget-buckets",
-    "memory.limits.compaction-immune-pct",
-    "memory.limits.large-block-threshold",
-    "memory.limits.compaction-loop-limit",
-    "memory.limits.local-llm-caps"
    ]
   },
   {
    "section": "memory-assembly",
    "ids": [
     "memory.assembly.app-rules",
-    "memory.assembly.project-rules",
-    "memory.assembly.instruction-budget-mode",
-    "memory.assembly.dry-method-guard"
-   ]
-  },
-  {
-   "section": "memory-assembly-view",
-   "ids": [
-    "memory.assembly.instruction-visibility",
-    "memory.assembly.injected-context-breakdown",
-    "memory.assembly.compiled-prompt-preview",
-    "memory.assembly.integrity-tracking"
-   ]
-  },
-  {
-   "section": "memory-rulepacks",
-   "ids": [
-    "memory.assembly.rule-pack-display"
-   ]
-  },
-  {
-   "section": "memory-assembly-safety",
-   "ids": [
-    "memory.assembly.import-cycle-detection",
-    "memory.assembly.history-admission-gate",
-    "memory.assembly.volatile-quarantine",
-    "memory.assembly.context-dedup",
-    "memory.assembly.epoch-baseline",
-    "memory.assembly.cache-lineage"
-   ]
-  },
-  {
-   "section": "memory-retrieval",
-   "ids": [
-    "memory.retention.retrieval-mode",
-    "memory.retention.rehydration",
-    "memory.assembly.max-injected-memories",
-    "memory.assembly.memory-capsule-budget"
-   ]
-  },
-  {
-   "section": "memory-matching",
-   "ids": [
-    "memory.retention.retrieval-strategy",
-    "memory.retention.retrieval-balance",
-    "memory.limits.memory-context-window"
-   ]
-  },
-  {
-   "section": "memory-fade",
-   "ids": [
-    "memory.retention.half-life-by-kind",
-    "memory.retention.done-decay-multiplier"
-   ]
-  },
-  {
-   "section": "memory-retention",
-   "ids": [
-    "memory.retention.auto-save-unverified",
-    "memory.retention.pinned-unverified-injection",
-    "memory.retention.verify-without-evidence"
-   ]
-  },
-  {
-   "section": "memory-sharing",
-   "ids": [
-    "memory.retention.subagent-access"
-   ]
-  },
-  {
-   "section": "memory-retention-tools",
-   "ids": [
-    "memory.retention.maintenance"
+    "memory.assembly.project-rules"
    ]
   },
   {
@@ -280,5 +182,50 @@
    },
    "defaultTab": "memories"
   }
- }
+ },
+ "retire_ids": [
+  "memory.assembly.cache-lineage",
+  "memory.assembly.compiled-prompt-preview",
+  "memory.assembly.context-dedup",
+  "memory.assembly.dry-method-guard",
+  "memory.assembly.epoch-baseline",
+  "memory.assembly.history-admission-gate",
+  "memory.assembly.import-cycle-detection",
+  "memory.assembly.injected-context-breakdown",
+  "memory.assembly.instruction-budget-mode",
+  "memory.assembly.instruction-visibility",
+  "memory.assembly.integrity-tracking",
+  "memory.assembly.max-injected-memories",
+  "memory.assembly.memory-capsule-budget",
+  "memory.assembly.rule-pack-display",
+  "memory.assembly.volatile-quarantine",
+  "memory.limits.auto-compress",
+  "memory.limits.budget-buckets",
+  "memory.limits.compaction-immune-pct",
+  "memory.limits.compaction-loop-limit",
+  "memory.limits.compaction-mode",
+  "memory.limits.large-block-threshold",
+  "memory.limits.local-llm-caps",
+  "memory.limits.low-context-warning",
+  "memory.limits.memory-context-window",
+  "memory.limits.pressure-aggressive-threshold",
+  "memory.limits.pressure-start-threshold",
+  "memory.limits.tool-result-policy",
+  "memory.notebook.auto-capture",
+  "memory.notebook.capsule-budget-tokens",
+  "memory.notebook.injection-budget-tokens",
+  "memory.notebook.resume-capsule",
+  "memory.retention.auto-save-unverified",
+  "memory.retention.done-decay-multiplier",
+  "memory.retention.gist-review-filter",
+  "memory.retention.half-life-by-kind",
+  "memory.retention.maintenance",
+  "memory.retention.pinned-unverified-injection",
+  "memory.retention.rehydration",
+  "memory.retention.retrieval-balance",
+  "memory.retention.retrieval-mode",
+  "memory.retention.retrieval-strategy",
+  "memory.retention.subagent-access",
+  "memory.retention.verify-without-evidence"
+ ]
 }

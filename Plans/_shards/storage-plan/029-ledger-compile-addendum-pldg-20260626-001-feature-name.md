@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L15733-L16050
 
-Source SHA256: `46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e`
+Source SHA256: `4362f38c9d620efb67475185e6ee0f698b8942d4594a492ccf04fed44c935144`
 
 ---
 
@@ -211,24 +211,31 @@ plan_unit_id: SP-220
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Teach memory capture is explicit and separate from one-off Teacher-guided instruction. Eligible
-  Teacher answers may offer Save as taught memory; durable records preserve normalized fact, scope selector thread/project/user,
-  source message/thread, secret-safety warning, conflict or supersession state, and user-locked record state. Users
-  can inspect, narrow, supersede, revoke, or unlock records; one-off guidance is not auto-saved and secrets must
-  not be persisted.
-gui_related: false
-gui_classification_reason: Durable taught-memory scope and record state are storage behavior; capture UI is owned
-  by Assistant Chat.
+canonical_text: >-
+  Teach/Teacher guidance is not automatically saved. A requested saved note uses the shared Memory
+  page and existing AMS-141 Add/Edit/Delete contracts. This project and Every project are the only
+  visible saved-note levels. Add/Edit/Delete use AMS-141 quiet Memory contracts; automatic
+  fading/archiving, deletion suppression, privacy and existing source restrictions remain. Private
+  app-thread records stay private and are not a third visible level. Durable records keep normalized
+  text, source identity, versions, conflict/supersession state, redaction and legacy
+  protected-record custody internally. Users see the note and its two-level availability,
+  Edit/Delete and Archived; they do not manage memory stores, locks, conflicts, provenance or
+  rollback. Written instructions use Settings > Personas & Crews > Defaults > Standing instructions
+  under the instruction owner. Existing historical Teach codecs and thread-private records remain
+  readable without becoming a third visible memory level.
+gui_related: true
+gui_classification_reason: >-
+  Defines the visible saved-note boundary: one Memory page, two levels and CRUD/Archived without
+  internal accounting controls.
 depends_on:
 - ACD-426
 unblocks:
 - G-026
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Explicit saved-note capture uses only This project or Every project and the shared Memory CRUD owner."
+  - "Source/history/conflict/legacy-lock/rollback metadata remains internal; no corresponding ordinary UI is required."
+  - "Secret exclusion, revision checks, privacy restrictions, deletion suppression and retained protections remain."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -255,6 +262,7 @@ source_lineage:
 - chat:teach-bundle-accepted-pmconcept-reference
 - chat:work-through-teach-gaps
 - Plans/assistant-chat-design.md#6-teach
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0094
 - atom-0122
@@ -306,17 +314,9 @@ preserved_exact_tokens:
 - revoke
 - unlock
 negative_constraints:
-- Do not make Teacher-guided instruction automatically persist memory.
-- Do not make durable Teach capture a closed mode overlay detached from the current thread runtime/mode selection.
-- Do not weaken existing `user-locked` Teach records through automated cleanup or summarization.
-- Do not persist Teach conversation content as memory without confirmation.
-- Do not use taught memory outside its approved scope.
-- Do not bury edit/delete controls away from the memory explanation.
-- Do not let later Teach runs overwrite locked corrections without explicit user action.
-- Do not cite a locked record without showing its scope/source when relevant.
-- Do not auto-save one-off Teacher guidance as taught memory.
-- Do not persist secrets, tokens, passwords, or credentials.
-- Do not allow conflicting teachings to silently overwrite prior locked records.
+  - "Do not auto-save one-off guidance, persist secrets, broaden scope, weaken legacy protections or recreate deleted notes."
+  - "Do not turn legacy thread scopes, lock/conflict fields or stored provenance into ordinary capture controls."
+  - "Do not emit a memory-use citation or receipt to explain why a note influenced a response."
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/Prompt_Pipeline.md

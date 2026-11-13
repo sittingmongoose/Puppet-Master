@@ -251,8 +251,11 @@ svg:where(.nx-z0) .nx-p { animation: none; }
    halo / .08 backlight; light themes a lower backlight curve, rest .07). Reduced motion: lit and static, the
    overlays hidden. NieR: the ink fill steps down band by band and the bolt flashes solid ink in held frames; no
    halo, no backlight. */
+/* inline-block, not inline-flex (as .nx-st below): the same box, but the svg is no longer a flex item, so Chrome lays
+   it out on its own when a part inside it moves instead of laying out the whole document from the top (lane A,
+   2026-11-10) */
 .nx-bolt {
-  position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle;
+  position: relative; isolation: isolate; display: inline-block; flex: none; line-height: 0; vertical-align: middle;
   --nxb-bl: nx-bolt-bl; --nxb-blh: nx-bolt-bl-h; --nxb-rest: var(--nx-bl-attention);
 }
 body[data-theme$="-light"] .nx-bolt { --nxb-bl: nx-bolt-bl-l; --nxb-blh: nx-bolt-bl-lh; --nxb-rest: .07; }
@@ -436,8 +439,12 @@ svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired
    into the surfaces by step 3B; here so the gallery and every later surface share one definition. */
-/* The wrapper is a small stacking context, so its backlight paints behind the glyph and above the row. */
-.nx-st { position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle; }
+/* The wrapper is a small stacking context, so its backlight paints behind the glyph and above the row. It is an
+   inline-block round its one block svg, the same box as the inline-flex it was (shrink-wrapped, its baseline the svg's
+   bottom), but the svg is no longer a flex item: a moving part inside it then lays out only the svg (Chrome's layout
+   stops at an svg of fixed size that is not a flex or grid item) instead of the whole document from the top, on every
+   frame the page draws (measured in PMConcept7, lane A 2026-11-10: dirty 5 of 7000 objects, whole document -> 2 of 7). */
+.nx-st { position: relative; isolation: isolate; display: inline-block; flex: none; line-height: 0; vertical-align: middle; }
 .nx-st > svg.nx { display: block; }
 /* The backlight: the glow's soft tail, a radial gradient of the plain tone token, about 2.2x the mark, faded by
    element opacity (no color-mix, no filter). It has no edge, unlike stepped stroke bands. */
@@ -460,6 +467,14 @@ svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 
    9 s list bead is both livelier and quieter, and needs-you's lead (neon-verify 13) is wider. */
 .nx-st-working::before { display: none; }
 .nx-st-working .nx-p { animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
+/* The bead is drawn in a second svg laid exactly over the first (neon-icons.js render: a status part that turns about
+   the centre), and that svg turns: it carries .nx-p and the part's --kl, so the rule above gives it the bead's own turn
+   (keyframes, 9 s, the spin voice's --nx-le, the delay), and every context that stops or holds a status mark's parts
+   (.nx-st .nx-p, .nx-st-move, .nx-st *) reaches it the same way. The bead inside it does not turn a second time. An svg
+   element turning is a compositor transform; the bead turning inside the svg laid the svg out and re-ran the hover hit
+   test on every frame (pm7-perf lane F2: 119 partial layouts and 120 hit tests a second, Basic Dark Settings). */
+.nx-st > svg.nx-st-spin { position: absolute; left: 0; top: 0; transform-box: border-box; transform-origin: 50% 50%; pointer-events: none; }
+.nx-st-working > svg.nx-st-spin .nx-p { animation: none; }
 /* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
 .nx-st-reviewing::before { display: none; }
 .nx-st-reviewing .nx-p { animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }
@@ -605,6 +620,9 @@ html[data-o55-nier="on"] .nx-st-failed { animation: o55n-nx-glitch 320ms steps(4
    at 2.8 s it out-moved needs-you 3-4x in a list; fix cycle 1 keeps the slow turn to the list);
    otherwise it is the ink bead on the ring, going round in steps (--nx-le above). */
 html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx { visibility: hidden; }
+/* the hidden ring's bead does not go round: Chrome ticks every running animation, seen or not, and restyles it in
+   every frame the page draws (pm7-perf lane F2: the Files footer's working mark on every NieR page) */
+html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx .nx-p, html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx-st-spin { animation: none; }
 html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
   content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;
   border: 1.5px solid var(--nx-ink, var(--o55-nier-ink)); outline: 1px solid var(--nx-ink, var(--o55-nier-ink)); outline-offset: -4.5px;

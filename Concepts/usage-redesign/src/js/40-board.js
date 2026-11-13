@@ -777,7 +777,8 @@
     function place(card, r) {
       card._pmuBoard = api;
       gridPlace(card, r);
-      card.dataset.x = r.x; card.dataset.y = r.y; card.dataset.w = r.w; card.dataset.h = r.h;
+      // only what differs: a relayout after a look change put every card back where it was and rewrote its four numbers
+      ['x', 'y', 'w', 'h'].forEach(function (k) { if (card.dataset[k] !== String(r[k])) card.dataset[k] = r[k]; });
       var def = PMU.widgets.get(card.getAttribute('data-widget')) || {};
       var form = PMU.cards.headForm(def, r.w, r.h, current.cls ? current.cls.pitchX : 48);
       if (card.getAttribute('data-head') !== form) card.setAttribute('data-head', form);
@@ -1453,9 +1454,9 @@
       flushLeaving(true);
       dropOld();
       cardsNow().forEach(destroyCard);
-      boardEl.setAttribute('data-held', '');
+      if (boardEl.getAttribute('data-held') !== '') boardEl.setAttribute('data-held', '');
       boardEl.removeAttribute('data-hold-bodies');
-      boardEl.setAttribute('data-room', room);
+      if (boardEl.getAttribute('data-room') !== room) boardEl.setAttribute('data-room', room);
       setBoardClass();
       boardEl.removeAttribute('data-op');
       boardEl.textContent = '';

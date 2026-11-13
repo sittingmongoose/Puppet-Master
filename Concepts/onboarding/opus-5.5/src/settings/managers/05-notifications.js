@@ -37,6 +37,9 @@
     #panel-settings .o55-notif-master { margin-bottom: 14px; }
     #panel-settings .o55-notif-master .pm51-note { margin-top: 8px; }
     #panel-settings .pm51-sound-styles { margin: 0 0 12px; overflow-x: auto; scrollbar-width: none; }
+    /* FO-159 round 2: the strip scrolls sideways, so let each chip keep its own width: squeezed to the strip's
+       width, "Setup & tour" needs a third line at 11 px where 10.5 px drew two. */
+    #panel-settings .pm51-sound-styles .segmented { width: max-content; }
     #panel-settings .o55-notif-master ~ :not(.pm51-quiet) { transition: opacity var(--k3-dur-base, 220ms) var(--k3-ease-out, ease); }
     #panel-settings .o55-notif-master.is-off ~ :not(.pm51-quiet) { opacity: .55; }
     /* events: the sound choice sits on the row; nothing on the row is whole-row clickable */

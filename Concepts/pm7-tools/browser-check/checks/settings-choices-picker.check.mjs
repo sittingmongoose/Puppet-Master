@@ -4,8 +4,8 @@
 // of every other single choice with more than 6 choices (the 11 long lists), is one picker (a combobox, the chat's
 // model selector) whose listbox unfolds inside the panel under it; a model setting's has a strip of maker marks that
 // filters it, a long list's has none. Every choice stays reachable through it, by pointer and by keys, in all ten
-// looks, at a standard and a narrow width, with Reduced Motion, on either surface (--set sandbox=0/1). A per-thing setting (a persona's
-// Preferred model, a Goal template's Kind of job) saves on the thing it was opened from and never as a shared value;
+// looks, at a standard and a narrow width, with Reduced Motion, on either surface (--set sandbox=0/1). A per-thing setting (a Goal template's
+// Kind of job; a persona's Preferred model is retired by DL-476) saves on the thing it was opened from and never as a shared value;
 // opened any other way its picker is read only (sol-review-l1s L1S-N2). Arrow keys keep the active row in view, the
 // search box has no show/hide hover tag, and long lists Jared did not choose stay tick lists. Short lists
 // (On/Off) and lists that take several choices stay tick lists. His #1 ("that logo looks terrible", most right-side
@@ -400,8 +400,8 @@ export const tests = {
 	},
 
 	/* sol-review-l1s L1S-N2: a per-thing setting picked in Details is stored on the thing it was opened from, through
-	   that thing's own row: a persona's Preferred model (an editable persona, Frontend Craft when it is there) and a
-	   Goal template's Kind of job. The thing's row and its line in the Now list change, the shared setting does not, and
+	   that thing's own row: a Goal template's Kind of job (a persona's Preferred model was the other, until DL-476
+	   retired it). The thing's row and its line in the Now list change, the shared setting does not, and
 	   picking its first value again puts it back. Opened any other way (here, as the "Next to it" links open it) the
 	   picker is read only: "What it can be", every choice unavailable, and a pick saves nothing anywhere. */
 	'FO-127 a per-thing setting saves on its thing': async (t) => {
@@ -423,7 +423,8 @@ export const tests = {
 			await t.page.keyboard.type(name); await t.page.waitForTimeout(250);
 			await t.page.keyboard.press('Enter'); await t.page.waitForTimeout(600);
 		};
-		for (const [id, thing, prefer] of [['personas.tuning.default-model', 'persona', /frontend craft/i], ['planning.verification.goal-template', 'template', null]]) {
+		/* the persona's own model (personas.tuning.default-model) is retired by Settings batch 3 (DL-476, MD2 'neither') */
+		for (const [id, thing, prefer] of [['planning.verification.goal-template', 'template', null]]) {
 			const pl = await f.evaluate((id) => PM51.placement.byId[id] || null, id);
 			if (!pl) { await t.check(`${thing}: ${id} is placed`, false); continue; }
 			await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${pl.domain}"]`).first().click(); await t.settle();

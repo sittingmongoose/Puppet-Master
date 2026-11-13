@@ -238,10 +238,13 @@
      is written back as plain text when the roll ends, so the page text after a moment equals an instant render ---- */
   var DIG = /[0-9]/;
   function strip(seq) { return seq.join('\n'); }
+  /* a text written only when it differs (a count that lands on the value it shows, a decode's settled frames): a write of
+     the same text still replaces the node, restyles and wakes every DOM watcher of the page (pm7-perf lane K) */
+  function setText(el, s) { if (el.firstElementChild || el.textContent !== s) el.textContent = s; }
   function odometer(el, to, format, o) {
     o = o || {};
     if (!el) return { cancel: function () {} };
-    if (off.odo) { el.textContent = format(to); return { cancel: function () {} }; }
+    if (off.odo) { setText(el, format(to)); return { cancel: function () {} }; }
     var fin = format(to);
     /* WOW-SPEC-3 9.1 / E3-10: a roll already running to this text keeps running; a reading whose shown text is already
        the target never rolls (no re-roll of an unchanged value by a patch) */
@@ -252,7 +255,7 @@
     /* quiet (WOW-SPEC-3 3.3, Q3 heroRoll): during an entrance only the hero's numbers roll; a supporting value is written
        final (one text write, no columns), as is any roll asked for with {quiet: true} */
     var quietNow = o.quiet || first && quietEl(el);
-    if (reduced() || quietNow || !DIG.test(fin) || (!first && (prev === fin || el.textContent === fin))) { el.textContent = fin; return { cancel: function () {} }; }
+    if (reduced() || quietNow || !DIG.test(fin) || (!first && (prev === fin || el.textContent === fin))) { setText(el, fin); return { cancel: function () {} }; }
     var f = fam();
     /* NieR decodes; without a GPU the hero's decode is one text swap at its time (PERF-3 open item: the decode is a JS
        tween on every frame of the moment) */
@@ -341,10 +344,10 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function swapText(el, text, delay) {
-    if (!delay || reduced()) { el.textContent = text; return { cancel: function () {} }; }
+    if (!delay || reduced()) { setText(el, text); return { cancel: function () {} }; }
     el.classList.add('pmu-dec-wait');
-    var id = setTimeout(function () { el.classList.remove('pmu-dec-wait'); el.textContent = text; }, delay * M.speed());
-    return { cancel: function () { clearTimeout(id); el.classList.remove('pmu-dec-wait'); el.textContent = text; } };
+    var id = setTimeout(function () { el.classList.remove('pmu-dec-wait'); setText(el, text); }, delay * M.speed());
+    return { cancel: function () { clearTimeout(id); el.classList.remove('pmu-dec-wait'); setText(el, text); } };
   }
   /* ---- NieR decode (5): glyphs cycle every 30 ms and lock left to right, 35 ms per character, at most 420 ms; the final
      characters are exact (never zero-first) ---- */
@@ -356,7 +359,7 @@
     if (!el) return { cancel: function () {} };
     if (el._pmuDecode) el._pmuDecode.cancel();
     /* a card title's nowrap spans (42-cards.js nbHyphen, item 9) come back when the decode lands */
-    var html0 = el.firstElementChild && el.textContent === text ? el.innerHTML : null, land = function () { if (html0 != null) el.innerHTML = html0; else el.textContent = text; };
+    var html0 = el.firstElementChild && el.textContent === text ? el.innerHTML : null, land = function () { if (html0 != null) el.innerHTML = html0; else setText(el, text); };
     if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); land(); return { cancel: function () {} }; }
     var n = text.length, per = Math.min(35, 420 / Math.max(1, n)), total = per * n + 60, lastBucket = -1;
     var same = o.from != null && String(o.from).length === n ? String(o.from) : null;
@@ -380,7 +383,7 @@
       step: function (ms) {
         show();
         var bucket = Math.floor(ms / 30); if (bucket === lastBucket) return; lastBucket = bucket;
-        el.textContent = glyphs(ms, bucket);
+        setText(el, glyphs(ms, bucket));
       },
       done: function () { show(); land(); if (el._pmuDecode === handle) el._pmuDecode = null; } });
     var handle = { cancel: function () { tw.cancel(); show(); if (el._pmuDecode === handle) el._pmuDecode = null; } };

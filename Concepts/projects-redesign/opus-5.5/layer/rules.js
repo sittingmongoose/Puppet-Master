@@ -41,16 +41,16 @@
   const SERVICES = [
     { id: 'github', name: 'GitHub', sub: 'Most popular', primary: true, fork: true, personal: true,
       kinds: [{ id: 'com', label: 'GitHub.com', host: 'github.com' }], auth: { com: ['browser', 'device'] },
-      ownerQ: 'Whose account keeps it?', rule: 'github', spaces: 'dash', device: 'github.com/login/device' },
+      ownerQ: 'Whose account keeps it?', rule: 'github', spaces: 'dash', device: 'github.com/login/device', codeMin: 15 },
     { id: 'ghe', name: 'GitHub Enterprise', sub: 'Your company’s own GitHub', fork: true, personal: true, enterprise: true,
       kinds: [{ id: 'server', label: 'GitHub Enterprise Server', address: true }], auth: { server: ['browser', 'token'] },
       ownerQ: 'Whose account keeps it?', rule: 'github', spaces: 'dash', tokenHow: 'github' },
     { id: 'gitlab', name: 'GitLab', sub: 'GitLab.com or your company’s own', personal: true,
       kinds: [{ id: 'com', label: 'GitLab.com', host: 'gitlab.com' }, { id: 'own', label: 'My company’s own server', address: true }], auth: { com: ['browser', 'device'], own: ['browser', 'token'] },
-      ownerQ: 'Where does it live?', rule: 'gitlab', spaces: 'dash', device: 'gitlab.com/oauth/device', tokenHow: 'gitlab' },
+      ownerQ: 'Where does it live?', rule: 'gitlab', spaces: 'dash', device: 'gitlab.com/oauth/device', codeMin: 5, tokenHow: 'gitlab' },
     { id: 'azure', name: 'Azure DevOps', sub: 'Microsoft’s service for teams', personal: false, project: 'teamProject',
       kinds: [{ id: 'services', label: 'Azure DevOps Services', host: 'dev.azure.com' }, { id: 'server', label: 'Azure DevOps Server', address: true }], auth: { services: ['browser', 'device'], server: ['browser', 'token'] },
-      ownerQ: { services: 'Organization', server: 'Collection' }, rule: 'azure', spaces: 'keep', device: 'microsoft.com/devicelogin', tokenHow: 'azure' },
+      ownerQ: { services: 'Organization', server: 'Collection' }, rule: 'azure', spaces: 'keep', device: 'microsoft.com/devicelogin', codeMin: 15, tokenHow: 'azure' },
     { id: 'bitbucket', name: 'Bitbucket', sub: 'Cloud or Data Center', personal: false,
       kinds: [{ id: 'cloud', label: 'Bitbucket Cloud', host: 'bitbucket.org' }, { id: 'dc', label: 'Bitbucket Data Center', address: true }], auth: { cloud: ['browser'], dc: ['browser', 'token'] },
       ownerQ: { cloud: 'Workspace', dc: 'Which project keeps it?' }, project: { cloud: 'bbProject' }, rule: { cloud: 'bitbucket', dc: 'bitbucketDc' }, spaces: 'keep', tokenHow: 'bitbucket' },
@@ -113,14 +113,16 @@
       return project && project.private ? priv : priv.concat([{ id: 'public', title: w('np.details.bbPublic'), sub: w('np.details.publicSub') }]);
     }
     // Forgejo and Gitea: an organization whose profile is limited shows even an Everyone copy only to people signed in there
-    const limited = owner && owner.profile === 'limited';
+    // (GUIDED-FLOWS 4.17) Public and Private are the real choice there; an organization's limited or private profile only
+    // narrows who can see a Public copy, which is said as a restriction, never as a third "Internal" value
+    const prof = owner && (owner.profile === 'limited' || owner.profile === 'private') ? owner.profile : null;
     return [isOrg ? { id: 'private', title: w('np.details.privateOrg', { org }), sub: w('np.details.privateOrgSub') } : { id: 'private', title: w('np.details.private'), sub: w('np.details.privateSub') },
-      limited ? { id: 'public', title: w('np.details.glInternal', { host }), sub: w('np.details.cap.profile', { org, host }) } : { id: 'public', title: w('np.details.public'), sub: w('np.details.publicServerSub', { host }) }];
+      { id: 'public', title: w('np.details.publicReal'), sub: prof ? w('np.details.cap.reach.' + prof, { org, host }) : w('np.details.publicServerSub', { host }) }];
   }
   function capNote(svc, k, owner, project, host) {
     if (svc === 'gitlab' && owner && owner.cap === 'private') return w('np.details.cap.gitlab', { org: owner.label });
     if (svc === 'bitbucket' && (kind(svc, k) || {}).id === 'cloud' && project && project.private) return w('np.details.cap.bitbucket', { project: project.label });
-    if ((svc === 'forgejo' || svc === 'gitea') && owner && owner.profile === 'limited') return w('np.details.cap.profile', { org: owner.label, host });
+    if ((svc === 'forgejo' || svc === 'gitea') && owner && (owner.profile === 'limited' || owner.profile === 'private')) return w('np.details.cap.reach.' + owner.profile, { org: owner.label, host });
     return '';
   }
   /* git check-ref-format --branch, in words: no space, control character or ~ ^ : ? * [ \, no "..", "@{" or "//", not "@",

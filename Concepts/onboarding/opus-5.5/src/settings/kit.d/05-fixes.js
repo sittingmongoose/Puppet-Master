@@ -22,6 +22,25 @@
   }
   if (fixed) try { saveState(); } catch (e) { /* the next save writes it */ }
 })();
+/* A model row whose inventory default is the atomic { provider_entry_id, model_id, effort } (Settings batch 3, DL-476)
+   was written as text by the reference rows, so it read "[object Object]". It starts on that model's own choice, the
+   way a model given as text does; the inventory row is unchanged. Only values the person has not changed are
+   corrected, so a saved choice is never overwritten. */
+(function o55FixModelDefaults() {
+  const ref = window.PM12_REFERENCE; if (!ref || !ref.byCat) return;
+  let fixed = 0;
+  for (const cat of Object.values(ref.byCat)) for (const row of cat.settings || []) {
+    const d = row.default;
+    if (!d || typeof d !== 'object' || Array.isArray(d) || typeof d.model_id !== 'string') continue;
+    const want = d.model_id, wrong = v => v == null || typeof v === 'object' || v === '[object Object]';
+    const f = findSettingGlobal(row.id);
+    if (f && f.setting && wrong(f.setting.value)) f.setting.value = want;
+    const e = PM51.placement && PM51.placement.byId[row.id];
+    if (e && e.setting && wrong(e.setting.value)) e.setting.value = want;
+    if (state.settings && !(state.changed || {})[row.id] && wrong(state.settings[row.id])) { state.settings[row.id] = want; fixed++; }
+  }
+  if (fixed) try { saveState(); } catch (e) { /* the next save writes it */ }
+})();
 /* An empty stored value that really means one of the row's own choices (rows.d `emptyMeans`) starts as that choice, so
    the row reads what applies instead of "Not set": "Open container web pages in" is empty until someone picks, and
    until then the system's default browser opens them. Only values the person has not changed are corrected. */

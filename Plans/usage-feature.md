@@ -159,7 +159,7 @@ OpenCode Desktop implementation reference (non-binding):
 - `packages/app/src/components/session-context-usage.tsx` is only a behavioral reference for the chat header context circle/button: hover shows total tokens, usage %, and total USD cost; click opens a `context` tab rather than replacing app-wide Usage.
 - `packages/app/src/pages/session/session-side-panel.tsx` is the reference for opening that `context` tab in the side/review panel, not the main editor.
 - `packages/app/src/components/session/session-context-tab.tsx` is the reference for the detail payload: session title, message counts, provider, model, context limit, total/input/output/reasoning/cache tokens, total cost, created/last-activity times, coarse context breakdown bar, system prompt, and raw per-message accordions with JSON.
-- OpenCode message UI is a reference for hover-revealed icon actions and metadata rows on messages, but it does not satisfy PM's richer per-message info popover requirement; PM keeps the curated inspection and raw payload requirements below as the canonical target.
+- OpenCode message UI remains a reference for hover-revealed icon actions and metadata rows. DL-475 keeps PM's human-readable message information and basic context/cost/model facts; the reference's source chart, system-prompt and raw-payload accordions are not user-facing PM requirements.
 
 Per-thread context/usage in chat is a split inspect/action affordance rather than a direct jump to a chat-shell usage panel.
 
@@ -174,14 +174,14 @@ Rules:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
 
-The Context Detail Pane must support both curated inspection and raw payload inspection.
+The Context Detail Pane keeps basic on-demand chat capacity, cost and model information and useful compaction/transition status (DL-475).
 
-Required content:
-- curated overview of thread counts, provider/model/mode/persona, and headline tokens/context/estimated cost
-- grouped context and token breakdowns
-- per-message inspection with human-readable fields first
-- raw payload toggles for the full thread and for individual messages
-- drill-downs by mode, provider, model, and other shared runtime identity dimensions when available
+Required visible content:
+- a readable overview of thread counts, provider/model/mode/persona, effective context window, tokens and estimated cost
+- useful compaction/transition state, outcome and history, with truthful unknown/estimated labels
+- ordinary per-message runtime identity, token and cost information through the existing message-info owner
+
+Source-family budgets, inclusion/omission records and raw payloads remain internal for enforcement and debugging. The thread pane has no assembled-source composition, full-thread/per-message raw payload toggle or per-run inclusion receipt. Existing Expert/ELI5 help explains the retained facts without exposing source records.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
 
@@ -189,7 +189,7 @@ Estimated-cost rule:
 - per-thread chat cost consumes canonical UsageRecord projections first
 - OpenCode-style normalization is a display fallback only when the UsageRecord marks the value `pricing_estimated` or otherwise non-authoritative
 - reasoning/thoughts, cache read, cache write, cache_write_1h/TTL, output_visible, provider_total, and context_estimate display only under the provider mapper's inclusive/exclusive `counting_semantics`
-- provider-sensitive cache normalization caveats, source_class, source_confidence, settlement_status, freshness, and redaction state remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
+- chat cost/usage labels remain truthful about estimates, freshness and settlement; provider-sensitive cache caveats, source_class/source_confidence and raw/redaction records stay on existing internal debug paths rather than a chat source-inspection view
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ### Cursor -- API (usage/account only; not for model invocation)
@@ -1510,7 +1510,13 @@ plan_unit_id: UF-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: The Context Detail Pane provides curated overview cards, grouped usage breakdowns, per-message inspection, raw payload toggles, provider/model/mode/persona drill-downs, and side-by-side Expert/ELI5 help copy for thread-scoped usage.
+canonical_text: >-
+  The Context Detail Pane provides basic on-demand thread capacity, effective context window/tokens,
+  cost and provider/model/mode/persona information, ordinary readable per-message usage facts and
+  useful compaction/transition status. Existing Expert/ELI5 help explains those facts. Source-family
+  accounting, assembled-source details, raw payloads and inclusion records stay internal for
+  enforcement and debugging; the thread pane exposes no source-composition view, raw payload toggle
+  or per-run inclusion receipt.
 gui_related: true
 gui_classification_reason: The unit defines visible Context Detail Pane inspection behavior.
 split_recommended: false
@@ -1521,9 +1527,10 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UF-012 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+  - "The thread-scoped pane retains basic capacity, effective model/window, token and cost facts plus useful compaction/transition state, result and history; unknown and estimated values are labelled truthfully."
+  - "Message information and Expert/ELI5 help retain readable identity/usage facts without exposing assembled-source payloads or source-family accounting."
+  - "Source records remain available internally under existing permission/redaction restrictions; no user-facing source composition, full-thread/per-message raw toggle or per-run inclusion receipt is required."
+  - "UF-012 remains addressable with preserved source lineage and ContractRefs; no WorkNodes, NodeSeeds, executable queues, implementation files or production build tasks are created."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1537,6 +1544,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0023
+- "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
 - Context Detail Pane
 - curated overview
@@ -1549,13 +1557,15 @@ preserved_exact_tokens:
 - persona
 - Expert
 - ELI5
-negative_constraints: []
+negative_constraints:
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "DL-475 retires the former grouped source breakdown and raw payload toggles; preserved inspection vocabulary is historical lineage, not a requirement to restore that GUI."
 owner_hints:
 - Plans/usage-feature.md
 ```
@@ -1567,7 +1577,12 @@ plan_unit_id: UF-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: 'Per-thread estimated cost and context usage preserve provider-sensitive caveats: reasoning tokens may be charged at output-token estimate when needed, cache read/write buckets remain visible, and raw/debug paths disclose normalization limits instead of claiming exact billing truth.'
+canonical_text: >-
+  Per-thread estimated cost/context usage preserves provider-sensitive caveats through truthful
+  visible cost/value-state and model/token/cache facts. Reasoning may use an output-token estimate
+  where needed, and visible labels never claim exact/provider-authoritative billing without
+  evidence. Raw/debug normalization evidence remains internal; ordinary chat has no raw/curated
+  source inspection, source composition or per-run inclusion receipt.
 gui_related: true
 gui_classification_reason: The unit governs visible per-thread cost/usage copy and caveat presentation.
 split_recommended: false
@@ -1578,9 +1593,10 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UF-013 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+  - "UF-013 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage."
+  - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+  - "Visible chat cost/value-state copy retains provider-sensitive estimate and cache-counting caveats; raw normalization/source evidence stays internal rather than a chat Raw view."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1594,6 +1610,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0023
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - estimated cost
 - reasoning tokens
@@ -1602,7 +1619,8 @@ preserved_exact_tokens:
 - provider-sensitive cache normalization caveats
 - raw/debug paths
 negative_constraints:
-- Provider-sensitive cache normalization caveats must remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI.
+  - "Do not hide provider-sensitive uncertainty behind authoritative billing wording. Keep normalization evidence internally without exposing a chat raw/debug source view or inclusion receipt."
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md'
@@ -5379,24 +5397,28 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE (P1) is compiled as canonical Puppet Master intent for Context budget receipts by source family: Imported external-repo finding extrepo-20260703-0027 / P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE (P1). The preserved PM gap/delta is: Add ContextBudgetReceipt per source family: tool descriptions, MCP schemas, skill summaries/bodies, retrieved docs, terminal/tool outputs, provider-native replay metadata. The observed external-repo signal remains source-lineage evidence: Tool schemas, skills, git instructions, memory/docs, and MCP schemas are all separate token tax sources; Codex skills use progressive disclosure.
+  P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE / extrepo-20260703-0027 remains the source lineage for
+  internal ContextBudgetReceipt records by source family: tool descriptions, MCP schemas, skill
+  summaries/bodies, retrieved docs, terminal/tool outputs and provider-native replay metadata. Keep
+  source-specific budgets, omission/defer reasons and compaction accounting internally for
+  enforcement and debugging, with existing source restrictions. DL-475 keeps basic
+  capacity/cost/model facts and useful compaction status visible while retiring user-facing
+  source-composition charts and per-run inclusion/budget receipts.
 gui_related: true
-gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+gui_classification_reason: "Defines visible basic context status while retiring source-family GUI receipts and retaining internal budget enforcement."
 depends_on:
 - PDS-003
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- GUI shows budget by source family
-- Omitted/deferred catalog entries have reason receipts
-- Compaction triggers use source-specific budgets
-- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+  - "Internal ContextBudgetReceipt records preserve source-family budgets and omitted/deferred catalog-entry reasons under existing source restrictions."
+  - "Compaction triggers continue to use source-specific budgets internally; retiring their GUI disclosure does not remove enforcement or debugging records."
+  - "Chat keeps basic capacity, cost, effective model information and useful compaction status, with no source-family chart or per-run inclusion/budget receipt."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile."
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- GUI shows budget by source family
-- Omitted/deferred catalog entries have reason receipts
-- Compaction triggers use source-specific budgets
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake"
+  - "Internal ContextBudgetReceipt records, omission/defer reasons and source-specific compaction budgets."
 risk_class: p1_context_cache_hardening
 reasoning_tier: standard
 context_scope: context_cache
@@ -5417,6 +5439,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:7
+- "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 source_atom_ids:
 - atom-0031
 external_atom_id: extrepo-20260703-0027
@@ -5445,11 +5468,14 @@ preserved_exact_tokens:
 - anomalyco/opencode
 - agent0ai/agent-zero
 - openai/codex
-negative_constraints: []
+negative_constraints:
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 observed_signal: Tool schemas, skills, git instructions, memory/docs, and MCP schemas are all separate token tax sources; Codex skills use progressive disclosure.
 pm_current_coverage: PM has usage/context/tool/skill planning and prior skill budget recommendation.
-pm_gap_or_delta: 'Add ContextBudgetReceipt per source family: tool descriptions, MCP schemas, skill summaries/bodies, retrieved docs, terminal/tool outputs, provider-native replay metadata.'
+pm_gap_or_delta: 'Historical imported delta, retained as internal accounting under DL-475: Add ContextBudgetReceipt per source family: tool descriptions, MCP schemas, skill summaries/bodies, retrieved docs, terminal/tool outputs, provider-native replay metadata.'
 compile_disposition: create_new_planunit
+stale_retired_dispositions:
+  - "DL-475 supersedes the imported GUI shows budget by source family requirement. The finding title, source-row IDs and imported gap text are historical lineage; internal source-specific accounting remains required."
 ```
 
 ## Usage GUI Propagation Addendum - 2026-07-09
@@ -5556,25 +5582,34 @@ unit_type: acceptance_contract
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  Usage implementation is not GUI-complete until cross-surface fixtures prove that normalized UsageRecord values render correctly in Usage, Ledger, Context Detail Pane, Runtime Artifacts, Run Graph, Orchestrator, provider/settings rows, model rows, and Dashboard-hosted Usage widgets. The fixture suite is closed at minimum over GUI-USG-001 missing usage, GUI-USG-002 provider-reported zero, GUI-USG-003 unknown cost, GUI-USG-004 BYOK/subscription hidden cost, GUI-USG-005 disabled quota bucket, GUI-USG-006 cache zero versus unsupported, GUI-USG-007 inclusive/exclusive no-double-count, GUI-USG-008 partial/aborted stream, GUI-CBP-001 Antigravity missing commands, GUI-CBP-002 Antigravity G1 credits, GUI-ROUTE-001 object-first usage route, GUI-RAW-001 Raw/Curated redaction, and GUI-RAP-001 envelope plus per-type validation.
+  Usage implementation is not GUI-complete until cross-surface fixtures prove that normalized
+  UsageRecord values render correctly in Usage, Ledger, Context Detail Pane, Runtime Artifacts, Run
+  Graph, Orchestrator, provider/settings rows, model rows, and Dashboard-hosted Usage widgets. The
+  fixture suite is closed at minimum over GUI-USG-001 missing usage, GUI-USG-002 provider-reported
+  zero, GUI-USG-003 unknown cost, GUI-USG-004 BYOK/subscription hidden cost, GUI-USG-005 disabled
+  quota bucket, GUI-USG-006 cache zero versus unsupported, GUI-USG-007 inclusive/exclusive
+  no-double-count, GUI-USG-008 partial/aborted stream, GUI-CBP-001 Antigravity missing commands,
+  GUI-CBP-002 Antigravity G1 credits, GUI-ROUTE-001 object-first usage route, GUI-RAW-001 non-chat
+  diagnostic Raw/Curated redaction, and GUI-RAP-001 envelope plus per-type validation.
 gui_related: true
 gui_classification_reason: The fixture matrix proves user-visible Usage behavior across GUI surfaces.
 depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
 unblocks: []
 acceptance_criteria:
-  - GUI-USG-001 missing usage carries source_class unknown, source_confidence unknown, source_authority unknown, and usage reporting state unknown or unavailable, with absent or redacted raw payload refs, and never renders zero tokens, zero cost, or no-usage success.
-  - GUI-USG-002 provider-reported zero carries source_class provider_reported, source_confidence, source_authority, settlement_status settled or adjusted, zero buckets, and raw ref/hash evidence, and is not confused with missing or null usage.
-  - GUI-USG-003 unknown cost carries cost_status unknown with null cost fields and visible unknown/estimated copy, not `$0.00` or provider-authoritative copy.
-  - GUI-USG-004 BYOK/subscription hidden preserves usage_event_ref, UsageRecord identity, source_confidence, and source_authority while rendering hidden_byok or hidden_subscription cost state instead of fake per-token price.
-  - GUI-USG-005 disabled quota bucket renders quota_status disabled without zero remaining, exhausted, success, reset countdown, or fabricated progress.
-  - GUI-USG-006 cache zero versus unsupported proves reported cache_read = 0 is distinct from cache unsupported, not_exposed, or unknown.
-  - GUI-USG-007 inclusive/exclusive no-double-count proves cache and reasoning buckets are not added to provider-inclusive totals and are added only when mapper counting_semantics proves exclusivity.
-  - GUI-USG-008 partial/aborted stream preserves streaming_partial or failed settlement, trace lifecycle partial or aborted, dedupe_key, and accepted partial rollup once without showing final/settled copy.
-  - GUI-CBP-001 Antigravity missing commands covers missing or broken `/stats`, `/usage`, `/quota`, and `/credits` as stats unavailable, usage unknown, quota not exposed, and credits not exposed.
-  - GUI-CBP-002 Antigravity G1 credits carries provider_id antigravity_cli, route agy, credits status/remaining, and UseG1Credits without populating token, cost, quota, or provider_total fields.
-  - GUI-ROUTE-001 object-first PMConcept7 Ledger route asserts route_target.object_kind = usage_attempt and object_id from attempt_id, keeps usage_event_ref plus UsageRecord/provider/runtime refs as correlation, carries no OpenSubject, and fails timestamp/run/thread/tier primary routing; event-primary artifact callers retain usage_event/usage_event_ref.
-  - GUI-RAW-001 Raw/Curated redaction shows normalized Curated fields including source_class/source_confidence/source_authority plus Raw redacted refs, hashes, omitted counts, and permission state with no credentials, account ids, local paths, or raw provider secrets.
-  - GUI-RAP-001 envelope plus per-type validation rejects envelope-only or arbitrary non-empty type_payload artifacts for cost_usage and tool_llm_trace.
+  - "GUI-USG-001 missing usage carries source_class unknown, source_confidence unknown, source_authority unknown, and usage reporting state unknown or unavailable, with absent or redacted raw payload refs, and never renders zero tokens, zero cost, or no-usage success."
+  - "GUI-USG-002 provider-reported zero carries source_class provider_reported, source_confidence, source_authority, settlement_status settled or adjusted, zero buckets, and raw ref/hash evidence, and is not confused with missing or null usage."
+  - "GUI-USG-003 unknown cost carries cost_status unknown with null cost fields and visible unknown/estimated copy, not `$0.00` or provider-authoritative copy."
+  - "GUI-USG-004 BYOK/subscription hidden preserves usage_event_ref, UsageRecord identity, source_confidence, and source_authority while rendering hidden_byok or hidden_subscription cost state instead of fake per-token price."
+  - "GUI-USG-005 disabled quota bucket renders quota_status disabled without zero remaining, exhausted, success, reset countdown, or fabricated progress."
+  - "GUI-USG-006 cache zero versus unsupported proves reported cache_read = 0 is distinct from cache unsupported, not_exposed, or unknown."
+  - "GUI-USG-007 inclusive/exclusive no-double-count proves cache and reasoning buckets are not added to provider-inclusive totals and are added only when mapper counting_semantics proves exclusivity."
+  - "GUI-USG-008 partial/aborted stream preserves streaming_partial or failed settlement, trace lifecycle partial or aborted, dedupe_key, and accepted partial rollup once without showing final/settled copy."
+  - "GUI-CBP-001 Antigravity missing commands covers missing or broken `/stats`, `/usage`, `/quota`, and `/credits` as stats unavailable, usage unknown, quota not exposed, and credits not exposed."
+  - "GUI-CBP-002 Antigravity G1 credits carries provider_id antigravity_cli, route agy, credits status/remaining, and UseG1Credits without populating token, cost, quota, or provider_total fields."
+  - "GUI-ROUTE-001 object-first PMConcept7 Ledger route asserts route_target.object_kind = usage_attempt and object_id from attempt_id, keeps usage_event_ref plus UsageRecord/provider/runtime refs as correlation, carries no OpenSubject, and fails timestamp/run/thread/tier primary routing; event-primary artifact callers retain usage_event/usage_event_ref."
+  - "GUI-RAW-001 non-chat diagnostic Raw/Curated redaction shows normalized Curated fields including source_class/source_confidence/source_authority plus Raw redacted refs, hashes, omitted counts, and permission state with no credentials, account ids, local paths, or raw provider secrets."
+  - "GUI-RAP-001 envelope plus per-type validation rejects envelope-only or arbitrary non-empty type_payload artifacts for cost_usage and tool_llm_trace."
+  - "Shared fixture coverage verifies that non-chat diagnostics retain their redaction contract while chat context/message surfaces expose no source-composition, raw/curated source-inspection view or per-run inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shard-plans.py --check
@@ -5606,6 +5641,7 @@ source_lineage:
   - "Plans/Contracts_V0.md:5665-5676"
   - "Plans/storage-plan.md:109"
   - "Plans/UI_Command_Catalog.md:1121"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - GUI-USG-001
   - GUI-USG-002
@@ -5640,6 +5676,8 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
   - Plans/Runtime_Artifacts_Panel.md
+owner_boundary_notes:
+  - "Raw/Curated redaction and source-level inspection in this shared contract apply only to existing non-chat Usage/Ledger and expert diagnostic surfaces, not the chat context ring, Context Detail Pane or message-info UI. Chat keeps normalized capacity/cost/model/settlement facts and useful compaction status; source accounting and raw references remain internal."
 ```
 
 ## Usage Implementation-Ready Evidence Addendum - 2026-07-09
