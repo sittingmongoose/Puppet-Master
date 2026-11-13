@@ -34,7 +34,7 @@
 // What it cannot see directly is the compositor; the hand-over above is computed from the timings the page reports.
 // The Node model (tests/stop-chip-beat-verify.mjs) and lane S's films (share 2026-11-13-pm7-stop-chip-pace) judge it
 // on a model of the compositor and on pixels.
-// After the run ends nothing of the chip's is armed (PM56_SENDSTOP.debug(): no quiet timer, no observer).
+// After the run ends nothing of the chip's is armed (PM56_SENDSTOP.debug(): no quiet timer, no speed listener, no pending frame callback).
 // Each look is SAVED through Settings before its run: a Settings save (the speed change) repaints the saved look, and
 // with the kit's unsaved look() the page went back to Basic Dark mid-run (first runs: a look change, read as a jump).
 // REDUCED (first look only): with Reduce motion on, the app's (Settings) and then the system's (prefers-reduced-motion),
@@ -401,7 +401,7 @@ export default async function (t) {
 			const off = quiet.filter((m) => m.flipMs == null || m.flipMs < 880 || m.flipMs > 900 + late);
 			await t.check(`${look}: 900 ms without a word turns it to waiting (within ${late} ms after)`, quiet.length >= 2 && off.length === 0, quiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}`).join('; '));
 			const d = R.after.debug || {};
-			await t.check(`${look}: once the run has ended nothing of the chip's is armed`, R.after.ss !== 'stop' && d.quiet === false && d.watching === false, JSON.stringify(R.after));
+			await t.check(`${look}: once the run has ended nothing of the chip's is armed`, R.after.ss !== 'stop' && d.quiet === false && d.watching === false && d.pending !== true, JSON.stringify(R.after));
 		}
 	}
 
